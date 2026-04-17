@@ -1,0 +1,10 @@
+{
+  "name": "model-lab-viewer",
+  "version": "1.0.0",
+  "scripts": {
+    "viewer": "node server.js"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  }
+}

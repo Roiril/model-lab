@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>model-lab viewer</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #1a1a1a; color: #eee; font-family: monospace; overflow: hidden; }
+  #canvas-container { width: 100vw; height: 100vh; }
+  #ui {
+    position: fixed; top: 16px; left: 16px; z-index: 10;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  #file-list {
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .file-btn {
+    background: #2a2a2a; border: 1px solid #444; color: #ccc;
+    padding: 6px 12px; cursor: pointer; font-family: monospace; font-size: 13px;
+    text-align: left; border-radius: 4px;
+  }
+  .file-btn:hover { background: #3a3a3a; }
+  .file-btn.active { border-color: #7af; color: #7af; }
+  #status {
+    position: fixed; bottom: 16px; left: 16px;
+    font-size: 12px; color: #666;
+  }
+  #status.new { color: #7af; }
+</style>
+</head>
+<body>
+<div id="canvas-container"></div>
+<div id="ui">
+  <div id="file-list"></div>
+</div>
+<div id="status">接続中...</div>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module">
+import * as THREE from "three";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { STLLoader } from "three/addons/loaders/STLLoader.js";
+
+// --- Three.js setup ---
+const container = document.getElementById("canvas-container");
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(devicePixelRatio);
+renderer.setSize(innerWidth, innerHeight);
+renderer.shadowMap.enabled = true;
+container.appendChild(renderer.domElement);
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x1a1a1a);
+
+const camera = new THREE.PerspectiveCamera(45, innerWidth / innerHeight, 0.0001, 100);
+camera.position.set(0.1, 0.1, 0.2);
+
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+
+// Lights
+scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+const dirLight = new THREE.DirectionalLight(0xffffff, 1.2);
+dirLight.position.set(1, 2, 2);
+scene.add(dirLight);
+const backLight = new THREE.DirectionalLight(0x8888ff, 0.4);
+backLight.position.set(-1, -1, -1);
+scene.add(backLight);
+
+// Grid
+const grid = new THREE.GridHelper(0.3, 30, 0x333333, 0x2a2a2a);
+scene.add(grid);
+
+window.addEventListener("resize", () => {
+  camera.aspect = innerWidth / innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+});
+
+renderer.setAnimationLoop(() => {
+  controls.update();
+  renderer.render(scene, camera);
+});
+
+// --- STL loading ---
+const loader = new STLLoader();
+let currentMesh = null;
+
+function loadSTL(filename) {
+  loader.load(`/exports/${filename}`, (geometry) => {
+    if (currentMesh) scene.remove(currentMesh);
+    geometry.computeVertexNormals();
+
+    const mat = new THREE.MeshStandardMaterial({
+      color: 0x88ccff, metalness: 0.1, roughness: 0.6,
+    });
+    currentMesh = new THREE.Mesh(geometry, mat);
+
+    // Center model
+    geometry.computeBoundingBox();
+    const box = geometry.boundingBox;
+    const center = new THREE.Vector3();
+    box.getCenter(center);
+    currentMesh.position.sub(center);
+    currentMesh.position.y += (box.max.y - box.min.y) / 2;
+
+    scene.add(currentMesh);
+
+    // Fit camera
+    const size = new THREE.Vector3();
+    box.getSize(size);
+    const maxDim = Math.max(size.x, size.y, size.z);
+    camera.position.set(maxDim * 1.5, maxDim * 1.5, maxDim * 2.5);
+    controls.target.set(0, size.y / 2, 0);
+    controls.update();
+
+    setStatus(`${filename}`, true);
+  });
+}
+
+// --- File list UI ---
+const fileList = document.getElementById("file-list");
+let activeFile = null;
+
+function renderFileList(files) {
+  fileList.innerHTML = "";
+  files.forEach((f) => {
+    const btn = document.createElement("button");
+    btn.className = "file-btn" + (f === activeFile ? " active" : "");
+    btn.textContent = f;
+    btn.onclick = () => { activeFile = f; renderFileList(files); loadSTL(f); };
+    fileList.appendChild(btn);
+  });
+}
+
+function setStatus(msg, isNew = false) {
+  const el = document.getElementById("status");
+  el.textContent = msg;
+  el.className = isNew ? "new" : "";
+  if (isNew) setTimeout(() => el.className = "", 2000);
+}
+
+// --- WebSocket ---
+function connect() {
+  const ws = new WebSocket("ws://localhost:3001");
+
+  ws.onopen = () => setStatus("接続済み");
+  ws.onclose = () => { setStatus("切断 — 再接続中..."); setTimeout(connect, 2000); };
+
+  ws.onmessage = ({ data }) => {
+    const msg = JSON.parse(data);
+    renderFileList(msg.files);
+    if (msg.files.length === 0) return;
+
+    if (msg.type === "init") {
+      activeFile = msg.files[0];
+      renderFileList(msg.files);
+      loadSTL(activeFile);
+    } else if (msg.type === "update") {
+      const latest = msg.files[0];
+      activeFile = latest;
+      renderFileList(msg.files);
+      loadSTL(latest);
+      setStatus(`更新: ${latest}`, true);
+    }
+  };
+}
+
+connect();
+</script>
+</body>
+</html>
