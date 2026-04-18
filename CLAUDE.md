@@ -21,7 +21,7 @@
 ```
 models/<name>/
   params.py    # 寸法・定数のみ（単位: m）
-  model.py     # bpyスクリプト本体
+  model.py     # bpyスクリプト本体（複数パーツは base.py / module.py など分割可）
 lib/
   blender_utils.py   # clear_scene(), export_stl()
 exports/             # 出力STLファイル（ビューワーが監視）
@@ -83,6 +83,36 @@ bpy.data.objects.remove(cutter, do_unlink=True)
 
 スケール変更後は必ず `bpy.ops.object.transform_apply(scale=True)` を実行する。
 Boolean前に適用しないと寸法がずれる。
+
+### bmesh で手動メッシュを作るとき
+
+`bm.faces.new()` の頂点順は **外側から見て反時計回り（CCW）** にする。
+間違えると法線が内向きになり、Boolean EXACT が無効になる（削れない・結合されない）。
+作成後に `bmesh.ops.recalc_face_normals(bm, faces=bm.faces)` を呼ぶと安全。
+
+```python
+bm = bmesh.new()
+v = [bm.verts.new(c) for c in coords]
+# 頂点順: 外から見てCCW
+bm.faces.new([v[0], v[1], v[2], v[3]])
+# ...
+bmesh.ops.recalc_face_normals(bm, faces=bm.faces)  # 法線を外向きに強制
+bm.to_mesh(mesh)
+bm.free()
+```
+
+### Boolean カッターの配置
+
+カッターの面がターゲットと **面一（coplanar）** だと Boolean が不安定になる。
+カッターをターゲット表面より **0.5mm 程度突き出して** 配置する。
+
+```python
+# 悪い例: カッター上面 = ベース上面（面一）
+dt.location = (0, 0, COVER_H)
+
+# 良い例: カッターをわずかに突き出す
+dt.location = (0, 0, COVER_H + 0.0005)
+```
 
 ---
 
