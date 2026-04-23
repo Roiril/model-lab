@@ -149,3 +149,32 @@ dt.location = (0, 0, COVER_H + 0.0005)
 | `/new-model <name>` | 新モデルのスキャフォールドを生成 |
 | `/build <name>` | モデルをビルドしてビューワーに反映 |
 | `/print-check <name>` | 3Dプリント適性チェック |
+
+---
+
+## Claude Code ハーネス (.claude/)
+
+- **[memory/](.claude/memory/)** — 自動メモリ（`MEMORY.md` がインデックス、topic ごとに分割）
+- **[hooks/](.claude/hooks/)** — プロジェクト固有 PreToolUse ガード
+- **[settings.json](.claude/settings.json)** — `bypassPermissions`（書き込み前承認なし）
+- **[settings.local.json](.claude/settings.local.json)** — ローカル個別 allow リスト
+- **[commands/](.claude/commands/)** — `/new-model` `/build` `/print-check` の本体
+
+汎用 hook（SessionStart 状態注入 / 不可逆操作ガード / Windows エンコーディング修正）とスラッシュコマンド（`/commit`, `/plan`）は `~/.claude/` にグローバル配置済み。
+
+## 共有ハーネス (.agent/)
+
+`.agent/` 配下は他エージェント (Cline / Roo Code) 用の資産だが、**領域別ルールと計画は Claude Code からも参照する**。
+
+### 領域別ルール（該当領域の作業前に読む）
+
+- [model-lab](.agent/rules/model-lab.md) — bpy / Blender 周りの全規約（このファイルの主要部と同期）
+- [global](.agent/rules/global.md) — 他エージェント向け汎用規約（参考）
+
+### その他
+
+- **ワークフロー**: `.agent/workflows/` — 他エージェント用（Claude Code は `.claude/commands/` を使う）
+- **計画**: `.agent/plans/` — 実装計画（`YYYY-MM-DD_<slug>.md`）。`/plan <slug>` で作成
+- **タスク**: `.agent/tasks/` — チェックリスト
+
+動作モードはグローバル `~/.claude/CLAUDE.md` 参照（書き込み前承認なし、git コミット規約 等）。
