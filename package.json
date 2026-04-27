@@ -2,6 +2,7 @@
   "name": "model-lab-viewer",
   "version": "1.0.0",
   "scripts": {
+    "dev": "node server.js",
     "viewer": "node server.js"
   },
   "dependencies": {

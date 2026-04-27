@@ -38,9 +38,43 @@ server.js            # HTTP + WebSocket サーバー
 1. **寸法調査** — 実物がある場合は公式スペックを確認する
 2. **`params.py` を先に書く** — 寸法・クリアランス・肉厚を定数化する
 3. **`model.py` を書く** — `params.py` をインポートして使う
-4. **ビルド実行** — `./run.sh models/<name>/model.py`
+4. **ビルド実行** — `./run.sh models/<name>/model.py`（または下記の watch.py 経由）
 5. **ビューワー確認** — サーバーが起動していなければ `node server.js` を起動する
 6. **ユーザーへ報告** — 外形寸法・肉厚・設計上の判断を明示する
+
+---
+
+## インタラクティブ・モデリング（Blender 共同編集）
+
+ユーザーが Blender で目視確認しながら一緒に詰めるときのワークフロー。
+
+### 役割分担
+
+- **Claude**: コード編集後に `./run.sh models/<name>/model.py` を実行してビルド
+- **Blender 側 watch.py**: `exports/<MODEL>.stl` の mtime を監視し、変化したらシーンをクリアして STL を再読込
+
+ソース（`model.py` / `params.py`）の import キャッシュ問題が起きないよう、**watch.py はビルド成果物（STL）のみを監視**する設計。
+
+### ユーザー側のセットアップ手順
+
+1. Blender 起動
+2. **Scripting** タブ → テキストエディタで [lib/watch.py](lib/watch.py) を Open
+3. 上部の `MODEL = "<name>"` を編集対象モデル名に書き換え
+4. **Run Script**（`Alt+P`）
+5. コンソールに `[watch] watching ...` と出れば常駐開始
+6. 以降、Claude がビルドする度に Blender のシーンが自動更新される
+
+### Claude 側の振る舞い
+
+- 編集後は **必ず** `./run.sh models/<name>/model.py` を実行する（watch.py は STL の mtime 変化でしか発火しない）
+- ユーザーが「壊れた」「見えなくなった」等と言ったらすぐ前の状態に戻せるよう、大きな構造変更は段階的に行う
+- 別モデルに切り替えるときは「watch.py の `MODEL` 定数を書き換えて Run Script し直してください」と案内する
+
+### 注意
+
+- watch.py は Blender 起動中のみ有効。Blender を閉じたら次回また Run Script 必要
+- 再読込時は **シーン内の全オブジェクトが削除されて STL がインポートされる**。ユーザーが Blender で手動編集中の内容は失われる。手動で形をいじっているときはビルドを保留する
+- ビューワー（http://localhost:3000）でも同じ STL を見られるので、Blender を閉じたいときはビューワーで代替可
 
 ---
 
