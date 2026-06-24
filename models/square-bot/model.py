@@ -14,7 +14,7 @@ import math
 from blender_utils import clear_scene, export_stl
 from servo_core import (
     add_cyl, add_box, add_sphere, boolean, round_box_xy,
-    cut_servo_mount, add_thrust_ring, cut_horn_coupling, SERVO,
+    cut_servo_mount, cut_servo_head_clearance, cut_horn_coupling, SERVO,
 )
 from params import *
 
@@ -32,29 +32,21 @@ inner = round_box_xy(BODY_W - 2 * WALL, BODY_D - 2 * WALL, inner_h,
                      max(BODY_FILLET - WALL, 0.001), inner_top - inner_h / 2, "body_inner")
 boolean(body, inner)
 
-# サーボ・マウント
+# サーボ・マウント（配線は中空内部→底開口へ）
 cut_servo_mount(body, deck_top_z=BODY_H, deck_t=DECK_T, clr=SERVO_CLR, screws=bool(SERVO_SCREWS))
 
-# スラストリング
-ring_top = add_thrust_ring(body, deck_top_z=BODY_H, ring_outer_r=RING_OUTER,
-                           ring_t=RING_T, ring_wall=RING_WALL)
-
 # ============================================================
-# 頭（角丸ボックス）
+# 頭（角丸ボックス）。デッキ上面に直接乗って軸まわりに回る（リング無し）
 # ============================================================
-PLANE = ring_top
+PLANE = BODY_H
 COUPLING_Z = BODY_H + SERVO.NUB_ABOVE_DECK + SERVO.BOSS_H + COUPLING_GAP
-CLEAR_R = max(CLEAR_R, SERVO.BOSS_DIA / 2 + 0.0015)
 head_cz = PLANE + HEAD_H / 2
 
 head = round_box_xy(HEAD_W, HEAD_D, HEAD_H, HEAD_FILLET, head_cz, "square_head")
 
-# 軸＋サーボ突起の逃げ
-bore_h = COUPLING_Z - PLANE + 0.002
-bore = add_cyl(CLEAR_R, bore_h, PLANE + bore_h / 2 - 0.001, "head_bore")
-boolean(head, bore)
-
-# ホーン結合
+# サーボのデッキ上突起の逃げ（回転対応の丸逃げ）＋ホーン結合
+cut_servo_head_clearance(head, plane_z=PLANE, deck_top_z=BODY_H,
+                         coupling_z=COUPLING_Z, clr=SERVO_CLR)
 cut_horn_coupling(head, coupling_z=COUPLING_Z, clr=SERVO_CLR)
 
 # 点目（前面 +Y のくぼみ）。前面板から EYE_DEPTH だけ彫る

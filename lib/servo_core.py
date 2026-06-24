@@ -208,14 +208,31 @@ def cut_servo_mount(body, deck_top_z, deck_t, clr=servo_clearance_default, screw
                          location=(cx + sx * SERVO.SCREW_SPACING / 2, 0, deck_top_z - deck_t / 2))
             boolean(body, sh)
 
-    # --- 配線チャネル（背面 -X からデッキ穴へ）---
-    chan_w = 0.005
-    chan = add_box(0.02, chan_w, deck_t + 0.004,
-                   (cx - SERVO.BODY_L / 2 - 0.01 + 0.001, 0, deck_top_z - deck_t / 2),
-                   "wire_chan")
-    boolean(body, chan)
-
+    # 配線は外壁を切らず、中空胴の内側を通して底開口から逃がす（外スリットは作らない）。
     return deck_bottom
+
+
+def cut_servo_head_clearance(part, plane_z, deck_top_z, coupling_z, clr=servo_clearance_default):
+    """回る側（頭 / キャップ）の裏に、サーボのデッキ上突起ぶんの逃げを彫る。
+
+    頭は軸まわりに回るので、逃げは「回転しても当たらない丸穴」にする必要がある。
+    - 下段: 上部ケース（羽根より上の角型ケース）を、最遠角までの半径で丸く逃がす
+    - 上段: ギアカバー座（丸）を coupling_z まで丸く逃がす
+    ホーン結合（cut_horn_coupling）は呼び出し側で別途彫る。
+    """
+    s = SERVO
+    case_top = deck_top_z + s.NUB_ABOVE_DECK
+    # 角型ケースの最遠角（軸=原点 からの距離）。回転で当たらないようこの半径で丸逃げ
+    nub_r = math.hypot(s.BODY_L / 2 + s.SHAFT_OFFSET, s.BODY_W / 2) + clr
+    h1 = (case_top - plane_z) + 0.004
+    c1 = add_cyl(nub_r, h1, (plane_z + case_top) / 2, "nub_clear")
+    boolean(part, c1)
+    # ギアカバー座の丸逃げ（plane..coupling）
+    boss_r = s.BOSS_DIA / 2 + clr
+    h2 = (coupling_z - plane_z) + 0.004
+    c2 = add_cyl(boss_r, h2, plane_z - 0.002 + h2 / 2, "boss_clear")
+    boolean(part, c2)
+    return nub_r
 
 
 def add_thrust_ring(body, deck_top_z, ring_outer_r, ring_t=0.0015, ring_wall=0.002):

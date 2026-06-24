@@ -14,7 +14,7 @@ import bpy
 from blender_utils import clear_scene, export_stl
 from servo_core import (
     add_cyl, add_box, add_sphere, boolean,
-    cut_servo_mount, add_thrust_ring, cut_horn_coupling, SERVO,
+    cut_servo_mount, cut_servo_head_clearance, cut_horn_coupling, SERVO,
 )
 from params import *
 
@@ -31,22 +31,15 @@ inner_h = inner_top + 0.002
 inner = add_cyl(BODY_R - WALL, inner_h, inner_top - inner_h / 2, "body_inner")
 boolean(body, inner)
 
-# サーボ・マウントを彫る（デッキ貫通穴・フランジ座・ネジ下穴・配線溝）
+# サーボ・マウントを彫る（デッキ貫通穴・フランジ座・ネジ下穴）。配線は中空内部→底開口へ
 cut_servo_mount(body, deck_top_z=BODY_H, deck_t=DECK_T, clr=SERVO_CLR, screws=bool(SERVO_SCREWS))
 
-# スラストリング（デッキ上面）。頭スカートが乗る
-RING_OUTER = BODY_R - RING_INSET
-ring_top = add_thrust_ring(body, deck_top_z=BODY_H, ring_outer_r=RING_OUTER,
-                           ring_t=RING_T, ring_wall=RING_WALL)
-
 # ============================================================
-# 頭（半球ドーム）
+# 頭（半球ドーム）。デッキ上面に直接乗って軸まわりに回る（リング無し）
 # ============================================================
-PLANE = ring_top                    # 頭の底面（リング上面に乗る）
+PLANE = BODY_H                      # 頭の底面 = デッキ上面
 # ホーン結合面 = 胴上面 + ケース上突起 + ギアカバー座高さ + すき間（サーボ実寸から自動）
 COUPLING_Z = BODY_H + SERVO.NUB_ABOVE_DECK + SERVO.BOSS_H + COUPLING_GAP
-# 軸逃げ径はギアカバー座を確実にクリア
-CLEAR_R = max(CLEAR_R, SERVO.BOSS_DIA / 2 + 0.0015)
 
 head = add_sphere(HEAD_R, (0, 0, PLANE), "round_head", segs=96, rings=48)
 # 接合面より下を平らに切る（半球化）
@@ -54,12 +47,9 @@ cutoff = add_box(HEAD_R * 3, HEAD_R * 3, HEAD_R * 2,
                  (0, 0, PLANE - HEAD_R), "head_cutoff")
 boolean(head, cutoff)
 
-# 軸＋サーボ突起の逃げ（中央クリアランス・ボア）
-bore_h = COUPLING_Z - PLANE + 0.002
-bore = add_cyl(CLEAR_R, bore_h, PLANE + bore_h / 2 - 0.001, "head_bore")
-boolean(head, bore)
-
-# ホーン結合（クロス溝 + ハブ + センタービス穴）
+# サーボのデッキ上突起の逃げ（回転対応の丸逃げ）＋ホーン結合
+cut_servo_head_clearance(head, plane_z=PLANE, deck_top_z=BODY_H,
+                         coupling_z=COUPLING_Z, clr=SERVO_CLR)
 cut_horn_coupling(head, coupling_z=COUPLING_Z, clr=SERVO_CLR)
 
 # 点目（前面 +Y のくぼみ）。表面上の点に小球カッターを置く
