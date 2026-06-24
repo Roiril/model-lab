@@ -7,31 +7,61 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { background: #1a1a1a; color: #eee; font-family: monospace; overflow: hidden; }
   #canvas-container { width: 100vw; height: 100vh; }
-  #ui {
-    position: fixed; top: 16px; left: 16px; z-index: 10;
-    display: flex; flex-direction: column; gap: 8px;
+  #panel {
+    position: fixed; top: 0; left: 0; z-index: 10;
+    width: 300px; max-height: 100vh; overflow-y: auto;
+    background: rgba(20,20,20,0.92); border-right: 1px solid #333;
+    padding: 12px; display: flex; flex-direction: column; gap: 10px;
   }
-  #file-list {
-    display: flex; flex-direction: column; gap: 4px;
-  }
-  .file-btn {
+  #panel h1 { font-size: 13px; color: #7af; font-weight: normal; letter-spacing: 1px; }
+  select {
     background: #2a2a2a; border: 1px solid #444; color: #ccc;
-    padding: 6px 12px; cursor: pointer; font-family: monospace; font-size: 13px;
-    text-align: left; border-radius: 4px;
+    padding: 6px 8px; font-family: monospace; font-size: 13px; border-radius: 4px;
   }
-  .file-btn:hover { background: #3a3a3a; }
-  .file-btn.active { border-color: #7af; color: #7af; }
+  #controls { display: flex; flex-direction: column; gap: 9px; }
+  .ctrl { display: flex; flex-direction: column; gap: 2px; }
+  .ctrl-head { display: flex; justify-content: space-between; align-items: baseline; gap: 6px; }
+  .ctrl-name { font-size: 11px; color: #9bd; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ctrl-val { font-size: 11px; color: #888; }
+  .ctrl-val input {
+    width: 70px; background: #222; border: 1px solid #444; color: #ccc;
+    font-family: monospace; font-size: 11px; text-align: right; padding: 1px 4px; border-radius: 3px;
+  }
+  input[type=range] { width: 100%; accent-color: #7af; height: 16px; }
+  .ctrl-label { font-size: 10px; color: #666; }
+  #export {
+    background: #2d5; border: none; color: #062; font-weight: bold;
+    padding: 9px; cursor: pointer; font-family: monospace; font-size: 13px; border-radius: 5px;
+    position: sticky; bottom: 0;
+  }
+  #export:hover { background: #4e7; }
+  #export:disabled { background: #555; color: #999; cursor: default; }
+  #reset, #copy {
+    background: #2a2a2a; border: 1px solid #444; color: #aaa;
+    padding: 5px; cursor: pointer; font-family: monospace; font-size: 11px; border-radius: 4px;
+  }
+  #reset:hover, #copy:hover { background: #3a3a3a; }
   #status {
-    position: fixed; bottom: 16px; left: 16px;
-    font-size: 12px; color: #666;
+    position: fixed; bottom: 12px; right: 16px;
+    font-size: 12px; color: #666; text-align: right;
   }
   #status.new { color: #7af; }
+  #status.busy { color: #fb4; }
+  #status.err { color: #f66; }
+  .hint { font-size: 10px; color: #555; line-height: 1.4; }
 </style>
 </head>
 <body>
 <div id="canvas-container"></div>
-<div id="ui">
-  <div id="file-list"></div>
+<div id="panel">
+  <h1>model-lab</h1>
+  <select id="cat-select"></select>
+  <select id="model-select"></select>
+  <div id="controls"></div>
+  <button id="reset">↺ デフォルトに戻す</button>
+  <button id="copy">📋 パラメータをコピー</button>
+  <button id="export">STL 生成</button>
+  <div class="hint" id="preview-hint"></div>
 </div>
 <div id="status">接続中...</div>
 
@@ -53,7 +83,6 @@ const container = document.getElementById("canvas-container");
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setPixelRatio(devicePixelRatio);
 renderer.setSize(innerWidth, innerHeight);
-renderer.shadowMap.enabled = true;
 container.appendChild(renderer.domElement);
 
 const scene = new THREE.Scene();
@@ -65,7 +94,6 @@ camera.position.set(0.1, 0.1, 0.2);
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
 
-// Lights
 scene.add(new THREE.AmbientLight(0xffffff, 0.6));
 const dirLight = new THREE.DirectionalLight(0xffffff, 1.2);
 dirLight.position.set(1, 2, 2);
@@ -74,106 +102,312 @@ const backLight = new THREE.DirectionalLight(0x8888ff, 0.4);
 backLight.position.set(-1, -1, -1);
 scene.add(backLight);
 
-// Grid
-const grid = new THREE.GridHelper(0.3, 30, 0x333333, 0x2a2a2a);
-scene.add(grid);
+scene.add(new THREE.GridHelper(0.3, 30, 0x333333, 0x2a2a2a));
 
-window.addEventListener("resize", () => {
+addEventListener("resize", () => {
   camera.aspect = innerWidth / innerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(innerWidth, innerHeight);
 });
 
-renderer.setAnimationLoop(() => {
-  controls.update();
-  renderer.render(scene, camera);
-});
+renderer.setAnimationLoop(() => { controls.update(); renderer.render(scene, camera); });
 
-// --- STL loading ---
-const loader = new STLLoader();
-let currentMesh = null;
+// --- 表示対象の管理（live group / STL mesh）---
+let current = null;       // 現在シーンに入っているオブジェクト
+function setObject(obj, fit = false) {
+  if (current) scene.remove(current);
+  current = obj;
+  if (!obj) return;
+  scene.add(obj);
 
-function loadSTL(filename) {
-  loader.load(`/exports/${filename}`, (geometry) => {
-    if (currentMesh) scene.remove(currentMesh);
-    geometry.computeVertexNormals();
-
-    const mat = new THREE.MeshStandardMaterial({
-      color: 0x88ccff, metalness: 0.1, roughness: 0.6,
-    });
-    currentMesh = new THREE.Mesh(geometry, mat);
-
-    // Center model
-    geometry.computeBoundingBox();
-    const box = geometry.boundingBox;
-    const center = new THREE.Vector3();
-    box.getCenter(center);
-    currentMesh.position.sub(center);
-    currentMesh.position.y += (box.max.y - box.min.y) / 2;
-
-    scene.add(currentMesh);
-
-    // Fit camera
-    const size = new THREE.Vector3();
-    box.getSize(size);
-    const maxDim = Math.max(size.x, size.y, size.z);
-    camera.position.set(maxDim * 1.5, maxDim * 1.5, maxDim * 2.5);
+  const box = new THREE.Box3().setFromObject(obj);
+  const center = new THREE.Vector3(); box.getCenter(center);
+  const size = new THREE.Vector3(); box.getSize(size);
+  // モデル底面を grid(y=0) に合わせる
+  obj.position.y -= box.min.y;
+  if (fit) {
+    const maxDim = Math.max(size.x, size.y, size.z) || 0.1;
+    camera.position.set(maxDim * 1.6, maxDim * 1.4, maxDim * 2.4);
     controls.target.set(0, size.y / 2, 0);
     controls.update();
+  }
+}
 
-    setStatus(`${filename}`, true);
+// --- 状態 ---
+let modelName = null;
+let controlsDef = [];     // [{name,index?,value,isInt,label}]
+let values = {};          // key -> number
+let previewBuild = null;  // preview モジュールの build 関数（無ければ null）
+
+const keyOf = (c) => c.index === undefined ? c.name : `${c.name}__${c.index}`;
+
+// values から params オブジェクト（タプルはリストに復元）を作る
+function collectParams() {
+  const out = {};
+  for (const c of controlsDef) {
+    if (c.index === undefined) out[c.name] = values[keyOf(c)];
+    else { (out[c.name] ||= [])[c.index] = values[keyOf(c)]; }
+  }
+  return out;
+}
+
+function rangeFor(c) {
+  const v = c.value;
+  if (c.isInt) return { min: Math.max(0, Math.round(v) - Math.max(1, Math.abs(v))), max: Math.round(v) * 3 || 10, step: 1 };
+  if (v === 0) return { min: -0.05, max: 0.05, step: 0.0005 };
+  const a = Math.abs(v);
+  const min = v > 0 ? 0 : v - 2 * a;
+  const max = v > 0 ? v * 2.5 : 0;
+  return { min, max, step: (max - min) / 200 };
+}
+
+// --- プレビュー再構築（live group）---
+let rebuildTimer = null;
+function scheduleRebuild() {
+  if (!previewBuild) return;
+  clearTimeout(rebuildTimer);
+  rebuildTimer = setTimeout(rebuildPreview, 30);
+}
+function rebuildPreview(fit = false) {
+  if (!previewBuild) return;
+  try {
+    const group = previewBuild(collectParams(), THREE);
+    setObject(group, fit);
+    setStatus("プレビュー更新", false);
+  } catch (e) {
+    setStatus("プレビュー失敗: " + e.message, false, "err");
+    console.error(e);
+  }
+}
+
+// --- パラメータパネル描画 ---
+const controlsEl = document.getElementById("controls");
+function buildPanel() {
+  controlsEl.innerHTML = "";
+  for (const c of controlsDef) {
+    const key = keyOf(c);
+    const r = rangeFor(c);
+    const row = document.createElement("div");
+    row.className = "ctrl";
+    const dispName = c.index === undefined ? c.name : `${c.name}[${c.index}]`;
+
+    const head = document.createElement("div");
+    head.className = "ctrl-head";
+    const nm = document.createElement("span");
+    nm.className = "ctrl-name"; nm.textContent = dispName;
+    const valWrap = document.createElement("span");
+    valWrap.className = "ctrl-val";
+    const num = document.createElement("input");
+    num.type = "number"; num.step = "any"; num.value = values[key];
+    valWrap.appendChild(num);
+    head.append(nm, valWrap);
+
+    const slider = document.createElement("input");
+    slider.type = "range";
+    slider.min = r.min; slider.max = r.max; slider.step = r.step;
+    slider.value = values[key];
+
+    const lbl = document.createElement("div");
+    lbl.className = "ctrl-label";
+    if (c.label && c.label !== c.name) lbl.textContent = c.label;
+
+    const commit = (v) => {
+      if (Number.isNaN(v)) return;   // 入力途中（空 / "22." 等）は確定しない
+      values[key] = v;
+      scheduleRebuild();
+    };
+    // スライダー操作 → 数値欄を同期（数値欄には書き戻さない＝入力途中を壊さない）
+    slider.addEventListener("input", () => {
+      const v = parseFloat(slider.value);
+      num.value = v;
+      commit(v);
+    });
+    // 数値欄入力 → スライダーだけ同期（欄自身は書き戻さないので小数点が消えない）
+    num.addEventListener("input", () => {
+      const v = parseFloat(num.value);
+      if (!Number.isNaN(v)) slider.value = v;
+      commit(v);
+    });
+
+    row.append(head, slider, lbl);
+    controlsEl.appendChild(row);
+  }
+}
+
+// --- モデル選択 ---
+async function loadModel(name) {
+  modelName = name;
+  const data = await (await fetch(`/api/params?model=${encodeURIComponent(name)}`)).json();
+  controlsDef = data.controls;
+  values = {};
+  for (const c of controlsDef) values[keyOf(c)] = c.value;
+  buildPanel();
+
+  // preview モジュールを動的 import
+  previewBuild = null;
+  const hint = document.getElementById("preview-hint");
+  if (data.preview) {
+    try {
+      const mod = await import(`/preview/${name}.js`);
+      previewBuild = mod.build;
+      hint.textContent = "スライダーで即時プレビュー。STL は生成ボタンで出力。";
+      rebuildPreview(true);
+    } catch (e) {
+      hint.textContent = "preview モジュール読込失敗。STL 生成後に表示します。";
+      console.error(e);
+    }
+  } else {
+    hint.textContent = "このモデルは即時プレビュー無し。STL 生成後に表示します。";
+    loadLatestStlFor(name, true);
+  }
+}
+
+let allModels = [];
+const DEFAULT_CAT = "かわいいロボット";
+
+function populateModelSelect(category) {
+  const sel = document.getElementById("model-select");
+  sel.innerHTML = "";
+  const list = category === "＊すべて"
+    ? allModels
+    : allModels.filter((m) => (m.category || "その他") === category);
+  for (const m of list) {
+    const o = document.createElement("option");
+    o.value = m.name; o.textContent = m.name + (m.preview ? "  ●" : "");
+    sel.appendChild(o);
+  }
+  return list;
+}
+
+async function initModels() {
+  const data = await (await fetch("/api/models")).json();
+  allModels = data.models;
+
+  // カテゴリ一覧（DEFAULT_CAT を先頭、その他を末尾、最後に「すべて」）
+  const cats = [...new Set(allModels.map((m) => m.category || "その他"))];
+  cats.sort((a, b) => {
+    if (a === DEFAULT_CAT) return -1; if (b === DEFAULT_CAT) return 1;
+    if (a === "その他") return 1; if (b === "その他") return -1;
+    return a.localeCompare(b, "ja");
+  });
+  const catOptions = [...cats, "＊すべて"];
+
+  const catSel = document.getElementById("cat-select");
+  const modelSel = document.getElementById("model-select");
+  catSel.innerHTML = "";
+  for (const c of catOptions) {
+    const o = document.createElement("option");
+    o.value = c;
+    const n = c === "＊すべて" ? allModels.length : allModels.filter((m) => (m.category || "その他") === c).length;
+    o.textContent = `${c} (${n})`;
+    catSel.appendChild(o);
+  }
+
+  modelSel.addEventListener("change", () => loadModel(modelSel.value));
+  catSel.addEventListener("change", async () => {
+    const list = populateModelSelect(catSel.value);
+    if (list[0]) { modelSel.value = list[0].name; await loadModel(list[0].name); }
+  });
+
+  // 既定カテゴリ = かわいいロボット（無ければ先頭）
+  const startCat = cats.includes(DEFAULT_CAT) ? DEFAULT_CAT : cats[0];
+  catSel.value = startCat;
+  const list = populateModelSelect(startCat);
+  const pref = list.find((m) => m.name === "round-bot") || list[0];
+  if (pref) { modelSel.value = pref.name; await loadModel(pref.name); }
+}
+
+// --- STL 読み込み（preview 無しモデル用）---
+const stlLoader = new STLLoader();
+let latestFiles = [];
+function loadLatestStlFor(name, fit) {
+  const f = latestFiles.find((x) => x === name + ".stl") || latestFiles[0];
+  if (f) loadSTL(f, fit);
+}
+function loadSTL(filename, fit = false) {
+  stlLoader.load(`/exports/${filename}`, (geometry) => {
+    // Blender は Z-up、three.js / preview モジュールは Y-up。STL を立たせる。
+    geometry.rotateX(-Math.PI / 2);
+    geometry.computeVertexNormals();
+    const mat = new THREE.MeshStandardMaterial({ color: 0x88ccff, metalness: 0.1, roughness: 0.6 });
+    const mesh = new THREE.Mesh(geometry, mat);
+    geometry.computeBoundingBox();
+    const center = new THREE.Vector3(); geometry.boundingBox.getCenter(center);
+    mesh.position.sub(center);
+    setObject(mesh, fit);
+    setStatus(filename, true);
   });
 }
 
-// --- File list UI ---
-const fileList = document.getElementById("file-list");
-let activeFile = null;
+// --- 生成（Blender で本番 STL 出力）---
+const exportBtn = document.getElementById("export");
+exportBtn.addEventListener("click", async () => {
+  exportBtn.disabled = true;
+  setStatus("STL 生成中… (Blender 実行)", false, "busy");
+  try {
+    const res = await fetch("/api/export", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ model: modelName, params: collectParams() }),
+    });
+    const r = await res.json();
+    if (r.ok) setStatus("STL 生成完了 ✓", true);
+    else setStatus("生成失敗 (code " + r.code + ")", false, "err");
+  } catch (e) {
+    setStatus("生成エラー: " + e.message, false, "err");
+  } finally {
+    exportBtn.disabled = false;
+  }
+});
 
-function renderFileList(files) {
-  fileList.innerHTML = "";
-  files.forEach((f) => {
-    const btn = document.createElement("button");
-    btn.className = "file-btn" + (f === activeFile ? " active" : "");
-    btn.textContent = f;
-    btn.onclick = () => { activeFile = f; renderFileList(files); loadSTL(f); };
-    fileList.appendChild(btn);
-  });
-}
+document.getElementById("copy").addEventListener("click", async () => {
+  const p = collectParams();
+  const lines = [`# ${modelName} params`];
+  for (const [k, v] of Object.entries(p)) {
+    lines.push(`${k} = ${Array.isArray(v) ? `(${v.join(", ")})` : v}`);
+  }
+  const text = lines.join("\n");
+  try {
+    await navigator.clipboard.writeText(text);
+    setStatus("パラメータをコピーしました ✓", true);
+  } catch {
+    // クリップボード不可時はフォールバック（選択用 textarea）
+    const ta = document.createElement("textarea");
+    ta.value = text; document.body.appendChild(ta); ta.select();
+    document.execCommand("copy"); ta.remove();
+    setStatus("パラメータをコピーしました ✓", true);
+  }
+});
 
-function setStatus(msg, isNew = false) {
+document.getElementById("reset").addEventListener("click", () => {
+  for (const c of controlsDef) values[keyOf(c)] = c.value;
+  buildPanel();
+  rebuildPreview(false);
+});
+
+function setStatus(msg, isNew = false, cls = "") {
   const el = document.getElementById("status");
   el.textContent = msg;
-  el.className = isNew ? "new" : "";
-  if (isNew) setTimeout(() => el.className = "", 2000);
+  el.className = cls || (isNew ? "new" : "");
+  if (isNew && !cls) setTimeout(() => (el.className = ""), 2000);
 }
 
-// --- WebSocket ---
+// --- WebSocket（STL 更新通知）---
 function connect() {
   const ws = new WebSocket("ws://localhost:3001");
-
   ws.onopen = () => setStatus("接続済み");
   ws.onclose = () => { setStatus("切断 — 再接続中..."); setTimeout(connect, 2000); };
-
   ws.onmessage = ({ data }) => {
     const msg = JSON.parse(data);
-    renderFileList(msg.files);
-    if (msg.files.length === 0) return;
-
-    if (msg.type === "init") {
-      activeFile = msg.files[0];
-      renderFileList(msg.files);
-      loadSTL(activeFile);
-    } else if (msg.type === "update") {
-      const latest = msg.files[0];
-      activeFile = latest;
-      renderFileList(msg.files);
-      loadSTL(latest);
-      setStatus(`更新: ${latest}`, true);
+    latestFiles = msg.files || [];
+    // preview 無しモデルなら生成された STL を表示
+    if (msg.type === "update" && !previewBuild && modelName) {
+      loadLatestStlFor(modelName, false);
     }
   };
 }
 
 connect();
+initModels();
 </script>
 </body>
 </html>
