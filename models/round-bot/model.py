@@ -56,7 +56,8 @@ boolean(head, cutoff)
 # サーボのデッキ上突起の逃げ（回転対応の丸逃げ）＋ホーン結合
 cut_servo_head_clearance(head, plane_z=PLANE, deck_top_z=BODY_H,
                          coupling_z=COUPLING_Z, clr=SERVO_CLR)
-cut_horn_coupling(head, coupling_z=COUPLING_Z, clr=SERVO_CLR)
+# クロス溝は頭の底（PLANE）まで縦に貫通させ、ホーン腕を下から差し込めるようにする
+cut_horn_coupling(head, coupling_z=COUPLING_Z, clr=SERVO_CLR, floor_z=PLANE)
 
 # 点目（前面 +Y のくぼみ）。表面上の点に小球カッターを置く
 import math

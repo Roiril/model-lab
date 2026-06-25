@@ -294,35 +294,39 @@ def add_thrust_ring(body, deck_top_z, ring_outer_r, ring_t=0.0015, ring_wall=0.0
 # ============================================================
 # ホーン結合（頭側に彫る）
 # ============================================================
-def cut_horn_coupling(head, coupling_z, clr=servo_clearance_default, horn=None, screw=False):
+def cut_horn_coupling(head, coupling_z, clr=servo_clearance_default, horn=None, screw=False,
+                      floor_z=None):
     """頭 `head` の裏側にホーン受けを彫る。寸法は HORN 仕様から取る。
 
     horn: ホーン仕様オブジェクト（属性参照）。None なら共通の HORN。
-          horn モデルは UI実測値の namespace を渡してライブ調整できる。
-    - 形状 TYPE: "cross"（十字2溝）/ "single"（1溝）/ "round"（円盤ポケット）
-    - 中央ハブ受け＋センタービス穴（頭天面まで貫通＝ドライバ/ビスを通す）
-
-    coupling_z: 受けの基準 z（ホーン上面が当たる高さ）。受けはここから上へ厚みぶん彫る。
+    floor_z: クロス溝を彫り下げる床の z（=頭の底面 PLANE）。指定すると溝が床まで縦に
+             貫通し、ホーン腕を下から差し込めるようになる（None なら結合面付近のみ）。
+    coupling_z: 受けの基準 z（ホーン下面が当たる高さ）。腕は coupling_z で着座する。
     """
     h = horn if horn is not None else HORN
     t = (getattr(h, "TYPE", "cross") or "cross").lower()
     thick = h.THICKNESS
-    depth = thick + 0.0015          # 受けの深さ（ホーン厚＋わずかな余裕）
-    zc = coupling_z + depth / 2 - 0.0005  # 溝中心（coupling_z = ホーン下面 から上へ）
+    depth = thick + 0.0015          # 着座部の余裕
+    slot_top = coupling_z + depth
+    # 溝は床（floor_z＝頭の底）から着座上端まで縦に通す。腕が下から滑り上がって入る。
+    # 床は底面より少し下へ出して coplanar を避け、確実に底へ開口させる。
+    floor = (floor_z - 0.002) if floor_z is not None else (coupling_z - 0.0005)
+    hh = slot_top - floor
+    zc = (floor + slot_top) / 2
 
-    # 中央ハブ受け
-    hub = add_cyl(h.HUB_DIA / 2 + clr, depth + 0.001, zc, "horn_hub")
+    # 中央ハブ受け（床まで通す）
+    hub = add_cyl(h.HUB_DIA / 2 + clr, hh, zc, "horn_hub")
     boolean(head, hub)
 
     if t in ("cross", "single"):
         # 長腕（X）: 長さ ARM_SPAN_X × 幅 ARM_W_X
-        s = add_box(h.ARM_SPAN_X + 2 * clr, h.ARM_W_X + 2 * clr, depth, (0, 0, zc), "horn_slot_x")
+        s = add_box(h.ARM_SPAN_X + 2 * clr, h.ARM_W_X + 2 * clr, hh, (0, 0, zc), "horn_slot_x")
         boolean(head, s)
         if t == "cross":  # 短腕（Y）: 長さ ARM_SPAN_Y × 幅 ARM_W_Y
-            s = add_box(h.ARM_W_Y + 2 * clr, h.ARM_SPAN_Y + 2 * clr, depth, (0, 0, zc), "horn_slot_y")
+            s = add_box(h.ARM_W_Y + 2 * clr, h.ARM_SPAN_Y + 2 * clr, hh, (0, 0, zc), "horn_slot_y")
             boolean(head, s)
     elif t == "round":
-        disc = add_cyl(h.ROUND_DIA / 2 + clr, depth, zc, "horn_disc")
+        disc = add_cyl(h.ROUND_DIA / 2 + clr, hh, zc, "horn_disc")
         boolean(head, disc)
 
     # --- センタービス（screw=True のときのみ）。ザグリ＋シャンク逃げで短ねじ化 ---

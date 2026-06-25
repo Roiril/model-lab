@@ -58,8 +58,8 @@ inner_h = inner_top - PLANE + 0.004
 inner = add_cyl(inner_r, inner_h, inner_top - inner_h / 2, "cap_inner")
 boolean(cap, inner)
 
-# ホーン結合（クロス溝 + ハブ + センタービス穴）
-cut_horn_coupling(cap, coupling_z=COUPLING_Z, clr=SERVO_CLR)
+# ホーン結合（クロス溝はキャップ底 PLANE まで縦に貫通＝腕を下から差し込める）
+cut_horn_coupling(cap, coupling_z=COUPLING_Z, clr=SERVO_CLR, floor_z=PLANE)
 
 # 回転が見えるポインタ（天面 +X 側に1本）
 ptr = add_box(POINTER_L, POINTER_W, POINTER_H,
