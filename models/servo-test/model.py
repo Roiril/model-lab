@@ -30,7 +30,8 @@ clear_scene()
 plate = round_box_xy(PLATE_W, PLATE_D, PLATE_T, PLATE_FILLET, PLATE_T / 2, "plate")
 
 # サーボ・マウント（デッキ穴・フランジ座・ネジ穴）。板そのものをデッキとして使う
-cut_servo_mount(plate, deck_top_z=PLATE_T, deck_t=PLATE_T, clr=SERVO_CLR, screws=bool(SERVO_SCREWS))
+cut_servo_mount(plate, deck_top_z=PLATE_T, deck_t=PLATE_T, clr=SERVO_CLR,
+                screws=bool(SERVO_SCREWS), wire_notch_w=WIRE_NOTCH_W)
 
 # 固定側の基準マーク（前縁 +Y。キャップが中心に戻るか見る用）
 ref = add_box(0.002, 0.002, 0.0015, (0, PLATE_D / 2 - 0.001, PLATE_T + 0.00075), "ref_mark")

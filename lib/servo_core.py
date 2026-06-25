@@ -191,7 +191,8 @@ def _servo_center_x():
     return -SERVO.SHAFT_OFFSET
 
 
-def cut_servo_mount(body, deck_top_z, deck_t, clr=servo_clearance_default, screws=True):
+def cut_servo_mount(body, deck_top_z, deck_t, clr=servo_clearance_default, screws=True,
+                    wire_notch_w=0.006):
     """胴 `body` にサーボ取付フィーチャを彫る。
 
     - デッキ貫通穴: 本体断面 (L×W) + クリアランス。本体＋上部突起がここを通る。
@@ -215,6 +216,14 @@ def cut_servo_mount(body, deck_top_z, deck_t, clr=servo_clearance_default, screw
                      (cx, 0, deck_top_z - SERVO.FLANGE_T / 2 + 0.00025), "flange_pocket")
     boolean(body, pocket)
 
+    # --- 羽受けの配線逃げ（サーボ長手の +X 端）---
+    # サーボの配線は長手方向の +X 端から出る。3芯リボンが羽根脇を通れるよう、
+    # 本体穴の +X 端〜デッキを小さく抜いて中空へ落とす。底の配線スロットへ繋がる。
+    if wire_notch_w > 0:
+        notch = add_box(0.008, wire_notch_w, deck_t + 0.004,
+                        (cx + SERVO.BODY_L / 2, 0, deck_top_z - deck_t / 2), "wire_notch")
+        boolean(body, notch)
+
     # --- ネジ下穴（フランジ両端ピッチ）。screws=False なら省略（頭で挟むので無ねじ可）---
     if screws:
         for sx in (-1, 1):
@@ -227,15 +236,17 @@ def cut_servo_mount(body, deck_top_z, deck_t, clr=servo_clearance_default, screw
     return deck_bottom
 
 
-def cut_wire_exit(body, back_y, wall, width=0.006, height=0.007):
-    """背面（-Y 側）の壁の下端に、配線を逃がす下開放スロットを彫る。
+def cut_wire_exit(body, back_x, wall, width=0.006, height=0.007):
+    """サーボ長手 +X 側の壁の下端に、配線を逃がす下開放スロットを彫る。
 
-    サーボの線は中空胴の内部を通り、このスロットから背面下端へ出る。
-    back_y: 背面外側の y（負値）。width=スロット幅(X), height=底からの高さ(Z)。
+    サーボの線は長手 +X 端から出て中空胴の内部を通り、このスロットから下端へ出る。
+    back_x: 壁の外側 x。正負どちらでも対応（copysign で内側へオフセット）。
+    width=スロット幅(Y), height=底からの高さ(Z)。
     底（z=0）より下に突き出して切るので、下端が開いた切り欠きになる（印刷向き◎）。
     """
-    cutter = add_box(width, wall + 0.004, height + 0.002,
-                     (0, back_y + wall / 2, height / 2 - 0.001), "wire_exit")
+    cx_wall = back_x - math.copysign(wall / 2, back_x)
+    cutter = add_box(wall + 0.004, width, height + 0.002,
+                     (cx_wall, 0, height / 2 - 0.001), "wire_exit")
     boolean(body, cutter)
 
 
