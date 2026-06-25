@@ -14,7 +14,7 @@ import math
 from blender_utils import clear_scene, export_stl
 from servo_core import (
     add_cyl, add_box, add_sphere, boolean, round_box_xy,
-    cut_servo_mount, cut_servo_head_clearance, cut_horn_coupling, SERVO,
+    cut_servo_mount, cut_servo_head_clearance, cut_horn_coupling, cut_wire_exit, SERVO,
 )
 from params import *
 
@@ -32,8 +32,11 @@ inner = round_box_xy(BODY_W - 2 * WALL, BODY_D - 2 * WALL, inner_h,
                      max(BODY_FILLET - WALL, 0.001), inner_top - inner_h / 2, "body_inner")
 boolean(body, inner)
 
-# サーボ・マウント（配線は中空内部→底開口へ）
+# サーボ・マウント
 cut_servo_mount(body, deck_top_z=BODY_H, deck_t=DECK_T, clr=SERVO_CLR, screws=bool(SERVO_SCREWS))
+
+# 配線出口（背面 -Y＝目の反対側 の下端）。線は中空内部を通ってここから出る
+cut_wire_exit(body, back_y=-BODY_D / 2, wall=WALL, width=WIRE_W, height=WIRE_H)
 
 # ============================================================
 # 頭（角丸ボックス）。デッキ上面に直接乗って軸まわりに回る（リング無し）

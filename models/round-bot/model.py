@@ -14,7 +14,7 @@ import bpy
 from blender_utils import clear_scene, export_stl
 from servo_core import (
     add_cyl, add_box, add_sphere, boolean,
-    cut_servo_mount, cut_servo_head_clearance, cut_horn_coupling, SERVO,
+    cut_servo_mount, cut_servo_head_clearance, cut_horn_coupling, cut_wire_exit, SERVO,
 )
 from params import *
 
@@ -31,8 +31,11 @@ inner_h = inner_top + 0.002
 inner = add_cyl(BODY_R - WALL, inner_h, inner_top - inner_h / 2, "body_inner")
 boolean(body, inner)
 
-# サーボ・マウントを彫る（デッキ貫通穴・フランジ座・ネジ下穴）。配線は中空内部→底開口へ
+# サーボ・マウントを彫る（デッキ貫通穴・フランジ座・ネジ下穴）
 cut_servo_mount(body, deck_top_z=BODY_H, deck_t=DECK_T, clr=SERVO_CLR, screws=bool(SERVO_SCREWS))
+
+# 配線出口（背面 -Y＝目の反対側 の下端）。線は中空内部を通ってここから出る
+cut_wire_exit(body, back_y=-BODY_R, wall=WALL, width=WIRE_W, height=WIRE_H)
 
 # ============================================================
 # 頭（半球ドーム）。デッキ上面に直接乗って軸まわりに回る（リング無し）

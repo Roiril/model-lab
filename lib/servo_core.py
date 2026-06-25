@@ -99,6 +99,21 @@ servo_clearance_default = 0.0004  # 0.4mm
 
 
 # ============================================================
+# サーボホーン仕様（実測前のプレースホルダ。入手後ここを更新すれば全モデル追従）
+# ============================================================
+class HORN:
+    TYPE = "cross"        # "cross"（十字4腕）/ "single"（1腕）/ "round"（円盤）
+    ARM_SPAN = 0.0190     # 腕の全長（端〜端・最長方向）
+    ARM_W = 0.0042        # 腕の幅
+    HUB_DIA = 0.0080      # 中央ハブ径
+    THICKNESS = 0.0035    # ホーン厚み（＝受けの溝深さ）
+    ROUND_DIA = 0.0200    # round タイプの円盤径
+    SCREW_DIA = 0.0026    # センタービス径（シャンク逃げ）
+    COUNTERBORE_DIA = 0.0050  # 天面ザグリ径（ねじ頭＋ドライバが入る）
+    SEAT_LEDGE = 0.0015   # ホーン上面〜ねじ頭座面までの肉厚（ねじ頭が受ける段）
+
+
+# ============================================================
 # 低レベル・プリミティブ（既存モデルと同じ流儀）
 # ============================================================
 def add_cyl(r, h, z_center, name, verts=96, location=None):
@@ -208,8 +223,20 @@ def cut_servo_mount(body, deck_top_z, deck_t, clr=servo_clearance_default, screw
                          location=(cx + sx * SERVO.SCREW_SPACING / 2, 0, deck_top_z - deck_t / 2))
             boolean(body, sh)
 
-    # 配線は外壁を切らず、中空胴の内側を通して底開口から逃がす（外スリットは作らない）。
+    # 配線は外壁を切らず、中空胴の内側を通す。出口は cut_wire_exit で背面下端に開ける。
     return deck_bottom
+
+
+def cut_wire_exit(body, back_y, wall, width=0.006, height=0.007):
+    """背面（-Y 側）の壁の下端に、配線を逃がす下開放スロットを彫る。
+
+    サーボの線は中空胴の内部を通り、このスロットから背面下端へ出る。
+    back_y: 背面外側の y（負値）。width=スロット幅(X), height=底からの高さ(Z)。
+    底（z=0）より下に突き出して切るので、下端が開いた切り欠きになる（印刷向き◎）。
+    """
+    cutter = add_box(width, wall + 0.004, height + 0.002,
+                     (0, back_y + wall / 2, height / 2 - 0.001), "wire_exit")
+    boolean(body, cutter)
 
 
 def cut_servo_head_clearance(part, plane_z, deck_top_z, coupling_z, clr=servo_clearance_default):
@@ -251,34 +278,76 @@ def add_thrust_ring(body, deck_top_z, ring_outer_r, ring_t=0.0015, ring_wall=0.0
 # ============================================================
 # ホーン結合（頭側に彫る）
 # ============================================================
-def cut_horn_coupling(head, coupling_z, clr=0.0003,
-                      slot_len=0.0190, slot_w=0.0042, slot_depth=0.0035,
-                      hub_r=0.0040, hub_depth=0.0025, screw_r=0.0013):
-    """頭 `head` の裏側にホーン結合を彫る。
+def cut_horn_coupling(head, coupling_z, clr=servo_clearance_default, horn=None):
+    """頭 `head` の裏側にホーン受けを彫る。寸法は HORN 仕様から取る。
 
-    - 中央ハブ穴: 円形ポケット（ホーン中心のボス＋ビス頭の逃げ）
-    - クロス溝: 直交2本の溝。クロスホーンもシングルホーンも任意向きで掴める
-    - センタービス穴: 軸へのセルフタップ用に頭天面まで貫通（ドライバアクセス）
+    horn: ホーン仕様オブジェクト（属性参照）。None なら共通の HORN。
+          horn モデルは UI実測値の namespace を渡してライブ調整できる。
+    - 形状 TYPE: "cross"（十字2溝）/ "single"（1溝）/ "round"（円盤ポケット）
+    - 中央ハブ受け＋センタービス穴（頭天面まで貫通＝ドライバ/ビスを通す）
 
-    coupling_z: 結合面の z（頭裏でホーン上面が当たる高さ。デッキ上面 + ホーン厚 付近）
+    coupling_z: 受けの基準 z（ホーン上面が当たる高さ）。受けはここから上へ厚みぶん彫る。
     """
-    # 中央ハブポケット
-    hub = add_cyl(hub_r + clr, hub_depth + 0.002, coupling_z + hub_depth / 2 - 0.001, "horn_hub")
+    h = horn if horn is not None else HORN
+    t = (getattr(h, "TYPE", "cross") or "cross").lower()
+    thick = h.THICKNESS
+    depth = thick + 0.0015          # 受けの深さ（ホーン厚＋わずかな余裕）
+    zc = coupling_z + depth / 2 - 0.0005  # 溝中心（coupling_z = ホーン下面 から上へ）
+
+    # 中央ハブ受け
+    hub = add_cyl(h.HUB_DIA / 2 + clr, depth + 0.001, zc, "horn_hub")
     boolean(head, hub)
 
-    # クロス溝（X, Y 2 本）
-    for ax in ("x", "y"):
-        if ax == "x":
-            s = add_box(slot_len + 2 * clr, slot_w + 2 * clr, slot_depth,
-                        (0, 0, coupling_z + slot_depth / 2 - 0.0005), "horn_slot_x")
-        else:
-            s = add_box(slot_w + 2 * clr, slot_len + 2 * clr, slot_depth,
-                        (0, 0, coupling_z + slot_depth / 2 - 0.0005), "horn_slot_y")
-        boolean(head, s)
+    if t in ("cross", "single"):
+        axes = ("x", "y") if t == "cross" else ("x",)
+        L = h.ARM_SPAN + 2 * clr
+        W = h.ARM_W + 2 * clr
+        for ax in axes:
+            if ax == "x":
+                s = add_box(L, W, depth, (0, 0, zc), "horn_slot_x")
+            else:
+                s = add_box(W, L, depth, (0, 0, zc), "horn_slot_y")
+            boolean(head, s)
+    elif t == "round":
+        disc = add_cyl(h.ROUND_DIA / 2 + clr, depth, zc, "horn_disc")
+        boolean(head, disc)
 
-    # センタービス穴（頭天面まで貫通させてドライバを通す）
-    screw = add_cyl(screw_r, 0.20, coupling_z + 0.10, "horn_screw", verts=24)
-    boolean(head, screw)
+    # --- センタービス：ザグリ + シャンク逃げ（短いねじで届くように）---
+    cbore_dia = getattr(h, "COUNTERBORE_DIA", 0.005)
+    seat_ledge = getattr(h, "SEAT_LEDGE", 0.0015)
+    seat_z = coupling_z + thick + seat_ledge   # ねじ頭の座面（ホーン上面＋肉厚）
+    # シャンク逃げ：座面より下（ホーン中心〜軸）。下方は頭クリアランスで既に開いている
+    shank = add_cyl(h.SCREW_DIA / 2, (seat_z - coupling_z) + 0.004,
+                    (coupling_z + seat_z) / 2 - 0.002, "horn_shank", verts=24)
+    boolean(head, shank)
+    # ザグリ：座面から天面まで貫通（ねじ頭＋ドライバが入る）
+    cbore = add_cyl(cbore_dia / 2, 0.20, seat_z + 0.10, "horn_cbore", verts=32)
+    boolean(head, cbore)
+
+
+def add_horn_dummy(prof=None, name="horn", base_z=0.0):
+    """サーボホーンの実体ダミー（正の形状）。horn モデルの可視化・確認用。"""
+    h = prof if prof is not None else HORN
+    t = (getattr(h, "TYPE", "cross") or "cross").lower()
+    thick = h.THICKNESS
+    parts = [add_cyl(h.HUB_DIA / 2, thick, base_z + thick / 2, name + "_hub", verts=48)]
+    if t in ("cross", "single"):
+        axes = ("x", "y") if t == "cross" else ("x",)
+        for ax in axes:
+            if ax == "x":
+                parts.append(add_box(h.ARM_SPAN, h.ARM_W, thick, (0, 0, base_z + thick / 2), name + "_armx"))
+            else:
+                parts.append(add_box(h.ARM_W, h.ARM_SPAN, thick, (0, 0, base_z + thick / 2), name + "_army"))
+    elif t == "round":
+        parts.append(add_cyl(h.ROUND_DIA / 2, thick, base_z + thick / 2, name + "_disc", verts=64))
+    # 穴あけ前に UNION で多様体化（join のままだと EXACT boolean が空になる）
+    horn = parts[0]
+    horn.name = name
+    for p in parts[1:]:
+        boolean(horn, p, op="UNION")
+    hole = add_cyl(h.SCREW_DIA / 2, thick + 0.004, base_z + thick / 2, name + "_hole", verts=24)
+    boolean(horn, hole)
+    return horn
 
 
 # ============================================================
