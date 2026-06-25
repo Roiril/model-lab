@@ -27,8 +27,8 @@ export function build(P, THREE) {
 
   vcyl(P.HUB_DIA, thick);                       // 中央ハブ
   if (t === "cross" || t === "single") {
-    box(P.ARM_SPAN_X, P.ARM_W, thick);          // 長腕（X）
-    if (t === "cross") box(P.ARM_W, P.ARM_SPAN_Y, thick); // 短腕（Y）
+    box(P.ARM_SPAN_X, P.ARM_W_X, thick);          // 長腕（X）
+    if (t === "cross") box(P.ARM_W_Y, P.ARM_SPAN_Y, thick); // 短腕（Y）
   } else if (t === "round") {
     vcyl(P.ROUND_DIA, thick);                   // 円盤
   }

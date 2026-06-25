@@ -106,14 +106,16 @@ class HORN:
     TYPE = "cross"        # "cross"（十字）/ "single"（1腕）/ "round"（円盤）
     ARM_SPAN_X = 0.0350   # 長腕の全長（端〜端）横35mm
     ARM_SPAN_Y = 0.0170   # 短腕の全長（端〜端）たて17mm
-    ARM_W = 0.0040        # 腕の幅
+    ARM_W_X = 0.0068      # 長腕の幅 6.8mm
+    ARM_W_Y = 0.0036      # 短腕の幅 3.6mm
     HUB_DIA = 0.0070      # 中央ハブ径
     THICKNESS = 0.0020    # 腕板の厚み（＝受け溝の深さ）
     STACK_H = 0.0056      # ギアカバー上面〜ホーン頂部（小円柱+ホーン）＝5.6mm
     ROUND_DIA = 0.0200    # round タイプの円盤径
-    SCREW_DIA = 0.0024    # センタービス径（自タッピング ⌀2.3〜2.4）
-    COUNTERBORE_DIA = 0.0050  # 天面ザグリ径（ねじ頭＋ドライバが入る）
-    SEAT_LEDGE = 0.0015   # ホーン上面〜ねじ頭座面までの肉厚（ねじ頭が受ける段）
+    # ねじ止めしない運用（はめ込み保持）。screw=True にすると下記でビス穴＋ザグリを彫る
+    SCREW_DIA = 0.0024    # センタービス径（screw=True 時）
+    COUNTERBORE_DIA = 0.0050  # 天面ザグリ径（screw=True 時）
+    SEAT_LEDGE = 0.0015   # ねじ頭座面の肉厚（screw=True 時）
 
 
 # ============================================================
@@ -292,7 +294,7 @@ def add_thrust_ring(body, deck_top_z, ring_outer_r, ring_t=0.0015, ring_wall=0.0
 # ============================================================
 # ホーン結合（頭側に彫る）
 # ============================================================
-def cut_horn_coupling(head, coupling_z, clr=servo_clearance_default, horn=None):
+def cut_horn_coupling(head, coupling_z, clr=servo_clearance_default, horn=None, screw=False):
     """頭 `head` の裏側にホーン受けを彫る。寸法は HORN 仕様から取る。
 
     horn: ホーン仕様オブジェクト（属性参照）。None なら共通の HORN。
@@ -313,28 +315,26 @@ def cut_horn_coupling(head, coupling_z, clr=servo_clearance_default, horn=None):
     boolean(head, hub)
 
     if t in ("cross", "single"):
-        W = h.ARM_W + 2 * clr
-        # 長腕（X）
-        s = add_box(h.ARM_SPAN_X + 2 * clr, W, depth, (0, 0, zc), "horn_slot_x")
+        # 長腕（X）: 長さ ARM_SPAN_X × 幅 ARM_W_X
+        s = add_box(h.ARM_SPAN_X + 2 * clr, h.ARM_W_X + 2 * clr, depth, (0, 0, zc), "horn_slot_x")
         boolean(head, s)
-        if t == "cross":  # 短腕（Y）
-            s = add_box(W, h.ARM_SPAN_Y + 2 * clr, depth, (0, 0, zc), "horn_slot_y")
+        if t == "cross":  # 短腕（Y）: 長さ ARM_SPAN_Y × 幅 ARM_W_Y
+            s = add_box(h.ARM_W_Y + 2 * clr, h.ARM_SPAN_Y + 2 * clr, depth, (0, 0, zc), "horn_slot_y")
             boolean(head, s)
     elif t == "round":
         disc = add_cyl(h.ROUND_DIA / 2 + clr, depth, zc, "horn_disc")
         boolean(head, disc)
 
-    # --- センタービス：ザグリ + シャンク逃げ（短いねじで届くように）---
-    cbore_dia = getattr(h, "COUNTERBORE_DIA", 0.005)
-    seat_ledge = getattr(h, "SEAT_LEDGE", 0.0015)
-    seat_z = coupling_z + thick + seat_ledge   # ねじ頭の座面（ホーン上面＋肉厚）
-    # シャンク逃げ：座面より下（ホーン中心〜軸）。下方は頭クリアランスで既に開いている
-    shank = add_cyl(h.SCREW_DIA / 2, (seat_z - coupling_z) + 0.004,
-                    (coupling_z + seat_z) / 2 - 0.002, "horn_shank", verts=24)
-    boolean(head, shank)
-    # ザグリ：座面から天面まで貫通（ねじ頭＋ドライバが入る）
-    cbore = add_cyl(cbore_dia / 2, 0.20, seat_z + 0.10, "horn_cbore", verts=32)
-    boolean(head, cbore)
+    # --- センタービス（screw=True のときのみ）。ザグリ＋シャンク逃げで短ねじ化 ---
+    if screw:
+        cbore_dia = getattr(h, "COUNTERBORE_DIA", 0.005)
+        seat_ledge = getattr(h, "SEAT_LEDGE", 0.0015)
+        seat_z = coupling_z + thick + seat_ledge
+        shank = add_cyl(h.SCREW_DIA / 2, (seat_z - coupling_z) + 0.004,
+                        (coupling_z + seat_z) / 2 - 0.002, "horn_shank", verts=24)
+        boolean(head, shank)
+        cbore = add_cyl(cbore_dia / 2, 0.20, seat_z + 0.10, "horn_cbore", verts=32)
+        boolean(head, cbore)
 
 
 def add_horn_dummy(prof=None, name="horn", base_z=0.0):
@@ -344,9 +344,9 @@ def add_horn_dummy(prof=None, name="horn", base_z=0.0):
     thick = h.THICKNESS
     parts = [add_cyl(h.HUB_DIA / 2, thick, base_z + thick / 2, name + "_hub", verts=48)]
     if t in ("cross", "single"):
-        parts.append(add_box(h.ARM_SPAN_X, h.ARM_W, thick, (0, 0, base_z + thick / 2), name + "_armx"))
+        parts.append(add_box(h.ARM_SPAN_X, h.ARM_W_X, thick, (0, 0, base_z + thick / 2), name + "_armx"))
         if t == "cross":
-            parts.append(add_box(h.ARM_W, h.ARM_SPAN_Y, thick, (0, 0, base_z + thick / 2), name + "_army"))
+            parts.append(add_box(h.ARM_W_Y, h.ARM_SPAN_Y, thick, (0, 0, base_z + thick / 2), name + "_army"))
     elif t == "round":
         parts.append(add_cyl(h.ROUND_DIA / 2, thick, base_z + thick / 2, name + "_disc", verts=64))
     # 穴あけ前に UNION で多様体化（join のままだと EXACT boolean が空になる）
