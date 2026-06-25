@@ -20,7 +20,8 @@ MM = 0.001
 TYPES = ["cross", "single", "round"]
 prof = SimpleNamespace(
     TYPE=TYPES[max(0, min(2, int(round(HORN_TYPE))))],
-    ARM_SPAN=ARM_SPAN * MM, ARM_W=ARM_W * MM, HUB_DIA=HUB_DIA * MM,
+    ARM_SPAN_X=ARM_SPAN_X * MM, ARM_SPAN_Y=ARM_SPAN_Y * MM,
+    ARM_W=ARM_W * MM, HUB_DIA=HUB_DIA * MM,
     THICKNESS=THICKNESS * MM, ROUND_DIA=ROUND_DIA * MM, SCREW_DIA=SCREW_DIA * MM,
 )
 

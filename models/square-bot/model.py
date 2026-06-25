@@ -14,7 +14,7 @@ import math
 from blender_utils import clear_scene, export_stl
 from servo_core import (
     add_cyl, add_box, add_sphere, boolean, round_box_xy,
-    cut_servo_mount, cut_servo_head_clearance, cut_horn_coupling, cut_wire_exit, SERVO,
+    cut_servo_mount, cut_servo_head_clearance, cut_horn_coupling, cut_wire_exit, SERVO, HORN,
 )
 from params import *
 
@@ -43,7 +43,8 @@ cut_wire_exit(body, back_x=BODY_W / 2, wall=WALL, width=WIRE_W, height=WIRE_H)
 # 頭（角丸ボックス）。デッキ上面に直接乗って軸まわりに回る（リング無し）
 # ============================================================
 PLANE = BODY_H
-COUPLING_Z = BODY_H + SERVO.NUB_ABOVE_DECK + SERVO.BOSS_H + COUPLING_GAP
+COUPLING_Z = (BODY_H + SERVO.NUB_ABOVE_DECK + SERVO.BOSS_H
+              + (HORN.STACK_H - HORN.THICKNESS) + COUPLING_GAP)
 head_cz = PLANE + HEAD_H / 2
 
 head = round_box_xy(HEAD_W, HEAD_D, HEAD_H, HEAD_FILLET, head_cz, "square_head")

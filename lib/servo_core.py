@@ -75,7 +75,7 @@ class SG92R:
     BOSS_DIA = 0.0123          # 大円柱（ギアカバー座）径 ⌀
     BOSS_H = 0.0046            # 大円柱の高さ（ケース上面から）
     SHAFT_DIA = 0.0046         # 小円柱（出力軸スプライン）径 ⌀
-    SHAFT_H = 0.0032           # 小円柱の高さ（大円柱上〜軸先端）
+    SHAFT_H = 0.0036           # 小円柱の高さ（大円柱上〜軸先端）≈ホーン込み5.6−板厚
     SHAFT_ABOVE_CASE = BOSS_H + SHAFT_H
     NUB_ABOVE_DECK = BODY_H - FLANGE_FROM_BOTTOM
     SHAFT_ABOVE_DECK = NUB_ABOVE_DECK + SHAFT_ABOVE_CASE
@@ -102,12 +102,14 @@ servo_clearance_default = 0.0004  # 0.4mm
 # サーボホーン仕様（実測前のプレースホルダ。入手後ここを更新すれば全モデル追従）
 # ============================================================
 class HORN:
-    # SG92R 付属クロスホーンのネット値ベースの初期値（手元実測で要差し替え）
-    TYPE = "cross"        # "cross"（十字4腕）/ "single"（1腕）/ "round"（円盤）
-    ARM_SPAN = 0.0180     # 腕の全長（端〜端・最長方向）≈18mm
-    ARM_W = 0.0040        # 腕の幅 ≈4mm
-    HUB_DIA = 0.0070      # 中央ハブ径 ≈7mm
-    THICKNESS = 0.0020    # 腕板の厚み（＝受け溝の深さ）≈1.5〜2mm
+    # SG92R 付属クロスホーン（白石実測）。横35×たて17の非対称クロス。
+    TYPE = "cross"        # "cross"（十字）/ "single"（1腕）/ "round"（円盤）
+    ARM_SPAN_X = 0.0350   # 長腕の全長（端〜端）横35mm
+    ARM_SPAN_Y = 0.0170   # 短腕の全長（端〜端）たて17mm
+    ARM_W = 0.0040        # 腕の幅
+    HUB_DIA = 0.0070      # 中央ハブ径
+    THICKNESS = 0.0020    # 腕板の厚み（＝受け溝の深さ）
+    STACK_H = 0.0056      # ギアカバー上面〜ホーン頂部（小円柱+ホーン）＝5.6mm
     ROUND_DIA = 0.0200    # round タイプの円盤径
     SCREW_DIA = 0.0024    # センタービス径（自タッピング ⌀2.3〜2.4）
     COUNTERBORE_DIA = 0.0050  # 天面ザグリ径（ねじ頭＋ドライバが入る）
@@ -311,14 +313,12 @@ def cut_horn_coupling(head, coupling_z, clr=servo_clearance_default, horn=None):
     boolean(head, hub)
 
     if t in ("cross", "single"):
-        axes = ("x", "y") if t == "cross" else ("x",)
-        L = h.ARM_SPAN + 2 * clr
         W = h.ARM_W + 2 * clr
-        for ax in axes:
-            if ax == "x":
-                s = add_box(L, W, depth, (0, 0, zc), "horn_slot_x")
-            else:
-                s = add_box(W, L, depth, (0, 0, zc), "horn_slot_y")
+        # 長腕（X）
+        s = add_box(h.ARM_SPAN_X + 2 * clr, W, depth, (0, 0, zc), "horn_slot_x")
+        boolean(head, s)
+        if t == "cross":  # 短腕（Y）
+            s = add_box(W, h.ARM_SPAN_Y + 2 * clr, depth, (0, 0, zc), "horn_slot_y")
             boolean(head, s)
     elif t == "round":
         disc = add_cyl(h.ROUND_DIA / 2 + clr, depth, zc, "horn_disc")
@@ -344,12 +344,9 @@ def add_horn_dummy(prof=None, name="horn", base_z=0.0):
     thick = h.THICKNESS
     parts = [add_cyl(h.HUB_DIA / 2, thick, base_z + thick / 2, name + "_hub", verts=48)]
     if t in ("cross", "single"):
-        axes = ("x", "y") if t == "cross" else ("x",)
-        for ax in axes:
-            if ax == "x":
-                parts.append(add_box(h.ARM_SPAN, h.ARM_W, thick, (0, 0, base_z + thick / 2), name + "_armx"))
-            else:
-                parts.append(add_box(h.ARM_W, h.ARM_SPAN, thick, (0, 0, base_z + thick / 2), name + "_army"))
+        parts.append(add_box(h.ARM_SPAN_X, h.ARM_W, thick, (0, 0, base_z + thick / 2), name + "_armx"))
+        if t == "cross":
+            parts.append(add_box(h.ARM_W, h.ARM_SPAN_Y, thick, (0, 0, base_z + thick / 2), name + "_army"))
     elif t == "round":
         parts.append(add_cyl(h.ROUND_DIA / 2, thick, base_z + thick / 2, name + "_disc", verts=64))
     # 穴あけ前に UNION で多様体化（join のままだと EXACT boolean が空になる）

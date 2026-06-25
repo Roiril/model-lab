@@ -18,7 +18,7 @@ import math
 from blender_utils import clear_scene, export_stl
 from servo_core import (
     add_cyl, add_box, boolean, round_box_xy,
-    cut_servo_mount, cut_horn_coupling, add_servo_dummy, SERVO,
+    cut_servo_mount, cut_horn_coupling, add_servo_dummy, SERVO, HORN,
 )
 from params import *
 
@@ -41,7 +41,8 @@ boolean(plate, ref, op="UNION")
 # キャップ（回る側・カップ形）。デッキ上面に直接乗る（リング無し）
 # ============================================================
 PLANE = PLATE_T
-COUPLING_Z = PLATE_T + SERVO.NUB_ABOVE_DECK + SERVO.BOSS_H + COUPLING_GAP
+COUPLING_Z = (PLATE_T + SERVO.NUB_ABOVE_DECK + SERVO.BOSS_H
+              + (HORN.STACK_H - HORN.THICKNESS) + COUPLING_GAP)
 CAP_TOP = COUPLING_Z + CAP_TOP_T
 
 # 回転時にサーボ上部ケースの最遠角を逃がすのに必要な内径

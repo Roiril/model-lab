@@ -14,7 +14,7 @@ import bpy
 from blender_utils import clear_scene, export_stl
 from servo_core import (
     add_cyl, add_box, add_sphere, boolean,
-    cut_servo_mount, cut_servo_head_clearance, cut_horn_coupling, cut_wire_exit, SERVO,
+    cut_servo_mount, cut_servo_head_clearance, cut_horn_coupling, cut_wire_exit, SERVO, HORN,
 )
 from params import *
 
@@ -42,8 +42,10 @@ cut_wire_exit(body, back_x=BODY_R, wall=WALL, width=WIRE_W, height=WIRE_H)
 # 頭（半球ドーム）。デッキ上面に直接乗って軸まわりに回る（リング無し）
 # ============================================================
 PLANE = BODY_H                      # 頭の底面 = デッキ上面
-# ホーン結合面 = 胴上面 + ケース上突起 + ギアカバー座高さ + すき間（サーボ実寸から自動）
-COUPLING_Z = BODY_H + SERVO.NUB_ABOVE_DECK + SERVO.BOSS_H + COUPLING_GAP
+# ホーン結合面（=クロス溝下面）= ギアカバー上面 + (ホーン頂部までのスタック − 腕板厚)
+# → ホーン腕がスタック頂部に来る。サーボ実寸＋ホーン実測から自動。
+COUPLING_Z = (BODY_H + SERVO.NUB_ABOVE_DECK + SERVO.BOSS_H
+              + (HORN.STACK_H - HORN.THICKNESS) + COUPLING_GAP)
 
 head = add_sphere(HEAD_R, (0, 0, PLANE), "round_head", segs=96, rings=48)
 # 接合面より下を平らに切る（半球化）
