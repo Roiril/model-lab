@@ -118,6 +118,8 @@ class HORN:
     SEAT_LEDGE = 0.0015   # ねじ頭座面の肉厚（screw=True 時）
 
 
+
+
 # ============================================================
 # 低レベル・プリミティブ（既存モデルと同じ流儀）
 # ============================================================
@@ -361,6 +363,23 @@ def add_horn_dummy(prof=None, name="horn", base_z=0.0):
     hole = add_cyl(h.SCREW_DIA / 2, thick + 0.004, base_z + thick / 2, name + "_hole", verts=24)
     boolean(horn, hole)
     return horn
+
+
+# ============================================================
+# 目玉パーツ（くぼみに接着する球）
+# ============================================================
+def add_eye_ball(dia, flat_h=0.0006, name="eye", base_z=0.0):
+    """頭の球くぼみ（半径 dia/2）に合う目玉ボールを1個生成。
+
+    半径 = くぼみ半径の真球。印刷用に底（南極側）を flat_h だけ平らに削り、
+    その平面を造形プレートに置いて印刷する（平らな側が接着面＝くぼみの奥に入る）。
+    """
+    r = dia / 2
+    ball = add_sphere(r, (0, 0, base_z + r), name, segs=64, rings=48)
+    # 底を flat_h だけ削って平面を作る（z < base_z + flat_h を除去）
+    cutter = add_box(dia * 3, dia * 3, dia, (0, 0, base_z + flat_h - dia / 2), name + "_flat")
+    boolean(ball, cutter)
+    return ball
 
 
 # ============================================================
