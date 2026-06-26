@@ -1,7 +1,8 @@
-"""rabbit-ears — square-bot 用 うさ耳カチューシャ。
+"""rabbit-ears — square-bot 用 うさ耳カチューシャ（バンドのみ）。
 
-角頭にかぶせるコの字バンド（天面バー＋両脇の脚、幅 BAND_W は Y方向）＋
-長い楕円のうさ耳2つ。アクセサリ座標は頭の天面を z=0 に取る。
+角頭にかぶせるコの字バンド（天面バー＋両脇の脚、幅 BAND_W は Y方向）。
+耳は別途 Blender で手作りして横置き印刷するため、ここはバンドだけを出力する。
+アクセサリ座標は頭の天面を z=0 に取る。
 """
 import sys, os
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "../../lib"))
@@ -9,7 +10,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 import bpy
 from blender_utils import clear_scene, export_stl
-from servo_core import add_box, add_sphere, boolean
+from servo_core import add_box, boolean
 from params import *
 
 clear_scene()
@@ -27,15 +28,7 @@ outer = add_box(outer_w, bw, outer_h, (0, 0, (BT - drop) / 2), "rab_band")
 inner = add_box(2 * HW, bw + 0.004, drop + 0.01, (0, 0, (-(drop) - 0.01) / 2 + 0.0), "band_in")
 boolean(outer, inner)
 band = outer
+band.name = "rabbit-ears"
 
-# --- うさ耳（長い楕円体）を天面に2つ ---
-for sx in (-1, 1):
-    x0 = sx * EAR_DX * MM
-    e = add_sphere(EAR_H / 2 * MM, (x0, 0, BT + EAR_H / 2 * MM), "rab_ear", segs=48, rings=32)
-    e.scale.x = EAR_W / EAR_H
-    e.scale.y = EAR_T / EAR_H
-    bpy.context.view_layer.objects.active = e
-    bpy.ops.object.transform_apply(scale=True)
-    boolean(band, e, op="UNION")
-
+# 耳は別途 Blender で手作りするため、ここはバンドのみ出力
 export_stl("rabbit-ears")
