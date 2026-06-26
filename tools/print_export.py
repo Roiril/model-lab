@@ -16,7 +16,8 @@ for f in os.listdir(OUT):
     if f.endswith(".stl"):
         os.remove(os.path.join(OUT, f))
 
-MODELS = ["round-bot", "square-bot", "servo-test", "sg92r"]
+# 印刷対象（eye は2サイズ別名で別途出力するためここには含めない）
+MODELS = ["round-bot", "square-bot", "servo-test", "sg92r", "horn"]
 
 
 def run_model(model):
