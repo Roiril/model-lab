@@ -189,6 +189,7 @@ dt.location = (0, 0, COVER_H + 0.0005)
 ## Claude Code ハーネス (.claude/)
 
 - **[memory/](.claude/memory/)** — 自動メモリ（`MEMORY.md` がインデックス、topic ごとに分割）
+- **[skills/](.claude/skills/)** — `servo-robot-design`：1サーボ・ロボット（round/square-bot 等）とサーボ/ホーン嵌合部品・アクセサリの設計原則・落とし穴・ワークフロー集（サーボ機構/ホーン結合/配線/目耳/単位/boolean/検証/印刷分割を扱う。サーボ系を触る前に必読）
 - **[hooks/](.claude/hooks/)** — プロジェクト固有 PreToolUse ガード
 - **[settings.json](.claude/settings.json)** — `bypassPermissions`（書き込み前承認なし）
 - **[settings.local.json](.claude/settings.local.json)** — ローカル個別 allow リスト
