@@ -44,17 +44,15 @@ def face_engrave():
     return loops
 
 
-def main():
+def compose():
+    """6面＋顔をシートに配置して (cut_loops, engrave_loops, panels) を返す。"""
     panels = lc.box_panels(W, D, H)
-
     # シート内レイアウト（3列 x 2行）
     #  row0: front  back   right
     #  row1: top    bottom left
     order = [["front", "back", "right"], ["top", "bottom", "left"]]
-    col_w = max(panels[n][1][0] for row in order for n in row)
     cut_loops = []
     engrave_loops = []
-    # 列幅・行高はパネルごとに違うのでカーソルで積む
     y_cursor = 0.0
     for row in order:
         x_cursor = 0.0
@@ -68,6 +66,11 @@ def main():
                     engrave_loops.append((fl, dx, dy))
             x_cursor += A + GAP
         y_cursor += row_h + GAP
+    return cut_loops, engrave_loops, panels
+
+
+def main():
+    cut_loops, engrave_loops, panels = compose()
 
     svg_path = os.path.join(OUT_DIR, "laser-bot.svg")
     sheet = lc.write_svg(svg_path, cut_loops, engrave_loops)
