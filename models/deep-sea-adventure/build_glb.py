@@ -120,15 +120,17 @@ def make_die(info):
     bev.width = size*0.08; bev.segments = 4
     bpy.ops.object.modifier_apply(modifier="bevel")
     me = ob.data
-    # 面ごとに材質（1..6）。法線方向で振り分け。
+    # 海底探検のサイコロ: 出目は 1,2,3 のみ（各2面、対面が同じ目）。
     faces_map = {  # 法線軸 -> 目
-        ( 1,0,0):1, (-1,0,0):6, (0,1,0):2, (0,-1,0):5, (0,0,1):3, (0,0,-1):4,
+        ( 1,0,0):1, (-1,0,0):1, (0,1,0):2, (0,-1,0):2, (0,0,1):3, (0,0,-1):3,
     }
     mats = {}
-    for n in range(1,7):
+    for n in (1,2,3):
         mats[n] = tex_mat(f"die_{n}", f"die_{n}.png")
         me.materials.append(mats[n])
-    matidx = {n:i for i,n in enumerate(range(1,7))}
+    matidx = {n:i for i,n in enumerate((1,2,3))}
+    me.materials.append(solid_mat("die_wood", info["color"]))   # ベベル面=木材無地
+    bevel_idx = 3
     # UV 展開（各面を 0..1 に）
     me.uv_layers.new(name="UVMap")
     bm = bmesh.new(); bm.from_mesh(me)
@@ -137,8 +139,8 @@ def make_die(info):
         nx,ny,nz = f.normal
         key = (round(nx),round(ny),round(nz))
         pip = faces_map.get(key)
-        if pip is None:   # ベベル面: 木材色（目1の材質を流用しても良いが木目のみ）
-            f.material_index = matidx[1]
+        if pip is None:   # ベベル面: 木材無地
+            f.material_index = bevel_idx
             continue
         f.material_index = matidx[pip]
         # 面ローカル軸で平面 UV
