@@ -100,9 +100,11 @@ function frame(obj){
   controls.update();
 }
 
+const BUST = Date.now();   // リロード毎に変わる → GLB のブラウザキャッシュを回避
 function load(name, niceLabel){
   labelEl.textContent = "読み込み中… " + niceLabel;
-  loader.load(`/exports/deep-sea/${name==='deep-sea-adventure'?'deep-sea-adventure':'glb/'+name}.glb`,
+  const sub = name==='deep-sea-adventure' ? 'deep-sea-adventure' : 'glb/'+name;
+  loader.load(`/exports/deep-sea/${sub}.glb?v=${BUST}`,
     (gltf)=>{
       if(current) scene.remove(current);
       current = gltf.scene;
