@@ -21,6 +21,8 @@ const MIME = {
   ".css": "text/css",
   ".json": "application/json",
   ".stl": "application/octet-stream",
+  ".glb": "model/gltf-binary",
+  ".png": "image/png",
 };
 
 function findFreePort(start) {
