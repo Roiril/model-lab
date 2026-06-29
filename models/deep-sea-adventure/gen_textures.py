@@ -20,10 +20,21 @@ os.makedirs(TEX, exist_ok=True)
 
 SIZE = 1024          # 最終テクスチャ解像度
 SS = 3               # スーパーサンプリング倍率（アンチエイリアス用）
-FONTS = "C:/Windows/Fonts/"
-F_BODONI_B = FONTS + "BOD_B.TTF"
-F_BODONI_R = FONTS + "BOD_R.TTF"
-F_GEORGIA  = FONTS + "georgia.ttf"
+FDIR = os.path.join(HERE, "fonts")
+F_SERIF = os.path.join(FDIR, "PlayfairDisplay.ttf")   # 宝物の数字（ディドネ調）
+F_SANS  = os.path.join(FDIR, "Jost.ttf")              # ボードのラベル
+
+def serif(px, weight=700):
+    f = ImageFont.truetype(F_SERIF, int(px))
+    try: f.set_variation_by_axes([weight])
+    except Exception: pass
+    return f
+
+def sans(px, weight=500):
+    f = ImageFont.truetype(F_SANS, int(px))
+    try: f.set_variation_by_axes([weight])
+    except Exception: pass
+    return f
 
 # ---------------------------------------------------------------- 幾何ヘルパ
 def reg_poly(n, R, rot_deg):
@@ -95,14 +106,17 @@ def fill_shape(d, outline, color):
     poly = [(n2px(x), n2py(y)) for x,y in outline]
     d.polygon(poly, fill=color)
 
-def draw_number(d, text, color, font_path, frac=0.42, dx=0.0, dy=0.0):
-    fs = int(SIZE*SS*frac)
-    font = ImageFont.truetype(font_path, fs)
+def draw_number(d, text, color, font, frac=0.42, dx=0.0, dy=0.0, underline=False):
     bb = d.textbbox((0,0), text, font=font)
     w = bb[2]-bb[0]; h = bb[3]-bb[1]
     cx = SIZE*SS/2 + dx*SIZE*SS
     cy = SIZE*SS/2 + dy*SIZE*SS
-    d.text((cx - w/2 - bb[0], cy - h/2 - bb[1]), text, fill=color, font=font)
+    ox = cx - w/2 - bb[0]; oy = cy - h/2 - bb[1]
+    d.text((ox, oy), text, fill=color, font=font)
+    if underline:   # 6/9 の判別用アンダーライン（実物に倣う）
+        uy = oy + bb[3] + int(0.03*SIZE*SS)
+        lw = max(2, int(0.018*SIZE*SS))
+        d.line([(cx - w*0.42, uy), (cx + w*0.42, uy)], fill=color, width=lw)
 
 def draw_dots(d, count, color, R=0.16, dot_r=0.055):
     """中央配置のドット（サイコロ目風）。count=0..4。"""
@@ -160,31 +174,33 @@ def add(name, outline, size_mm, thick_mm, textured, color, ptype, side_color=Non
     }
 
 # ---------------------------------------------------------------- 宝物チップ
-def make_treasure(name, sides, rot, value, body, num, side, size_mm, font):
+def make_treasure(name, sides, rot, value, body, num, side, size_mm,
+                  frac, weight, dy=0.0):
     base = reg_poly(sides, 0.5, rot)
     outline = normalize_fit(round_corners(base, 0.12), 0.92)
     img, d = new_canvas()
     fill_shape(d, outline, body)
-    draw_number(d, str(value), num, font)
+    font = serif(SIZE*SS*frac, weight)
+    draw_number(d, str(value), num, font, dy=dy, underline=(value in (6,9)))
     save(img, name)
     add(name, outline, size_mm, 2.4, True, body, "treasure", side)
 
-# レベル1: 三角 0-3
+# レベル1: 三角 0-3（白地・タン数字、頂点が上なので数字をやや下げる）
 for v in range(0,4):
     make_treasure(f"tri_{v}", 3, 90, v, COL["tri_body"], COL["tri_num"],
-                  COL["side_light"], 33, F_BODONI_B)
-# レベル2: 四角 4-7
+                  COL["side_light"], 33, 0.34, 620, dy=0.07)
+# レベル2: 四角 4-7（タン地・白数字）
 for v in range(4,8):
     make_treasure(f"sq_{v}", 4, 45, v, COL["sq_body"], COL["sq_num"],
-                  COL["side_tan"], 30, F_BODONI_B)
-# レベル3: 五角 8-11
+                  COL["side_tan"], 30, 0.42, 600)
+# レベル3: 五角 8-11（淡ラベンダー地・グレー数字）
 for v in range(8,12):
     make_treasure(f"pen_{v}", 5, 90, v, COL["pen_body"], COL["pen_num"],
-                  COL["side_light"], 33, F_BODONI_B)
-# レベル4: 六角 12-15
+                  COL["side_light"], 33, 0.40, 620, dy=0.03)
+# レベル4: 六角 12-15（ゴールド地・白数字）
 for v in range(12,16):
     make_treasure(f"hex_{v}", 6, 0, v, COL["hex_body"], COL["hex_num"],
-                  COL["side_tan"], 33, F_BODONI_B)
+                  COL["side_tan"], 33, 0.44, 700)
 
 # ---------------------------------------------------------------- 裏トークン（レベル指標）
 def make_back(name, sides, rot, dots, body, size_mm, cross=False):
@@ -219,80 +235,74 @@ save(img, "air_marker")
 add("air_marker", outline, 18, 6.0, True, COL["red"], "air")
 
 # ---------------------------------------------------------------- 潜水艦ボード
+def chaikin(pts, iters=2):
+    for _ in range(iters):
+        new = []; n = len(pts)
+        for i in range(n):
+            p = pts[i]; q = pts[(i+1) % n]
+            new.append((0.75*p[0]+0.25*q[0], 0.75*p[1]+0.25*q[1]))
+            new.append((0.25*p[0]+0.75*q[0], 0.25*p[1]+0.75*q[1]))
+        pts = new
+    return pts
+
 def make_submarine():
-    # 潜水艦シルエット（艦橋の段差つき）。右半分を作って左にミラー。
-    # x: -1..1, y: -0.55..0.55 程度
-    top = [
-        (-1.30,-0.20),(-1.34,-0.05),(-1.30,0.10),
-        (-1.10,0.30),(-0.85,0.36),(-0.55,0.40),
-        (-0.50,0.55),(-0.30,0.62),(-0.18,0.55),   # 司令塔の小山
-        (-0.10,0.42),
-        (0.05,0.44),(0.18,0.66),(0.50,0.70),(0.78,0.66),  # 主艦橋の大山
-        (0.92,0.42),
-        (1.20,0.34),(1.40,0.18),(1.46,0.0),
-        (1.40,-0.18),(1.18,-0.34),(0.80,-0.42),
-        (0.20,-0.46),(-0.40,-0.46),(-0.90,-0.40),
-        (-1.18,-0.32),
-    ]
-    outline = normalize_fit(round_corners(top, 0.07, seg=8), 0.96)
-    # テクスチャ
+    # 実物写真(PXL_20260629)から cv2 で抽出した輪郭とドット配置を使用
+    data = json.load(open(os.path.join(OUT, "_board_data.json"), encoding="utf-8"))
+    outline = chaikin([tuple(p) for p in data["outline"]], 2)
+
     img, d = new_canvas()
     fill_shape(d, outline, COL["board_blue"])
     line = COL["board_line"]
-    lw = max(2, int(0.006*SIZE*SS))
+    lw = max(2, int(0.0055*SIZE*SS))
     def P(nx,ny): return (n2px(nx), n2py(ny))
-    # アウトラインに沿った細い縁取り
-    d.line([P(x,y) for x,y in outline]+[P(*outline[0])], fill=(255,255,255,70), width=lw)
+    # 縁取り（淡い白）
+    d.line([P(x,y) for x,y in outline]+[P(*outline[0])], fill=(255,255,255,60), width=lw)
 
-    # ドットトラック（3段の蛇行）: 25(左上) → 右 → 折返し → 左 → 折返し → 1 → ダイブ
-    xL, xR = -0.40, 0.40
-    y1, y2, y3 = 0.115, 0.015, -0.085        # 上中下段
-    track = []                                # (x, y, number)
-    n = 25
-    # 1段目: 左→右（25..17）
-    cols = 9
-    for i in range(cols):
-        track.append((xL + (xR-xL)*i/(cols-1), y1, n)); n -= 1
-    # 2段目: 右→左（16..8）
-    for i in range(cols):
-        track.append((xR - (xR-xL)*i/(cols-1), y2, n)); n -= 1
-    # 3段目: 左→右（7..1）
-    cols3 = 7
-    for i in range(cols3):
-        track.append((xL + (xR-xL)*i/(cols3-1), y3, n)); n -= 1
+    # 抽出した行ジオメトリ（正規化座標, y上）。25→1 の蛇行 + ダイブ点。
+    rows = [  # (ny, xL, xR, count, dir)  dir=+1:左→右, -1:右→左
+        ( 0.047, -0.437,  0.410, 11, +1),   # 上段 25 ... 15
+        (-0.040, -0.384,  0.372, 10, -1),   # 中段（折返し）
+        (-0.124, -0.250,  0.217,  7, +1),   # 下段 ... 1
+    ]
+    dive = (-0.017, -0.205)
 
-    # 接続線（各段 + 折返しカーブ）
-    seg1 = [P(x,y) for x,y,_ in track[:cols]]
-    seg2 = [P(x,y) for x,y,_ in track[cols:2*cols]]
-    seg3 = [P(x,y) for x,y,_ in track[2*cols:]]
-    d.line(seg1, fill=line, width=lw); d.line(seg2, fill=line, width=lw); d.line(seg3, fill=line, width=lw)
-    d.line([P(xR,y1),P(xR+0.055,y1),P(xR+0.055,y2),P(xR,y2)], fill=line, width=lw)  # 右折返し
-    d.line([P(xL,y2),P(xL-0.055,y2),P(xL-0.055,y3),P(xL,y3)], fill=line, width=lw)  # 左折返し
-    # ダイブポイントへ（最後のドットから下へ）
-    lx,ly,_ = track[-1]
-    dive = (lx+0.10, y3-0.10)
-    d.line([P(lx,ly),P(lx+0.05,y3-0.05),P(*dive)], fill=line, width=lw)
+    def row_pts(ny, xl, xr, cnt, dr):
+        xs = [xl + (xr-xl)*i/(cnt-1) for i in range(cnt)]
+        if dr < 0: xs = xs[::-1]
+        return [(x, ny) for x in xs]
+
+    path = []                 # 蛇行順の全ドット
+    rowdots = []
+    for ny,xl,xr,cnt,dr in rows:
+        rp = row_pts(ny,xl,xr,cnt,dr); rowdots.append(rp); path += rp
+
+    # 接続線（蛇行 + 端の折返し弧 + ダイブへの弧）
+    d.line([P(x,y) for x,y in path], fill=line, width=lw)
+    d.line([P(*path[-1]), P(dive[0]+0.07, dive[1]+0.01), P(*dive)], fill=line, width=lw)
 
     # ドット
-    dr = 0.0145*SIZE*SS
-    for x,y,_ in track:
+    dr = 0.0135*SIZE*SS
+    for x,y in path:
         px,py = P(x,y)
         d.ellipse([px-dr,py-dr,px+dr,py+dr], fill=line)
     # ダイブポイント（◎）
     px,py = P(*dive)
-    d.ellipse([px-dr*1.5,py-dr*1.5,px+dr*1.5,py+dr*1.5], outline=line, width=lw)
-    d.ellipse([px-dr*0.5,py-dr*0.5,px+dr*0.5,py+dr*0.5], fill=line)
+    d.ellipse([px-dr*1.6,py-dr*1.6,px+dr*1.6,py+dr*1.6], outline=line, width=lw)
+    d.ellipse([px-dr*0.55,py-dr*0.55,px+dr*0.55,py+dr*0.55], fill=line)
 
-    # 数字ラベル（5の倍数 と 1〜4）
-    fnt = ImageFont.truetype(F_GEORGIA, int(0.034*SIZE*SS))
-    want = {25,20,15,10,5,4,3,2,1}
-    for x,y,num in track:
-        if num in want:
-            px,py = P(x, y+0.052)
-            t = str(num); bb = d.textbbox((0,0),t,font=fnt)
-            d.text((px-(bb[2]-bb[0])/2-bb[0], py-(bb[3]-bb[1])/2-bb[1]), t, fill=line, font=fnt)
+    # 数字ラベル（実物の表示位置に合わせる）
+    fnt = sans(0.030*SIZE*SS, 500)
+    def label(pt, t, off=0.050):
+        px,py = P(pt[0], pt[1]+off)
+        bb = d.textbbox((0,0),t,font=fnt)
+        d.text((px-(bb[2]-bb[0])/2-bb[0], py-(bb[3]-bb[1])/2-bb[1]), t, fill=line, font=fnt)
+    r0,r1,r2 = rowdots
+    label(r0[0], "25"); label(r0[5], "20"); label(r0[10], "15")   # 上段
+    label(min(r1, key=lambda p:p[0]), "10")                        # 中段 左
+    for i,t in enumerate(["5","4","3","2","1"]):                   # 下段 左→右
+        label(r2[i], t, off=-0.052)
     save(img, "submarine_board")
-    add("submarine_board", outline, 178, 3.0, True, COL["board_blue"], "board")
+    add("submarine_board", outline, 175, 3.0, True, COL["board_blue"], "board")
 
 make_submarine()
 
