@@ -304,8 +304,7 @@ def make_submarine():
     r0,r1,r2 = rowdots
     label(r0[0], "25"); label(r0[5], "20"); label(r0[10], "15")   # 上段
     label(min(r1, key=lambda p:p[0]), "10")                        # 中段 左
-    for i,t in enumerate(["5","4","3","2","1"]):                   # 下段 左→右
-        label(r2[i], t, off=-0.052)
+    # 下段ラベル 1〜5 は位置がずれるため省略（ドット・ダイブ点のみ）
     save(img, "submarine_board")
     add("submarine_board", outline, 175, 3.0, True, COL["board_blue"], "board")
 
