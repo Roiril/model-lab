@@ -141,6 +141,17 @@ async function main() {
       const result = await buildModel(body.model, body.params);
       return sendJSON(res, result);
     }
+    if (p === "/api/shot" && req.method === "POST") {
+      let data = "";
+      req.on("data", (c) => (data += c));
+      req.on("end", () => {
+        const b64 = data.replace(/^data:image\/png;base64,/, "");
+        const out = path.join(EXPORTS_DIR, "deep-sea", "_browser_shot.png");
+        fs.writeFileSync(out, Buffer.from(b64, "base64"));
+        sendJSON(res, { ok: true, bytes: fs.statSync(out).size });
+      });
+      return;
+    }
 
     // --- static ---
     let filePath = null;

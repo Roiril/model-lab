@@ -83,7 +83,9 @@ def make_tile(name, info):
     for f in bm.faces:
         for loop in f.loops:
             co = loop.vert.co
-            loop[uvl].uv = (co.x/size + 0.5, 0.5 - co.y/size)
+            # Blender UV は下原点。テクスチャは PIL で上原点に描いているので
+            # model+y(=画像上) を v=1 に対応させる（= 0.5 + y）。
+            loop[uvl].uv = (co.x/size + 0.5, 0.5 + co.y/size)
 
     # マテリアル割り当て: トップ=0, その他=1
     if info["textured"]:
@@ -184,22 +186,24 @@ def place(name, x, y, rot_z=0.0):
     ob.location = (x, y, 0.0)
     ob.rotation_euler = (0,0,rot_z)
 
-GAP = 0.045
-# 宝物 4行 x 4
-for col,v in enumerate(range(0,4)):   place(f"tri_{v}", col*GAP, 0*GAP)
-for col,v in enumerate(range(4,8)):   place(f"sq_{v}",  col*GAP, -1*GAP)
-for col,v in enumerate(range(8,12)):  place(f"pen_{v}", col*GAP, -2*GAP)
-for col,v in enumerate(range(12,16)): place(f"hex_{v}", col*GAP, -3*GAP)
-# 裏トークン 1行
+# 実物写真の配置に合わせる（真上比較しやすいように）
+G = 0.050
+# 行A: ボード（左・大）/ 空気マーカー / 裏トークン5
+place("submarine_board", 0.02, 0.255)
+place("air_marker", 0.165, 0.30)
 for col,n in enumerate(["back_circle","back_tri","back_square","back_pentagon","back_hexagon"]):
-    place(n, col*GAP, -4*GAP)
-# 小物
-place("air_marker", 0*GAP, -5*GAP)
-place("meeple_purple", 1*GAP, -5*GAP)
-place("meeple_red", 2*GAP, -5*GAP)
-objs["die"].location = (3*GAP, -5*GAP, info["size_mm"]*0.0005)
-# ボード（上に大きく）
-place("submarine_board", 1.5*GAP, 2.0*GAP)
+    place(n, 0.255 + col*G, 0.27)
+# 行B: 五角 8-11 / 六角 12-15
+for col,v in enumerate(range(8,12)):  place(f"pen_{v}", 0.0 + col*G, 0.10)
+for col,v in enumerate(range(12,16)): place(f"hex_{v}", 0.255 + col*G, 0.10)
+# 行C: 三角 0 / 三角 1-3 / 四角 4-7
+place("tri_0", 0.0, -0.05)
+for col,v in enumerate(range(1,4)):   place(f"tri_{v}", 0.07 + col*G, -0.05)
+for col,v in enumerate(range(4,8)):   place(f"sq_{v}",  0.255 + col*G, -0.05)
+# 行D: ミープル2 / サイコロ
+place("meeple_purple", 0.03, -0.19)
+place("meeple_red",    0.09, -0.19)
+objs["die"].location = (0.165, -0.19, info["size_mm"]*0.0005)
 
 bpy.ops.object.select_all(action="SELECT")
 bpy.ops.export_scene.gltf(

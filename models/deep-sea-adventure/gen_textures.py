@@ -137,28 +137,33 @@ def save(img, name):
     img.save(os.path.join(TEX, name+".png"))
 
 # ---------------------------------------------------------------- 配色
+# 配色は実写(PXL_20260629)からサンプリングして調整
 COL = {
-    "tri_body":   (236,238,240,255),   # 三角(レベル1) 白
+    "tri_body":   (236,235,231,255),   # 三角(レベル1) 暖白
     "tri_num":    (176,138,74,255),     # タン
     "sq_body":    (201,160,100,255),    # 四角(レベル2) タン
     "sq_num":     (250,250,248,255),    # 白
-    "pen_body":   (205,211,221,255),    # 五角(レベル3) 淡ラベンダー
+    "pen_body":   (198,202,208,255),    # 五角(レベル3) 淡グレー
     "pen_num":    (92,100,112,255),      # グレー
-    "hex_body":   (178,162,92,255),      # 六角(レベル4) ゴールド
+    "hex_body":   (176,160,96,255),      # 六角(レベル4) ゴールド
     "hex_num":    (250,250,246,255),     # 白
-    "mint":       (134,213,205,255),     # 裏トークン ミント
-    "mint2":      (120,205,200,255),
-    "blue_back":  (62,155,184,255),      # 裏トークン 六角(濃青)
+    # 裏トークン（各色を写真に合わせ個別化）
+    "bk_circle":  (92,172,176,255),      # 円(+)  ミディアムティール
+    "bk_tri":     (150,202,200,255),     # 三角   淡ミント
+    "bk_square":  (104,196,200,255),     # 四角   シアン
+    "bk_pent":    (74,176,176,255),      # 五角   ターコイズ
+    "bk_hex":     (52,128,160,255),      # 六角   ブルー
     "back_dot":   (250,253,252,255),
-    "red":        (192,57,43,255),       # 空気マーカー
-    "board_blue": (45,124,164,255),
-    "board_line": (242,247,249,255),
-    "meeple_purple": (94,61,107,255),
-    "meeple_red":    (190,58,47,255),
-    "wood":       (217,188,140,255),
+    "red":        (176,52,46,255),       # 空気マーカー（やや深い赤）
+    "board_blue": (40,106,142,255),      # スチールブルー（写真寄りに暗め）
+    "board_line": (240,246,248,255),
+    "meeple_purple": (88,58,98,255),
+    "meeple_red":    (182,56,46,255),
+    "wood":       (212,184,138,255),
     "pip":        (40,38,36,255),
-    "side_light": (228,230,233,255),     # 側面/裏（明）
+    "side_light": (224,226,229,255),     # 側面/裏（明）
     "side_tan":   (188,150,94,255),
+    "side_teal":  (120,180,182,255),     # 裏トークン側面
 }
 
 manifest = {}
@@ -221,11 +226,11 @@ def make_back(name, sides, rot, dots, body, size_mm, cross=False):
     save(img, name)
     add(name, outline, size_mm, 2.4, True, body, "back")
 
-make_back("back_circle",  0, 0,  0, COL["mint"],      30, cross=True)
-make_back("back_tri",     3, 90, 1, COL["mint"],      30)
-make_back("back_square",  4, 45, 2, COL["mint2"],     28)
-make_back("back_pentagon",5, 90, 3, COL["mint2"],     30)
-make_back("back_hexagon", 6, 0,  4, COL["blue_back"], 30)
+make_back("back_circle",  0, 0,  0, COL["bk_circle"], 30, cross=True)
+make_back("back_tri",     3, 90, 1, COL["bk_tri"],    30)
+make_back("back_square",  4, 45, 2, COL["bk_square"], 28)
+make_back("back_pentagon",5, 90, 3, COL["bk_pent"],   30)
+make_back("back_hexagon", 6, 0,  4, COL["bk_hex"],    30)
 
 # ---------------------------------------------------------------- 空気マーカー（赤丸）
 outline = normalize_fit(circle_pts(0.5), 0.92)

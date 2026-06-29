@@ -66,7 +66,7 @@ const ITEMS = [
 
 const cv = document.getElementById("cv");
 const labelEl = document.getElementById("label");
-const renderer = new THREE.WebGLRenderer({ canvas:cv, antialias:true });
+const renderer = new THREE.WebGLRenderer({ canvas:cv, antialias:true, preserveDrawingBuffer:true });
 renderer.setPixelRatio(Math.min(devicePixelRatio,2));
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = 1.05;
@@ -92,11 +92,17 @@ function frame(obj){
   const box = new THREE.Box3().setFromObject(obj);
   const size = box.getSize(new THREE.Vector3());
   const center = box.getCenter(new THREE.Vector3());
-  const r = Math.max(size.x,size.y,size.z) * 0.5 || 0.05;
   controls.target.copy(center);
-  const d = r / Math.tan((camera.fov*Math.PI/180)/2) * 1.6;
-  camera.position.set(center.x + d*0.25, center.y + d*0.85, center.z + d);
-  camera.near = r*0.02; camera.far = r*60; camera.updateProjectionMatrix();
+  // 縦横どちらもフレーム内に収まる距離（ビュー縦横比を考慮）
+  const vfov = camera.fov*Math.PI/180;
+  const aspect = camera.aspect || 1;
+  const fitH = (size.y*0.5) / Math.tan(vfov/2);
+  const fitW = (size.x*0.5) / (Math.tan(vfov/2)*aspect);
+  const d = (Math.max(fitH, fitW) + size.z*0.5) * 1.12;
+  // Three.js は Y-up。真上に近い俯瞰（Y を高く、Z へわずかに傾ける）
+  camera.position.set(center.x + d*0.02, center.y + d*0.96, center.z + d*0.28);
+  const r = Math.max(size.x,size.y,size.z)*0.5 || 0.05;
+  camera.near = r*0.02; camera.far = r*80; camera.updateProjectionMatrix();
   controls.update();
 }
 
