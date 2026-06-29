@@ -186,24 +186,25 @@ def place(name, x, y, rot_z=0.0):
     ob.location = (x, y, 0.0)
     ob.rotation_euler = (0,0,rot_z)
 
-# 実物写真の配置に合わせる（真上比較しやすいように）
-G = 0.050
+# 実物写真の配置に合わせつつ、全体を中央寄りにコンパクト化
+G  = 0.046          # チップ間隔
+RX = 0.205          # 右グループの開始x（左グループとの間を詰める）
 # 行A: ボード（左・大）/ 空気マーカー / 裏トークン5
-place("submarine_board", 0.02, 0.255)
-place("air_marker", 0.165, 0.30)
+place("submarine_board", 0.01, 0.205)
+place("air_marker", 0.145, 0.235)
 for col,n in enumerate(["back_circle","back_tri","back_square","back_pentagon","back_hexagon"]):
-    place(n, 0.255 + col*G, 0.27)
+    place(n, RX + col*G, 0.215)
 # 行B: 五角 8-11 / 六角 12-15
-for col,v in enumerate(range(8,12)):  place(f"pen_{v}", 0.0 + col*G, 0.10)
-for col,v in enumerate(range(12,16)): place(f"hex_{v}", 0.255 + col*G, 0.10)
+for col,v in enumerate(range(8,12)):  place(f"pen_{v}", 0.0 + col*G, 0.085)
+for col,v in enumerate(range(12,16)): place(f"hex_{v}", RX + col*G, 0.085)
 # 行C: 三角 0 / 三角 1-3 / 四角 4-7
-place("tri_0", 0.0, -0.05)
-for col,v in enumerate(range(1,4)):   place(f"tri_{v}", 0.07 + col*G, -0.05)
-for col,v in enumerate(range(4,8)):   place(f"sq_{v}",  0.255 + col*G, -0.05)
+place("tri_0", 0.0, -0.04)
+for col,v in enumerate(range(1,4)):   place(f"tri_{v}", 0.062 + col*G, -0.04)
+for col,v in enumerate(range(4,8)):   place(f"sq_{v}",  RX + col*G, -0.04)
 # 行D: ミープル2 / サイコロ
-place("meeple_purple", 0.03, -0.19)
-place("meeple_red",    0.09, -0.19)
-objs["die"].location = (0.165, -0.19, info["size_mm"]*0.0005)
+place("meeple_purple", 0.03, -0.15)
+place("meeple_red",    0.085, -0.15)
+objs["die"].location = (0.145, -0.15, info["size_mm"]*0.0005)
 
 bpy.ops.object.select_all(action="SELECT")
 bpy.ops.export_scene.gltf(
