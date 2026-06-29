@@ -168,7 +168,8 @@ COL = {
 
 manifest = {}
 
-def add(name, outline, size_mm, thick_mm, textured, color, ptype, side_color=None):
+def add(name, outline, size_mm, thick_mm, textured, color, ptype, side_color=None,
+        back_tex=None):
     manifest[name] = {
         "outline": [[round(x,5), round(y,5)] for x,y in outline],
         "size_mm": size_mm, "thick_mm": thick_mm,
@@ -176,11 +177,12 @@ def add(name, outline, size_mm, thick_mm, textured, color, ptype, side_color=Non
         "side_color": list(side_color) if side_color else list(color),
         "type": ptype,
         "tex": (name+".png") if textured else None,
+        "back_tex": back_tex,   # 裏面テクスチャ（数字チップは形に対応する点付き裏）
     }
 
 # ---------------------------------------------------------------- 宝物チップ
 def make_treasure(name, sides, rot, value, body, num, side, size_mm,
-                  frac, weight, dy=0.0):
+                  frac, weight, back_tex, dy=0.0):
     base = reg_poly(sides, 0.5, rot)
     outline = normalize_fit(round_corners(base, 0.12), 0.92)
     img, d = new_canvas()
@@ -188,24 +190,25 @@ def make_treasure(name, sides, rot, value, body, num, side, size_mm,
     font = serif(SIZE*SS*frac, weight)
     draw_number(d, str(value), num, font, dy=dy, underline=(value in (6,9)))
     save(img, name)
-    add(name, outline, size_mm, 2.4, True, body, "treasure", side)
+    add(name, outline, size_mm, 2.4, True, body, "treasure", side, back_tex=back_tex)
 
+# 表=数字 / 裏=対応する形の点付きトークン（0→△1点, 4→□2点, 8→⬠3点, 12→⬡4点）
 # レベル1: 三角 0-3（白地・タン数字、頂点が上なので数字をやや下げる）
 for v in range(0,4):
     make_treasure(f"tri_{v}", 3, 90, v, COL["tri_body"], COL["tri_num"],
-                  COL["side_light"], 33, 0.34, 620, dy=0.07)
+                  COL["side_light"], 33, 0.34, 620, "back_tri.png", dy=0.07)
 # レベル2: 四角 4-7（タン地・白数字）
 for v in range(4,8):
     make_treasure(f"sq_{v}", 4, 45, v, COL["sq_body"], COL["sq_num"],
-                  COL["side_tan"], 30, 0.42, 600)
+                  COL["side_tan"], 30, 0.42, 600, "back_square.png")
 # レベル3: 五角 8-11（淡ラベンダー地・グレー数字）
 for v in range(8,12):
     make_treasure(f"pen_{v}", 5, 90, v, COL["pen_body"], COL["pen_num"],
-                  COL["side_light"], 33, 0.40, 620, dy=0.03)
+                  COL["side_light"], 33, 0.40, 620, "back_pentagon.png", dy=0.03)
 # レベル4: 六角 12-15（ゴールド地・白数字）
 for v in range(12,16):
     make_treasure(f"hex_{v}", 6, 0, v, COL["hex_body"], COL["hex_num"],
-                  COL["side_tan"], 33, 0.44, 700)
+                  COL["side_tan"], 33, 0.44, 700, "back_hexagon.png")
 
 # ---------------------------------------------------------------- 裏トークン（レベル指標）
 def make_back(name, sides, rot, dots, body, size_mm, cross=False):

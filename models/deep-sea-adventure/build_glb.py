@@ -79,21 +79,28 @@ def make_tile(name, info):
         sides.append(bm.faces.new([bot[i], bot[j], top[j], top[i]]))
     bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
 
+    has_back = info["textured"] and info.get("back_tex")
     uvl = bm.loops.layers.uv.new("UVMap")
     for f in bm.faces:
+        flip = (f is f_bot and has_back)   # 裏面は U 反転（裏から見て正像）
         for loop in f.loops:
             co = loop.vert.co
             # Blender UV は下原点。テクスチャは PIL で上原点に描いているので
             # model+y(=画像上) を v=1 に対応させる（= 0.5 + y）。
-            loop[uvl].uv = (co.x/size + 0.5, 0.5 + co.y/size)
+            u = (0.5 - co.x/size) if flip else (co.x/size + 0.5)
+            loop[uvl].uv = (u, 0.5 + co.y/size)
 
-    # マテリアル割り当て: トップ=0, その他=1
+    # マテリアル割り当て: トップ=0, 側面=1, 裏=2(あれば)
     if info["textured"]:
         ob.data.materials.append(tex_mat(name+"_top", info["tex"]))
         ob.data.materials.append(solid_mat(name+"_side", info["side_color"]))
         f_top.material_index = 0
-        f_bot.material_index = 1
         for s in sides: s.material_index = 1
+        if has_back:
+            ob.data.materials.append(tex_mat(name+"_back", info["back_tex"]))
+            f_bot.material_index = 2
+        else:
+            f_bot.material_index = 1
     else:
         ob.data.materials.append(solid_mat(name+"_mat", info["color"]))
 

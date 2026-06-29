@@ -198,7 +198,8 @@
    255
   ],
   "type": "treasure",
-  "tex": "tri_0.png"
+  "tex": "tri_0.png",
+  "back_tex": "back_tri.png"
  },
  "tri_1": {
   "outline": [
@@ -399,7 +400,8 @@
    255
   ],
   "type": "treasure",
-  "tex": "tri_1.png"
+  "tex": "tri_1.png",
+  "back_tex": "back_tri.png"
  },
  "tri_2": {
   "outline": [
@@ -600,7 +602,8 @@
    255
   ],
   "type": "treasure",
-  "tex": "tri_2.png"
+  "tex": "tri_2.png",
+  "back_tex": "back_tri.png"
  },
  "tri_3": {
   "outline": [
@@ -801,7 +804,8 @@
    255
   ],
   "type": "treasure",
-  "tex": "tri_3.png"
+  "tex": "tri_3.png",
+  "back_tex": "back_tri.png"
  },
  "sq_4": {
   "outline": [
@@ -1062,7 +1066,8 @@
    255
   ],
   "type": "treasure",
-  "tex": "sq_4.png"
+  "tex": "sq_4.png",
+  "back_tex": "back_square.png"
  },
  "sq_5": {
   "outline": [
@@ -1323,7 +1328,8 @@
    255
   ],
   "type": "treasure",
-  "tex": "sq_5.png"
+  "tex": "sq_5.png",
+  "back_tex": "back_square.png"
  },
  "sq_6": {
   "outline": [
@@ -1584,7 +1590,8 @@
    255
   ],
   "type": "treasure",
-  "tex": "sq_6.png"
+  "tex": "sq_6.png",
+  "back_tex": "back_square.png"
  },
  "sq_7": {
   "outline": [
@@ -1845,7 +1852,8 @@
    255
   ],
   "type": "treasure",
-  "tex": "sq_7.png"
+  "tex": "sq_7.png",
+  "back_tex": "back_square.png"
  },
  "pen_8": {
   "outline": [
@@ -2166,7 +2174,8 @@
    255
   ],
   "type": "treasure",
-  "tex": "pen_8.png"
+  "tex": "pen_8.png",
+  "back_tex": "back_pentagon.png"
  },
  "pen_9": {
   "outline": [
@@ -2487,7 +2496,8 @@
    255
   ],
   "type": "treasure",
-  "tex": "pen_9.png"
+  "tex": "pen_9.png",
+  "back_tex": "back_pentagon.png"
  },
  "pen_10": {
   "outline": [
@@ -2808,7 +2818,8 @@
    255
   ],
   "type": "treasure",
-  "tex": "pen_10.png"
+  "tex": "pen_10.png",
+  "back_tex": "back_pentagon.png"
  },
  "pen_11": {
   "outline": [
@@ -3129,7 +3140,8 @@
    255
   ],
   "type": "treasure",
-  "tex": "pen_11.png"
+  "tex": "pen_11.png",
+  "back_tex": "back_pentagon.png"
  },
  "hex_12": {
   "outline": [
@@ -3510,7 +3522,8 @@
    255
   ],
   "type": "treasure",
-  "tex": "hex_12.png"
+  "tex": "hex_12.png",
+  "back_tex": "back_hexagon.png"
  },
  "hex_13": {
   "outline": [
@@ -3891,7 +3904,8 @@
    255
   ],
   "type": "treasure",
-  "tex": "hex_13.png"
+  "tex": "hex_13.png",
+  "back_tex": "back_hexagon.png"
  },
  "hex_14": {
   "outline": [
@@ -4272,7 +4286,8 @@
    255
   ],
   "type": "treasure",
-  "tex": "hex_14.png"
+  "tex": "hex_14.png",
+  "back_tex": "back_hexagon.png"
  },
  "hex_15": {
   "outline": [
@@ -4653,7 +4668,8 @@
    255
   ],
   "type": "treasure",
-  "tex": "hex_15.png"
+  "tex": "hex_15.png",
+  "back_tex": "back_hexagon.png"
  },
  "back_circle": {
   "outline": [
@@ -5058,7 +5074,8 @@
    255
   ],
   "type": "back",
-  "tex": "back_circle.png"
+  "tex": "back_circle.png",
+  "back_tex": null
  },
  "back_tri": {
   "outline": [
@@ -5259,7 +5276,8 @@
    255
   ],
   "type": "back",
-  "tex": "back_tri.png"
+  "tex": "back_tri.png",
+  "back_tex": null
  },
  "back_square": {
   "outline": [
@@ -5520,7 +5538,8 @@
    255
   ],
   "type": "back",
-  "tex": "back_square.png"
+  "tex": "back_square.png",
+  "back_tex": null
  },
  "back_pentagon": {
   "outline": [
@@ -5841,7 +5860,8 @@
    255
   ],
   "type": "back",
-  "tex": "back_pentagon.png"
+  "tex": "back_pentagon.png",
+  "back_tex": null
  },
  "back_hexagon": {
   "outline": [
@@ -6222,7 +6242,8 @@
    255
   ],
   "type": "back",
-  "tex": "back_hexagon.png"
+  "tex": "back_hexagon.png",
+  "back_tex": null
  },
  "air_marker": {
   "outline": [
@@ -6627,7 +6648,8 @@
    255
   ],
   "type": "air",
-  "tex": "air_marker.png"
+  "tex": "air_marker.png",
+  "back_tex": null
  },
  "submarine_board": {
   "outline": [
@@ -7064,7 +7086,8 @@
    255
   ],
   "type": "board",
-  "tex": "submarine_board.png"
+  "tex": "submarine_board.png",
+  "back_tex": null
  },
  "meeple_purple": {
   "outline": [
@@ -8089,7 +8112,8 @@
    255
   ],
   "type": "meeple",
-  "tex": null
+  "tex": null,
+  "back_tex": null
  },
  "meeple_red": {
   "outline": [
@@ -9114,7 +9138,8 @@
    255
   ],
   "type": "meeple",
-  "tex": null
+  "tex": null,
+  "back_tex": null
  },
  "die": {
   "type": "die",
