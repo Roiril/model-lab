@@ -295,16 +295,19 @@ def make_submarine():
     d.ellipse([px-dr*1.6,py-dr*1.6,px+dr*1.6,py+dr*1.6], outline=line, width=lw)
     d.ellipse([px-dr*0.55,py-dr*0.55,px+dr*0.55,py+dr*0.55], fill=line)
 
-    # 数字ラベル（実物の表示位置に合わせる）
-    fnt = sans(0.030*SIZE*SS, 500)
-    def label(pt, t, off=0.050):
+    # メモリ数字: ダイブ点(◎)=0、右下の白丸=1、白線を辿って外側へ増加。
+    # path は外側(top-left)→ダイブ側 の順なので count = N - index。
+    # 5 刻みでドットの近くに配置（上段は上、中下段は下にオフセット）。
+    N = len(path)
+    fnt = sans(0.030*SIZE*SS, 600)
+    def label(pt, t, off):
         px,py = P(pt[0], pt[1]+off)
         bb = d.textbbox((0,0),t,font=fnt)
         d.text((px-(bb[2]-bb[0])/2-bb[0], py-(bb[3]-bb[1])/2-bb[1]), t, fill=line, font=fnt)
-    r0,r1,r2 = rowdots
-    label(r0[0], "25"); label(r0[5], "20"); label(r0[10], "15")   # 上段
-    label(min(r1, key=lambda p:p[0]), "10")                        # 中段 左
-    # 下段ラベル 1〜5 は位置がずれるため省略（ドット・ダイブ点のみ）
+    for i,pt in enumerate(path):
+        cnt = N - i
+        if cnt % 5 == 0:
+            label(pt, str(cnt), 0.042)   # 常にその丸の真上に置く
     save(img, "submarine_board")
     add("submarine_board", outline, 175, 3.0, True, COL["board_blue"], "board")
 
