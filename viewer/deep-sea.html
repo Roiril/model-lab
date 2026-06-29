@@ -69,21 +69,22 @@ const labelEl = document.getElementById("label");
 const renderer = new THREE.WebGLRenderer({ canvas:cv, antialias:true, preserveDrawingBuffer:true });
 renderer.setPixelRatio(Math.min(devicePixelRatio,2));
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.05;
+renderer.toneMappingExposure = 0.78;   // 淡色チップの白飛びを抑える
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0xf3f1ec);
 const pmrem = new THREE.PMREMGenerator(renderer);
 scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+scene.environmentIntensity = 0.5;       // 環境光を控えめに
 
 const camera = new THREE.PerspectiveCamera(40, 1, 0.001, 100);
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
 
-// ライト（環境光の上に方向光で陰影）
-const key = new THREE.DirectionalLight(0xffffff, 1.7); key.position.set(0.3,0.6,0.5); scene.add(key);
-const fill = new THREE.DirectionalLight(0xffffff, 0.5); fill.position.set(-0.4,0.2,-0.3); scene.add(fill);
-scene.add(new THREE.AmbientLight(0xffffff, 0.25));
+// ライト（環境光の上に方向光で軽く陰影。白飛びしないよう弱め）
+const key = new THREE.DirectionalLight(0xffffff, 0.85); key.position.set(0.3,0.6,0.5); scene.add(key);
+const fill = new THREE.DirectionalLight(0xffffff, 0.28); fill.position.set(-0.4,0.2,-0.3); scene.add(fill);
+scene.add(new THREE.AmbientLight(0xffffff, 0.12));
 
 const loader = new GLTFLoader();
 let current = null;
