@@ -104,10 +104,12 @@ def make_tile(name, info):
     else:
         ob.data.materials.append(solid_mat(name+"_mat", info["color"]))
 
+    # 上面・底面はフラット（平らに見せる）、薄い側面のみスムーズ
+    f_top.smooth = False
+    f_bot.smooth = False
+    for s in sides: s.smooth = True
     bm.to_mesh(me)
     bm.free()
-    # スムーズシェード（側面の丸み表現）+ Auto Smooth
-    for p in me.polygons: p.use_smooth = True
     return ob
 
 def make_die(info):
