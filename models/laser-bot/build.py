@@ -34,32 +34,34 @@ FILL = 0.92     # 安全域に対する顔の充填率
 
 
 def panel_face_items(name, A, B):
-    """パネル(A x B)ローカル座標に配置した顔の彫刻アイテム群を返す。
-    返り: [subpaths, ...]（subpaths = ループのリスト, evenodd で穴）"""
-    norm = fe.extract_face(*FACE_MAP[name])
-    allpts = np.vstack([lp for pls in norm for lp in pls])
+    """パネル(A x B)ローカル座標に配置した顔を返す。
+    返り: (fills, lines)
+      fills = [subpaths, ...]（evenodd の黒ベタ）
+      lines = [loop, ...]    （白目↔黄色の境目＝黒線）"""
+    fills, lines = fe.extract_face(*FACE_MAP[name])
+    allpts = np.vstack(lines) if lines else np.vstack([lp for f in fills for lp in f])
     cw = allpts[:, 0].max() - allpts[:, 0].min()
     ch = allpts[:, 1].max() - allpts[:, 1].min()
     aw, ah = A - 2 * INSET, B - 2 * INSET
     scale = min(aw / cw, ah / ch) * FILL
     cx, cy = A / 2.0, B / 2.0
-    items = []
-    for pls in norm:
-        sub = []
-        for lp in pls:
-            pts = [(cx + x * scale, cy + y * scale) for x, y in lp]
-            sub.append(pts)
-        items.append(sub)
-    return items
+
+    def place(lp):
+        return [(cx + x * scale, cy + y * scale) for x, y in lp]
+
+    fills_p = [[place(lp) for lp in f] for f in fills]
+    lines_p = [place(lp) for lp in lines]
+    return fills_p, lines_p
 
 
 def compose():
-    """6面＋各面の顔をシートに配置して (cut_loops, engrave_loops, panels) を返す。"""
+    """6面＋各面の顔を配置して (cut_loops, engrave_loops, engrave_lines, panels) を返す。"""
     panels = lc.box_panels(W, D, H)
     # シート内レイアウト（3列 x 2行）
     order = [["front", "back", "right"], ["top", "bottom", "left"]]
     cut_loops = []
     engrave_loops = []
+    engrave_lines = []
     y_cursor = 0.0
     for row in order:
         x_cursor = 0.0
@@ -68,17 +70,20 @@ def compose():
             loop, (A, B) = panels[name]
             dx, dy = x_cursor, y_cursor
             cut_loops.append((loop, dx, dy))
-            for sub in panel_face_items(name, A, B):
+            fills, lines = panel_face_items(name, A, B)
+            for sub in fills:
                 engrave_loops.append((sub, dx, dy))
+            if lines:
+                engrave_lines.append((lines, dx, dy))
             x_cursor += A + GAP
         y_cursor += row_h + GAP
-    return cut_loops, engrave_loops, panels
+    return cut_loops, engrave_loops, engrave_lines, panels
 
 
 def main():
-    cut_loops, engrave_loops, panels = compose()
+    cut_loops, engrave_loops, engrave_lines, panels = compose()
     svg_path = os.path.join(OUT_DIR, "laser-bot.svg")
-    sheet = lc.write_svg(svg_path, cut_loops, engrave_loops)
+    sheet = lc.write_svg(svg_path, cut_loops, engrave_loops, engrave_lines)
 
     print(f"box outer (mm)   : {W} x {D} x {H}  (W x D x H)")
     print(f"material         : t={lc.MAT_T}mm  kerf={lc.KERF}mm")

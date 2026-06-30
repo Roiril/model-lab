@@ -50,8 +50,8 @@ os.makedirs(KIT, exist_ok=True)
 MM2IN = 1 / 25.4
 
 
-def render(cut, eng, sheet, path, dpi=150, line_pdf=False):
-    """1:1 でカット赤線・彫刻黒ベタを描画。line_pdf=True で PDF ベクター出力。"""
+def render(cut, eng, lines, sheet, path, dpi=150, line_pdf=False):
+    """1:1 でカット赤線・彫刻黒ベタ・黒線輪郭を描画。"""
     W, H = sheet
     fig = plt.figure(figsize=(W * MM2IN, H * MM2IN))
     ax = fig.add_axes([0, 0, 1, 1])
@@ -62,6 +62,14 @@ def render(cut, eng, sheet, path, dpi=150, line_pdf=False):
     for item in eng:
         sub, dx, dy = _subpaths(item)
         ax.add_patch(_compound_patch(sub, dx, dy))
+    # 彫刻（黒線輪郭＝白目と黄色の境目）
+    lw_mm = lc.ENGRAVE_LINE_W
+    lw_pt = lw_mm / 25.4 * 72
+    for loops, dx, dy in lines:
+        for lp in loops:
+            ax.plot([x + dx for x, y in lp] + [lp[0][0] + dx],
+                    [y + dy for x, y in lp] + [lp[0][1] + dy],
+                    "-", color="black", lw=lw_pt, solid_capstyle="round")
     # カット（赤線）
     for loop, dx, dy in cut:
         ax.plot([x + dx for x, y in loop], [y + dy for x, y in loop],
@@ -71,12 +79,14 @@ def render(cut, eng, sheet, path, dpi=150, line_pdf=False):
 
 
 def main():
-    cut, eng, panels = build.compose()
+    cut, eng, lines, panels = build.compose()
     # 配置原点を margin に合わせる（write_svg と同じ +5mm マージン基準で bbox 再計算）
     all_pts = [(x + dx, y + dy) for loop, dx, dy in cut for (x, y) in loop]
     for item in eng:
         sub, dx, dy = _subpaths(item)
         all_pts += [(x + dx, y + dy) for lp in sub for (x, y) in lp]
+    for loops, dx, dy in lines:
+        all_pts += [(x + dx, y + dy) for lp in loops for (x, y) in lp]
     minx = min(p[0] for p in all_pts); miny = min(p[1] for p in all_pts)
     maxx = max(p[0] for p in all_pts); maxy = max(p[1] for p in all_pts)
     m = 5.0
@@ -84,6 +94,7 @@ def main():
     off = (m - minx, m - miny)
     cut = [(l, dx + off[0], dy + off[1]) for l, dx, dy in cut]
     eng = [(l, dx + off[0], dy + off[1]) for l, dx, dy in eng]
+    lines = [(l, dx + off[0], dy + off[1]) for l, dx, dy in lines]
 
     # 1) SVG（本番カット用）— build.py の出力を流用してコピー
     src_svg = os.path.join(LASER_DIR, "laser-bot.svg")
@@ -91,9 +102,9 @@ def main():
         build.main()
     shutil.copy(src_svg, os.path.join(KIT, "laser-bot.svg"))
     # 2) PDF（1:1 ベクター, 入稿バックアップ）
-    render(cut, eng, sheet, os.path.join(KIT, "laser-bot.pdf"), line_pdf=True)
+    render(cut, eng, lines, sheet, os.path.join(KIT, "laser-bot.pdf"), line_pdf=True)
     # 3) preview PNG（認識用）
-    render(cut, eng, sheet, os.path.join(KIT, "preview.png"), dpi=150)
+    render(cut, eng, lines, sheet, os.path.join(KIT, "preview.png"), dpi=150)
 
     print("kit ->", KIT)
     for f in sorted(os.listdir(KIT)):

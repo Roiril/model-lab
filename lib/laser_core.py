@@ -194,16 +194,24 @@ def _engrave_subpaths(item):
     return first, dx, dy                # ループのリスト
 
 
-def write_svg(path, cut_loops, engrave_loops=None, margin=5.0):
-    """cut_loops: [(loop, dx, dy)]  engrave_loops: [(loop|subpaths, dx, dy)] mm。
+ENGRAVE_LINE_W = 0.5   # 黒線彫刻のストローク幅 mm（白目の輪郭など）
+
+
+def write_svg(path, cut_loops, engrave_loops=None, engrave_lines=None,
+              margin=5.0, line_w=ENGRAVE_LINE_W):
+    """cut_loops: [(loop, dx, dy)]  engrave_loops: [(loop|subpaths, dx, dy)]
+    engrave_lines: [(loops, dx, dy)] … 黒線（ストローク）彫刻。mm。
 
     cut    = 赤ヘアライン（外周・スロット）
     engrave= 黒ベタ（顔）。複合パスは fill-rule:evenodd で穴/島を表現。
+    line   = 黒ストローク（白目と黄色の境目など輪郭線）。
     """
     engrave_loops = engrave_loops or []
+    engrave_lines = engrave_lines or []
     eng_norm = [_engrave_subpaths(it) for it in engrave_loops]
     all_pts = [(x + dx, y + dy) for loop, dx, dy in cut_loops for (x, y) in loop]
     all_pts += [(x + dx, y + dy) for sub, dx, dy in eng_norm for lp in sub for (x, y) in lp]
+    all_pts += [(x + dx, y + dy) for loops, dx, dy in engrave_lines for lp in loops for (x, y) in lp]
     maxx = max(x for x, _ in all_pts)
     maxy = max(y for _, y in all_pts)
     minx = min(x for x, _ in all_pts)
@@ -219,6 +227,12 @@ def write_svg(path, cut_loops, engrave_loops=None, margin=5.0):
     for sub, dx, dy in eng_norm:
         d = " ".join(loop_to_path(lp, dx + ox, dy + oy) for lp in sub)
         out.append(f'<path d="{d}" fill="#000000" fill-rule="evenodd" stroke="none"/>')
+    # 彫刻（黒線＝輪郭ストローク）
+    for loops, dx, dy in engrave_lines:
+        for lp in loops:
+            out.append(f'<path d="{loop_to_path(lp, dx + ox, dy + oy)}" '
+                       f'fill="none" stroke="#000000" stroke-width="{line_w}" '
+                       f'stroke-linejoin="round"/>')
     # カット（赤ヘアライン）
     for loop, dx, dy in cut_loops:
         out.append(f'<path d="{loop_to_path(loop, dx+ox, dy+oy)}" '

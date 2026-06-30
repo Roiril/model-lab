@@ -20,6 +20,7 @@ NCOL = 7
 ROW_BANDS = [(48, 120), (138, 205)]    # 上段 / 下段 の y 帯
 UPSCALE = 8                            # 輪郭平滑用アップスケール
 BLACK_TH = 95                          # これ未満を黒(彫る)とみなす
+NONYELLOW_TH = 60                      # 黄背景からこの距離超で「描画(白or黒)」
 APPROX_EPS = 1.1                       # approxPolyDP（アップスケール後px）
 
 
@@ -38,11 +39,12 @@ def _chaikin(poly, iters=2):
     return p
 
 
-def extract_face(row, col, min_area_frac=0.0012):
-    """row(0=上,1=下), col(1始まり) の顔の黒領域を抽出。
+def _smooth(c):
+    ap = cv2.approxPolyDP(c, APPROX_EPS, True).reshape(-1, 2).astype(float)
+    return _chaikin(ap, 2) if len(ap) >= 3 else None
 
-    戻り: paths = [ [outer_loop, hole_loop, ...], ... ]  正規化座標(原点中心・最大辺1)。
-    """
+
+def _cell_masks(row, col):
     img = cv2.imread(SHEET)
     if img is None:
         raise FileNotFoundError(SHEET)
@@ -51,66 +53,72 @@ def extract_face(row, col, min_area_frac=0.0012):
     cx0 = int(round(X0 + (col - 1) * cw))
     cx1 = int(round(X0 + col * cw))
     cell = img[y0:y1, cx0:cx1]
-
-    # アップスケールして滑らかに
     big = cv2.resize(cell, None, fx=UPSCALE, fy=UPSCALE, interpolation=cv2.INTER_CUBIC)
     gray = cv2.cvtColor(big, cv2.COLOR_BGR2GRAY)
     black = (gray < BLACK_TH).astype(np.uint8) * 255
-    # 微小ノイズ除去
+    dist = np.linalg.norm(big.astype(int) - BG_BGR[None, None, :], axis=2)
+    nonyellow = (dist > NONYELLOW_TH).astype(np.uint8) * 255
+    white = (big[:, :, 0] > 150).astype(np.uint8) * 255  # 白目(B高)。黄(B低)・黒を除外
     k = np.ones((3, 3), np.uint8)
-    black = cv2.morphologyEx(black, cv2.MORPH_OPEN, k)
-    black = cv2.morphologyEx(black, cv2.MORPH_CLOSE, k)
+    for m in (black, nonyellow, white):
+        cv2.morphologyEx(m, cv2.MORPH_OPEN, k, dst=m)
+        cv2.morphologyEx(m, cv2.MORPH_CLOSE, k, dst=m)
+    return black, nonyellow, white
 
-    cnts, hier = cv2.findContours(black, cv2.RETR_CCOMP, cv2.CHAIN_APPROX_SIMPLE)
-    if not cnts:
-        return []
+
+def extract_face(row, col, min_area_frac=0.0012):
+    """row(0=上,1=下), col(1始まり) の顔を抽出。
+
+    戻り: (fills, lines)  いずれも非黄色領域の bbox で共通正規化（原点中心・最大辺1）。
+      fills = [[outer, hole, ...], ...]  黒シェイプ（彫りベタ, evenodd）
+      lines = [loop, ...]                非黄色領域の外周＝白目と黄色の境目（黒線で描く）
+    """
+    black, nonyellow, white = _cell_masks(row, col)
     H, W = black.shape
     area_all = H * W
-    hier = hier[0]
+    amin = area_all * min_area_frac
 
-    # 外輪郭(level0, parent==-1) ごとに、その子(穴)を集める
-    paths = []
-    for i, c in enumerate(cnts):
-        if hier[i][3] != -1:
-            continue  # 穴は親側で処理
-        if cv2.contourArea(c) < area_all * min_area_frac:
+    # --- 黒ベタ（穴つき） ---
+    cnts, hier = cv2.findContours(black, cv2.RETR_CCOMP, cv2.CHAIN_APPROX_SIMPLE)
+    fills = []
+    if cnts:
+        hier = hier[0]
+        for i, c in enumerate(cnts):
+            if hier[i][3] != -1 or cv2.contourArea(c) < amin:
+                continue
+            loops = [c]
+            ch = hier[i][2]
+            while ch != -1:
+                if cv2.contourArea(cnts[ch]) >= amin * 0.5:
+                    loops.append(cnts[ch])
+                ch = hier[ch][0]
+            sm = [s for s in (_smooth(l) for l in loops) if s is not None]
+            if sm:
+                fills.append(sm)
+
+    # --- 白目↔黄色の境目 → 黒線（白画素を含む眼ブロックの外周のみ。口は除外）---
+    ncnts, _ = cv2.findContours(nonyellow, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    white_bin = white > 0
+    lines = []
+    ny_pts = []
+    for c in ncnts:
+        if cv2.contourArea(c) < amin:
             continue
-        loops = [c]
-        ch = hier[i][2]  # first child
-        while ch != -1:
-            if cv2.contourArea(cnts[ch]) >= area_all * min_area_frac * 0.5:
-                loops.append(cnts[ch])
-            ch = hier[ch][0]  # next sibling
-        paths.append(loops)
+        ny_pts.append(c.reshape(-1, 2).astype(float))
+        blob = np.zeros((H, W), np.uint8)
+        cv2.drawContours(blob, [c], -1, 1, -1)
+        wfrac = (white_bin & (blob > 0)).sum() / max(int(blob.sum()), 1)
+        if wfrac < 0.06:      # 白目を含まない（＝口など）はスキップ
+            continue
+        sm = _smooth(c)
+        if sm is not None:
+            lines.append(sm)
 
-    if not paths:
-        return []
-
-    # 平滑＋簡約 → float 点列
-    proc = []
-    for loops in paths:
-        pls = []
-        for c in loops:
-            ap = cv2.approxPolyDP(c, APPROX_EPS, True).reshape(-1, 2).astype(float)
-            if len(ap) >= 3:
-                pls.append(_chaikin(ap, 2))
-        if pls:
-            proc.append(pls)
-
-    # 正規化（全 path の bbox 重心を原点、最大辺=1）
-    allpts = np.vstack([lp for pls in proc for lp in pls])
-    mn = allpts.min(axis=0)
-    mx = allpts.max(axis=0)
+    # --- 共通正規化（全眼ブロック=非黄色領域の bbox で。白フィルタに依らず安定）---
+    npts = np.vstack(ny_pts) if ny_pts else np.vstack([lp for f in fills for lp in f])
+    mn, mx = npts.min(axis=0), npts.max(axis=0)
     ctr = (mn + mx) / 2
     span = (mx - mn).max()
-    norm = [[(lp - ctr) / span for lp in pls] for pls in proc]
-    return norm  # list of [np.array(N,2) ...]
-
-
-def content_aspect(row, col):
-    """抽出コンテンツの横/縦 比（配置の縦横調整用）。"""
-    norm = extract_face(row, col)
-    allpts = np.vstack([lp for pls in norm for lp in pls])
-    w = allpts[:, 0].max() - allpts[:, 0].min()
-    h = allpts[:, 1].max() - allpts[:, 1].min()
-    return w, h
+    fills_n = [[(lp - ctr) / span for lp in f] for f in fills]
+    lines_n = [(lp - ctr) / span for lp in lines]
+    return fills_n, lines_n
