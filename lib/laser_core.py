@@ -28,7 +28,8 @@ BED_W = 726.0
 BED_H = 432.0
 
 # フィンガー幅の目安（この値に近い本数を自動で奇数化して使う）
-FINGER_TARGET = 11.0  # mm
+# 大きいほど凸凹が少なく大きくなり、組み立てが楽になる（小さいと多数の小凸凹で組みにくい）。
+FINGER_TARGET = 22.0  # mm → ~56-68mm 辺で 3 本（1本約19-23mm のがっしり凸凹）
 
 
 def finger_count(length, target=FINGER_TARGET):
