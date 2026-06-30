@@ -8,8 +8,9 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "../../lib"))
 sys.path.insert(0, os.path.dirname(__file__))
 
 import laser_core as lc
-from params import (W, D, H, EYE_R, EYE_Y, EYE_DX, MOUTH_W, MOUTH_TH,
-                    MOUTH_DIP, MOUTH_Y, CHEEK_R, CHEEK_Y, CHEEK_DX, GAP)
+from params import (W, D, H, EYE_R, PUP_R, SPARK_R, EYE_Y, EYE_DX,
+                    PUP_IN, PUP_DOWN, SPARK_UP, SPARK_LEFT,
+                    MOUTH_W, MOUTH_TH, MOUTH_DIP, MOUTH_Y, GAP)
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 OUT_DIR = os.path.join(ROOT, "exports", "laser")
@@ -28,20 +29,25 @@ def smile(cx, cy, w, th, dip, seg=40):
     return top + bot[::-1]
 
 
+def eye(cx, cy, side):
+    """白目(彫る) - 黒目(穴) + ハイライト(彫る) の複合パス（evenodd）。
+    side=-1:左 / +1:右。瞳は中心寄せ＋下げ、ハイライトは瞳の上左。"""
+    px = cx - side * PUP_IN       # 中心側へ
+    py = cy + PUP_DOWN            # 下げ
+    eyeball = lc.circle(cx, cy, EYE_R)            # 彫る（白目=フロスト）
+    pupil = lc.circle(px, py, PUP_R)              # 穴（黒目=彫り残し）
+    spark = lc.circle(px - SPARK_LEFT, py - SPARK_UP, SPARK_R)  # 彫る（光）
+    return [eyeball, pupil, spark]
+
+
 def face_engrave():
-    """front パネル(W x H, ローカル原点左上 y 下)上の顔パーツ群を返す。"""
-    loops = []
+    """front パネル(W x H, 原点左上 y 下)上の顔。各要素は subpaths のリスト。"""
     ey = EYE_Y * H
-    # 目
-    loops.append(lc.circle(W * (0.5 - EYE_DX), ey, EYE_R))
-    loops.append(lc.circle(W * (0.5 + EYE_DX), ey, EYE_R))
-    # ほっぺ
-    cy = CHEEK_Y * H
-    loops.append(lc.circle(W * (0.5 - CHEEK_DX), cy, CHEEK_R))
-    loops.append(lc.circle(W * (0.5 + CHEEK_DX), cy, CHEEK_R))
-    # 口（笑み）
-    loops.append(smile(W * 0.5, MOUTH_Y * H, MOUTH_W, MOUTH_TH, MOUTH_DIP))
-    return loops
+    items = []
+    items.append(eye(W * (0.5 - EYE_DX), ey, -1))
+    items.append(eye(W * (0.5 + EYE_DX), ey, +1))
+    items.append([smile(W * 0.5, MOUTH_Y * H, MOUTH_W, MOUTH_TH, MOUTH_DIP)])
+    return items
 
 
 def compose():

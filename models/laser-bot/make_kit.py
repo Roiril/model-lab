@@ -12,10 +12,36 @@ sys.path.insert(0, os.path.dirname(__file__))
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-from matplotlib.patches import Polygon
+from matplotlib.path import Path
+from matplotlib.patches import PathPatch
 
 import laser_core as lc
 import build  # compose() を再利用
+
+
+def _subpaths(item):
+    first, dx, dy = item
+    if first and isinstance(first[0], (int, float)):
+        return [first], dx, dy
+    return first, dx, dy
+
+
+def _compound_patch(subpaths, dx, dy):
+    """複数ループを一つの PathPatch にして穴/島を表現。
+    matplotlib は nonzero 塗りなので、穴(奇数番)を逆巻きにして穴を開ける
+    （SVG 側は fill-rule:evenodd なので巻き方向に依らず正しい）。"""
+    verts, codes = [], []
+    for idx, lp in enumerate(subpaths):
+        pts = list(lp)
+        if idx % 2 == 1:           # 穴: 逆巻き
+            pts = pts[::-1]
+        if pts[0] != pts[-1]:
+            pts = pts + [pts[0]]
+        for i, (x, y) in enumerate(pts):
+            verts.append((x + dx, y + dy))
+            codes.append(Path.MOVETO if i == 0 else Path.LINETO)
+        codes[-1] = Path.CLOSEPOLY
+    return PathPatch(Path(verts, codes), fc="black", ec="none")
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 LASER_DIR = os.path.join(ROOT, "exports", "laser")
@@ -32,10 +58,10 @@ def render(cut, eng, sheet, path, dpi=150, line_pdf=False):
     ax.set_xlim(0, W); ax.set_ylim(0, H)
     ax.set_aspect("equal"); ax.axis("off")
     ax.invert_yaxis()  # SVG 系 y 下向きに合わせる
-    # 彫刻（黒ベタ）
-    for loop, dx, dy in eng:
-        ax.add_patch(Polygon([(x + dx, y + dy) for x, y in loop],
-                             closed=True, fc="black", ec="none"))
+    # 彫刻（黒ベタ, 複合パスは evenodd で穴/島）
+    for item in eng:
+        sub, dx, dy = _subpaths(item)
+        ax.add_patch(_compound_patch(sub, dx, dy))
     # カット（赤線）
     for loop, dx, dy in cut:
         ax.plot([x + dx for x, y in loop], [y + dy for x, y in loop],
@@ -47,7 +73,10 @@ def render(cut, eng, sheet, path, dpi=150, line_pdf=False):
 def main():
     cut, eng, panels = build.compose()
     # 配置原点を margin に合わせる（write_svg と同じ +5mm マージン基準で bbox 再計算）
-    all_pts = [(x + dx, y + dy) for loop, dx, dy in (cut + eng) for (x, y) in loop]
+    all_pts = [(x + dx, y + dy) for loop, dx, dy in cut for (x, y) in loop]
+    for item in eng:
+        sub, dx, dy = _subpaths(item)
+        all_pts += [(x + dx, y + dy) for lp in sub for (x, y) in lp]
     minx = min(p[0] for p in all_pts); miny = min(p[1] for p in all_pts)
     maxx = max(p[0] for p in all_pts); maxy = max(p[1] for p in all_pts)
     m = 5.0

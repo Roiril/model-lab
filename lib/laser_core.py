@@ -181,16 +181,29 @@ def loop_to_path(loop, dx=0.0, dy=0.0):
     return d
 
 
+def _engrave_subpaths(item):
+    """engrave エントリを (subpaths, dx, dy) に正規化。
+
+    item は (loop, dx, dy)          … 単一ループ
+        or (subpaths, dx, dy)       … 複合（subpaths=ループのリスト, evenodd で穴/島）
+    単一ループ判定: 先頭要素が (x,y) のタプルなら単一ループ。
+    """
+    first, dx, dy = item
+    if first and isinstance(first[0], (int, float)):
+        return [first], dx, dy          # 単一ループ
+    return first, dx, dy                # ループのリスト
+
+
 def write_svg(path, cut_loops, engrave_loops=None, margin=5.0):
-    """cut_loops / engrave_loops: [(loop点列, dx, dy), ...] mm。
+    """cut_loops: [(loop, dx, dy)]  engrave_loops: [(loop|subpaths, dx, dy)] mm。
 
     cut    = 赤ヘアライン（外周・スロット）
-    engrave= 黒ベタ（顔など）
+    engrave= 黒ベタ（顔）。複合パスは fill-rule:evenodd で穴/島を表現。
     """
     engrave_loops = engrave_loops or []
-    all_pts = [(x + dx, y + dy)
-               for loop, dx, dy in (cut_loops + engrave_loops)
-               for (x, y) in loop]
+    eng_norm = [_engrave_subpaths(it) for it in engrave_loops]
+    all_pts = [(x + dx, y + dy) for loop, dx, dy in cut_loops for (x, y) in loop]
+    all_pts += [(x + dx, y + dy) for sub, dx, dy in eng_norm for lp in sub for (x, y) in lp]
     maxx = max(x for x, _ in all_pts)
     maxy = max(y for _, y in all_pts)
     minx = min(x for x, _ in all_pts)
@@ -202,10 +215,10 @@ def write_svg(path, cut_loops, engrave_loops=None, margin=5.0):
     out = [f'<svg xmlns="http://www.w3.org/2000/svg" '
            f'width="{W:.2f}mm" height="{H:.2f}mm" '
            f'viewBox="0 0 {W:.2f} {H:.2f}">']
-    # 彫刻（先に黒ベタ）
-    for loop, dx, dy in engrave_loops:
-        out.append(f'<path d="{loop_to_path(loop, dx+ox, dy+oy)}" '
-                   f'fill="#000000" stroke="none"/>')
+    # 彫刻（先に黒ベタ。複合パスは evenodd）
+    for sub, dx, dy in eng_norm:
+        d = " ".join(loop_to_path(lp, dx + ox, dy + oy) for lp in sub)
+        out.append(f'<path d="{d}" fill="#000000" fill-rule="evenodd" stroke="none"/>')
     # カット（赤ヘアライン）
     for loop, dx, dy in cut_loops:
         out.append(f'<path d="{loop_to_path(loop, dx+ox, dy+oy)}" '
