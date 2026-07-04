@@ -2,3 +2,7 @@ node_modules/
 exports/*.stl
 __pycache__/
 *.pyc
+
+# ローカル設定（マシン固有・コミット対象外）
+.claude/settings.local.json
+.claude/worktrees/
