@@ -1,8 +1,13 @@
 {
   "permissions": {
-    "defaultMode": "bypassPermissions",
-    "allow": []
+    "allow": [
+      "Bash(./run.sh models/ivrc-booth/model.py)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:3000)",
+      "Bash(./run.sh models/smartphone/model.py)",
+      "Bash(curl -s http://localhost:3000 -o /dev/null -w \"%{http_code}\\\\n\")",
+      "Bash(./run.sh models/phone-stand/model.py)"
+    ],
+    "defaultMode": "bypassPermissions"
   },
-  "hooks": {
-  }
+  "hooks": {}
 }
