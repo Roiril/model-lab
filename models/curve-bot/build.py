@@ -102,29 +102,61 @@ def _cum(outline):
     return cum
 
 
-def cap_slots(outline, cum, u_list, tab_w, t):
-    """D外周に沿って u_list(帯の弧長位置)にスロット矩形を置く。"""
+CAP_RIM = 0.8   # フタが帯の外面より張り出す量（見た目のリム）
+
+
+def _point_tangent(outline, cum, s):
+    """中心線 outline 上の弧長 s の点と単位接線を返す。"""
     total = cum[-1]
+    s = s % total
+    j = 1
+    while j < len(cum) and cum[j] < s:
+        j += 1
+    j = min(j, len(outline) - 1)
+    seglen = cum[j] - cum[j - 1] or 1e-9
+    f = (s - cum[j - 1]) / seglen
+    p0, p1 = outline[j - 1], outline[j]
+    px = p0[0] + (p1[0] - p0[0]) * f
+    py = p0[1] + (p1[1] - p0[1]) * f
+    tl = math.hypot(p1[0] - p0[0], p1[1] - p0[1]) or 1e-9
+    return (px, py), ((p1[0] - p0[0]) / tl, (p1[1] - p0[1]) / tl)
+
+
+def _outward(p, t):
+    """接線 t に直交する外向き法線（原点=断面中心から遠ざかる側）。"""
+    nx, ny = t[1], -t[0]
+    if nx * p[0] + ny * p[1] < 0:    # 内向きなら反転
+        nx, ny = -nx, -ny
+    return nx, ny
+
+
+def cap_outline(outline):
+    """中心線を T/2+CAP_RIM だけ外側へオフセットしたフタ外周を返す。"""
+    off = T / 2 + CAP_RIM
+    n = len(outline)
+    out = []
+    for i in range(n):
+        p_prev = outline[i - 1]
+        p = outline[i]
+        p_next = outline[(i + 1) % n]
+        tx = p_next[0] - p_prev[0]
+        ty = p_next[1] - p_prev[1]
+        tl = math.hypot(tx, ty) or 1e-9
+        nx, ny = _outward(p, (tx / tl, ty / tl))
+        out.append((p[0] + nx * off, p[1] + ny * off))
+    return out
+
+
+def cap_slots(outline, cum, u_list, tab_w, t):
+    """帯中心線上（＝壁の中心）に、輪郭接線向きでスロット矩形を置く。"""
     slots = []
     sw, sh = (tab_w + lc.KERF) / 2, (t + lc.KERF) / 2
     for u in u_list:
-        s = u % total
-        # 弧長 s の点と接線を補間
-        j = 1
-        while j < len(cum) and cum[j] < s:
-            j += 1
-        j = min(j, len(outline) - 1)
-        seglen = cum[j] - cum[j - 1] or 1e-9
-        f = (s - cum[j - 1]) / seglen
-        p0, p1 = outline[j - 1], outline[j]
-        px = p0[0] + (p1[0] - p0[0]) * f
-        py = p0[1] + (p1[1] - p0[1]) * f
-        # 内向き法線（中心 O へ）
-        d = math.hypot(px, py) or 1e-9
-        nx, ny = -px / d, -py / d       # 半径方向(内向き)
-        tx, ty = -ny, nx                # 接線方向
+        p, tan = _point_tangent(outline, cum, u)
+        nx, ny = _outward(p, tan)
         corners = [(-sw, -sh), (sw, -sh), (sw, sh), (-sw, sh)]
-        loop = [(px + a * tx + b * nx, py + a * ty + b * ny) for a, b in corners]
+        loop = [(p[0] + a * tan[0] + b * nx, p[1] + a * tan[1] + b * ny)
+                for a, b in corners]
         slots.append(loop)
     return slots
 
@@ -148,17 +180,19 @@ def compose():
         eng_lines.append((lines, bx, by))
 
     # --- D字フタ x2（帯の下に横並び）---
-    # 帯タブ位置 u_i と同じ弧長位置にスロットを置く（前面フラット部は前面へ）
+    # 中心線(=帯の壁センター)の弧長を帯の u と一致させ、同位置にスロット。
+    # フタ外周は中心線を T/2+CAP_RIM 外側へオフセット（壁全厚を受けて少し張り出す）。
     u_list = [(i + 0.5) * C / N_TAB for i in range(N_TAB)]
-    outline, R, th = d_outline(C, WF)
-    cum = _cum(outline)
-    dmaxx = max(p[0] for p in outline) - min(p[0] for p in outline)
-    dmaxy = max(p[1] for p in outline) - min(p[1] for p in outline)
+    centerline, R, th = d_outline(C, WF)
+    cum = _cum(centerline)
+    rim = cap_outline(centerline)
+    dmaxx = max(p[0] for p in rim) - min(p[0] for p in rim)
+    dmaxy = max(p[1] for p in rim) - min(p[1] for p in rim)
     cap_y = H + T + GAP + dmaxy / 2
     for k in range(2):
         ccx = dmaxx / 2 + k * (dmaxx + GAP)
-        cut_loops.append((outline, ccx, cap_y))
-        for slot in cap_slots(outline, cum, u_list, TAB_W, T):
+        cut_loops.append((rim, ccx, cap_y))
+        for slot in cap_slots(centerline, cum, u_list, TAB_W, T):
             cut_loops.append((slot, ccx, cap_y))
 
     return cut_loops, cut_lines, eng_loops, eng_lines
