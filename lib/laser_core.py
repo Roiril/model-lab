@@ -198,21 +198,28 @@ def _engrave_subpaths(item):
 ENGRAVE_LINE_W = 0.5   # 黒線彫刻のストローク幅 mm（白目の輪郭など）
 
 
-def write_svg(path, cut_loops, engrave_loops=None, engrave_lines=None,
-              margin=5.0, line_w=ENGRAVE_LINE_W):
-    """cut_loops: [(loop, dx, dy)]  engrave_loops: [(loop|subpaths, dx, dy)]
-    engrave_lines: [(loops, dx, dy)] … 黒線（ストローク）彫刻。mm。
+def open_path(pts, dx=0.0, dy=0.0):
+    return "M " + " L ".join(f"{x+dx:.3f},{y+dy:.3f}" for x, y in pts)
 
-    cut    = 赤ヘアライン（外周・スロット）
-    engrave= 黒ベタ（顔）。複合パスは fill-rule:evenodd で穴/島を表現。
-    line   = 黒ストローク（白目と黄色の境目など輪郭線）。
+
+def write_svg(path, cut_loops, engrave_loops=None, engrave_lines=None,
+              cut_lines=None, margin=5.0, line_w=ENGRAVE_LINE_W):
+    """cut_loops: [(loop, dx, dy)]  engrave_loops: [(loop|subpaths, dx, dy)]
+    engrave_lines: [(loops, dx, dy)]  cut_lines: [(polyline, dx, dy)] mm。
+
+    cut       = 赤ヘアライン（外周・スロット, 閉ループ）
+    cut_lines = 赤ヘアライン（開いた切断線＝リビングヒンジのスリット等）
+    engrave   = 黒ベタ（顔）。複合パスは fill-rule:evenodd で穴/島。
+    line      = 黒ストローク（白目と黄色の境目など輪郭線）。
     """
     engrave_loops = engrave_loops or []
     engrave_lines = engrave_lines or []
+    cut_lines = cut_lines or []
     eng_norm = [_engrave_subpaths(it) for it in engrave_loops]
     all_pts = [(x + dx, y + dy) for loop, dx, dy in cut_loops for (x, y) in loop]
     all_pts += [(x + dx, y + dy) for sub, dx, dy in eng_norm for lp in sub for (x, y) in lp]
     all_pts += [(x + dx, y + dy) for loops, dx, dy in engrave_lines for lp in loops for (x, y) in lp]
+    all_pts += [(x + dx, y + dy) for pl, dx, dy in cut_lines for (x, y) in pl]
     maxx = max(x for x, _ in all_pts)
     maxy = max(y for _, y in all_pts)
     minx = min(x for x, _ in all_pts)
@@ -234,9 +241,13 @@ def write_svg(path, cut_loops, engrave_loops=None, engrave_lines=None,
             out.append(f'<path d="{loop_to_path(lp, dx + ox, dy + oy)}" '
                        f'fill="none" stroke="#000000" stroke-width="{line_w}" '
                        f'stroke-linejoin="round"/>')
-    # カット（赤ヘアライン）
+    # カット（閉ループ, 赤ヘアライン）
     for loop, dx, dy in cut_loops:
         out.append(f'<path d="{loop_to_path(loop, dx+ox, dy+oy)}" '
+                   f'fill="none" stroke="#FF0000" stroke-width="0.01"/>')
+    # カット（開いた切断線＝ヒンジのスリット, 赤ヘアライン）
+    for pl, dx, dy in cut_lines:
+        out.append(f'<path d="{open_path(pl, dx+ox, dy+oy)}" '
                    f'fill="none" stroke="#FF0000" stroke-width="0.01"/>')
     out.append("</svg>")
     open(path, "w", encoding="utf-8").write("\n".join(out))
@@ -257,3 +268,57 @@ def arc(cx, cy, r, a0, a1, seg=24):
     import math
     return [(cx + r * math.cos(a0 + (a1 - a0) * i / seg),
              cy + r * math.sin(a0 + (a1 - a0) * i / seg)) for i in range(seg + 1)]
+
+
+# ============================================================
+#  リビングヒンジ（帯を曲げるためのスタガードスリット）
+# ============================================================
+
+def living_hinge(u0, u1, v0, v1, col_space=3.0, seg_len=10.0, ligament=3.5,
+                 margin=5.0, exclude=None):
+    """矩形領域[u0,u1]x[v0,v1]を曲げるための縦スリット群（開いた線分）を返す。
+
+    u = 曲げ方向（円周）、v = 曲げ軸方向。列を u に沿って並べ、各列は v 方向の
+    縦スリットを ligament(ブリッジ)で区切る。隣列で半周期ずらして S 字に撓ませる。
+    帯の上下端(v0,v1)は margin だけ残して切らない（端＝タブ側を連続に保つ）。
+    exclude=(fx0,fx1) の u 範囲の列は生成しない（顔の窓＝剛性パネルを残す）。
+
+    戻り: [polyline, ...]（各 polyline は2点の線分 mm）
+    """
+    slits = []
+    uu0, uu1 = v0 + margin, v1 - margin      # v 方向の可切断域
+    period = seg_len + ligament
+    ncol = int(round((u1 - u0) / col_space))
+    for i in range(ncol + 1):
+        u = u0 + i * col_space
+        if exclude and exclude[0] <= u <= exclude[1]:
+            continue
+        phase = 0.0 if (i % 2 == 0) else period / 2.0
+        v = uu0 - phase
+        while v < uu1:
+            a = max(v, uu0)
+            b = min(v + seg_len, uu1)
+            if b - a > 1.0:
+                slits.append([(u, a), (u, b)])
+            v += period
+    return slits
+
+
+def ring_slots(cx, cy, r_ring, n, slot_w, slot_h, angle0=0.0, kerf=KERF):
+    """円板の周に沿って n 個のスロット矩形（閉ループ）を返す。帯のタブ受け。
+
+    slot_w = 接線方向の幅（タブ幅）、slot_h = 半径方向の高さ（板厚）。
+    """
+    import math
+    loops = []
+    sw = (slot_w + kerf) / 2.0
+    sh = (slot_h + kerf) / 2.0
+    for i in range(n):
+        th = angle0 + 2 * math.pi * i / n
+        cr, sr = math.cos(th), math.sin(th)      # 半径方向
+        ct, st = -sr, cr                          # 接線方向
+        px, py = cx + r_ring * cr, cy + r_ring * sr
+        corners = [(-sw, -sh), (sw, -sh), (sw, sh), (-sw, sh)]
+        loop = [(px + a * ct + b * cr, py + a * st + b * sr) for a, b in corners]
+        loops.append(loop)
+    return loops
