@@ -102,7 +102,8 @@ def _cum(outline):
     return cum
 
 
-CAP_RIM = 0.8   # フタが帯の外面より張り出す量（見た目のリム）
+CAP_RIM = 2.0   # フタが帯の外面より張り出す量。スロット外縁との橋
+                # = CAP_RIM + T/2 - (T+KERF)/2 ≈ 1.95mm を確保（0.8だと0.75mmで割れる）
 
 
 def _point_tangent(outline, cum, s):
