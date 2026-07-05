@@ -152,11 +152,12 @@ def compose():
                 eng_lines.append((lines, x_cursor, row_y + T))
         x_cursor += w + GAP
 
-    # --- D字ポリゴンのフタ x2 ---
+    # --- D字ポリゴンのフタ x2（パネル群の下に GAP を空けて配置）---
     rim = offset_polygon(verts, T / 2 + RIM)
     dminx = min(p[0] for p in rim); dmaxx = max(p[0] for p in rim)
     dminy = min(p[1] for p in rim); dmaxy = max(p[1] for p in rim)
-    cap_y = row_y + T + H + T + GAP + (dmaxy - dminy) / 2 - dmaxy
+    panel_ymax = row_y + T + H + T           # パネル下端（タブ含む）
+    cap_y = panel_ymax + GAP - dminy         # フタ上端 = panel_ymax + GAP
     for k in range(2):
         ccx = -dminx + k * ((dmaxx - dminx) + GAP)
         cut_loops.append((rim, ccx, cap_y))
