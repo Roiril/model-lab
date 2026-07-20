@@ -157,24 +157,18 @@ def cut_eyes(body):
 
 # ---------------------------------------------------------------- 裏ひだ・裾
 def cut_flutes(body):
-    # 溝: 裏(-Y)側の下半分に縦の半円溝を彫る
+    # 溝: 裏(-Y)側の下半分〜底面まで縦の半円溝を彫る（裾は平ら）
     xs = np.linspace(-RX_BASE * 0.62, RX_BASE * 0.62, FLUTE_N)
     for x in xs:
-        t_mid = FLUTE_TOP * 0.5
-        ysurf = -y_front_at(x, min(t_mid, 0.5))   # 裏面は -Y
-        cyl = add_cylinder(FLUTE_R, HEIGHT * FLUTE_TOP + 0.02,
-                           (x, ysurf - FLUTE_R * 0.58, HEIGHT * FLUTE_TOP * 0.5),
+        ysurf = -y_front_at(x, 0.5)               # 裏面は -Y
+        # 縦の半円溝。下端は底面(z=0)を貫いて裾まで届かせる（底面自体は平らのまま、
+        # 裏の縁だけが溝でなみなみになる）。上端は FLUTE_TOP。
+        length = HEIGHT * FLUTE_TOP + 0.02
+        zc = HEIGHT * FLUTE_TOP * 0.5             # 下端 z=-10mm / 上端 z=FLUTE_TOP+10mm
+        cyl = add_cylinder(FLUTE_R, length,
+                           (x, ysurf - FLUTE_R * 0.58, zc),
                            (0, 0, 0))
         boolean(body, cyl, "DIFFERENCE")
-    # なみなみ裾: 底の裏側に扇状のカッターで山谷を作る
-    xs2 = np.linspace(-RX_BASE, RX_BASE, HEM_SCALLOP_N + 1)
-    for i in range(HEM_SCALLOP_N):
-        xc = (xs2[i] + xs2[i + 1]) / 2
-        # 谷位置に球を置いて裾を上に切り欠く（裏寄り）
-        bpy.ops.mesh.primitive_uv_sphere_add(
-            segments=24, ring_count=16, radius=HEM_SCALLOP_DEPTH * 1.15,
-            location=(xc, -RX_BASE * DEPTH_RATIO * 0.55, 0.0))
-        boolean(body, bpy.context.object, "DIFFERENCE")
 
 
 # ---------------------------------------------------------------- マーカー
