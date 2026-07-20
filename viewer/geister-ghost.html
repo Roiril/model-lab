@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ガイスター (Geister) — おばけコマ</title>
+<style>
+  :root{ --bg:#e9e9ec; --ink:#1c1a17; --panel:#f3f3f5; --line:#d7d7dc; --accent:#222; }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; height:100%; background:var(--bg); color:var(--ink);
+    font-family:"Hiragino Kaku Gothic ProN","Segoe UI",system-ui,sans-serif; }
+  #app{ display:flex; height:100%; }
+  #side{ width:200px; flex:0 0 200px; background:var(--panel); border-right:1px solid var(--line);
+    padding:14px 0; }
+  #side h1{ font-size:15px; margin:0 16px 4px; }
+  #side .sub{ font-size:11px; color:#6b6557; margin:0 16px 12px; }
+  .group{ font-size:11px; color:#7a7363; margin:14px 16px 4px; letter-spacing:.08em; }
+  button.item{ display:block; width:100%; text-align:left; border:0; background:none;
+    padding:8px 16px; font-size:13px; color:var(--ink); cursor:pointer; }
+  button.item:hover{ background:#e2e2e6; }
+  button.item.active{ background:var(--accent); color:#fff; }
+  #stage{ flex:1; position:relative; }
+  #cv{ display:block; width:100%; height:100%; }
+  #label{ position:absolute; left:18px; bottom:16px; font-size:13px; color:#6b6557;
+    background:rgba(233,233,236,.8); padding:6px 12px; border:1px solid var(--line); }
+  #hint{ position:absolute; right:18px; top:14px; font-size:11px; color:#8a8273; }
+</style>
+</head>
+<body>
+<div id="app">
+  <aside id="side">
+    <h1>ガイスター</h1>
+    <p class="sub">おばけコマ（白本体・赤/青マーカー）</p>
+    <div id="list"></div>
+  </aside>
+  <main id="stage">
+    <canvas id="cv"></canvas>
+    <div id="label">読み込み中…</div>
+    <div id="hint">ドラッグ=回転 / ホイール=ズーム / 右ドラッグ=移動</div>
+  </main>
+</div>
+
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"
+}}
+</script>
+
+<script type="module">
+import * as THREE from "three";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
+
+const ITEMS = [
+  { g:"単体", items:[ ["ghost_blue","青コマ", true], ["ghost_red","赤コマ"] ] },
+  { g:"並べて", items:[ ["geister-ghost","青・赤 2体"] ] },
+];
+
+const cv = document.getElementById("cv");
+const labelEl = document.getElementById("label");
+const renderer = new THREE.WebGLRenderer({ canvas:cv, antialias:true, preserveDrawingBuffer:true });
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 0.9;
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0xe9e9ec);
+const pmrem = new THREE.PMREMGenerator(renderer);
+scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+scene.environmentIntensity = 0.6;
+
+const camera = new THREE.PerspectiveCamera(38, 1, 0.001, 100);
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+
+const key = new THREE.DirectionalLight(0xffffff, 1.0); key.position.set(0.3,0.7,0.6); scene.add(key);
+const fill = new THREE.DirectionalLight(0xffffff, 0.35); fill.position.set(-0.4,0.2,-0.4); scene.add(fill);
+scene.add(new THREE.AmbientLight(0xffffff, 0.16));
+
+const loader = new GLTFLoader();
+let current = null;
+
+function frame(obj){
+  const box = new THREE.Box3().setFromObject(obj);
+  const size = box.getSize(new THREE.Vector3());
+  const center = box.getCenter(new THREE.Vector3());
+  controls.target.copy(center);
+  const vfov = camera.fov*Math.PI/180;
+  const aspect = camera.aspect || 1;
+  const fitH = (size.y*0.5) / Math.tan(vfov/2);
+  const fitW = (size.x*0.5) / (Math.tan(vfov/2)*aspect);
+  const d = Math.max(fitH, fitW) * 1.5;
+  camera.position.set(center.x + d*0.15, center.y + size.y*0.1, center.z + d);
+  const r = Math.max(size.x,size.y,size.z)*0.5 || 0.05;
+  camera.near = r*0.02; camera.far = r*80; camera.updateProjectionMatrix();
+  controls.update();
+}
+
+const BUST = Date.now();
+function load(name, nice){
+  labelEl.textContent = "読み込み中… " + nice;
+  loader.load(`/exports/geister-ghost/${name}.glb?v=${BUST}`,
+    (gltf)=>{
+      if(current) scene.remove(current);
+      current = gltf.scene;
+      scene.add(current);
+      frame(current);
+      labelEl.textContent = nice + "（高さ 50mm）";
+    },
+    undefined,
+    (err)=>{ labelEl.textContent = "読み込み失敗: "+name; console.error(err); }
+  );
+}
+
+const listEl = document.getElementById("list");
+let firstBtn = null;
+for(const grp of ITEMS){
+  const h = document.createElement("div"); h.className="group"; h.textContent=grp.g; listEl.appendChild(h);
+  for(const [name,nice] of grp.items){
+    const b = document.createElement("button"); b.className="item"; b.textContent=nice;
+    b.onclick = ()=>{ document.querySelectorAll(".item").forEach(x=>x.classList.remove("active"));
+      b.classList.add("active"); load(name,nice); };
+    listEl.appendChild(b);
+    if(!firstBtn) firstBtn = b;
+  }
+}
+
+function resize(){
+  const w = cv.clientWidth, h = cv.clientHeight;
+  if(cv.width!==w*devicePixelRatio || cv.height!==h*devicePixelRatio){
+    renderer.setSize(w,h,false);
+    camera.aspect = w/h; camera.updateProjectionMatrix();
+  }
+}
+function tick(){ resize(); controls.update(); renderer.render(scene,camera); requestAnimationFrame(tick); }
+tick();
+
+firstBtn.classList.add("active");
+load("ghost_blue","青コマ");
+</script>
+</body>
+</html>
