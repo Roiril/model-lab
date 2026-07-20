@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ガイスター (Geister) — 一式（盤＋コマ）</title>
+<style>
+  :root{ --bg:#e9e9ec; --ink:#1c1a17; --line:#d7d7dc; }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; height:100%; background:var(--bg); color:var(--ink);
+    font-family:"Hiragino Kaku Gothic ProN","Segoe UI",system-ui,sans-serif; }
+  #stage{ position:relative; height:100%; }
+  #cv{ display:block; width:100%; height:100%; }
+  #label{ position:absolute; left:18px; bottom:16px; font-size:13px; color:#6b6557;
+    background:rgba(233,233,236,.8); padding:6px 12px; border:1px solid var(--line); }
+  #hint{ position:absolute; right:18px; top:14px; font-size:11px; color:#8a8273; }
+</style>
+</head>
+<body>
+<main id="stage">
+  <canvas id="cv"></canvas>
+  <div id="label">読み込み中…</div>
+  <div id="hint">ドラッグ=回転 / ホイール=ズーム / 右ドラッグ=移動</div>
+</main>
+
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"
+}}
+</script>
+
+<script type="module">
+import * as THREE from "three";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
+
+const cv = document.getElementById("cv");
+const labelEl = document.getElementById("label");
+const renderer = new THREE.WebGLRenderer({ canvas:cv, antialias:true, preserveDrawingBuffer:true });
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 0.95;
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0xe9e9ec);
+const pmrem = new THREE.PMREMGenerator(renderer);
+scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+scene.environmentIntensity = 0.6;
+
+const camera = new THREE.PerspectiveCamera(40, 1, 0.001, 100);
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+
+const key = new THREE.DirectionalLight(0xffffff, 1.0); key.position.set(0.3,0.8,0.4); scene.add(key);
+const fill = new THREE.DirectionalLight(0xffffff, 0.35); fill.position.set(-0.4,0.3,-0.4); scene.add(fill);
+scene.add(new THREE.AmbientLight(0xffffff, 0.16));
+
+function frameAngled(obj){
+  const box = new THREE.Box3().setFromObject(obj);
+  const size = box.getSize(new THREE.Vector3());
+  const center = box.getCenter(new THREE.Vector3());
+  controls.target.copy(center);
+  const d = Math.max(size.x, size.z) * 1.15;
+  // 手前やや上から俯瞰
+  camera.position.set(center.x, center.y - d*0.85, center.z + d*0.8);
+  camera.near = d*0.01; camera.far = d*40; camera.updateProjectionMatrix();
+  controls.update();
+}
+
+new GLTFLoader().load(`/exports/geister-set/geister-set.glb?v=${Date.now()}`,
+  (gltf)=>{
+    scene.add(gltf.scene);
+    frameAngled(gltf.scene);
+    labelEl.textContent = "ガイスター一式（盤 390mm ＋ 青8・赤8）";
+  },
+  undefined,
+  (err)=>{ labelEl.textContent = "読み込み失敗: geister-set.glb"; console.error(err); }
+);
+
+function resize(){
+  const w = cv.clientWidth, h = cv.clientHeight;
+  if(cv.width!==w*devicePixelRatio || cv.height!==h*devicePixelRatio){
+    renderer.setSize(w,h,false);
+    camera.aspect = w/h; camera.updateProjectionMatrix();
+  }
+}
+function tick(){ resize(); controls.update(); renderer.render(scene,camera); requestAnimationFrame(tick); }
+tick();
+</script>
+</body>
+</html>
