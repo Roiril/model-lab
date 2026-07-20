@@ -171,22 +171,68 @@ def cut_eyes(body):
 
 
 # ---------------------------------------------------------------- 裏ひだ・裾
+def _flute_profile(zbot, ztop):
+    """溝カッターの (半径, z) プロファイル。下=太い円柱、上=テーパー＋丸い先端。"""
+    z1 = ztop - FLUTE_TAPER                     # テーパー開始
+    z2 = ztop - FLUTE_TIP_R                     # 丸め開始
+    prof = [(FLUTE_R, zbot), (FLUTE_R, z1)]
+    for i in range(1, 7):                       # 直線テーパー
+        v = i / 6
+        prof.append((FLUTE_R + (FLUTE_TIP_R - FLUTE_R) * v, z1 + (z2 - z1) * v))
+    for i in range(1, 5):                       # 先端を1/4円で丸める → apex(0,ztop)
+        a = (i / 4) * (math.pi / 2)
+        prof.append((FLUTE_TIP_R * math.cos(a), z2 + FLUTE_TIP_R * math.sin(a)))
+    return prof
+
+
+def _revolution_cutter(prof, x0, y0, nseg=48):
+    """(半径,z) プロファイルを Z 軸周りに回転した中実カッターを (x0,y0) に作る。"""
+    me = bpy.data.meshes.new("cutter")
+    ob = bpy.data.objects.new("cutter", me)
+    bpy.context.collection.objects.link(ob)
+    bm = bmesh.new()
+    rings = []
+    apex = None
+    for r, z in prof:
+        if r <= 1e-6:
+            apex = bm.verts.new((x0, y0, z))
+            break
+        ring = [bm.verts.new((x0 + r * math.cos(2 * math.pi * k / nseg),
+                              y0 + r * math.sin(2 * math.pi * k / nseg), z))
+                for k in range(nseg)]
+        rings.append(ring)
+    for i in range(len(rings) - 1):
+        r0, r1 = rings[i], rings[i + 1]
+        for k in range(nseg):
+            j = (k + 1) % nseg
+            bm.faces.new([r0[k], r0[j], r1[j], r1[k]])
+    if apex is not None:
+        top = rings[-1]
+        for k in range(nseg):
+            j = (k + 1) % nseg
+            bm.faces.new([top[k], top[j], apex])
+    bm.faces.new(list(reversed(rings[0])))       # 底キャップ
+    bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
+    bm.to_mesh(me)
+    bm.free()
+    return ob
+
+
 def cut_flutes(body):
-    # 溝: 裏(-Y)側の下半分〜底面まで縦の半円溝を彫る。
-    # 上端は球で丸めて滑らかにフェードさせ（硬い棚を作らない）、
-    # 下端は底面(z=0)を貫いて裾まで届かせる（底面自体は平ら、裏の縁だけ溝でなみなみ）。
-    xs = np.linspace(-RX_BASE * 0.62, RX_BASE * 0.62, FLUTE_N)
+    # 溝: 裏(-Y)側の下半分〜底面まで縦の溝を彫る。
+    # 上端はテーパー＋丸めで「しゅっと」した先端に、下端は底面(z=0)を貫いて裾まで。
     ztop = HEIGHT * FLUTE_TOP
     zbot = -0.010
+    if FLUTE_N > 1:
+        xs = np.linspace(-RX_BASE * FLUTE_SPREAD, RX_BASE * FLUTE_SPREAD, FLUTE_N)
+    else:
+        xs = [0.0]
+    prof = _flute_profile(zbot, ztop)
     for x in xs:
         ysurf = -y_front_at(x, 0.35)              # 裏面は -Y
         y = ysurf - FLUTE_R * 0.55
-        # カッターは結合せず個別に引く（結合すると自己交差で EXACT が壊れる）。
-        cyl = add_cylinder(FLUTE_R, ztop - zbot, (x, y, (ztop + zbot) / 2), (0, 0, 0))
-        boolean(body, cyl, "DIFFERENCE")
-        bpy.ops.mesh.primitive_uv_sphere_add(
-            segments=32, ring_count=16, radius=FLUTE_R, location=(x, y, ztop))
-        boolean(body, bpy.context.object, "DIFFERENCE")   # 上端を球で丸める
+        cutter = _revolution_cutter(prof, x, y)
+        boolean(body, cutter, "DIFFERENCE")
 
 
 # ---------------------------------------------------------------- マーカー
