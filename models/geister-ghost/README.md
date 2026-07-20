@@ -10,8 +10,9 @@
 
 ```
 ref_front/side/back.jpg   実物3面写真（採寸元・黒背景）
-build_glb.py              楕円ロフト本体＋目(boolean)＋ひだ(boolean)＋なみなみ裾＋マーカー
-                          → ghost_blue.glb / ghost_red.glb / geister-ghost.glb（青赤2体）
+build_glb.py              回転ロフト本体＋目(boolean)＋ひだ(boolean)＋埋め込みマーカー
+                          → ghost_blue.glb / ghost_red.glb（単体）
+                          → geister-ghost.glb（青8+赤8 の16体セット・メッシュ共有で軽量）
 render_preview.py         正面・側面・裏の3アングルを EEVEE でレンダ → _v_*.png
 ```
 
@@ -52,4 +53,5 @@ node server.js
 
 - 裏のひだは実物のドレープを様式化した近似（写真からの厳密復元ではない）
 - 中空シェル版・両面テクスチャは未対応（表示ソリッドのみ）
-- 実ゲームは赤8体＋青8体。ここでは各色1体の代表モデル（`geister-ghost.glb` に青赤並べて収録）
+- 実ゲームどおり赤8体＋青8体を `geister-ghost.glb` に 4×4 で収録（青8=奥2段, 赤8=手前2段）。
+  Unity では単体 `ghost_blue.glb` / `ghost_red.glb` を各8個インスタンスするのが軽量

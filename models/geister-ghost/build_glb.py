@@ -287,16 +287,31 @@ for name, rgb in VARIANTS.items():
     export(objs, os.path.join(OUT, f"ghost_{name}.glb"))
     print(f"  ghost_{name}.glb")
 
-# 俯瞰（青・赤 並べる）
+# セット俯瞰（実ゲームどおり 青8 + 赤8 の計16体を 4×4 グリッドに配置）
+# 上2段=青8、下2段=赤8。各色1体だけ実体を作り、残りはメッシュ共有のリンク複製で
+# 出力（glTF が同一メッシュを1つにまとめ、16体でも軽量）。
 clear()
-allobjs = []
-gap = RX_BASE * 3.4
-for i, (name, rgb) in enumerate(VARIANTS.items()):
-    objs = build_ghost(rgb)
-    dx = (i - (len(VARIANTS) - 1) / 2) * gap
-    for o in objs:
-        o.location.x += dx
-    allobjs += objs
-export(allobjs, os.path.join(OUT, "geister-ghost.glb"))
-print("DONE: height=%.0fmm width=%.0fmm  ->  %s" % (
+COLS = 4
+SX = RX_BASE * 2 * 1.5          # 横間隔（幅の1.5倍）
+SY = RX_BASE * 2 * 1.7          # 奥行間隔
+blue_proto = build_ghost(MARK_BLUE)
+red_proto = build_ghost(MARK_RED)
+
+
+def grid_xy(idx):
+    row, col = idx // COLS, idx % COLS
+    return (col - (COLS - 1) / 2) * SX, ((3 - row) - 1.5) * SY
+
+
+sel = []
+for idx in range(16):
+    proto = blue_proto if idx < 8 else red_proto
+    dx, dy = grid_xy(idx)
+    for po in proto:
+        no = po.copy()             # リンク複製（mesh データを共有）
+        bpy.context.collection.objects.link(no)
+        no.location = (dx, dy, po.location.z)
+        sel.append(no)
+export(sel, os.path.join(OUT, "geister-ghost.glb"))
+print("DONE: 16体セット (青8+赤8)  height=%.0fmm width=%.0fmm  ->  %s" % (
     HEIGHT * 1000, RX_BASE * 2000, OUT))
