@@ -26,8 +26,23 @@ os.makedirs(OUT, exist_ok=True)
 # 段階検証用トグル（True で裏のひだ・なみなみ裾を追加）
 DO_FLUTES = True
 
-_PT = np.array([p[0] for p in PROFILE])
-_PR = np.array([p[1] for p in PROFILE])
+def _rel_at(t):
+    """正面 half幅の RX_BASE 比を数式で返す（滑らかな1本曲線）。
+    t<=SHOULDER_T: ベル状に広がる裾（底=1.0 → 肩=SHOULDER_REL）
+    t> SHOULDER_T: 丸くブラントなドーム頭（肩=SHOULDER_REL → 頭頂=0）
+    """
+    if t <= SHOULDER_T:
+        u = t / SHOULDER_T                      # 0=底, 1=肩
+        base = SHOULDER_REL + (1.0 - SHOULDER_REL) * (1.0 - u) ** BODY_FLARE_POW
+        foot = FLARE_FOOT * math.exp(-(t / FOOT_WIDTH) ** 2)  # 最下部のスカート広がり
+        return base + foot
+    u = (t - SHOULDER_T) / (1.0 - SHOULDER_T)   # 0=肩, 1=頭頂
+    return SHOULDER_REL * max(0.0, 1.0 - u ** DOME_POW) ** 0.5
+
+
+# 数式プロファイルを密にサンプルして補間テーブル化
+_PT = np.linspace(0.0, 1.0, 400)
+_PR = np.array([_rel_at(t) for t in _PT])
 
 
 def rx_at(t):
@@ -157,28 +172,39 @@ def cut_eyes(body):
 
 # ---------------------------------------------------------------- 裏ひだ・裾
 def cut_flutes(body):
-    # 溝: 裏(-Y)側の下半分〜底面まで縦の半円溝を彫る（裾は平ら）
+    # 溝: 裏(-Y)側の下半分〜底面まで縦の半円溝を彫る。
+    # 上端は球で丸めて滑らかにフェードさせ（硬い棚を作らない）、
+    # 下端は底面(z=0)を貫いて裾まで届かせる（底面自体は平ら、裏の縁だけ溝でなみなみ）。
     xs = np.linspace(-RX_BASE * 0.62, RX_BASE * 0.62, FLUTE_N)
+    ztop = HEIGHT * FLUTE_TOP
+    zbot = -0.010
     for x in xs:
-        ysurf = -y_front_at(x, 0.5)               # 裏面は -Y
-        # 縦の半円溝。下端は底面(z=0)を貫いて裾まで届かせる（底面自体は平らのまま、
-        # 裏の縁だけが溝でなみなみになる）。上端は FLUTE_TOP。
-        length = HEIGHT * FLUTE_TOP + 0.02
-        zc = HEIGHT * FLUTE_TOP * 0.5             # 下端 z=-10mm / 上端 z=FLUTE_TOP+10mm
-        cyl = add_cylinder(FLUTE_R, length,
-                           (x, ysurf - FLUTE_R * 0.58, zc),
-                           (0, 0, 0))
+        ysurf = -y_front_at(x, 0.35)              # 裏面は -Y
+        y = ysurf - FLUTE_R * 0.55
+        # カッターは結合せず個別に引く（結合すると自己交差で EXACT が壊れる）。
+        cyl = add_cylinder(FLUTE_R, ztop - zbot, (x, y, (ztop + zbot) / 2), (0, 0, 0))
         boolean(body, cyl, "DIFFERENCE")
+        bpy.ops.mesh.primitive_uv_sphere_add(
+            segments=32, ring_count=16, radius=FLUTE_R, location=(x, y, ztop))
+        boolean(body, bpy.context.object, "DIFFERENCE")   # 上端を球で丸める
 
 
 # ---------------------------------------------------------------- マーカー
-def make_marker(rgb):
+def make_marker(body, rgb):
+    """裏面に平らな座ぐりを彫り、その底に色ディスクを埋め込む（出っ張らせない）。"""
     z = HEIGHT * MARK_T
-    ysurf = -y_front_at(0.0, MARK_T)      # 裏面中央（-Y）
-    # 曲面に埋もれて欠けないよう、外側へ 0.6mm 出す薄いパック
+    ysurf = -y_front_at(0.0, MARK_T)      # 裏面中央（-Y, 負値）。外側 = -Y 方向
+    # 座ぐり: 底面 y = ysurf + MARK_POCKET（胴側へ 0.6mm）から外へ貫くシリンダーで平らに削る
+    extra = 0.004
+    cyl = add_cylinder(MARK_R, MARK_POCKET + extra,
+                       (0.0, ysurf + MARK_POCKET / 2 - extra / 2, z),
+                       (math.radians(90), 0, 0))
+    boolean(body, cyl, "DIFFERENCE")
+    # 色ディスク: 外面を表面より 0.3mm 内側に（埋め込み）
+    disc_t = 0.0007
     bpy.ops.mesh.primitive_cylinder_add(
-        vertices=48, radius=MARK_R, depth=0.0008,
-        location=(0.0, ysurf - 0.0002, z),
+        vertices=48, radius=MARK_R * 0.94, depth=disc_t,
+        location=(0.0, ysurf + MARK_INSET + disc_t / 2, z),
         rotation=(math.radians(90), 0, 0))
     mk = bpy.context.object
     mk.name = "marker"
@@ -193,7 +219,7 @@ def build_ghost(variant_rgb):
     eyes = cut_eyes(body)
     if DO_FLUTES:
         cut_flutes(body)
-    marker = make_marker(variant_rgb)
+    marker = make_marker(body, variant_rgb)
     return [body, eyes, marker]
 
 
