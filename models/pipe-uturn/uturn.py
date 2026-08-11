@@ -138,18 +138,33 @@ def rail_profile(r):
     return pts
 
 
-def teardrop_profile():
-    """穴の断面。円＋45 度の屋根。屋根は TD_TOP で切る。"""
+def bore_profile(t):
+    """穴の断面。t=1 で 45 度の屋根つきティアドロップ、t=0 でただの円。
+
+    屋根の角は芯から 15.5mm あり、口元で外形を 14.7mm まで絞ると壁を突き破る。
+    口元では屋根を引っ込めて円に戻す。"""
     r = BORE_D / 2
-    hw = r * math.sqrt(2.0) - TD_TOP
-    pts = []
     n = 64
-    for i in range(n + 1):                   # 135° → 405°（上を空ける）
+    pts = []
+    for i in range(n + 1):                   # 135° → 405°
         a = math.radians(135.0 + 270.0 * i / n)
         pts.append((r * math.cos(a), r * math.sin(a)))
-    pts.append((hw, TD_TOP))
-    pts.append((-hw, TD_TOP))
-    return pts
+    # 残り 90° ぶん。円のときは弧上、ティアドロップのときは屋根の角
+    hw = r * math.sqrt(2.0) - TD_TOP
+    ends = []
+    for a_deg, roof in ((75.0, (hw, TD_TOP)), (105.0, (-hw, TD_TOP))):
+        a = math.radians(a_deg)
+        c = (r * math.cos(a), r * math.sin(a))
+        ends.append((c[0] + (roof[0] - c[0]) * t, c[1] + (roof[1] - c[1]) * t))
+    return pts + ends
+
+
+def bore_t(s):
+    """口元では 0、外形が太ったところで 1 になる。外形の絞りより遅らせて
+    屋根が壁から出ないようにする。"""
+    d = max(min(s, TOTAL_LEN - s), 0.0)
+    ss = smoothstep(min(d, MOUTH_TAPER) / MOUTH_TAPER)
+    return max(0.0, min(1.0, (ss - 0.15) / 0.55))
 
 
 # ---------------------------------------------------------------- build
@@ -163,8 +178,8 @@ def build_uturn(col_name="uturn"):
 
     ss2 = s_list(pad=20.0)
     st2 = [station_at(s) for s in ss2]
-    td = teardrop_profile()
-    boolean(body, sweep("bore", st2, [td] * len(ss2), col), "DIFFERENCE")
+    boolean(body, sweep("bore", st2, [bore_profile(bore_t(s)) for s in ss2], col),
+            "DIFFERENCE")
 
     _activate(body)
     bpy.ops.object.shade_flat()
