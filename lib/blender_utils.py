@@ -16,7 +16,10 @@ def export_stl(filename: str):
     base = filename[:-4] if filename.endswith(".stl") else filename
     stl_path = os.path.join(EXPORTS_DIR, base + ".stl")
     blend_path = os.path.join(EXPORTS_DIR, base + ".blend")
-    bpy.ops.wm.stl_export(filepath=stl_path, export_selected_objects=False)
+    # モデルは m 単位（1mm = 0.001）で組んでいる。STL に単位は無くスライサーは mm と読むので
+    # 1000 倍して書き出す。これが無いと 160mm のモデルが 0.16mm の粒として読み込まれる。
+    bpy.ops.wm.stl_export(filepath=stl_path, export_selected_objects=False,
+                          global_scale=1000.0)
     bpy.ops.wm.save_as_mainfile(filepath=blend_path, copy=True)
     print(f"Exported: {stl_path}")
     print(f"Saved:    {blend_path}")
