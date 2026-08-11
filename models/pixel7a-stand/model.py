@@ -25,9 +25,8 @@ def sp(s, h, x=0.0):
     return (x, BASE_Y + s * UY + h * NY, BASE_Z + s * UZ + h * NZ)
 
 
-def add_box(name, size, loc, tilt=False):
-    rot = (A, 0.0, 0.0) if tilt else (0.0, 0.0, 0.0)
-    bpy.ops.mesh.primitive_cube_add(size=1.0, location=loc, rotation=rot)
+def add_box(name, size, loc, rot_x=0.0):
+    bpy.ops.mesh.primitive_cube_add(size=1.0, location=loc, rotation=(rot_x, 0.0, 0.0))
     o = bpy.context.object
     o.name = name
     o.scale = size
@@ -35,60 +34,81 @@ def add_box(name, size, loc, tilt=False):
     return o
 
 
-def add_cyl(name, r, depth, loc):
-    bpy.ops.mesh.primitive_cylinder_add(
-        radius=r, depth=depth, location=loc, rotation=(A, 0.0, 0.0), vertices=64)
-    o = bpy.context.object
-    o.name = name
-    return o
-
-
-def cut(target, cutter):
+def _apply(target, other, op):
     bpy.ops.object.select_all(action="DESELECT")
     target.select_set(True)
     bpy.context.view_layer.objects.active = target
-    m = target.modifiers.new("cut", "BOOLEAN")
-    m.operation = "DIFFERENCE"
-    m.object = cutter
+    m = target.modifiers.new("bool", "BOOLEAN")
+    m.operation = op
+    m.object = other
     m.solver = "EXACT"
     bpy.ops.object.modifier_apply(modifier=m.name)
-    bpy.data.objects.remove(cutter, do_unlink=True)
+    bpy.data.objects.remove(other, do_unlink=True)
+
+
+def cut(target, cutter):
+    _apply(target, cutter, "DIFFERENCE")
+
+
+def join(target, part):
+    _apply(target, part, "UNION")
 
 
 # --- 本体ブランク --------------------------------------------------------
 body = add_box("pixel7a_stand", (STAND_W, STAND_D, STAND_H), (0.0, 0.0, STAND_H / 2))
 
 # --- 斜面を切り出す（h > 0 側を落とす） ----------------------------------
-cut(body, add_box("cut_slope", (BIG, BIG, BIG), sp(SLOPE_LEN / 2, BIG / 2), tilt=True))
+cut(body, add_box("cut_slope", (BIG, BIG, BIG), sp(SLOPE_LEN / 2, BIG / 2), A))
 
 # --- スマホスロット（天面の差し込み口から下端の受けまで） ----------------
 slot_cut_len = SLOT_W + SLOT_ENTRY
 cut(body, add_box("cut_slot", (SLOT_L, slot_cut_len, SLOT_T),
-                  sp(STOPPER + slot_cut_len / 2, -(FRONT_SKIN + SLOT_T / 2)), tilt=True))
+                  sp(STOPPER + slot_cut_len / 2, -(FRONT_SKIN + SLOT_T / 2)), A))
 
 # --- カメラ窓（外皮を貫通。カメラバーがここから顔を出す） ----------------
 win_x = SLOT_L / 2 - CAM_EDGE_RIM - CAM_WIN_L / 2
 cut(body, add_box("cut_camwin", (CAM_WIN_L, WIN_S_LEN, 0.020),
-                  sp(WIN_S_CENTER, 0.0, win_x), tilt=True))
+                  sp(WIN_S_CENTER, 0.0, win_x), A))
 
-# --- 内部の肉抜き（底面開口・中央にリブを残す） --------------------------
+# --- 差し込み口のテーパー（外皮側だけ斜めに逃がす） ----------------------
+phi = math.atan2(TAPER_D, TAPER_LEN)
+ta = A + phi   # 斜面より立てる。s が増えるほど外皮の内面が外へ退く
+tdy, tdz = math.cos(ta), math.sin(ta)      # テーパー面に沿う方向
+tny, tnz = -math.sin(ta), math.cos(ta)     # テーパー面の外向き法線
+tp = sp(TAPER_S0, -FRONT_SKIN)
+thalf = 0.030
+# テーパー面から内側へ TAPER_D だけの層を抜く（外皮の外面は削らない）
+cut(body, add_box("cut_taper", (2 * STAND_W, 2 * thalf, TAPER_D),
+                  (0.0,
+                   tp[1] + thalf * tdy - (TAPER_D / 2) * tny,
+                   tp[2] + thalf * tdz - (TAPER_D / 2) * tnz), ta))
+
+# --- 指がかり（中央だけ外皮と裏板を落としてスマホ上端を摘まめるようにする） ---
+grip_len = 0.040
+cut(body, add_box("cut_grip", (GRIP_W, grip_len, 0.020),
+                  sp(GRIP_S0 + grip_len / 2, -0.006), A))
+
+# --- 内部の肉抜き（底板は残す） ------------------------------------------
 cav_h = -(FRONT_SKIN + SLOT_T + BACK_PLATE)
-for sign in (-1.0, 1.0):
-    x_in = sign * RIB_W / 2
-    x_out = sign * (STAND_W / 2 - SIDE_WALL)
-    cav = add_box("cut_cavity", (abs(x_out - x_in), STAND_D - 2 * WALL_Y, 0.200),
-                  ((x_in + x_out) / 2, 0.0, 0.080))
-    cut(cav, add_box("cut_cavity_lid", (BIG, BIG, BIG), sp(SLOPE_LEN / 2, cav_h + BIG / 2), tilt=True))
-    cut(body, cav)
+cav = add_box("cut_cavity", (STAND_W - 2 * SIDE_WALL, STAND_D - 2 * WALL_Y, 0.200),
+              (0.0, 0.0, BOTTOM_T + 0.100))
+cut(cav, add_box("cut_cavity_lid", (BIG, BIG, BIG), sp(SLOPE_LEN / 2, cav_h + BIG / 2), A))
+cut(body, cav)
 
-# --- 指穴（裏板を貫通。ここを押してスマホを抜く） ------------------------
-for x in (-FINGER_X, FINGER_X):
-    cut(body, add_cyl("cut_finger", FINGER_R, FINGER_DEPTH,
-                      sp(FINGER_S, cav_h + FINGER_DEPTH / 2 - 0.004, x)))
+# --- 保持リブ（裏板から 0.3mm。スマホ上部を外皮側へ押して 3 点で支える） ---
+join(body, add_box("rib_hold", (SLOT_L - 2 * RIB_SIDE_GAP, RIB_BW, RIB_H + RIB_EMBED),
+                   sp(RIB_S, -(FRONT_SKIN + SLOT_T) + (RIB_H - RIB_EMBED) / 2), A))
 
-# --- USB-C / スピーカーの逃げ（スマホ下端側の側壁を切り欠く） ------------
+# --- 側壁リブ（長辺方向のガタを 1.0mm → 0.3mm に詰める） -----------------
+side_rib_len = SIDE_RIB_S1 - SIDE_RIB_S0
+for sx in (-1.0, 1.0):
+    join(body, add_box("rib_side", (RIB_EMBED + SIDE_RIB_H, side_rib_len, SLOT_T - 0.002),
+                       sp(SIDE_RIB_S0 + side_rib_len / 2, -(FRONT_SKIN + SLOT_T / 2),
+                          sx * (SLOT_L / 2 + (RIB_EMBED - SIDE_RIB_H) / 2)), A))
+
+# --- USB-C / スピーカーの逃げ（リブより後に抜いて塞がないようにする） ----
 cut(body, add_box("cut_usb", (0.020, USB_W, 0.012),
-                  sp(USB_S, -(FRONT_SKIN + 0.006), -(STAND_W / 2 - SIDE_WALL)), tilt=True))
+                  sp(USB_S, -(FRONT_SKIN + 0.006), -(STAND_W / 2 - SIDE_WALL)), A))
 
 bpy.ops.object.select_all(action="DESELECT")
 body.select_set(True)
