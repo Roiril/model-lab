@@ -67,8 +67,8 @@ cut(body, add_box("cut_slot", (SLOT_L, slot_cut_len, SLOT_T),
 
 # --- カメラ窓（外皮を貫通。カメラバーがここから顔を出す） ----------------
 win_x = SLOT_L / 2 - CAM_EDGE_RIM - CAM_WIN_L / 2
-cut(body, add_box("cut_camwin", (CAM_WIN_L, WIN_S_LEN, 0.020),
-                  sp(WIN_S_CENTER, 0.0, win_x), A))
+cut(body, add_box("cut_camwin", (CAM_WIN_L, WIN_S_LEN, 0.010),
+                  sp(WIN_S_CENTER, -0.003, win_x), A))
 
 # --- 差し込み口のテーパー（外皮側だけ斜めに逃がす） ----------------------
 phi = math.atan2(TAPER_D, TAPER_LEN)
@@ -102,7 +102,7 @@ join(body, add_box("rib_hold", (SLOT_L - 2 * RIB_SIDE_GAP, RIB_BW, RIB_H + RIB_E
 # --- 側壁リブ（長辺方向のガタを 1.0mm → 0.3mm に詰める） -----------------
 side_rib_len = SIDE_RIB_S1 - SIDE_RIB_S0
 for sx in (-1.0, 1.0):
-    join(body, add_box("rib_side", (RIB_EMBED + SIDE_RIB_H, side_rib_len, SLOT_T - 0.002),
+    join(body, add_box("rib_side", (RIB_EMBED + SIDE_RIB_H, side_rib_len, SLOT_T - 0.004),
                        sp(SIDE_RIB_S0 + side_rib_len / 2, -(FRONT_SKIN + SLOT_T / 2),
                           sx * (SLOT_L / 2 + (RIB_EMBED - SIDE_RIB_H) / 2)), A))
 
