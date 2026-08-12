@@ -95,16 +95,18 @@ cav = add_box("cut_cavity", (STAND_W - 2 * SIDE_WALL, STAND_D - 2 * WALL_Y, 0.20
 cut(cav, add_box("cut_cavity_lid", (BIG, BIG, BIG), sp(SLOPE_LEN / 2, cav_h + BIG / 2), A))
 cut(body, cav)
 
-# --- 保持リブ（裏板から 0.3mm。スマホ上部を外皮側へ押して 3 点で支える） ---
-join(body, add_box("rib_hold", (SLOT_L - 2 * RIB_SIDE_GAP, RIB_BW, RIB_H + RIB_EMBED),
-                   sp(RIB_S, -(FRONT_SKIN + SLOT_T) + (RIB_H - RIB_EMBED) / 2), A))
+# --- 保持リブ（裏板から突き出してスマホ上部を外皮側へ押す。0 なら作らない） ---
+if RIB_H > 0:
+    join(body, add_box("rib_hold", (SLOT_L - 2 * RIB_SIDE_GAP, RIB_BW, RIB_H + RIB_EMBED),
+                       sp(RIB_S, -(FRONT_SKIN + SLOT_T) + (RIB_H - RIB_EMBED) / 2), A))
 
-# --- 側壁リブ（長辺方向のガタを 1.0mm → 0.3mm に詰める） -----------------
-side_rib_len = SIDE_RIB_S1 - SIDE_RIB_S0
-for sx in (-1.0, 1.0):
-    join(body, add_box("rib_side", (RIB_EMBED + SIDE_RIB_H, side_rib_len, SLOT_T - 0.004),
-                       sp(SIDE_RIB_S0 + side_rib_len / 2, -(FRONT_SKIN + SLOT_T / 2),
-                          sx * (SLOT_L / 2 + (RIB_EMBED - SIDE_RIB_H) / 2)), A))
+# --- 側壁リブ（長辺方向のガタ止め。0 なら作らない） ----------------------
+if SIDE_RIB_H > 0:
+    side_rib_len = SIDE_RIB_S1 - SIDE_RIB_S0
+    for sx in (-1.0, 1.0):
+        join(body, add_box("rib_side", (RIB_EMBED + SIDE_RIB_H, side_rib_len, SLOT_T - 0.004),
+                           sp(SIDE_RIB_S0 + side_rib_len / 2, -(FRONT_SKIN + SLOT_T / 2),
+                              sx * (SLOT_L / 2 + (RIB_EMBED - SIDE_RIB_H) / 2)), A))
 
 # --- USB-C / スピーカーの逃げ（リブより後に抜いて塞がないようにする） ----
 cut(body, add_box("cut_usb", (0.020, USB_W, 0.012),
