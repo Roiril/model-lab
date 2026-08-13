@@ -1,0 +1,13 @@
+import sys, os
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "../../lib"))
+sys.path.insert(0, os.path.dirname(__file__))
+
+from blender_utils import clear_scene, export_stl
+from kanji_utils import build_kanji, log_bbox, count_loose_parts
+from params import CHAR, TARGET_SIZE, THICKNESS
+
+clear_scene()
+obj = build_kanji(CHAR, "kanji_ban", TARGET_SIZE, THICKNESS)
+log_bbox(obj, "kanji_ban")
+print(f"[kanji_ban] loose parts = {count_loose_parts(obj)}")
+export_stl("kanji_ban")
