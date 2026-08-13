@@ -117,6 +117,10 @@ grip_len = 0.040
 cut(body, add_box("cut_grip", (GRIP_W, grip_len, 0.020),
                   sp(GRIP_S0 + grip_len / 2, -0.006), A))
 
+# 指がかりの開口に中央ガセットが橋のように残るので、その区間だけ落とす。
+cut(body, add_box("cut_grip_gusset", (GUSSET_W + 0.004, grip_len, 0.041),
+                  sp(GRIP_S0 + grip_len / 2, -0.0345), A))
+
 # --- USB-C / スピーカーの逃げ（スマホ下端側の側壁だけを切り欠く） --------
 # 外皮・裏板とは面一にせず、厚み方向はスロットの内側で止める（coplanar を避ける）。
 usb_x0 = -(MOUNT_W / 2 + 0.005)
@@ -133,6 +137,13 @@ for x0, x1 in ((-MOUNT_W / 2 + SIDE_WALL, -GUSSET_W / 2),
     cut(cav, add_box("cut_cavity_lid", (BIG, BIG, BIG),
                      sp(SLOPE_LEN / 2, -SHELL_TOTAL + BIG / 2), A))
     cut(body, cav)
+
+# --- 面積ゼロの縮退面を掃除する（テーパーが外皮の先端をほぼ一点で切るため出る） ---
+_bm = bmesh.new()
+_bm.from_mesh(body.data)
+bmesh.ops.dissolve_degenerate(_bm, dist=1e-6, edges=_bm.edges[:])
+_bm.to_mesh(body.data)
+_bm.free()
 
 bpy.ops.object.select_all(action="DESELECT")
 body.select_set(True)
