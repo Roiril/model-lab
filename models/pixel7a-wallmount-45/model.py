@@ -64,9 +64,23 @@ def cut(target, cutter):
 
 
 def back_of_slot(bite):
-    """スロット部の裏面より背板側だけを残すためのカッター。"""
+    """スロット部の裏面より手前（h が大きい側）を落とすカッター。"""
     return add_box("lid", (BIG, BIG, BIG),
                    sp(SLOPE_LEN / 2, -SHELL_TOTAL + bite + BIG / 2), ROT)
+
+
+def beyond_entry():
+    """差し込み口より先（s > SLOPE_LEN）を落とすカッター。
+    これが無いとガセットがスロット部を突き抜けて向こう側まで伸びる。"""
+    return add_box("end_lid", (BIG, BIG, BIG),
+                   sp(SLOPE_LEN + BIG / 2, -SHELL_TOTAL / 2), ROT)
+
+
+def outside_width(sign):
+    """スロット部の幅の外（|x| > MOUNT_W/2）を落とすカッター。"""
+    return add_box("side_lid", (BIG, BIG, BIG),
+                   sp(SLOPE_LEN / 2, -SHELL_TOTAL / 2,
+                      sign * (MOUNT_W / 2 + BIG / 2)), ROT)
 
 
 # =========================================================================
@@ -134,6 +148,12 @@ for i in range(GUSSET_N):
                       (GUSSET_T, Y_MAX - y0, z1 - z0),
                       (xg, y0 + (Y_MAX - y0) / 2, (z0 + z1) / 2))
         cut(gus, back_of_slot(GUSSET_BITE))   # スロット部の裏板へ BITE 食い込ませる
+        if len(gus.data.vertices):
+            cut(gus, beyond_entry())          # 差し込み口より先へ伸ばさない
+        if len(gus.data.vertices):
+            cut(gus, outside_width(1.0))      # 幅の外へも伸ばさない
+        if len(gus.data.vertices):
+            cut(gus, outside_width(-1.0))
         if len(gus.data.vertices) == 0 or gus.dimensions.y < GUSSET_MIN:
             bpy.data.objects.remove(gus, do_unlink=True)
             continue
