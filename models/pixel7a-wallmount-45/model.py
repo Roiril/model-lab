@@ -202,6 +202,26 @@ for o in list(bpy.data.objects):
 cut(body, add_box("open_grip_slot", (GRIP_W, 0.040, GRIP_DEPTH),
                   sp(GRIP_S0 + 0.020, -(GRIP_DEPTH / 2 - 0.004)), ROT))
 
+# =========================================================================
+# 6) ねじ穴（背板に M4 の通し穴と皿座繰り。ガセットの間に置く）
+# =========================================================================
+plate = bpy.data.objects["pixel7a_wm45_plate"]
+pitch = plate_w / GUSSET_N
+for sx in (1, 5):                      # ガセット i と i+1 の中間
+    hx = PLATE_X0 + pitch * (sx + 1.0)
+    for hz in (SCREW_INSET, PLATE_H - SCREW_INSET):
+        bpy.ops.mesh.primitive_cylinder_add(
+            radius=SCREW_D / 2, depth=0.040, vertices=48,
+            location=(hx, 0.020, hz), rotation=(math.pi / 2, 0.0, 0.0))
+        cut(plate, bpy.context.object)
+        # 皿座繰り（部屋側から彫る。壁に当たる面は平らなまま残す）
+        bpy.ops.mesh.primitive_cone_add(
+            radius1=SCREW_D / 2, radius2=SCREW_HEAD / 2, depth=SCREW_SINK,
+            vertices=48, location=(hx, PLATE_T - SCREW_SINK / 2, hz),
+            rotation=(-math.pi / 2, 0.0, 0.0))
+        cut(plate, bpy.context.object)
+print("screw holes: 4 (M4)")
+
 # --- 各パーツを掃除して報告 ----------------------------------------------
 for o in bpy.data.objects:
     if o.type != "MESH":
