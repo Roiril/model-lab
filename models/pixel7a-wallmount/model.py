@@ -107,10 +107,12 @@ tdy, tdz = math.cos(ta), math.sin(ta)
 tny, tnz = math.sin(ta), -math.cos(ta)
 tp = sp(TAPER_S0, -FRONT_SKIN)
 thalf = 0.030
-cut(body, add_box("cut_taper", (2 * MOUNT_W, 2 * thalf, TAPER_D),
+# テーパー面から「スロット側（-tn）」へ抜く。外側へ当てると外皮が 2 枚に割れて
+# 外面側が薄い膜として残り、間に隙間ができる。
+cut(body, add_box("cut_taper", (2 * MOUNT_W, 2 * thalf, TAPER_CUT),
                   (0.0,
-                   tp[1] + thalf * tdy + (TAPER_D / 2) * tny,
-                   tp[2] + thalf * tdz + (TAPER_D / 2) * tnz), ta))
+                   tp[1] + thalf * tdy - (TAPER_CUT / 2) * tny,
+                   tp[2] + thalf * tdz - (TAPER_CUT / 2) * tnz), ta))
 
 # --- 指がかり（中央だけ外皮と裏板を落としてスマホ上端を摘まめるようにする） ---
 grip_len = 0.040
@@ -124,7 +126,7 @@ cut(body, add_box("cut_grip_gusset", (GUSSET_W + 0.004, grip_len, 0.041),
 # --- USB-C / スピーカーの逃げ（スマホ下端側の側壁だけを切り欠く） --------
 # 外皮・裏板とは面一にせず、厚み方向はスロットの内側で止める（coplanar を避ける）。
 usb_x0 = -(MOUNT_W / 2 + 0.005)
-usb_x1 = -(SLOT_L / 2 - 0.0005)
+usb_x1 = -(SLOT_L / 2 - USB_INTO)
 cut(body, add_box("cut_usb", (usb_x1 - usb_x0, USB_W, USB_T),
                   sp(USB_S, -SHELL_TOTAL / 2, (usb_x0 + usb_x1) / 2), A))
 
