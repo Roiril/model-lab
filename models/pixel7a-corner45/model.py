@@ -157,14 +157,36 @@ r = a + WING_REAR           # 後端を落とす位置の u
 
 
 def wing_poly(q):
-    """前端を u = q に置いたウィング断面（u, v）。CCW。"""
+    """前端を u = q に置いたウィング断面（u, v）。CCW。
+
+    幅の打ち切り WING_VMAX は、前端と壁の間に楔が残る範囲までしか使えない。
+    足りない高さ（ポケットの下の方）では自動的に詰まり、鰭の外形が斜めになる。
+    """
+    vmax = min(WING_VMAX, q - WING_WEDGE)
     return [
-        (r, a),                  # 側壁ぎわの後端
-        (q, a),                  # 側壁ぎわの前端
-        (q, WING_VMAX),          # 前面の外端
-        (WING_VMAX, WING_VMAX),  # 壁の上の外端
-        (r, r),                  # 壁の上の後端
+        (r, a),          # 側壁ぎわの後端
+        (q, a),          # 側壁ぎわの前端
+        (q, vmax),       # 前面の外端
+        (vmax, vmax),    # 壁の上の外端
+        (r, r),          # 壁の上の後端
     ]
+
+
+def check_shell(name, outer, inner, t):
+    """内形の各点が、すべての辺から t 以上離れているか。割れば前壁が薄くなる。"""
+    worst = 1e9
+    n = len(outer)
+    for i in range(n):
+        (x0, y0), (x1, y1) = outer[i], outer[(i + 1) % n]
+        dx, dy = x1 - x0, y1 - y0
+        L = math.hypot(dx, dy)
+        for (px, py) in inner:
+            worst = min(worst, ((px - x0) * dy - (py - y0) * dx) / L * -1)
+    # 角では幾何的に少し薄くなる。ノズル 2 本ぶんを割ったら設計の失敗とみなす。
+    if worst < 0.0016:
+        print("!! %s: 肉厚が %.2fmm しか無い（狙いは %.2fmm）"
+              % (name, worst * 1000, t * 1000))
+    return worst
 
 
 # 高さの取り方。外皮の上端（H_W）まではポケットの前面に沿って前へ倒れながら太り、
@@ -180,8 +202,13 @@ for sign in (1.0, -1.0):
     n = len(polys[0])
     verts, faces = [], []
     for (z, _), p in zip(LEVELS, polys):
+        inner = offset_poly(p, WING_T)
+        if sign > 0:
+            print("wing z=%6.2fmm 肉厚 %.2fmm"
+                  % (z * 1000, check_shell("z=%.1f" % (z * 1000), p, inner,
+                                           WING_T) * 1000))
         verts += [world(u, sign * v, z) for (u, v) in p]
-        verts += [world(u, sign * v, z) for (u, v) in offset_poly(p, WING_T)]
+        verts += [world(u, sign * v, z) for (u, v) in inner]
     for k in range(len(LEVELS) - 1):
         O0, I0 = k * 2 * n, k * 2 * n + n
         O1, I1 = (k + 1) * 2 * n, (k + 1) * 2 * n + n
