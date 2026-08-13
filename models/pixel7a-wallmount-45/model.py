@@ -129,12 +129,11 @@ PLATE_X1 = max(c[0] for c in corners) + PLATE_MARGIN
 plate_w = PLATE_X1 - PLATE_X0
 Y_MAX = max(c[1] for c in corners)
 
-# 背板もガセットも上下の帯だけにする（全高にすると材料が倍以上になる）
+# 背板は全面。ガセットは箱の中に隠れるので上下の帯だけにする
 BANDS = ((0.0, BAND_H), (PLATE_H - BAND_H, PLATE_H))
 
-for j, (z0, z1) in enumerate(BANDS):
-    add_box("pixel7a_wm45_plate_%d" % j, (plate_w, PLATE_T, z1 - z0),
-            ((PLATE_X0 + PLATE_X1) / 2, PLATE_T / 2, (z0 + z1) / 2))
+add_box("pixel7a_wm45_plate", (plate_w, PLATE_T, PLATE_H),
+        ((PLATE_X0 + PLATE_X1) / 2, PLATE_T / 2, PLATE_H / 2))
 
 # =========================================================================
 # 3) ガセット（背板とスロット部を渡す縦の板。両側へ BITE 食い込ませる）
@@ -162,6 +161,46 @@ for i in range(GUSSET_N):
 print("gussets: %d / %d" % (made, GUSSET_N))
 print("plate x: %.2f .. %.2f mm, Y_MAX: %.2f mm"
       % (PLATE_X0 * 1000, PLATE_X1 * 1000, Y_MAX * 1000))
+
+# =========================================================================
+# 4) 外装（左右・底・上を張って箱にする）
+# =========================================================================
+y0c = PLATE_T - GUSSET_BITE
+covers = [
+    ("left",   (COVER_T, Y_MAX - y0c, PLATE_H),
+     (PLATE_X0 + COVER_T / 2, y0c + (Y_MAX - y0c) / 2, PLATE_H / 2)),
+    ("right",  (COVER_T, Y_MAX - y0c, PLATE_H),
+     (PLATE_X1 - COVER_T / 2, y0c + (Y_MAX - y0c) / 2, PLATE_H / 2)),
+    ("bottom", (plate_w, Y_MAX - y0c, COVER_T),
+     ((PLATE_X0 + PLATE_X1) / 2, y0c + (Y_MAX - y0c) / 2, COVER_T / 2)),
+    ("top",    (plate_w, Y_MAX - y0c, COVER_T),
+     ((PLATE_X0 + PLATE_X1) / 2, y0c + (Y_MAX - y0c) / 2, PLATE_H - COVER_T / 2)),
+]
+for name, size, loc in covers:
+    c = add_box("pixel7a_wm45_cover_%s" % name, size, loc)
+    cut(c, back_of_slot(GUSSET_BITE))     # スロット部の裏面より背板側だけ残す
+    if len(c.data.vertices):
+        cut(c, beyond_entry())            # 差し込み口より先へ出さない
+    if len(c.data.vertices) == 0:
+        bpy.data.objects.remove(c, do_unlink=True)
+
+# =========================================================================
+# 5) 全パーツに開口を通す（スマホの抜き差しと指の道を塞がない）
+# =========================================================================
+for o in list(bpy.data.objects):
+    if o.type != "MESH" or o.name == "pixel7a_wm45_slot":
+        continue
+    cut(o, add_box("open_slot", (SLOT_L, slot_cut_len, SLOT_T),
+                   sp(STOPPER + slot_cut_len / 2, -(FRONT_SKIN + SLOT_T / 2)), ROT))
+    if len(o.data.vertices):
+        cut(o, add_box("open_grip", (GRIP_W, 0.040, GRIP_DEPTH),
+                       sp(GRIP_S0 + 0.020, -(GRIP_DEPTH / 2 - 0.004)), ROT))
+    if len(o.data.vertices) == 0:
+        bpy.data.objects.remove(o, do_unlink=True)
+
+# スロット部の指がかりも背板側まで通す
+cut(body, add_box("open_grip_slot", (GRIP_W, 0.040, GRIP_DEPTH),
+                  sp(GRIP_S0 + 0.020, -(GRIP_DEPTH / 2 - 0.004)), ROT))
 
 # --- 各パーツを掃除して報告 ----------------------------------------------
 for o in bpy.data.objects:
