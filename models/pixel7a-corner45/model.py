@@ -156,9 +156,8 @@ a = HALF - WING_BITE        # 側壁ぎわの面の v（ポケットへ 2mm 食�
 r = a + WING_REAR           # 後端を落とす位置の u
 
 
-def wing_poly(z):
-    """高さ z でのウィング断面（u, v）。CCW。"""
-    q = U_ORG + z / math.tan(A) + PAD_OVER   # ポケット前面の u（そこまで伸ばす）
+def wing_poly(q):
+    """前端を u = q に置いたウィング断面（u, v）。CCW。"""
     return [
         (r, a),                  # 側壁ぎわの後端
         (q, a),                  # 側壁ぎわの前端
@@ -168,23 +167,33 @@ def wing_poly(z):
     ]
 
 
+# 高さの取り方。外皮の上端（H_W）まではポケットの前面に沿って前へ倒れながら太り、
+# そこから上はポケットが無いので前端を絞って細い鰭にする。上へ伸ばすほど、前へ
+# 倒れようとする力を受け止める腕が長くなる。壁に当たる面の幅は上まで変わらない。
+LEVELS = [(0.0, U_ORG + PAD_OVER),
+          (H_W, U_ORG + H_W / math.tan(A) + PAD_OVER),
+          (WING_H, r + WING_TOP_D)]
+
 wings = []
 for sign in (1.0, -1.0):
-    lo, hi = wing_poly(0.0), wing_poly(H_W)
-    loi, hii = offset_poly(lo, WING_T), offset_poly(hi, WING_T)
-    verts = ([world(u, sign * v, 0.0) for (u, v) in lo]
-             + [world(u, sign * v, H_W) for (u, v) in hi]
-             + [world(u, sign * v, 0.0) for (u, v) in loi]
-             + [world(u, sign * v, H_W) for (u, v) in hii])
-    n = len(lo)
-    OL, OH, IL, IH = 0, n, 2 * n, 3 * n
-    faces = []
+    polys = [wing_poly(q) for (_, q) in LEVELS]
+    n = len(polys[0])
+    verts, faces = [], []
+    for (z, _), p in zip(LEVELS, polys):
+        verts += [world(u, sign * v, z) for (u, v) in p]
+        verts += [world(u, sign * v, z) for (u, v) in offset_poly(p, WING_T)]
+    for k in range(len(LEVELS) - 1):
+        O0, I0 = k * 2 * n, k * 2 * n + n
+        O1, I1 = (k + 1) * 2 * n, (k + 1) * 2 * n + n
+        for i in range(n):
+            j = (i + 1) % n
+            faces.append((O0 + i, O0 + j, O1 + j, O1 + i))   # 外側
+            faces.append((I0 + j, I0 + i, I1 + i, I1 + j))   # 内側
+    top = (len(LEVELS) - 1) * 2 * n
     for i in range(n):
         j = (i + 1) % n
-        faces.append((OL + i, OL + j, OH + j, OH + i))   # 外側
-        faces.append((IL + j, IL + i, IH + i, IH + j))   # 内側
-        faces.append((OL + j, OL + i, IL + i, IL + j))   # 下端の縁
-        faces.append((OH + i, OH + j, IH + j, IH + i))   # 上端の縁
+        faces.append((j, i, n + i, n + j))                   # 下端の縁
+        faces.append((top + i, top + j, top + n + j, top + n + i))   # 上端の縁
     wings.append(make_mesh("pixel7a_c45_wing_%s" % ("l" if sign > 0 else "r"),
                            verts, faces))
 
@@ -192,10 +201,10 @@ for sign in (1.0, -1.0):
 tab_x1 = r * R2 + PAD_LAP        # ウィングの壁面と重ねる
 tab_x0 = r * R2 - PAD_TAB
 tab_len = tab_x1 - tab_x0
-wings.append(add_box("pixel7a_c45_pad_l", (tab_len, PAD_TAB_T, H_W),
-                     ((tab_x0 + tab_x1) / 2, PAD_TAB_T / 2, H_W / 2)))
-wings.append(add_box("pixel7a_c45_pad_r", (PAD_TAB_T, tab_len, H_W),
-                     (PAD_TAB_T / 2, (tab_x0 + tab_x1) / 2, H_W / 2)))
+wings.append(add_box("pixel7a_c45_pad_l", (tab_len, PAD_TAB_T, WING_H),
+                     ((tab_x0 + tab_x1) / 2, PAD_TAB_T / 2, WING_H / 2)))
+wings.append(add_box("pixel7a_c45_pad_r", (PAD_TAB_T, tab_len, WING_H),
+                     (PAD_TAB_T / 2, (tab_x0 + tab_x1) / 2, WING_H / 2)))
 
 # --- USB-C / スピーカーの逃げ（側壁とウィングを貫く） ---
 usb_t0 = -(HALF + WING_T + 0.006)
