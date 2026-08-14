@@ -1,26 +1,24 @@
 """28mm パイプの入隅（縦柱＋水平レール）に付ける Pixel 7a ホルダー。
 
-壁の入隅版（pixel7a-corner45）を、両面テープではなくパイプ 2 本を掴む形に置き換えた。
-壁の版は首を 45° 振っていたが、こちらは振らない。スマホの長辺は水平レールと平行で、
-カメラはレールの半径方向・外向きに 45° 下を向く。
+向きは Blender の板（Cube.005、回転 0/45/45）から取った。カメラは水平から 45° 下、
+平面でも 45° 振れる。壁の入隅版（pixel7a-corner45）と同じ姿勢を、両面テープではなく
+パイプ 2 本を掴んで出す。
 
 原点は 2 本の軸の交点（角）。
     x … 外向き   y … レールに沿って奥   z … 上（縦柱は z<0 側）
-    h = ( cos45, 0, -sin45) カメラの視線
-    s = ( sin45, 0,  cos45) スロットを上る向き。差し込み口は上
+    h … 視線 / s … スロットを上る向き / L … スマホの長辺
 
 掴み方:
     水平レールに割りリング 1 個、縦柱に割りリング 1 個。それぞれ M4×2 で締める。
-    直交する 2 本を掴むので摩擦に頼らない。レール側が縦軸まわりの回転を止め、
-    柱側がレール軸まわりの回転を止める。
+    直交する 2 本を掴むので摩擦に頼らない。腕が 2 本になって三角形を作るのも効く。
 
 継手・パイプの逃げ:
-    位置決めで気をつけるのではなく、継手とパイプが占める円柱を全部品から彫る。
-    実測して JOINT_* を直せば、当たる部品は自動で削れる。
+    継手とパイプが占める円柱を腕とリングから彫る。ポケットは彫らない（彫るとスロットに
+    穴が開くため）。当たっていないかはビルド時の印字で見る。
 
 部品:
-    pipe-corner45.stl       … 本体（ポケット＋板 2 枚＋リング 2 個）
-    pipe-corner45-strap.stl … 帯。レール用・柱用で同じものを 2 個刷る
+    pipe-corner45.stl       … 本体（ポケット＋腕 2 本＋リング 2 個）
+    pipe-corner45-strap.stl … 帯。2 個刷る
     pipe-corner45-asm.stl   … 組んだ状態（確認用）
 
 必要なもの: M4 ボルト 25mm 4 本、M4 ナット 4 個。
@@ -32,34 +30,41 @@ sys.path.insert(0, os.path.dirname(__file__))
 import math
 import bmesh
 import bpy
-from mathutils import Matrix
+from mathutils import Matrix, Vector
 from blender_utils import clear_scene, export_stl
 from params import *
 
 clear_scene()
 
-D = math.radians(CAM_DEPRESSION)
-CD, SD = math.cos(D), math.sin(D)
-HV = (CD, 0.0, -SD)     # h: カメラの視線
-SV = (SD, 0.0, CD)      # s: スロットを上る向き
-BIG = 0.4
+DL = math.radians(CAM_DEPRESSION)
+PS = math.radians(YAW_DEG)
+CD, SDl = math.cos(DL), math.sin(DL)
+CP, SP = math.cos(PS), math.sin(PS)
 
-# ポケットのローカル軸 → ワールド。幅方向 t は -y（USB 側を奥に持ってくる）
-POCKET_ROT = Matrix(((0.0, SD, -CD), (-1.0, 0.0, 0.0), (0.0, CD, SD))).to_euler()
+HV = Vector((CD * CP, CD * SP, -SDl))     # 視線
+SV = Vector((SDl * CP, SDl * SP, CD))     # スロープ
+LV = Vector((-SP, CP, 0.0))               # 長辺
+YA = Vector((0.0, 1.0, 0.0))              # レール軸
+ZA = Vector((0.0, 0.0, 1.0))              # 柱軸
 
-Y_RAIL = JOINT_RAIL + JOINT_GAP + RING_W / 2      # レールのリング位置
-Z_POST = -(JOINT_POST + JOINT_GAP + RING_W / 2)   # 柱のリング位置
+# スマホ中心（ワールド）
+C_PH = HV * H_PH + SV * S_PH + LV * L_PH
+S_C = STOPPER + PHONE_W / 2
+H_C = -(FRONT_SKIN + CLR_T / 2 + PHONE_T / 2)
 
 
-def hs(a, b, y=0.0):
-    """(h, s, y) 座標をワールドへ。"""
-    return (a * HV[0] + b * SV[0], y, a * HV[2] + b * SV[2])
+def rot_from(cx, cy, cz):
+    return Matrix(((cx[0], cy[0], cz[0]),
+                   (cx[1], cy[1], cz[1]),
+                   (cx[2], cy[2], cz[2]))).to_euler()
+
+
+POCKET_ROT = rot_from(-LV, SV, -HV)
 
 
 def sp(s, h, t=0.0):
-    """ポケット座標 (s, h, t) をワールドへ。"""
-    p = hs(P_BACK + SHELL_TOTAL + h, s - SLOPE_LEN / 2)
-    return (p[0], Y_PH - t, p[2])
+    """ポケット座標 (s, h, t) をワールドへ。t は長辺方向（-L 側が奥）。"""
+    return C_PH + SV * (s - S_C) + HV * (h - H_C) - LV * t
 
 
 def add_box(name, size, loc, rot=(0.0, 0.0, 0.0)):
@@ -83,9 +88,7 @@ def _apply(target, other, op):
     target.select_set(True)
     bpy.context.view_layer.objects.active = target
     m = target.modifiers.new("bool", "BOOLEAN")
-    m.operation = op
-    m.object = other
-    m.solver = "EXACT"
+    m.operation, m.object, m.solver = op, other, "EXACT"
     bpy.ops.object.modifier_apply(modifier=m.name)
     bpy.data.objects.remove(other, do_unlink=True)
 
@@ -135,10 +138,9 @@ def clamp_profile(r_out, r_in, hc, ear_h1):
 # 1) ポケット
 # =========================================================================
 PROF = [(0.0, 0.0), (SLOPE_LEN, 0.0), (SLOPE_LEN, -SHELL_TOTAL), (0.0, -SHELL_TOTAL)]
-pocket = mesh_from_loops(
-    "pipe_corner45_pocket",
-    [sp(s, h, -MOUNT_W / 2) for (s, h) in PROF],
-    [sp(s, h, MOUNT_W / 2) for (s, h) in PROF])
+pocket = mesh_from_loops("pipe_corner45_pocket",
+                         [sp(s, h, -MOUNT_W / 2) for (s, h) in PROF],
+                         [sp(s, h, MOUNT_W / 2) for (s, h) in PROF])
 
 slot_cut_len = SLOT_W + SLOT_ENTRY
 cut(pocket, add_box("cut_slot", (SLOT_L, slot_cut_len, SLOT_T),
@@ -149,17 +151,15 @@ win_t = SLOT_L / 2 - CAM_EDGE_RIM - CAM_WIN_L / 2
 cut(pocket, add_box("cut_camwin", (CAM_WIN_L, WIN_S_LEN, 0.010),
                     sp(WIN_S_CENTER, -0.003, win_t), POCKET_ROT))
 
+# 差し込み口のテーパー: s を phi だけ h 側へ倒した面で外皮の内側を逃がす
 phi = math.atan2(TAPER_D, TAPER_LEN)
+tdir = (SV * math.cos(phi) + HV * math.sin(phi)).normalized()
+tn = (HV * math.cos(phi) - SV * math.sin(phi)).normalized()
 tp = sp(TAPER_S0, -FRONT_SKIN)
-tdir = (SD * math.cos(phi) + CD * math.sin(phi), 0.0,
-        CD * math.cos(phi) - SD * math.sin(phi))     # s を phi だけ h 側へ倒した向き
-tn = (tdir[2], 0.0, -tdir[0])                        # その法線（h 側）
 th = 0.030
-taper_rot = Matrix(((0.0, tdir[0], -tn[0]), (-1.0, 0.0, 0.0),
-                    (0.0, tdir[2], -tn[2]))).to_euler()
 cut(pocket, add_box("cut_taper", (2 * MOUNT_W, 2 * th, TAPER_CUT),
-                    (tp[0] + th * tdir[0] + (TAPER_CUT / 2) * tn[0], tp[1],
-                     tp[2] + th * tdir[2] + (TAPER_CUT / 2) * tn[2]), taper_rot))
+                    tp + tdir * th + tn * (TAPER_CUT / 2),
+                    rot_from(-LV, tdir, -tn)))
 
 grip_len = 0.040
 cut(pocket, add_box("cut_grip", (GRIP_W, grip_len, 0.020),
@@ -173,9 +173,10 @@ cut(pocket, add_box("cut_usb", (usb_t1 - usb_t0, USB_W, USB_T),
 latches = []
 for sx in (1, -1):
     r = LATCH_H * 1.8
-    p = sp(SLOPE_LEN - LATCH_S, -FRONT_SKIN + (r - LATCH_H), sx * LATCH_X)
-    latches.append(add_cyl("pipe_corner45_latch_%d" % (sx > 0), r, LATCH_L, p,
-                           (math.pi / 2, 0.0, 0.0), verts=24))
+    latches.append(add_cyl("pipe_corner45_latch_%d" % (sx > 0), r, LATCH_L,
+                           sp(SLOPE_LEN - LATCH_S, -FRONT_SKIN + (r - LATCH_H),
+                              sx * LATCH_X),
+                           rot_from(SV, -HV, -LV), verts=24))
 
 # =========================================================================
 # 2) リング 2 個と帯
@@ -185,94 +186,75 @@ NUT_OVER = 0.0002
 nut_depth = NUT_T + NUT_OVER
 nut_h = CLAMP_GAP + EAR_T + NUT_OVER - nut_depth / 2
 EAR_H1 = CLAMP_GAP + EAR_T
+H_BACK = H_PH + (-SHELL_TOTAL - H_C)      # ポケット裏面の h 座標
 
-# レール用: 断面は (s, h) 平面、y 方向へ押し出す
-prof_rail = clamp_profile(RING_R, BORE_D / 2, CLAMP_GAP, EAR_H1)
-ring_rail = mesh_from_loops(
-    "pipe_corner45_ring_rail",
-    [hs(h, s, Y_RAIL - RING_W / 2) for (s, h) in prof_rail],
-    [hs(h, s, Y_RAIL + RING_W / 2) for (s, h) in prof_rail])
 
-# 柱用: 断面は (y, x) 平面、z 方向へ押し出す。C は +x 側（ポケットの側）に肉を残す
-prof_post = clamp_profile(RING_R, BORE_D / 2 + POST_EXTRA, CLAMP_GAP, EAR_H1)
-ring_post = mesh_from_loops(
-    "pipe_corner45_ring_post",
-    [(h, s, Z_POST - RING_W / 2) for (s, h) in prof_post],
-    [(h, s, Z_POST + RING_W / 2) for (s, h) in prof_post])
+def ring_basis(axis):
+    """軸に直交する面内で、視線に一番近い向き e1 と、それに直交する e2。"""
+    e1 = (HV - axis * HV.dot(axis)).normalized()
+    return e1, axis.cross(e1)
 
-straps = []
-for tag, prof, lo, hi in (
-        ("rail", clamp_profile(BORE_D / 2 + STRAP_ARC, BORE_D / 2, CLAMP_GAP, EAR_H1),
-         lambda s, h: hs(-h, s, Y_RAIL - RING_W / 2),
-         lambda s, h: hs(-h, s, Y_RAIL + RING_W / 2)),
-        ("post", clamp_profile(BORE_D / 2 + STRAP_ARC, BORE_D / 2 + POST_EXTRA,
-                               CLAMP_GAP, EAR_H1),
-         lambda s, h: (-h, s, Z_POST - RING_W / 2),
-         lambda s, h: (-h, s, Z_POST + RING_W / 2))):
-    straps.append(mesh_from_loops("pipe_corner45_strap_%s" % tag,
-                                  [lo(s, h) for (s, h) in prof],
-                                  [hi(s, h) for (s, h) in prof]))
 
-# ねじ穴・ナット座
-for ring, strap, axis in ((ring_rail, straps[0], "rail"), (ring_post, straps[1], "post")):
+def build_clamp(name, axis, at, r_in):
+    """割りリング（本体側）を作る。at は軸上の位置ベクトル。"""
+    e1, e2 = ring_basis(axis)
+    prof = clamp_profile(RING_R, r_in, CLAMP_GAP, EAR_H1)
+    lo = [at + e2 * s + e1 * h - axis * (RING_W / 2) for (s, h) in prof]
+    hi = [at + e2 * s + e1 * h + axis * (RING_W / 2) for (s, h) in prof]
+    ring = mesh_from_loops(name, lo, hi)
+    strap_prof = clamp_profile(BORE_D / 2 + STRAP_ARC, r_in, CLAMP_GAP, EAR_H1)
+    strap = mesh_from_loops(name.replace("ring", "strap"),
+                            [at - e2 * s - e1 * h - axis * (RING_W / 2)
+                             for (s, h) in strap_prof],
+                            [at - e2 * s - e1 * h + axis * (RING_W / 2)
+                             for (s, h) in strap_prof])
+    rot = rot_from(e2, axis, e1)
     for sx in (1, -1):
-        if axis == "rail":
-            c0 = hs(0.0, sx * EAR_R, Y_RAIL)
-            cn = hs(nut_h, sx * EAR_R, Y_RAIL)
-            cs = hs(nut_h, sx * EAR_R, Y_RAIL + RING_W / 2)
-            rot = (0.0, math.atan2(HV[0], -HV[2]), 0.0)
-            slot = (RING_W, NUT_SLOT_W, nut_depth)
-            slot_rot = Matrix(((SV[0], 0.0, HV[0]), (0.0, 1.0, 0.0),
-                               (SV[2], 0.0, HV[2]))).to_euler()
-            slot_size = (RING_W, NUT_SLOT_W, nut_depth)
-            slot_rot = Matrix(((0.0, SV[0], HV[0]), (1.0, 0.0, 0.0),
-                               (0.0, SV[2], HV[2]))).to_euler()
-        else:
-            c0 = (0.0, sx * EAR_R, Z_POST)
-            cn = (nut_h, sx * EAR_R, Z_POST)
-            cs = (nut_h, sx * EAR_R, Z_POST + RING_W / 2)
-            rot = (0.0, math.pi / 2, 0.0)
-            slot_size = (RING_W, NUT_SLOT_W, nut_depth)
-            slot_rot = Matrix(((0.0, 0.0, 1.0), (0.0, 1.0, 0.0),
-                               (-1.0, 0.0, 0.0))).to_euler()
+        c0 = at + e2 * (sx * EAR_R)
         cut(ring, add_cyl("screw", SCREW_D / 2, 0.060, c0, rot))
         cut(strap, add_cyl("screw", SCREW_D / 2, 0.060, c0, rot))
-        cut(ring, add_cyl("nut", nut_r, nut_depth, cn, rot, verts=6))
-        cut(ring, add_box("nut_slot", slot_size, cs, slot_rot))
+        cut(ring, add_cyl("nut", nut_r, nut_depth, c0 + e1 * nut_h, rot, verts=6))
+        cut(ring, add_box("nut_slot", (RING_W, NUT_SLOT_W, nut_depth),
+                          c0 + e1 * nut_h + axis * (RING_W / 2),
+                          rot_from(axis, e2, e1)))
+    return ring, strap, e1, e2
+
+
+Y_RAIL = JOINT_RAIL + JOINT_GAP + RING_W / 2
+Z_POST = -(JOINT_POST + JOINT_GAP + RING_W / 2)
+
+ring_rail, strap_rail, e1r, e2r = build_clamp(
+    "pipe_corner45_ring_rail", YA, YA * Y_RAIL, BORE_D / 2)
+ring_post, strap_post, e1p, e2p = build_clamp(
+    "pipe_corner45_ring_post", ZA, ZA * Z_POST, BORE_D / 2 + POST_EXTRA)
 
 # =========================================================================
-# 3) 板（リング → ポケット）
+# 3) 腕（リング → ポケット）。軸と視線を含む面に沿う板
 # =========================================================================
-# レール側: s=0 の面に沿う板。リングの外周からポケット裏面まで
-WEB_ROT = Matrix(((HV[0], 0.0, SV[0]), (0.0, 1.0, 0.0),
-                  (HV[2], 0.0, SV[2]))).to_euler()
-web_rail = add_box("pipe_corner45_web_rail",
-                   (P_BACK + WEB_BITE - (RING_R - WEB_BITE), RING_W + 0.020, WEB_T),
-                   hs((RING_R - WEB_BITE + P_BACK + WEB_BITE) / 2, 0.0, Y_RAIL),
-                   WEB_ROT)
+def build_web(name, axis, at, e1, e2, width):
+    reach = 0.260
+    mid = at + e1 * (RING_R - 0.004 + reach / 2) + e2 * (C_PH.dot(e2))
+    web = add_box(name, (width, reach, WEB_T), mid, rot_from(axis, e1, e2))
+    # ポケット裏面より前へは出さない
+    cut(web, add_box("lid", (0.4, 0.4, 0.4),
+                     C_PH + HV * (-SHELL_TOTAL - H_C + WEB_BITE + 0.2), POCKET_ROT))
+    return web
 
-# 柱側: レール側と同じ向き（法線は s）の板。ポケットの下端ぎわに置くと、柱リングを
-# 斜めに串刺しにして繋がる。y に垂直な板にすると、立てて刷ったとき 18cm2 の水平な
-# オーバーハングになる（実測）。
-S_WEB_POST = -SLOPE_LEN / 2 + 0.002
-H_POST0 = 0.034
-web_post = add_box("pipe_corner45_web_post",
-                   (P_BACK + WEB_BITE - H_POST0, RING_W, WEB_T),
-                   hs((H_POST0 + P_BACK + WEB_BITE) / 2, S_WEB_POST, 0.0),
-                   WEB_ROT)
+
+web_rail = build_web("pipe_corner45_web_rail", YA, YA * Y_RAIL, e1r, e2r, WEB_Y)
+web_post = build_web("pipe_corner45_web_post", ZA, ZA * Z_POST, e1p, e2p, WEB_Z)
 
 for sx in (1, -1):
     cut(web_rail, add_cyl("tether", TETHER_D / 2, WEB_T + 0.01,
-                          hs((RING_R + P_BACK) / 2, 0.0, Y_RAIL + sx * 0.016),
-                          Matrix(((HV[0], 0.0, SV[0]), (0.0, 1.0, 0.0),
-                                  (HV[2], 0.0, SV[2]))).to_euler()))
+                          YA * Y_RAIL + e1r * (RING_R + 0.030)
+                          + e2r * (C_PH.dot(e2r)) + YA * (sx * 0.014),
+                          rot_from(YA, e1r, e2r)))
 
 # =========================================================================
-# 4) パイプと継手の逃げ（全部品から彫る）
+# 4) パイプと継手の逃げ（腕とリングから彫る。ポケットは彫らない）
 # =========================================================================
-body = [pocket, web_rail, web_post, ring_rail, ring_post] + latches
-LONG = 0.600
-for part in body:
+LONG = 0.700
+for part in (web_rail, web_post, ring_rail, ring_post):
     cut(part, add_cyl("rail_pipe", BORE_D / 2, LONG, (0.0, LONG / 2 - 0.001, 0.0),
                       (math.pi / 2, 0.0, 0.0), verts=64))
     cut(part, add_cyl("post_pipe", BORE_D / 2 + POST_EXTRA, LONG,
@@ -285,14 +267,15 @@ for part in body:
 # =========================================================================
 # 5) 検証
 # =========================================================================
-def joint_clear(p):
-    dr = math.hypot(p[0], p[2]) - JOINT_R          # レール軸から
+def clearances(p):
+    """(継手すきま, レール軸からの距離, 柱軸からの距離)"""
+    rr = math.hypot(p[0], p[2])
     dy = max(-p[1], p[1] - JOINT_RAIL)
-    a = dr if dy <= 0 else math.hypot(dy, max(dr, 0.0))
-    dr2 = math.hypot(p[0], p[1]) - JOINT_R         # 柱軸から
+    a = (rr - JOINT_R) if dy <= 0 else math.hypot(dy, max(rr - JOINT_R, 0.0))
+    rp = math.hypot(p[0], p[1])
     dz = max(p[2], -JOINT_POST - p[2])
-    b = dr2 if dz <= 0 else math.hypot(dz, max(dr2, 0.0))
-    return min(a, b)
+    b = (rp - JOINT_R) if dz <= 0 else math.hypot(dz, max(rp - JOINT_R, 0.0))
+    return min(a, b), rr, rp
 
 
 bad = 0
@@ -307,39 +290,38 @@ for o in bpy.data.objects:
     b.free()
     bad += n
     mw = o.matrix_world
-    pts = [mw @ v.co for v in o.data.vertices]
-    jc = min(joint_clear(p) for p in pts)
-    rail = min(math.hypot(p.x, p.z) for p in pts)
-    post = min(math.hypot(p.x, p.y) for p in pts)
-    print("part %-28s nm=%d verts=%4d 継手%+7.2f レール軸%6.2f 柱軸%6.2f"
-          % (o.name, n, len(o.data.vertices), jc * 1000, rail * 1000, post * 1000))
+    vals = [clearances(mw @ v.co) for v in o.data.vertices]
+    print("part %-28s nm=%d verts=%4d 継手%+7.2f レール軸%7.2f 柱軸%7.2f"
+          % (o.name, n, len(o.data.vertices),
+             min(v[0] for v in vals) * 1000, min(v[1] for v in vals) * 1000,
+             min(v[2] for v in vals) * 1000))
 
-worst = 1e9
+pj, pr, pp = 1e9, 1e9, 1e9
 for s in (STOPPER, STOPPER + PHONE_W):
     for h in (-(FRONT_SKIN + CLR_T / 2), -(FRONT_SKIN + CLR_T / 2 + PHONE_T)):
         for t in (-PHONE_L / 2, PHONE_L / 2):
-            worst = min(worst, joint_clear(sp(s, h, t)))
+            a, r1, r2 = clearances(sp(s, h, t))
+            pj, pr, pp = min(pj, a), min(pr, r1), min(pp, r2)
 print("---")
 print("非多様体の合計: %d" % bad)
-print("リング: レール y=%.1fmm / 柱 z=%.1fmm（継手は半径 %.1f、レール %.1f、柱 %.1f と仮定）"
-      % (Y_RAIL * 1000, Z_POST * 1000, JOINT_R * 1000, JOINT_RAIL * 1000,
-         JOINT_POST * 1000))
-print("実機と継手のすきま: %+.2fmm%s"
-      % (worst * 1000, "" if worst > 0 else "  ← P_BACK を増やすこと"))
+print("リング: レール y=%.1fmm / 柱 z=%.1fmm" % (Y_RAIL * 1000, Z_POST * 1000))
+print("スマホ中心: レール軸から %.1fmm / 柱軸から %.1fmm"
+      % (math.hypot(C_PH.x, C_PH.z) * 1000, math.hypot(C_PH.x, C_PH.y) * 1000))
+print("実機のすきま: 継手 %+.2fmm / レール %+.2fmm / 柱 %+.2fmm%s"
+      % (pj * 1000, (pr - PIPE_OD / 2) * 1000, (pp - PIPE_OD / 2) * 1000,
+         "" if min(pj, pr - PIPE_OD / 2, pp - PIPE_OD / 2) > 0
+         else "  ← H_PH を増やすこと"))
+print("俯角 %.0f° / 振り %.0f°" % (CAM_DEPRESSION, YAW_DEG))
+
+body = [pocket, web_rail, web_post, ring_rail, ring_post] + latches
 
 
-def export_upright(name, parts):
-    """ポケットの長辺（y）を立てた向き＝印刷の向きで書き出す。
-
-    寝かせるとスロットの空洞の天井 153 x 74mm がまるごとオーバーハングになる。
-    立てればスロットは縦のスリットになり、荷重も積層を剥がす向きに来ない。
-    総当たりで測った結果、-y を上にする向きがいちばんサポートが少ない。
-    """
+def export_upright(name, parts, rot):
     bpy.ops.object.empty_add(location=(0.0, 0.0, 0.0))
     piv = bpy.context.object
     for o in parts:
         o.parent = piv
-    piv.rotation_euler = (-math.pi / 2, 0.0, 0.0)
+    piv.rotation_euler = rot
     bpy.context.view_layer.update()
     pts = [o.matrix_world @ v.co for o in parts for v in o.data.vertices]
     piv.location = (-(min(p.x for p in pts) + max(p.x for p in pts)) / 2,
@@ -355,6 +337,9 @@ def export_upright(name, parts):
     bpy.data.objects.remove(piv, do_unlink=True)
 
 
-export_upright("pipe-corner45", body)
-export_upright("pipe-corner45-strap", [straps[0]])
+# スロットの空洞を縦のスリットにする向き（長辺 L を立てる）
+UP = rot_from(-HV, SV.cross(-HV), SV) if False else \
+    Matrix(((LV.x, HV.x, SV.x), (LV.y, HV.y, SV.y), (LV.z, HV.z, SV.z))).inverted().to_euler()
+export_upright("pipe-corner45", body, UP)
+export_upright("pipe-corner45-strap", [strap_rail], UP)
 export_stl("pipe-corner45-asm")

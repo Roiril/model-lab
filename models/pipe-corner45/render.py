@@ -14,17 +14,22 @@ from params import *
 
 MM = 1000.0
 OUT = os.path.join(os.path.dirname(__file__), "../../exports")
-D = math.radians(CAM_DEPRESSION)
-CD, SD = math.cos(D), math.sin(D)
-HV, SV = (CD, 0.0, -SD), (SD, 0.0, CD)
-POCKET_ROT = Matrix(((0.0, SD, -CD), (-1.0, 0.0, 0.0), (0.0, CD, SD))).to_euler()
+DL, PSI = math.radians(CAM_DEPRESSION), math.radians(YAW_DEG)
+CD, SDl, CP, SP = math.cos(DL), math.sin(DL), math.cos(PSI), math.sin(PSI)
+HV = Vector((CD * CP, CD * SP, -SDl))
+SV = Vector((SDl * CP, SDl * SP, CD))
+LV = Vector((-SP, CP, 0.0))
+POCKET_ROT = Matrix(((-LV.x, SV.x, -HV.x), (-LV.y, SV.y, -HV.y),
+                     (-LV.z, SV.z, -HV.z))).to_euler()
+C_PH = HV * (H_PH * MM) + SV * (S_PH * MM) + LV * (L_PH * MM)
+S_C = (STOPPER + PHONE_W / 2) * MM
+H_C = -(FRONT_SKIN + CLR_T / 2 + PHONE_T / 2) * MM
 
 clear_scene()
 
 
 def sp(s, h, t=0.0):
-    a, b = (P_BACK + SHELL_TOTAL + h) * MM, (s - SLOPE_LEN / 2 * MM)
-    return (a * HV[0] + b * SV[0], Y_PH * MM - t, a * HV[2] + b * SV[2])
+    return C_PH + SV * (s - S_C) + HV * (h - H_C) - LV * t
 
 
 def color(o, c):
@@ -51,9 +56,7 @@ for loc, rot, dep in (((0, JOINT_RAIL * MM / 2, 0), (math.pi / 2, 0, 0), JOINT_R
     color(bpy.context.object, (0.90, 0.55, 0.25, 1))
 
 # --- 実機 ---
-bpy.ops.mesh.primitive_cube_add(size=1.0, rotation=POCKET_ROT,
-                                location=sp(STOPPER * MM + PHONE_W * MM / 2,
-                                            -(FRONT_SKIN + CLR_T / 2 + PHONE_T / 2) * MM))
+bpy.ops.mesh.primitive_cube_add(size=1.0, rotation=POCKET_ROT, location=C_PH)
 ph = bpy.context.object
 ph.scale = (PHONE_L * MM, PHONE_W * MM, PHONE_T * MM)
 bpy.ops.object.transform_apply(scale=True)
@@ -61,7 +64,7 @@ color(ph, (0.15, 0.16, 0.18, 1))
 
 # --- カメラの視線 ---
 gaze = Vector(HV)
-eye = Vector(sp(0.020 * MM, 0.0, (SLOT_L / 2 - CAM_EDGE_RIM - CAM_WIN_L / 2) * MM))
+eye = sp(0.020 * MM, 0.0, (SLOT_L / 2 - CAM_EDGE_RIM - CAM_WIN_L / 2) * MM)
 bpy.ops.mesh.primitive_cylinder_add(radius=1.6, depth=170, vertices=16,
                                     location=eye + gaze * 85)
 ray = bpy.context.object
@@ -81,11 +84,11 @@ sc.render.resolution_x, sc.render.resolution_y = 1100, 850
 bpy.ops.object.camera_add()
 cam = bpy.context.object
 sc.camera = cam
-TARGET = Vector((40, 50, -50))
-VIEWS = [("side", Vector((70, 560, -40)), 55),
-         ("iso", Vector((430, 330, 190)), 50),
-         ("front", Vector((420, 60, -330)), 50),
-         ("clamp", Vector((250, -190, 60)), 60)]
+TARGET = Vector((60, 75, -30))
+VIEWS = [("side", Vector((-380, 430, 60)), 50),
+         ("iso", Vector((470, 400, 240)), 50),
+         ("front", Vector((380, 400, -330)), 50),
+         ("clamp", Vector((280, -230, 90)), 60)]
 for name, pos, lens in VIEWS:
     cam.location = pos
     cam.rotation_mode = "QUATERNION"
