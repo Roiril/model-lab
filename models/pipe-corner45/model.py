@@ -232,18 +232,20 @@ ring_post, strap_post, e1p, e2p = build_clamp(
 # 3) 腕（リング → ポケット）。軸と視線を含む面に沿う板
 # =========================================================================
 def build_web(name, axis, at, width):
-    """リングからポケットへ渡す腕。
+    """リングからポケットへ渡す腕。板の面はリングの軸と「リング→スマホ」を含む。
 
-    軸に直交する面内で「リング中心 → スマホ中心」の向きへ伸ばす。振りが入ると
-    ポケットは軸から横へ逃げるので、視線方向へ真っ直ぐ伸ばすとリングに届かない
-    （実測: レール側で最接近 42.5mm。リングの外半径は 18.3mm なので宙に浮いていた）。
+    面が軸を含まないと、腕は軸方向へ登れない。柱側はポケットが 33mm 上にあるので、
+    軸に直交する板にしたら 0mm3 しか重ならなかった（交差体積で実測）。
+    面が軸を含めば、リングの肉を軸方向に貫き、そのままポケットまで登れる。
     """
     v = C_PH - at
-    d = (v - axis * v.dot(axis)).normalized()      # 軸に直交する面内での向き
-    w = axis.cross(d)
+    d = (v - axis * v.dot(axis)).normalized()      # 軸に直交する成分（外向き）
+    th = d.cross(axis)                             # 板の厚み方向
     reach = 0.300
-    mid = at + d * (RING_R - 0.004 + reach / 2)
-    web = add_box(name, (WEB_T, reach, width), mid, rot_from(axis, d, w))
+    a_lo = min(-(RING_W / 2 + 0.004), v.dot(axis) - 0.008)
+    a_hi = max(RING_W / 2 + 0.004, v.dot(axis) + 0.008)
+    mid = (at + d * (RING_R - 0.004 + reach / 2) + axis * ((a_lo + a_hi) / 2))
+    web = add_box(name, (reach, a_hi - a_lo, WEB_T), mid, rot_from(d, axis, th))
     # ポケット裏面より先へは出さない。裏板は 3mm なので食い込みは 2mm まで
     cut(web, add_box("lid", (0.4, 0.4, 0.4),
                      C_PH + HV * (-SHELL_TOTAL - H_C + WEB_BITE + 0.2), POCKET_ROT))
@@ -253,12 +255,13 @@ def build_web(name, axis, at, width):
 web_rail = build_web("pipe_corner45_web_rail", YA, YA * Y_RAIL, WEB_Y)
 web_post = build_web("pipe_corner45_web_post", ZA, ZA * Z_POST, WEB_Z)
 
-_dr = ((C_PH - YA * Y_RAIL) - YA * (C_PH - YA * Y_RAIL).dot(YA)).normalized()
+_v = C_PH - YA * Y_RAIL
+_dr = (_v - YA * _v.dot(YA)).normalized()
 for sx in (1, -1):
     cut(web_rail, add_cyl("tether", TETHER_D / 2, WEB_T + 0.01,
-                          YA * Y_RAIL + _dr * (RING_R + 0.028)
-                          + YA.cross(_dr) * (sx * 0.014),
-                          rot_from(_dr, YA.cross(_dr), YA)))
+                          YA * Y_RAIL + _dr * (RING_R + 0.030)
+                          + YA * (_v.dot(YA) / 2 + sx * 0.013),
+                          rot_from(_dr, YA, _dr.cross(YA))))
 
 # =========================================================================
 # 4) パイプと継手の逃げ（腕とリングから彫る。ポケットは彫らない）
@@ -305,6 +308,38 @@ for o in bpy.data.objects:
           % (o.name, n, len(o.data.vertices),
              min(v[0] for v in vals) * 1000, min(v[1] for v in vals) * 1000,
              min(v[2] for v in vals) * 1000))
+
+# --- 部品どうしが本当に体積を共有しているか（重ねて一体化させる前提なので命） ---
+def shared_volume(a, b):
+    """a と b の交差体積 (mm3)。0 なら繋がっていない。"""
+    dup = a.copy()
+    dup.data = a.data.copy()
+    bpy.context.collection.objects.link(dup)
+    bpy.ops.object.select_all(action="DESELECT")
+    dup.select_set(True)
+    bpy.context.view_layer.objects.active = dup
+    m = dup.modifiers.new("x", "BOOLEAN")
+    m.operation, m.object, m.solver = "INTERSECT", b, "EXACT"
+    bpy.ops.object.modifier_apply(modifier=m.name)
+    v = 0.0
+    mw = dup.matrix_world
+    me = dup.data
+    me.calc_loop_triangles()
+    for t in me.loop_triangles:
+        p0, p1, p2 = (mw @ me.vertices[i].co for i in t.vertices)
+        v += p0.dot(p1.cross(p2)) / 6.0
+    bpy.data.objects.remove(dup, do_unlink=True)
+    return abs(v) * 1e9
+
+
+# 腕は必ずリングとポケットの両方に食い込んでいなければならない。
+# リングとポケットは直接は触れない（腕が渡す）ので、ここには入れない。
+for a, b in ((web_rail, ring_rail), (web_rail, pocket),
+             (web_post, ring_post), (web_post, pocket)):
+    v = shared_volume(a, b)
+    print("重なり %-12s x %-12s = %8.1f mm3%s"
+          % (a.name.replace("pipe_corner45_", ""), b.name.replace("pipe_corner45_", ""),
+             v, "" if v > 100.0 else "   ← 繋がっていない"))
 
 pj, pr, pp = 1e9, 1e9, 1e9
 for s in (STOPPER, STOPPER + PHONE_W):
