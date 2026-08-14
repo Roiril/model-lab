@@ -328,6 +328,10 @@ function loadSTL(filename, fit = false) {
   stlLoader.load(`/exports/${filename}`, (geometry) => {
     // Blender は Z-up、three.js / preview モジュールは Y-up。STL を立たせる。
     geometry.rotateX(-Math.PI / 2);
+    // export_stl() は STL を 1000 倍（スライサーが mm と読むため）で書く。この場では
+    // グリッドも preview モジュールも m なので戻す。戻さないとカメラの far(100) の
+    // 外へ出て、読み込みは成功しているのに画面が真っ暗になる。
+    geometry.scale(0.001, 0.001, 0.001);
     geometry.computeVertexNormals();
     const mat = new THREE.MeshStandardMaterial({ color: 0x88ccff, metalness: 0.1, roughness: 0.6 });
     const mesh = new THREE.Mesh(geometry, mat);
