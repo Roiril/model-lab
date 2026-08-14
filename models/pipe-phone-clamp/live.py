@@ -86,9 +86,22 @@ else:
 print(f"[pose] {src}: center_mm={tuple(round(v * 1000, 1) for v in center)} euler_deg={tuple(round(v, 1) for v in euler)}")
 print(f"[pipe] {rail_src}: pt_mm={tuple(round(v * 1000, 1) for v in pipe_pt)} dir={pipe_dir}")
 
+post = bpy.data.objects.get("P_post_3_hi")
+if post is not None:
+    q0, q1 = _wbb(post)
+    post_xy = ((q0.x + q1.x) / 2, (q0.y + q1.y) / 2)
+else:
+    post_xy = (0.480, -0.955)
+
 fC, fK, arm_len = M.frames(center, euler, pipe_pt, pipe_dir)
 print(f"[frame] 腕の長さ（パイプ軸→合わせ面）= {arm_len * 1000:.1f}mm / "
       f"リング外まで {(arm_len - P.RING_R) * 1000:.1f}mm が片持ち")
+
+fQ, hole_c, boss_c = M.brace_frames(post_xy, fC)
+hw = fC @ hole_c
+print(f"[brace] 柱のリングの高さ z={hw.z*1000:.1f}mm（レールの {(pipe_pt[2]-hw.z)*1000:.0f}mm 下）"
+      f" / 柱の軸から水平 {P.POST_HOLE_R*1000:.0f}mm")
+print(f"        棒の穴どうしの距離 {((boss_c - hole_c).length)*1000:.1f}mm（1 枚の平板）")
 
 # --- 自分の作った物だけ消して作り直す --------------------------------------
 coll = bpy.data.collections.get(COLL)
@@ -103,7 +116,10 @@ for ob in list(coll.objects):
 
 parts = [M.build_saddle(coll, fK, fC, arm_len),
          M.build_strap(coll, fK),
-         M.build_cradle(coll, fC)]
+         M.build_cradle(coll, fC, brace=True),
+         M.build_post_saddle(coll, fQ, fC, hole_c),
+         M.build_strap(coll, fQ, name="M_post_strap"),
+         M.build_strut(coll, fC, hole_c, boss_c)]
 
 # 実機と同じ寸法の箱を、スロットの底へ着くまで差し込んだ位置に置く。見た目の確認と
 # 「本当に入るのか」の検算を兼ねる（部品ではないので STL には出さない）
@@ -142,7 +158,7 @@ for ob in parts:
 
 skip = {"Cube", "Cube.001", "Cube.002", "Cube.003", "Cube.004", "Cylinder",
         "Cylinder.001", "Cylinder.002", "Cylinder.003", "Cylinder.004",
-        "Plane", "Plane.001", "Cube.005", "Cube.006"}
+        "Plane", "Plane.001", "Cube.005", "Cube.006", "Cube.007"}   # 005/006/007 は下書き
 print("\n[ブースとの干渉（交差体積。0 以外は当たっている）]")
 hit = 0
 for ob in parts:
@@ -161,15 +177,34 @@ if hit == 0:
     print("  当たりなし")
 
 # --- パイプとの隙間（ボアは片側 0.3mm のはず） ------------------------------
-p0 = Vector(pipe_pt)
-d = Vector(pipe_dir).normalized()
+def _min_r(ob, p0, d):
+    d = Vector(d).normalized()
+    return min((((ob.matrix_world @ v.co) - Vector(p0))
+                - d * (((ob.matrix_world @ v.co) - Vector(p0)).dot(d))).length
+               for v in ob.data.vertices)
+
+
+print("\n[パイプまでの最短距離（外周は 14.00mm。抱く部品は 14.28mm が正解）]")
+axes = (("レール", pipe_pt, pipe_dir), ("柱", (post_xy[0], post_xy[1], 0.0), (0, 0, 1)))
 for ob in parts:
-    dmin = 1e9
-    for v in ob.data.vertices:
-        w = ob.matrix_world @ v.co
-        r = ((w - p0) - d * (w - p0).dot(d)).length
-        dmin = min(dmin, r)
-    print(f"[隙間] {ob.name}: パイプ軸までの最短 {dmin * 1000:.2f}mm（パイプ外周は 14.00mm）")
+    s = "  ".join(f"{nm} {_min_r(ob, p, d) * 1000:6.2f}mm" for nm, p, d in axes)
+    print(f"  {ob.name:14s} {s}")
+
+# 継手（ユーザー実測: 角から横 80mm・縦 50mm）を避けられているか
+corner_y = post_xy[1]
+z_free = pipe_pt[2] - P.JOINT_ALONG_POST          # 柱側で自由になる高さ
+y_free = corner_y + P.JOINT_ALONG_RAIL            # レール側で自由になる位置
+print(f"\n[継手の回避] 柱は z<{z_free*1000:.1f}mm、レールは y>{y_free*1000:.1f}mm が自由")
+for ob in parts:
+    ws = [ob.matrix_world @ v.co for v in ob.data.vertices]
+    near_post = [w for w in ws if ((w.x - post_xy[0]) ** 2 + (w.y - corner_y) ** 2) ** 0.5 < 0.045]
+    if near_post:
+        print(f"  {ob.name:14s} 柱まわり半径45mm 内の最高点 z={max(w.z for w in near_post)*1000:7.1f}mm"
+              f"（{(z_free - max(w.z for w in near_post))*1000:+.1f}mm の余裕）")
+    near_rail = [w for w in ws if abs(w.x - pipe_pt[0]) < 0.045 and abs(w.z - pipe_pt[2]) < 0.045]
+    if near_rail:
+        print(f"  {ob.name:14s} レールまわり半径45mm 内の最も角寄り y={min(w.y for w in near_rail)*1000:7.1f}mm"
+              f"（{(min(w.y for w in near_rail) - y_free)*1000:+.1f}mm の余裕）")
 
 # --- 旧版と下書きの板は目障りなので隠す（消してはいない。Alt+H で戻る） -----
 for n in ("Cube.005", "Cube.006"):
