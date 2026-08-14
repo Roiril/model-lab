@@ -264,10 +264,26 @@ for sx in (1, -1):
                           rot_from(_dr, YA, _dr.cross(YA))))
 
 # =========================================================================
+# 3.5) 橋（2 つのリングを直接つなぐ L 字の板）
+# =========================================================================
+# 手で作った形（Cube.006）の要点はこれ。2 本のパイプを形で拘束する板を渡すと、
+# 締め付けの摩擦に頼らずに回転が止まる。板の面は 2 つのリング中心の両方を含み、
+# かつ外（+x）へ逃げられる向きに取る。継手の円柱で彫れば、角の内側が斜めに
+# 落ちて、手打ちの形と同じ逃げになる。
+_a1, _a2 = YA * Y_RAIL, ZA * Z_POST
+_d1 = (_a2 - _a1).normalized()               # レールのリング → 柱のリング
+_d2 = Vector((1.0, 0.0, 0.0))                # 外向き
+_span = (_a2 - _a1).length + 2 * RING_R
+_x0, _x1 = -RING_R, BRIDGE_X
+bridge = add_box("pipe_corner45_bridge", (_span, _x1 - _x0, WEB_T),
+                 (_a1 + _a2) / 2 + _d2 * ((_x0 + _x1) / 2),
+                 rot_from(_d1, _d2, _d1.cross(_d2)))
+
+# =========================================================================
 # 4) パイプと継手の逃げ（腕とリングから彫る。ポケットは彫らない）
 # =========================================================================
 LONG = 0.700
-for part in (web_rail, web_post, ring_rail, ring_post):
+for part in (web_rail, web_post, ring_rail, ring_post, bridge):
     cut(part, add_cyl("rail_pipe", BORE_D / 2, LONG, (0.0, LONG / 2 - 0.001, 0.0),
                       (math.pi / 2, 0.0, 0.0), verts=64))
     cut(part, add_cyl("post_pipe", BORE_D / 2 + POST_EXTRA, LONG,
@@ -335,7 +351,8 @@ def shared_volume(a, b):
 # 腕は必ずリングとポケットの両方に食い込んでいなければならない。
 # リングとポケットは直接は触れない（腕が渡す）ので、ここには入れない。
 for a, b in ((web_rail, ring_rail), (web_rail, pocket),
-             (web_post, ring_post), (web_post, pocket)):
+             (web_post, ring_post), (web_post, pocket),
+             (bridge, ring_rail), (bridge, ring_post)):
     v = shared_volume(a, b)
     print("重なり %-12s x %-12s = %8.1f mm3%s"
           % (a.name.replace("pipe_corner45_", ""), b.name.replace("pipe_corner45_", ""),
@@ -358,7 +375,7 @@ print("実機のすきま: 継手 %+.2fmm / レール %+.2fmm / 柱 %+.2fmm%s"
          else "  ← H_PH を増やすこと"))
 print("俯角 %.0f° / 振り %.0f°" % (CAM_DEPRESSION, YAW_DEG))
 
-body = [pocket, web_rail, web_post, ring_rail, ring_post] + latches
+body = [pocket, web_rail, web_post, ring_rail, ring_post, bridge] + latches
 
 
 def export_upright(name, parts, rot):
