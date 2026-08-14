@@ -231,24 +231,34 @@ ring_post, strap_post, e1p, e2p = build_clamp(
 # =========================================================================
 # 3) 腕（リング → ポケット）。軸と視線を含む面に沿う板
 # =========================================================================
-def build_web(name, axis, at, e1, e2, width):
-    reach = 0.260
-    mid = at + e1 * (RING_R - 0.004 + reach / 2) + e2 * (C_PH.dot(e2))
-    web = add_box(name, (width, reach, WEB_T), mid, rot_from(axis, e1, e2))
-    # ポケット裏面より前へは出さない
+def build_web(name, axis, at, width):
+    """リングからポケットへ渡す腕。
+
+    軸に直交する面内で「リング中心 → スマホ中心」の向きへ伸ばす。振りが入ると
+    ポケットは軸から横へ逃げるので、視線方向へ真っ直ぐ伸ばすとリングに届かない
+    （実測: レール側で最接近 42.5mm。リングの外半径は 18.3mm なので宙に浮いていた）。
+    """
+    v = C_PH - at
+    d = (v - axis * v.dot(axis)).normalized()      # 軸に直交する面内での向き
+    w = axis.cross(d)
+    reach = 0.300
+    mid = at + d * (RING_R - 0.004 + reach / 2)
+    web = add_box(name, (WEB_T, reach, width), mid, rot_from(axis, d, w))
+    # ポケット裏面より先へは出さない。裏板は 3mm なので食い込みは 2mm まで
     cut(web, add_box("lid", (0.4, 0.4, 0.4),
                      C_PH + HV * (-SHELL_TOTAL - H_C + WEB_BITE + 0.2), POCKET_ROT))
     return web
 
 
-web_rail = build_web("pipe_corner45_web_rail", YA, YA * Y_RAIL, e1r, e2r, WEB_Y)
-web_post = build_web("pipe_corner45_web_post", ZA, ZA * Z_POST, e1p, e2p, WEB_Z)
+web_rail = build_web("pipe_corner45_web_rail", YA, YA * Y_RAIL, WEB_Y)
+web_post = build_web("pipe_corner45_web_post", ZA, ZA * Z_POST, WEB_Z)
 
+_dr = ((C_PH - YA * Y_RAIL) - YA * (C_PH - YA * Y_RAIL).dot(YA)).normalized()
 for sx in (1, -1):
     cut(web_rail, add_cyl("tether", TETHER_D / 2, WEB_T + 0.01,
-                          YA * Y_RAIL + e1r * (RING_R + 0.030)
-                          + e2r * (C_PH.dot(e2r)) + YA * (sx * 0.014),
-                          rot_from(YA, e1r, e2r)))
+                          YA * Y_RAIL + _dr * (RING_R + 0.028)
+                          + YA.cross(_dr) * (sx * 0.014),
+                          rot_from(_dr, YA.cross(_dr), YA)))
 
 # =========================================================================
 # 4) パイプと継手の逃げ（腕とリングから彫る。ポケットは彫らない）
