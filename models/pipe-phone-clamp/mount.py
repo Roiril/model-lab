@@ -288,22 +288,44 @@ def build_cradle(coll, fC, brace=False, name="M_cradle"):
     body = _box(name, fC, (xc, 0, zc),
                 (P.X_FRONT - P.X_BACK, P.SHELL_Y, P.Z_TOP - P.Z_BOT), coll)
     # ボスは殻へ 1mm 食い込ませる。面一で突き当てると合わせ面が内部の壁として残る。
-    bz = (P.Z_BOT + P.BOSS_Z_TOP) / 2
-    _csg(body, _box("_boss", fC, (P.X_BACK - P.BOSS_T / 2 + 0.0005, 0, bz),
-                    (P.BOSS_T + 0.001, P.BOSS_Y, P.BOSS_Z_TOP - P.Z_BOT), coll), "UNION")
+    # 下端は殻の底より 0.5mm 上で止める。底を面一に揃えると、その合わせ目が
+    # union の縫い目として残る（実測 158 本の非多様体エッジ）。
+    bz0 = P.Z_BOT + 0.0005
+    _csg(body, _box("_boss", fC, (P.X_BACK - P.BOSS_T / 2 + 0.0005, 0, (bz0 + P.BOSS_Z_TOP) / 2),
+                    (P.BOSS_T + 0.001, P.BOSS_Y, P.BOSS_Z_TOP - bz0), coll), "UNION")
 
-    top = P.Z_TOP + 0.060                          # スロットは上へ抜く
-    z0 = -P.SLOT_W / 2
-    _csg(body, _box("_slot", fC, (0, 0, (z0 + top) / 2),
-                    (P.SLOT_T, P.SLOT_L, top - z0), coll))
+    # --- ここから差し込み側。models/pixel7a-stand と同じ形・同じ寸法 ------------
+    def z_of(s):                                   # 斜面座標 s → C-z
+        return s - P.S_MID
 
-    wz0 = z0 + P.BORDER                            # 前の窓（上端は開けたまま）
-    _csg(body, _box("_win", fC, (P.X_FRONT, 0, (wz0 + top) / 2),
-                    (0.020, P.SLOT_L - 2 * P.BORDER, top - wz0), coll))
+    cut_len = P.SLOT_W + P.SLOT_ENTRY              # スロット（上へ抜く）
+    _csg(body, _box("_slot", fC, (0, 0, z_of(P.STOPPER + cut_len / 2)),
+                    (P.SLOT_T, P.SLOT_L, cut_len), coll))
 
-    ubot = P.Z_BOT - 0.005                         # 底の USB 切り欠き
-    utop = z0 + 0.0005                             # スロットの床と面一にしない
-    _csg(body, _box("_usb", fC, (0, 0, (ubot + utop) / 2), (0.040, P.USB_W, utop - ubot), coll))
+    win_y = P.SLOT_L / 2 - P.CAM_EDGE_RIM - P.CAM_WIN_L / 2   # カメラ窓
+    _csg(body, _box("_camwin", fC,
+                    (P.X_FRONT - 0.003, win_y, z_of((P.WIN_S_MIN + P.WIN_S_MAX) / 2)),
+                    (0.010, P.CAM_WIN_L, P.WIN_S_MAX - P.WIN_S_MIN), coll))
+
+    # 差し込み口のテーパー。斜面より phi だけ立てた面を引き、その内側 TAPER_D を抜く
+    phi = math.atan2(P.TAPER_D, P.TAPER_LEN)
+    ft = (fC @ Matrix.Translation((P.SLOT_T / 2, 0.0, z_of(P.TAPER_S0)))
+          @ Matrix.Rotation(phi, 4, "Y"))
+    # 厚みは TAPER_D ではなく 8mm 取る。TAPER_D ぴったりだと、下面がスロットの面を
+    # 浅い角度で横切って薄片ができる。余分はスロットの空洞なので形は変わらない。
+    _csg(body, _box("_taper", ft, (-0.004, 0, 0.030),
+                    (0.008, 2 * P.SHELL_Y, 0.060), coll))
+
+    glen = 0.040                                   # 指がかり（外皮と裏板を落とす）
+    _csg(body, _box("_grip", fC, (P.X_FRONT - 0.006, 0, z_of(P.GRIP_S0 + glen / 2)),
+                    (0.020, P.GRIP_W, glen), coll))
+
+    # USB-C / スピーカーの逃げ。スマホ下端は長辺の端に来るので、側壁を切り欠く。
+    # 外皮側の面はスロットの面より 0.5mm 手前で止める（面一にすると縫い目が残る）
+    ux0, ux1 = P.X_FRONT - 0.0145, P.SLOT_T / 2 - 0.0005
+    _csg(body, _box("_usb", fC, ((ux0 + ux1) / 2,
+                                 -(P.SHELL_Y / 2 - P.SIDE_WALL), z_of(P.USB_S)),
+                    (ux1 - ux0, 0.020, P.USB_W), coll))
 
     _csg(body, _cyl("_teth", fC, (P.X_BACK - P.BOSS_T / 2, 0, 0.0130),
                     P.TETHER_R, P.BOSS_Y + 0.020, "Y", coll))
