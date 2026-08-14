@@ -15,9 +15,9 @@ CLR_W = 0.0007   # 短辺方向 0.7mm
 CLR_T = 0.0008   # 厚み方向 0.8mm（保持リブ込みの実効 0.6mm）
 
 # --- スロット内寸 ---
-SLOT_L = PHONE_L + 2 * CLR_L   # 153.0mm 長辺方向（X）
-SLOT_W = PHONE_W + 2 * CLR_W   #  73.7mm 短辺方向（斜面に沿う）
-SLOT_T = PHONE_T + CLR_T       #   9.4mm 厚み方向（斜面の法線）
+SLOT_L = PHONE_L + 2 * CLR_L   # 153.4mm 長辺方向（X）
+SLOT_W = PHONE_W + 2 * CLR_W   #  74.3mm 短辺方向（斜面に沿う）
+SLOT_T = PHONE_T + CLR_T       #   9.8mm 厚み方向（斜面の法線）
 
 # --- 肉厚 ---
 FRONT_SKIN = 0.0025   # 2.5mm 斜面の外皮（この裏にスマホ背面が接する）
@@ -31,7 +31,7 @@ STOPPER    = 0.0035   # 3.5mm スロット下端の受け（ここでスマホ�
 TILT_DEG   = 75.0
 FRONT_H    = 0.0080   # 8.0mm 前壁の立ち上がり
 TOP_FLAT   = 0.0300   # 30.0mm 天面（差し込み口が開く。75°は背が高いので奥行きで転倒を抑える）
-SLOPE_LEN  = STOPPER + SLOT_W + 0.0008   # 78.0mm 斜面の長さ
+SLOPE_LEN  = STOPPER + SLOT_W + 0.0008   # 78.6mm 斜面の長さ
 SLOT_ENTRY = 0.0600   # 差し込み口を抜くためのカッター延長
 
 STAND_W = SLOT_L + 2 * SIDE_WALL                         # 160.4mm
