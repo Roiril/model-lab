@@ -197,15 +197,15 @@ r0, r1 = _wbb(rail)
 q0, q1 = _wbb(post)
 print(f"\n[掴む位置] レールの実在範囲 y[{r0.y*1000:.0f}, {r1.y*1000:.0f}]mm / "
       f"柱の実在範囲 z[{q0.z*1000:.0f}, {q1.z*1000:.0f}]mm")
-rg0, rg1 = P.RAIL_RING_Y - P.RING_W / 2, P.RAIL_RING_Y + P.RING_W / 2
-pg0, pg1 = P.POST_RING_Z - P.RING_W / 2, P.POST_RING_Z + P.RING_W / 2
-print(f"  レールのリング y[{rg0*1000:.0f}, {rg1*1000:.0f}]mm  "
-      f"→ パイプ端まで {(rg0 - r0.y)*1000:+.1f}mm の余裕")
-print(f"  柱のリング   z[{pg0*1000:.0f}, {pg1*1000:.0f}]mm  "
-      f"→ パイプ上端まで {(q1.z - pg1)*1000:+.1f}mm の余裕")
+rg0, rg1 = P.RAIL_RING_Y - P.CLIP_W / 2, P.RAIL_RING_Y + P.CLIP_W / 2
+pg0, pg1 = P.POST_RING_Z - P.CLIP_W / 2, P.POST_RING_Z + P.CLIP_W / 2
+print(f"  レールのクリップ y[{rg0*1000:.0f}, {rg1*1000:.0f}]mm  幅 {P.CLIP_W*1000:.0f}mm"
+      f"  → パイプ端まで {(rg0 - r0.y)*1000:+.1f}mm の余裕")
+print(f"  柱のクリップ   z[{pg0*1000:.0f}, {pg1*1000:.0f}]mm  幅 {P.CLIP_W*1000:.0f}mm"
+      f"  → パイプ上端まで {(q1.z - pg1)*1000:+.1f}mm の余裕")
 
 # --- 旧版と下書きの板は目障りなので隠す（消してはいない。Alt+H で戻る） -----
-for n in ("Cube.005", "Cube.006"):
+for n in ("Cube.005", "Cube.006", "Cube.007", "Cube.008", "Cube.009"):
     ob = bpy.data.objects.get(n)
     if ob:
         ob.hide_set(True)
