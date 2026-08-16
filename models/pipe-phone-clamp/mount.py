@@ -126,30 +126,6 @@ def frames(phone_center, euler_deg, pipe_point, pipe_dir):
 # =========================================================================
 # 部品
 # =========================================================================
-def _ring_start(coll, fK, name):
-    """リングの外形と耳。ボアと分割はまだ引かない（腕やラグを足したあとで引く）。"""
-    body = _cyl(name, fK, (0, 0, 0), P.RING_R, P.RING_W, "Z", coll)
-    for s in (+1, -1):
-        yc = s * (P.EAR_Y0 + P.EAR_Y1) / 2
-        _csg(body, _box("_ear", fK, (P.EAR_T / 2, yc, 0),
-                        (P.EAR_T, P.EAR_Y1 - P.EAR_Y0, P.RING_W), coll), "UNION")
-    return body
-
-
-def _ring_finish(coll, fK, body):
-    """ボア・分割・耳のボルト穴・ナット座。材料を足し終えてから呼ぶ。"""
-    half = P.SPLIT_GAP / 2
-    # ボアは長く取る。パイプは無限に続くので、リング幅ぶんだけ抜くと、あとから足した
-    # ラグの角がボアの外（上下）に残ってパイプへ食い込む（実測 0.399cm3 の食い込み）。
-    _csg(body, _cyl("_bore", fK, (0, 0, 0), P.BORE_R, 0.200, "Z", coll))
-    _csg(body, _box("_split", fK, (half - 0.100, 0, 0), (0.200, 0.400, 0.400), coll))
-    for s in (+1, -1):
-        _csg(body, _cyl("_bh", fK, (0, s * P.BOLT_Y, 0), P.BOLT_R, 0.060, "X", coll))
-        _csg(body, _hex("_nut", fK, (P.EAR_T - P.NUT_T / 2 + 0.0004, s * P.BOLT_Y, 0),
-                        P.NUT_AF, P.NUT_T + 0.0008, "X", coll))
-    return body
-
-
 # =========================================================================
 # 角のジョイントを兼ねる本体（レールと柱を 1 つの部品で掴む）
 # =========================================================================
@@ -201,69 +177,66 @@ def _arm_frame(a, b):
                    (0.0, 0.0, 0.0, 1.0))), (b - a).length
 
 
+def _tri_z(name, frame, tri_xy, length, coll):
+    """frame の x-y 平面に置いた三角形を、z 方向へ length 押し出した角柱。"""
+    bm = bmesh.new()
+    h = length / 2
+    vs = [(bm.verts.new((x, y, -h)), bm.verts.new((x, y, +h))) for (x, y) in tri_xy]
+    bm.faces.new([vs[0][0], vs[1][0], vs[2][0]])
+    bm.faces.new([vs[0][1], vs[1][1], vs[2][1]])
+    for i in range(3):
+        a, b = vs[i], vs[(i + 1) % 3]
+        bm.faces.new([a[0], b[0], b[1], a[1]])
+    bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
+    bm.transform(frame)
+    return _obj(name, bm, coll)
+
+
 def build_corner(coll, fR, fQ, fC, name="M_corner"):
-    """角のジョイント本体。レールと柱の半分ずつ + 角の肉 + 腕 + パッド。"""
+    """角のジョイント本体。2 本のパイプへ嵌める C クリップ + 腕 + パッド。ねじ止め無し。"""
     x_mate = P.X_BACK - P.BOSS_T
-    body = _ring_start(coll, fR, name)
-    _csg(body, _ring_start(coll, fQ, "_postring"), "UNION")
+    r_out = P.CLIP_BORE_R + P.CLIP_WALL
+    x0 = r_out * 0.5                                 # 冠が始まる半径
+
+    body = _cyl(name, fR, (0, 0, 0), r_out, P.CLIP_W, "Z", coll)
+    _csg(body, _cyl("_c2", fQ, (0, 0, 0), r_out, P.CLIP_W, "Z", coll), "UNION")
+    for f in (fR, fQ):                               # 冠（平らな背。造形板へ着く面）
+        _csg(body, _box("_crown", f, ((x0 + P.CLIP_CROWN_R) / 2, 0, 0),
+                        (P.CLIP_CROWN_R - x0, 2 * P.CLIP_CROWN_Y, P.CLIP_W), coll), "UNION")
 
     I = Matrix.Identity(4)
-    _csg(body, _box("_web", I, (P.CORNER_X, (P.WEB_Y0 + P.WEB_Y1) / 2,
-                                (P.WEB_Z0 + P.WEB_Z1) / 2),
-                    (2 * P.RING_R, P.WEB_Y1 - P.WEB_Y0, P.WEB_Z1 - P.WEB_Z0), coll), "UNION")
+    # 角の肉は冠と同じ x の帯に置く。口（x < CORNER_X 側）を塞がないため
+    _csg(body, _box("_web", I, (P.CORNER_X + (x0 + P.CLIP_CROWN_R) / 2,
+                                (P.WEB_Y0 + P.WEB_Y1) / 2, (P.WEB_Z0 + P.WEB_Z1) / 2),
+                    (P.CLIP_CROWN_R - x0, P.WEB_Y1 - P.WEB_Y0, P.WEB_Z1 - P.WEB_Z0),
+                    coll), "UNION")
 
     pad_c = fC @ Vector((x_mate, 0.0, 0.0))
-    root = Vector((P.CORNER_X, (P.WEB_Y0 + P.WEB_Y1) / 2, (P.WEB_Z0 + P.WEB_Z1) / 2))
+    root = Vector((P.CORNER_X + (x0 + P.CLIP_CROWN_R) / 2,
+                   (P.WEB_Y0 + P.WEB_Y1) / 2, (P.WEB_Z0 + P.WEB_Z1) / 2))
     fA, alen = _arm_frame(root, pad_c)
     _csg(body, _box("_arm", fA, (0, 0, 0), (alen + 0.020, P.ARM_W, P.ARM_H), coll), "UNION")
     _csg(body, _box("_pad", fC, (x_mate - P.PAD_T / 2 + 0.00025, 0, 0),
                     (P.PAD_T + 0.0005, P.PAD_Y, P.PAD_Z), coll), "UNION")
     _csg(body, _box("_mate", fC, (x_mate + 0.100, 0, 0), (0.200, 0.400, 0.400), coll))
 
-    # ⚠ 分割 → ボアの順で引く。逆にすると EXACT が転んで中身が空になる（実測）
-    _csg(body, _box("_split", fR, (P.SPLIT_GAP / 2 - 0.100, 0, 0), (0.200, 0.400, 0.400), coll))
-    for f in (fR, fQ):                              # 2 本ぶんのボアと、その天井の切妻
-        _csg(body, _cyl("_bore", f, (0, 0, 0), P.BORE_R, 0.300, "Z", coll))
-        _csg(body, _roof("_roof", f, P.BORE_R, 0.300, +1, coll))
-
-    for f in (fR, fQ):                              # 耳のボルト穴とナット座
-        for s in (+1, -1):
-            _csg(body, _cyl("_bh", f, (0, s * P.BOLT_Y, 0), P.BOLT_R, 0.060, "X", coll))
-            _csg(body, _hex("_nut", f, (P.EAR_T - P.NUT_T / 2 + 0.0004, s * P.BOLT_Y, 0),
-                            P.NUT_AF, P.NUT_T + 0.0008, "X", coll))
+    # ⚠ 口 → ボアの順で引く。逆にすると EXACT が転んで中身が空になる（実測）
+    a = math.radians(180.0 - P.CLIP_MOUTH)
+    b = math.radians(180.0 + P.CLIP_MOUTH)
+    R = 0.150
+    for f in (fR, fQ):
+        _csg(body, _tri_z("_mouth", f, [(0.0, 0.0),
+                                        (R * math.cos(a), R * math.sin(a)),
+                                        (R * math.cos(b), R * math.sin(b))], 0.300, coll))
+    for f in (fR, fQ):                              # ボアと、その天井の切妻
+        _csg(body, _cyl("_bore", f, (0, 0, 0), P.CLIP_BORE_R, 0.300, "Z", coll))
+        _csg(body, _roof("_roof", f, P.CLIP_BORE_R, 0.300, +1, coll))
 
     for s in (+1, -1):                              # パッドのボルト穴と座ぐり
         _csg(body, _cyl("_pb", fC, (x_mate - P.PAD_T / 2, s * P.PAD_BOLT_Y, 0),
                         P.BOLT_R, 0.060, "X", coll))
         _csg(body, _cyl("_pcb", fC, (x_mate - P.PAD_T - 0.0005 + P.CB_D / 2,
                                      s * P.PAD_BOLT_Y, 0), P.CB_R, P.CB_D + 0.001, "X", coll))
-    return body
-
-
-def build_corner_strap(coll, fR, fQ, name="M_corner_strap"):
-    """L 字の押さえ。2 本ぶんの反対半分を 1 個で受ける。"""
-    half = P.SPLIT_GAP / 2
-    body = _cyl(name, fR, (0, 0, 0), P.RING_R, P.RING_W, "Z", coll)
-    _csg(body, _cyl("_r2", fQ, (0, 0, 0), P.RING_R, P.RING_W, "Z", coll), "UNION")
-    for f in (fR, fQ):
-        for s in (+1, -1):
-            yc = s * (P.EAR_Y0 + P.EAR_Y1) / 2
-            _csg(body, _box("_ear", f, (-P.EAR_T / 2, yc, 0),
-                            (P.EAR_T, P.EAR_Y1 - P.EAR_Y0, P.RING_W), coll), "UNION")
-    I = Matrix.Identity(4)
-    _csg(body, _box("_web", I, (P.CORNER_X - P.WEB_T / 2, (P.WEB_Y0 + P.WEB_Y1) / 2,
-                                (P.WEB_Z0 + P.WEB_Z1) / 2),
-                    (P.WEB_T, P.WEB_Y1 - P.WEB_Y0, P.WEB_Z1 - P.WEB_Z0), coll), "UNION")
-    # ⚠ 分割 → ボアの順（逆にすると中身が空になる）
-    _csg(body, _box("_split", fR, (0.100 - half, 0, 0), (0.200, 0.400, 0.400), coll))
-    for f in (fR, fQ):
-        _csg(body, _cyl("_bore", f, (0, 0, 0), P.BORE_R, 0.300, "Z", coll))
-        _csg(body, _roof("_roof", f, P.BORE_R, 0.300, -1, coll))
-    for f in (fR, fQ):
-        for s in (+1, -1):
-            _csg(body, _cyl("_bh", f, (0, s * P.BOLT_Y, 0), P.BOLT_R, 0.060, "X", coll))
-            _csg(body, _cyl("_cb", f, (-P.EAR_T - 0.0005 + P.CB_D / 2, s * P.BOLT_Y, 0),
-                            P.CB_R, P.CB_D + 0.001, "X", coll))
     return body
 
 
@@ -295,7 +268,11 @@ def build_cradle(coll, fC, brace=False, name="M_cradle"):
 
     # 差し込み口のテーパー。斜面より phi だけ立てた面を引き、その内側 TAPER_D を抜く
     phi = math.atan2(P.TAPER_D, P.TAPER_LEN)
-    ft = (fC @ Matrix.Translation((P.SLOT_T / 2, 0.0, z_of(P.TAPER_S0)))
+    # 起点をスロット側へ 0.2mm 逃がし、その分だけ斜面を手前から始める。面がスロットの
+    # 面と接したままだと、USB の切り欠きと交わる所に三角形が 1 枚残る（実測 3 本）。
+    back = 0.0002
+    ft = (fC @ Matrix.Translation((P.SLOT_T / 2 - back, 0.0,
+                                   z_of(P.TAPER_S0 - back / math.tan(phi))))
           @ Matrix.Rotation(phi, 4, "Y"))
     # 厚みは TAPER_D ではなく 8mm 取る。TAPER_D ぴったりだと、下面がスロットの面を
     # 浅い角度で横切って薄片ができる。余分はスロットの空洞なので形は変わらない。

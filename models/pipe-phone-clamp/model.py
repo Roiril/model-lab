@@ -24,13 +24,13 @@ fC, fK, arm_len = M.frames(P.PHONE_CENTER, P.PLATE_EULER_DEG, P.RAIL_POINT, P.RA
 fR, fQ = M.corner_frames()
 
 parts = [M.build_corner(coll, fR, fQ, fC),
-         M.build_corner_strap(coll, fR, fQ),
          M.build_cradle(coll, fC)]
 
 # 造形板へ向ける向き（この向きの「上」を +Z にして寝かせる）。
 # 角の 2 部品は共通の分割面を伏せる。2 本ぶんの樋が上を向き、天井は切妻なので支持材が要らない。
-UPS = {"M_corner": Vector((1, 0, 0)),
-       "M_corner_strap": Vector((-1, 0, 0)),
+# 向きは面の法線を総当たりして選んだ（要サポート面と接地面積で比較）。
+# corner はポケットを留めるパッド面を伏せるのが最善（接地 2010mm2・高さ 59mm）。
+UPS = {"M_corner": -(fC.to_3x3() @ Vector((1, 0, 0))),
        "M_cradle": fC.to_3x3() @ Vector((0, 0, 1))}   # 差し込み口を上に立てる
 
 print("\n=== 部品（この向きのまま STL にしてある） ===")
@@ -49,8 +49,8 @@ for ob in parts:
           f"  体積 {s['vol_cm3']:6.1f}cm3  非多様体 {s['nonmani']}  殻 {s['shells']}")
     export_stl(f"pipe-phone-clamp_{ob.name[2:]}", only=[ob])
 
-print("\nねじ: M4×16 を 6 本、M4 ナットを 6 個")
-print("  角のジョイント 4 本（レール 2・柱 2）/ ポケット 2 本")
+print("\nねじ: M4×16 を 2 本、M4 ナットを 2 個（ポケットを本体へ留めるぶんだけ）")
+print("  パイプ側はねじ無し。C クリップを -X へ押し込んで嵌める")
 
 # ビューワー用に 6 部品を並べた 1 枚
 y = 0.0

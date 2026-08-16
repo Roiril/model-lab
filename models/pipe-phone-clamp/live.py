@@ -63,13 +63,18 @@ def _intersect_cm3(a, b, coll):
 
 
 # --- 据え付ける姿勢を実物から読む ------------------------------------------
+# 姿勢は板 Cube.005、位置はあとから置かれた箱（Cube.008）を優先して読む。
+# 「回転は変えずに平行移動」なので、この 2 つを別々に取るのが正しい。
 plate = bpy.data.objects.get("Cube.005")
-if plate is not None:
-    center = tuple(plate.matrix_world.translation)
-    euler = tuple(a * 57.2957795 for a in plate.rotation_euler)
-    src = "Cube.005（ユーザーが置いた板）"
+euler = (tuple(a * 57.2957795 for a in plate.rotation_euler) if plate is not None
+         else P.PLATE_EULER_DEG)
+box = bpy.data.objects.get("Cube.008")
+if box is not None:
+    cs = [box.matrix_world @ Vector(c) for c in box.bound_box]
+    center = tuple((min(c[i] for c in cs) + max(c[i] for c in cs)) / 2 for i in range(3))
+    src = "Cube.008 の中心（位置）+ Cube.005 の回転"
 else:
-    center, euler, src = P.PHONE_CENTER, P.PLATE_EULER_DEG, "params.py の控え"
+    center, src = P.PHONE_CENTER, "params.py の控え"
 
 rail = bpy.data.objects.get("P_rail_B")
 if rail is not None:
@@ -113,7 +118,6 @@ for ob in list(coll.objects):
         bpy.data.meshes.remove(me)
 
 parts = [M.build_corner(coll, fR, fQ, fC),
-         M.build_corner_strap(coll, fR, fQ),
          M.build_cradle(coll, fC)]
 
 # 実機と同じ寸法の箱を、スロットの底へ着くまで差し込んだ位置に置く。見た目の確認と
@@ -141,7 +145,8 @@ pmat.diffuse_color = (0.02, 0.02, 0.025, 1.0)
 phone.data.materials.clear()
 phone.data.materials.append(pmat)
 
-print(f"\n[検算] Pixel 7a 実寸の箱 ∩ ポケット = {_intersect_cm3(phone, parts[2], coll):.4f} cm3"
+cradle = next(o for o in parts if o.name.startswith("M_cradle"))
+print(f"\n[検算] Pixel 7a 実寸の箱 ∩ ポケット = {_intersect_cm3(phone, cradle, coll):.4f} cm3"
       f"（0 でなければ入らない）")
 
 # --- 検査 -------------------------------------------------------------------
@@ -153,7 +158,7 @@ for ob in parts:
 
 skip = {"Cube", "Cube.001", "Cube.002", "Cube.003", "Cube.004", "Cylinder",
         "Cylinder.001", "Cylinder.002", "Cylinder.003", "Cylinder.004",
-        "Plane", "Plane.001", "Cube.005", "Cube.006", "Cube.007"}   # 005/006/007 は下書き
+        "Plane", "Plane.001", "Cube.005", "Cube.006", "Cube.007", "Cube.008"}  # 下書きの箱
 print("\n[ブースとの干渉（交差体積。0 以外は当たっている）]")
 hit = 0
 for ob in parts:
