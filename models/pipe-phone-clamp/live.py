@@ -97,11 +97,9 @@ fC, fK, arm_len = M.frames(center, euler, pipe_pt, pipe_dir)
 print(f"[frame] 腕の長さ（パイプ軸→合わせ面）= {arm_len * 1000:.1f}mm / "
       f"リング外まで {(arm_len - P.RING_R) * 1000:.1f}mm が片持ち")
 
-fQ, hole_c, boss_c = M.brace_frames(post_xy, fC)
-hw = fC @ hole_c
-print(f"[brace] 柱のリングの高さ z={hw.z*1000:.1f}mm（レールの {(pipe_pt[2]-hw.z)*1000:.0f}mm 下）"
-      f" / 柱の軸から水平 {P.POST_HOLE_R*1000:.0f}mm")
-print(f"        棒の穴どうしの距離 {((boss_c - hole_c).length)*1000:.1f}mm（1 枚の平板）")
+fR, fQ = M.corner_frames()
+print(f"[corner] 分割面 x={P.CORNER_X*1000:.0f}mm（2 本の軸が乗る平面）")
+print(f"         レールを y={P.RAIL_RING_Y*1000:.0f}mm、柱を z={P.POST_RING_Z*1000:.0f}mm で掴む")
 
 # --- 自分の作った物だけ消して作り直す --------------------------------------
 coll = bpy.data.collections.get(COLL)
@@ -114,12 +112,9 @@ for ob in list(coll.objects):
     if getattr(me, "users", 1) == 0:
         bpy.data.meshes.remove(me)
 
-parts = [M.build_saddle(coll, fK, fC, arm_len),
-         M.build_strap(coll, fK),
-         M.build_cradle(coll, fC, brace=True),
-         M.build_post_saddle(coll, fQ, fC, hole_c),
-         M.build_strap(coll, fQ, name="M_post_strap"),
-         M.build_strut(coll, fC, hole_c, boss_c)]
+parts = [M.build_corner(coll, fR, fQ, fC),
+         M.build_corner_strap(coll, fR, fQ),
+         M.build_cradle(coll, fC)]
 
 # 実機と同じ寸法の箱を、スロットの底へ着くまで差し込んだ位置に置く。見た目の確認と
 # 「本当に入るのか」の検算を兼ねる（部品ではないので STL には出さない）
@@ -178,6 +173,8 @@ if hit == 0:
 
 # --- パイプとの隙間（ボアは片側 0.3mm のはず） ------------------------------
 def _min_r(ob, p0, d):
+    if not ob.data.vertices:
+        return float("nan")                       # 空の部品でも落ちないように
     d = Vector(d).normalized()
     return min((((ob.matrix_world @ v.co) - Vector(p0))
                 - d * (((ob.matrix_world @ v.co) - Vector(p0)).dot(d))).length
@@ -190,21 +187,17 @@ for ob in parts:
     s = "  ".join(f"{nm} {_min_r(ob, p, d) * 1000:6.2f}mm" for nm, p, d in axes)
     print(f"  {ob.name:14s} {s}")
 
-# 継手（ユーザー実測: 角から横 80mm・縦 50mm）を避けられているか
-corner_y = post_xy[1]
-z_free = pipe_pt[2] - P.JOINT_ALONG_POST          # 柱側で自由になる高さ
-y_free = corner_y + P.JOINT_ALONG_RAIL            # レール側で自由になる位置
-print(f"\n[継手の回避] 柱は z<{z_free*1000:.1f}mm、レールは y>{y_free*1000:.1f}mm が自由")
-for ob in parts:
-    ws = [ob.matrix_world @ v.co for v in ob.data.vertices]
-    near_post = [w for w in ws if ((w.x - post_xy[0]) ** 2 + (w.y - corner_y) ** 2) ** 0.5 < 0.045]
-    if near_post:
-        print(f"  {ob.name:14s} 柱まわり半径45mm 内の最高点 z={max(w.z for w in near_post)*1000:7.1f}mm"
-              f"（{(z_free - max(w.z for w in near_post))*1000:+.1f}mm の余裕）")
-    near_rail = [w for w in ws if abs(w.x - pipe_pt[0]) < 0.045 and abs(w.z - pipe_pt[2]) < 0.045]
-    if near_rail:
-        print(f"  {ob.name:14s} レールまわり半径45mm 内の最も角寄り y={min(w.y for w in near_rail)*1000:7.1f}mm"
-              f"（{(min(w.y for w in near_rail) - y_free)*1000:+.1f}mm の余裕）")
+# 掴む場所がパイプの上に乗っているか（端から外れていないか）
+r0, r1 = _wbb(rail)
+q0, q1 = _wbb(post)
+print(f"\n[掴む位置] レールの実在範囲 y[{r0.y*1000:.0f}, {r1.y*1000:.0f}]mm / "
+      f"柱の実在範囲 z[{q0.z*1000:.0f}, {q1.z*1000:.0f}]mm")
+rg0, rg1 = P.RAIL_RING_Y - P.RING_W / 2, P.RAIL_RING_Y + P.RING_W / 2
+pg0, pg1 = P.POST_RING_Z - P.RING_W / 2, P.POST_RING_Z + P.RING_W / 2
+print(f"  レールのリング y[{rg0*1000:.0f}, {rg1*1000:.0f}]mm  "
+      f"→ パイプ端まで {(rg0 - r0.y)*1000:+.1f}mm の余裕")
+print(f"  柱のリング   z[{pg0*1000:.0f}, {pg1*1000:.0f}]mm  "
+      f"→ パイプ上端まで {(q1.z - pg1)*1000:+.1f}mm の余裕")
 
 # --- 旧版と下書きの板は目障りなので隠す（消してはいない。Alt+H で戻る） -----
 for n in ("Cube.005", "Cube.006"):

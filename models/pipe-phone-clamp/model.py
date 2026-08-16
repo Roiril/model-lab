@@ -21,25 +21,17 @@ clear_scene()
 coll = bpy.context.scene.collection
 
 fC, fK, arm_len = M.frames(P.PHONE_CENTER, P.PLATE_EULER_DEG, P.RAIL_POINT, P.RAIL_DIR)
-post_xy = (P.RAIL_POINT[0], P.POST_Y)
-fQ, hole_c, boss_c = M.brace_frames(post_xy, fC)
+fR, fQ = M.corner_frames()
 
-parts = [M.build_saddle(coll, fK, fC, arm_len),
-         M.build_strap(coll, fK),
-         M.build_cradle(coll, fC, brace=True),
-         M.build_post_saddle(coll, fQ, fC, hole_c),
-         M.build_strap(coll, fQ, name="M_post_strap"),
-         M.build_strut(coll, fC, hole_c, boss_c)]
+parts = [M.build_corner(coll, fR, fQ, fC),
+         M.build_corner_strap(coll, fR, fQ),
+         M.build_cradle(coll, fC)]
 
-# 造形板へ向ける向き（この向きの「上」を +Z にして寝かせる）
-MX = fC.to_3x3() @ Vector((1, 0, 0))
-MZ = fC.to_3x3() @ Vector((0, 0, 1))
-UPS = {"M_saddle": fK.to_3x3() @ Vector((1, 0, 0)),   # 分割面を造形板へ
-       "M_strap": fK.to_3x3() @ Vector((0, 0, 1)),    # リングを寝かせる
-       "M_cradle": MZ,                                # 差し込み口を上に立てる
-       "M_post_saddle": -MX,                          # 棒の座面を造形板へ
-       "M_post_strap": Vector((0, 0, 1)),
-       "M_strut": MX}                                 # 平置き（支持材ゼロ）
+# 造形板へ向ける向き（この向きの「上」を +Z にして寝かせる）。
+# 角の 2 部品は共通の分割面を伏せる。2 本ぶんの樋が上を向き、天井は切妻なので支持材が要らない。
+UPS = {"M_corner": Vector((1, 0, 0)),
+       "M_corner_strap": Vector((-1, 0, 0)),
+       "M_cradle": fC.to_3x3() @ Vector((0, 0, 1))}   # 差し込み口を上に立てる
 
 print("\n=== 部品（この向きのまま STL にしてある） ===")
 for ob in parts:
@@ -57,9 +49,8 @@ for ob in parts:
           f"  体積 {s['vol_cm3']:6.1f}cm3  非多様体 {s['nonmani']}  殻 {s['shells']}")
     export_stl(f"pipe-phone-clamp_{ob.name[2:]}", only=[ob])
 
-print(f"\n腕の長さ（レール軸→合わせ面）{arm_len * 1000:.1f}mm / 片持ち {(arm_len - P.RING_R) * 1000:.1f}mm")
-print(f"つっかえ棒の穴どうし {((boss_c - hole_c).length) * 1000:.1f}mm")
-print("ねじ: M4×16 を 8 本、M4 ナットを 8 個")
+print("\nねじ: M4×16 を 6 本、M4 ナットを 6 個")
+print("  角のジョイント 4 本（レール 2・柱 2）/ ポケット 2 本")
 
 # ビューワー用に 6 部品を並べた 1 枚
 y = 0.0

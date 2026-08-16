@@ -150,55 +150,21 @@ def _ring_finish(coll, fK, body):
     return body
 
 
-def build_saddle(coll, fK, fC, arm_len, name="M_saddle"):
-    """パイプを抱く半分 + 腕 + パッド。合わせ面より先（ポケット側）は落とす。"""
-    x_mate = P.X_BACK - P.BOSS_T                 # C 座標での合わせ面
-    body = _ring_start(coll, fK, name)
+# =========================================================================
+# 角のジョイントを兼ねる本体（レールと柱を 1 つの部品で掴む）
+# =========================================================================
+def _roof(name, frame, r, length, sign, coll):
+    """ボアの天井を 45° の切妻に落とすカッター。
 
-    over = 0.020                                  # 合わせ面が斜めなので長めに出して切る
-    _csg(body, _box("_arm", fK, ((arm_len + over) / 2, 0, 0),
-                    (arm_len + over, P.ARM_H, P.ARM_W), coll), "UNION")
-    # パッドは合わせ面より 0.5mm 出しておいて、あとで面で切る。面一で置くと切る材料が
-    # 無い退化した boolean になる。
-    _csg(body, _box("_pad", fC, (x_mate - P.PAD_T / 2 + 0.00025, 0, 0),
-                    (P.PAD_T + 0.0005, P.PAD_Y, P.PAD_Z), coll), "UNION")
-    _csg(body, _box("_mate", fC, (x_mate + 0.100, 0, 0), (0.200, 0.400, 0.400), coll))
-
-    _ring_finish(coll, fK, body)
-
-    for s in (+1, -1):                            # パッドのボルト穴と座ぐり
-        _csg(body, _cyl("_pb", fC, (x_mate - P.PAD_T / 2, s * P.PAD_BOLT_Y, 0),
-                        P.BOLT_R, 0.060, "X", coll))
-        _csg(body, _cyl("_pcb", fC, (x_mate - P.PAD_T - 0.0005 + P.CB_D / 2,
-                                     s * P.PAD_BOLT_Y, 0),
-                        P.CB_R, P.CB_D + 0.001, "X", coll))
-    return body
-
-
-def build_strap(coll, fK, name="M_strap"):
-    """反対側の半分。頭は座ぐりへ落とす。"""
-    half = P.SPLIT_GAP / 2
-    body = _cyl(name, fK, (0, 0, 0), P.RING_R, P.RING_W, "Z", coll)
-    for s in (+1, -1):
-        yc = s * (P.EAR_Y0 + P.EAR_Y1) / 2
-        _csg(body, _box("_ear", fK, (-P.EAR_T / 2, yc, 0),
-                        (P.EAR_T, P.EAR_Y1 - P.EAR_Y0, P.RING_W), coll), "UNION")
-    # ボアは長く取る。パイプは無限に続くので、リング幅ぶんだけ抜くと、あとから足した
-    # ラグの角がボアの外（上下）に残ってパイプへ食い込む（実測 0.399cm3 の食い込み）。
-    _csg(body, _cyl("_bore", fK, (0, 0, 0), P.BORE_R, 0.200, "Z", coll))
-    _csg(body, _box("_split", fK, (0.100 - half, 0, 0), (0.200, 0.400, 0.400), coll))
-    for s in (+1, -1):
-        _csg(body, _cyl("_bh", fK, (0, s * P.BOLT_Y, 0), P.BOLT_R, 0.060, "X", coll))
-        _csg(body, _cyl("_cb", fK, (-P.EAR_T - 0.0005 + P.CB_D / 2, s * P.BOLT_Y, 0),
-                        P.CB_R, P.CB_D + 0.001, "X", coll))
-    return body
-
-
-def _tri_prism(name, frame, tri_xz, width, coll):
-    """frame の x-z 平面に置いた三角形を、y 方向へ width だけ押し出した角柱。"""
+    分割面を造形板へ伏せると、半円の樋の天井（頂点まわり ±45°）だけが宙に浮く。
+    そこを切妻に落とすと支持材が要らなくなる。パイプは残った 4 本の帯（±45°/±135°）
+    で挟まれるので、掴む力はむしろ V ブロックに近くなって位置も決まる。
+    """
+    k = r * 0.70710678
+    tri = [(sign * k, +k), (sign * k, -k), (sign * r * 1.41421356, 0.0)]
     bm = bmesh.new()
-    h = width / 2
-    vs = [(bm.verts.new((x, -h, z)), bm.verts.new((x, +h, z))) for (x, z) in tri_xz]
+    h = length / 2
+    vs = [(bm.verts.new((x, y, -h)), bm.verts.new((x, y, +h))) for (x, y) in tri]
     bm.faces.new([vs[0][0], vs[1][0], vs[2][0]])
     bm.faces.new([vs[0][1], vs[1][1], vs[2][1]])
     for i in range(3):
@@ -209,75 +175,95 @@ def _tri_prism(name, frame, tri_xz, width, coll):
     return _obj(name, bm, coll)
 
 
-def brace_frames(post_xy, fC):
-    """柱のクランプ fQ と、つっかえ棒の 2 つの穴（C 座標）を返す。
-
-    棒はポケットの背中と平行な 1 枚の平板にする。そのために、柱側のラグの座面を
-    ボス面から棒の厚みだけ外へずらした平面（C-x = 一定）に置く。柱のリングの高さは、
-    その平面が柱から POST_HOLE_R 離れた所を通る高さとして自動的に決まる。
-    """
-    mx = (fC.to_3x3() @ Vector((1, 0, 0))).normalized()
-    o = fC.translation
-    x_boss = P.X_BACK - P.BOSS_T                     # ポケット側の座面
-    x_lug = x_boss - P.STRUT_T                       # 柱側の座面（棒の厚みぶん外）
-    boss_w = fC @ Vector((x_boss, 0.0, P.STRUT_BOSS_Z))
-
-    u = Vector((boss_w.x - post_xy[0], boss_w.y - post_xy[1], 0.0)).normalized()
-    hx = post_xy[0] + u.x * P.POST_HOLE_R
-    hy = post_xy[1] + u.y * P.POST_HOLE_R
-    hz = (x_lug - (hx - o.x) * mx.x - (hy - o.y) * mx.y) / mx.z + o.z
-    hole_w = Vector((hx, hy, hz))
-
-    uz = Vector((0.0, 0.0, 1.0))
-    uy = uz.cross(u)
-    fQ = Matrix(((u.x, uy.x, uz.x, post_xy[0]),
-                 (u.y, uy.y, uz.y, post_xy[1]),
-                 (u.z, uy.z, uz.z, hz),
+def corner_frames():
+    """レール側 fR と柱側 fQ。どちらも frame-x = 世界 +X（＝共通の分割面の法線）、
+    frame-z = そのパイプの軸。こうすると _ring_start がそのまま使える。"""
+    fR = Matrix(((1.0, 0.0, 0.0, P.CORNER_X),
+                 (0.0, 0.0, 1.0, P.RAIL_RING_Y),
+                 (0.0, -1.0, 0.0, P.RAIL_Z),
                  (0.0, 0.0, 0.0, 1.0)))
-    inv = fC.inverted()
-    return fQ, inv @ hole_w, inv @ boss_w
+    fQ = Matrix(((1.0, 0.0, 0.0, P.CORNER_X),
+                 (0.0, 1.0, 0.0, P.CORNER_Y),
+                 (0.0, 0.0, 1.0, P.POST_RING_Z),
+                 (0.0, 0.0, 0.0, 1.0)))
+    return fR, fQ
 
 
-def build_post_saddle(coll, fQ, fC, hole_c, name="M_post_saddle"):
-    """縦の柱を抱く半分 + 棒の座面になるラグ。座面はポケットの背中と平行。"""
-    body = _ring_start(coll, fQ, name)
-    # ラグ: 座面からリングへ向かって伸びる角柱（C 座標で厚み方向に伸ばす）
-    _csg(body, _box("_lug", fC, (hole_c.x - P.LUG_DEPTH / 2, hole_c.y, hole_c.z),
-                    (P.LUG_DEPTH, P.STRUT_W + 0.004, P.LUG_W), coll), "UNION")
-    _ring_finish(coll, fQ, body)
-    # 棒を留める M4。座面から入れてナットで受ける（ナットは座面の裏の六角座へ）
-    _csg(body, _cyl("_lh", fC, (hole_c.x - 0.020, hole_c.y, hole_c.z),
-                    P.BOLT_R, 0.044, "X", coll))
-    nx = hole_c.x - P.NUT_T - 0.0006
-    _csg(body, _hex("_lnut", fC, (nx + P.NUT_T / 2, hole_c.y, hole_c.z),
-                    P.NUT_AF, P.NUT_T + 0.0004, "X", coll))
-    _csg(body, _box("_lslot", fC, (nx + P.NUT_T / 2 - 0.0002,
-                                   hole_c.y + (P.STRUT_W / 2 + 0.008) / 2, hole_c.z),
-                    (P.NUT_T + 0.0010, P.STRUT_W / 2 + 0.008, P.NUT_AF + 0.0004), coll))
+def _arm_frame(a, b):
+    """a→b を x 軸に持つ座標系（z はできるだけ世界の上を向ける）。"""
+    ux = (b - a).normalized()
+    uz = (Vector((0, 0, 1)) - ux * ux.z).normalized()
+    uy = uz.cross(ux)
+    m = (a + b) / 2
+    return Matrix(((ux.x, uy.x, uz.x, m.x),
+                   (ux.y, uy.y, uz.y, m.y),
+                   (ux.z, uy.z, uz.z, m.z),
+                   (0.0, 0.0, 0.0, 1.0))), (b - a).length
+
+
+def build_corner(coll, fR, fQ, fC, name="M_corner"):
+    """角のジョイント本体。レールと柱の半分ずつ + 角の肉 + 腕 + パッド。"""
+    x_mate = P.X_BACK - P.BOSS_T
+    body = _ring_start(coll, fR, name)
+    _csg(body, _ring_start(coll, fQ, "_postring"), "UNION")
+
+    I = Matrix.Identity(4)
+    _csg(body, _box("_web", I, (P.CORNER_X, (P.WEB_Y0 + P.WEB_Y1) / 2,
+                                (P.WEB_Z0 + P.WEB_Z1) / 2),
+                    (2 * P.RING_R, P.WEB_Y1 - P.WEB_Y0, P.WEB_Z1 - P.WEB_Z0), coll), "UNION")
+
+    pad_c = fC @ Vector((x_mate, 0.0, 0.0))
+    root = Vector((P.CORNER_X, (P.WEB_Y0 + P.WEB_Y1) / 2, (P.WEB_Z0 + P.WEB_Z1) / 2))
+    fA, alen = _arm_frame(root, pad_c)
+    _csg(body, _box("_arm", fA, (0, 0, 0), (alen + 0.020, P.ARM_W, P.ARM_H), coll), "UNION")
+    _csg(body, _box("_pad", fC, (x_mate - P.PAD_T / 2 + 0.00025, 0, 0),
+                    (P.PAD_T + 0.0005, P.PAD_Y, P.PAD_Z), coll), "UNION")
+    _csg(body, _box("_mate", fC, (x_mate + 0.100, 0, 0), (0.200, 0.400, 0.400), coll))
+
+    # ⚠ 分割 → ボアの順で引く。逆にすると EXACT が転んで中身が空になる（実測）
+    _csg(body, _box("_split", fR, (P.SPLIT_GAP / 2 - 0.100, 0, 0), (0.200, 0.400, 0.400), coll))
+    for f in (fR, fQ):                              # 2 本ぶんのボアと、その天井の切妻
+        _csg(body, _cyl("_bore", f, (0, 0, 0), P.BORE_R, 0.300, "Z", coll))
+        _csg(body, _roof("_roof", f, P.BORE_R, 0.300, +1, coll))
+
+    for f in (fR, fQ):                              # 耳のボルト穴とナット座
+        for s in (+1, -1):
+            _csg(body, _cyl("_bh", f, (0, s * P.BOLT_Y, 0), P.BOLT_R, 0.060, "X", coll))
+            _csg(body, _hex("_nut", f, (P.EAR_T - P.NUT_T / 2 + 0.0004, s * P.BOLT_Y, 0),
+                            P.NUT_AF, P.NUT_T + 0.0008, "X", coll))
+
+    for s in (+1, -1):                              # パッドのボルト穴と座ぐり
+        _csg(body, _cyl("_pb", fC, (x_mate - P.PAD_T / 2, s * P.PAD_BOLT_Y, 0),
+                        P.BOLT_R, 0.060, "X", coll))
+        _csg(body, _cyl("_pcb", fC, (x_mate - P.PAD_T - 0.0005 + P.CB_D / 2,
+                                     s * P.PAD_BOLT_Y, 0), P.CB_R, P.CB_D + 0.001, "X", coll))
     return body
 
 
-def build_strut(coll, fC, hole_c, boss_c, name="M_strut"):
-    """柱のラグとポケットのボスを結ぶ平板。両端 1 本ずつのボルト（＝ピン結合）。
-
-    2 つの穴は同じ平面上にあり、ボルトも平行なので、ただの板で足りる。片側は長穴に
-    して、継手の遊びから来る長さの誤差 ±3mm を組むときに吸収する。
-    """
-    d = Vector((0.0, boss_c.y - hole_c.y, boss_c.z - hole_c.z))
-    L = d.length
-    ang = math.atan2(d.z, d.y)
-    fP = fC @ Matrix.Translation(((hole_c.x + boss_c.x) / 2,
-                                  (hole_c.y + boss_c.y) / 2,
-                                  (hole_c.z + boss_c.z) / 2)) @ Matrix.Rotation(ang, 4, "X")
-    body = _box(name, fP, (0, 0, 0),
-                (P.STRUT_T, L + 2 * P.STRUT_END + P.STRUT_SLOT, P.STRUT_W), coll)
-    th = P.STRUT_T + 0.010
-    _csg(body, _cyl("_h1", fP, (0, +L / 2, 0), P.BOLT_R, th, "X", coll))
-    for dy in (-P.STRUT_SLOT, +P.STRUT_SLOT):        # 長穴（丸穴 2 つ + 間の溝）
-        _csg(body, _cyl("_h2", fP, (0, -L / 2 + dy, 0), P.BOLT_R, th, "X", coll))
-    _csg(body, _box("_slot", fP, (0, -L / 2, 0), (th, 2 * P.STRUT_SLOT, 2 * P.BOLT_R), coll))
-    if P.BEVEL > 0:
-        _bevel(body, P.BEVEL)
+def build_corner_strap(coll, fR, fQ, name="M_corner_strap"):
+    """L 字の押さえ。2 本ぶんの反対半分を 1 個で受ける。"""
+    half = P.SPLIT_GAP / 2
+    body = _cyl(name, fR, (0, 0, 0), P.RING_R, P.RING_W, "Z", coll)
+    _csg(body, _cyl("_r2", fQ, (0, 0, 0), P.RING_R, P.RING_W, "Z", coll), "UNION")
+    for f in (fR, fQ):
+        for s in (+1, -1):
+            yc = s * (P.EAR_Y0 + P.EAR_Y1) / 2
+            _csg(body, _box("_ear", f, (-P.EAR_T / 2, yc, 0),
+                            (P.EAR_T, P.EAR_Y1 - P.EAR_Y0, P.RING_W), coll), "UNION")
+    I = Matrix.Identity(4)
+    _csg(body, _box("_web", I, (P.CORNER_X - P.WEB_T / 2, (P.WEB_Y0 + P.WEB_Y1) / 2,
+                                (P.WEB_Z0 + P.WEB_Z1) / 2),
+                    (P.WEB_T, P.WEB_Y1 - P.WEB_Y0, P.WEB_Z1 - P.WEB_Z0), coll), "UNION")
+    # ⚠ 分割 → ボアの順（逆にすると中身が空になる）
+    _csg(body, _box("_split", fR, (0.100 - half, 0, 0), (0.200, 0.400, 0.400), coll))
+    for f in (fR, fQ):
+        _csg(body, _cyl("_bore", f, (0, 0, 0), P.BORE_R, 0.300, "Z", coll))
+        _csg(body, _roof("_roof", f, P.BORE_R, 0.300, -1, coll))
+    for f in (fR, fQ):
+        for s in (+1, -1):
+            _csg(body, _cyl("_bh", f, (0, s * P.BOLT_Y, 0), P.BOLT_R, 0.060, "X", coll))
+            _csg(body, _cyl("_cb", f, (-P.EAR_T - 0.0005 + P.CB_D / 2, s * P.BOLT_Y, 0),
+                            P.CB_R, P.CB_D + 0.001, "X", coll))
     return body
 
 
