@@ -151,18 +151,21 @@ def _roof(name, frame, r, length, sign, coll):
     return _obj(name, bm, coll)
 
 
-def corner_frames():
-    """レール側 fR と柱側 fQ。どちらも frame-x = 世界 +X（＝共通の分割面の法線）、
-    frame-z = そのパイプの軸。こうすると _ring_start がそのまま使える。"""
-    fR = Matrix(((1.0, 0.0, 0.0, P.CORNER_X),
-                 (0.0, 0.0, 1.0, P.RAIL_RING_Y),
-                 (0.0, -1.0, 0.0, P.RAIL_Z),
-                 (0.0, 0.0, 0.0, 1.0)))
-    fQ = Matrix(((1.0, 0.0, 0.0, P.CORNER_X),
-                 (0.0, 1.0, 0.0, P.CORNER_Y),
-                 (0.0, 0.0, 1.0, P.POST_RING_Z),
-                 (0.0, 0.0, 0.0, 1.0)))
-    return fR, fQ
+def corner_frames(fC):
+    """レール側 fR と柱側 fQ。frame-z はそのパイプの軸、frame-x は「印刷したときの
+    真上」をその軸と直角な面へ射影した向き（＝ボアの切妻を向ける向き）。"""
+    up = (fC.to_3x3() @ Vector((0, 0, 1))).normalized()      # 印刷時の上 = Mz
+
+    def mk(o, axis):
+        z = Vector(axis).normalized()
+        x = (up - z * up.dot(z)).normalized()
+        y = z.cross(x)
+        return Matrix(((x.x, y.x, z.x, o[0]),
+                       (x.y, y.y, z.y, o[1]),
+                       (x.z, y.z, z.z, o[2]),
+                       (0.0, 0.0, 0.0, 1.0)))
+    return (mk((P.CORNER_X, P.RAIL_RING_Y, P.RAIL_Z), (0, 1, 0)),
+            mk((P.CORNER_X, P.CORNER_Y, P.POST_RING_Z), (0, 0, 1)))
 
 
 def _arm_frame(a, b):
@@ -192,55 +195,42 @@ def _tri_z(name, frame, tri_xy, length, coll):
     return _obj(name, bm, coll)
 
 
-def build_corner(coll, fR, fQ, fC, name="M_corner"):
-    """角のジョイント本体。2 本のパイプへ嵌める C クリップ + 腕 + パッド。ねじ止め無し。"""
-    x_mate = P.X_BACK - P.BOSS_T
-    r_out = P.CLIP_BORE_R + P.CLIP_WALL
-    x0 = r_out * 0.5                                 # 冠が始まる半径
+def build_one(coll, fR, fQ, fC, name="M_mount"):
+    """全部 1 部品。閉じたリング 2 個 + 角の肉 + 腕 + ポケット。ねじは使わない。
 
+    リングは口を開けない（差し込みで組む）ので、撓ませる必要が無く肉を厚く取れる。
+    ボアの天井だけ 45 度の切妻に落としてあるので、深い筒の中に支持材が入らない。
+    """
+    r_out = P.CLIP_BORE_R + P.CLIP_WALL
     body = _cyl(name, fR, (0, 0, 0), r_out, P.CLIP_W, "Z", coll)
     _csg(body, _cyl("_c2", fQ, (0, 0, 0), r_out, P.CLIP_W, "Z", coll), "UNION")
-    for f in (fR, fQ):                               # 冠（平らな背。造形板へ着く面）
-        _csg(body, _box("_crown", f, ((x0 + P.CLIP_CROWN_R) / 2, 0, 0),
-                        (P.CLIP_CROWN_R - x0, 2 * P.CLIP_CROWN_Y, P.CLIP_W), coll), "UNION")
 
     I = Matrix.Identity(4)
-    # 角の肉は冠と同じ x の帯に置く。口（x < CORNER_X 側）を塞がないため
-    _csg(body, _box("_web", I, (P.CORNER_X + (x0 + P.CLIP_CROWN_R) / 2,
-                                (P.WEB_Y0 + P.WEB_Y1) / 2, (P.WEB_Z0 + P.WEB_Z1) / 2),
-                    (P.CLIP_CROWN_R - x0, P.WEB_Y1 - P.WEB_Y0, P.WEB_Z1 - P.WEB_Z0),
-                    coll), "UNION")
+    _csg(body, _box("_web", I, (P.CORNER_X, (P.WEB_Y0 + P.WEB_Y1) / 2,
+                                (P.WEB_Z0 + P.WEB_Z1) / 2),
+                    (2 * r_out, P.WEB_Y1 - P.WEB_Y0, P.WEB_Z1 - P.WEB_Z0), coll), "UNION")
 
-    pad_c = fC @ Vector((x_mate, 0.0, 0.0))
-    root = Vector((P.CORNER_X + (x0 + P.CLIP_CROWN_R) / 2,
-                   (P.WEB_Y0 + P.WEB_Y1) / 2, (P.WEB_Z0 + P.WEB_Z1) / 2))
-    fA, alen = _arm_frame(root, pad_c)
-    _csg(body, _box("_arm", fA, (0, 0, 0), (alen + 0.020, P.ARM_W, P.ARM_H), coll), "UNION")
-    _csg(body, _box("_pad", fC, (x_mate - P.PAD_T / 2 + 0.00025, 0, 0),
-                    (P.PAD_T + 0.0005, P.PAD_Y, P.PAD_Z), coll), "UNION")
-    _csg(body, _box("_mate", fC, (x_mate + 0.100, 0, 0), (0.200, 0.400, 0.400), coll))
+    # 腕。ポケットの背中のボスの中まで差し込んで一体にする
+    tip = fC @ Vector((P.X_BACK - P.BOSS_T / 2, 0.0, 0.0))
+    root = Vector((P.CORNER_X, (P.WEB_Y0 + P.WEB_Y1) / 2, (P.WEB_Z0 + P.WEB_Z1) / 2))
+    fA, alen = _arm_frame(root, tip)
+    _csg(body, _box("_arm", fA, (0, 0, 0), (alen, P.ARM_W, P.ARM_H), coll), "UNION")
 
-    # ⚠ 口 → ボアの順で引く。逆にすると EXACT が転んで中身が空になる（実測）
-    a = math.radians(180.0 - P.CLIP_MOUTH)
-    b = math.radians(180.0 + P.CLIP_MOUTH)
-    R = 0.150
-    for f in (fR, fQ):
-        _csg(body, _tri_z("_mouth", f, [(0.0, 0.0),
-                                        (R * math.cos(a), R * math.sin(a)),
-                                        (R * math.cos(b), R * math.sin(b))], 0.300, coll))
+    _csg(body, build_cradle(coll, fC, bolts=False, name="_pocket"), "UNION")
+
+    # 腕はボス（10mm）より厚いので、そのままだとスロットへ 3.7cm3 はみ出す。
+    # union のあとでスロットだけ引き直して、中を空にする
+    cut_len = P.SLOT_W + P.SLOT_ENTRY
+    _csg(body, _box("_reslot", fC, (0, 0, P.STOPPER + cut_len / 2 - P.S_MID),
+                    (P.SLOT_T, P.SLOT_L, cut_len), coll))
+
     for f in (fR, fQ):                              # ボアと、その天井の切妻
         _csg(body, _cyl("_bore", f, (0, 0, 0), P.CLIP_BORE_R, 0.300, "Z", coll))
         _csg(body, _roof("_roof", f, P.CLIP_BORE_R, 0.300, +1, coll))
-
-    for s in (+1, -1):                              # パッドのボルト穴と座ぐり
-        _csg(body, _cyl("_pb", fC, (x_mate - P.PAD_T / 2, s * P.PAD_BOLT_Y, 0),
-                        P.BOLT_R, 0.060, "X", coll))
-        _csg(body, _cyl("_pcb", fC, (x_mate - P.PAD_T - 0.0005 + P.CB_D / 2,
-                                     s * P.PAD_BOLT_Y, 0), P.CB_R, P.CB_D + 0.001, "X", coll))
     return body
 
 
-def build_cradle(coll, fC, brace=False, name="M_cradle"):
+def build_cradle(coll, fC, brace=False, bolts=True, name="M_cradle"):
     """スマホのポケット。前は枠。差し込み口は +z。"""
     xc = (P.X_BACK + P.X_FRONT) / 2
     zc = (P.Z_BOT + P.Z_TOP) / 2
@@ -295,7 +285,7 @@ def build_cradle(coll, fC, brace=False, name="M_cradle"):
 
     # ボルト穴・ナット座・ナットを差し込む溝。この 3 つはどの面も他と一致させない。
     # 一致させると切る材料の無い boolean になり、殻の裏に三角形が 1 枚残る。
-    holes = [(+1, P.PAD_BOLT_Y, 0.0), (-1, -P.PAD_BOLT_Y, 0.0)]
+    holes = [(+1, P.PAD_BOLT_Y, 0.0), (-1, -P.PAD_BOLT_Y, 0.0)] if bolts else []
     if brace:                                      # つっかえ棒をボス面へ留める 3 本目
         holes.append((+1, 0.0, P.STRUT_BOSS_Z))
     for s, y, zh in holes:

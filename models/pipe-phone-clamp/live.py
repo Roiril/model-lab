@@ -102,7 +102,7 @@ fC, fK, arm_len = M.frames(center, euler, pipe_pt, pipe_dir)
 print(f"[frame] 腕の長さ（パイプ軸→合わせ面）= {arm_len * 1000:.1f}mm / "
       f"リング外まで {(arm_len - P.RING_R) * 1000:.1f}mm が片持ち")
 
-fR, fQ = M.corner_frames()
+fR, fQ = M.corner_frames(fC)
 print(f"[corner] 分割面 x={P.CORNER_X*1000:.0f}mm（2 本の軸が乗る平面）")
 print(f"         レールを y={P.RAIL_RING_Y*1000:.0f}mm、柱を z={P.POST_RING_Z*1000:.0f}mm で掴む")
 
@@ -117,8 +117,7 @@ for ob in list(coll.objects):
     if getattr(me, "users", 1) == 0:
         bpy.data.meshes.remove(me)
 
-parts = [M.build_corner(coll, fR, fQ, fC),
-         M.build_cradle(coll, fC)]
+parts = [M.build_one(coll, fR, fQ, fC)]
 
 # 実機と同じ寸法の箱を、スロットの底へ着くまで差し込んだ位置に置く。見た目の確認と
 # 「本当に入るのか」の検算を兼ねる（部品ではないので STL には出さない）
@@ -145,8 +144,7 @@ pmat.diffuse_color = (0.02, 0.02, 0.025, 1.0)
 phone.data.materials.clear()
 phone.data.materials.append(pmat)
 
-cradle = next(o for o in parts if o.name.startswith("M_cradle"))
-print(f"\n[検算] Pixel 7a 実寸の箱 ∩ ポケット = {_intersect_cm3(phone, cradle, coll):.4f} cm3"
+print(f"\n[検算] Pixel 7a 実寸の箱 ∩ ポケット = {_intersect_cm3(phone, parts[0], coll):.4f} cm3"
       f"（0 でなければ入らない）")
 
 # --- 検査 -------------------------------------------------------------------
