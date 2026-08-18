@@ -11,10 +11,11 @@ import bmesh
 from mathutils import Matrix, Vector
 
 from params import (
-    MM, PIPE_OD, BORE_D, HUB_D, WALL, BODY_T, TAPER_L, TIP_D, BASE_ROUND,
+    MM, PIPE_OD, BORE_D, HUB_D, LEG_HUB_D, BODY_T, TAPER_L, TIP_D, BASE_ROUND,
     FILLET_R, FILLET_ANGLE, X_TOP, X_BOT, X_PRISM,
     LEG_TOP_D, LEG_BOT_D, LEG_TOP_Z, LEG_X, TEARDROP_TOP,
     SIDE_Y, SIDE_Z, SLOPE_DEG, STRUT_T,
+    TIE_T, TIE_Z_TOP, TIE_Z_BOT, TIE_Y,
     SEG, TAPER_SEG, FILLET_SEG, REF_RAIL_L, REF_LEG_L,
 )
 
@@ -168,7 +169,7 @@ def sleeve_profile():
 
 def column_poly(sy):
     """脚ソケットの XY 断面。下は角、上は半円（＝スリーブと同径でつながる）。"""
-    r = HUB_D / 2
+    r = LEG_HUB_D / 2
     pts = [(X_BUILD_BOT, sy - r)]
     n = SEG // 2
     for i in range(n + 1):                       # -90° → +90°（+X 側の半円）
@@ -219,6 +220,12 @@ def build_joint(col_name="joint"):
         parts.append(box("strut_%s" % ("p" if sy > 0 else "n"),
                          ((X_PRISM - X_BUILD_BOT) * MM, (span + 12.0) * MM, STRUT_T * MM),
                          Matrix.Translation(mid) @ rot, col))
+
+    # M の下の弦：左右の柱の下端に全幅で 1 本渡す。脚穴・中央レール穴はあとから開ける
+    parts.append(box("tie",
+                     ((X_PRISM - X_BUILD_BOT) * MM, 2 * TIE_Y * MM, TIE_T * MM),
+                     Matrix.Translation(Vector(((X_BUILD_BOT + X_PRISM) / 2, 0.0,
+                                                (TIE_Z_TOP + TIE_Z_BOT) / 2)) * MM), col))
 
     body = parts[0]
     body.name = "pipe_joint"
