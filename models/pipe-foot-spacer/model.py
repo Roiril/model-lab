@@ -92,7 +92,7 @@ def bevel(ob, width, segments, angle_deg):
     mod.limit_method = "ANGLE"
     mod.angle_limit = math.radians(angle_deg)
     mod.miter_outer = "MITER_ARC"
-    mod.use_clamp_overlap = True
+    mod.use_clamp_overlap = False
     _activate(ob)
     bpy.ops.object.modifier_apply(modifier=mod.name)
     return ob
