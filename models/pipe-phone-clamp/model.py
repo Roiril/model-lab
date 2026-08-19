@@ -23,11 +23,13 @@ coll = bpy.context.scene.collection
 fC, fK, arm_len = M.frames(P.PHONE_CENTER, P.PLATE_EULER_DEG, P.RAIL_POINT, P.RAIL_DIR)
 fR, fQ = M.corner_frames(fC)
 
-parts = [M.build_one(coll, fR, fQ, fC)]
+parts = [M.build_corner(coll, fR, fQ, fC),
+         M.build_cradle(coll, fC, bolts=False, key=True)]
 
 # 造形板へ向ける向き。ポケットのスロットが最も精度の要る所なので、そこが縦に立つ
 # 向き（Mz を上）に固定した。2 本のボアの切妻もこの向きに合わせて切ってある。
-UPS = {"M_mount": fC.to_3x3() @ Vector((0, 0, 1))}
+UPS = {"M_corner": -(fC.to_3x3() @ Vector((1, 0, 0))),   # パッド面を伏せる
+       "M_cradle": fC.to_3x3() @ Vector((0, 0, 1))}     # 差し込み口を上に立てる
 
 print("\n=== 部品（この向きのまま STL にしてある） ===")
 for ob in parts:

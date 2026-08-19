@@ -151,10 +151,16 @@ def _roof(name, frame, r, length, sign, coll):
     return _obj(name, bm, coll)
 
 
-def corner_frames(fC):
+def corner_frames(fC, up=None):
     """レール側 fR と柱側 fQ。frame-z はそのパイプの軸、frame-x は「印刷したときの
-    真上」をその軸と直角な面へ射影した向き（＝ボアの切妻を向ける向き）。"""
-    up = (fC.to_3x3() @ Vector((0, 0, 1))).normalized()      # 印刷時の上 = Mz
+    真上」をその軸と直角な面へ射影した向き（＝ボアの切妻を向ける向き）。
+
+    ⚠ up には「この部品を印刷する向きの上」を渡す。ここを間違えると切妻が別の方を
+    向き、深さ 55mm のボアの中に支持材が入る（実測 2061mm2）。
+    """
+    if up is None:
+        up = -(fC.to_3x3() @ Vector((1, 0, 0)))              # 本体はパッド面を伏せて刷る
+    up = Vector(up).normalized()
 
     def mk(o, axis):
         z = Vector(axis).normalized()
@@ -195,12 +201,15 @@ def _tri_z(name, frame, tri_xy, length, coll):
     return _obj(name, bm, coll)
 
 
-def build_one(coll, fR, fQ, fC, name="M_mount"):
-    """全部 1 部品。閉じたリング 2 個 + 角の肉 + 腕 + ポケット。ねじは使わない。
+def build_corner(coll, fR, fQ, fC, name="M_corner"):
+    """パイプを掴む本体。閉じたリング 2 個 + 角の肉 + 腕 + パッド。
 
-    リングは口を開けない（差し込みで組む）ので、撓ませる必要が無く肉を厚く取れる。
-    ボアの天井だけ 45 度の切妻に落としてあるので、深い筒の中に支持材が入らない。
+    ポケットとは別部品にする。1 部品にすると、どの向きに置いても造形板に着く平らな面が
+    無くなり（実測: 接地 0mm2・ポケットの底が 54mm 宙に浮く）、そこがスパゲッティになる。
+    2 個に割ると、この部品はパッドの面を伏せて接地 3900mm2、ポケットは立てて 2400mm2 が
+    取れる。合わせ面は 60×34mm あるので、接着すれば実質 1 本になる。
     """
+    x_mate = P.X_BACK - P.BOSS_T
     r_out = P.CLIP_BORE_R + P.CLIP_WALL
     body = _cyl(name, fR, (0, 0, 0), r_out, P.CLIP_W, "Z", coll)
     _csg(body, _cyl("_c2", fQ, (0, 0, 0), r_out, P.CLIP_W, "Z", coll), "UNION")
@@ -210,19 +219,17 @@ def build_one(coll, fR, fQ, fC, name="M_mount"):
                                 (P.WEB_Z0 + P.WEB_Z1) / 2),
                     (2 * r_out, P.WEB_Y1 - P.WEB_Y0, P.WEB_Z1 - P.WEB_Z0), coll), "UNION")
 
-    # 腕。ポケットの背中のボスの中まで差し込んで一体にする
-    tip = fC @ Vector((P.X_BACK - P.BOSS_T / 2, 0.0, 0.0))
+    pad_c = fC @ Vector((x_mate, 0.0, 0.0))
     root = Vector((P.CORNER_X, (P.WEB_Y0 + P.WEB_Y1) / 2, (P.WEB_Z0 + P.WEB_Z1) / 2))
-    fA, alen = _arm_frame(root, tip)
-    _csg(body, _box("_arm", fA, (0, 0, 0), (alen, P.ARM_W, P.ARM_H), coll), "UNION")
+    fA, alen = _arm_frame(root, pad_c)
+    _csg(body, _box("_arm", fA, (0, 0, 0), (alen + 0.020, P.ARM_W, P.ARM_H), coll), "UNION")
+    _csg(body, _box("_pad", fC, (x_mate - P.PAD_T / 2 + 0.00025, 0, 0),
+                    (P.PAD_T + 0.0005, P.PAD_Y, P.PAD_Z), coll), "UNION")
+    _csg(body, _box("_mate", fC, (x_mate + 0.100, 0, 0), (0.200, 0.400, 0.400), coll))
 
-    _csg(body, build_cradle(coll, fC, bolts=False, name="_pocket"), "UNION")
-
-    # 腕はボス（10mm）より厚いので、そのままだとスロットへ 3.7cm3 はみ出す。
-    # union のあとでスロットだけ引き直して、中を空にする
-    cut_len = P.SLOT_W + P.SLOT_ENTRY
-    _csg(body, _box("_reslot", fC, (0, 0, P.STOPPER + cut_len / 2 - P.S_MID),
-                    (P.SLOT_T, P.SLOT_L, cut_len), coll))
+    # 位置決めの穴（ポケット側の舌がここへ入る。接着代も兼ねる）
+    _csg(body, _box("_key", fC, (x_mate - P.KEY_D / 2 + 0.0005, 0, 0),
+                    (P.KEY_D + 0.001, P.KEY_Y + 2 * P.KEY_CLR, P.KEY_Z + 2 * P.KEY_CLR), coll))
 
     for f in (fR, fQ):                              # ボアと、その天井の切妻
         _csg(body, _cyl("_bore", f, (0, 0, 0), P.CLIP_BORE_R, 0.300, "Z", coll))
@@ -230,7 +237,7 @@ def build_one(coll, fR, fQ, fC, name="M_mount"):
     return body
 
 
-def build_cradle(coll, fC, brace=False, bolts=True, name="M_cradle"):
+def build_cradle(coll, fC, brace=False, bolts=True, key=False, name="M_cradle"):
     """スマホのポケット。前は枠。差し込み口は +z。"""
     xc = (P.X_BACK + P.X_FRONT) / 2
     zc = (P.Z_BOT + P.Z_TOP) / 2
@@ -306,6 +313,10 @@ def build_cradle(coll, fC, brace=False, bolts=True, name="M_cradle"):
         _csg(body, _box("_cslot", fC, ((sl0 + sl1) / 2, (y0 + y1) / 2, zh),
                         (sl1 - sl0, abs(y1 - y0), P.NUT_AF + 0.0004), coll))
 
+    if key:                                        # 本体のパッドへ差し込む舌
+        x_mate = P.X_BACK - P.BOSS_T
+        _csg(body, _box("_key", fC, (x_mate - P.KEY_D / 2 + 0.0005, 0, 0),
+                        (P.KEY_D + 0.001, P.KEY_Y, P.KEY_Z), coll), "UNION")
     if P.BEVEL > 0:
         _bevel(body, P.BEVEL)
     return body

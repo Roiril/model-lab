@@ -117,7 +117,8 @@ for ob in list(coll.objects):
     if getattr(me, "users", 1) == 0:
         bpy.data.meshes.remove(me)
 
-parts = [M.build_one(coll, fR, fQ, fC)]
+parts = [M.build_corner(coll, fR, fQ, fC),
+         M.build_cradle(coll, fC, bolts=False, key=True)]
 
 # 実機と同じ寸法の箱を、スロットの底へ着くまで差し込んだ位置に置く。見た目の確認と
 # 「本当に入るのか」の検算を兼ねる（部品ではないので STL には出さない）
@@ -144,7 +145,7 @@ pmat.diffuse_color = (0.02, 0.02, 0.025, 1.0)
 phone.data.materials.clear()
 phone.data.materials.append(pmat)
 
-print(f"\n[検算] Pixel 7a 実寸の箱 ∩ ポケット = {_intersect_cm3(phone, parts[0], coll):.4f} cm3"
+print(f"\n[検算] Pixel 7a 実寸の箱 ∩ ポケット = {_intersect_cm3(phone, parts[1], coll):.4f} cm3"
       f"（0 でなければ入らない）")
 
 # --- 検査 -------------------------------------------------------------------
