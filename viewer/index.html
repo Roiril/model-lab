@@ -237,6 +237,8 @@ function buildPanel() {
 // --- モデル選択 ---
 async function loadModel(name) {
   modelName = name;
+  // 今見ているモデルを URL に残す。?model=<name> で直接その状態を開ける
+  history.replaceState(null, "", `${location.pathname}?model=${encodeURIComponent(name)}`);
   const data = await (await fetch(`/api/params?model=${encodeURIComponent(name)}`)).json();
   controlsDef = data.controls;
   values = {};
@@ -312,6 +314,17 @@ async function initModels() {
   // 既定カテゴリ = かわいいロボット（無ければ先頭）
   const startCat = cats.includes(DEFAULT_CAT) ? DEFAULT_CAT : cats[0];
   catSel.value = startCat;
+  // ?model=<name> が指すモデルがあればそれを開く（リンクで開いた状態を渡せる）
+  const want = new URLSearchParams(location.search).get("model");
+  const target = allModels.find((m) => m.name === want);
+  if (target) {
+    catSel.value = target.category || "その他";
+    populateModelSelect(catSel.value);
+    modelSel.value = target.name;
+    await loadModel(target.name);
+    return;
+  }
+
   const list = populateModelSelect(startCat);
   const pref = list.find((m) => m.name === "round-bot") || list[0];
   if (pref) { modelSel.value = pref.name; await loadModel(pref.name); }
