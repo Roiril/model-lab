@@ -44,24 +44,29 @@ round-bot / square-bot（1サーボ・パン）と周辺部品（servo-test治�
 
 11. **join（非多様体）後に EXACT boolean → 結果が空になる**。複数プリミティブは穴あけ前に **UNION で多様体化**してから掘る（`add_horn_dummy` / `add_eye_ball` 参照）。
 12. カッター面がターゲットと**面一（coplanar）**だと boolean が不安定→**表面より0.5mm程度突き出す**。
-13. boolean 後の**STL 法線が内向き**になり Blender workbench では「開いて見える」ことがあるが、メッシュは水密。viewer は `computeVertexNormals()` で再計算するため正しく表示される。**印刷可否は法線でなく水密性で判断**。
+13. ⚠⚠ **非多様体のまま次の boolean に入れると EXACT は「エラーを出さずに」壊れた結果を返す**（2026-08-25 servo-arm で実害）。従動側パーツ（16 本の non-manifold edge を持っていた）に駆動側を UNION したら、**サーボの羽根座とデッキ穴が塞がって 5159mm3 の材料が生えた**。単体で試すと正しく彫れるので原因が分からず遠回りした。
+    - ⇒ **union / difference のたびに掃除する**（`remove_doubles(dist=1e-5)` → `dissolve_degenerate` → `recalc_face_normals`。models/servo-arm/model.py の `clean()` / `union()` / `cut()`）。掃除を挟むと non-manifold は 0 になり、同じ union が正しく通る
+    - ⇒ 検証は **non-manifold 数だけでなく「サーボ実体ダミーとパーツの共通体積」**を測る。0 でなければ入るはずの部品が入らない
+14. **長円・角丸を「箱＋円柱の UNION」で作らない。** 円柱が箱の面に**接する**（接線）ので長さ 0 のエッジが残り、上の事故の火種になる（`round_box_xy` も同型）。輪郭を多角形で作って押し出す（`prism_x`）方が確実に多様体。
+15. **同じ座標を共有する板どうしの UNION（面一）も non-manifold の発生源。** 梁・支柱の端は相手の外面から **0.4mm 逃がす**（見た目は変わらない）。
+16. boolean 後の**STL 法線が内向き**になり Blender workbench では「開いて見える」ことがあるが、メッシュは水密。viewer は `computeVertexNormals()` で再計算するため正しく表示される。**印刷可否は法線でなく水密性で判断**。
 
 ## 6. 検証の作法（[[feedback_modellab_visual_check]] と同旨）
 
-14. **自前の Blender ヘッドレス確認レンダはカメラ角度・断面の取り方を間違えて誤判定しがち**（このプロジェクトで何度も別の面＝ドーム上面等を見て「壊れてる」と誤断した）。形の正否は次に寄せる：
+17. **自前の Blender ヘッドレス確認レンダはカメラ角度・断面の取り方を間違えて誤判定しがち**（このプロジェクトで何度も別の面＝ドーム上面等を見て「壊れてる」と誤断した）。形の正否は次に寄せる：
     - **数値検証**：bbox 寸法、`bmesh` の non-manifold edge 数、パラメータ計算。
     - **ユーザーの viewer**（http://localhost:3000、法線再計算で正しく表示）での目視。
     - 撮るなら実績アングルのみ（真上 ortho／真横 ortho、look_at を bbox 中心へ）。断面の +Y ortho は空振り多数なので避ける。
 
 ## 7. 印刷向けの分割と向き
 
-15. **パーツ分割**：胴／頭は別（間にサーボを挟む）。目は**接着ボール**（くぼみ径と同じ真球＋底を平らに、`add_eye_ball`）。耳はユーザーが Blender で手作り→別印刷。カチューシャはバンド＋耳を統合。
-16. **印刷向き（サポート最小）**：胴は上下逆さ（デッキを下）／ドーム・頭はそのまま／アクセサリは面を寝かせて平ら（横置き）／目玉は底平面を下。
-17. 出力前に**水密チェック**（non-manifold edge = 0 が理想。1〜数本ならスライサーが自動修復することが多い）。
+18. **パーツ分割**：胴／頭は別（間にサーボを挟む）。目は**接着ボール**（くぼみ径と同じ真球＋底を平らに、`add_eye_ball`）。耳はユーザーが Blender で手作り→別印刷。カチューシャはバンド＋耳を統合。
+19. **印刷向き（サポート最小）**：胴は上下逆さ（デッキを下）／ドーム・頭はそのまま／アクセサリは面を寝かせて平ら（横置き）／目玉は底平面を下。
+20. 出力前に**水密チェック**（non-manifold edge = 0 が理想。1〜数本ならスライサーが自動修復することが多い）。
 
 ## 8. Blender 手作業との協調（MCP）
 
-18. ユーザーが Blender で耳等を手作りし、こちらが統合する流れ：
+21. ユーザーが Blender で耳等を手作りし、こちらが統合する流れ：
     - band-only を読み込む（**オブジェクトモード必須**。編集モードだと ops の poll が context エラーになる）。
     - シーンのクリアは ops でなく **data API**（`for o in list(bpy.data.objects): bpy.data.objects.remove(o, do_unlink=True)`）が堅い。
     - 統合物は**信頼基準寸法で実寸化** → 横置き回転（厚みを Z へ）→ 中心化 → `bpy.ops.wm.stl_export(... export_selected_objects=True)` で `prints/<name>-assembled.stl` へ。
@@ -70,8 +75,8 @@ round-bot / square-bot（1サーボ・パン）と周辺部品（servo-test治�
 
 ## 9. パイプライン保守
 
-19. **新モデルを足したら `tools/print_export.py` の `MODELS` に追加**（eye/horn/cat-ears を入れ忘れて prints に出ない事故あり）。サイズ違いが要る部品（目：round⌀6.4/square⌀6.8）は別名で明示書き出し。
-20. viewer：`params.py` の `# CATEGORY: 名前` でカテゴリ分け。mm入力モデルは params を mm で書き model.py で `*0.001`。数値入力欄は input 中に値を書き戻さない（書き戻すと小数点が打てなくなる）。
+22. **新モデルを足したら `tools/print_export.py` の `MODELS` に追加**（eye/horn/cat-ears を入れ忘れて prints に出ない事故あり）。サイズ違いが要る部品（目：round⌀6.4/square⌀6.8）は別名で明示書き出し。
+23. viewer：`params.py` の `# CATEGORY: 名前` でカテゴリ分け。mm入力モデルは params を mm で書き model.py で `*0.001`。数値入力欄は input 中に値を書き戻さない（書き戻すと小数点が打てなくなる）。
 
 ## 10. 定番コマンド
 
