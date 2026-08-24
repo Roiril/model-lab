@@ -9,6 +9,13 @@
 噛み合う形で、寸法はすべて params.py のサーボ実寸から出す。別のサーボへ替えるときは
 params.py の SERVO_* / HORN_* だけ直せば、関節幅・逃げ・結合面の高さが全部追従する。
 
+組み立ての順（この順でないと入らない）:
+  1. サーボをデッキの羽根座へ +X 側から差し込み、M2 タッピング 2 本で留める
+  2. ホーンを従動側の頬板の溝へ落とし、長穴から M2 タッピング 2 本で留める
+  3. リンクを軸方向へ差し込む。ピンが反対側の頬板の穴へ、ホーンがスプラインへ同時に入る
+     （サーボは中立位置にしてから。腕の向きはスプラインの歯 1 個ぶん＝約 14° 刻みで決まる）
+  4. 頬板の天面のザグリからセンタービスを締めて、頬板ごとホーンを軸へ固定する
+
 座標: X = 関節軸（左右）／ Y = 腕の伸びる向き／ Z = 上。
 各リンクは「自分のローカル系（関節が原点・梁が +Y・軸が X）」で組んでから、
 プレビュー用に姿勢角へ回す。印刷用 STL はローカル系のまま（＝底が平らな向き）で書き出す。
@@ -93,11 +100,17 @@ X_COUPLING = SERVO.NUB_ABOVE_DECK + SERVO.BOSS_H + SERVO.SHAFT_H   # ホーン�
 X_CHEEK_B1 = X_COUPLING + CHEEK_B_T * MM               # 従動 頬板（ホーン側）の外面
 JOINT_WIDTH = X_CHEEK_B1 - X_PIVOT0
 
+# --- 断面（Z）。梁・背板・頬板・デッキの高さを揃えて底を平らにする ----------
+BEAM_HH = max(BEAM_H * MM, HORN.ARM_SPAN_Y + 0.005) / 2   # 梁の半分の高さ = 頬板の半幅
+WEB_HH = BEAM_HH
+
 # --- 半径方向。回転して当たらない最小値へ引き上げる ------------------------
 # デッキ上に出るサーボ角ケースの最遠角（従動側はこの外を回る）
 NUB_R = math.hypot(SERVO.BODY_L / 2 + SERVO.SHAFT_OFFSET, SERVO.BODY_W / 2)
 DECK_FRONT = max(DECK_FRONT_R * MM, SERVO.FLANGE_L / 2 - SERVO.SHAFT_OFFSET + 0.0025)
-DECK_HW = max(DECK_W * MM, SERVO.BODY_W + 2 * CLR + 0.006) / 2      # デッキ半幅
+# デッキ・支柱・ピボット腕の半幅。梁より狭いと印刷時に底面から浮いてサポートが要るので
+# 梁の高さに揃える（サーボ穴のまわりの肉も増える）
+DECK_HW = max(DECK_W * MM / 2, (SERVO.BODY_W + 2 * CLR + 0.006) / 2, BEAM_HH)
 DECK_CORNER = math.hypot(DECK_FRONT, DECK_HW)                        # 前側の角の半径
 
 R_WEB_IN = max(R_WEB * MM, NUB_R + 0.0015, DECK_CORNER + 0.002)      # 背板の内半径
@@ -108,9 +121,6 @@ R_BACK = max(DECK_BACK * MM, SERVO.FLANGE_L / 2 + SERVO.SHAFT_OFFSET + 0.003,
              R_SPINE_IN + 0.004)                                     # デッキ・支柱の後ろ端
 R_PIVOT_DISK = PIN_DIA * MM / 2 + 0.004
 
-# --- 断面（Z）。梁・背板・頬板の高さを揃えて底を平らにする ------------------
-BEAM_HH = max(BEAM_H * MM, HORN.ARM_SPAN_Y + 0.005) / 2   # 梁の半分の高さ = 頬板の半幅
-WEB_HH = BEAM_HH
 BEAM_X0 = X_CHEEK_A0 + 0.0004      # 梁の X 範囲（両リンク共通）。頬板・デッキの
 BEAM_X1 = X_DECK_TOP - 0.0004      # 外面と面一にすると boolean が壊れるので 0.4mm 逃がす
 BEAM_XC = (BEAM_X0 + BEAM_X1) / 2
@@ -178,6 +188,18 @@ def cyl_y(r, y0, y1, x, z, name, verts=32):
     return o
 
 
+def cone_x(r0, r1, x0, x1, y, z, name, verts=64):
+    """X 軸に沿った円錐台（-X 端が r0、+X 端が r1）。"""
+    bpy.ops.mesh.primitive_cone_add(radius1=r0, radius2=r1, depth=abs(x1 - x0), vertices=verts,
+                                    location=(0, 0, 0), rotation=(0, math.pi / 2, 0))
+    o = bpy.context.active_object
+    o.location = ((x0 + x1) / 2, y, z)
+    _activate(o)
+    bpy.ops.object.transform_apply(location=True, rotation=True)
+    o.name = name
+    return o
+
+
 def radial_box(x0, x1, r0, r1, hw, ang, oy, oz, name):
     """関節中心 (oy,oz) から角度 ang の向きへ r0..r1、接線方向 ±hw の箱。"""
     o = box_range(x0, x1, r0, r1, -hw, hw, name)
@@ -231,21 +253,47 @@ def prism_x(name, poly, x0, x1):
     return ob
 
 
-def stadium_x(x0, x1, half_len, half_w, oy, oz, name, seg=24):
-    """X 軸方向に押し出した長円（Y に長く、Z に ±half_w）。頬板の外形。
+def prism_z(name, poly, z0, z1):
+    """(x, y) の閉じた多角形を Z 方向へ押し出す。"""
+    bm = bmesh.new()
+    lo = [bm.verts.new((x, y, z0)) for x, y in poly]
+    hi = [bm.verts.new((x, y, z1)) for x, y in poly]
+    n = len(poly)
+    for i in range(n):
+        j = (i + 1) % n
+        bm.faces.new([lo[i], lo[j], hi[j], hi[i]])
+    bm.faces.new(list(reversed(lo)))
+    bm.faces.new(hi)
+    bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
+    me = bpy.data.meshes.new(name)
+    bm.to_mesh(me)
+    bm.free()
+    ob = bpy.data.objects.new(name, me)
+    bpy.context.scene.collection.objects.link(ob)
+    return ob
+
+
+def stadium_poly(half_len, half_w, seg=24):
+    """長円の輪郭（第1座標に長い）。
 
     箱＋円柱の UNION だと円柱が箱の面に接して（接線）degenerate なエッジが残るので、
     輪郭を直接ポリゴンで作って押し出す。
     """
     r = min(half_w, half_len)
     c = half_len - r
-    poly = []
+    pts = []
     for i in range(seg + 1):
         a = -math.pi / 2 + math.pi * i / seg
-        poly.append((oy + c + r * math.cos(a), oz + r * math.sin(a)))
+        pts.append((c + r * math.cos(a), r * math.sin(a)))
     for i in range(seg + 1):
         a = math.pi / 2 + math.pi * i / seg
-        poly.append((oy - c + r * math.cos(a), oz + r * math.sin(a)))
+        pts.append((-c + r * math.cos(a), r * math.sin(a)))
+    return pts
+
+
+def stadium_x(x0, x1, half_len, half_w, oy, oz, name, seg=24):
+    """X 軸方向に押し出した長円（Y に長く、Z に ±half_w）。頬板の外形。"""
+    poly = [(oy + a, oz + b) for a, b in stadium_poly(half_len, half_w, seg)]
     return prism_x(name, poly, x0, x1)
 
 
@@ -275,7 +323,9 @@ def build_driver(ang, oy, oz, tag):
     union(deck, spine)
 
     # --- ピボットピン（従動頬板の穴に入る）---
-    pin = cyl_x(PIN_R, X_PIVOT1, X_CHEEK_A1, oy, oz, tag + "_pin", verts=64)
+    # 先端を細らせる。差し込みの誘いになり、横向きに刷ったときの下側の垂れも吸収する
+    pin = cone_x(PIN_R, PIN_R - PIN_TAPER * MM, X_PIVOT1, X_CHEEK_A1, oy, oz,
+                 tag + "_pin", verts=64)
     union(deck, pin)
     return deck
 
@@ -298,13 +348,14 @@ def build_driven(tag):
     # servo_mat(pi) では servo X → リンク Y なので、長腕は腕の伸びる向きに寝る。
     place(cheek_b, servo_mat(math.pi).inverted())
     cut_horn_coupling(cheek_b, coupling_z=X_COUPLING, clr=CLR, horn=HORN, screw=True)
+    # 腕ビスは長穴。実物のホーンは穴ピッチが個体で違うので、
+    # HORN_ARM_SCREW_R ± HORN_ARM_SLOT/2 のどの穴でも通るようにする
     for i in range(int(HORN_ARM_SCREW_N)):
         sx = 1 if i % 2 == 0 else -1
-        h = add_cyl(HORN_ARM_SCREW_DIA * MM / 2, CHEEK_B_T * MM + 0.004,
-                    X_COUPLING + CHEEK_B_T * MM / 2, tag + "_hs", verts=24,
-                    location=(sx * HORN_ARM_SCREW_R * MM, 0.0,
-                              X_COUPLING + CHEEK_B_T * MM / 2))
-        cut(cheek_b, h)
+        poly = [(sx * HORN_ARM_SCREW_R * MM + pa, pb) for pa, pb in
+                stadium_poly(HORN_ARM_SLOT * MM / 2, HORN_ARM_SCREW_DIA * MM / 2, seg=12)]
+        slot = prism_z(tag + "_hs", poly, X_COUPLING - 0.002, X_CHEEK_B1 + 0.002)
+        cut(cheek_b, slot)
     place(cheek_b, servo_mat(math.pi))                 # → リンク系へ戻す
     union(cheek_a, cheek_b)
 
@@ -312,6 +363,28 @@ def build_driven(tag):
     web = box_range(X_CHEEK_A0, X_CHEEK_B1, R_WEB_IN, R_JOINT, -WEB_HH, WEB_HH, tag + "_web")
     union(cheek_a, web)
     return cheek_a
+
+
+def lighten(part, y0, y1, tag):
+    """梁に肉抜きの丸穴を開ける。軽くなるぶん肩のトルクが浮く。
+
+    穴は横向き（X 貫通）なので、印刷時の天井はアーチになりサポートが要らない。
+    結束バンドを通して配線をまとめる穴も兼ねる。
+    """
+    if not BEAM_HOLE:
+        return
+    wall = BEAM_WALL * MM
+    r = BEAM_HH - wall
+    lo, hi = y0 + wall, y1 - wall
+    avail = hi - lo
+    if r <= 0.002 or avail <= 2 * r:
+        return
+    n = int((avail + wall) // (2 * r + wall))
+    step = avail / n
+    for i in range(n):
+        h = cyl_x(r, BEAM_X0 - 0.002, BEAM_X1 + 0.002, lo + step * (i + 0.5), 0.0,
+                  tag + "_lighten", verts=48)
+        cut(part, h)
 
 
 # ============================================================
@@ -329,12 +402,25 @@ def build_base():
     # 卓上固定穴（四隅）
     ins = BASE_HOLE_INSET * MM
     for sx in (-1, 1):
-        for sy in (-1, 1):
+        for hy in (BASE_FRONT * MM - ins, BASE_HOLE_REAR_Y * MM):
             hx = cx + sx * (BASE_W * MM / 2 - ins)
-            hy = BASE_FRONT * MM - ins if sy > 0 else BASE_FRONT * MM - BASE_D * MM + ins
             h = add_cyl(BASE_HOLE_DIA * MM / 2, BASE_T * MM + 0.004, BASE_T * MM / 2,
                         "base_hole", verts=32, location=(hx, hy, BASE_T * MM / 2))
             cut(plate, h)
+
+    # おもり入れ（後ろの箱）。腕を前へ伸ばすと前へ倒れるので、卓上固定しないなら
+    # ここに重りを入れて釣り合わせる。前壁は支柱に食い込ませて一体にする
+    if BALLAST_H > 0:
+        bhw, bd = BALLAST_W * MM / 2, BALLAST_D * MM
+        bh, bwall = BALLAST_H * MM, BALLAST_WALL * MM
+        iy0 = BASE_FRONT * MM - BASE_D * MM + bwall + 0.001
+        iy1 = iy0 + bd
+        box = box_range(cx - bhw - bwall, cx + bhw + bwall, iy0 - bwall, iy1 + bwall,
+                        BASE_T * MM / 2, BASE_T * MM + bh, "ballast")
+        union(plate, box)
+        cav = box_range(cx - bhw, cx + bhw, iy0, iy1,
+                        BASE_T * MM, BASE_T * MM + bh + 0.002, "ballast_cav")
+        cut(plate, cav)
 
     # 支柱（土台から肩まで）。上端は肩の回転半径で削り取る
     col = box_range(X_PIVOT0 + 0.0004, X_DECK_TOP - 0.0004,
@@ -360,6 +446,7 @@ def build_upper():
     beam = box_range(BEAM_X0, BEAM_X1, R_WEB_IN, LINK_M - BEAM_FAR, -BEAM_HH, BEAM_HH,
                      "up_beam")
     union(part, beam)
+    lighten(part, R_WEB_IN, LINK_M - R_BACK, "up")   # 肘の支柱より手前まで
     drv = build_driver(math.pi, LINK_M, 0.0, "el")   # 肘の死角は肩側（腕をたたむ向き）
     union(part, drv)
     part.name = "upper"
@@ -374,6 +461,7 @@ def build_fore():
     beam = box_range(BEAM_X0, BEAM_X1, R_WEB_IN, LINK_M - TIP_T * MM, -BEAM_HH, BEAM_HH,
                      "fo_beam")
     union(part, beam)
+    lighten(part, R_WEB_IN, LINK_M - TIP_T * MM, "fo")
 
     tip = box_range(BEAM_XC - TIP_W * MM / 2, BEAM_XC + TIP_W * MM / 2,
                     LINK_M - TIP_T * MM, LINK_M, -TIP_H * MM / 2, TIP_H * MM / 2, "fo_tip")
