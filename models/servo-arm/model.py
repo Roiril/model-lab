@@ -316,7 +316,8 @@ def build_driver(ang, oy, oz, tag):
     # --- デッキ（サーボフレームで作る。上面 z=0・尻尾は -X）---
     deck = box_range(-R_BACK, DECK_FRONT, -DECK_HW, DECK_HW, -DECK_T * MM, 0.0, tag + "_deck")
     cut_servo_mount(deck, deck_top_z=0.0, deck_t=DECK_T * MM, clr=CLR,
-                    screws=True, wire_notch_w=0.0)
+                    screws=True, wire_notch_w=WIRE_NOTCH_W * MM,
+                    wire_notch_d=WIRE_NOTCH_D * MM)
     place(deck, servo_mat(ang, oy, oz))
 
     # --- ピボット腕（ピンが生える板）---

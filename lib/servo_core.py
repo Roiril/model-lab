@@ -199,13 +199,13 @@ def _servo_center_x():
 
 
 def cut_servo_mount(body, deck_top_z, deck_t, clr=servo_clearance_default, screws=True,
-                    wire_notch_w=0.006):
+                    wire_notch_w=0.006, wire_notch_d=0.0025):
     """胴 `body` にサーボ取付フィーチャを彫る。
 
     - デッキ貫通穴: 本体断面 (L×W) + クリアランス。本体＋上部突起がここを通る。
     - フランジ座: デッキ上面の浅いポケット (FLANGE_L×FLANGE_W)。羽根が面で受かる。
     - ネジ下穴: 28mm ピッチ × 2、デッキを貫通（下から M2 セルフタップ）。
-    - 配線チャネル: 背面 (-X) からデッキ穴へ抜ける溝。
+    - 配線の通り道: 尻尾側 (-X) の穴の端を浅く広げる溝。
 
     deck_top_z: デッキ上面の z（通常は胴の全高 BODY_H）
     deck_t:     デッキ厚
@@ -223,13 +223,27 @@ def cut_servo_mount(body, deck_top_z, deck_t, clr=servo_clearance_default, screw
                      (cx, 0, deck_top_z - SERVO.FLANGE_T / 2 + 0.00025), "flange_pocket")
     boolean(body, pocket)
 
-    # --- 羽受けの配線逃げ（サーボ長手の +X 端）---
-    # サーボの配線は長手方向の +X 端から出る。3芯リボンが羽根脇を通れるよう、
-    # 本体穴の +X 端〜デッキを小さく抜いて中空へ落とす。底の配線スロットへ繋がる。
-    if wire_notch_w > 0:
-        notch = add_box(0.008, wire_notch_w, deck_t + 0.004,
-                        (cx + SERVO.BODY_L / 2, 0, deck_top_z - deck_t / 2), "wire_notch")
-        boolean(body, notch)
+    # --- 配線の通り道（サーボ長手の尻尾側 = -X 端）---
+    # ⚠ 配線はギアと反対の端（-X）から、本体底から約 4mm の高さで出る。座った状態では
+    #    デッキより下にあるが、差し込む途中で必ずデッキ穴を通る。穴は本体断面ぴったり
+    #    （片側 0.3〜0.5mm）なので、この溝が無いとリボンを噛んで入らない。
+    # ⚠ 深さは取付ねじの下穴を食わない範囲で頭打ちにする。旧版は +X 端（ギア側）に
+    #    4mm 彫っており、配線側には効かないうえ +X 側のねじ穴を丸ごと飲んでいた。
+    if wire_notch_w > 0 and wire_notch_d > 0:
+        body_end = cx - SERVO.BODY_L / 2                       # 本体の尻尾側の面
+        limit = body_end - (cx - SERVO.SCREW_SPACING / 2 + SERVO.SCREW_R + 0.0005)
+        depth = min(wire_notch_d, max(0.0, limit))
+        if depth < 0.001:
+            print(f"[wire] ⚠ 配線逃げが彫れない（ねじ下穴まで {limit * 1000:.1f}mm）。"
+                  f"リボンが噛むのでネジ位置か穴のクリアランスを見直すこと")
+        else:
+            notch = add_box(depth + 0.002, wire_notch_w, deck_t + 0.004,
+                            (body_end - depth / 2 + 0.001, 0, deck_top_z - deck_t / 2),
+                            "wire_notch")
+            boolean(body, notch)
+            print(f"[wire] 配線の通り道: 幅 {wire_notch_w * 1000:.1f}mm × "
+                  f"本体面から {depth * 1000:.1f}mm（穴のクリアランス込みで "
+                  f"{(depth + clr) * 1000:.1f}mm・ねじ下穴は残る）")
 
     # --- ネジ下穴（フランジ両端ピッチ）。screws=False なら省略（頭で挟むので無ねじ可）---
     if screws:
