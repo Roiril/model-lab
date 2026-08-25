@@ -403,16 +403,22 @@ SH_Z = SHOULDER_Z * MM
 
 
 def build_base():
-    bx0, bx1 = X_PIVOT0, X_CHEEK_B1
+    # 板が受け持つのは支柱だけ（関節から先は宙に浮いて回る）。だから板の中心も
+    # 幅も支柱に合わせる。関節中心に合わせると +X 側に使わない板が残る
+    bx0, bx1 = X_PIVOT0, X_DECK_TOP
     cx = (bx0 + bx1) / 2
-    plate = box_range(cx - BASE_W * MM / 2, cx + BASE_W * MM / 2,
+    half_w = max(BASE_W * MM / 2, (bx1 - bx0) / 2 + 0.004)   # 支柱を必ず覆う
+    plate = box_range(cx - half_w, cx + half_w,
                       BASE_FRONT * MM - BASE_D * MM, BASE_FRONT * MM,
                       0.0, BASE_T * MM, "base")
-    # 卓上固定穴（四隅）
+    # 取付穴（四隅）。⚠ 支柱の下に潜らせない（潜るとドライバーが入らない）
     ins = BASE_HOLE_INSET * MM
+    clear_y = COLUMN_W * MM / 2 + BASE_HOLE_DIA * MM / 2 + 0.0015
+    hy_front = max(BASE_FRONT * MM - ins, clear_y)
+    hy_rear = min(BASE_HOLE_REAR_Y * MM, -clear_y)
     for sx in (-1, 1):
-        for hy in (BASE_FRONT * MM - ins, BASE_HOLE_REAR_Y * MM):
-            hx = cx + sx * (BASE_W * MM / 2 - ins)
+        for hy in (hy_front, hy_rear):
+            hx = cx + sx * (half_w - ins)
             h = add_cyl(BASE_HOLE_DIA * MM / 2, BASE_T * MM + 0.004, BASE_T * MM / 2,
                         "base_hole", verts=32, location=(hx, hy, BASE_T * MM / 2))
             cut(plate, h)
@@ -453,6 +459,10 @@ def build_base():
     drv = build_driver(-math.pi / 2, 0.0, SH_Z, "sh")
     union(plate, drv)
     plate.name = "base"
+    print(f"[base]  板 {half_w * 2000:.1f} x {BASE_D:.1f} x {BASE_T:.1f}mm / "
+          f"取付穴 ⌀{BASE_HOLE_DIA:.1f} を x±{(half_w - ins) * 1000:.1f}, "
+          f"y {hy_front * 1000:+.1f} と {hy_rear * 1000:+.1f}（支柱は幅 {COLUMN_W:.0f}mm）"
+          + ("" if BALLAST_H > 0 else " / おもり入れなし＝ねじ止め前提"))
     return plate
 
 
