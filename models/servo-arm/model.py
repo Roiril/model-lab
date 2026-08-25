@@ -11,10 +11,13 @@ params.py の SERVO_* / HORN_* だけ直せば、関節幅・逃げ・結合面�
 
 組み立ての順（この順でないと入らない）:
   1. サーボをデッキの羽根座へ +X 側から差し込み、M2 タッピング 2 本で留める
+     （リンクを付けた後ではドライバーが入らないので必ず先に）
   2. ホーンを従動側の頬板の溝へ落とし、長穴から M2 タッピング 2 本で留める
-  3. リンクを軸方向へ差し込む。ピンが反対側の頬板の穴へ、ホーンがスプラインへ同時に入る
+  3. リンクを ASSY_LIFT ぶん軸方向へずらした位置で、腕の伸びる向きから横に差し込む。
+     二枚の頬板がサーボを挟む形なので、軸方向からは入らない（横入れが唯一の経路）
+  4. 軸を合わせたらリンクを降ろす。ピンが頬板の穴へ、ホーンがスプラインへ同時に入る
      （サーボは中立位置にしてから。腕の向きはスプラインの歯 1 個ぶん＝約 14° 刻みで決まる）
-  4. 頬板の天面のザグリからセンタービスを締めて、頬板ごとホーンを軸へ固定する
+  5. 頬板の天面のザグリからセンタービスを締めて、頬板ごとホーンを軸へ固定する
 
 座標: X = 関節軸（左右）／ Y = 腕の伸びる向き／ Z = 上。
 各リンクは「自分のローカル系（関節が原点・梁が +Y・軸が X）」で組んでから、
@@ -92,7 +95,11 @@ CLR = SERVO_CLR * MM
 X_DECK_TOP = 0.0
 X_DECK_BOT = -DECK_T * MM
 X_BODY_BOT = -SERVO.FLANGE_FROM_BOTTOM                 # サーボ本体の底
-X_CHEEK_A1 = X_BODY_BOT - GAP_SERVO * MM               # 従動 頬板（ピン側）の内面
+# 組み立ての逃げ: リンクは横から差し込むので、頬板がピン先端（GAP_ROT + CHEEK_A_T）を
+# 越え、ホーンがスプライン（SERVO_SHAFT_H）から抜けるぶんだけ軸方向に持ち上げられる
+# 必要がある。ここが足りないと、サーボを付けても付けなくてもリンクが入らない
+ASSY_LIFT = max(CHEEK_A_T * MM, SERVO.SHAFT_H) + 0.0005
+X_CHEEK_A1 = X_BODY_BOT - max(GAP_SERVO * MM, ASSY_LIFT + 0.001)   # 従動 頬板（ピン側）の内面
 X_CHEEK_A0 = X_CHEEK_A1 - CHEEK_A_T * MM
 X_PIVOT1 = X_CHEEK_A0 - GAP_ROT * MM                   # 駆動 ピボット腕の内面
 X_PIVOT0 = X_PIVOT1 - PIVOT_T * MM
@@ -121,8 +128,9 @@ R_BACK = max(DECK_BACK * MM, SERVO.FLANGE_L / 2 + SERVO.SHAFT_OFFSET + 0.003,
              R_SPINE_IN + 0.004)                                     # デッキ・支柱の後ろ端
 R_PIVOT_DISK = PIN_DIA * MM / 2 + 0.004
 
-BEAM_X0 = X_CHEEK_A0 + 0.0004      # 梁の X 範囲（両リンク共通）。頬板・デッキの
-BEAM_X1 = X_DECK_TOP - 0.0004      # 外面と面一にすると boolean が壊れるので 0.4mm 逃がす
+BEAM_X1 = X_DECK_TOP - 0.0004      # 梁の X 範囲（両リンク共通）。頬板・デッキの外面と
+BEAM_X0 = max(X_CHEEK_A0 + 0.0004,  # 面一にすると boolean が壊れるので 0.4mm 逃がす。
+              BEAM_X1 - BEAM_W * MM)  # 幅は BEAM_W。関節が広がっても梁は太らせない
 BEAM_XC = (BEAM_X0 + BEAM_X1) / 2
 
 PIN_R = PIN_DIA * MM / 2
@@ -431,6 +439,15 @@ def build_base():
     cut(col, clear)
     union(plate, col)
 
+    # 肩サーボの配線窓。線は尻尾（真下）から出るが、支柱の弧に当たって外へ出られない。
+    # 腕が絶対に来ない後ろ下がりの向きへ、支柱の側面を抜いて逃がす
+    if WIRE_SLOT_W > 0 and WIRE_SLOT_H > 0:
+        wz = SH_Z - R_SPINE_IN + 0.001
+        w = box_range(X_DECK_BOT - 0.003 - WIRE_SLOT_W * MM, X_DECK_BOT - 0.003,
+                      -COLUMN_W * MM / 2 - 0.002, 0.0,
+                      wz, wz + WIRE_SLOT_H * MM, "wire_slot")
+        cut(plate, w)
+
     # 肩の駆動側（サーボの尻尾と支柱は真下 = 可動域の死角を下へ逃がす）
     drv = build_driver(-math.pi / 2, 0.0, SH_Z, "sh")
     union(plate, drv)
@@ -517,6 +534,8 @@ if SHOW_SERVO:
 
 print(f"[joint] 幅 {JOINT_WIDTH * 1000:.1f}mm / 頬板半径 {R_JOINT * 1000:.1f}mm "
       f"/ 背板内半径 {R_WEB_IN * 1000:.1f}mm / 支柱内半径 {R_SPINE_IN * 1000:.1f}mm")
+print(f"[joint] 組み立ての持ち上げ量 {ASSY_LIFT * 1000:.1f}mm / "
+      f"頬板とサーボ本体の隙間 {(X_BODY_BOT - X_CHEEK_A1) * 1000:.1f}mm")
 print(f"[joint] ホーン結合面 デッキ上 {X_COUPLING * 1000:.1f}mm / "
       f"サーボ上部の回転逃げ半径 {NUB_R * 1000:.1f}mm")
 print(f"[link]  関節間 {LINK:.0f}mm / 梁 {(BEAM_X1 - BEAM_X0) * 1000:.1f} x "

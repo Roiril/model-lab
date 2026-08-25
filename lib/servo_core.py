@@ -439,4 +439,11 @@ def add_servo_dummy(flange_top_z=None, name="servo", clr=0.0, prof=None):
                          (cx - s.BODY_L / 2 - 0.004 + 0.001, 0, body_bottom + 0.004),
                          name + "_wire"))
 
-    return join_objects(parts, name)
+    # ⚠ join だと重なった部品どうしが非多様体のまま残り、このダミーを相手にした
+    # EXACT boolean が「エラーを出さずに」壊れた結果を返す（相手のパーツ丸ごとを
+    # 共通部分として返す等）。フィット確認に使う以上、UNION で多様体化しておく。
+    solid = parts[0]
+    solid.name = name
+    for p in parts[1:]:
+        boolean(solid, p, op="UNION")
+    return solid
