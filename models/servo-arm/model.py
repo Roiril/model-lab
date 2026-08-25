@@ -31,7 +31,7 @@ import math
 import types
 import bpy
 import bmesh
-from mathutils import Matrix
+from mathutils import Matrix, Vector
 
 import blender_utils
 import servo_core
@@ -510,6 +510,59 @@ for obj, fname in ((base, "servo-arm-base"), (upper, "servo-arm-upper"), (fore, 
     bpy.ops.wm.stl_export(filepath=path, export_selected_objects=True, global_scale=1000.0)
     d = obj.dimensions
     print(f"[part] {fname}: {d.x * 1000:.1f} x {d.y * 1000:.1f} x {d.z * 1000:.1f} mm")
+
+# ============================================================
+# トルク収支（メッシュから質量と重心を出す）
+# 最悪姿勢 = 肩 0°・肘 0°、腕を前へ水平に伸ばしきった状態。
+# この時点では upper / fore はローカル系のまま（原点＝それぞれの関節軸）。
+# ============================================================
+def vol_com(o):
+    """体積 [mm3] と体積重心（ローカル）。符号付き四面体の和で出す。
+
+    頂点の平均ではない。頂点密度は形の細かさで偏るので、平均を重心に使うと
+    肉抜き穴の多い側へ重心が寄って、トルクを小さく見積もる。
+    """
+    bm = bmesh.new()
+    bm.from_mesh(o.data)
+    bm.transform(o.matrix_world)
+    bmesh.ops.triangulate(bm, faces=bm.faces[:])
+    vol = 0.0
+    acc = Vector((0.0, 0.0, 0.0))
+    for f in bm.faces:
+        a, b, c = [x.co for x in f.verts]
+        t = a.dot(b.cross(c)) / 6.0
+        vol += t
+        acc += t * (a + b + c) / 4.0
+    bm.free()
+    return abs(vol) * 1e9, (acc / vol if abs(vol) > 1e-12 else Vector())
+
+
+def print_torque():
+    v_up, c_up = vol_com(upper)
+    v_fo, c_fo = vol_com(fore)
+    m_up = v_up * PLA_DENSITY / 1000.0          # g
+    m_fo = v_fo * PLA_DENSITY / 1000.0
+    y_up, y_fo = c_up.y * 1000.0, c_fo.y * 1000.0   # 関節軸からの水平距離 mm
+    m_joint = SERVO_MASS_G + HORN_MASS_G
+
+    # 1 kgf·cm = 10000 g·mm
+    sh_self = m_up * y_up + m_fo * (LINK + y_fo) + m_joint * LINK
+    el_self = m_fo * y_fo
+    budget = SERVO_STALL_KGCM * SERVO_DUTY * 10000.0
+
+    print(f"[mass]  上腕 {m_up:.1f}g（肩軸から {y_up:.0f}mm）/ "
+          f"前腕 {m_fo:.1f}g（肘軸から {y_fo:.0f}mm）")
+    for tag, self_t, arm_mm in (("肩", sh_self, 2 * LINK), ("肘", el_self, LINK)):
+        pay = max(0.0, (budget - self_t) / arm_mm)
+        print(f"[torque] {tag} 自重 {self_t / 10000:.2f} / 連続枠 {budget / 10000:.2f} kgf·cm "
+              f"（{self_t / budget * 100:.0f}%）→ 手先に載せられるのは {pay:.0f}g まで")
+    print(f"[range] 電気 180°: 肩 {SHOULDER_WINDOW[0]:+.0f}〜{SHOULDER_WINDOW[1]:+.0f}° / "
+          f"肘 {ELBOW_WINDOW[0]:+.0f}〜{ELBOW_WINDOW[1]:+.0f}°"
+          f"（スプライン {SERVO_SPLINE_TEETH} 山 = ホーンは "
+          f"{360 / SERVO_SPLINE_TEETH:.0f}° 刻み）")
+
+
+print_torque()
 
 # --- プレビュー姿勢へ回す ---
 a_sh = math.radians(POSE_SHOULDER)
