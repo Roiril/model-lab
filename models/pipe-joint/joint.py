@@ -14,8 +14,9 @@ from params import (
     MM, PIPE_OD, BORE_D, HUB_D, LEG_HUB_D, BODY_T, TAPER_L, TIP_D, BASE_ROUND,
     FILLET_R, FILLET_ANGLE, X_TOP, X_BOT, X_PRISM,
     LEG_TOP_D, LEG_BOT_D, LEG_TOP_Z, LEG_X, TEARDROP_TOP,
-    SIDE_Y, SIDE_Z, SLOPE_DEG, STRUT_T,
-    TIE_T, TIE_Z_TOP, TIE_Z_BOT, TIE_Y,
+    SIDE_Y, SIDE_Z, SLOPE_DEG,
+    STRUT_T, STRUT_AXIS_R, STRUT_FOOT_Z, STRUT_TOP_EXT,
+    TIE_H, TIE_Z_TOP, TIE_Z_BOT, TIE_Y,
     SEG, TAPER_SEG, FILLET_SEG, REF_RAIL_L, REF_LEG_L,
 )
 
@@ -194,6 +195,21 @@ def teardrop_poly(sy):
     return pts
 
 
+def strut_axis():
+    """+Y 側の斜材の中心線。向き (dy, dz) と下端 (fy, fz) を返す。-Y 側は y を反転する。
+
+    左右レールの軸から下ろし、中央レールの軸を STRUT_AXIS_R だけ外して振る。
+    そのまま下の弦の厚みの真ん中まで伸ばすので、谷が弦の上の節点になる。
+    """
+    span = math.hypot(SIDE_Y, SIDE_Z)
+    by, bz = -SIDE_Y / span, -SIDE_Z / span          # 左右レール軸 → 中央レール軸
+    a = math.asin(STRUT_AXIS_R / span)               # 中央を外すぶんの振り角
+    ca, sa = math.cos(a), math.sin(a)
+    dy, dz = by * ca - bz * sa, by * sa + bz * ca    # +Y 側を通る向きへ振る
+    t = (SIDE_Z - STRUT_FOOT_Z) / -dz
+    return (dy, dz), (SIDE_Y + dy * t, SIDE_Z + dz * t)
+
+
 def build_joint(col_name="joint"):
     col = get_collection(col_name)
     parts = []
@@ -209,23 +225,28 @@ def build_joint(col_name="joint"):
         parts.append(prism("column_%s" % ("p" if sy > 0 else "n"), poly,
                            (SIDE_Z - LEG_BOT_D) * MM, SIDE_Z * MM, col))
 
-    # 斜材：中央スリーブ ↔ 左右スリーブ。X は X_BUILD_BOT..X_PRISM
-    for sy in (SIDE_Y, -SIDE_Y):
-        d = Vector((0.0, sy, SIDE_Z)).normalized()
-        perp = Vector((0.0, -d.z, d.y))
-        span = math.hypot(sy, SIDE_Z)
-        cx = (X_BUILD_BOT + X_PRISM) / 2
-        mid = Vector((cx, sy * 0.5, SIDE_Z * 0.5)) * MM
-        rot = Matrix(((1.0, d.x, perp.x), (0.0, d.y, perp.y), (0.0, d.z, perp.z))).to_4x4()
-        parts.append(box("strut_%s" % ("p" if sy > 0 else "n"),
-                         ((X_PRISM - X_BUILD_BOT) * MM, (span + 12.0) * MM, STRUT_T * MM),
-                         Matrix.Translation(mid) @ rot, col))
-
-    # M の下の弦：左右の柱の下端に全幅で 1 本渡す。脚穴・中央レール穴はあとから開ける
+    # M の下の弦：左右の柱の下端に全幅で 1 本渡す。脚穴・中央レール穴はあとから開ける。
+    # ⚠ 斜材より先に積む。斜材の下端の面が弦の肉の中に入った状態で union するため
     parts.append(box("tie",
-                     ((X_PRISM - X_BUILD_BOT) * MM, 2 * TIE_Y * MM, TIE_T * MM),
+                     ((X_PRISM - X_BUILD_BOT) * MM, 2 * TIE_Y * MM, TIE_H * MM),
                      Matrix.Translation(Vector(((X_BUILD_BOT + X_PRISM) / 2, 0.0,
                                                 (TIE_Z_TOP + TIE_Z_BOT) / 2)) * MM), col))
+
+    # 斜材：左右スリーブ → 下の弦。X は X_BUILD_BOT..X_PRISM
+    # 上端は左右レールの軸より外へ、下端は弦の厚みの真ん中まで伸ばす。
+    # どちらの端面も既にある肉の中で終わるので、union が端どうしの接触にならない
+    (dy, dz), (fy, fz) = strut_axis()
+    cx = (X_BUILD_BOT + X_PRISM) / 2
+    for sy in (SIDE_Y, -SIDE_Y):
+        s = 1.0 if sy > 0 else -1.0
+        d = Vector((0.0, dy * s, dz))
+        perp = Vector((0.0, -d.z, d.y))
+        top = Vector((cx, sy, SIDE_Z)) - d * STRUT_TOP_EXT
+        foot = Vector((cx, fy * s, fz))
+        rot = Matrix(((1.0, d.x, perp.x), (0.0, d.y, perp.y), (0.0, d.z, perp.z))).to_4x4()
+        parts.append(box("strut_%s" % ("p" if sy > 0 else "n"),
+                         ((X_PRISM - X_BUILD_BOT) * MM, (top - foot).length * MM, STRUT_T * MM),
+                         Matrix.Translation((top + foot) * 0.5 * MM) @ rot, col))
 
     body = parts[0]
     body.name = "pipe_joint"
