@@ -280,6 +280,11 @@ def finish_body(body, col):
         cut = prism("bore_leg", poly, (SIDE_Z - LEG_BOT_D - 40) * MM, LEG_TOP_Z * MM, col)
         boolean(body, cut, "DIFFERENCE")
 
+    # 穴あけが残す極小のスリバーを潰す。面どうしが角で交わる所に 0.01mm 級の
+    # 非多様体エッジが出ることがある。0.02mm は最小の造形物（TIP_WALL 0.4mm）の
+    # 1/20 なので、意図した形には触らない
+    clean(body, dist=2e-5)
+
     _activate(body)
     bpy.ops.object.transform_apply(location=True, rotation=True, scale=True)
     bpy.ops.object.shade_flat()
