@@ -17,7 +17,7 @@ for f in os.listdir(OUT):
         os.remove(os.path.join(OUT, f))
 
 # 印刷対象（eye は2サイズ別名で別途出力するためここには含めない）
-MODELS = ["round-bot", "square-bot", "servo-test", "sg92r", "horn"]
+MODELS = ["round-bot", "square-bot", "servo-test", "sg92r", "horn", "hug-arm"]
 
 
 def run_model(model):
