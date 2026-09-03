@@ -340,11 +340,19 @@ def build_upper():
     part = cut_driven(part)                                            # 肩側（従動）
     part = cut_deck(part, X_WEB0, X_ELBOW_DECK0, X_WEB1, oy=L1_M)      # 肘側（駆動）
     part = add_journal(part, X_WEB1, X_ELBOW_CASE + X_RING1, oy=L1_M)
-    if TIE_HOLES:
-        # 肘サーボの配線を裏面に沿わせて留める。ハブと羽根の座を避けた 2 か所
-        r = TIE_HOLE_DIA * MM / 2
-        for yy in (R_HUB + 0.006, L1_M + SERVO_FLANGE_Y[0] - 0.006):
-            part = cut(part, cyl_x(r, X_WEB0 - EPS, X_WEB1 + EPS, yy, 0.0, "tie", verts=24))
+    if CABLE_GROOVE:
+        # 肘サーボの配線を裏面の溝に沈める。サーボの座ぐりから肩側 CABLE_EXIT まで。
+        # そこから先はブラケットが 0.4mm で通るので何も載せられない
+        y_end = CABLE_EXIT * MM
+        y_start = L1_M + SERVO_FLANGE_Y[0]            # 座ぐりの尻尾端につなぐ
+        hw = CABLE_GROOVE_W * MM / 2
+        part = cut(part, box_range(X_WEB0 - EPS, X_WEB0 + CABLE_GROOVE_D * MM,
+                                   y_end - hw, y_start + EPS, -hw, hw, "cable"))
+        part = cut(part, cyl_x(hw, X_WEB0 - EPS, X_WEB0 + CABLE_GROOVE_D * MM,
+                               y_end - hw, 0.0, "cable_end", verts=24))
+        print(f"[cable] 裏面の溝 幅 {CABLE_GROOVE_W:.1f} x 深さ {CABLE_GROOVE_D:.1f}mm / "
+              f"肩軸から {CABLE_EXIT:.0f}mm 〜 座ぐり。ここで体の板へ抜く"
+              f"（ブラケットの縁 R{max(abs(SERVO_SCREW_Y[1]) + 0.012, R_HUB) * 1000:.0f} の外）")
     print(f"[upper] ハブ ⌀{R_HUB * 2000:.1f} / 桁 幅 {BEAM_W:.1f}mm 一定 / "
           f"平板 {PLATE * 1000:.1f}mm 一定（肘の座は裏から "
           f"{(X_ELBOW_DECK0 - X_WEB0) * 1000:.1f}mm）")
@@ -680,6 +688,11 @@ print(f"[joint] 平板 {PLATE * 1000:.1f}mm / ハブ ⌀{R_HUB * 2000:.1f} / "
       f"デッキ {DECK * 1000:.1f}mm / 羽根の座 {(PLATE - DECK) * 1000:.1f}mm")
 print(f"[joint] ホーンの腕板 座の上 {(X_HORN0 - X_BOSS1) * 1000:.1f}〜"
       f"{(X_HORN1 - X_BOSS1) * 1000:.1f}mm / 板の上に載せて R{HORN_HOLE_R:.1f} の穴で留める")
+print(f"[wall]  ハブ: 軸受け穴〜下穴 {(HORN.HOLE_R - R_PILOT - R_BORE) * 1000:.2f}mm / "
+      f"下穴〜縁 {(R_HUB - HORN.HOLE_R - R_PILOT) * 1000:.2f}mm / "
+      f"リング {(R_JOURNAL - R_JOURNAL_IN) * 1000:.2f}mm / "
+      f"桁の両脇（前腕の溝） {SLOT_RAIL:.1f}mm / "
+      f"肘サーボ穴の両脇 {(R_BEAM - SERVO.BODY_W / 2 - SERVO_CLR * MM) * 1000:.2f}mm")
 print(f"[joint] 幅 ブラケット裏〜上腕表 {(X_WEB1 - X_BRK0) * 1000:.1f}mm / "
       f"前腕のビスの頭まで {(X_ELBOW_CASE + X_HEAD1 - X_BRK0) * 1000:.1f}mm "
       f"/ 肩サーボの出っ張り込み {(X_ELBOW_CASE + X_HEAD1 + SERVO.BODY_H - NUB) * 1000:.1f}mm")
