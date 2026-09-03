@@ -16,6 +16,7 @@ from params import (
     LEG_TOP_D, LEG_BOT_D, LEG_TOP_Z, LEG_X, TEARDROP_TOP,
     SIDE_Y, SIDE_Z, SLOPE_DEG,
     STRUT_T, STRUT_AXIS_R, STRUT_FOOT_Z, STRUT_TOP_EXT,
+    WEB_X_TOP,
     TIE_H, TIE_Z_TOP, TIE_Z_BOT, TIE_Y,
     SEG, TAPER_SEG, FILLET_SEG, REF_RAIL_L, REF_LEG_L,
 )
@@ -227,16 +228,17 @@ def build_joint(col_name="joint"):
 
     # M の下の弦：左右の柱の下端に全幅で 1 本渡す。脚穴・中央レール穴はあとから開ける。
     # ⚠ 斜材より先に積む。斜材の下端の面が弦の肉の中に入った状態で union するため
+    web_d = WEB_X_TOP - X_BUILD_BOT
+    cx = (X_BUILD_BOT + WEB_X_TOP) / 2
     parts.append(box("tie",
-                     ((X_PRISM - X_BUILD_BOT) * MM, 2 * TIE_Y * MM, TIE_H * MM),
-                     Matrix.Translation(Vector(((X_BUILD_BOT + X_PRISM) / 2, 0.0,
+                     (web_d * MM, 2 * TIE_Y * MM, TIE_H * MM),
+                     Matrix.Translation(Vector((cx, 0.0,
                                                 (TIE_Z_TOP + TIE_Z_BOT) / 2)) * MM), col))
 
-    # 斜材：左右スリーブ → 下の弦。X は X_BUILD_BOT..X_PRISM
+    # 斜材：左右スリーブ → 下の弦。X は弦と同じ奥行き（底面から WEB_D）
     # 上端は左右レールの軸より外へ、下端は弦の厚みの真ん中まで伸ばす。
     # どちらの端面も既にある肉の中で終わるので、union が端どうしの接触にならない
     (dy, dz), (fy, fz) = strut_axis()
-    cx = (X_BUILD_BOT + X_PRISM) / 2
     for sy in (SIDE_Y, -SIDE_Y):
         s = 1.0 if sy > 0 else -1.0
         d = Vector((0.0, dy * s, dz))
@@ -245,7 +247,7 @@ def build_joint(col_name="joint"):
         foot = Vector((cx, fy * s, fz))
         rot = Matrix(((1.0, d.x, perp.x), (0.0, d.y, perp.y), (0.0, d.z, perp.z))).to_4x4()
         parts.append(box("strut_%s" % ("p" if sy > 0 else "n"),
-                         ((X_PRISM - X_BUILD_BOT) * MM, (top - foot).length * MM, STRUT_T * MM),
+                         (web_d * MM, (top - foot).length * MM, STRUT_T * MM),
                          Matrix.Translation((top + foot) * 0.5 * MM) @ rot, col))
 
     body = parts[0]

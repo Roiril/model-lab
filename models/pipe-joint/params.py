@@ -118,6 +118,13 @@ STRUT_FOOT_Z = (TIE_Z_TOP + TIE_Z_BOT) / 2    # -15.5 下端は弦の厚みの�
 STRUT_TOP_EXT = 12.0                          # 上端は左右レール軸より外へ出す
 STRUT_CREASE = math.degrees(math.acos(STRUT_FACE_R / (HUB_D / 2)))   # 41.3 襟との交差角
 
+# --- ブリッジ（斜材と弦）の奥行き ---
+# パイプを咥える筒と柱は BODY_T いっぱい使う。繋いでいるだけの斜材と弦は
+# 造形板の側へ寄せて奥行きを半分にする。天面が上を向いた平らな面になるので
+# 支持材は要らない。⚠ 中央へ寄せると天面が宙に浮いた天井になるので底面から測る。
+WEB_D = (X_PRISM - X_BOT) / 2                 # 19.0 底面から測ったブリッジの奥行き
+WEB_X_TOP = X_BOT + WEB_D                     # -8.0 ブリッジの天面
+
 assert STRUT_CREASE > 35.0, "斜材が襟を浅く撫でている。bevel が壊れる"
 assert STRUT_FACE_R + STRUT_T / 2 > BORE_D / 2, "斜材が中央の穴に飲まれる"
 
