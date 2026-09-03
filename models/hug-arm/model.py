@@ -101,11 +101,15 @@ X_BORE1 = X_HORN1 + HORN_CLR * MM              # 軸受け穴の底
 PLATE = max(PLATE_T * MM, X_BORE1 - X_WEB0 + LEDGE_T * MM)
 X_WEB1 = X_WEB0 + PLATE
 
-R_JOURNAL = JOURNAL_D * MM / 2
-R_BORE = R_JOURNAL + JOURNAL_CLR * MM
+# ホーンは軸受け穴を通って奥へ落ちる。通るのは腕の先端ではなく「角」なので、
+# 半span と半幅の合成で見る。ここを腕の長さだけで見ると角が引っかかる
+R_HORN_SWEEP = math.hypot(HORN_SPAN_LONG * MM / 2, HORN_ARM_W_LONG * MM / 2)
+R_BORE = max(JOURNAL_D * MM / 2 + JOURNAL_CLR * MM, R_HORN_SWEEP + HORN_CLR * MM)
+R_JOURNAL = R_BORE - JOURNAL_CLR * MM
 R_JOURNAL_IN = SERVO.BOSS_DIA / 2 + BOSS_CLR * MM
-R_HUB = max(R_BORE + HUB_WALL * MM,
-            HORN_ARM_SCREW_R * MM + HORN_ARM_SCREW_DIA * MM / 2 + 0.0025)
+R_HUB = R_BORE + HUB_WALL * MM
+R_BEAM = BEAM_W * MM / 2
+R_SLOT = R_BEAM - SLOT_RAIL * MM
 
 L1_M, L2_M = L1 * MM, L2 * MM
 SERVO_CY = -SERVO.SHAFT_OFFSET                 # 本体の中心（Y）。尻尾は -Y へ向く
@@ -114,7 +118,9 @@ SERVO_BODY_Y = (SERVO_CY - SERVO.BODY_L / 2, SERVO_CY + SERVO.BODY_L / 2)
 # 羽根は本体より Y に長い（32.2 対 22.0）。逃げは羽根で決まる
 SERVO_FLANGE_Y = (SERVO_CY - SERVO.FLANGE_L / 2, SERVO_CY + SERVO.FLANGE_L / 2)
 
-# 肘の羽根の座は、平板の表面から DECK ぶん内側
+# 駆動側は肩も肘も同じ形: 厚み PLATE の板、表面から DECK 内側に羽根の座、
+# 座より裏はすべて逃げ。表面から軸受けリングが立つ
+X_BRK0 = X_DECK1 - PLATE          # ブラケットの裏面
 X_ELBOW_DECK1 = X_WEB1
 X_ELBOW_DECK0 = X_WEB1 - DECK
 X_ELBOW_CASE = X_ELBOW_DECK0 + NUB             # 肘サーボのケース上面（上腕ローカル）
@@ -176,20 +182,11 @@ def add_journal(part, x0, x1, oy=0.0):
 def cut_driven(part, oy=0.0):
     """従動側: 軸受け穴・ホーンの溝・長穴・センタービスの通し穴を彫る。
 
-    ホーンの長腕は囲わない。ハブの縁まで溝を開けて外へ逃がす。囲うとハブが ⌀40 に
-    なって平板が急に太る。長腕は Z 方向へ向けるので、桁の付け根（+Y）を切らない。
+    穴は 1 つだけ。軸受けリングが乗る面と、ホーンが座る面を同じ円筒で兼ねる。
+    ホーンはこの穴を通って奥へ落ちるので、十字の溝は要らない。
     """
+    # 穴は 1 つ。軸受けリングもホーンもここに収まる。十字の溝は彫らない
     part = cut(part, cyl_x(R_BORE, X_WEB0 - EPS, X_BORE1, oy, 0.0, "bore"))
-
-    hz = X_HORN0 - HORN_CLR * MM
-    for span, w, along_z in ((HORN.ARM_SPAN_X, HORN.ARM_W_X, True),
-                             (HORN.ARM_SPAN_Y, HORN.ARM_W_Y, False)):
-        half = max(span / 2, R_HUB + EPS)           # ハブの縁まで抜いて逃がす
-        hw = w / 2 + HORN_CLR * MM
-        if along_z:
-            part = cut(part, box_range(hz, X_BORE1, oy - hw, oy + hw, -half, half, "horn_z"))
-        else:
-            part = cut(part, box_range(hz, X_BORE1, oy - half, oy + half, -hw, hw, "horn_y"))
 
     # 長穴は「箱 + 端の円柱」で作らない。円柱が箱の側面に接してゼロ長エッジが残り、
     # 次の boolean が壊れた結果を返す（上腕で non-manifold 3 本 → 干渉検算が全滅した）
@@ -231,19 +228,29 @@ def along(nodes, t):
     return nodes[-1]
 
 
-def lighten(part, nodes, x0, x1, tag):
-    """桁に肉抜き穴を開ける。軽くなるうえ、配線と結束バンドを通せる。"""
-    if not LIGHTEN:
+def slot_cut(part, nodes, x0, x1, tag, t_end=2.0):
+    """桁の真ん中を 1 本だけ抜く。
+
+    丸穴を等間隔に並べるのは理由が無い。面内で曲げを受ける桁では中央の肉は
+    効かないので、真ん中を通しで抜いて両脇に桁を残すのが素直。配線と結束
+    バンドの通り道も兼ねる。参考モデルの腕も、抜くときは大きな開口 1 つで
+    抜いている（丸穴の行列は 1 つも無い）。
+    """
+    if not SLOT:
         return part
-    n = max(0, int(path_len(nodes) / (LIGHTEN_PITCH * MM)) - 1)
-    for i in range(n):
-        c, r = along(nodes, (i + 1) / (n + 1))
-        hr = r - LIGHTEN_WALL * MM
-        if hr < 0.002:
-            continue
-        part = cut(part, cyl_x(hr, x0 - EPS, x1 + EPS, c[0], c[1],
-                               f"{tag}_hole{i}", verts=48))
-    return part
+    # 溝の先端は節点より R_SLOT ぶん外へ伸びる。両端ともそのぶん内側に節点を置く
+    # （引き算にすると溝がハブの中まで食い込んで、軸受け穴とつながる）
+    total = path_len(nodes)
+    t0 = (nodes[0][1] + SLOT_MARGIN * MM + R_SLOT) / total
+    t1 = min(t_end, 1.0 - (nodes[-1][1] + SLOT_MARGIN * MM + R_SLOT) / total)
+    if (t1 - t0) * total < SLOT_MIN * MM:
+        print(f"[slot] {tag}: 取れる長さが {(t1 - t0) * total * 1000:.0f}mm しかないので抜かない")
+        return part
+    pts = [along(nodes, t0 + (t1 - t0) * i / 5)[0] for i in range(6)]
+    cutter = chain_plate(f"{tag}_slot", [(c, R_SLOT) for c in pts], x0 - EPS, x1 + EPS)
+    print(f"[slot] {tag}: 幅 {R_SLOT * 2000:.1f}mm / 両脇の桁 {SLOT_RAIL:.1f}mm x2 / "
+          f"長さ {(t1 - t0) * total * 1000:.0f}mm")
+    return cut(part, cutter)
 
 
 # ============================================================
@@ -267,15 +274,15 @@ def build_bracket():
     y1 = max(SERVO_SCREW_Y[0] + m + 2 * inset, R_HUB + 0.002)
     hz = max(SERVO.BODY_W / 2 + m, R_HUB + 0.002, BRK_HOLE_PITCH * MM / 2 + hr + 0.003)
 
-    part = prism_x("bracket", round_rect_poly(y0, y1, -hz, hz, 0.005), X_SEAT, X_DECK1)
-    part = cut_deck(part, X_SEAT, X_DECK0, X_DECK1)
+    part = prism_x("bracket", round_rect_poly(y0, y1, -hz, hz, 0.005), X_BRK0, X_DECK1)
+    part = cut_deck(part, X_BRK0, X_DECK0, X_DECK1)
     part = add_journal(part, X_DECK1, X_BOSS1)
     for sy in (y0 + inset, y1 - inset):
         for sz in (-BRK_HOLE_PITCH * MM / 2, BRK_HOLE_PITCH * MM / 2):
-            part = cut(part, cyl_x(hr, X_SEAT - EPS, X_DECK1 + EPS, sy, sz,
+            part = cut(part, cyl_x(hr, X_BRK0 - EPS, X_DECK1 + EPS, sy, sz,
                                    "brk_hole", verts=32))
     print(f"[bracket] 板 {(y1 - y0) * 1000:.1f} x {hz * 2000:.1f} x "
-          f"{(X_DECK1 - X_SEAT) * 1000:.1f}mm / "
+          f"{(X_DECK1 - X_BRK0) * 1000:.1f}mm / "
           f"取付穴 ⌀{BRK_HOLE_DIA:.1f} 4 本（ピッチ "
           f"{(y1 - y0 - 2 * inset) * 1000:.1f} x {BRK_HOLE_PITCH:.1f}mm）")
     return part
@@ -285,8 +292,11 @@ def build_bracket():
 # 上腕（肩＝従動 / 肘＝駆動）
 # ============================================================
 def upper_nodes():
+    """ハブ → 一定幅の桁 → ハブ。桁の幅は全長で変えない。"""
+    t = BEAM_TAPER
     return [((0.0, 0.0), R_HUB),
-            ((L1_M * 0.5, 0.0), BEAM_R_MID * MM),
+            ((L1_M * t, 0.0), R_BEAM),
+            ((L1_M * (1 - t), 0.0), R_BEAM),
             ((L1_M, 0.0), R_HUB)]
 
 
@@ -299,12 +309,15 @@ def build_upper():
     """
     nodes = upper_nodes()
     part = chain_plate("upper", nodes, X_WEB0, X_WEB1)
-    part = lighten(part, nodes, X_WEB0, X_WEB1, "upper")
+    # 溝は肘のサーボ穴の手前で止める。溝の先端は節点より R_SLOT ぶん伸びるので
+    # そのぶん手前に節点を置く（引かないとサーボ穴とつながって切り欠きになる）
+    t_end = (L1_M + SERVO_BODY_Y[0] - 0.003 - R_SLOT) / path_len(nodes)
+    part = slot_cut(part, nodes, X_WEB0, X_WEB1, "upper", t_end)
     part = cut_driven(part)                                            # 肩側（従動）
     part = cut_deck(part, X_WEB0, X_ELBOW_DECK0, X_WEB1, oy=L1_M)      # 肘側（駆動）
     part = add_journal(part, X_WEB1, X_ELBOW_CASE + SERVO.BOSS_H, oy=L1_M)
-    print(f"[upper] 肩ハブ ⌀{R_HUB * 2000:.1f} / 桁 幅 {BEAM_R_MID * 2:.1f}mm / "
-          f"平板 {PLATE * 1000:.1f}mm（肘の座は裏から "
+    print(f"[upper] ハブ ⌀{R_HUB * 2000:.1f} / 桁 幅 {BEAM_W:.1f}mm 一定 / "
+          f"平板 {PLATE * 1000:.1f}mm 一定（肘の座は裏から "
           f"{(X_ELBOW_DECK0 - X_WEB0) * 1000:.1f}mm）")
     return part
 
@@ -320,25 +333,19 @@ def fore_nodes():
     else:
         r_path = L2_M / th
         cs = arc_centers((0.0, r_path), r_path, -math.pi / 2, -math.pi / 2 + th, n)
-    radii = []
-    for i in range(n):
-        t = i / (n - 1)
-        if t <= 0.5:
-            radii.append(R_HUB + (BEAM_R_MID * MM - R_HUB) * (t / 0.5))
-        else:
-            radii.append(BEAM_R_MID * MM
-                         + (BEAM_R_TIP * MM - BEAM_R_MID * MM) * ((t - 0.5) / 0.5))
+    # 根元のハブから桁幅へ絞り、あとは先端まで一定
+    radii = [R_HUB if i == 0 else R_BEAM for i in range(n)]
     return list(zip(cs, radii))
 
 
 def build_fore():
     nodes = fore_nodes()
     part = chain_plate("fore", nodes, X_WEB0, X_WEB1)
-    part = lighten(part, nodes, X_WEB0, X_WEB1, "fore")
+    part = slot_cut(part, nodes, X_WEB0, X_WEB1, "fore")
     part = cut_driven(part)
     tip = nodes[-1][0]
-    print(f"[fore] 曲がり {FORE_CURL:.0f}° / 先端は肘軸から "
-          f"({tip[0] * 1000:.0f}, {tip[1] * 1000:.0f})mm / 平板 {PLATE * 1000:.1f}mm")
+    print(f"[fore] 曲がり {FORE_CURL:.0f}° / 桁 幅 {BEAM_W:.1f}mm 一定 / "
+          f"先端は肘軸から ({tip[0] * 1000:.0f}, {tip[1] * 1000:.0f})mm")
     return part
 
 
@@ -505,6 +512,43 @@ def overlap_mm3(part, mat, dy=0.0):
     return v, box
 
 
+def overlap_horn(part, mat, grow=0.0):
+    """ホーンの実体と従動側の共通体積 [mm3]。穴に本当に入るかを測る。
+
+    校正は「ホーンを一回り大きくする」。長さ方向へずらしても穴の中で動くだけで
+    当たらないので、ずらしでは計器の生死が分からない（1 度これで騙された）。
+    """
+    horn = add_horn_dummy(prof=HORN, name="hchk", base_z=X_BOSS1)
+    if grow:
+        horn.scale = (1.0 + grow, 1.0 + grow, 1.0)
+        activate(horn)
+        bpy.ops.object.transform_apply(scale=True)
+    place(horn, mat)
+    probe = part.copy()
+    probe.data = part.data.copy()
+    bpy.context.scene.collection.objects.link(probe)
+    boolean(probe, horn, op="INTERSECT")
+    v = solid_volume(probe)
+    box = wbox(probe) if v > 0.01 else "なし"
+    bpy.data.objects.remove(probe, do_unlink=True)
+    return v, box
+
+
+def check_horn():
+    """ホーンが溝に収まるか。長腕・短腕・ハブすべてを含む実体で測る。
+
+    校正は「ホーンを 1.5mm 横へずらす」。溝の余裕は片側 0.2mm なので必ず当たる。
+    """
+    for tag, part, mat in (("肩", upper, servo_mat(math.pi / 2)),
+                           ("肘", fore, servo_mat(math.pi / 2))):
+        good, box = overlap_horn(part, mat)
+        bad, _ = overlap_horn(part, mat, grow=0.10)
+        ok = "OK" if good < 1.0 else "⚠ 入らない"
+        cal = "計器 生きている" if bad > good + 5.0 else "⚠ 計器が死んでいる"
+        print(f"[horn] {tag}（ホーン ↔ 従動側）: 共通体積 {good:.2f}mm3 ({box}) → {ok} "
+              f"（1 割大きくすると {bad:.1f}mm3 ＝ {cal}）")
+
+
 def check_fit():
     cases = (("肩サーボ ↔ ブラケット", bracket, servo_mat(math.pi)),
              ("肘サーボ ↔ 上腕", upper, servo_mat(math.pi, oy=L1_M, ox=X_ELBOW_CASE)))
@@ -518,8 +562,10 @@ def check_fit():
 
 
 check_fit()
+check_horn()
 print(f"[joint] 平板 {PLATE * 1000:.1f}mm / ハブ ⌀{R_HUB * 2000:.1f} / "
-      f"軸受け ⌀{JOURNAL_D:.1f} × 高さ {(X_BOSS1 - X_DECK1) * 1000:.1f}mm / "
+      f"軸受け ⌀{R_JOURNAL * 2000:.1f} × 高さ {(X_BOSS1 - X_DECK1) * 1000:.1f}mm"
+      f"（ホーンの角 ⌀{R_HORN_SWEEP * 2000:.1f} が通る径まで自動で広げた）/ "
       f"デッキ {DECK * 1000:.1f}mm")
 print(f"[joint] 印刷パーツの幅 肩+上腕 {(X_WEB1 - X_DECK0) * 1000:.1f}mm / "
       f"前腕まで {(X_ELBOW_CASE + X_WEB1 - X_DECK0) * 1000:.1f}mm "
