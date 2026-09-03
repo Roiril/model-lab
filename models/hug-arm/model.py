@@ -349,21 +349,52 @@ def build_fore():
     return part
 
 
+def extend_back(seg, dist):
+    """節点列の手前側へ 1 節伸ばす。カッターを外殻より先に始めるため。"""
+    (y0, z0), r0 = seg[0]
+    (y1, z1), _ = seg[1]
+    d = math.hypot(y1 - y0, z1 - z0) or 1.0
+    back = ((y0 - (y1 - y0) / d * dist, z0 - (z1 - z0) / d * dist), r0)
+    return [back] + list(seg)
+
+
+def half_cut(part, c, ang, x0, x1, name):
+    """点 c を通り向き ang に垂直な面で、手前側を落とす。"""
+    big = 0.2
+    cutter = box_range(x0, x1, -big, 0.0, -big, big, name)
+    place(cutter, Matrix.Translation((0.0, c[0], c[1])) @ Matrix.Rotation(ang, 4, "X"))
+    return cut(part, cutter)
+
+
 def build_pad():
-    """前腕の縁にかぶせる TPU の袖。先端から差し込む。"""
+    """前腕の縁にかぶせる TPU の袖。先端から押し込む。
+
+    ⚠ 外殻と中を抜くカッターを同じ節点から始めてはいけない。半径が違うぶん
+    カッターの端が内側で終わり、その差の肉が手前側の端に残って板を塞ぐ。
+    2026-09-03 にこれで「腕に差し込めない袖」ができた。カッターは外殻より
+    手前から始めて、最後に平面で切りそろえる。
+    """
     nodes = fore_nodes()
     seg = nodes[max(1, int(len(nodes) * PAD_FROM)):]
     t, g, c = PAD_T * MM, PAD_GRIP * MM, PAD_CLR * MM
-    part = chain_plate("pad", [(cc, rr + t) for cc, rr in seg], X_WEB0 - t, X_WEB1 + t)
-    part = cut(part, chain_plate("pad_h", [(cc, rr + c) for cc, rr in seg],
+    x0, x1 = X_WEB0 - t, X_WEB1 + t
+
+    outer = extend_back(seg, 0.014)
+    inner = extend_back(seg, 0.030)
+    part = chain_plate("pad", [(cc, rr + t) for cc, rr in outer], x0, x1)
+    part = cut(part, chain_plate("pad_h", [(cc, rr + c) for cc, rr in inner],
                                  X_WEB0 - c, X_WEB1 + c))
-    part = cut(part, chain_plate("pad_d", [(cc, max(rr - g, 0.001)) for cc, rr in seg],
-                                 X_WEB0 - t - 0.002, X_WEB1 + t + 0.002))
-    (ty, tz), tr = seg[-1]
-    part = cut(part, cyl_x(tr + t + 0.002, X_WEB0 - t - 0.002, X_WEB1 + t + 0.002,
-                           ty, tz, "pad_open", verts=64))     # 先端を開けて差し込めるように
+    part = cut(part, chain_plate("pad_d", [(cc, max(rr - g, 0.001)) for cc, rr in inner],
+                                 x0 - 0.002, x1 + 0.002))
+
+    # 手前側を平面で切りそろえる（丸い端キャップの羽根を残さない）
+    (sy, sz), _ = seg[0]
+    (ny, nz), _ = seg[1]
+    ang = math.atan2(nz - sz, ny - sy)
+    part = half_cut(part, (sy, sz), ang, x0 - 0.002, x1 + 0.002, "pad_face")
+
     print(f"[pad] TPU / 肉厚 {PAD_T:.1f}mm / 掴み代 片側 {PAD_GRIP:.1f}mm / "
-          f"前腕の {PAD_FROM * 100:.0f}% から先")
+          f"前腕の {PAD_FROM * 100:.0f}% から先。先端側は閉じ、手前側は開く")
     return part
 
 
@@ -561,8 +592,40 @@ def check_fit():
               f"（1.5mm ずらすと {bad:.1f}mm3 ＝ {cal}）")
 
 
+def check_pad():
+    """パッドが前腕にかぶさるか。姿勢を合わせた状態の共通体積で見る。
+
+    校正は「パッドの内側のすきまを潰す」ではなく、前腕を 1mm 太らせた形との
+    共通体積。0 のままなら計器が死んでいる。
+    """
+    if pad is None:
+        return
+    def overlap(scale):
+        probe = pad.copy(); probe.data = pad.data.copy()
+        bpy.context.scene.collection.objects.link(probe)
+        beam = fore.copy(); beam.data = fore.data.copy()
+        bpy.context.scene.collection.objects.link(beam)
+        if scale != 1.0:
+            beam.scale = (1.0, scale, scale)
+            activate(beam)
+            bpy.ops.object.transform_apply(scale=True)
+        boolean(probe, beam, op="INTERSECT")
+        v = solid_volume(probe)
+        b = wbox(probe) if v > 0.01 else "なし"
+        bpy.data.objects.remove(probe, do_unlink=True)
+        return v, b
+
+    v, box = overlap(1.0)
+    bad, _ = overlap(1.03)          # 前腕を 3% 太らせる = 必ず当たる入力
+    ok = "OK" if v < 2.0 else "⚠ 差し込めない"
+    cal = "計器 生きている" if bad > v + 20.0 else "⚠ 計器が死んでいる"
+    print(f"[pad] パッド ↔ 前腕: 共通体積 {v:.2f}mm3 ({box}) → {ok} "
+          f"（前腕を 3% 太らせると {bad:.0f}mm3 ＝ {cal}）")
+
+
 check_fit()
 check_horn()
+check_pad()
 print(f"[joint] 平板 {PLATE * 1000:.1f}mm / ハブ ⌀{R_HUB * 2000:.1f} / "
       f"軸受け ⌀{R_JOURNAL * 2000:.1f} × 高さ {(X_BOSS1 - X_DECK1) * 1000:.1f}mm"
       f"（ホーンの角 ⌀{R_HORN_SWEEP * 2000:.1f} が通る径まで自動で広げた）/ "
