@@ -251,13 +251,6 @@ def build():
     boolean(body, box("cut_base", (600 * MM, 400 * MM, 100 * MM),
                       Matrix.Translation(Vector((0, 0, -50.0)) * MM)), "DIFFERENCE")
 
-    # 両端を M 字ジョイントの外形に合わせて平らに切る。
-    # 切る面はソケットの外周に接するので、筒はそのまま残って端の面だけが削れる
-    for s in (1.0, -1.0):
-        boolean(body, box("cut_end", (200 * MM, 400 * MM, 400 * MM),
-                          Matrix.Translation(Vector((s * (HALF_W + 100), 0, 100)) * MM)),
-                "DIFFERENCE")
-
     # パイプの穴（座面まで）
     for k, x in enumerate((-sx, sx)):
         boolean(body, cyl("bore%d" % k, BORE_D / 2, SEAT_Z, BOSS_TOP + 10, x, 0.0),
