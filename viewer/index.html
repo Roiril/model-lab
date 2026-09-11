@@ -338,9 +338,10 @@ function loadLatestStlFor(name, fit) {
   // 揃えてから、同名 → 同名で始まるもの → 最新の順に探す
   const norm = (s) => s.toLowerCase().replace(/-/g, "_");
   const want = norm(name);
-  const f = latestFiles.find((x) => norm(x) === want + ".stl")
-    || latestFiles.find((x) => norm(x).startsWith(want + "_") || norm(x).startsWith(want + "."))
-    || latestFiles[0];
+  const heads = latestFiles.filter((x) => norm(x).startsWith(want + "_") || norm(x).startsWith(want + "."));
+  // 同名で始まるものが複数あるとき（pipe_joint_28 と pipe_joint_28_print）は短い名前 = 本体を取る
+  heads.sort((a, b) => a.length - b.length);
+  const f = latestFiles.find((x) => norm(x) === want + ".stl") || heads[0] || latestFiles[0];
   if (f) loadSTL(f, fit);
 }
 function loadSTL(filename, fit = false) {
