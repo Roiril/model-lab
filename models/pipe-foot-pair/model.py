@@ -1,4 +1,4 @@
-"""M 字ジョイントの脚 2 本を床で受けるベース。
+"""M 字ジョイントの脚 2 本と、その横の 3 本目の脚を床で受けるベース。
 
     ./run.sh models/pipe-foot-pair/model.py
 """
@@ -82,29 +82,6 @@ def prism(name, poly, z0, z1, matrix=None):
     return _finish(name, bm, matrix)
 
 
-def wall(name, xs, z_bot, z_top, y0, y1):
-    """x を並べ、下端 z_bot(x) と上端 z_top(x) のあいだを埋めた縦板。
-
-    ⚠⚠ 凹んだ輪郭を prism() の n-gon の蓋で作ってはいけない。三角化が凹みを
-    またいで膜を張り、弧の内側が塞がって板になる（Blender 5.1 で実測）。
-    しかも体積も非多様体エッジ数も正しいままなので、数値では気づけない。
-    蓋も四角形の帯で作れば、そもそも凹みが問題にならない。
-    """
-    bm = bmesh.new()
-    lo0 = [bm.verts.new((x * MM, y0 * MM, z_bot(x) * MM)) for x in xs]
-    hi0 = [bm.verts.new((x * MM, y0 * MM, z_top(x) * MM)) for x in xs]
-    lo1 = [bm.verts.new((x * MM, y1 * MM, z_bot(x) * MM)) for x in xs]
-    hi1 = [bm.verts.new((x * MM, y1 * MM, z_top(x) * MM)) for x in xs]
-    for i in range(len(xs) - 1):
-        bm.faces.new([lo0[i], lo0[i + 1], hi0[i + 1], hi0[i]])
-        bm.faces.new([lo1[i], lo1[i + 1], hi1[i + 1], hi1[i]])
-        bm.faces.new([lo0[i], lo1[i], lo1[i + 1], lo0[i + 1]])
-        bm.faces.new([hi0[i], hi1[i], hi1[i + 1], hi0[i + 1]])
-    bm.faces.new([lo0[0], hi0[0], hi1[0], lo1[0]])
-    bm.faces.new([lo0[-1], hi0[-1], hi1[-1], lo1[-1]])
-    return _finish(name, bm)
-
-
 def box(name, size, matrix):
     bm = bmesh.new()
     bmesh.ops.create_cube(bm, size=1.0)
@@ -174,22 +151,34 @@ def socket_profile():
     return out
 
 
-def plate_poly(r, seg=SEG):
-    """x = ±SPAN/2 に置いた半径 r の円 2 つの凸包。反時計回り。"""
-    s = SPAN / 2
-    n = seg // 2
+def _normal_angle(p, q):
+    """反時計回りの多角形の辺 p→q の、外向き法線の角度。"""
+    return math.atan2(-(q[0] - p[0]), q[1] - p[1])
+
+
+def hull_poly(centers, r, seg=SEG):
+    """半径 r の円を centers（反時計回り）に置いたときの凸包。反時計回りの点列。
+
+    各円の上では、入ってくる辺の法線から出ていく辺の法線までの弧を描き、
+    弧どうしは共通外接線でつながる。円が 2 つなら長丸になる。
+    """
+    n = len(centers)
     pts = []
-    for i in range(n + 1):                       # 右の半円 -90° → +90°
-        a = -math.pi / 2 + math.pi * i / n
-        pts.append((s + r * math.cos(a), r * math.sin(a)))
-    for i in range(n + 1):                       # 左の半円 +90° → +270°
-        a = math.pi / 2 + math.pi * i / n
-        pts.append((-s + r * math.cos(a), r * math.sin(a)))
+    for i in range(n):
+        p = centers[i]
+        a0 = _normal_angle(centers[i - 1], p)
+        a1 = _normal_angle(p, centers[(i + 1) % n])
+        while a1 <= a0:
+            a1 += 2 * math.pi
+        k = max(1, round(seg * (a1 - a0) / (2 * math.pi)))
+        for j in range(k + 1):
+            a = a0 + (a1 - a0) * j / k
+            pts.append((p[0] + r * math.cos(a), p[1] + r * math.sin(a)))
     return pts
 
 
 def spine_top(x):
-    """背骨の上端。中央で傾きが 0 になる二次曲線。
+    """主材の上端。中央で傾きが 0 になる二次曲線。
 
     smoothstep にすると中央が平らな帯になり、板を立てただけに見える。
     曲げを受けるのは根元だけなので、中央は低くてよい。
@@ -198,10 +187,66 @@ def spine_top(x):
     return SPINE_MID_Z + (SPINE_TOP_Z - SPINE_MID_Z) * t * t
 
 
-def spine_xs():
-    """背骨を刻む x。両端はソケットの軸まで伸ばし、肉の中で終わらせる。"""
-    x0 = SPAN / 2
-    return [-x0 + 2 * x0 * i / SPINE_SEG for i in range(SPINE_SEG + 1)]
+def branch_top(y):
+    """枝の上端。主材の側面から出る所の高さを起点に、同じ二次曲線で上がる。"""
+    y0 = SPINE_T / 2
+    z0 = spine_top(y0)
+    t = (y - y0) / (THIRD_OFF - y0)
+    return z0 + (SPINE_TOP_Z - z0) * t * t
+
+
+def t_spine():
+    """背骨。X 方向の主材と、3 本目のソケットへ伸びる枝を 1 つのメッシュで作る。
+
+    枝を別体にして boolean で足すと、主材の上面（中央で 14mm）と枝の上面が
+    ほぼ同じ高さで交わり、0.1mm 以下の段や薄片が出て bevel が荒れる。
+    主材の x に ±SPINE_T/2 を含めてそのあいだに点を置かず、+Y の側面のその
+    四角形を抜いて、枝の付け根をその 4 頂点に直接つなぐ。
+
+    ⚠⚠ 凹んだ輪郭を prism() の n-gon の蓋で作ってはいけない。三角化が凹みを
+    またいで膜を張り、弧の内側が塞がって板になる（Blender 5.1 で実測）。
+    しかも体積も非多様体エッジ数も正しいままなので、数値では気づけない。
+    蓋も四角形の帯で作れば、そもそも凹みが問題にならない。
+    """
+    sx = SPAN / 2
+    ht = SPINE_T / 2
+    zb = PLATE_T - SPINE_LAP
+    n = SPINE_SEG // 2
+    bm = bmesh.new()
+
+    def V(x, y, z):
+        return bm.verts.new((x * MM, y * MM, z * MM))
+
+    # 主材。両端はソケットの軸まで伸ばし、肉の中で終わらせる
+    xs = ([-sx + (sx - ht) * i / n for i in range(n + 1)]
+          + [ht + (sx - ht) * i / n for i in range(n + 1)])
+    k = n                                      # xs[k] = -ht, xs[k+1] = +ht
+    lo0 = [V(x, -ht, zb) for x in xs]
+    hi0 = [V(x, -ht, spine_top(x)) for x in xs]
+    lo1 = [V(x, ht, zb) for x in xs]
+    hi1 = [V(x, ht, spine_top(x)) for x in xs]
+    for i in range(len(xs) - 1):
+        bm.faces.new([lo0[i], lo0[i + 1], hi0[i + 1], hi0[i]])
+        if i != k:                             # 枝の付け根は抜く
+            bm.faces.new([lo1[i], lo1[i + 1], hi1[i + 1], hi1[i]])
+        bm.faces.new([lo0[i], lo1[i], lo1[i + 1], lo0[i + 1]])
+        bm.faces.new([hi0[i], hi1[i], hi1[i + 1], hi0[i + 1]])
+    bm.faces.new([lo0[0], hi0[0], hi1[0], lo1[0]])
+    bm.faces.new([lo0[-1], hi0[-1], hi1[-1], lo1[-1]])
+
+    # 枝。付け根の 4 頂点は主材のもの。先端は 3 本目のソケットの軸まで
+    ys = [ht + (THIRD_OFF - ht) * j / BRANCH_SEG for j in range(BRANCH_SEG + 1)]
+    la = [lo1[k]] + [V(-ht, y, zb) for y in ys[1:]]
+    ha = [hi1[k]] + [V(-ht, y, branch_top(y)) for y in ys[1:]]
+    lb = [lo1[k + 1]] + [V(ht, y, zb) for y in ys[1:]]
+    hb = [hi1[k + 1]] + [V(ht, y, branch_top(y)) for y in ys[1:]]
+    for j in range(BRANCH_SEG):
+        bm.faces.new([la[j], la[j + 1], ha[j + 1], ha[j]])
+        bm.faces.new([lb[j], lb[j + 1], hb[j + 1], hb[j]])
+        bm.faces.new([la[j], lb[j], lb[j + 1], la[j + 1]])
+        bm.faces.new([ha[j], hb[j], hb[j + 1], ha[j + 1]])
+    bm.faces.new([la[-1], ha[-1], hb[-1], lb[-1]])
+    return _finish("spine", bm)
 
 
 def fin_poly():
@@ -219,25 +264,29 @@ def fin_poly():
 
 def build():
     sx = SPAN / 2
+    # ソケットの軸と、そのひれの向き。ひれは背骨と直交する側に出す
+    sockets = [((-sx, 0.0), (90.0, -90.0)),
+               ((sx, 0.0), (90.0, -90.0)),
+               (THIRD, (0.0, 180.0))]
 
-    # 床に着く板（ソケット 2 つを包む長丸）
-    body = prism("pipe_foot_pair", plate_poly(PLATE_R), Z_BUILD_BOT, PLATE_T)
+    # 床に着く板（ソケット 3 つを包む凸包。反時計回りに並べる）
+    body = prism("pipe_foot_pair", hull_poly([c for c, _ in sockets], PLATE_R),
+                 Z_BUILD_BOT, PLATE_T)
 
-    # ソケット 2 本
+    # ソケット 3 本
     prof = socket_profile()
-    for k, x in enumerate((-sx, sx)):
+    for k, (c, _) in enumerate(sockets):
         boolean(body, revolve("socket%d" % k, prof,
-                              Matrix.Translation(Vector((x, 0, 0)) * MM)), "UNION")
+                              Matrix.Translation(Vector((c[0], c[1], 0)) * MM)), "UNION")
 
-    # 背骨
-    boolean(body, wall("spine", spine_xs(), lambda x: PLATE_T - SPINE_LAP, spine_top,
-                       -SPINE_T / 2, SPINE_T / 2), "UNION")
+    # 背骨（主材 + 枝）
+    boolean(body, t_spine(), "UNION")
 
-    # 横のひれ 4 枚（ソケットごとに ±Y）
+    # 横のひれ 6 枚（ソケットごとに 2 枚）
     poly = fin_poly()
-    for k, x in enumerate((-sx, sx)):
-        for j, ang in enumerate((90.0, -90.0)):
-            m = (Matrix.Translation(Vector((x, 0, 0)) * MM)
+    for k, (c, angs) in enumerate(sockets):
+        for j, ang in enumerate(angs):
+            m = (Matrix.Translation(Vector((c[0], c[1], 0)) * MM)
                  @ Matrix.Rotation(math.radians(ang), 4, "Z")
                  @ Matrix.Rotation(math.radians(90), 4, "X"))
             boolean(body, prism("fin%d%d" % (k, j), poly, -FIN_T / 2, FIN_T / 2, m),
@@ -252,8 +301,8 @@ def build():
                       Matrix.Translation(Vector((0, 0, -50.0)) * MM)), "DIFFERENCE")
 
     # パイプの穴（座面まで）
-    for k, x in enumerate((-sx, sx)):
-        boolean(body, cyl("bore%d" % k, BORE_D / 2, SEAT_Z, BOSS_TOP + 10, x, 0.0),
+    for k, (c, _) in enumerate(sockets):
+        boolean(body, cyl("bore%d" % k, BORE_D / 2, SEAT_Z, BOSS_TOP + 10, c[0], c[1]),
                 "DIFFERENCE")
 
     # 穴あけが残す極小のスリバーを潰す。0.02mm は最小の造形物（口元の肉厚 1.0mm）の
