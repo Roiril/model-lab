@@ -96,11 +96,14 @@ def arrange(parts, max_w):
 
 
 def center_on_bed(placed, total):
-    """並べた塊をプレートの中心へ寄せる。除外域に掛かるなら奥へ逃がす。"""
+    """並べた塊をプレートの中心へ寄せる。除外域に掛かるなら奥へ逃がす。
+
+    余白が MARGIN を切るほど大きい塊も中央のまま置く。片側を MARGIN まで押すと
+    反対側の余白がその分だけ減るので、中央が両側とも一番広い（244mm の板を
+    10 / 2mm に寄せていた。2026-09-11）。
+    """
     ox = (BED_X - total[0]) / 2
     oy = (BED_Y - total[1]) / 2
-    ox = max(ox, MARGIN)
-    oy = max(oy, MARGIN)
     if ox < EXCLUDE[0] + 2 and oy < EXCLUDE[1] + 2:
         oy = EXCLUDE[1] + 2
     return [(n, v, f, dx + ox, dy + oy) for n, v, f, dx, dy in placed]
@@ -209,9 +212,16 @@ def main():
           f"はみ出し・除外域 {'なし' if not off_bed else off_bed}")
 
     hi_z = max(bbox(v)[1][2] for _, v, _, _, _ in placed)
-    fits = total[0] <= BED_X - 2 * MARGIN and total[1] <= BED_Y - 2 * MARGIN and hi_z <= BED_Z
+    edge = min((BED_X - total[0]) / 2, (BED_Y - total[1]) / 2)
+    fits = edge >= 0 and hi_z <= BED_Z
+    if not fits:
+        verdict = "⚠ プレートに入らない"
+    elif edge < MARGIN:
+        verdict = f"入る（縁まで {edge:.0f}mm。ブリムは付けられない）"
+    else:
+        verdict = "入る"
     print(f"[plate] 占める広さ {total[0]:.0f} x {total[1]:.0f}mm / 最大高さ {hi_z:.1f}mm "
-          f"→ {'入る' if fits else '⚠ プレートに入らない'}（256 x 256 x 250）")
+          f"→ {verdict}（256 x 256 x 250）")
 
     path = os.path.join(EXPORTS, out_name + ".3mf")
     write_3mf(path, placed, extruder)
