@@ -18,13 +18,19 @@ pipe-foot-pair（脚 2 本 + 3 本目）を 2 つ直角に置き、角で 1 体�
     角に向けて置く前提で、本体どうしの隙間が CORNER_OFF - 19.7 - 18.3 = 4mm になる 42 にした。
     レールが角の側から入る向きで使うなら 53 以上が要る（そのときは FIFTH との干渉も見直す）。
 
-造形板に収める:
-    脚列の長さは SPAN + CORNER_OFF = 202。板を軸から PLATE_R = 42 まで出すと 286 になり
-    X1C の 256 に入らない。外側（角の外側と列の遠い端）だけ軸から EDGE_CUT = 25 で
-    平らに切って 252 に収める。切った面はソケットの台座（r 26）を 5mm ほどかすめる。
+造形板に収める形（2026-09-11 ユーザー指示: はみ出す所を切るのではなく、収まる形に設計する）:
+    脚列の長さは SPAN + CORNER_OFF = 202。板を軸から 42 まで出すと 286 になり X1C の
+    256 に入らない。外側（角の外側 2 辺と、列の遠い端）は軸から OUTER_R = 25 の所を
+    縁にする。25 の中にソケットが収まるよう、この部品のソケットには pipe-foot の
+    台座（半径 34 の段と半径 26 の円錐）を付けず、板から半径 FOOT_R の丸みで筒を立てる。
+        筒 18.3 + 丸み 3.5 + 縁の R 2.5 = 24.3 < 25
+    輪郭は、外側の直線 2 本 → 角の 1/4 円（r 25）→ 遠い端の半円（r 25）→ 内側へ向かって
+    半径 END_R の弧で広がる → 2 つの遠い端を結ぶ斜辺。どこも接線がつながる。
+    内側は fins（軸から 36）を平らな板の上で終わらせるため、遠い端の内側で 43 まで広げる。
     造形板の縁まで 2mm。ブリムは付けられない。
 """
 import importlib.util
+import math
 import os
 
 
@@ -48,9 +54,6 @@ SEAT_Z = PAIR.SEAT_Z             # 30.0 パイプの下端の高さ
 BOSS_TOP = PAIR.BOSS_TOP         # 85.0 全高
 MOUTH_TAPER = PAIR.MOUTH_TAPER   # 12.0
 TIP_R = PAIR.TIP_R               # 15.3
-HUB_T = PAIR.HUB_T               # 8.0
-DISC_R = PAIR.DISC_R             # 34.0
-CONE_BASE_R = PAIR.CONE_BASE_R   # 26.0
 
 # --- 脚の配置 ---
 SPAN = PAIR.SPAN                 # 160.0 M 字ジョイントの脚の芯間
@@ -72,15 +75,20 @@ assert CORNER_OFF >= JOINT_END + BOSS_R + 3.0, "角の脚が近すぎて M 字�
 assert FIFTH_OFF - PIPE_OD / 2 > JOINT_END + 3.0, "5 本目のパイプが M 字ジョイントの本体に当たる"
 
 # --- 床に着く板 ---
-PLATE_R = PAIR.PLATE_R           # 42.0 ソケット軸からの半径（凸包の丸み）
-PLATE_T = PAIR.PLATE_T           # 5.0 縁の板厚
-EDGE_CUT = 25.0                  # 外側の縁を軸から何 mm で平らに切るか
+PLATE_T = PAIR.PLATE_T           # 5.0 板厚
 BED = 256.0                      # X1C の造形板
 BED_MARGIN = 2.0                 # 縁に残す余白
+EXTENT = BED - 2 * BED_MARGIN                   # 252.0 部品の全幅（= 奥行き）
+OUTER_R = (EXTENT - SPAN - CORNER_OFF) / 2      # 25.0 外側の縁。軸からの距離
+END_R = 50.0                     # 遠い端の内側へ広がる弧の半径（軸から OUTER_R の点で外側の半円に接する）
+END_INNER = math.sqrt(END_R ** 2 - (END_R - OUTER_R) ** 2)   # 43.3 遠い脚の軸で、内側の縁までの距離
 
-EXTENT = SPAN + CORNER_OFF + 2 * EDGE_CUT       # 252.0 部品の全幅（= 奥行き）
-assert EXTENT <= BED - 2 * BED_MARGIN, f"造形板に入らない: {EXTENT}"
-assert EDGE_CUT > BOSS_R + 2.0, "切り落としがソケットの筒に掛かる"
+# --- ソケットの根元 ---
+# pipe-foot の台座（半径 34 の段・半径 26 の円錐）は OUTER_R に入らないので付けない。
+# 板から半径 FOOT_R の丸みで筒を立てる
+FOOT_R = 3.5
+FILLET_R = PAIR.FILLET_R         # 2.5 接合部と板の縁の R
+assert BOSS_R + FOOT_R + FILLET_R <= OUTER_R - 0.5, "ソケットの根元と板の縁の R が食い合う"
 
 # --- 背骨（脚列を通す縦板）と枝 ---
 SPINE_T = PAIR.SPINE_T           # 8.0
@@ -95,14 +103,14 @@ SPINE_CURV = (SPINE_TOP_Z - SPINE_MID_Z) / (SPAN / 2) ** 2   # 0.0053 /mm
 CORNER_Z = SPINE_TOP_Z - SPINE_CURV * CORNER_OFF ** 2         # 38.6 角での高さ
 
 # --- 横のひれ ---
-# 外側（切り落とす側）には出せない。板が平らな所で終われないため（pipe-foot-pair の注意書き）
+# 外側（縁まで 25）には出せない。内側だけ
 FIN_T = PAIR.FIN_T               # 6.0
 FIN_OUT_R = PAIR.FIN_OUT_R       # 36.0
 FIN_OUT_H = PAIR.FIN_OUT_H       # 5.0
 FIN_TOP_Z = PAIR.FIN_TOP_Z       # 48.0
+assert FIN_OUT_R + 2 * FILLET_R <= END_INNER, "遠い端の内側のひれが板の縁の R に掛かる"
 
 # --- 仕上げ ---
-FILLET_R = PAIR.FILLET_R         # 2.5
 FILLET_ANGLE = PAIR.FILLET_ANGLE
 FILLET_SEG = PAIR.FILLET_SEG
 BASE_ROUND = PAIR.BASE_ROUND     # 1.5

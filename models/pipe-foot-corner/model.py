@@ -73,18 +73,36 @@ def spine_net():
 
 # ---------------------------------------------------------------- build
 
+def plate_outline():
+    """床に着く板の輪郭。反時計回り。どの継ぎ目も接線がつながる。
+
+    遠い端（-227, 0）から: 内側へ広がる弧（END_R）→ 斜辺 → もう一方の遠い端の弧 →
+    遠い端の外側の半円（OUTER_R）→ 外側の直線 → 角の 1/4 円（OUTER_R）→ 外側の直線 →
+    遠い端の外側の半円。遠い端の点で半径 OUTER_R と END_R の円が内接する
+    （END_R の中心は軸から END_R - OUTER_R だけ角の側）。
+    """
+    ro, re = OUTER_R, END_R
+    ca = (A2[0] + (re - ro), 0.0)            # X 列の遠い端、内側の弧の中心
+    cb = (0.0, B2[1] + (re - ro))            # Y 列の遠い端
+    n = SEG // 4
+    return fc.chain(
+        fc.arc(ca, re, 180, 225, n // 2),    # 遠い端 → 斜辺の接点
+        fc.arc(cb, re, 225, 270, n // 2),    # 斜辺（直線）→ もう一方の遠い端
+        fc.arc(B2, ro, 270, 360, n),         # 遠い端の外側の半円
+        fc.arc((0.0, 0.0), ro, 0, 90, n),    # 外側の直線（x = OUTER_R）→ 角の 1/4 円
+        fc.arc(A2, ro, 90, 180, n),          # 外側の直線（y = OUTER_R）→ 遠い端の外側の半円
+    )
+
+
 def build():
-    # ソケットの軸と、そのひれの向き。ひれは背骨と直交し、切り落とさない内側へ出す
+    # ソケットの軸と、そのひれの向き。ひれは背骨と直交し、板に余地がある内側へ出す
     sockets = [(A1, (-90.0,)), (A2, (-90.0,)), (B1, (180.0,)), (B2, (180.0,)),
                (FIFTH, (180.0, -90.0))]
 
-    # 床に着く板。外側の 4 つのソケットを包む凸包（反時計回り）。5 本目はその中に入る
-    hull = fc.hull_poly([A2, B2, B1, A1], PLATE_R, SEG)
-    assert FIFTH[0] + FIFTH[1] > A2[0] + B2[1], "5 本目が凸包の外に出ている"
-    body = fc.prism("pipe_foot_corner", hull, Z_BUILD_BOT, PLATE_T)
+    body = fc.prism("pipe_foot_corner", plate_outline(), Z_BUILD_BOT, PLATE_T)
 
-    # ソケット 5 本
-    prof = fc.socket_profile(P, Z_BUILD_BOT)
+    # ソケット 5 本（台座なし。板から FOOT_R の丸みで筒が立つ）
+    prof = fc.socket_profile_plain(P, Z_BUILD_BOT, FOOT_R)
     for k, (c, _) in enumerate(sockets):
         fc.boolean(body, fc.revolve("socket%d" % k, prof, fc.translate(*c), SEG), "UNION")
 
@@ -102,14 +120,6 @@ def build():
 
     # 底を平らに切る
     fc.boolean(body, fc.box_mm("cut_base", -400, 400, -400, 400, -100, 0), "DIFFERENCE")
-
-    # 外側の縁を平らに切って造形板に収める（角の外側 2 面と、列の遠い端 2 面）
-    far = -(CORNER_OFF + SPAN + EDGE_CUT)
-    for name, rng in (("cut_px", (EDGE_CUT, 100, -400, 100)),
-                      ("cut_py", (-400, 100, EDGE_CUT, 100)),
-                      ("cut_nx", (-400, far, -400, 100)),
-                      ("cut_ny", (-400, 100, -400, far))):
-        fc.boolean(body, fc.box_mm(name, *rng, -10, 200), "DIFFERENCE")
 
     # パイプの穴（座面まで）
     for k, (c, _) in enumerate(sockets):

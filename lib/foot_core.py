@@ -212,6 +212,48 @@ def socket_profile(P, z_bot):
     return out
 
 
+def socket_profile_plain(P, z_bot, foot_r, arc_seg=8):
+    """台座（8mm の段と円錐）を持たないソケット [(z, r)]。板から直接、半径 foot_r の
+    丸みで筒が立つ。
+
+    板の縁までの余地が無い所（pipe-foot-corner の外側。軸から 25mm で造形板が尽きる）用。
+    丸みは回転体の輪郭に入れるので bevel は掛からない（隣り合う面の角が 25° 未満）。
+    筒の外径 + foot_r + 板の縁の R が縁までの距離に収まることは呼ぶ側が確かめる。
+    """
+    r0 = P.BOSS_R + foot_r
+    pts = [(z_bot, r0), (P.PLATE_T, r0)]
+    for i in range(1, arc_seg + 1):
+        a = math.pi / 2 * i / arc_seg
+        pts.append((P.PLATE_T + foot_r * (1.0 - math.cos(a)), r0 - foot_r * math.sin(a)))
+    pts.append((P.BOSS_TOP - P.MOUTH_TAPER, P.BOSS_R))
+    for i in range(1, P.CONE_SEG + 1):
+        t = i / P.CONE_SEG
+        pts.append((P.BOSS_TOP - P.MOUTH_TAPER + P.MOUTH_TAPER * t,
+                    P.BOSS_R + (P.TIP_R - P.BOSS_R) * smoothstep(t)))
+    return pts
+
+
+def arc(center, r, a0_deg, a1_deg, n):
+    """center を中心に a0 → a1（度）をたどる点列。両端を含む。"""
+    cx, cy = center
+    return [(cx + r * math.cos(math.radians(a0_deg + (a1_deg - a0_deg) * i / n)),
+             cy + r * math.sin(math.radians(a0_deg + (a1_deg - a0_deg) * i / n)))
+            for i in range(n + 1)]
+
+
+def chain(*pieces):
+    """点列を順につなぐ。継ぎ目で同じ点が重なれば 1 つにする。"""
+    out = []
+    for pc in pieces:
+        for p in pc:
+            if out and abs(out[-1][0] - p[0]) < 1e-9 and abs(out[-1][1] - p[1]) < 1e-9:
+                continue
+            out.append(p)
+    if len(out) > 1 and abs(out[0][0] - out[-1][0]) < 1e-9 and abs(out[0][1] - out[-1][1]) < 1e-9:
+        out.pop()
+    return out
+
+
 def fin_poly(P):
     """横のひれの断面 [(r, z)]。外端は FIN_OUT_H の高さを残して尖らせない。
 
