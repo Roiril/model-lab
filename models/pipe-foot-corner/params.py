@@ -22,8 +22,8 @@ pipe-foot-pair（脚 2 本 + 3 本目）を 2 つ直角に置き、角で 1 体�
     脚列の長さは SPAN + CORNER_OFF = 202。板を軸から 42 まで出すと 286 になり X1C の
     256 に入らない。外側（角の外側 2 辺と、列の遠い端）は軸から OUTER_R = 25 の所を
     縁にする。25 の中にソケットが収まるよう、この部品のソケットには pipe-foot の
-    台座（半径 34 の段と半径 26 の円錐）を付けず、板から半径 FOOT_R の丸みで筒を立てる。
-        筒 18.3 + 丸み 3.5 + 縁の R 2.5 = 24.3 < 25
+    台座（半径 34 の段と半径 26 の円錐）を付けず、筒を板に直角に立てて根元を R2.5 で丸める。
+        根元の筒 19.5 + 根元の R 2.5 = 22.0 < 縁の R が始まる 22.5
     輪郭は、外側の直線 2 本 → 角の 1/4 円（r 25）→ 遠い端の半円（r 25）→ 内側へ向かって
     半径 END_R の弧で広がる → 2 つの遠い端を結ぶ斜辺。どこも接線がつながる。
     内側は fins（軸から 36）を平らな板の上で終わらせるため、遠い端の内側で 43 まで広げる。
@@ -83,22 +83,32 @@ OUTER_R = (EXTENT - SPAN - CORNER_OFF) / 2      # 25.0 外側の縁。軸から�
 END_R = 50.0                     # 遠い端の内側へ広がる弧の半径（軸から OUTER_R の点で外側の半円に接する）
 END_INNER = math.sqrt(END_R ** 2 - (END_R - OUTER_R) ** 2)   # 43.3 遠い脚の軸で、内側の縁までの距離
 
-# --- ソケットの根元 ---
+# --- ソケットの根元（折れにくくする）---
 # pipe-foot の台座（半径 34 の段・半径 26 の円錐）は OUTER_R に入らないので付けない。
-# 板から半径 FOOT_R の丸みで筒を立てる
-FOOT_R = 3.5
+# 代わりに、根元から座面までの壁を ROOT_WALL に厚くし、その上で BOSS_R の筒へ細らせる。
+# 筒は縦に刷るので、根元の曲げは層の剥がれで折れる。断面係数を根元で稼ぐ
+# （壁 4.0 → 5.2 で筒の断面係数 3018 → 4460 mm3、1.5 倍）。
+# 板との角は bevel の R（FILLET_R）。ROOT_R + FILLET_R が板の縁の R に掛からない範囲で最大にする
 FILLET_R = PAIR.FILLET_R         # 2.5 接合部と板の縁の R
-assert BOSS_R + FOOT_R + FILLET_R <= OUTER_R - 0.5, "ソケットの根元と板の縁の R が食い合う"
+ROOT_WALL = 5.2                  # 根元の壁厚（BORE_D/2 から）
+ROOT_R = BORE_D / 2 + ROOT_WALL  # 19.5 根元の外径の半分
+ROOT_TOP_Z = SEAT_Z              # 30.0 ここまで厚いまま（パイプの座面の高さ）
+ROOT_TAPER = 15.0                # ここから 15mm かけて BOSS_R へ細る（z 30 → 45）
+assert ROOT_R + FILLET_R <= OUTER_R - FILLET_R - 0.5, "ソケットの根元の R と板の縁の R が食い合う"
+assert ROOT_TOP_Z + ROOT_TAPER < BOSS_TOP - MOUTH_TAPER, "根元の細りが口元の絞りに掛かる"
 
 # --- 背骨（脚列を通す縦板）と枝 ---
+# ソケット側の付け根は pipe-foot-pair の 48 より高い 60 にして、筒の 85 のうち 7 割を支える。
+# 根元の壁を厚くしただけでは筒の途中（リブが終わる高さ）に応力が集まるので、リブで上まで抱える
+RIB_TOP_Z = 60.0                 # 背骨とひれがソケットに付く高さ
 SPINE_T = PAIR.SPINE_T           # 8.0
-SPINE_TOP_Z = PAIR.SPINE_TOP_Z   # 48.0 ソケット側の付け根の高さ
+SPINE_TOP_Z = RIB_TOP_Z          # 60.0 ソケット側の付け根の高さ
 SPINE_MID_Z = PAIR.SPINE_MID_Z   # 14.0 脚 2 本の中央での高さ
 SPINE_LAP = PAIR.SPINE_LAP       # 1.0 板へ食い込ませる量
 SPINE_SEG = PAIR.SPINE_SEG       # 48 脚 2 本のあいだの分割数
 BRANCH_SEG = PAIR.BRANCH_SEG     # 24 枝の分割数
 # 脚から角までは、脚 2 本のあいだと同じ曲率のまま角で最も低くなる弧。
-# 角に近い脚 2 本の根元が集まる所なので、角は低くしない（CORNER_OFF 42 で 38.6）
+# 角に近い脚 2 本の根元が集まる所なので、角は低くしない（CORNER_OFF 42 で 47.3）
 SPINE_CURV = (SPINE_TOP_Z - SPINE_MID_Z) / (SPAN / 2) ** 2   # 0.0053 /mm
 CORNER_Z = SPINE_TOP_Z - SPINE_CURV * CORNER_OFF ** 2         # 38.6 角での高さ
 
@@ -107,8 +117,9 @@ CORNER_Z = SPINE_TOP_Z - SPINE_CURV * CORNER_OFF ** 2         # 38.6 角での�
 FIN_T = PAIR.FIN_T               # 6.0
 FIN_OUT_R = PAIR.FIN_OUT_R       # 36.0
 FIN_OUT_H = PAIR.FIN_OUT_H       # 5.0
-FIN_TOP_Z = PAIR.FIN_TOP_Z       # 48.0
+FIN_TOP_Z = RIB_TOP_Z            # 60.0
 assert FIN_OUT_R + 2 * FILLET_R <= END_INNER, "遠い端の内側のひれが板の縁の R に掛かる"
+assert RIB_TOP_Z > ROOT_TOP_Z + ROOT_TAPER, "リブの付け根が根元の細りの途中で終わる"
 
 # --- 仕上げ ---
 FILLET_ANGLE = PAIR.FILLET_ANGLE

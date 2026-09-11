@@ -101,8 +101,8 @@ def build():
 
     body = fc.prism("pipe_foot_corner", plate_outline(), Z_BUILD_BOT, PLATE_T)
 
-    # ソケット 5 本（台座なし。板から FOOT_R の丸みで筒が立つ）
-    prof = fc.socket_profile_plain(P, Z_BUILD_BOT, FOOT_R)
+    # ソケット 5 本（台座なし。根元の壁を厚くした筒）
+    prof = fc.socket_profile_root(P, Z_BUILD_BOT)
     for k, (c, _) in enumerate(sockets):
         fc.boolean(body, fc.revolve("socket%d" % k, prof, fc.translate(*c), SEG), "UNION")
 

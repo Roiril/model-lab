@@ -212,19 +212,19 @@ def socket_profile(P, z_bot):
     return out
 
 
-def socket_profile_plain(P, z_bot, foot_r, arc_seg=8):
-    """台座（8mm の段と円錐）を持たないソケット [(z, r)]。板から直接、半径 foot_r の
-    丸みで筒が立つ。
+def socket_profile_root(P, z_bot):
+    """台座（8mm の段と円錐）を持たず、根元の肉だけ厚いソケット [(z, r)]。
 
     板の縁までの余地が無い所（pipe-foot-corner の外側。軸から 25mm で造形板が尽きる）用。
-    丸みは回転体の輪郭に入れるので bevel は掛からない（隣り合う面の角が 25° 未満）。
-    筒の外径 + foot_r + 板の縁の R が縁までの距離に収まることは呼ぶ側が確かめる。
+    筒は板の上面に直角に立ち、根元の R は bevel（FILLET_R）が作る。
+    根元から ROOT_TOP_Z までは壁を ROOT_R（外径）にし、そこから ROOT_TAPER で BOSS_R へ細る。
+    ROOT_R + FILLET_R が板の縁の R（縁から FILLET_R）に掛からないことは呼ぶ側が確かめる。
     """
-    r0 = P.BOSS_R + foot_r
-    pts = [(z_bot, r0), (P.PLATE_T, r0)]
-    for i in range(1, arc_seg + 1):
-        a = math.pi / 2 * i / arc_seg
-        pts.append((P.PLATE_T + foot_r * (1.0 - math.cos(a)), r0 - foot_r * math.sin(a)))
+    pts = [(z_bot, P.ROOT_R), (P.ROOT_TOP_Z, P.ROOT_R)]
+    for i in range(1, P.CONE_SEG + 1):
+        t = i / P.CONE_SEG
+        pts.append((P.ROOT_TOP_Z + P.ROOT_TAPER * t,
+                    P.ROOT_R + (P.BOSS_R - P.ROOT_R) * smoothstep(t)))
     pts.append((P.BOSS_TOP - P.MOUTH_TAPER, P.BOSS_R))
     for i in range(1, P.CONE_SEG + 1):
         t = i / P.CONE_SEG
