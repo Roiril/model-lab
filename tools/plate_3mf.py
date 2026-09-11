@@ -104,7 +104,12 @@ def center_on_bed(placed, total):
     """
     ox = (BED_X - total[0]) / 2
     oy = (BED_Y - total[1]) / 2
-    if ox < EXCLUDE[0] + 2 and oy < EXCLUDE[1] + 2:
+    # 除外域に材料が掛かるときだけ奥へ逃がす（枠ではなく頂点で見る。L 字のように
+    # 枠の隅が空いている部品は動かさない）。逃がすと奥がはみ出すなら動かさず、後段の検査に任せる
+    def hits(oy):
+        return any(x + dx + ox < EXCLUDE[0] + 2 and y + dy + oy < EXCLUDE[1] + 2
+                   for _, v, _, dx, dy in placed for x, y, _ in v)
+    if hits(oy) and total[1] + EXCLUDE[1] + 2 <= BED_Y:
         oy = EXCLUDE[1] + 2
     return [(n, v, f, dx + ox, dy + oy) for n, v, f, dx, dy in placed]
 
@@ -205,11 +210,13 @@ def main():
             if ov[0] > 0 and ov[1] > 0:
                 print(f"[plate] ⚠ {a[0]} と {b[0]} が {ov[0]:.1f} x {ov[1]:.1f}mm 重なっている")
                 worst = max(worst, min(ov))
-    off_bed = [b[0] for b in boxes
-               if b[1] < 0 or b[2] < 0 or b[3] > BED_X or b[4] > BED_Y
-               or (b[1] < EXCLUDE[0] and b[2] < EXCLUDE[1])]
+    off_bed = [b[0] for b in boxes if b[1] < 0 or b[2] < 0 or b[3] > BED_X or b[4] > BED_Y]
+    # 除外域は枠ではなく頂点で見る。L 字のように枠の隅が空いている部品を弾かないため
+    in_excl = [name for name, v, _, dx, dy in placed
+               if any(x + dx < EXCLUDE[0] and y + dy < EXCLUDE[1] for x, y, _ in v)]
     print(f"[plate] 重なり {'なし' if worst == 0 else f'{worst:.1f}mm'} / "
-          f"はみ出し・除外域 {'なし' if not off_bed else off_bed}")
+          f"はみ出し {'なし' if not off_bed else off_bed} / "
+          f"除外域 {'なし' if not in_excl else in_excl}")
 
     hi_z = max(bbox(v)[1][2] for _, v, _, _, _ in placed)
     edge = min((BED_X - total[0]) / 2, (BED_Y - total[1]) / 2)

@@ -334,7 +334,13 @@ async function initModels() {
 const stlLoader = new STLLoader();
 let latestFiles = [];
 function loadLatestStlFor(name, fit) {
-  const f = latestFiles.find((x) => x === name + ".stl") || latestFiles[0];
+  // モデル名と STL 名は「-」と「_」が混在している（pipe-foot-pair → pipe_foot_pair.stl）。
+  // 揃えてから、同名 → 同名で始まるもの → 最新の順に探す
+  const norm = (s) => s.toLowerCase().replace(/-/g, "_");
+  const want = norm(name);
+  const f = latestFiles.find((x) => norm(x) === want + ".stl")
+    || latestFiles.find((x) => norm(x).startsWith(want + "_") || norm(x).startsWith(want + "."))
+    || latestFiles[0];
   if (f) loadSTL(f, fit);
 }
 function loadSTL(filename, fit = false) {
