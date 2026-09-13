@@ -3,6 +3,7 @@
     pipe_foot_corner_a   … M 字 A の脚 2 本 + 5 本目の柱を受ける板（pipe-foot-pair と同じ形）
     pipe_foot_corner_b   … M 字 B の脚 2 本を受ける板（3 本目なし）
     pipe_foot_corner_tie … 角の脚 2 本のソケットに上からかぶせる添え板（片側は長穴）
+    pipe_foot_corner_asm … 角一式を組んだ状態（確認用。asm.py で出す。印刷には使わない）
 
 形は lib/pair_base.build()。1 体の L 字板は作らない: 角の脚の間隔は内側エルボの差し込み
 （pipe-corner）で決まり、そのとき L 字の全長は CORNER_OFF + 160 + 2×25 ≥ 280 で

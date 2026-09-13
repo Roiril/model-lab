@@ -342,7 +342,15 @@ function loadLatestStlFor(name, fit) {
   // 同名で始まるものが複数あるとき（pipe_joint_28 と pipe_joint_28_print）は短い名前 = 本体を取る。
   // 同じ長さなら名前順（pipe_foot_corner_a が _b より先）
   heads.sort((a, b) => a.length - b.length || a.localeCompare(b));
-  const f = latestFiles.find((x) => norm(x) === want + ".stl") || heads[0] || latestFiles[0];
+  // 組んだ状態の確認用（<name>_asm.stl / <name>-asm.stl）があれば、部品より先にそれを見せる
+  const asm = heads.find((x) => /[_-]asm\.stl$/.test(norm(x)));
+  if (asm) { loadSTL(asm, fit); return; }
+  const exact = latestFiles.find((x) => norm(x) === want + ".stl");
+  // ⚠ 完全一致でも、それより新しい同名で始まるファイルがあればそちらを取る。モデルの出力名が
+  //   変わったあと（pipe_foot_corner → pipe_foot_corner_a）古い STL が残っていると昨日の形を見せてしまう
+  //   （2026-09-13 実害）。latestFiles は新しい順なので、先に出てくる方が新しい
+  const f = (exact && heads[0] && latestFiles.indexOf(heads[0]) < latestFiles.indexOf(exact)) ? heads[0]
+    : exact || heads[0] || latestFiles[0];
   if (f) loadSTL(f, fit);
 }
 function loadSTL(filename, fit = false) {
