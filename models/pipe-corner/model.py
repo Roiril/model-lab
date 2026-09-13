@@ -1,3 +1,7 @@
+"""角の内側エルボ（R25、差し込み 30）と外側エルボ（R185、差し込み 28.5）。
+
+    ./run.sh models/pipe-corner/model.py
+"""
 import sys, os
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "../../lib"))
 sys.path.insert(0, os.path.dirname(__file__))
@@ -5,15 +9,16 @@ sys.path.insert(0, os.path.dirname(__file__))
 import bpy
 from blender_utils import clear_scene, EXPORTS_DIR
 import corner
-from params import R_INNER, R_OUTER
+from params import R_INNER, R_OUTER, STRAIGHT_INNER, STRAIGHT_OUTER
 
 clear_scene()
 os.makedirs(EXPORTS_DIR, exist_ok=True)
 
-for R, name in ((R_INNER, "pipe_corner_in_28"), (R_OUTER, "pipe_corner_out_28")):
+for R, straight, name in ((R_INNER, STRAIGHT_INNER, "pipe_corner_in_28"),
+                          (R_OUTER, STRAIGHT_OUTER, "pipe_corner_out_28")):
     for ob in list(bpy.context.scene.objects):
         bpy.data.objects.remove(ob, do_unlink=True)
-    body = corner.build_corner(R, name)
+    body = corner.build_corner(R, straight, name)
     stl = os.path.join(EXPORTS_DIR, name + ".stl")
     bpy.ops.object.select_all(action="DESELECT")
     body.select_set(True)

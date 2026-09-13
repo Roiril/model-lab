@@ -1,4 +1,5 @@
-"""28mm パイプ用 90 度コーナー（手すり）の寸法定義。
+"""28mm パイプ用 90 度コーナー（手すり）の寸法定義。角で 2 つの M 字ジョイントの
+内側レールどうし・外側レールどうしをつなぐ。
 
 すべて mm。ローカル座標:
     円弧の中心が原点。円弧は角度 90°（点 (0,R)）から 0°（点 (R,0)）へ回る
@@ -9,9 +10,35 @@
     上半分は半径 HUB_R の半円、横は垂直、下は 45 度面取り付きの平ら
     寝かせたまま無サポートで刷れる。穴の天井はティアドロップ
 
-L 字の実配置では、内側 R=20 / 外側 R=180 の 2 個を同じ原点に置く。
-中心はどちらも (380, -100, 62.3)。中央レールを回すなら R=100。
+角での置き方（2026-09-13 に決め直し。上面図は pipe-foot-corner の docstring）:
+    2 つの M 字は平らな面を角へ向け、レールは平らな面を抜けて角へ出る。
+    内側エルボ（R_INNER）の口は両方の M 字の平らな面に突き当たる。これが角の寸法の基準で、
+    角の脚の軸から相手の軸線までの距離 CORNER_OFF = JOINT_END + R_INNER + STRAIGHT_INNER。
+    外側エルボ（R_OUTER = R_INNER + 160）は同心。口は突き当てず REVEAL の目地を残す。
+    レール間隔 160 の印刷収縮（0.3〜0.5）が外側の口元に 1:1 で効くので、両方を突き当てると
+    着座しない（設計批評 2026-09-13）。
+    口元の外径は絞らない（M 字の面と同径 36.6 で面一にする）。穴の天井だけ口元で丸に戻す。
+
+抜け止め:
+    突き当ては押す向きしか止めない。各腕の上に M4 の止めねじ（ナットポケット）を置き、
+    パイプをエルボに固定する。M 字のスリーブには付けない（レールは閉じた輪の中で
+    軸方向に逃げ場が無く、抜け止めはここで足りる）。
+
+曲げの内側は半径 R_INNER - HUB_R。R=20 だと 1.7 で指を挟む溝になるので 25（6.7）にした。
 """
+import importlib.util
+import os
+
+
+def _load(name, model):
+    path = os.path.join(os.path.dirname(__file__), os.pardir, model, "params.py")
+    spec = importlib.util.spec_from_file_location(name, path)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+J = _load("pipe_joint_params", "pipe-joint")
 
 MM = 0.001
 
@@ -22,25 +49,37 @@ BORE_D = PIPE_OD + 2 * CLEAR       # 28.6
 
 # --- 断面（U ターンと共通）---
 WALL = 4.0
-HUB_R = BORE_D / 2 + WALL          # 18.3 握り部の半径（外径 36.6）
-TIP_WALL = 0.4
-TIP_R = BORE_D / 2 + TIP_WALL      # 14.7 口元 → パイプ面からの段差 0.7mm
-MOUTH_TAPER = 16.0
+HUB_R = BORE_D / 2 + WALL          # 18.3 握り部の半径（外径 36.6 = M 字のスリーブと同径）
+assert abs(HUB_R * 2 - J.HUB_D) < 1e-9, "M 字のスリーブと径が違う。突き当てで段が出る"
 
 BOT_WALL = 3.0
 Z_BASE = BORE_D / 2 + BOT_WALL     # 17.3 芯から底面までの深さ
 BOT_CHAMFER = 4.0
 
 TD_TOP = HUB_R - WALL              # 14.3 ティアドロップの天井
+BORE_MOUTH_L = 12.0                # 口元でティアドロップの屋根を丸に戻す長さ
 
 # --- 芯線 ---
-STRAIGHT = 55.0                    # 両端の直線部（＝パイプの差し込み長）
+SPAN = 2 * J.SIDE_Y                # 160.0 内側レールと外側レールの間隔
+R_INNER = 25.0                     # 内側レール。曲げの内側の半径 = 25 - 18.3 = 6.7
+R_OUTER = R_INNER + SPAN           # 185.0 外側レール（同心）
+STRAIGHT_INNER = 30.0              # 内側の直線部 = 差し込み深さ。口は M 字の面に突き当たる
+REVEAL = 1.5                       # 外側の口と M 字の面のあいだに残す目地
+STRAIGHT_OUTER = STRAIGHT_INNER - REVEAL   # 28.5
 
-# --- 実配置（L 字の角）---
-ARC_CENTER = (380.0, -100.0, 62.3)  # 3 本のレールに共通の回転中心
-R_INNER = 20.0                      # 内側レール（ラン A の Y=-80 ↔ ラン B の X=400）
-R_CENTER = 100.0                    # 中央レール（Y=0 ↔ X=480、高さは Z=0）
-R_OUTER = 180.0                     # 外側レール（ラン A の Y=+80 ↔ ラン B の X=560）
+JOINT_END = J.LEG_X - J.X_BOT      # 19.7 M 字の本体が脚の軸から平らな面まで出る量
+CORNER_OFF = JOINT_END + R_INNER + STRAIGHT_INNER   # 74.7 角の脚の軸 → 相手の軸線
+ARC_CENTER_OFF = CORNER_OFF - R_INNER               # 49.7 同心の中心（角の節点から両軸へ）
+
+assert STRAIGHT_OUTER >= 1.0 * PIPE_OD, "外側の差し込みがパイプ径より浅い"
+
+# --- 止めねじ（M4、各腕の直線部の真ん中、上から）---
+SCREW_D = 4.3                      # M4 のバカ穴
+NUT_AF = 7.2                       # M4 ナットの二面幅 7.0 + 0.2
+NUT_T = 3.4                        # 厚み 3.2 + 0.2
+BOSS_W = 14.0                      # ボスの幅（腕に沿う向き・横向きとも）
+BOSS_TOP_Z = HUB_R + 1.6 + NUT_T + 2.8   # 26.1 握りの頂点 + 下の肉 1.6 + ナット + 上の肉 2.8
+NUT_Z0 = HUB_R + 1.6               # 19.9 ナットポケットの下面
 
 # --- メッシュ品質 ---
 STR_SEG = 28                       # 直線部の分割数

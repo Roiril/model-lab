@@ -10,6 +10,7 @@ Blender を使わない（STL を直に読んで 3mf を直に書く）。
 造形範囲 256 x 256 x 250mm / 手前左 18 x 28mm は除外域。
 """
 
+import math
 import os
 import re
 import struct
@@ -196,6 +197,25 @@ def main():
 
     placed, total = arrange(parts, BED_X - 2 * MARGIN)
     placed = center_on_bed(placed, total)
+
+    # 除外域（手前左）に材料が掛かる部品は、その部品だけ Z まわりに回して置き直す。
+    # 三角形の板のように枠の隅が空いている向きがあれば、回すだけで逃げられる
+    def intruders(placed):
+        return [i for i, (_, v, _, dx, dy) in enumerate(placed)
+                if any(x + dx < EXCLUDE[0] and y + dy < EXCLUDE[1] for x, y, _ in v)]
+
+    for i in intruders(placed):
+        name, v0, t0 = parts[i]
+        for deg in (90, 180, 270):
+            c, sn = math.cos(math.radians(deg)), math.sin(math.radians(deg))
+            v = [(x * c - y * sn, x * sn + y * c, z) for x, y, z in v0]
+            trial = parts[:i] + [(name, v, t0)] + parts[i + 1:]
+            pl, tot = arrange(trial, BED_X - 2 * MARGIN)
+            pl = center_on_bed(pl, tot)
+            if i not in intruders(pl):
+                print(f"[plate] {name} を {deg}° 回して除外域を避けた")
+                parts, placed, total = trial, pl, tot
+                break
 
     # 重なっていないことを枠の突き合わせで確かめる（棚づめの結果を信用しない）
     boxes = []

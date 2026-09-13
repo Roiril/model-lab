@@ -1,4 +1,4 @@
-"""パイプの脚を床で受けるベース（pipe-foot-pair / pipe-foot-corner）で共有する形づくりの部品。
+"""パイプの脚を床で受けるベース（lib/pair_base、pipe-foot-pair / pipe-foot-corner）で共有する形づくりの部品。
 
 寸法はここに持たない。ソケットの輪郭やひれの断面は、呼ぶ側の params を引数で受ける。
 単位はモデル側と同じく mm で受け、Blender へ渡すときに MM を掛ける。
@@ -209,48 +209,6 @@ def socket_profile(P, z_bot):
     for p in pts[1:]:
         if p[0] - out[-1][0] > 1e-9:
             out.append(p)
-    return out
-
-
-def socket_profile_root(P, z_bot):
-    """台座（8mm の段と円錐）を持たず、根元の肉だけ厚いソケット [(z, r)]。
-
-    板の縁までの余地が無い所（pipe-foot-corner の外側。軸から 25mm で造形板が尽きる）用。
-    筒は板の上面に直角に立ち、根元の R は bevel（FILLET_R）が作る。
-    根元から ROOT_TOP_Z までは壁を ROOT_R（外径）にし、そこから ROOT_TAPER で BOSS_R へ細る。
-    ROOT_R + FILLET_R が板の縁の R（縁から FILLET_R）に掛からないことは呼ぶ側が確かめる。
-    """
-    pts = [(z_bot, P.ROOT_R), (P.ROOT_TOP_Z, P.ROOT_R)]
-    for i in range(1, P.CONE_SEG + 1):
-        t = i / P.CONE_SEG
-        pts.append((P.ROOT_TOP_Z + P.ROOT_TAPER * t,
-                    P.ROOT_R + (P.BOSS_R - P.ROOT_R) * smoothstep(t)))
-    pts.append((P.BOSS_TOP - P.MOUTH_TAPER, P.BOSS_R))
-    for i in range(1, P.CONE_SEG + 1):
-        t = i / P.CONE_SEG
-        pts.append((P.BOSS_TOP - P.MOUTH_TAPER + P.MOUTH_TAPER * t,
-                    P.BOSS_R + (P.TIP_R - P.BOSS_R) * smoothstep(t)))
-    return pts
-
-
-def arc(center, r, a0_deg, a1_deg, n):
-    """center を中心に a0 → a1（度）をたどる点列。両端を含む。"""
-    cx, cy = center
-    return [(cx + r * math.cos(math.radians(a0_deg + (a1_deg - a0_deg) * i / n)),
-             cy + r * math.sin(math.radians(a0_deg + (a1_deg - a0_deg) * i / n)))
-            for i in range(n + 1)]
-
-
-def chain(*pieces):
-    """点列を順につなぐ。継ぎ目で同じ点が重なれば 1 つにする。"""
-    out = []
-    for pc in pieces:
-        for p in pc:
-            if out and abs(out[-1][0] - p[0]) < 1e-9 and abs(out[-1][1] - p[1]) < 1e-9:
-                continue
-            out.append(p)
-    if len(out) > 1 and abs(out[0][0] - out[-1][0]) < 1e-9 and abs(out[0][1] - out[-1][1]) < 1e-9:
-        out.pop()
     return out
 
 

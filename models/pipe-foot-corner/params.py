@@ -1,43 +1,25 @@
-"""M 字ジョイント 2 つが直角に出会う角で、脚 4 本と 5 本目の脚を 1 枚の板で受けるベース。
+"""M 字ジョイント 2 つが直角に出会う角の、床側の部品 3 つの寸法定義。
 
-pipe-foot-pair（脚 2 本 + 3 本目）を 2 つ直角に置き、角で 1 体にしたもの。
-別々の板だと角の脚どうしが 84mm より近づけない。1 体にして角の脚を寄せる
-（2026-09-11 ユーザーのスケッチ「近づけるために一体化」）。
+    pipe_foot_corner_a   … M 字 A の脚 2 本 + 5 本目の柱を受ける板（pipe-foot-pair と同じ形）
+    pipe_foot_corner_b   … M 字 B の脚 2 本を受ける板（3 本目なし）
+    pipe_foot_corner_tie … 角の脚 2 本のソケットに上からかぶせる添え板（片側は長穴）
 
-すべて mm。ローカル座標: 底面が z=0、+Z が上。刷る向きのまま。
-    角の節点 = 原点。そこから -X へ伸びる脚列と -Y へ伸びる脚列
-    X 列の脚: (-CORNER_OFF, 0) と (-CORNER_OFF - SPAN, 0)   ← M 字ジョイント A
-    Y 列の脚: (0, -CORNER_OFF) と (0, -CORNER_OFF - SPAN)   ← M 字ジョイント B
-    5 本目  : (-FIFTH_OFF, -FIFTH_OFF)。M 字ジョイントの閉じた端から、5 本目の
-              パイプ側面に付く 50mm のジョイントの先まで JOINT_CLEAR の隙間
-ユーザーのスケッチ（角が右下、列が上と左へ伸びる）を反時計回りに 90° 回した向き。
-造形板の手前左（除外域 18 x 28mm）に、板の無い側（斜辺の外）が来るようにするため。
+形は lib/pair_base.build()。1 体の L 字板は作らない: 角の脚の間隔は内側エルボの差し込み
+（pipe-corner）で決まり、そのとき L 字の全長は CORNER_OFF + 160 + 2×25 ≥ 280 で
+造形板 252 に入らない（2026-09-13 設計批評）。
 
-M 字ジョイントの置き方（この部品の前提）:
-    本体は脚の軸から、閉じた端の側へ 19.7、レールが入る側へ 34.3 はみ出す
-    （pipe-joint: BODY_T 54 / LEG_X -7.3）。脚の並ぶ向きには軸から 18.3（全幅 196.6）。
-    2 つのジョイントは **閉じた端を角に向けて**（レールは角から離れる向きへ）置く。
-    - 角の脚（CORNER_OFF 42）: 本体どうしの隙間 42 - 19.7 - 18.3 = 4mm
-    - レールを角の側へ向けると本体が 34.3 出るので 53 以上が要り、さらにレールが
-      もう一方のジョイントの襟をかすめる（50 以上）。そのとき部品は 266mm になり
-      造形板に入らない。2 つに割る設計が要る
+上から見た配置（すべて mm。角の節点が原点、M 字 A の脚は x 軸上の負側、B の脚は y 軸上の負側）:
+    A の脚 (-CORNER_OFF, 0), (-CORNER_OFF-160, 0)   B の脚 (0, -CORNER_OFF), (0, -CORNER_OFF-160)
+    5 本目 (-FIFTH_OFF, -FIFTH_OFF) = 2 つの中央レールの延長線の交点。両方の中央レールが
+    ここで柱の側面ソケット（パイプ面から 50、市販継手）に差さって止まる
+    2 つの M 字は平らな面を角へ向ける。内側エルボ（R25、差し込み 30）の口が両方の面に
+    突き当たり、CORNER_OFF = 19.7 + 25 + 30 = 74.7。外側エルボ（R185）は同心で目地 1.5
+    板 A と板 B は床で結合しない（角の過剰拘束を床で逃がす）。板どうしの最接近は約 12
+    添え板は角のソケット 2 つ（対角 105.6）にかぶせてひれの上（z=48）に乗り、
+    平面のせん断だけを止める。片側を長穴にして寸法の食い違いを吸う
 
-5 本目の位置（FIFTH_OFF。2026-09-12 ユーザー指摘で決め直し）:
-    5 本目のパイプには、側面から SIDE_JOINT_L = 50 延びるジョイントが付く。それが
-    M 字ジョイントの閉じた端（中央の襟）に当たる。最初はパイプ外面どうし 55 で置いたが、
-    本体は脚パイプの面より 5.7 外へ出ているので、50 + 5 では 0.7 食い込んでいた。
-    軸線から: 閉じた端 19.7 + ジョイント 50 + 隙間 JOINT_CLEAR + パイプ半径 14 = 88.7
-
-造形板に収める形（2026-09-11 ユーザー指示: はみ出す所を切るのではなく、収まる形に設計する）:
-    脚列の長さは SPAN + CORNER_OFF = 202。板を軸から 42 まで出すと 286 になり X1C の
-    256 に入らない。外側（角の外側 2 辺と、列の遠い端）は軸から OUTER_R = 25 の所を
-    縁にする。25 の中にソケットが収まるよう、この部品のソケットには pipe-foot の
-    台座（半径 34 の段と半径 26 の円錐）を付けず、筒を板に直角に立てて根元を R2.5 で丸める。
-        根元の筒 19.5 + 根元の R 2.5 = 22.0 < 縁の R が始まる 22.5
-    輪郭は、外側の直線 2 本 → 角の 1/4 円（r 25）→ 遠い端の半円（r 25）→ 内側へ向かって
-    半径 END_R の弧で広がる → 2 つの遠い端を結ぶ斜辺。どこも接線がつながる。
-    内側は fins（軸から 36）を平らな板の上で終わらせるため、遠い端の内側で 43 まで広げる。
-    造形板の縁まで 2mm。ブリムは付けられない。
+造形板 256（使えるのは 252）: 板 A は 244 x 238.7、板 B は 244 x 84、添え板は 150.7 x 45.1
+印刷はこの向きのまま。底面が丸ごと着き、上へ行くほど細るだけなので無支持。
 """
 import importlib.util
 import math
@@ -53,91 +35,31 @@ def _load(name, model):
 
 
 PAIR = _load("pipe_foot_pair_params", "pipe-foot-pair")
+CORNER = _load("pipe_corner_params", "pipe-corner")
 
 MM = PAIR.MM
+SPAN = PAIR.SPAN                         # 160.0 M 字の脚の芯間
+PLATE_R = PAIR.PLATE_R                   # 42.0 板の輪郭の半径
 
-# --- パイプとソケット（pipe-foot-pair と同じ）---
-PIPE_OD = PAIR.PIPE_OD           # 28.0
-BORE_D = PAIR.BORE_D             # 28.6
-BOSS_R = PAIR.BOSS_R             # 18.3 ソケット外径 36.6
-SEAT_Z = PAIR.SEAT_Z             # 30.0 パイプの下端の高さ
-BOSS_TOP = PAIR.BOSS_TOP         # 85.0 全高
-MOUTH_TAPER = PAIR.MOUTH_TAPER   # 12.0
-TIP_R = PAIR.TIP_R               # 15.3
+# --- 配置（正本は pipe-corner。ここでは読むだけ）---
+CORNER_OFF = CORNER.CORNER_OFF           # 74.7 角の脚の軸 → 相手の脚列の軸線
+FIFTH_OFF = CORNER_OFF + SPAN / 2        # 154.7 5 本目の軸 → 各脚列の軸線（中央レールの交点）
+TIE_L = CORNER_OFF * math.sqrt(2.0)      # 105.6 角の脚 2 本の軸間（対角）
 
-# --- 脚の配置 ---
-SPAN = PAIR.SPAN                 # 160.0 M 字ジョイントの脚の芯間
-CORNER_OFF = 42.0                # 角の脚の軸から、もう一方の列の軸線までの距離
-JOINT_END = 19.7                 # M 字ジョイントの本体が、脚の軸から閉じた端の側へ出る量
-JOINT_RAIL_END = 34.3            # 同、レールが入る側へ出る量
-SIDE_JOINT_L = 50.0              # 5 本目のパイプの側面から延びるジョイントの長さ（ユーザー指定）
-JOINT_CLEAR = 5.0                # そのジョイントの先と M 字ジョイントの閉じた端のあいだに残す隙間
-FIFTH_OFF = JOINT_END + SIDE_JOINT_L + JOINT_CLEAR + PIPE_OD / 2   # 88.7 5 本目の軸 → 各列の軸線
-FIFTH_GAP = FIFTH_OFF - PIPE_OD  # 60.7 パイプ外面どうしの隙間（参考）
+# 板 A（脚 2 本 + 5 本目）が造形板に入ること。板 B は 244 x 84 で問わない
+BED = 252.0
+assert SPAN + 2 * PLATE_R <= BED, "板 A の幅が造形板に入らない"
+assert FIFTH_OFF + 2 * PLATE_R <= BED, "板 A の奥行きが造形板に入らない"
 
-A1 = (-CORNER_OFF, 0.0)                  # X 列、角に近い脚
-A2 = (-CORNER_OFF - SPAN, 0.0)           # X 列、遠い脚
-B1 = (0.0, -CORNER_OFF)                  # Y 列、角に近い脚
-B2 = (0.0, -CORNER_OFF - SPAN)           # Y 列、遠い脚
-FIFTH = (-FIFTH_OFF, -FIFTH_OFF)         # 5 本目
+# 5 本目の側面ソケット（パイプ面から SIDE_JOINT_L）の先が M 字の平らな面に当たらないこと
+CENTER_FREE = FIFTH_OFF - PAIR.PIPE_OD / 2 - PAIR.SIDE_JOINT_L - PAIR.JOINT_END   # 66.0 裸のパイプ
+assert CENTER_FREE >= PAIR.JOINT_CLEAR, "側面ソケットの先が M 字の面に当たる"
 
-# 角の脚 2 本の軸間の下限。ジョイント本体は脚の軸から閉じた端まで JOINT_END、
-# 脚の並ぶ向きには BOSS_R はみ出す。閉じた端を角に向けたとき、本体どうしの隙間が 3mm 以上
-JOINT_GAP = CORNER_OFF - JOINT_END - BOSS_R     # 4.0 角で 2 つのジョイント本体のあいだに残る隙間
-assert JOINT_GAP >= 3.0, "角の脚が近すぎて M 字ジョイントの本体どうしが当たる"
-
-# --- 床に着く板 ---
-PLATE_T = PAIR.PLATE_T           # 5.0 板厚
-BED = 256.0                      # X1C の造形板
-BED_MARGIN = 2.0                 # 縁に残す余白
-EXTENT = BED - 2 * BED_MARGIN                   # 252.0 部品の全幅（= 奥行き）
-OUTER_R = (EXTENT - SPAN - CORNER_OFF) / 2      # 25.0 外側の縁。軸からの距離
-END_R = 50.0                     # 遠い端の内側へ広がる弧の半径（軸から OUTER_R の点で外側の半円に接する）
-END_INNER = math.sqrt(END_R ** 2 - (END_R - OUTER_R) ** 2)   # 43.3 遠い脚の軸で、内側の縁までの距離
-
-# --- ソケットの根元（折れにくくする）---
-# pipe-foot の台座（半径 34 の段・半径 26 の円錐）は OUTER_R に入らないので付けない。
-# 代わりに、根元から座面までの壁を ROOT_WALL に厚くし、その上で BOSS_R の筒へ細らせる。
-# 筒は縦に刷るので、根元の曲げは層の剥がれで折れる。断面係数を根元で稼ぐ
-# （壁 4.0 → 5.2 で筒の断面係数 3018 → 4460 mm3、1.5 倍）。
-# 板との角は bevel の R（FILLET_R）。ROOT_R + FILLET_R が板の縁の R に掛からない範囲で最大にする
-FILLET_R = PAIR.FILLET_R         # 2.5 接合部と板の縁の R
-ROOT_WALL = 5.2                  # 根元の壁厚（BORE_D/2 から）
-ROOT_R = BORE_D / 2 + ROOT_WALL  # 19.5 根元の外径の半分
-ROOT_TOP_Z = SEAT_Z              # 30.0 ここまで厚いまま（パイプの座面の高さ）
-ROOT_TAPER = 15.0                # ここから 15mm かけて BOSS_R へ細る（z 30 → 45）
-assert ROOT_R + FILLET_R <= OUTER_R - FILLET_R - 0.5, "ソケットの根元の R と板の縁の R が食い合う"
-assert ROOT_TOP_Z + ROOT_TAPER < BOSS_TOP - MOUTH_TAPER, "根元の細りが口元の絞りに掛かる"
-
-# --- 背骨（脚列を通す縦板）と枝 ---
-# ソケット側の付け根は pipe-foot-pair の 48 より高い 60 にして、筒の 85 のうち 7 割を支える。
-# 根元の壁を厚くしただけでは筒の途中（リブが終わる高さ）に応力が集まるので、リブで上まで抱える
-RIB_TOP_Z = 60.0                 # 背骨とひれがソケットに付く高さ
-SPINE_T = PAIR.SPINE_T           # 8.0
-SPINE_TOP_Z = RIB_TOP_Z          # 60.0 ソケット側の付け根の高さ
-SPINE_MID_Z = PAIR.SPINE_MID_Z   # 14.0 脚 2 本の中央での高さ
-SPINE_LAP = PAIR.SPINE_LAP       # 1.0 板へ食い込ませる量
-SPINE_SEG = PAIR.SPINE_SEG       # 48 脚 2 本のあいだの分割数
-BRANCH_SEG = PAIR.BRANCH_SEG     # 24 枝の分割数
-# 脚から角までは、脚 2 本のあいだと同じ曲率のまま角で最も低くなる弧。
-# 角に近い脚 2 本の根元が集まる所なので、角は低くしない（CORNER_OFF 42 で 47.3）
-SPINE_CURV = (SPINE_TOP_Z - SPINE_MID_Z) / (SPAN / 2) ** 2   # 0.0053 /mm
-CORNER_Z = SPINE_TOP_Z - SPINE_CURV * CORNER_OFF ** 2         # 38.6 角での高さ
-
-# --- 横のひれ ---
-# 外側（縁まで 25）には出せない。内側だけ
-FIN_T = PAIR.FIN_T               # 6.0
-FIN_OUT_R = PAIR.FIN_OUT_R       # 36.0
-FIN_OUT_H = PAIR.FIN_OUT_H       # 5.0
-FIN_TOP_Z = RIB_TOP_Z            # 60.0
-assert FIN_OUT_R + 2 * FILLET_R <= END_INNER, "遠い端の内側のひれが板の縁の R に掛かる"
-assert RIB_TOP_Z > ROOT_TOP_Z + ROOT_TAPER, "リブの付け根が根元の細りの途中で終わる"
-
-# --- 仕上げ ---
-FILLET_ANGLE = PAIR.FILLET_ANGLE
-FILLET_SEG = PAIR.FILLET_SEG
-BASE_ROUND = PAIR.BASE_ROUND     # 1.5
-
-# --- メッシュ品質 ---
-SEG = PAIR.SEG                   # 96
-CONE_SEG = PAIR.CONE_SEG         # 24
+# --- 添え板 ---
+TIE_RING_ID = 2 * PAIR.BOSS_R + 0.5      # 37.1 ソケットの外径 36.6 に片側 0.25（pipe-foot-spacer と同じ）
+TIE_RING_WALL = 4.0
+TIE_RING_R = TIE_RING_ID / 2 + TIE_RING_WALL   # 22.55 → 板の幅 45.1
+TIE_T = 5.0                              # 板厚
+TIE_SLOT = 1.5                           # 片側の穴を板の長手に ±1.5 伸ばす（長穴）
+TIE_CHAMFER = 1.0                        # 穴の口の面取り（上からかぶせる時のリード）
+TIE_Z = PAIR.FIN_TOP_Z                   # 48.0 ひれの頂点に乗る高さ（参考）

@@ -14,6 +14,8 @@ from params import (
     MM, PIPE_OD, BORE_D, HUB_D, LEG_HUB_D, BODY_T, TAPER_L, TIP_D, BASE_ROUND,
     FILLET_R, FILLET_ANGLE, X_TOP, X_BOT, X_PRISM,
     LEG_TOP_D, LEG_BOT_D, LEG_TOP_Z, LEG_X, TEARDROP_TOP,
+    LEG_BORE_D, LEG_RELIEF_D, LEG_RELIEF_Z0, LEG_RELIEF_Z1, LEG_LEAD,
+    BOSS_X, BOSS_Z, BOSS_W, BOSS_D, SCREW_D, NUT_AF, NUT_T, NUT_CORNER, NUT_Y_IN,
     SIDE_Y, SIDE_Z, SLOPE_DEG,
     STRUT_T, STRUT_AXIS_R, STRUT_FOOT_Z, STRUT_TOP_EXT,
     WEB_X_TOP,
@@ -100,6 +102,26 @@ def box(name, size, matrix, col):
     return _finish(name, bm, col, matrix)
 
 
+def box_mm(name, x0, x1, y0, y1, z0, z1, col):
+    """mm の範囲で置く箱。"""
+    return box(name, ((x1 - x0) * MM, (y1 - y0) * MM, (z1 - z0) * MM),
+               Matrix.Translation(Vector(((x0 + x1) / 2, (y0 + y1) / 2, (z0 + z1) / 2)) * MM), col)
+
+
+def loft(name, polys, zs, col):
+    """同じ頂点数の (x, y) 多角形（mm）を z（mm）ごとに置いて帯で結ぶ。断面が z で変わる柱。"""
+    bm = bmesh.new()
+    rings = [[bm.verts.new((x * MM, y * MM, z * MM)) for x, y in poly] for poly, z in zip(polys, zs)]
+    n = len(polys[0])
+    for lo, hi in zip(rings, rings[1:]):
+        for i in range(n):
+            j = (i + 1) % n
+            bm.faces.new([lo[i], lo[j], hi[j], hi[i]])
+    bm.faces.new(list(reversed(rings[0])))
+    bm.faces.new(rings[-1])
+    return _finish(name, bm, col)
+
+
 def boolean(target, cutter, op="UNION", solver="MANIFOLD"):
     # EXACT は細かいメッシュに止まり穴を空けると結果が空になることがある
     # （Blender 5.1 で実測）。MANIFOLD なら通る。
@@ -120,6 +142,16 @@ def clean(ob, dist=1e-6):
     bm.from_mesh(ob.data)
     bmesh.ops.remove_doubles(bm, verts=bm.verts[:], dist=dist)
     bmesh.ops.dissolve_degenerate(bm, dist=dist, edges=bm.edges[:])
+    # 辺が 2 本しか無く一直線に並ぶ頂点を消す。Blender の中では多様体でも、STL の三角化が
+    # 両側の面で食い違って面積 0 の三角形が残る（lib/foot_core.clean と同じ対策）
+    straight = []
+    for v in bm.verts:
+        if len(v.link_edges) == 2:
+            a, b = (e.other_vert(v).co - v.co for e in v.link_edges)
+            if a.length > 0 and b.length > 0 and a.normalized().dot(b.normalized()) < -0.9999:
+                straight.append(v)
+    if straight:
+        bmesh.ops.dissolve_verts(bm, verts=straight)
     bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
     bm.to_mesh(ob.data)
     bm.free()
@@ -141,6 +173,7 @@ def bevel(ob, width, segments, angle_deg):
 
 
 ROT_Z_TO_X = Matrix.Rotation(math.radians(90), 4, "Y")
+ROT_Z_TO_Y = Matrix.Rotation(math.radians(-90), 4, "X")
 
 
 def frame(origin=(0, 0, 0), rot=None):
@@ -181,9 +214,8 @@ def column_poly(sy):
     return pts
 
 
-def teardrop_poly(sy):
-    """脚穴の XY 断面。円＋45度の屋根。屋根は TEARDROP_TOP で切る。"""
-    r = BORE_D / 2
+def teardrop_poly(sy, r):
+    """脚穴の XY 断面（半径 r）。円＋45度の屋根。屋根は TEARDROP_TOP で切る。"""
     apex = LEG_X + r * math.sqrt(2.0)
     hw = apex - TEARDROP_TOP
     pts = []
@@ -250,6 +282,20 @@ def build_joint(col_name="joint"):
                          (web_d * MM, (top - foot).length * MM, STRUT_T * MM),
                          Matrix.Translation((top + foot) * 0.5 * MM) @ rot, col))
 
+    # 脚の止めねじのボス。柱の外側の平らな面（Y=±TIE_Y）に、外へ BOSS_D。
+    # 印刷では +X が上なので、ボスの -X 側（下面）は 45° の袖で自立させる
+    for sy in (SIDE_Y, -SIDE_Y):
+        s = 1.0 if sy > 0 else -1.0
+        y_face = TIE_Y - 1.0                      # 1mm 食い込ませる（面どうしの接触を作らない）
+        x0, x1 = BOSS_X - BOSS_W / 2, BOSS_X + BOSS_W / 2
+        poly = [(x0 - BOSS_D - 1.0, y_face), (x0, y_face + BOSS_D + 1.0),
+                (x1, y_face + BOSS_D + 1.0), (x1, y_face)]
+        poly = [(x * MM, s * y * MM) for x, y in poly]
+        if s < 0:
+            poly.reverse()
+        parts.append(prism("boss_%s" % ("p" if sy > 0 else "n"), poly,
+                           (BOSS_Z - BOSS_W / 2) * MM, (BOSS_Z + BOSS_W / 2) * MM, col))
+
     body = parts[0]
     body.name = "pipe_joint"
     for p in parts[1:]:
@@ -274,16 +320,43 @@ def finish_body(body, col):
                       col, frame((0, y, z), ROT_Z_TO_X))
         boolean(body, cut, "DIFFERENCE")
 
-    # 脚 2 本（下から差し込む止まり穴。天井はティアドロップ）
+    # 脚 2 本（下から差し込む止まり穴。天井はティアドロップ）。
+    # 半径は z で変える: 弦の底の口に 45° のリード → 当たる帯 → 逃がし（45° で移る）→ 座面側の帯
+    rb, rr = LEG_BORE_D / 2, LEG_RELIEF_D / 2
+    d = rr - rb
+    z_lead = TIE_Z_BOT + LEG_LEAD
+    # ⚠ 輪を部品の面（弦の底 TIE_Z_BOT）に載せない。載せると交線が既存の頂点と重なって
+    #   面積 0 の三角形が残る。円錐は面の 1mm 下から始めて面を斜めに横切らせる
+    stations = [(SIDE_Z - LEG_BOT_D - 40, rb + LEG_LEAD + 1.0), (TIE_Z_BOT - 1.0, rb + LEG_LEAD + 1.0),
+                (z_lead, rb),
+                (LEG_RELIEF_Z0 - d, rb), (LEG_RELIEF_Z0, rr),
+                (LEG_RELIEF_Z1, rr), (LEG_RELIEF_Z1 + d, rb), (LEG_TOP_Z, rb)]
     for sy in (SIDE_Y, -SIDE_Y):
-        poly = [(x * MM, y * MM) for x, y in teardrop_poly(sy)]
-        cut = prism("bore_leg", poly, (SIDE_Z - LEG_BOT_D - 40) * MM, LEG_TOP_Z * MM, col)
+        cut = loft("bore_leg", [teardrop_poly(sy, r) for _, r in stations],
+                   [z for z, _ in stations], col)
         boolean(body, cut, "DIFFERENCE")
 
-    # 穴あけが残す極小のスリバーを潰す。面どうしが角で交わる所に 0.01mm 級の
-    # 非多様体エッジが出ることがある。0.02mm は最小の造形物（TIP_WALL 0.4mm）の
-    # 1/20 なので、意図した形には触らない
-    clean(body, dist=2e-5)
+    # 止めねじの穴（Y 方向）とナットの溝（+X へ開く。印刷の上向き）
+    for sy in (SIDE_Y, -SIDE_Y):
+        s = 1.0 if sy > 0 else -1.0
+        y_in = SIDE_Y + PIPE_OD / 2 - 2.0         # 穴の内側の端（パイプの中まで）
+        y_out = TIE_Y + BOSS_D + 1.0
+        # ⚠ 反対側は鏡映（負のスケール）で置かない。メッシュが裏返って boolean が壊れる。
+        #   ローカル +Z を +Y / -Y へ回す行列で置く
+        rot = ROT_Z_TO_Y if s > 0 else Matrix.Rotation(math.radians(90), 4, "X")
+        cut = revolve("screw", [(y_in * MM, SCREW_D / 2 * MM), (y_out * MM, SCREW_D / 2 * MM)],
+                      col, frame((BOSS_X, 0, BOSS_Z), rot), seg=32)
+        boolean(body, cut, "DIFFERENCE")
+        y0, y1 = TIE_Y + NUT_Y_IN, TIE_Y + NUT_Y_IN + NUT_T
+        cut = box_mm("nut", BOSS_X - NUT_CORNER / 2, BOSS_X + BOSS_W / 2 + 1.0,
+                     min(s * y0, s * y1), max(s * y0, s * y1),
+                     BOSS_Z - NUT_AF / 2, BOSS_Z + NUT_AF / 2, col)
+        boolean(body, cut, "DIFFERENCE")
+
+    # 仕上げの掃除は 1e-6 で。⚠ 2e-5 にすると、斜材・弦・平らな面が集まる角にある
+    # 0.03mm の辺（正しい形）まで溶かして面が壊れ、STL に非多様体が 3〜6 本出る
+    # （2026-09-13 実測。1e-6 と掃除なしはどちらも 0）
+    clean(body, dist=1e-6)
 
     _activate(body)
     bpy.ops.object.transform_apply(location=True, rotation=True, scale=True)
