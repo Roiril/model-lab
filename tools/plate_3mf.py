@@ -1,13 +1,15 @@
 """exports の STL を造形プレートに並べて 3mf にまとめる。
 
-    py -3.11 tools/plate_3mf.py <出力名> <stl> [<stl> ...]
+    py -3.11 tools/plate_3mf.py <出力名> <stl> [<stl> ...] [--bed=x1c|h2d] [--extruder=N]
     py -3.11 tools/plate_3mf.py hug-arm-pla exports/hug-arm-upper-l.stl ...
 
 Blender を使わない（STL を直に読んで 3mf を直に書く）。
 書き出す STL は既に刷る向き（底面が z=0）になっている前提。
 
-プリンタは exports の既存 3mf から読んだ Bambu Lab X1 Carbon の値に合わせる:
-造形範囲 256 x 256 x 250mm / 手前左 18 x 28mm は除外域。
+プリンタ（--bed。既定は x1c）:
+    x1c … Bambu Lab X1 Carbon。256 x 256 x 250、手前左 18 x 28 は除外域（exports の既存 3mf から読んだ値）
+    h2d … Bambu Lab H2D。300 x 320 x 325 で見る（2 ノズル時の範囲。1 ノズルなら 325、
+          同じフィラメントを両方に入れれば 350 まで広がる）。除外域は置かない
 """
 
 import math
@@ -21,8 +23,15 @@ from datetime import date
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 EXPORTS = os.path.join(ROOT, "exports")
 
-BED_X, BED_Y, BED_Z = 256.0, 256.0, 250.0
-EXCLUDE = (18.0, 28.0)        # 手前左の除外域
+BEDS = {
+    "x1c": dict(size=(256.0, 256.0, 250.0), exclude=(18.0, 28.0)),
+    # H2D の 1 ノズル 325 x 320 / 2 ノズル 300 x 320 / 同一フィラメント両ノズル 350 x 320
+    # （https://www.goodprints3d.com/blogs/3d/what-is-the-build-plate-size-and-build-volume-of-the-bambu-lab-h2d
+    #   2026-09-13 確認）。全モードで刷れる 300 x 320 で見る
+    "h2d": dict(size=(300.0, 320.0, 325.0), exclude=(0.0, 0.0)),
+}
+BED_X, BED_Y, BED_Z = BEDS["x1c"]["size"]
+EXCLUDE = BEDS["x1c"]["exclude"]        # 手前左の除外域
 MARGIN = 10.0                 # プレートの縁からの余白
 GAP = 6.0                     # 部品どうしの間隔
 WELD = 1e-4                   # 頂点をまとめる距離 [mm]
@@ -178,14 +187,20 @@ def main():
     if len(sys.argv) < 3:
         print(__doc__)
         return 1
+    global BED_X, BED_Y, BED_Z, EXCLUDE
     out_name = sys.argv[1]
     extruder = 1
+    bed = "x1c"
     files = []
     for a in sys.argv[2:]:
         if a.startswith("--extruder="):
             extruder = int(a.split("=")[1])
+        elif a.startswith("--bed="):
+            bed = a.split("=")[1]
         else:
             files.append(a)
+    BED_X, BED_Y, BED_Z = BEDS[bed]["size"]
+    EXCLUDE = BEDS[bed]["exclude"]
 
     parts = []
     for f in files:
@@ -248,7 +263,7 @@ def main():
     else:
         verdict = "入る"
     print(f"[plate] 占める広さ {total[0]:.0f} x {total[1]:.0f}mm / 最大高さ {hi_z:.1f}mm "
-          f"→ {verdict}（256 x 256 x 250）")
+          f"→ {verdict}（{bed} {BED_X:.0f} x {BED_Y:.0f} x {BED_Z:.0f}）")
 
     path = os.path.join(EXPORTS, out_name + ".3mf")
     write_3mf(path, placed, extruder)

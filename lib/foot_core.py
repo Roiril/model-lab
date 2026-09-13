@@ -189,6 +189,26 @@ def hull_poly(centers, r, seg=96):
     return pts
 
 
+def hull_circles(circles, seg=192):
+    """半径の違う円 [(cx, cy, r)] の凸包。反時計回りの点列。
+
+    向きを seg 等分し、各向きで支持関数（c·n + r）が最大の円の支持点を取る。
+    円が切り替わる所の辺は共通外接線の近似で、ずれは r·Δθ²/2 ≈ 0.02mm（r 42、192 分割）。
+    半径が同じなら hull_poly と同じ形になる。
+    """
+    pts = []
+    for i in range(seg):
+        a = 2 * math.pi * i / seg
+        nx, ny = math.cos(a), math.sin(a)
+        cx, cy, r = max(circles, key=lambda c: c[0] * nx + c[1] * ny + c[2])
+        p = (cx + r * nx, cy + r * ny)
+        if not pts or math.hypot(p[0] - pts[-1][0], p[1] - pts[-1][1]) > 1e-6:
+            pts.append(p)
+    if math.hypot(pts[0][0] - pts[-1][0], pts[0][1] - pts[-1][1]) < 1e-6:
+        pts.pop()
+    return pts
+
+
 def socket_profile(P, z_bot):
     """底 → 台座 → ソケット → 口元を 1 本の回転体で作る [(z, r)]。
 
@@ -200,6 +220,31 @@ def socket_profile(P, z_bot):
         t = i / P.CONE_SEG
         z = P.HUB_T + (P.SEAT_Z - P.HUB_T) * t
         pts.append((z, P.BOSS_R + (P.CONE_BASE_R - P.BOSS_R) * (1.0 - smoothstep(t))))
+    pts.append((P.BOSS_TOP - P.MOUTH_TAPER, P.BOSS_R))
+    for i in range(1, P.CONE_SEG + 1):
+        t = i / P.CONE_SEG
+        pts.append((P.BOSS_TOP - P.MOUTH_TAPER + P.MOUTH_TAPER * t,
+                    P.BOSS_R + (P.TIP_R - P.BOSS_R) * smoothstep(t)))
+    out = [pts[0]]
+    for p in pts[1:]:
+        if p[0] - out[-1][0] > 1e-9:
+            out.append(p)
+    return out
+
+
+def socket_profile_root(P, z_bot):
+    """台座（8mm の段と円錐）を持たず、根元の肉だけ厚いソケット [(z, r)]。
+
+    板の縁までの余地が無い所（一体の角の板の外側。軸から 30 で造形板が尽きる）用。
+    筒は板の上面に直角に立ち、根元の R は bevel（FILLET_R）が作る。
+    根元から ROOT_TOP_Z までは壁を ROOT_R（外径）にし、そこから ROOT_TAPER で BOSS_R へ細る。
+    ROOT_R + FILLET_R が板の縁の R（縁から FILLET_R）に掛からないことは呼ぶ側が確かめる。
+    """
+    pts = [(z_bot, P.ROOT_R), (P.ROOT_TOP_Z, P.ROOT_R)]
+    for i in range(1, P.CONE_SEG + 1):
+        t = i / P.CONE_SEG
+        pts.append((P.ROOT_TOP_Z + P.ROOT_TAPER * t,
+                    P.ROOT_R + (P.BOSS_R - P.ROOT_R) * smoothstep(t)))
     pts.append((P.BOSS_TOP - P.MOUTH_TAPER, P.BOSS_R))
     for i in range(1, P.CONE_SEG + 1):
         t = i / P.CONE_SEG
