@@ -1,17 +1,16 @@
 """28mm パイプ用 90 度コーナー（手すり）の形状生成。
 
 U ターン（models/pipe-uturn）と同じ断面・同じ作り方で、円弧だけ 90 度にしたもの。
-半径と直線部の長さを変えれば内側・外側のどちらにも使える。各腕に M4 の止めねじのボスを足す。
+半径と直線部の長さを変えれば内側・外側のどちらにも使える。
 """
 import math
 
 import bpy
 import bmesh
-from mathutils import Matrix, Vector
+from mathutils import Vector
 
 from params import (
     MM, BORE_D, HUB_R, Z_BASE, BOT_CHAMFER, TD_TOP, BORE_MOUTH_L,
-    SCREW_D, NUT_AF, NUT_T, BOSS_W, BOSS_TOP_Z, NUT_Z0,
     STR_SEG, PROF_SEG, ARC_SEG_MIN,
 )
 
@@ -64,31 +63,6 @@ def sweep(name, stations, profiles, col):
             bm.faces.new([lo[i], lo[j], hi[j], hi[i]])
     bm.faces.new(list(reversed(rings[0])))
     bm.faces.new(rings[-1])
-    return _finish(name, bm, col)
-
-
-def box(name, x0, x1, y0, y1, z0, z1, col):
-    """mm の範囲で置く箱。"""
-    bm = bmesh.new()
-    bmesh.ops.create_cube(bm, size=1.0)
-    bmesh.ops.scale(bm, verts=bm.verts[:], vec=Vector(((x1 - x0) * MM, (y1 - y0) * MM, (z1 - z0) * MM)))
-    bmesh.ops.translate(bm, verts=bm.verts[:],
-                        vec=Vector(((x0 + x1) / 2 * MM, (y0 + y1) / 2 * MM, (z0 + z1) / 2 * MM)))
-    return _finish(name, bm, col)
-
-
-def cyl_z(name, r, x, y, z0, z1, col, seg=48):
-    """Z 軸に平行な円柱。"""
-    bm = bmesh.new()
-    lo = [bm.verts.new(((x + r * math.cos(2 * math.pi * i / seg)) * MM,
-                        (y + r * math.sin(2 * math.pi * i / seg)) * MM, z0 * MM)) for i in range(seg)]
-    hi = [bm.verts.new(((x + r * math.cos(2 * math.pi * i / seg)) * MM,
-                        (y + r * math.sin(2 * math.pi * i / seg)) * MM, z1 * MM)) for i in range(seg)]
-    for i in range(seg):
-        j = (i + 1) % seg
-        bm.faces.new([lo[i], lo[j], hi[j], hi[i]])
-    bm.faces.new(list(reversed(lo)))
-    bm.faces.new(hi)
     return _finish(name, bm, col)
 
 
@@ -167,36 +141,11 @@ def bore_t(s, total):
 
 # ---------------------------------------------------------------- build
 
-def add_boss(body, R, straight, arm, col):
-    """腕の直線部の真ん中、上に M4 の止めねじのボス。ナットの溝は曲げの外側へ開く。
-
-    arm "A": 軸 y=R、x ∈ [-straight, 0]。外側は +y。
-    arm "B": 軸 x=R、y ∈ [-straight, 0]。外側は +x。
-    ねじは上から。反力でナットが上へ押されるので、溝の上に 2.8 の肉を残す。
-    印刷（寝かせる）では溝の天井 7.2 が橋になるだけで支持材は要らない。
-    """
-    h = BOSS_W / 2
-    if arm == "A":
-        cx, cy = -straight / 2, R
-        boolean(body, box("boss_a", cx - h, cx + h, cy - h, cy + h, 0.0, BOSS_TOP_Z, col), "UNION")
-        boolean(body, box("nut_a", cx - NUT_AF / 2, cx + NUT_AF / 2, cy, cy + h + 1.0,
-                          NUT_Z0, NUT_Z0 + NUT_T, col), "DIFFERENCE")
-    else:
-        cx, cy = R, -straight / 2
-        boolean(body, box("boss_b", cx - h, cx + h, cy - h, cy + h, 0.0, BOSS_TOP_Z, col), "UNION")
-        boolean(body, box("nut_b", cx, cx + h + 1.0, cy - NUT_AF / 2, cy + NUT_AF / 2,
-                          NUT_Z0, NUT_Z0 + NUT_T, col), "DIFFERENCE")
-    boolean(body, cyl_z("screw_" + arm, SCREW_D / 2, cx, cy, 4.0, BOSS_TOP_Z + 1.0, col), "DIFFERENCE")
-    return body
-
-
 def build_corner(R, straight, name, col_name="corner"):
     col = get_collection(col_name)
     at, ss, total = make_path(R, straight)
 
     body = sweep(name, [at(s) for s in ss], [rail_profile(HUB_R) for _ in ss], col)
-    for arm in ("A", "B"):
-        add_boss(body, R, straight, arm, col)
 
     ss2 = [-20.0] + ss + [total + 20.0]
     boolean(body, sweep(name + "_bore", [at(s) for s in ss2],

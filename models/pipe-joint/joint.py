@@ -15,7 +15,6 @@ from params import (
     FILLET_R, FILLET_ANGLE, X_TOP, X_BOT, X_PRISM,
     LEG_TOP_D, LEG_BOT_D, LEG_TOP_Z, LEG_X, TEARDROP_TOP,
     LEG_BORE_D, LEG_RELIEF_D, LEG_RELIEF_Z0, LEG_RELIEF_Z1, LEG_LEAD,
-    BOSS_X, BOSS_Z, BOSS_W, BOSS_D, SCREW_D, NUT_AF, NUT_T, NUT_CORNER, NUT_Y_IN,
     SIDE_Y, SIDE_Z, SLOPE_DEG,
     STRUT_T, STRUT_AXIS_R, STRUT_FOOT_Z, STRUT_TOP_EXT,
     WEB_X_TOP,
@@ -102,12 +101,6 @@ def box(name, size, matrix, col):
     return _finish(name, bm, col, matrix)
 
 
-def box_mm(name, x0, x1, y0, y1, z0, z1, col):
-    """mm の範囲で置く箱。"""
-    return box(name, ((x1 - x0) * MM, (y1 - y0) * MM, (z1 - z0) * MM),
-               Matrix.Translation(Vector(((x0 + x1) / 2, (y0 + y1) / 2, (z0 + z1) / 2)) * MM), col)
-
-
 def loft(name, polys, zs, col):
     """同じ頂点数の (x, y) 多角形（mm）を z（mm）ごとに置いて帯で結ぶ。断面が z で変わる柱。"""
     bm = bmesh.new()
@@ -173,7 +166,6 @@ def bevel(ob, width, segments, angle_deg):
 
 
 ROT_Z_TO_X = Matrix.Rotation(math.radians(90), 4, "Y")
-ROT_Z_TO_Y = Matrix.Rotation(math.radians(-90), 4, "X")
 
 
 def frame(origin=(0, 0, 0), rot=None):
@@ -282,20 +274,6 @@ def build_joint(col_name="joint"):
                          (web_d * MM, (top - foot).length * MM, STRUT_T * MM),
                          Matrix.Translation((top + foot) * 0.5 * MM) @ rot, col))
 
-    # 脚の止めねじのボス。柱の外側の平らな面（Y=±TIE_Y）に、外へ BOSS_D。
-    # 印刷では +X が上なので、ボスの -X 側（下面）は 45° の袖で自立させる
-    for sy in (SIDE_Y, -SIDE_Y):
-        s = 1.0 if sy > 0 else -1.0
-        y_face = TIE_Y - 1.0                      # 1mm 食い込ませる（面どうしの接触を作らない）
-        x0, x1 = BOSS_X - BOSS_W / 2, BOSS_X + BOSS_W / 2
-        poly = [(x0 - BOSS_D - 1.0, y_face), (x0, y_face + BOSS_D + 1.0),
-                (x1, y_face + BOSS_D + 1.0), (x1, y_face)]
-        poly = [(x * MM, s * y * MM) for x, y in poly]
-        if s < 0:
-            poly.reverse()
-        parts.append(prism("boss_%s" % ("p" if sy > 0 else "n"), poly,
-                           (BOSS_Z - BOSS_W / 2) * MM, (BOSS_Z + BOSS_W / 2) * MM, col))
-
     body = parts[0]
     body.name = "pipe_joint"
     for p in parts[1:]:
@@ -334,23 +312,6 @@ def finish_body(body, col):
     for sy in (SIDE_Y, -SIDE_Y):
         cut = loft("bore_leg", [teardrop_poly(sy, r) for _, r in stations],
                    [z for z, _ in stations], col)
-        boolean(body, cut, "DIFFERENCE")
-
-    # 止めねじの穴（Y 方向）とナットの溝（+X へ開く。印刷の上向き）
-    for sy in (SIDE_Y, -SIDE_Y):
-        s = 1.0 if sy > 0 else -1.0
-        y_in = SIDE_Y + PIPE_OD / 2 - 2.0         # 穴の内側の端（パイプの中まで）
-        y_out = TIE_Y + BOSS_D + 1.0
-        # ⚠ 反対側は鏡映（負のスケール）で置かない。メッシュが裏返って boolean が壊れる。
-        #   ローカル +Z を +Y / -Y へ回す行列で置く
-        rot = ROT_Z_TO_Y if s > 0 else Matrix.Rotation(math.radians(90), 4, "X")
-        cut = revolve("screw", [(y_in * MM, SCREW_D / 2 * MM), (y_out * MM, SCREW_D / 2 * MM)],
-                      col, frame((BOSS_X, 0, BOSS_Z), rot), seg=32)
-        boolean(body, cut, "DIFFERENCE")
-        y0, y1 = TIE_Y + NUT_Y_IN, TIE_Y + NUT_Y_IN + NUT_T
-        cut = box_mm("nut", BOSS_X - NUT_CORNER / 2, BOSS_X + BOSS_W / 2 + 1.0,
-                     min(s * y0, s * y1), max(s * y0, s * y1),
-                     BOSS_Z - NUT_AF / 2, BOSS_Z + NUT_AF / 2, col)
         boolean(body, cut, "DIFFERENCE")
 
     # 仕上げの掃除は 1e-6 で。⚠ 2e-5 にすると、斜材・弦・平らな面が集まる角にある
