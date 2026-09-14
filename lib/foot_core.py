@@ -92,6 +92,33 @@ def prism(name, poly, z0, z1, matrix=None):
     return finish(name, bm, matrix)
 
 
+def prism_concave(name, poly, z0, z1, matrix=None):
+    """凹みのある (x, y) 多角形（mm）を z0→z1 に押し出す。蓋は tessellate_polygon で三角形にして張る。
+
+    prism() の n-gon の蓋は凹みをまたいで膜を張ることがあるので（CLAUDE.md）、蓋を自分で
+    三角形にする。三角形の面積の和が多角形の面積（靴ひも公式）と一致することを確かめる。
+    """
+    from mathutils.geometry import tessellate_polygon
+    from mathutils import Vector as _V
+    tris = tessellate_polygon([[_V((x, y, 0.0)) for x, y in poly]])
+    area_poly = abs(sum(poly[i][0] * poly[(i + 1) % len(poly)][1] - poly[(i + 1) % len(poly)][0] * poly[i][1]
+                        for i in range(len(poly)))) / 2
+    area_tris = sum(abs((poly[b][0] - poly[a][0]) * (poly[c][1] - poly[a][1])
+                        - (poly[c][0] - poly[a][0]) * (poly[b][1] - poly[a][1])) / 2 for a, b, c in tris)
+    assert abs(area_tris - area_poly) < 1e-6 * max(1.0, area_poly), f"{name}: 蓋の三角化が輪郭と合わない"
+    bm = bmesh.new()
+    lo = [bm.verts.new((x * MM, y * MM, z0 * MM)) for x, y in poly]
+    hi = [bm.verts.new((x * MM, y * MM, z1 * MM)) for x, y in poly]
+    n = len(poly)
+    for i in range(n):
+        j = (i + 1) % n
+        bm.faces.new([lo[i], lo[j], hi[j], hi[i]])
+    for a, b, c in tris:
+        bm.faces.new([lo[c], lo[b], lo[a]])
+        bm.faces.new([hi[a], hi[b], hi[c]])
+    return finish(name, bm, matrix)
+
+
 def box(name, size, matrix):
     """size: (x, y, z) は Blender 単位（m）。"""
     bm = bmesh.new()
