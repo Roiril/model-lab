@@ -29,10 +29,10 @@ def branch_top(P):
 
 
 def tie_top(P):
-    """A1 → B1 の対角の壁。両端 SPINE_TOP_Z、中央 SPINE_MID_Z の二次曲線。"""
+    """A1 → B1 の対角の壁。両端 SPINE_TOP_Z、中央 TIE_MID_Z の二次曲線。"""
     def top(s, side):
         t = (s - P.TIE_L / 2) / (P.TIE_L / 2)
-        return P.SPINE_MID_Z + (P.SPINE_TOP_Z - P.SPINE_MID_Z) * t * t
+        return P.TIE_MID_Z + (P.SPINE_TOP_Z - P.TIE_MID_Z) * t * t
     return top
 
 
@@ -69,8 +69,9 @@ def sockets(P):
             (P.F, (180.0, -90.0))]
 
 
-def build_plate(P, name):
-    """板 + ソケット 5 本 + 背骨 + 対角の壁 + ひれ、穴あけまで済ませて返す。"""
+def build_plate(P, name, extras=()):
+    """板 + ソケット 5 本 + 背骨 + 対角の壁 + ひれ、穴あけまで済ませて返す。
+    extras: bevel の前に union する追加の立体（分割版の節など）。"""
     z_bot = -P.BASE_ROUND
     socks = sockets(P)
     circles = [(P.A1[0], P.A1[1], P.EDGE_R), (P.A2[0], P.A2[1], P.EDGE_R),
@@ -85,6 +86,8 @@ def build_plate(P, name):
 
     fc.boolean(body, spine_net(P), "UNION")
     fc.boolean(body, tie_wall(P), "UNION")
+    for ob in extras:
+        fc.boolean(body, ob, "UNION")
 
     for k, (c, angs) in enumerate(socks):
         for j, ang in enumerate(angs):
