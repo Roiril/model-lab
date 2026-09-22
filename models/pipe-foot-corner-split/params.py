@@ -1,17 +1,17 @@
 """角の床側の板（pipe-foot-corner-one と同じ形）を、X1C で刷れるよう 2 枚に切る版の寸法定義。
 
-    pipe_foot_corner_split_a … A の脚 2 本 + 5 本目の側（245 x 245）
-    pipe_foot_corner_split_b … B の脚 2 本の側（169 x 245）
+    pipe_foot_corner_split_a … A の脚 2 本 + 5 本目の側
+    pipe_foot_corner_split_b … B の脚 2 本の側
 
 2 枚は継ぎ目のパズルの凸凹で位置を合わせる。B を A の上から落として噛み合わせるだけで
 角の脚の間隔が決まるので、添え板（pipe-foot-corner の tie）は要らない。
 
 継ぎ目（世界座標。角の節点が原点、A の脚は x 軸上の負側、B の脚は y 軸上の負側）:
-    1. 角の縁（対角線 x + y = -39.3）の中点 S0 = (-19.67, -19.67) から (-1, -1) の向きへ
+    1. 角の縁（対角線 x + y = -35.10）の中点 S0 = (-17.55, -17.55) から (-1, -1) の向きへ
        （x = y の線）、A1-B1 の対角の壁をその真ん中で直角に横切って K = (SEAM_X, SEAM_X) まで
     2. K から真っ直ぐ下（-y）へ板の縁まで。x = SEAM_X = -115
     継ぎ目 2 を -45 に置くと、5 本目と B2 のあいだで垂れている縁（x = -45 で y = -244）が
-    A に付いて A が 269 になる。-115 なら縁は y = -216 で、A は 241 に収まる。
+    A に付いて造形範囲を超える。-115 なら分割後のAを252mm以内に収められる。
     横切る壁は対角の壁（真ん中、高さ 24）と、J2 → F の枝（x = -115、高さ 39）の 2 枚。
     そこには「節」（KNUCKLE）を付け、壁の高さまで貫く凸凹で壁どうしをつなぐ。
     板の部分は板の厚み（8）の凸凹。板どうし・壁の切り口は GAP/2 ずつ空ける。
@@ -21,10 +21,7 @@
     （それぞれの片が凸 2 つと凹 2 つを持つ）。
     凸は持ち主から TAB_CLEAR だけ痩せさせ、相手の凹は図面の寸法のまま（片側 0.2 の遊び）。
 
-片の大きさ（外側の縁 EDGE_R = 28、板厚 8）:
-    A: x -262.7 〜 -17.55（245.1）、y -216.9 〜 +28（244.9）
-    B: x -139.5 〜 +28（167.5。B の板の凸の頭が -139.5 まで出る）、y -262.7 〜 -17.55（245.1）
-    どちらも X1C の 252 に入る（縁まで 3.5）。
+板厚は 8。各片の外形は最終メッシュで測り、X1C の 252 に収める。
 """
 import importlib.util
 import math
@@ -44,8 +41,8 @@ PAIR = ONE.PAIR
 CORNER = ONE.CORNER
 
 MM = ONE.MM
-PLATE_T = ONE.PLATE_T            # 5.0
-EDGE_R = ONE.EDGE_R              # 25.0
+PLATE_T = ONE.PLATE_T            # 8.0
+EDGE_R = ONE.EDGE_R              # 28.0
 CORNER_OFF = ONE.CORNER_OFF      # 74.7
 SPAN = ONE.SPAN                  # 160.0
 FIN_OUT_R = ONE.FIN_OUT_R        # 36.0
@@ -53,13 +50,13 @@ FILLET_R = ONE.FILLET_R          # 2.5
 SPINE_T = ONE.SPINE_T            # 8.0
 
 # --- 継ぎ目 ---
-CHAMFER_C = CORNER_OFF - EDGE_R * math.sqrt(2.0)   # 39.3 角の縁の対角線 x + y = -CHAMFER_C
-SEAM_S0 = (-CHAMFER_C / 2, -CHAMFER_C / 2)         # (-19.67, -19.67) 継ぎ目が角の縁に出る点
+CHAMFER_C = CORNER_OFF - EDGE_R * math.sqrt(2.0)   # 35.10 角の縁の対角線 x + y = -CHAMFER_C
+SEAM_S0 = (-CHAMFER_C / 2, -CHAMFER_C / 2)         # (-17.55, -17.55) 継ぎ目が角の縁に出る点
 SEAM_X = -115.0                                    # 継ぎ目 2（縦）の x。折れ点 K = (SEAM_X, SEAM_X)
 SEAM_TIE_XY = -CORNER_OFF / 2                      # -37.35 継ぎ目 1 が対角の壁を横切る点（x = y）
 SEAM_K = (SEAM_X, SEAM_X)
 GAP = 0.3                                          # 継ぎ目の板どうし・壁の切り口の隙間（合計。両側へ半分ずつ）
-TAB_CLEAR = 0.2                                    # 凸を痩せさせる量（片側）。凹は図面の寸法のまま
+TAB_CLEAR = 0.2                                    # 凸の輪郭を法線方向へ縮める量。凹は図面の寸法のまま
 
 # 継ぎ目 1（x = y）と A1 のひれの先 (-CORNER_OFF, -FIN_OUT_R) の距離
 _fin_tip_gap = (CORNER_OFF - FIN_OUT_R) / math.sqrt(2.0) - ONE.FIN_T / 2 - FILLET_R
@@ -85,7 +82,6 @@ SEAM_BOTTOM_Y = (_h - _nx * SEAM_X) / _ny                        # -215.8 継ぎ
 #   knuckle … 継ぎ目が壁を横切る所の「節」。壁を継ぎ目の両側で幅 KNUCKLE_W の塊に太らせ、
 #             その塊を壁の高さまで貫く凸凹で噛み合わせる。壁が継ぎ目をまたいでつながる
 #             （2026-09-20 ユーザー指示「もっと折れにくく」。それまでは壁を切りっ放しにしていた）
-TAB_CLEAR = 0.2                  # 凸を痩せさせる量（片側）。凹は図面の寸法のまま
 PLATE_TAB = dict(neck_w=14.0, neck_l=14.0, head_r=10.5)   # 首の幅 / 継ぎ目から頭の中心 / 頭の半径
 KNUCKLE_TAB = dict(neck_w=14.0, neck_l=15.0, head_r=11.0)
 KNUCKLE_W = 32.0                 # 節の幅（壁と直交する向き）。凹の頭 22 の両側に 5 残る
@@ -94,7 +90,13 @@ KNUCKLE_L_TAB = 14.0             # 凸の側（持ち主の側）は短い。凸
 #   ⚠ 枝の節は 5 本目のソケット（根元 r 19.5、x = -135.2 まで）に近い。凹を A 側（-x）に
 #   置くと頭が根元に食い込み、穴の壁に穴が開く（実測）。凸凹の向きは A → B（+x）にする
 KNUCKLE_UP = 5.0                 # 節の上面を壁の上端よりこれだけ高くする（面を重ねない）
-KNUCKLE_CHAMFER = 10.0           # 節の端の上の角を 45° で落とす（壁がそこから出る）
+KNUCKLE_RADIUS = 12.0            # 平面の角丸。端の幅は8mmで補強壁と揃える
+KNUCKLE_BLEND = 12.0             # 端からこの距離で、既存の壁の高さへ滑らかにつなぐ
+ENTRY_CHAMFER = 0.4              # B下降時の凹の入口だけを45度で広げる
+TAB_ROOT_R = 3.0                 # 首の根元を板の側面へ接線でつなぐ半径
+assert 0 < KNUCKLE_RADIUS <= min(KNUCKLE_W / 2, KNUCKLE_L_TAB)
+assert 0 < ENTRY_CHAMFER < ONE.PLATE_T / 4
+assert 0 < TAB_ROOT_R < min(PLATE_TAB["neck_l"], KNUCKLE_TAB["neck_l"])
 for _t in (PLATE_TAB, KNUCKLE_TAB):
     assert _t["head_r"] > _t["neck_w"] / 2 + 2.0, "頭が首より太くないと引き抜きに掛からない"
 assert KNUCKLE_W >= 2 * KNUCKLE_TAB["head_r"] + 10.0, "節の幅が凹の頭に対して薄い"
