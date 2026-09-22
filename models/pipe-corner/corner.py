@@ -1,7 +1,7 @@
 """28mm パイプ用 90 度コーナー（手すり）の形状生成。
 
-U ターン（models/pipe-uturn）と同じ断面・同じ作り方で、円弧だけ 90 度にしたもの。
-半径と直線部の長さを変えれば内側・外側のどちらにも使える。
+円形の握りを45度の接線と平底へつなぐ。両端にはM字の受けへ入る短い舌を付ける。
+内径と芯線は既存品と共通。舌の下面だけ局所サポートを使う。
 """
 import math
 
@@ -10,9 +10,13 @@ import bmesh
 from mathutils import Vector
 
 from params import (
-    MM, BORE_D, HUB_R, Z_BASE, BOT_CHAMFER, TD_TOP, BORE_MOUTH_L,
+    MM, BORE_D, HUB_R, Z_BASE, TD_TOP, BORE_MOUTH_L,
     STR_SEG, PROF_SEG, ARC_SEG_MIN,
+    EDGE_R, R_INNER,
 )
+from rail_coupling import (INNER_R as KEY_INNER_R, OUTER_R as KEY_OUTER_R,
+                           HALF_H as KEY_HALF_H, ROUND as KEY_ROUND,
+                           INNER_L as KEY_INNER_L, OUTER_L as KEY_OUTER_L)
 
 ZU = Vector((0.0, 0.0, 1.0))
 
@@ -108,15 +112,52 @@ def make_path(R, straight):
 # ---------------------------------------------------------------- profiles
 
 def rail_profile(r):
-    """握りの断面。上半円、横は垂直、下は面取り付きの平ら。外径は口元まで絞らない
-    （M 字の平らな面と同径 36.6 で突き当てる）。"""
+    """円形の側面から45度の接線で平底へ移る。最大幅・高さは維持する。"""
     pts = []
-    for i in range(PROF_SEG + 1):
-        a = math.pi * i / PROF_SEG
+    n = round(PROF_SEG * 1.25)
+    for i in range(n + 1):
+        a = math.radians(225) * i / n
         pts.append((r * math.cos(a), r * math.sin(a)))
-    c = min(BOT_CHAMFER, r - 1.0)
-    pts += [(-r, -(Z_BASE - c)), (-(r - c), -Z_BASE), (r - c, -Z_BASE), (r, -(Z_BASE - c))]
+    # 45度面と底面が作る角に、両面へ接する小円弧を置く。
+    corner = r * math.sqrt(2) - Z_BASE
+    setback = EDGE_R * math.tan(math.pi / 8)
+    for sign in (-1, 1):
+        cx = sign * (corner - setback)
+        cz = -Z_BASE + EDGE_R
+        angles = (225, 270) if sign == -1 else (270, 315)
+        for i in range(7):
+            a = math.radians(angles[0] + (angles[1] - angles[0]) * i / 6)
+            pts.append((cx + EDGE_R * math.cos(a), cz + EDGE_R * math.sin(a)))
+    for i in range(PROF_SEG // 4 + 1):
+        a = math.radians(315 + 45 * i / (PROF_SEG // 4))
+        if i < PROF_SEG // 4:
+            pts.append((r * math.cos(a), r * math.sin(a)))
     return pts
+
+
+def add_keys(body, R, straight, col):
+    """同じパイプを通したまま、M字の脇の受けへ入る2本の短い舌。"""
+    length = KEY_INNER_L if abs(R - R_INNER) < 1e-6 else KEY_OUTER_L
+    radial = (KEY_INNER_R + KEY_OUTER_R) / 2
+    for end in range(2):
+        for sign in (-1, 1):
+            # 根元は0.8mm食い込ませる。穴を削った後なので内径は変わらない。
+            center = (-(straight + (length - .8) / 2), R - sign * radial, 0)
+            dims = (length + .8, KEY_OUTER_R - KEY_INNER_R, KEY_HALF_H * 2)
+            if end:
+                center = (center[1], center[0], center[2])
+                dims = (dims[1], dims[0], dims[2])
+            bpy.ops.mesh.primitive_cube_add(size=1, location=Vector(center) * MM)
+            key = bpy.context.object
+            key.name = 'location_key'
+            key.dimensions = Vector(dims) * MM
+            bpy.ops.object.transform_apply(location=False, rotation=False, scale=True)
+            bevel = key.modifiers.new('soft_key_edges', 'BEVEL')
+            bevel.width = KEY_ROUND * MM
+            bevel.segments = 4
+            bpy.ops.object.modifier_apply(modifier=bevel.name)
+            boolean(body, key, 'UNION', solver='EXACT')
+    return body
 
 
 def bore_profile(t):
@@ -146,10 +187,35 @@ def build_corner(R, straight, name, col_name="corner"):
     at, ss, total = make_path(R, straight)
 
     body = sweep(name, [at(s) for s in ss], [rail_profile(HUB_R) for _ in ss], col)
+    _activate(body)
+    mod = body.modifiers.new('mouth_outer_round', 'BEVEL')
+    mod.width = EDGE_R * MM
+    mod.segments = 4
+    mod.limit_method = 'ANGLE'
+    mod.angle_limit = math.radians(35)
+    bpy.ops.object.modifier_apply(modifier=mod.name)
 
     ss2 = [-20.0] + ss + [total + 20.0]
     boolean(body, sweep(name + "_bore", [at(s) for s in ss2],
                         [bore_profile(bore_t(s, total)) for s in ss2], col), "DIFFERENCE")
+    add_keys(body, R, straight, col)
+    bm = bmesh.new()
+    bm.from_mesh(body.data)
+    bmesh.ops.remove_doubles(bm, verts=bm.verts[:], dist=1e-7)
+    bmesh.ops.dissolve_degenerate(bm, edges=bm.edges[:], dist=1e-8)
+    straight_vertices = []
+    for v in bm.verts:
+        if len(v.link_edges) == 2:
+            a, b = (e.other_vert(v).co - v.co for e in v.link_edges)
+            if a.length and b.length and a.normalized().dot(b.normalized()) < -.999999:
+                straight_vertices.append(v)
+    if straight_vertices:
+        bmesh.ops.dissolve_verts(bm, verts=straight_vertices)
+    bmesh.ops.triangulate(bm, faces=bm.faces[:])
+    bmesh.ops.recalc_face_normals(bm, faces=bm.faces[:])
+    assert all(e.is_manifold for e in bm.edges), 'corner mesh must be closed'
+    bm.to_mesh(body.data)
+    bm.free()
     _activate(body)
     bpy.ops.object.shade_flat()
     return body

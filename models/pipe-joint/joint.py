@@ -11,7 +11,8 @@ import bmesh
 from mathutils import Matrix, Vector
 
 from params import (
-    MM, PIPE_OD, BORE_D, HUB_D, LEG_HUB_D, BODY_T, TAPER_L, TIP_D, BASE_ROUND,
+    MM, PIPE_OD, BORE_D, HUB_D, LEG_HUB_D, BODY_T, SLEEVE_END_R, RAIL_LEAD,
+    BASE_ROUND, WEB_EDGE_R,
     FILLET_R, FILLET_ANGLE, X_TOP, X_BOT, X_PRISM,
     LEG_TOP_D, LEG_BOT_D, LEG_TOP_Z, LEG_X, TEARDROP_TOP,
     LEG_BORE_D, LEG_RELIEF_D, LEG_RELIEF_Z0, LEG_RELIEF_Z1, LEG_LEAD,
@@ -19,13 +20,8 @@ from params import (
     STRUT_T, STRUT_AXIS_R, STRUT_FOOT_Z, STRUT_TOP_EXT,
     WEB_X_TOP,
     TIE_H, TIE_Z_TOP, TIE_Z_BOT, TIE_Y,
-    SEG, TAPER_SEG, FILLET_SEG, REF_RAIL_L, REF_LEG_L,
+    SEG, SLEEVE_END_SEG, FILLET_SEG, REF_RAIL_L, REF_LEG_L,
 )
-
-# ベベルする前は底を BASE_ROUND ぶん下へ伸ばしておき、最後に X_BOT で切る。
-# こうすると底面は平らなまま、その上だけが丸まる。
-X_BUILD_BOT = X_BOT - BASE_ROUND
-
 
 # ---------------------------------------------------------------- helpers
 
@@ -56,10 +52,6 @@ def _finish(name, bm, col, matrix=None):
     if matrix is not None:
         ob.matrix_world = matrix
     return ob
-
-
-def smoothstep(t):
-    return t * t * (3.0 - 2.0 * t)
 
 
 def revolve(name, profile, col, matrix=None, seg=SEG):
@@ -185,24 +177,37 @@ RAILS = ((0.0, 0.0), (SIDE_Y, SIDE_Z), (-SIDE_Y, SIDE_Z))
 # ---------------------------------------------------------------- build
 
 def sleeve_profile():
-    """-X 端は満径のまま、+X 端だけ TIP_D まで落とす非対称プロファイル。"""
-    r_hub, r_tip = HUB_D / 2, TIP_D / 2
-    pts = [(X_BUILD_BOT, r_hub), (X_PRISM, r_hub)]
-    for i in range(1, TAPER_SEG + 1):
-        t = i / TAPER_SEG
-        pts.append((X_PRISM + TAPER_L * t, r_hub + (r_tip - r_hub) * smoothstep(t)))
+    """満径の筒。両端の外角だけ接線の連続する円弧で丸める。"""
+    r_hub = HUB_D / 2
+    pts = [(X_BOT, r_hub - BASE_ROUND)]
+    for i in range(1, SLEEVE_END_SEG + 1):
+        a = -math.pi / 2 + math.pi * i / (2 * SLEEVE_END_SEG)
+        pts.append((X_BOT + BASE_ROUND + BASE_ROUND * math.sin(a),
+                    r_hub - BASE_ROUND + BASE_ROUND * math.cos(a)))
+    pts.append((X_TOP - SLEEVE_END_R, r_hub))
+    for i in range(1, SLEEVE_END_SEG + 1):
+        a = math.pi * i / (2 * SLEEVE_END_SEG)
+        pts.append((X_TOP - SLEEVE_END_R + SLEEVE_END_R * math.sin(a),
+                    r_hub - SLEEVE_END_R + SLEEVE_END_R * math.cos(a)))
     return [(a * MM, r * MM) for a, r in pts]
 
 
 def column_poly(sy):
-    """脚ソケットの XY 断面。下は角、上は半円（＝スリーブと同径でつながる）。"""
+    """脚ソケットの XY 断面。-X の角を袖と揃え、+X は半円。"""
     r = LEG_HUB_D / 2
-    pts = [(X_BUILD_BOT, sy - r)]
+    pts = [(X_BOT, sy - r + BASE_ROUND)]
+    for i in range(1, SLEEVE_END_SEG + 1):
+        a = math.pi + math.pi * i / (2 * SLEEVE_END_SEG)
+        pts.append((X_BOT + BASE_ROUND + BASE_ROUND * math.cos(a),
+                    sy - r + BASE_ROUND + BASE_ROUND * math.sin(a)))
     n = SEG // 2
     for i in range(n + 1):                       # -90° → +90°（+X 側の半円）
         a = -math.pi / 2 + math.pi * i / n
         pts.append((LEG_X + r * math.cos(a), sy + r * math.sin(a)))
-    pts.append((X_BUILD_BOT, sy + r))
+    for i in range(1, SLEEVE_END_SEG + 1):
+        a = math.pi / 2 + math.pi * i / (2 * SLEEVE_END_SEG)
+        pts.append((X_BOT + BASE_ROUND + BASE_ROUND * math.cos(a),
+                    sy + r - BASE_ROUND + BASE_ROUND * math.sin(a)))
     return pts
 
 
@@ -252,12 +257,14 @@ def build_joint(col_name="joint"):
 
     # M の下の弦：左右の柱の下端に全幅で 1 本渡す。脚穴・中央レール穴はあとから開ける。
     # ⚠ 斜材より先に積む。斜材の下端の面が弦の肉の中に入った状態で union するため
-    web_d = WEB_X_TOP - X_BUILD_BOT
-    cx = (X_BUILD_BOT + WEB_X_TOP) / 2
-    parts.append(box("tie",
-                     (web_d * MM, 2 * TIE_Y * MM, TIE_H * MM),
-                     Matrix.Translation(Vector((cx, 0.0,
-                                                (TIE_Z_TOP + TIE_Z_BOT) / 2)) * MM), col))
+    web_d = WEB_X_TOP - X_BOT
+    cx = (X_BOT + WEB_X_TOP) / 2
+    tie = box("tie",
+              (web_d * MM, 2 * TIE_Y * MM, TIE_H * MM),
+              Matrix.Translation(Vector((cx, 0.0,
+                                         (TIE_Z_TOP + TIE_Z_BOT) / 2)) * MM), col)
+    bevel(tie, WEB_EDGE_R * MM, FILLET_SEG, FILLET_ANGLE)
+    parts.append(tie)
 
     # 斜材：左右スリーブ → 下の弦。X は弦と同じ奥行き（底面から WEB_D）
     # 上端は左右レールの軸より外へ、下端は弦の厚みの真ん中まで伸ばす。
@@ -270,9 +277,11 @@ def build_joint(col_name="joint"):
         top = Vector((cx, sy, SIDE_Z)) - d * STRUT_TOP_EXT
         foot = Vector((cx, fy * s, fz))
         rot = Matrix(((1.0, d.x, perp.x), (0.0, d.y, perp.y), (0.0, d.z, perp.z))).to_4x4()
-        parts.append(box("strut_%s" % ("p" if sy > 0 else "n"),
-                         (web_d * MM, (top - foot).length * MM, STRUT_T * MM),
-                         Matrix.Translation((top + foot) * 0.5 * MM) @ rot, col))
+        strut = box("strut_%s" % ("p" if sy > 0 else "n"),
+                    (web_d * MM, (top - foot).length * MM, STRUT_T * MM),
+                    Matrix.Translation((top + foot) * 0.5 * MM) @ rot, col)
+        bevel(strut, WEB_EDGE_R * MM, FILLET_SEG, FILLET_ANGLE)
+        parts.append(strut)
 
     body = parts[0]
     body.name = "pipe_joint"
@@ -286,17 +295,17 @@ def finish_body(body, col):
     clean(body)
     bevel(body, FILLET_R * MM, FILLET_SEG, FILLET_ANGLE)
 
-    # 底を平らに切る（角丸を残したまま接地面を確保）
-    cut = box("cut_base", (200 * MM, 400 * MM, 400 * MM),
-              Matrix.Translation(Vector((X_BOT - 100, 0, SIDE_Z / 2)) * MM), col)
-    boolean(body, cut, "DIFFERENCE")
-
     # レール 3 本（貫通）
     r = BORE_D / 2
     for i, (y, z) in enumerate(RAILS):
         cut = revolve("bore_%d" % i, [(-300 * MM, r * MM), (300 * MM, r * MM)],
                       col, frame((0, y, z), ROT_Z_TO_X))
         boolean(body, cut, "DIFFERENCE")
+        lead = revolve("bore_lead_%d" % i,
+                       [((X_TOP - RAIL_LEAD) * MM, r * MM),
+                        ((X_TOP + RAIL_LEAD) * MM, (r + 2 * RAIL_LEAD) * MM)],
+                       col, frame((0, y, z), ROT_Z_TO_X))
+        boolean(body, lead, "DIFFERENCE")
 
     # 脚 2 本（下から差し込む止まり穴。天井はティアドロップ）。
     # 半径は z で変える: 弦の底の口に 45° のリード → 当たる帯 → 逃がし（45° で移る）→ 座面側の帯
@@ -314,10 +323,23 @@ def finish_body(body, col):
                    [z for z, _ in stations], col)
         boolean(body, cut, "DIFFERENCE")
 
+    from rail_coupling import cut_receivers
+    cut_receivers(body, col, boolean, X_BOT, SIDE_Y, SIDE_Z)
+
     # 仕上げの掃除は 1e-6 で。⚠ 2e-5 にすると、斜材・弦・平らな面が集まる角にある
     # 0.03mm の辺（正しい形）まで溶かして面が壊れ、STL に非多様体が 3〜6 本出る
     # （2026-09-13 実測。1e-6 と掃除なしはどちらも 0）
     clean(body, dist=1e-6)
+    # STLと3MFで同じ三角形を使う。極小の面は書き出す前に整理する。
+    bm = bmesh.new()
+    bm.from_mesh(body.data)
+    bmesh.ops.triangulate(bm, faces=bm.faces[:])
+    bmesh.ops.dissolve_degenerate(bm, edges=bm.edges[:], dist=1e-8)
+    bmesh.ops.triangulate(bm, faces=bm.faces[:])
+    bmesh.ops.recalc_face_normals(bm, faces=bm.faces[:])
+    assert all(e.is_manifold for e in bm.edges), 'joint mesh must be closed'
+    bm.to_mesh(body.data)
+    bm.free()
 
     _activate(body)
     bpy.ops.object.transform_apply(location=True, rotation=True, scale=True)

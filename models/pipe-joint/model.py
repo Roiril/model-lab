@@ -6,6 +6,7 @@ import bpy
 from mathutils import Matrix, Vector
 from blender_utils import clear_scene, EXPORTS_DIR
 import joint
+from rail_coupling import export_print_part
 
 clear_scene()
 body = joint.build_all(ref=False)
@@ -13,6 +14,7 @@ body = joint.build_all(ref=False)
 
 def export(ob, name):
     path = os.path.join(EXPORTS_DIR, name + ".stl")
+    bpy.context.view_layer.update()
     bpy.ops.object.select_all(action="DESELECT")
     ob.select_set(True)
     bpy.context.view_layer.objects.active = ob
@@ -38,3 +40,4 @@ bpy.context.view_layer.update()
 zs = [(pr.matrix_world @ Vector(c)).z for c in pr.bound_box]
 pr.matrix_world = Matrix.Translation((0, 0, -min(zs))) @ pr.matrix_world
 export(pr, "pipe_joint_28_print")
+export_print_part(pr, EXPORTS_DIR, 'pipe-joint-refined.3mf')
