@@ -54,6 +54,17 @@ def metrics(v, f):
                 duplicate_triangles=len(f) - len({tuple(sorted(x)) for x in f}))
 
 
+def projected_pole_gap(v, f, center, radius):
+    """鉛直ポールに対する保守的な水平隙間。全三角形の辺までの距離を測る。"""
+    p = v[f][:, :, :2]
+    a = p.reshape(-1, 2)
+    b = np.roll(p, -1, axis=1).reshape(-1, 2)
+    d = b - a
+    denom = (d * d).sum(axis=1)
+    t = np.clip(((np.array(center) - a) * d).sum(axis=1) / np.maximum(denom, 1e-20), 0, 1)
+    return float(np.linalg.norm(a + d*t[:, None] - center, axis=1).min() - radius)
+
+
 def mesh(name, v, f):
     me = bpy.data.meshes.new(name)
     me.from_pydata((v * .001).tolist(), [], f.tolist())
@@ -161,6 +172,21 @@ def main():
         assert m['components'] == 1 and m['volume_mm3'] > 0, (name, m)
         assert not any(m[k] for k in ('bad_edges', 'degenerate_triangles', 'duplicate_triangles')), (name, m)
         obs[name] = mesh(name, v, f)
+        if name == 'pipe_corner_out_28':
+            # 中央ポールは世界(-154.7,-154.7)、カーブの座標では(105,105)。
+            pole = C.R_INNER + J.SIDE_Y
+            gap = projected_pole_gap(v, f, (pole, pole), J.PIPE_OD / 2)
+            assert gap >= 22.0, gap
+            assert abs(v[:, 2].min() + C.Z_BASE) < .0001
+            tri = v[f]
+            on_bed = np.max(np.abs(tri[:, :, 2] + C.Z_BASE), axis=1) < .0001
+            area = np.linalg.norm(np.cross(tri[:, 1]-tri[:, 0], tri[:, 2]-tri[:, 0]), axis=1)
+            flat_width = (hit(obs[name], (-15, C.R_OUTER, -C.Z_BASE+.0001), (0, 1, 0))[1]
+                          - hit(obs[name], (-15, C.R_OUTER, -C.Z_BASE+.0001), (0, -1, 0))[1])
+            assert 19.8 < flat_width < 20.1, flat_width
+            results['outer_clearance_and_bed'] = {'pole_horizontal_gap_mm': gap,
+                  'flat_width_mm': float(flat_width), 'flat_contact_area_mm2': float(area[on_bed].sum()/2),
+                  'bottom_slope_deg': C.OUTER_BOTTOM_SLOPE, 'bulge_mm': C.OUTER_BULGE}
 
     joint = obs['pipe_joint_28']
     measurements = []
@@ -190,7 +216,7 @@ def main():
     results['fixed_dimensions'] = {'joint_length': J.BODY_T, 'leg_x': J.LEG_X,
                                   'side_y': J.SIDE_Y, 'side_z': J.SIDE_Z,
                                   'corner_off': C.CORNER_OFF, 'inner_radius': C.R_INNER,
-                                  'outer_radius': C.R_OUTER, 'outer_reveal': C.REVEAL}
+                                  'outer_endpoint_offset': C.R_OUTER, 'outer_reveal': C.REVEAL}
     assert np.allclose([J.BODY_T, J.LEG_X, J.SIDE_Y, J.SIDE_Z, C.CORNER_OFF], [54, -7.3, 80, 62.3, 74.7])
 
     # 組み立て位置を実際の頂点へ適用して、両方のM字との干渉を測る。
@@ -220,6 +246,7 @@ def main():
     results['key_engagement_mm'] = {'inner': K.INNER_L, 'outer': K.OUTER_L - C.REVEAL}
     results['receiver_inner_wall_mm'] = K.INNER_R - K.CLEAR - J.BORE_D / 2
     results['print_files'] = {}
+    assert (OUT / 'pipe-corner-outer-roomy.3mf').read_bytes() == (OUT / 'pipe-corner-outer-refined.3mf').read_bytes()
     ns = '{http://schemas.microsoft.com/3dmanufacturing/core/2015/02}'
     for filename, stl in (('pipe-joint-refined.3mf', 'pipe_joint_28_print'),
                           ('pipe-corner-inner-refined.3mf', 'pipe_corner_in_28'),

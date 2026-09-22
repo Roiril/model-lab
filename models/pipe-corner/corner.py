@@ -1,9 +1,10 @@
 """28mm パイプ用 90 度コーナー（手すり）の形状生成。
 
-円形の握りを45度の接線と平底へつなぐ。両端にはM字の受けへ入る短い舌を付ける。
-内径と芯線は既存品と共通。舌の下面だけ局所サポートを使う。
+外側は中央ポールを避ける凸な曲線と広い平底。内側は円弧と従来の平底。
+内径と両端の接続は既存品と共通。舌の下面だけ局所サポートを使う。
 """
 import math
+from bisect import bisect_left
 
 import bpy
 import bmesh
@@ -12,7 +13,8 @@ from mathutils import Vector
 from params import (
     MM, BORE_D, HUB_R, Z_BASE, TD_TOP, BORE_MOUTH_L,
     STR_SEG, PROF_SEG, ARC_SEG_MIN,
-    EDGE_R, R_INNER,
+    EDGE_R, R_INNER, R_OUTER, OUTER_BULGE, OUTER_HANDLE,
+    OUTER_BOTTOM_SLOPE, OUTER_BED_INSET,
 )
 from rail_coupling import (INNER_R as KEY_INNER_R, OUTER_R as KEY_OUTER_R,
                            HALF_H as KEY_HALF_H, ROUND as KEY_ROUND,
@@ -83,10 +85,33 @@ def boolean(target, cutter, op="DIFFERENCE", solver="MANIFOLD"):
 
 # ---------------------------------------------------------------- path
 
+def outer_curve(R, t):
+    """端の位置・接線・曲率0を保った、凸な5次Bezier曲線。単位mm。"""
+    a = OUTER_HANDLE * R
+    b = (32 * (R + OUTER_BULGE) / math.sqrt(2) - 16 * R - 5 * a) / 10
+    points = ((0, R), (a, R), (b, R), (R, b), (R, a), (R, 0))
+    assert 0 < a < b < R
+    def bezier(ps):
+        n = len(ps) - 1
+        return tuple(sum(math.comb(n, i) * (1-t)**(n-i) * t**i * p[k]
+                         for i, p in enumerate(ps)) for k in (0, 1))
+    derivative = [(5 * (q[0]-p[0]), 5 * (q[1]-p[1])) for p, q in zip(points, points[1:])]
+    return bezier(points), bezier(derivative)
+
+
 def make_path(R, straight):
     """芯線。原点＝円弧の中心。
     腕A: (-straight, R) → (0, R) を +X へ / 円弧: 90°→0° / 腕B: (R, 0) → (R, -straight)。"""
     arc_len = math.pi / 2 * R
+    outer = abs(R - R_OUTER) < 1e-6
+    if outer:
+        # 距離sは曲線上でもmm。補間用の累積長を作り、等距離で断面を置く。
+        samples = 2048
+        points = [outer_curve(R, i / samples)[0] for i in range(samples + 1)]
+        lengths = [0.0]
+        for a, b in zip(points, points[1:]):
+            lengths.append(lengths[-1] + math.dist(a, b))
+        arc_len = lengths[-1]
     total = straight + arc_len + straight
 
     def at(s):
@@ -94,15 +119,25 @@ def make_path(R, straight):
             p = Vector(((s - straight) * MM, R * MM, 0.0))
             t = Vector((1.0, 0.0, 0.0))
         elif s <= straight + arc_len:
-            a = math.pi / 2 - (s - straight) / R          # 90° → 0°
-            p = Vector((R * math.cos(a) * MM, R * math.sin(a) * MM, 0.0))
-            t = Vector((math.sin(a), -math.cos(a), 0.0))  # 時計回りの接線
+            if outer:
+                distance = s - straight
+                i = max(1, min(samples, bisect_left(lengths, distance)))
+                u = (i - 1 + (distance-lengths[i-1]) / (lengths[i]-lengths[i-1])) / samples
+                point, derivative = outer_curve(R, u)
+                p = Vector((point[0] * MM, point[1] * MM, 0))
+                t = Vector((*derivative, 0)).normalized()
+            else:
+                a = math.pi / 2 - (s - straight) / R
+                p = Vector((R * math.cos(a) * MM, R * math.sin(a) * MM, 0.0))
+                t = Vector((math.sin(a), -math.cos(a), 0.0))
         else:
             p = Vector((R * MM, -(s - straight - arc_len) * MM, 0.0))
             t = Vector((0.0, -1.0, 0.0))
         return p, t.cross(ZU).normalized(), ZU
 
-    seg = max(ARC_SEG_MIN, int(R / 2))
+    seg = max(ARC_SEG_MIN, int(arc_len / 2)) if outer else max(ARC_SEG_MIN, int(R / 2))
+    if outer and seg % 2:
+        seg += 1                    # 最もポールへ近い中点も必ず含める
     ss = [straight * i / STR_SEG for i in range(STR_SEG + 1)]
     ss += [straight + arc_len * i / seg for i in range(1, seg + 1)]
     ss += [straight + arc_len + straight * i / STR_SEG for i in range(1, STR_SEG + 1)]
@@ -111,8 +146,25 @@ def make_path(R, straight):
 
 # ---------------------------------------------------------------- profiles
 
-def rail_profile(r):
-    """円形の側面から45度の接線で平底へ移る。最大幅・高さは維持する。"""
+def rail_profile(r, outer=False):
+    """円形の側面から斜面で平底へ移る。内側45度、外側55度。"""
+    if outer:
+        slope = math.radians(OUTER_BOTTOM_SLOPE)
+        end = math.pi * 1.5 - slope
+        n = round(PROF_SEG * end / math.pi)
+        pts = [(r * math.cos(end * i / n), r * math.sin(end * i / n)) for i in range(n + 1)]
+        # 側面の円へ接する55度斜面と平底。最後の0.3mmは45度の面取り。
+        corner = r * math.sin(slope) - (Z_BASE-r*math.cos(slope))/math.tan(slope)
+        rise = OUTER_BED_INSET / (1 - 1/math.tan(slope))
+        shoulder = corner + rise / math.tan(slope)
+        flat = corner - OUTER_BED_INSET
+        pts += [(-shoulder, -Z_BASE + rise), (-flat, -Z_BASE),
+                (flat, -Z_BASE), (shoulder, -Z_BASE + rise)]
+        start = math.pi * 1.5 + slope
+        n = round(PROF_SEG * (2*math.pi-start) / math.pi)
+        pts += [(r * math.cos(start + (2*math.pi-start)*i/n),
+                 r * math.sin(start + (2*math.pi-start)*i/n)) for i in range(n)]
+        return pts
     pts = []
     n = round(PROF_SEG * 1.25)
     for i in range(n + 1):
@@ -186,18 +238,38 @@ def build_corner(R, straight, name, col_name="corner"):
     col = get_collection(col_name)
     at, ss, total = make_path(R, straight)
 
-    body = sweep(name, [at(s) for s in ss], [rail_profile(HUB_R) for _ in ss], col)
+    outer = abs(R - R_OUTER) < 1e-6
+    body = sweep(name, [at(s) for s in ss], [rail_profile(HUB_R, outer) for _ in ss], col)
     _activate(body)
     mod = body.modifiers.new('mouth_outer_round', 'BEVEL')
     mod.width = EDGE_R * MM
     mod.segments = 4
     mod.limit_method = 'ANGLE'
     mod.angle_limit = math.radians(35)
+    if outer:
+        # 平底の面取りを二重に丸めない。口の端面だけを丸める。
+        weights = body.data.attributes.new('bevel_weight_edge', 'FLOAT', 'EDGE')
+        for edge in body.data.edges:
+            coords = [body.data.vertices[i].co for i in edge.vertices]
+            mouth = any(all(abs(p[axis] + straight * MM) < 1e-7 for p in coords) for axis in (0, 1))
+            above_sole = all(p.z > (-Z_BASE + 1.01) * MM for p in coords)
+            weights.data[edge.index].value = float(mouth and above_sole)
+        mod.limit_method = 'WEIGHT'
     bpy.ops.object.modifier_apply(modifier=mod.name)
 
     ss2 = [-20.0] + ss + [total + 20.0]
     boolean(body, sweep(name + "_bore", [at(s) for s in ss2],
                         [bore_profile(bore_t(s, total)) for s in ss2], col), "DIFFERENCE")
+    if outer:
+        # 穴の口に残る極小の辺を整理してから突起を結合する。
+        bm = bmesh.new()
+        bm.from_mesh(body.data)
+        bmesh.ops.remove_doubles(bm, verts=bm.verts[:], dist=1e-7)
+        bmesh.ops.triangulate(bm, faces=bm.faces[:])
+        bmesh.ops.dissolve_degenerate(bm, edges=bm.edges[:], dist=1e-8)
+        bmesh.ops.recalc_face_normals(bm, faces=bm.faces[:])
+        bm.to_mesh(body.data)
+        bm.free()
     add_keys(body, R, straight, col)
     bm = bmesh.new()
     bm.from_mesh(body.data)

@@ -1,8 +1,9 @@
-"""角の内側エルボ（R25、差し込み 30）と外側エルボ（R185、差し込み 28.5）。
+"""内側R25と、中央ポールを避けて外へ膨らませた外側カーブ。
 
     ./run.sh models/pipe-corner/model.py
 """
 import sys, os
+import shutil
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "../../lib"))
 sys.path.insert(0, os.path.dirname(__file__))
 
@@ -29,3 +30,6 @@ for R, straight, name in ((R_INNER, STRAIGHT_INNER, "pipe_corner_in_28"),
     print("Exported:", stl, "bbox mm:", [round(v * 1000, 2) for v in body.dimensions])
     filename = 'pipe-corner-inner-refined.3mf' if R == R_INNER else 'pipe-corner-outer-refined.3mf'
     export_print_part(body, EXPORTS_DIR, filename)
+    if R == R_OUTER:
+        shutil.copyfile(os.path.join(EXPORTS_DIR, filename),
+                        os.path.join(EXPORTS_DIR, 'pipe-corner-outer-roomy.3mf'))
