@@ -18,6 +18,7 @@ OUT = ROOT / 'exports'
 sys.path.insert(0, str(ROOT / 'lib'))
 sys.path.insert(0, str(Path(__file__).parent))
 import params as C
+import corner
 import rail_coupling as K
 J = C.J
 
@@ -165,6 +166,7 @@ def main():
 
     results = {'calibration': 'closed/open tetrahedra; intersecting/separate cubes', 'meshes': {}}
     obs = {}
+    results['print_roof'] = {}
     for name in ('pipe_joint_28', 'pipe_corner_in_28', 'pipe_corner_out_28'):
         v, f = read_stl(OUT / (name + '.stl'))
         m = metrics(v, f)
@@ -172,6 +174,36 @@ def main():
         assert m['components'] == 1 and m['volume_mm3'] > 0, (name, m)
         assert not any(m[k] for k in ('bad_edges', 'degenerate_triangles', 'duplicate_triangles')), (name, m)
         obs[name] = mesh(name, v, f)
+        if name in ('pipe_corner_in_28', 'pipe_corner_out_28'):
+            radius, straight = ((C.R_INNER, C.STRAIGHT_INNER) if name == 'pipe_corner_in_28'
+                                else (C.R_OUTER, C.STRAIGHT_OUTER))
+            section_x = -straight / 2
+            section = []
+            skin = []
+            for side in np.arange(-10.1, 10.11, .1):
+                z = hit(obs[name], (section_x, radius + side, 0), (0, 0, 1))[2]
+                upper = hit(obs[name], (section_x, radius + side, z + .1), (0, 0, 1))[2]
+                section.append((side, z))
+                skin.append((side, upper))
+            section, skin = np.array(section), np.array(skin)
+            plateau = section[np.abs(section[:, 1]-section[101, 1]) < .03, 0]
+            bridge = float(plateau.max()-plateau.min())
+            distance = np.linalg.norm(section[:, None, :]-skin[None, :, :], axis=2)
+            upper_wall = float(distance.min())
+            assert 5.5 <= bridge <= 6.5 and upper_wall >= 3.5, (name, bridge, upper_wall)
+            at, _, total = corner.make_path(radius, straight)
+            p, lateral, _ = at(total / 2)
+            curve_roof = []
+            for side in (-6, -3, 0, 3, 6):
+                origin = p + lateral * (side * .001)
+                yes, contact, *_ = obs[name].ray_cast(origin, Vector((0, 0, 1)))
+                assert yes, (name, side)
+                curve_roof.append(contact.z * 1000)
+            assert max(curve_roof[1:4])-min(curve_roof[1:4]) < .03, (name, curve_roof)
+            assert 2.9 < curve_roof[2]-curve_roof[0] < 3.1, (name, curve_roof)
+            results['print_roof'][name] = {'straight_bridge_mm':bridge,
+                                           'minimum_upper_wall_mm':upper_wall,
+                                           'bend_section_roof_z_mm':curve_roof}
         if name == 'pipe_corner_out_28':
             # 中央ポールは世界(-154.7,-154.7)、カーブの座標では(105,105)。
             pole = C.R_INNER + J.SIDE_Y
