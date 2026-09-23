@@ -1,7 +1,7 @@
 """28mm パイプ用 90 度コーナー（手すり）の形状生成。
 
 外側は中央ポールを避ける凸な曲線と広い平底。内側は円弧と従来の平底。
-内径と両端の接続は既存品と共通。口の上半周に半割り袖用のビードを付ける。
+内径と接続位置は既存品と共通。両端の一体の筒をM字の円形受けへ差す。
 """
 import math
 from bisect import bisect_left
@@ -14,9 +14,10 @@ from params import (
     MM, BORE_D, HUB_R, Z_BASE, TD_TOP, BORE_MOUTH_L,
     STR_SEG, PROF_SEG, ARC_SEG_MIN,
     EDGE_R, R_INNER, R_OUTER, OUTER_BULGE, OUTER_HANDLE,
-    OUTER_BOTTOM_SLOPE, OUTER_BED_INSET,
+    OUTER_BOTTOM_SLOPE, OUTER_BED_INSET, REVEAL,
 )
-from rail_coupling import add_upper_bead
+from rail_coupling import (SPIGOT_R, SPIGOT_LEAD, ENGAGEMENT,
+                           COLLAR_R, COLLAR_HOLD, COLLAR_BLEND)
 
 ZU = Vector((0.0, 0.0, 1.0))
 
@@ -192,7 +193,7 @@ def bore_profile(t):
     pts = [(r * math.cos(math.radians(135.0 + 270.0 * i / n)),
             r * math.sin(math.radians(135.0 + 270.0 * i / n))) for i in range(n + 1)]
     hw = r * math.sqrt(2.0) - TD_TOP
-    for a_deg, roof in ((75.0, (hw, TD_TOP)), (105.0, (-hw, TD_TOP))):
+    for a_deg, roof in ((75.0, (hw, TD_TOP)), (90.0, (0, TD_TOP)), (105.0, (-hw, TD_TOP))):
         a = math.radians(a_deg)
         c = (r * math.cos(a), r * math.sin(a))
         pts.append((c[0] + (roof[0] - c[0]) * t, c[1] + (roof[1] - c[1]) * t))
@@ -205,6 +206,15 @@ def bore_t(s, total):
     return max(0.0, min(1.0, (ss - 0.15) / 0.55))
 
 
+def spigot_profile(r):
+    """円形受けに収まる筒。底のみ本体と同じ高さで切り、接地を連続させる。"""
+    start = -math.asin(Z_BASE / r)
+    angles = [start * (1-i/16) for i in range(16)]
+    angles += [math.pi*i/64 for i in range(65)]
+    angles += [math.pi-start*i/16 for i in range(1,17)]
+    return [(r*math.cos(a), max(-Z_BASE, r*math.sin(a))) for a in angles]
+
+
 # ---------------------------------------------------------------- build
 
 def build_corner(R, straight, name, col_name="corner"):
@@ -212,7 +222,15 @@ def build_corner(R, straight, name, col_name="corner"):
     at, ss, total = make_path(R, straight)
 
     outer = abs(R - R_OUTER) < 1e-6
-    body = sweep(name, [at(s) for s in ss], [rail_profile(HUB_R, outer) for _ in ss], col)
+    # 端の肩は厚くし、8mmで元の握り径へ戻す。平底の高さは変えない。
+    ss = sorted(set(ss + [d for d in (COLLAR_HOLD, COLLAR_BLEND)]
+                    + [total-d for d in (COLLAR_HOLD, COLLAR_BLEND)]))
+    def collar_radius(s):
+        d = min(s, total-s)
+        t = max(0, min(1, (d-COLLAR_HOLD)/(COLLAR_BLEND-COLLAR_HOLD)))
+        return HUB_R + (COLLAR_R-HUB_R)*(1-smoothstep(t))
+    body = sweep(name, [at(s) for s in ss],
+                 [rail_profile(collar_radius(s), outer) for s in ss], col)
     _activate(body)
     mod = body.modifiers.new('mouth_outer_round', 'BEVEL')
     mod.width = EDGE_R * MM
@@ -230,6 +248,32 @@ def build_corner(R, straight, name, col_name="corner"):
         mod.limit_method = 'WEIGHT'
     bpy.ops.object.modifier_apply(modifier=mod.name)
 
+    # 中空化する前に全周の差し込み筒を結合する。根元は肩の内部へ1mm重ねる。
+    length = ENGAGEMENT + (REVEAL if outer else 0)
+    for end in (0, 1):
+        bm = bmesh.new()
+        bm.from_mesh(body.data)
+        bmesh.ops.remove_doubles(bm, verts=bm.verts[:], dist=1e-7)
+        bmesh.ops.triangulate(bm, faces=bm.faces[:])
+        bmesh.ops.dissolve_degenerate(bm, edges=bm.edges[:], dist=1e-8)
+        bmesh.ops.recalc_face_normals(bm, faces=bm.faces[:])
+        bm.to_mesh(body.data)
+        bm.free()
+        distances = [-length, -length+SPIGOT_LEAD, 1.0]
+        radii = [SPIGOT_R-SPIGOT_LEAD, SPIGOT_R, SPIGOT_R]
+        stations = [at(total-d if end else d) for d in distances]
+        male = sweep(name+'_spigot', stations, [spigot_profile(r) for r in radii], col)
+        # 外カーブの2本目はEXACTが共面の平底を3頂点へ崩す。閉じた入力を確認して切替。
+        solver = 'MANIFOLD' if outer and end else 'EXACT'
+        if solver == 'MANIFOLD':
+            for part in (body, male):
+                check = bmesh.new()
+                check.from_mesh(part.data)
+                assert check.faces and all(e.is_manifold for e in check.edges), 'union input must be closed'
+                assert abs(check.calc_volume()) > 1e-9, 'union input must contain volume'
+                check.free()
+        boolean(body, male, 'UNION', solver=solver)
+
     ss2 = [-20.0] + ss + [total + 20.0]
     boolean(body, sweep(name + "_bore", [at(s) for s in ss2],
                         [bore_profile(bore_t(s, total)) for s in ss2], col), "DIFFERENCE")
@@ -243,11 +287,6 @@ def build_corner(R, straight, name, col_name="corner"):
         bmesh.ops.recalc_face_normals(bm, faces=bm.faces[:])
         bm.to_mesh(body.data)
         bm.free()
-    bead_center = 4.5 if outer else 6.0
-    add_upper_bead(body, name + '_bead_a', at, bead_center,
-                   col, boolean, HUB_R)
-    add_upper_bead(body, name + '_bead_b', at, total - bead_center,
-                   col, boolean, HUB_R)
     bm = bmesh.new()
     bm.from_mesh(body.data)
     bmesh.ops.remove_doubles(bm, verts=bm.verts[:], dist=1e-7)
@@ -267,7 +306,7 @@ def build_corner(R, straight, name, col_name="corner"):
         print('[corner] non-manifold', name, len(non_manifold),
               [[tuple(round(c * 1000, 4) for c in v.co) for v in e.verts]
                for e in non_manifold[:12]])
-    assert not non_manifold, 'corner mesh must be closed'
+    assert bm.verts and bm.faces and not non_manifold, 'corner mesh must be nonempty and closed'
     bm.to_mesh(body.data)
     bm.free()
     _activate(body)

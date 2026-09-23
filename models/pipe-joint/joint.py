@@ -10,6 +10,11 @@ import bpy
 import bmesh
 from mathutils import Matrix, Vector
 
+from rail_coupling import (
+    SOCKET_BLEND, SOCKET_DEPTH, SOCKET_FLOOR_LEAD, SOCKET_LEAD,
+    SOCKET_OUTER_R, SOCKET_R,
+)
+
 from params import (
     MM, PIPE_OD, BORE_D, HUB_D, LEG_HUB_D, BODY_T, SLEEVE_END_R, RAIL_LEAD,
     BASE_ROUND, WEB_EDGE_R,
@@ -192,6 +197,36 @@ def sleeve_profile():
     return [(a * MM, r * MM) for a, r in pts]
 
 
+def socket_boss_profile():
+    """左右レールの -X 端を補強する。口元外角と胴への接続は接線を連続させる。"""
+    face_r = SOCKET_OUTER_R - SOCKET_FLOOR_LEAD
+    pts = []
+    for i in range(SLEEVE_END_SEG + 1):
+        a = math.pi * i / (2 * SLEEVE_END_SEG)
+        pts.append((X_BOT + SOCKET_FLOOR_LEAD * (1.0 - math.cos(a)),
+                    face_r + SOCKET_FLOOR_LEAD * math.sin(a)))
+    pts.append((X_BOT + SOCKET_DEPTH, SOCKET_OUTER_R))
+    for i in range(1, SLEEVE_END_SEG + 1):
+        t = i / SLEEVE_END_SEG
+        r = HUB_D / 2 + (SOCKET_OUTER_R - HUB_D / 2) * (1.0 + math.cos(math.pi * t)) / 2
+        pts.append((X_BOT + SOCKET_DEPTH + SOCKET_BLEND * t, r))
+    pts.append((X_BOT + SOCKET_DEPTH + SOCKET_BLEND + 0.5, HUB_D / 2))
+    return [(a * MM, r * MM) for a, r in pts]
+
+
+def socket_cut_profile():
+    """入口面取り、8mm超の平行壁、底の内隅面取りを持つ止まり穴。"""
+    return [
+        ((X_BOT - 1.0) * MM, (SOCKET_R + SOCKET_LEAD) * MM),
+        (X_BOT * MM, (SOCKET_R + SOCKET_LEAD) * MM),
+        ((X_BOT + SOCKET_LEAD) * MM, SOCKET_R * MM),
+        ((X_BOT + SOCKET_DEPTH) * MM, SOCKET_R * MM),
+        ((X_BOT + SOCKET_DEPTH) * MM, (BORE_D / 2 + SOCKET_FLOOR_LEAD) * MM),
+        ((X_BOT + SOCKET_DEPTH + SOCKET_FLOOR_LEAD) * MM, (BORE_D / 2) * MM),
+        (300 * MM, (BORE_D / 2) * MM),
+    ]
+
+
 def column_poly(sy):
     """脚ソケットの XY 断面。-X の角を袖と揃え、+X は半円。"""
     r = LEG_HUB_D / 2
@@ -295,6 +330,13 @@ def finish_body(body, col):
     clean(body)
     bevel(body, FILLET_R * MM, FILLET_SEG, FILLET_ANGLE)
 
+    # 左右レールの -X 端だけを肉増しする。外周は元のスリーブへ滑らかに戻す。
+    boss_prof = socket_boss_profile()
+    for i, sy in enumerate((-SIDE_Y, SIDE_Y)):
+        boss = revolve("socket_boss_%d" % i, boss_prof, col,
+                       frame((0, sy, SIDE_Z), ROT_Z_TO_X))
+        boolean(body, boss, "UNION", solver="EXACT")
+
     # レール 3 本（貫通）
     r = BORE_D / 2
     for i, (y, z) in enumerate(RAILS):
@@ -323,14 +365,12 @@ def finish_body(body, col):
                    [z for z, _ in stations], col)
         boolean(body, cut, "DIFFERENCE")
 
-    from rail_coupling import add_upper_bead
-    side = Vector((0.0, 1.0, 0.0))
-    up = Vector((0.0, 0.0, 1.0))
+    # カーブ側の雄ソケットを受ける円形 counterbore。脚穴まで終えてから最終加工する。
+    socket_prof = socket_cut_profile()
     for i, sy in enumerate((-SIDE_Y, SIDE_Y)):
-        def frame_at(x, rail_y=sy):
-            return Vector((x, rail_y, SIDE_Z)) * MM, side, up
-        add_upper_bead(body, 'rail_bead_%d' % i, frame_at, X_BOT + 6.0,
-                       col, boolean, HUB_D / 2)
+        cut = revolve("socket_%d" % i, socket_prof, col,
+                      frame((0, sy, SIDE_Z), ROT_Z_TO_X))
+        boolean(body, cut, "DIFFERENCE", solver="EXACT")
 
     # 仕上げの掃除は 1e-6 で。⚠ 2e-5 にすると、斜材・弦・平らな面が集まる角にある
     # 0.03mm の辺（正しい形）まで溶かして面が壊れ、STL に非多様体が 3〜6 本出る
@@ -342,6 +382,10 @@ def finish_body(body, col):
     bmesh.ops.triangulate(bm, faces=bm.faces[:])
     bmesh.ops.dissolve_degenerate(bm, edges=bm.edges[:], dist=1e-8)
     bmesh.ops.triangulate(bm, faces=bm.faces[:])
+    # EXACT union が接線で重なる外周ブレンド終端に面を持たない辺だけを残すことがある。
+    wire_edges = [e for e in bm.edges if not e.link_faces]
+    if wire_edges:
+        bmesh.ops.delete(bm, geom=wire_edges, context="EDGES")
     bmesh.ops.recalc_face_normals(bm, faces=bm.faces[:])
     assert all(e.is_manifold for e in bm.edges), 'joint mesh must be closed'
     bm.to_mesh(body.data)

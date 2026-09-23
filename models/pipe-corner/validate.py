@@ -165,7 +165,7 @@ def main():
 
     results = {'calibration': 'closed/open tetrahedra; intersecting/separate cubes', 'meshes': {}}
     obs = {}
-    for name in ('pipe_joint_28', 'pipe_corner_in_28', 'pipe_corner_out_28', 'pipe_rail_coupler'):
+    for name in ('pipe_joint_28', 'pipe_corner_in_28', 'pipe_corner_out_28'):
         v, f = read_stl(OUT / (name + '.stl'))
         m = metrics(v, f)
         results['meshes'][name] = m
@@ -202,24 +202,40 @@ def main():
         assert abs(seat - 39) < .002 and abs(high - low - 28.9) < .002
         measurements.append({'leg_y': y, 'seat_z': seat, 'diameter_mm': high - low})
     results['joint_measurements'] = measurements
-    # 元の筒を削らず足した幅広の段差。旧受け溝も塞がっていることを実測する。
-    results['coupling_beads'] = []
+    results['socket_measurements'] = []
     for y in (-J.SIDE_Y, J.SIDE_Y):
-        z = hit(joint, (J.X_BOT + 6, y, J.SIDE_Z + 30), (0, 0, -1))[2]
-        assert abs(z - J.SIDE_Z - 19.8) < .03, z
-        side = hit(joint, (J.X_BOT + 3, y + 16, J.SIDE_Z), (0, 1, 0))[1] - y
-        assert abs(side - 18.3) < .03, side
-        results['coupling_beads'].append({'part': 'M', 'rail_y': y, 'top_radius_mm': float(z-J.SIDE_Z),
-                                          'former_slot_outer_radius_mm': float(side)})
+        x = J.X_BOT+3
+        low = hit(joint, (x,y,J.SIDE_Z), (0,-1,0))[1]
+        high = hit(joint, (x,y,J.SIDE_Z), (0,1,0))[1]
+        outer = hit(joint, (x,y,J.SIDE_Z+30), (0,0,-1))[2]-J.SIDE_Z
+        inside = hit(joint, (x,y,J.SIDE_Z), (0,0,1))[2]-J.SIDE_Z
+        depth = hit(joint, (J.X_BOT-10,y+16,J.SIDE_Z), (1,0,0))[0]-J.X_BOT
+        assert abs(high-low-2*K.SOCKET_R) < .003
+        assert abs(outer-K.SOCKET_OUTER_R) < .003
+        assert abs(depth-K.SOCKET_DEPTH) < .003, depth
+        assert outer-inside >= 2.84
+        results['socket_measurements'].append({'rail_y':y, 'bore_diameter_mm':float(high-low),
+            'body_radius_mm':float(outer), 'wall_mm':float(outer-inside), 'depth_mm':float(depth)})
+    results['spigot_measurements'] = []
     results['corner_measurements'] = []
     for name, radius, straight in (('pipe_corner_in_28', C.R_INNER, C.STRAIGHT_INNER),
                                     ('pipe_corner_out_28', C.R_OUTER, C.STRAIGHT_OUTER)):
         ob = obs[name]
-        bead_center = 6 if radius == C.R_INNER else 6-C.REVEAL
-        bead_top = hit(ob, (-straight+bead_center, radius, 30), (0, 0, -1))[2]
-        assert abs(bead_top-19.8) < .03, (name, bead_top)
-        results['coupling_beads'].append({'part': name, 'top_radius_mm': float(bead_top)})
-        for along in (3, 15, 25):
+        length = K.ENGAGEMENT + (C.REVEAL if radius == C.R_OUTER else 0)
+        x = -straight-3
+        r = hit(ob,(x,radius+30,0),(0,-1,0))[1]-radius
+        inside = hit(ob,(x,radius,0),(0,1,0))[1]-radius
+        bottom = hit(ob,(x,radius,-30),(0,0,1))[2]
+        inner_bottom = hit(ob,(x,radius,0),(0,0,-1))[2]
+        tip_x = hit(ob,(-straight-20,radius+16,0),(1,0,0))[0]
+        assert abs(r-K.SPIGOT_R) < .003
+        assert abs(bottom+C.Z_BASE) < .003
+        assert abs(inner_bottom-bottom-3) < .003
+        assert abs(tip_x+straight+length) < .003
+        results['spigot_measurements'].append({'name':name,'outer_diameter_mm':float(2*r),
+            'radial_wall_mm':float(r-inside),'bottom_wall_mm':float(inner_bottom-bottom),
+            'extension_mm':float(-tip_x-straight),'engagement_mm':K.ENGAGEMENT})
+        for along in (-5, -2, 3, 15, 25):
             x = -straight + along
             lo = hit(ob, (x, radius, 0), (0, -1, 0))[1]
             hi = hit(ob, (x, radius, 0), (0, 1, 0))[1]
@@ -254,60 +270,35 @@ def main():
     bpy.context.view_layer.update()
     assert penetration(ob, joint)['inside_samples'] > 0
     ob.location.x -= .002
-    results['contact_test_note'] = 'Surface samples, tolerance 0.001mm; displaced real part fails. Coplanar Boolean intersection is unreliable.'
-    # 別体の上半割り継手。4箇所とも同一STLを用い、置いた状態と上からの着脱を検査。
-    sleeve = obs['pipe_rail_coupler']
-    pocket_inner = hit(sleeve, (6, 0, 0), (0, 0, 1))[2]
-    pocket_outer = hit(sleeve, (6, 0, 30), (0, 0, -1))[2]
-    plain_inner = hit(sleeve, (0, 0, 0), (0, 0, 1))[2]
-    assert abs(pocket_inner-20.15) < .002 and abs(plain_inner-18.65) < .002
-    assert abs(pocket_outer-pocket_inner-2.5) < .002
-    results['coupler_fit'] = []
-    for side, receiver in (('b', joint), ('a', ma)):
-        for radius, name in ((C.R_INNER, 'pipe_corner_in_28'), (C.R_OUTER, 'pipe_corner_out_28')):
-            axis = arc-radius
-            face = -J.LEG_X+J.X_BOT
-            if side == 'b':
-                sleeve.matrix_world = Matrix.Translation(Vector((face, axis, J.SIDE_Z))*.001)
-            else:
-                sleeve.matrix_world = Matrix(((0,-1,0,axis*.001),(1,0,0,face*.001),
-                                               (0,0,1,J.SIDE_Z*.001),(0,0,0,1)))
-            mate = obs[name]
-            bpy.context.view_layer.update()
-            checks = [penetration(sleeve, x) for x in (receiver, mate)]
-            checks += [penetration(x, sleeve) for x in (receiver, mate)]
-            assert all(c['inside_samples'] == 0 for c in checks), (side, name, checks)
-            base_matrix = sleeve.matrix_world.copy()
-            motion = []
-            for lift in (.5, 1.5, 3, 6, 12, 24):
-                sleeve.matrix_world = Matrix.Translation((0,0,lift*.001)) @ base_matrix
-                bpy.context.view_layer.update()
-                moving = [penetration(sleeve, x) for x in (receiver, mate)]
-                moving += [penetration(x, sleeve) for x in (receiver, mate)]
-                assert all(c['inside_samples'] == 0 for c in moving), (side, name, lift, moving)
-                motion.append({'lift_mm': lift, 'inside_samples': sum(c['inside_samples'] for c in moving)})
-            sleeve.matrix_world = base_matrix
-            results['coupler_fit'].append({'side': side, 'curve': name, 'seated_checks': checks,
-                                           'vertical_assembly_samples': motion})
-    # 軸方向のずれは段差で止まる。1mmずらした不正位置を実メッシュで検出。
-    sleeve.matrix_world = Matrix.Translation(Vector((-J.LEG_X+J.X_BOT+1, arc-C.R_INNER, J.SIDE_Z))*.001)
     bpy.context.view_layer.update()
-    shifted = penetration(sleeve, joint)
-    assert shifted['inside_samples'] > 0, shifted
-    results['coupler_axial_stop_calibration'] = shifted
-    results['coupler_dimensions'] = {'clearance_mm': K.CLEAR, 'bead_height_mm': K.BEAD_HEIGHT,
-                                    'bead_total_width_mm': K.BEAD_WIDTH, 'length_mm': K.CAP_LENGTH,
-                                    'pocket_wall_measured_mm': float(pocket_outer-pocket_inner),
-                                    'pocket_radius_measured_mm': float(pocket_inner),
-                                    'plain_radius_measured_mm': float(plain_inner),
-                                    'quantity': 4}
+    results['contact_test_note'] = 'Surface samples, tolerance 0.001mm; displaced real part fails. Coplanar Boolean intersection is unreliable.'
+    # 片方のM字から各曲線を軸方向に抜き、再び差す道筋を両口で検査。
+    results['socket_insertion_samples'] = []
+    for name in ('pipe_corner_in_28','pipe_corner_out_28'):
+        ob = obs[name]
+        base = ob.matrix_world.copy()
+        for axis, receiver in ((0,joint),(1,ma)):
+            samples=[]
+            for distance in (0,.5,2,4,6,9,12):
+                shift=Vector((0,0,0));shift[axis]=-distance*.001
+                ob.matrix_world=Matrix.Translation(shift)@base
+                bpy.context.view_layer.update()
+                checks=[penetration(ob,receiver),penetration(receiver,ob)]
+                assert all(c['inside_samples']==0 for c in checks),(name,axis,distance,checks)
+                samples.append({'withdrawal_mm':distance,'inside_samples':sum(c['inside_samples'] for c in checks)})
+            results['socket_insertion_samples'].append({'curve':name,'axis':axis,'samples':samples})
+        ob.matrix_world=base
+    results['coupling_dimensions'] = {'radial_clearance_mm':K.CLEAR,
+        'engagement_mm':K.ENGAGEMENT,'socket_depth_mm':K.SOCKET_DEPTH,
+        'socket_floor_lead_mm':K.SOCKET_FLOOR_LEAD,
+        'nominal_floor_gap_mm':K.SOCKET_DEPTH-K.ENGAGEMENT,
+        'outer_reveal_mm':C.REVEAL,'separate_parts':0}
     results['print_files'] = {}
     assert (OUT / 'pipe-corner-outer-roomy.3mf').read_bytes() == (OUT / 'pipe-corner-outer-refined.3mf').read_bytes()
     ns = '{http://schemas.microsoft.com/3dmanufacturing/core/2015/02}'
     for filename, stl in (('pipe-joint-refined.3mf', 'pipe_joint_28_print'),
                           ('pipe-corner-inner-refined.3mf', 'pipe_corner_in_28'),
-                          ('pipe-corner-outer-refined.3mf', 'pipe_corner_out_28'),
-                          ('pipe-rail-coupler.3mf', 'pipe_rail_coupler_print')):
+                          ('pipe-corner-outer-refined.3mf', 'pipe_corner_out_28')):
         with zipfile.ZipFile(OUT / filename) as zf:
             root = ET.fromstring(zf.read('3D/3dmodel.model'))
         assert root.get('unit') == 'millimeter'
