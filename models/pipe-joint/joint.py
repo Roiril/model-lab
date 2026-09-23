@@ -323,8 +323,14 @@ def finish_body(body, col):
                    [z for z, _ in stations], col)
         boolean(body, cut, "DIFFERENCE")
 
-    from rail_coupling import cut_receivers
-    cut_receivers(body, col, boolean, X_BOT, SIDE_Y, SIDE_Z)
+    from rail_coupling import add_upper_bead
+    side = Vector((0.0, 1.0, 0.0))
+    up = Vector((0.0, 0.0, 1.0))
+    for i, sy in enumerate((-SIDE_Y, SIDE_Y)):
+        def frame_at(x, rail_y=sy):
+            return Vector((x, rail_y, SIDE_Z)) * MM, side, up
+        add_upper_bead(body, 'rail_bead_%d' % i, frame_at, X_BOT + 6.0,
+                       col, boolean, HUB_D / 2)
 
     # 仕上げの掃除は 1e-6 で。⚠ 2e-5 にすると、斜材・弦・平らな面が集まる角にある
     # 0.03mm の辺（正しい形）まで溶かして面が壊れ、STL に非多様体が 3〜6 本出る

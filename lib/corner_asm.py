@@ -76,6 +76,16 @@ def build_asm(P, C, exports_dir, name, boards):
     for nm, fn in (("elbow_in", "pipe_corner_in_28.stl"), ("elbow_out", "pipe_corner_out_28.stl")):
         parts.append(place(load_stl(exports_dir, nm, fn), 180, arc_c, arc_c, h_side))
 
+    # 上から被せる半割り袖。中心はM字の-X端面。外側カーブの1.5mm目地も袖内で吸収する。
+    face = -J.LEG_X + J.X_BOT
+    side_lines = (-mc + P.SPAN / 2, -mc - P.SPAN / 2)
+    for i, y in enumerate(side_lines):
+        parts.append(place(load_stl(exports_dir, 'coupler_b%d' % i,
+                                    'pipe_rail_coupler.stl'), 0, face, y, h_side))
+    for i, x in enumerate(side_lines):
+        parts.append(place(load_stl(exports_dir, 'coupler_a%d' % i,
+                                    'pipe_rail_coupler.stl'), 90, x, face, h_side))
+
     # パイプ
     for i, (x, y) in enumerate(a_legs + b_legs):
         parts.append(pipe("leg%d" % i, (x, y, P.SEAT_Z), (x, y, P.SEAT_Z + ASM_LEG_L), r_pipe))

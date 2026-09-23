@@ -1,7 +1,7 @@
 """28mm パイプ用 90 度コーナー（手すり）の形状生成。
 
 外側は中央ポールを避ける凸な曲線と広い平底。内側は円弧と従来の平底。
-内径と両端の接続は既存品と共通。舌の下面だけ局所サポートを使う。
+内径と両端の接続は既存品と共通。口の上半周に半割り袖用のビードを付ける。
 """
 import math
 from bisect import bisect_left
@@ -16,9 +16,7 @@ from params import (
     EDGE_R, R_INNER, R_OUTER, OUTER_BULGE, OUTER_HANDLE,
     OUTER_BOTTOM_SLOPE, OUTER_BED_INSET,
 )
-from rail_coupling import (INNER_R as KEY_INNER_R, OUTER_R as KEY_OUTER_R,
-                           HALF_H as KEY_HALF_H, ROUND as KEY_ROUND,
-                           INNER_L as KEY_INNER_L, OUTER_L as KEY_OUTER_L)
+from rail_coupling import add_upper_bead
 
 ZU = Vector((0.0, 0.0, 1.0))
 
@@ -187,31 +185,6 @@ def rail_profile(r, outer=False):
     return pts
 
 
-def add_keys(body, R, straight, col):
-    """同じパイプを通したまま、M字の脇の受けへ入る2本の短い舌。"""
-    length = KEY_INNER_L if abs(R - R_INNER) < 1e-6 else KEY_OUTER_L
-    radial = (KEY_INNER_R + KEY_OUTER_R) / 2
-    for end in range(2):
-        for sign in (-1, 1):
-            # 根元は0.8mm食い込ませる。穴を削った後なので内径は変わらない。
-            center = (-(straight + (length - .8) / 2), R - sign * radial, 0)
-            dims = (length + .8, KEY_OUTER_R - KEY_INNER_R, KEY_HALF_H * 2)
-            if end:
-                center = (center[1], center[0], center[2])
-                dims = (dims[1], dims[0], dims[2])
-            bpy.ops.mesh.primitive_cube_add(size=1, location=Vector(center) * MM)
-            key = bpy.context.object
-            key.name = 'location_key'
-            key.dimensions = Vector(dims) * MM
-            bpy.ops.object.transform_apply(location=False, rotation=False, scale=True)
-            bevel = key.modifiers.new('soft_key_edges', 'BEVEL')
-            bevel.width = KEY_ROUND * MM
-            bevel.segments = 4
-            bpy.ops.object.modifier_apply(modifier=bevel.name)
-            boolean(body, key, 'UNION', solver='EXACT')
-    return body
-
-
 def bore_profile(t):
     """t=1 でティアドロップ、t=0 でただの円。口元では屋根を引っ込める。"""
     r = BORE_D / 2
@@ -270,7 +243,11 @@ def build_corner(R, straight, name, col_name="corner"):
         bmesh.ops.recalc_face_normals(bm, faces=bm.faces[:])
         bm.to_mesh(body.data)
         bm.free()
-    add_keys(body, R, straight, col)
+    bead_center = 4.5 if outer else 6.0
+    add_upper_bead(body, name + '_bead_a', at, bead_center,
+                   col, boolean, HUB_R)
+    add_upper_bead(body, name + '_bead_b', at, total - bead_center,
+                   col, boolean, HUB_R)
     bm = bmesh.new()
     bm.from_mesh(body.data)
     bmesh.ops.remove_doubles(bm, verts=bm.verts[:], dist=1e-7)
@@ -285,7 +262,12 @@ def build_corner(R, straight, name, col_name="corner"):
         bmesh.ops.dissolve_verts(bm, verts=straight_vertices)
     bmesh.ops.triangulate(bm, faces=bm.faces[:])
     bmesh.ops.recalc_face_normals(bm, faces=bm.faces[:])
-    assert all(e.is_manifold for e in bm.edges), 'corner mesh must be closed'
+    non_manifold = [e for e in bm.edges if not e.is_manifold]
+    if non_manifold:
+        print('[corner] non-manifold', name, len(non_manifold),
+              [[tuple(round(c * 1000, 4) for c in v.co) for v in e.verts]
+               for e in non_manifold[:12]])
+    assert not non_manifold, 'corner mesh must be closed'
     bm.to_mesh(body.data)
     bm.free()
     _activate(body)

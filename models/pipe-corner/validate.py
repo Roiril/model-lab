@@ -165,7 +165,7 @@ def main():
 
     results = {'calibration': 'closed/open tetrahedra; intersecting/separate cubes', 'meshes': {}}
     obs = {}
-    for name in ('pipe_joint_28', 'pipe_corner_in_28', 'pipe_corner_out_28'):
+    for name in ('pipe_joint_28', 'pipe_corner_in_28', 'pipe_corner_out_28', 'pipe_rail_coupler'):
         v, f = read_stl(OUT / (name + '.stl'))
         m = metrics(v, f)
         results['meshes'][name] = m
@@ -202,10 +202,23 @@ def main():
         assert abs(seat - 39) < .002 and abs(high - low - 28.9) < .002
         measurements.append({'leg_y': y, 'seat_z': seat, 'diameter_mm': high - low})
     results['joint_measurements'] = measurements
+    # 元の筒を削らず足した幅広の段差。旧受け溝も塞がっていることを実測する。
+    results['coupling_beads'] = []
+    for y in (-J.SIDE_Y, J.SIDE_Y):
+        z = hit(joint, (J.X_BOT + 6, y, J.SIDE_Z + 30), (0, 0, -1))[2]
+        assert abs(z - J.SIDE_Z - 19.8) < .03, z
+        side = hit(joint, (J.X_BOT + 3, y + 16, J.SIDE_Z), (0, 1, 0))[1] - y
+        assert abs(side - 18.3) < .03, side
+        results['coupling_beads'].append({'part': 'M', 'rail_y': y, 'top_radius_mm': float(z-J.SIDE_Z),
+                                          'former_slot_outer_radius_mm': float(side)})
     results['corner_measurements'] = []
     for name, radius, straight in (('pipe_corner_in_28', C.R_INNER, C.STRAIGHT_INNER),
                                     ('pipe_corner_out_28', C.R_OUTER, C.STRAIGHT_OUTER)):
         ob = obs[name]
+        bead_center = 6 if radius == C.R_INNER else 6-C.REVEAL
+        bead_top = hit(ob, (-straight+bead_center, radius, 30), (0, 0, -1))[2]
+        assert abs(bead_top-19.8) < .03, (name, bead_top)
+        results['coupling_beads'].append({'part': name, 'top_radius_mm': float(bead_top)})
         for along in (3, 15, 25):
             x = -straight + along
             lo = hit(ob, (x, radius, 0), (0, -1, 0))[1]
@@ -242,15 +255,59 @@ def main():
     assert penetration(ob, joint)['inside_samples'] > 0
     ob.location.x -= .002
     results['contact_test_note'] = 'Surface samples, tolerance 0.001mm; displaced real part fails. Coplanar Boolean intersection is unreliable.'
-    results['key_clearance_mm_per_side'] = K.CLEAR
-    results['key_engagement_mm'] = {'inner': K.INNER_L, 'outer': K.OUTER_L - C.REVEAL}
-    results['receiver_inner_wall_mm'] = K.INNER_R - K.CLEAR - J.BORE_D / 2
+    # 別体の上半割り継手。4箇所とも同一STLを用い、置いた状態と上からの着脱を検査。
+    sleeve = obs['pipe_rail_coupler']
+    pocket_inner = hit(sleeve, (6, 0, 0), (0, 0, 1))[2]
+    pocket_outer = hit(sleeve, (6, 0, 30), (0, 0, -1))[2]
+    plain_inner = hit(sleeve, (0, 0, 0), (0, 0, 1))[2]
+    assert abs(pocket_inner-20.15) < .002 and abs(plain_inner-18.65) < .002
+    assert abs(pocket_outer-pocket_inner-2.5) < .002
+    results['coupler_fit'] = []
+    for side, receiver in (('b', joint), ('a', ma)):
+        for radius, name in ((C.R_INNER, 'pipe_corner_in_28'), (C.R_OUTER, 'pipe_corner_out_28')):
+            axis = arc-radius
+            face = -J.LEG_X+J.X_BOT
+            if side == 'b':
+                sleeve.matrix_world = Matrix.Translation(Vector((face, axis, J.SIDE_Z))*.001)
+            else:
+                sleeve.matrix_world = Matrix(((0,-1,0,axis*.001),(1,0,0,face*.001),
+                                               (0,0,1,J.SIDE_Z*.001),(0,0,0,1)))
+            mate = obs[name]
+            bpy.context.view_layer.update()
+            checks = [penetration(sleeve, x) for x in (receiver, mate)]
+            checks += [penetration(x, sleeve) for x in (receiver, mate)]
+            assert all(c['inside_samples'] == 0 for c in checks), (side, name, checks)
+            base_matrix = sleeve.matrix_world.copy()
+            motion = []
+            for lift in (.5, 1.5, 3, 6, 12, 24):
+                sleeve.matrix_world = Matrix.Translation((0,0,lift*.001)) @ base_matrix
+                bpy.context.view_layer.update()
+                moving = [penetration(sleeve, x) for x in (receiver, mate)]
+                moving += [penetration(x, sleeve) for x in (receiver, mate)]
+                assert all(c['inside_samples'] == 0 for c in moving), (side, name, lift, moving)
+                motion.append({'lift_mm': lift, 'inside_samples': sum(c['inside_samples'] for c in moving)})
+            sleeve.matrix_world = base_matrix
+            results['coupler_fit'].append({'side': side, 'curve': name, 'seated_checks': checks,
+                                           'vertical_assembly_samples': motion})
+    # 軸方向のずれは段差で止まる。1mmずらした不正位置を実メッシュで検出。
+    sleeve.matrix_world = Matrix.Translation(Vector((-J.LEG_X+J.X_BOT+1, arc-C.R_INNER, J.SIDE_Z))*.001)
+    bpy.context.view_layer.update()
+    shifted = penetration(sleeve, joint)
+    assert shifted['inside_samples'] > 0, shifted
+    results['coupler_axial_stop_calibration'] = shifted
+    results['coupler_dimensions'] = {'clearance_mm': K.CLEAR, 'bead_height_mm': K.BEAD_HEIGHT,
+                                    'bead_total_width_mm': K.BEAD_WIDTH, 'length_mm': K.CAP_LENGTH,
+                                    'pocket_wall_measured_mm': float(pocket_outer-pocket_inner),
+                                    'pocket_radius_measured_mm': float(pocket_inner),
+                                    'plain_radius_measured_mm': float(plain_inner),
+                                    'quantity': 4}
     results['print_files'] = {}
     assert (OUT / 'pipe-corner-outer-roomy.3mf').read_bytes() == (OUT / 'pipe-corner-outer-refined.3mf').read_bytes()
     ns = '{http://schemas.microsoft.com/3dmanufacturing/core/2015/02}'
     for filename, stl in (('pipe-joint-refined.3mf', 'pipe_joint_28_print'),
                           ('pipe-corner-inner-refined.3mf', 'pipe_corner_in_28'),
-                          ('pipe-corner-outer-refined.3mf', 'pipe_corner_out_28')):
+                          ('pipe-corner-outer-refined.3mf', 'pipe_corner_out_28'),
+                          ('pipe-rail-coupler.3mf', 'pipe_rail_coupler_print')):
         with zipfile.ZipFile(OUT / filename) as zf:
             root = ET.fromstring(zf.read('3D/3dmodel.model'))
         assert root.get('unit') == 'millimeter'
