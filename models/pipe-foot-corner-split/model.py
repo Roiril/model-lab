@@ -17,9 +17,10 @@ from blender_utils import clear_scene, EXPORTS_DIR
 import foot_core as fc
 import pair_base
 import corner_plate
-from params import (ONE, SEAM_S0, SEAM_X, SEAM_TIE_XY, GAP, TAB_CLEAR, PLATE_TAB, KNUCKLE_TAB,
+from params import (ONE, SEAM_S0, SEAM_X, SEAM_TIE_XY, GAP, TAB_CLEAR, tab_dimensions,
                     KNUCKLE_W, KNUCKLE_L, KNUCKLE_L_TAB, KNUCKLE_UP, TABS,
-                    KNUCKLE_RADIUS, KNUCKLE_BLEND, ENTRY_CHAMFER, TAB_ROOT_R, BED)
+                    KNUCKLE_RADIUS, KNUCKLE_BLEND, S1_KNUCKLE_L,
+                    ENTRY_CHAMFER, TAB_ROOT_R, BED)
 
 FAR = 400.0          # 領域の角柱を板より十分大きく取る
 Z_TOP = 300.0
@@ -57,7 +58,9 @@ def knuckle_blocks():
             continue
         p, d, t = seam_frame(seg, pos)
         h = wall_height_at(seg) + KNUCKLE_UP
-        la, lb = (KNUCKLE_L_TAB, KNUCKLE_L) if owner == "A" else (KNUCKLE_L, KNUCKLE_L_TAB)
+        recess_l = S1_KNUCKLE_L if seg == "s1" else KNUCKLE_L
+        la, lb = ((KNUCKLE_L_TAB, recess_l) if owner == "A" else
+                  (recess_l, KNUCKLE_L_TAB))
         bm = bmesh.new()
         rings = []
         # Cross-sections avoid the triangular fan of a non-planar roof.
@@ -93,7 +96,8 @@ def knuckle_blocks():
 
 def _tab_outline(dim):
     """根元から幅 14 の首を経て、円形の頭へ接線でつながる輪郭。"""
-    r = dim["head_r"]
+    rx = dim["head_r"]
+    ry = dim.get("head_ry", rx)
     neck = dim["neck_w"] / 2
     center = dim["neck_l"]
     narrow = TAB_ROOT_R
@@ -104,9 +108,9 @@ def _tab_outline(dim):
                       neck + TAB_ROOT_R * (1 + math.sin(a))))
     for i in range(1, 25):
         s = narrow + (center - narrow) * i / 24
-        upper.append((s, neck + (r - neck) * _smooth((s - narrow) / (center - narrow))))
-    head = [(center + r * math.cos(math.radians(90 - 180 * i / 48)),
-             r * math.sin(math.radians(90 - 180 * i / 48))) for i in range(1, 49)]
+        upper.append((s, neck + (ry - neck) * _smooth((s - narrow) / (center - narrow))))
+    head = [(center + rx * math.cos(math.radians(90 - 180 * i / 48)),
+             ry * math.sin(math.radians(90 - 180 * i / 48))) for i in range(1, 49)]
     return upper + head + [(s, -u) for s, u in reversed(upper[:-1])]
 
 
@@ -137,7 +141,7 @@ def tab_solids(owner, shrink, tag):
         p, d, t = seam_frame(seg, pos)
         if owner == "B":
             d = (-d[0], -d[1])
-        dim = KNUCKLE_TAB if kind == "knuckle" else PLATE_TAB
+        dim = tab_dimensions(seg, kind)
         z_top = (wall_height_at(seg) + KNUCKLE_UP if kind == "knuckle" else ONE.PLATE_T) + 1.0
         outline = _tab_outline(dim)
         if shrink:

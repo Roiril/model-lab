@@ -14,8 +14,9 @@
 
 角での置き方（2026-09-13 に決め直し。上面図は pipe-foot-corner の docstring）:
     2 つの M 字は平らな面を角へ向け、レールは平らな面を抜けて角へ出る。
-    内側エルボ（R_INNER）の口は両方の M 字の平らな面に突き当たる。これが角の寸法の基準で、
-    角の脚の軸から相手の軸線までの距離 CORNER_OFF = JOINT_END + R_INNER + STRAIGHT_INNER。
+    2 つの M 字は向きを保ったまま角から JOINT_SHIFT 平行移動する。
+    元の角寸法は BASE_STRAIGHT_INNER で保ち、カーブ側の直線だけを短くする。
+    CORNER_OFF = JOINT_END + R_INNER + BASE_STRAIGHT_INNER。
     外側はR_OUTER = R_INNER + 160の両端を保ち、中央を外へ18mm膨らませる。
     口は突き当てず REVEAL の目地を残す。
     内側を位置決めの突き当てにする。外側は見える隙間を0.8mmに抑え、同時突き当てを避ける。
@@ -70,15 +71,18 @@ R_INNER = 25.0                     # 内側レール。曲げの内側の半径 
 R_OUTER = R_INNER + SPAN           # 185.0 外側の両端位置。中央は円弧より膨らませる
 OUTER_BULGE = 18.0                # 外側の中央を円弧より18mm外へ出す
 OUTER_HANDLE = 0.30               # 5次曲線の端側制御点 / R_OUTER
-STRAIGHT_INNER = 30.0              # 内側の直線部 = 差し込み深さ。口は M 字の面に突き当たる
+BASE_STRAIGHT_INNER = 30.0         # 元の角寸法を保つ基準長さ
+JOINT_SHIFT = 29.2                 # M 字を角から平行移動する量
 REVEAL = 0.8                       # 外側の口と M 字の面のあいだに残す目地
-STRAIGHT_OUTER = STRAIGHT_INNER - REVEAL   # 29.2
+STRAIGHT_INNER = 0.8                # 内側は M 字の面に突き当たる
+STRAIGHT_OUTER = 0.0                # 外側は0.8mmの目地を残す
 
 JOINT_END = J.LEG_X - J.X_BOT      # 19.7 M 字の本体が脚の軸から平らな面まで出る量
-CORNER_OFF = JOINT_END + R_INNER + STRAIGHT_INNER   # 74.7 角の脚の軸 → 相手の軸線
+CORNER_OFF = JOINT_END + R_INNER + BASE_STRAIGHT_INNER  # 74.7 角の脚の軸 → 相手の軸線
 ARC_CENTER_OFF = CORNER_OFF - R_INNER               # 49.7 同心の中心（角の節点から両軸へ）
 
-assert STRAIGHT_OUTER >= 1.0 * PIPE_OD, "外側の差し込みがパイプ径より浅い"
+assert abs(STRAIGHT_INNER - (BASE_STRAIGHT_INNER - JOINT_SHIFT)) < 1e-9
+assert abs(STRAIGHT_OUTER - (STRAIGHT_INNER - REVEAL)) < 1e-9
 
 # --- メッシュ品質 ---
 STR_SEG = 28                       # 直線部の分割数

@@ -7,14 +7,15 @@
 
 造形板: H2D は 1 ノズルで 325 x 320、2 ノズルで 300 x 320（同じフィラメントを両方に入れた
 ときだけ 350 x 320）。どのモードでも刷れるよう 300 x 300 に収める。
-    全幅 = CORNER_OFF + SPAN + 2 * EDGE_R = 74.7 + 160 + 56 = 290.7（縁まで 4.65）
+    全幅 = CORNER_OFF + SPAN + 2 * EDGE_R - JOINT_SHIFT = 261.5
 外側の縁は軸から EDGE_R = 28。X1C 向けに 2 枚へ切る分割版（pipe-foot-corner-split）で
 それぞれの片が 252 に入る上限は 32（片の幅 = 197.35 + 1.707 * EDGE_R）。
 そこにあるソケット 4 本は pipe-foot の台座（半径 34 の段・半径 26 の円錐）を付けず、
 根元の壁を厚くした筒にする。5 本目は板の内側の角にあるので、まわりの板は半径 PLATE_R = 42 のまま。
 
 上から見た配置（すべて mm。角の節点が原点、A の脚は x 軸上の負側、B の脚は y 軸上の負側）:
-    A の脚 A1 (-CORNER_OFF, 0), A2 (-CORNER_OFF-160, 0)    B の脚 B1 (0, -CORNER_OFF), B2 (0, -CORNER_OFF-160)
+    A の脚 A1 (-CORNER_OFF, -JOINT_SHIFT), A2 (-CORNER_OFF-160, -JOINT_SHIFT)
+    B の脚 B1 (-JOINT_SHIFT, -CORNER_OFF), B2 (-JOINT_SHIFT, -CORNER_OFF-160)
     5 本目 F (-FIFTH_OFF, -FIFTH_OFF) = 2 つの中央レールの延長線の交点
     板の輪郭は「A1, A2, B1, B2 に半径 EDGE_R、F に半径 PLATE_R の円」の凸包。
     F は A2-B2 の対角線より外にあるので、輪郭は五角形（A2 → F → B2 → B1 → A1）。
@@ -62,9 +63,10 @@ FUNNEL_DR = PAIR.FUNNEL_DR       # 2.5
 # --- 配置（正本は pipe-corner。ここでは読むだけ）---
 SPAN = PAIR.SPAN                 # 160.0
 CORNER_OFF = CORNER.CORNER_OFF   # 74.7 角の脚の軸 → 相手の脚列の軸線
+JOINT_SHIFT = CORNER.JOINT_SHIFT # 29.2 M 字を回さず角の内側へ平行移動する量
 FIFTH_OFF = CORNER_OFF + SPAN / 2    # 154.7 5 本目の軸 → 各脚列の軸線
-A1, A2 = (-CORNER_OFF, 0.0), (-CORNER_OFF - SPAN, 0.0)
-B1, B2 = (0.0, -CORNER_OFF), (0.0, -CORNER_OFF - SPAN)
+A1, A2 = (-CORNER_OFF, -JOINT_SHIFT), (-CORNER_OFF - SPAN, -JOINT_SHIFT)
+B1, B2 = (-JOINT_SHIFT, -CORNER_OFF), (-JOINT_SHIFT, -CORNER_OFF - SPAN)
 F = (-FIFTH_OFF, -FIFTH_OFF)
 MC = CORNER_OFF + SPAN / 2       # 154.7 各列の脚の中点（= 中央レールの位置）
 
@@ -73,7 +75,7 @@ PLATE_T = 8.0                    # 板厚（pipe-foot-pair は 5。角は継ぎ�
 PLATE_R = PAIR.PLATE_R           # 42.0 5 本目まわりの半径
 EDGE_R = 28.0                    # 脚 4 本まわりの半径（外側の縁）
 BED = 300.0                      # H2D の 2 ノズル時の X。ここに入れば全モードで刷れる
-EXTENT = CORNER_OFF + SPAN + 2 * EDGE_R          # 290.7 全幅 = 奥行き
+EXTENT = CORNER_OFF + SPAN + 2 * EDGE_R - JOINT_SHIFT  # 261.5 全幅 = 奥行き
 assert EXTENT <= BED, f"造形板に入らない: {EXTENT}"
 
 # --- ソケットの根元（脚 4 本。縁まで 28 しか無いので台座を付けず、根元の壁を厚くする）---
@@ -92,9 +94,9 @@ SPINE_MID_Z = PAIR.SPINE_MID_Z   # 14.0 脚 2 本の中央での高さ
 SPINE_LAP = PAIR.SPINE_LAP       # 1.0 板へ食い込ませる量
 SPINE_SEG = PAIR.SPINE_SEG       # 48
 BRANCH_SEG = PAIR.BRANCH_SEG     # 24
-TIE_L = CORNER_OFF * math.sqrt(2.0)   # 105.6 A1 → B1 の対角の壁の長さ
+TIE_L = (CORNER_OFF - JOINT_SHIFT) * math.sqrt(2.0)   # 64.35 A1 → B1 の対角の壁の長さ
 TIE_MID_Z = 24.0                 # 対角の壁の中央の高さ。分割版はここに節（凸凹）を付けるので 14 より高く
-# 対角の壁の外側の面から板の縁（x + y = -CORNER_OFF + EDGE_R*√2）までの距離
+# 対角の壁の外側の面から板の縁までの距離
 TIE_EDGE_CLEAR = EDGE_R - SPINE_T / 2
 assert TIE_EDGE_CLEAR >= 2 * FILLET_R + 6.0, "対角の壁が板の縁に寄りすぎ"
 

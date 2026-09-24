@@ -17,13 +17,14 @@ def arm_top(P, s):
 
 
 def branch_top(P):
-    """枝の上端。J（脚の中点、軸座標 0 の節点）の面 -HT の高さから、F（軸座標 -MC）で
+    """枝の上端。J（脚の中点、軸座標 -JOINT_SHIFT の節点）の面 -HT の高さから、F（軸座標 -MC）で
     SPINE_TOP_Z へ上がる。付け根の高さは列の背骨の -MC ± HT での高さに合わせる。"""
     ht = P.SPINE_T / 2
 
     def top(s, side):
         z0 = arm_top(P, -P.MC + side * ht)
-        t = min(1.0, max(0.0, (-ht - s) / (P.MC - ht)))
+        t = min(1.0, max(0.0, (-P.JOINT_SHIFT - ht - s) /
+                              (P.MC - P.JOINT_SHIFT - ht)))
         return z0 + (P.SPINE_TOP_Z - z0) * t * t
     return top
 
@@ -39,15 +40,16 @@ def tie_top(P):
 def spine_net(P):
     """背骨の網。A の列（x 軸上）と B の列（y 軸上）はそれぞれ脚の中点 J で枝を出し、
     枝は中央レールの真下を通って 5 本目 F で出会う。"""
-    nodes = {"J1": (-P.MC, 0.0), "J2": (0.0, -P.MC), "F": P.F}
+    nodes = {"J1": (-P.MC, -P.JOINT_SHIFT),
+             "J2": (-P.JOINT_SHIFT, -P.MC), "F": P.F}
     arm = lambda s, side: arm_top(P, s)
     br = branch_top(P)
     n = P.SPINE_SEG // 2
     walls = [
-        dict(axis="x", c=0.0, a=("free", P.A2[0]), b=("node", "J1"), top=arm, seg=n),
-        dict(axis="x", c=0.0, a=("node", "J1"), b=("free", P.A1[0]), top=arm, seg=n),
-        dict(axis="y", c=0.0, a=("free", P.B2[1]), b=("node", "J2"), top=arm, seg=n),
-        dict(axis="y", c=0.0, a=("node", "J2"), b=("free", P.B1[1]), top=arm, seg=n),
+        dict(axis="x", c=-P.JOINT_SHIFT, a=("free", P.A2[0]), b=("node", "J1"), top=arm, seg=n),
+        dict(axis="x", c=-P.JOINT_SHIFT, a=("node", "J1"), b=("free", P.A1[0]), top=arm, seg=n),
+        dict(axis="y", c=-P.JOINT_SHIFT, a=("free", P.B2[1]), b=("node", "J2"), top=arm, seg=n),
+        dict(axis="y", c=-P.JOINT_SHIFT, a=("node", "J2"), b=("free", P.B1[1]), top=arm, seg=n),
         dict(axis="y", c=P.F[0], a=("node", "F"), b=("node", "J1"), top=br, seg=P.BRANCH_SEG),
         dict(axis="x", c=P.F[1], a=("node", "F"), b=("node", "J2"), top=br, seg=P.BRANCH_SEG),
     ]

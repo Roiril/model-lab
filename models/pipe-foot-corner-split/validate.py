@@ -64,7 +64,20 @@ for letter in ('a', 'b'):
     parts[letter] = ob
 
 results = {'calibration': 'overlapping cubes 500mm3; separated cubes 0mm3',
+           'meshes': {},
            'insertion_overlap_mm3': {}}
+for letter, ob in parts.items():
+    bm = bmesh.new()
+    bm.from_mesh(ob.data)
+    stats = dict(vertices=len(bm.verts), faces=len(bm.faces),
+                 nonmanifold_edges=sum(not edge.is_manifold for edge in bm.edges),
+                 bbox_mm=[x * 1000 for x in ob.dimensions])
+    bm.free()
+    assert stats['vertices'] and stats['faces'], stats
+    assert stats['nonmanifold_edges'] == 0, stats
+    assert max(stats['bbox_mm'][:2]) <= D.BED, stats
+    results['meshes'][letter] = stats
+
 for dz in (0, .2, 1, 4, 8, 16, 30, 44, 86):
     parts['b'].location.z = dz * .001
     bpy.context.view_layer.update()
@@ -89,6 +102,7 @@ def ray_hits(ob, origin, direction):
 
 
 results['sockets'] = []
+socket_results = {}
 for name, center, owner in [('A1', D.ONE.A1, 'a'), ('A2', D.ONE.A2, 'a'),
                             ('F', D.ONE.F, 'a'), ('B1', D.ONE.B1, 'b'), ('B2', D.ONE.B2, 'b')]:
     ob = parts[owner]
@@ -110,26 +124,48 @@ for name, center, owner in [('A1', D.ONE.A1, 'a'), ('A2', D.ONE.A2, 'a'),
     assert abs(seat - 30) < .02 and min(radii) > 14.28 and max(radii) < 14.32, result
     assert min(walls) > 3.98, result
     results['sockets'].append(result)
+    socket_results[name] = result
 
-results['female_head_side_walls'] = []
+results['female_head_clearances'] = []
 for seg, pos, owner, kind in D.TABS:
     if kind != 'knuckle':
         continue
     p = (pos, pos) if seg == 's1' else (D.SEAM_X, pos)
     d = (2**-.5, -2**-.5) if seg == 's1' else (1, 0)
     t = (-d[1], d[0])
-    hc = (p[0] + 15 * d[0], p[1] + 15 * d[1])
+    dim = D.tab_dimensions(seg, kind)
+    hc = (p[0] + dim['neck_l'] * d[0], p[1] + dim['neck_l'] * d[1])
     measured = []
+    by_angle = {}
+    cavity_reach = {}
     for angle in range(-90, 91, 5):
         theta = math.radians(angle)
         direction = (d[0] * math.cos(theta) + t[0] * math.sin(theta),
                      d[1] * math.cos(theta) + t[1] * math.sin(theta), 0)
         hits = ray_hits(parts['b'], (*hc, 15), direction)
         assert len(hits) >= 2, (seg, angle, hits)
-        measured.append(math.dist(hits[0], hits[1]))
-    results['female_head_side_walls'].append(
-        dict(seam=seg, z_mm=15, min_mm=min(measured), max_mm=max(measured)))
-    assert min(measured) > 4.97, (seg, min(measured))
+        gap = math.dist(hits[0], hits[1])
+        measured.append(gap)
+        by_angle[str(angle)] = gap
+        cavity_reach[str(angle)] = math.dist((*hc, 15), hits[0])
+    result = dict(seam=seg, z_mm=15,
+                  nominal_head_radii_mm=[dim['head_r'], dim.get('head_ry', dim['head_r'])],
+                  holding_shoulder_mm=dim.get('head_ry', dim['head_r']) - dim['neck_w'] / 2,
+                  transverse_side_walls_mm=[by_angle['-90'], by_angle['90']],
+                  forward_material_until_surface_mm=by_angle['0'],
+                  minimum_sampled_material_mm=min(measured))
+    if seg == 's1':
+        bore_r = socket_results['B1']['bore_diameter_range_mm'][1] / 2
+        result['nominal_block_tip_wall_mm'] = (
+            D.S1_KNUCKLE_L - dim['neck_l'] - dim['head_r'])
+        result['projected_cavity_to_bore_mm'] = (
+            math.dist(hc, D.ONE.B1) - cavity_reach['0'] - bore_r)
+    results['female_head_clearances'].append(result)
+    assert min(result['transverse_side_walls_mm']) > 4.9, result
+    if seg == 's1':
+        assert result['nominal_block_tip_wall_mm'] > 5.19, result
+        assert result['projected_cavity_to_bore_mm'] > 4.8, result
+    assert result['minimum_sampled_material_mm'] > (4.8 if seg == 's1' else 4.9), result
 
 (ROOT / 'exports' / 'pipe-foot-corner-refined-validation.json').write_text(
     json.dumps(results, ensure_ascii=False, indent=2), encoding='utf-8')

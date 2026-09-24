@@ -105,6 +105,19 @@ def hit(ob, origin, direction):
     return np.array(p) * 1000
 
 
+def path_frame(at, station):
+    """芯線の局所座標を mm で返す。"""
+    center, lateral, up = at(station)
+    return np.array(center) * 1000, np.array(lateral), np.array(up)
+
+
+def frame_hit(ob, frame, side, height, direction):
+    """芯線断面の局所座標からレイを飛ばす。"""
+    center, lateral, up = frame
+    origin = center + lateral * side + up * height
+    return hit(ob, origin, direction)
+
+
 def penetration(a, b, tolerance_mm=.001):
     """最近傍法線で候補を絞り、3方向の交差回数で内外を判定する。"""
     b.data.calc_loop_triangles()
@@ -177,12 +190,14 @@ def main():
         if name in ('pipe_corner_in_28', 'pipe_corner_out_28'):
             radius, straight = ((C.R_INNER, C.STRAIGHT_INNER) if name == 'pipe_corner_in_28'
                                 else (C.R_OUTER, C.STRAIGHT_OUTER))
-            section_x = -straight / 2
+            at, _, total = corner.make_path(radius, straight)
+            section_station = min(C.BORE_MOUTH_L, total / 2)
+            frame = path_frame(at, section_station)
             section = []
             skin = []
             for side in np.arange(-10.1, 10.11, .1):
-                z = hit(obs[name], (section_x, radius + side, 0), (0, 0, 1))[2]
-                upper = hit(obs[name], (section_x, radius + side, z + .1), (0, 0, 1))[2]
+                z = frame_hit(obs[name], frame, side, 0, frame[2])[2]
+                upper = frame_hit(obs[name], frame, side, z + .1, frame[2])[2]
                 section.append((side, z))
                 skin.append((side, upper))
             section, skin = np.array(section), np.array(skin)
@@ -193,7 +208,6 @@ def main():
             assert 11.7 <= bridge <= 12.0 and upper_wall >= 2.8, (name, bridge, upper_wall)
             radial_error = float(np.max(np.abs(np.linalg.norm(skin, axis=1)-C.HUB_R)))
             assert radial_error < .03, (name, 'circular exterior', radial_error)
-            at, _, total = corner.make_path(radius, straight)
             p, lateral, _ = at(total / 2)
             curve_roof = []
             for side in (-9, -6, 0, 6, 9):
@@ -203,7 +217,8 @@ def main():
                 curve_roof.append(contact.z * 1000)
             assert abs(curve_roof[2]-C.BORE_D/2) < .03, (name, curve_roof)
             assert 2.9 < curve_roof[1]-curve_roof[0] < 3.1, (name, curve_roof)
-            results['print_roof'][name] = {'straight_bridge_mm':bridge,
+            results['print_roof'][name] = {'section_station_mm': section_station,
+                                           'roof_bridge_mm':bridge,
                                            'minimum_upper_wall_mm':upper_wall,
                                            'exterior_radius_error_mm':radial_error,
                                            'bend_section_side_mm':[-9,-6,0,6,9],
@@ -217,12 +232,25 @@ def main():
             tri = v[f]
             on_bed = np.max(np.abs(tri[:, :, 2] + C.Z_BASE), axis=1) < .0001
             area = np.linalg.norm(np.cross(tri[:, 1]-tri[:, 0], tri[:, 2]-tri[:, 0]), axis=1)
-            flat_width = (hit(obs[name], (-15, C.R_OUTER, -C.Z_BASE+.0001), (0, 1, 0))[1]
-                          - hit(obs[name], (-15, C.R_OUTER, -C.Z_BASE+.0001), (0, -1, 0))[1])
+            at, _, total = corner.make_path(C.R_OUTER, C.STRAIGHT_OUTER)
+            frame = path_frame(at, min(C.BORE_MOUTH_L, total / 2))
+            low = frame_hit(obs[name], frame, 0, -C.Z_BASE + .0001, -frame[1])
+            high = frame_hit(obs[name], frame, 0, -C.Z_BASE + .0001, frame[1])
+            flat_width = float(np.dot(high - low, frame[1]))
             assert 19.8 < flat_width < 20.1, flat_width
+            mouth_round = []
+            for station in np.linspace(C.EDGE_R / 4, C.EDGE_R, 4):
+                frame = path_frame(at, station)
+                top = frame_hit(obs[name], frame, 0, C.BORE_D/2 + .1, frame[2])
+                actual = float(np.dot(top - frame[0], frame[2]))
+                expected = (K.COLLAR_R - C.EDGE_R
+                            + np.sqrt(max(0.0, C.EDGE_R**2 - (station-C.EDGE_R)**2)))
+                assert abs(actual - expected) < .03, (station, actual, expected)
+                mouth_round.append({'station_mm': float(station), 'radius_mm': actual})
             results['outer_clearance_and_bed'] = {'pole_horizontal_gap_mm': gap,
                   'flat_width_mm': float(flat_width), 'flat_contact_area_mm2': float(area[on_bed].sum()/2),
-                  'bottom_slope_deg': C.OUTER_BOTTOM_SLOPE, 'bulge_mm': C.OUTER_BULGE}
+                  'bottom_slope_deg': C.OUTER_BOTTOM_SLOPE, 'bulge_mm': C.OUTER_BULGE,
+                  'mouth_round_r_mm': C.EDGE_R, 'mouth_round_samples': mouth_round}
 
     joint = obs['pipe_joint_28']
     measurements = []
@@ -258,11 +286,12 @@ def main():
                                     ('pipe_corner_out_28', C.R_OUTER, C.STRAIGHT_OUTER)):
         ob = obs[name]
         length = K.ENGAGEMENT + (C.REVEAL if radius == C.R_OUTER else 0)
-        x = -straight-3
-        r = hit(ob,(x,radius+30,0),(0,-1,0))[1]-radius
-        inside = hit(ob,(x,radius,0),(0,1,0))[1]-radius
-        bottom = hit(ob,(x,radius,-30),(0,0,1))[2]
-        inner_bottom = hit(ob,(x,radius,0),(0,0,-1))[2]
+        at, _, total = corner.make_path(radius, straight)
+        frame = path_frame(at, -3)
+        r = np.dot(frame_hit(ob, frame, 30, 0, -frame[1]) - frame[0], frame[1])
+        inside = np.dot(frame_hit(ob, frame, 0, 0, frame[1]) - frame[0], frame[1])
+        bottom = frame_hit(ob, frame, 0, -30, frame[2])[2]
+        inner_bottom = frame_hit(ob, frame, 0, 0, -frame[2])[2]
         tip_x = hit(ob,(-straight-20,radius+16,0),(1,0,0))[0]
         assert abs(r-K.SPIGOT_R) < .003
         assert abs(bottom+C.Z_BASE) < .003
@@ -271,26 +300,42 @@ def main():
         results['spigot_measurements'].append({'name':name,'outer_diameter_mm':float(2*r),
             'radial_wall_mm':float(r-inside),'bottom_wall_mm':float(inner_bottom-bottom),
             'extension_mm':float(-tip_x-straight),'engagement_mm':K.ENGAGEMENT})
-        for along in (-5, -2, 3, 15, 25):
-            x = -straight + along
-            lo = hit(ob, (x, radius, 0), (0, -1, 0))[1]
-            hi = hit(ob, (x, radius, 0), (0, 1, 0))[1]
-            assert abs(hi - lo - 28.6) < .03, (name, along, lo, hi)
-            results['corner_measurements'].append({'name': name, 'distance_from_mouth': along,
-                                                   'diameter_mm': hi - lo})
+        stations = [-5, -2, 0]
+        if straight > 0:
+            stations += [straight / 2, straight]
+        for station in stations:
+            frame = path_frame(at, station)
+            lo = frame_hit(ob, frame, 0, 0, -frame[1])
+            hi = frame_hit(ob, frame, 0, 0, frame[1])
+            diameter = float(np.dot(hi - lo, frame[1]))
+            assert abs(diameter - C.BORE_D) < .03, (name, station, diameter)
+            results['corner_measurements'].append({'name': name, 'distance_from_mouth': station,
+                                                   'diameter_mm': diameter})
     results['fixed_dimensions'] = {'joint_length': J.BODY_T, 'leg_x': J.LEG_X,
                                   'side_y': J.SIDE_Y, 'side_z': J.SIDE_Z,
                                   'corner_off': C.CORNER_OFF, 'inner_radius': C.R_INNER,
-                                  'outer_endpoint_offset': C.R_OUTER, 'outer_reveal': C.REVEAL}
-    assert np.allclose([J.BODY_T, J.LEG_X, J.SIDE_Y, J.SIDE_Z, C.CORNER_OFF], [54, -7.3, 80, 62.3, 74.7])
+                                  'outer_endpoint_offset': C.R_OUTER, 'outer_reveal': C.REVEAL,
+                                  'joint_shift': C.JOINT_SHIFT,
+                                  'base_straight_inner': C.BASE_STRAIGHT_INNER,
+                                  'straight_inner': C.STRAIGHT_INNER,
+                                  'straight_outer': C.STRAIGHT_OUTER}
+    assert np.allclose([J.BODY_T, J.LEG_X, J.SIDE_Y, J.SIDE_Z, C.CORNER_OFF,
+                        C.JOINT_SHIFT, C.BASE_STRAIGHT_INNER, C.STRAIGHT_INNER,
+                        C.STRAIGHT_OUTER],
+                       [54, -7.3, 80, 62.3, 74.7, 29.2, 30, .8, 0])
 
     # 組み立て位置を実際の頂点へ適用して、両方のM字との干渉を測る。
     ma = joint.copy()
     ma.data = joint.data.copy()
     bpy.context.collection.objects.link(ma)
     mc = C.CORNER_OFF + J.SIDE_Y
-    joint.matrix_world = Matrix.Translation(Vector((-J.LEG_X, -mc, 0)) * .001)
-    ma.matrix_world = Matrix(((0, -1, 0, -mc * .001), (1, 0, 0, -J.LEG_X * .001), (0, 0, 1, 0), (0, 0, 0, 1)))
+    moved = -J.LEG_X - C.JOINT_SHIFT
+    joint.matrix_world = Matrix.Translation(Vector((moved, -mc, 0)) * .001)
+    ma.matrix_world = Matrix(((0, -1, 0, -mc * .001), (1, 0, 0, moved * .001), (0, 0, 1, 0), (0, 0, 0, 1)))
+    bpy.context.view_layer.update()
+    mm_checks = [penetration(joint, ma), penetration(ma, joint)]
+    assert all(c['inside_samples'] == 0 for c in mm_checks), mm_checks
+    results['joint_penetration'] = mm_checks
     arc = -(C.CORNER_OFF - C.R_INNER)
     results['assembly_penetration'] = {}
     for name in ('pipe_corner_in_28', 'pipe_corner_out_28'):

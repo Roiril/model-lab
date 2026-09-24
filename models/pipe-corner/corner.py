@@ -227,28 +227,36 @@ def build_corner(R, straight, name, col_name="corner"):
     # 端の肩は厚くし、8mmで元の握り径へ戻す。平底の高さは変えない。
     ss = sorted(set(ss + [d for d in (COLLAR_HOLD, COLLAR_BLEND)]
                     + [total-d for d in (COLLAR_HOLD, COLLAR_BLEND)]))
+    if outer and straight == 0:
+        mouth_round = [EDGE_R * i / 4 for i in range(5)]
+        ss = sorted(set(ss + mouth_round + [total-d for d in mouth_round]))
     def collar_radius(s):
         d = min(s, total-s)
+        if outer and straight == 0 and d < EDGE_R:
+            return (COLLAR_R - EDGE_R
+                    + math.sqrt(max(0.0, EDGE_R**2 - (d-EDGE_R)**2)))
         t = max(0, min(1, (d-COLLAR_HOLD)/(COLLAR_BLEND-COLLAR_HOLD)))
         return HUB_R + (COLLAR_R-HUB_R)*(1-smoothstep(t))
     body = sweep(name, [at(s) for s in ss],
                  [rail_profile(collar_radius(s), outer) for s in ss], col)
-    _activate(body)
-    mod = body.modifiers.new('mouth_outer_round', 'BEVEL')
-    mod.width = EDGE_R * MM
-    mod.segments = 4
-    mod.limit_method = 'ANGLE'
-    mod.angle_limit = math.radians(35)
-    if outer:
-        # 平底の面取りを二重に丸めない。口の端面だけを丸める。
-        weights = body.data.attributes.new('bevel_weight_edge', 'FLOAT', 'EDGE')
-        for edge in body.data.edges:
-            coords = [body.data.vertices[i].co for i in edge.vertices]
-            mouth = any(all(abs(p[axis] + straight * MM) < 1e-7 for p in coords) for axis in (0, 1))
-            above_sole = all(p.z > (-Z_BASE + 1.01) * MM for p in coords)
-            weights.data[edge.index].value = float(mouth and above_sole)
-        mod.limit_method = 'WEIGHT'
-    bpy.ops.object.modifier_apply(modifier=mod.name)
+    # 直線部0の口は円弧端と同一面になり、BEVELが開いたメッシュを作る。
+    if straight > 0:
+        _activate(body)
+        mod = body.modifiers.new('mouth_outer_round', 'BEVEL')
+        mod.width = EDGE_R * MM
+        mod.segments = 4
+        mod.limit_method = 'ANGLE'
+        mod.angle_limit = math.radians(35)
+        if outer:
+            # 平底の面取りを二重に丸めない。口の端面だけを丸める。
+            weights = body.data.attributes.new('bevel_weight_edge', 'FLOAT', 'EDGE')
+            for edge in body.data.edges:
+                coords = [body.data.vertices[i].co for i in edge.vertices]
+                mouth = any(all(abs(p[axis] + straight * MM) < 1e-7 for p in coords) for axis in (0, 1))
+                above_sole = all(p.z > (-Z_BASE + 1.01) * MM for p in coords)
+                weights.data[edge.index].value = float(mouth and above_sole)
+            mod.limit_method = 'WEIGHT'
+        bpy.ops.object.modifier_apply(modifier=mod.name)
 
     # 中空化する前に全周の差し込み筒を結合する。根元は肩の内部へ1mm重ねる。
     length = ENGAGEMENT + (REVEAL if outer else 0)
