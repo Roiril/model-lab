@@ -190,19 +190,23 @@ def main():
             bridge = float(plateau.max()-plateau.min())
             distance = np.linalg.norm(section[:, None, :]-skin[None, :, :], axis=2)
             upper_wall = float(distance.min())
-            assert 5.5 <= bridge <= 6.5 and upper_wall >= 3.5, (name, bridge, upper_wall)
+            assert 11.7 <= bridge <= 12.0 and upper_wall >= 2.8, (name, bridge, upper_wall)
+            radial_error = float(np.max(np.abs(np.linalg.norm(skin, axis=1)-C.HUB_R)))
+            assert radial_error < .03, (name, 'circular exterior', radial_error)
             at, _, total = corner.make_path(radius, straight)
             p, lateral, _ = at(total / 2)
             curve_roof = []
-            for side in (-6, -3, 0, 3, 6):
+            for side in (-9, -6, 0, 6, 9):
                 origin = p + lateral * (side * .001)
                 yes, contact, *_ = obs[name].ray_cast(origin, Vector((0, 0, 1)))
                 assert yes, (name, side)
                 curve_roof.append(contact.z * 1000)
-            assert max(curve_roof[1:4])-min(curve_roof[1:4]) < .03, (name, curve_roof)
-            assert 2.9 < curve_roof[2]-curve_roof[0] < 3.1, (name, curve_roof)
+            assert abs(curve_roof[2]-C.BORE_D/2) < .03, (name, curve_roof)
+            assert 2.9 < curve_roof[1]-curve_roof[0] < 3.1, (name, curve_roof)
             results['print_roof'][name] = {'straight_bridge_mm':bridge,
                                            'minimum_upper_wall_mm':upper_wall,
+                                           'exterior_radius_error_mm':radial_error,
+                                           'bend_section_side_mm':[-9,-6,0,6,9],
                                            'bend_section_roof_z_mm':curve_roof}
         if name == 'pipe_corner_out_28':
             # 中央ポールは世界(-154.7,-154.7)、カーブの座標では(105,105)。

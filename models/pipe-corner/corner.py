@@ -12,7 +12,7 @@ from mathutils import Vector
 
 from params import (
     MM, BORE_D, HUB_R, Z_BASE, BORE_ROOF_HALF, BORE_ROOF_TOP,
-    ROOF_SKIN_LIFT, BORE_MOUTH_L,
+    BORE_MOUTH_L,
     STR_SEG, PROF_SEG, ARC_SEG_MIN,
     EDGE_R, R_INNER, R_OUTER, OUTER_BULGE, OUTER_HANDLE,
     OUTER_BOTTOM_SLOPE, OUTER_BED_INSET, REVEAL,
@@ -146,21 +146,13 @@ def make_path(R, straight):
 
 # ---------------------------------------------------------------- profiles
 
-def rail_profile(r, outer=False, roof_lift=0.0):
-    """平底と上面のなだらかな厚みを持つ外周断面。"""
-    def upper_point(a):
-        # 45〜135度だけを接線が続く形で膨らませる。底と側面は変えない。
-        lift = 0.0
-        if math.pi / 4 < a < 3 * math.pi / 4:
-            lift = roof_lift * math.sin(2 * (a - math.pi / 4)) ** 2
-        rho = r + lift
-        return rho * math.cos(a), rho * math.sin(a)
-
+def rail_profile(r, outer=False):
+    """円形の側面・上面から斜面で平底へ移る。内側45度、外側55度。"""
     if outer:
         slope = math.radians(OUTER_BOTTOM_SLOPE)
         end = math.pi * 1.5 - slope
         n = round(PROF_SEG * end / math.pi)
-        pts = [upper_point(end * i / n) for i in range(n + 1)]
+        pts = [(r * math.cos(end * i / n), r * math.sin(end * i / n)) for i in range(n + 1)]
         # 側面の円へ接する55度斜面と平底。最後の0.3mmは45度の面取り。
         corner = r * math.sin(slope) - (Z_BASE-r*math.cos(slope))/math.tan(slope)
         rise = OUTER_BED_INSET / (1 - 1/math.tan(slope))
@@ -177,7 +169,7 @@ def rail_profile(r, outer=False, roof_lift=0.0):
     n = round(PROF_SEG * 1.25)
     for i in range(n + 1):
         a = math.radians(225) * i / n
-        pts.append(upper_point(a))
+        pts.append((r * math.cos(a), r * math.sin(a)))
     # 45度面と底面が作る角に、両面へ接する小円弧を置く。
     corner = r * math.sqrt(2) - Z_BASE
     setback = EDGE_R * math.tan(math.pi / 8)
@@ -196,7 +188,7 @@ def rail_profile(r, outer=False, roof_lift=0.0):
 
 
 def bore_profile(t):
-    """t=1 で45度の屋根と6mmの短い橋渡し。口元では円へ戻す。"""
+    """t=1 で45度の屋根と約11.85mmの橋渡し。口元では円へ戻す。"""
     r = BORE_D / 2
     n = 64
     pts = [(r * math.cos(math.radians(135.0 + 270.0 * i / n)),
@@ -239,12 +231,8 @@ def build_corner(R, straight, name, col_name="corner"):
         d = min(s, total-s)
         t = max(0, min(1, (d-COLLAR_HOLD)/(COLLAR_BLEND-COLLAR_HOLD)))
         return HUB_R + (COLLAR_R-HUB_R)*(1-smoothstep(t))
-    def upper_lift(s):
-        # 差し込み口の丸穴では肩が十分に厚い。屋根が高くなると上面も高くする。
-        radius = collar_radius(s)
-        return max(0.0, HUB_R + ROOF_SKIN_LIFT - radius) * bore_t(s, total)
     body = sweep(name, [at(s) for s in ss],
-                 [rail_profile(collar_radius(s), outer, upper_lift(s)) for s in ss], col)
+                 [rail_profile(collar_radius(s), outer) for s in ss], col)
     _activate(body)
     mod = body.modifiers.new('mouth_outer_round', 'BEVEL')
     mod.width = EDGE_R * MM
