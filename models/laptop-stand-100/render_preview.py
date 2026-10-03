@@ -1,4 +1,4 @@
-"""Render the real generated mesh, plus a separate non-exported tablet mockup."""
+"""Render the real generated meshes, plus a non-exported laptop reference."""
 from __future__ import annotations
 
 import math
@@ -87,16 +87,17 @@ def render(path, width=1400, height=1000):
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     bpy.ops.wm.open_mainfile(filepath=str(ROOT / 'exports/laptop-stand-100.blend'))
-    frames = [obj for obj in bpy.context.scene.objects if obj.type == 'MESH']
-    if len(frames) != 2:
-        raise ValueError('Assembly scene must contain exactly two frame meshes')
+    parts = [obj for obj in bpy.context.scene.objects if obj.type == 'MESH']
+    if {obj.name for obj in parts} != {'left_frame', 'right_frame', 'left_foot', 'right_foot'}:
+        raise ValueError('Assembly scene must contain exactly two frames and two feet')
+    frames = [obj for obj in parts if obj.name.endswith('_frame')]
     sage = material('Matte sage frame', '526c61', .78)
     dark = material('Graphite laptop', '2b2723', .55)
     glass_mat = material('Unlit glass', '191512', .32)
     pad_mat = material('Soft protective pads', '59534d', .9)
     keyboard_mat = material('Keyboard reference', '383532', .8)
     paper = material('Studio background', 'f5efe2', .95)
-    for obj in frames:
+    for obj in parts:
         obj.data.materials.clear()
         obj.data.materials.append(sage)
     scene = bpy.context.scene
@@ -126,14 +127,19 @@ def main():
         lamp.location = position
         lamp.rotation_euler = (Vector((0, .12, .10)) - lamp.location).to_track_quat('-Z', 'Y').to_euler()
     pads = []
+    laptop_z = params.BODY_HEIGHT + params.FOOT_FLOOR + 2 * params.PAD_THICKNESS
     for x in (-params.RAIL_CENTER, params.RAIL_CENTER):
         for start in (params.PAD_FRONT_Y, params.PAD_REAR_Y):
-            for z in (params.PAD_THICKNESS / 2, params.BODY_HEIGHT + params.PAD_THICKNESS * 1.5):
-                pads.append(box('Non-print protective pad',
-                                (params.PAD_WIDTH, params.PAD_LENGTH, params.PAD_THICKNESS),
-                                (x, start + params.PAD_LENGTH / 2, z), pad_mat, .0003))
+            pads.append(box('Non-print upper protective pad',
+                            (params.PAD_WIDTH, params.PAD_LENGTH, params.PAD_THICKNESS),
+                            (x, start + params.PAD_LENGTH / 2, laptop_z - params.PAD_THICKNESS / 2),
+                            pad_mat, .0003))
+        for start in (params.BASE_PAD_FRONT_Y, params.BASE_PAD_REAR_Y):
+            pads.append(box('Non-print wide anti-slip pad',
+                            (params.BASE_PAD_WIDTH, params.BASE_PAD_LENGTH, params.PAD_THICKNESS),
+                            (x, start + params.BASE_PAD_LENGTH / 2, params.PAD_THICKNESS / 2),
+                            pad_mat, .0003))
     yc = params.FRAME_DEPTH / 2
-    laptop_z = params.BODY_HEIGHT + 2 * params.PAD_THICKNESS
     laptop = []
     thickness = params.LAPTOP_BASE_THICKNESS
     width, depth = params.LAPTOP_WIDTH, params.LAPTOP_DEPTH
@@ -176,7 +182,13 @@ def main():
     camera((.5, -.25, -.34), (0, yc, .045), .5)
     render(OUT / 'underside.png')
     ground.hide_render = False
-    for obj in frames + pads:
+    for obj in pads:
+        obj.hide_render = True
+    for obj in frames:
+        obj.location.z += .065
+    camera((.55, -.40, .37), (0, yc, .075), .55)
+    render(OUT / 'assembly.png')
+    for obj in parts + pads:
         obj.hide_render = True
     bpy.ops.wm.stl_import(filepath=str(OUT / 'frame.stl'))
     printing = bpy.context.object
@@ -186,7 +198,16 @@ def main():
     printing.data.materials.append(sage)
     camera((.40, -.38, .37), (0, 0, .013), .37)
     render(OUT / 'print.png')
-    print('PREVIEW_FILES: stand.png in-use.png side.png underside.png print.png')
+    printing.hide_render = True
+    bpy.ops.wm.stl_import(filepath=str(OUT / 'foot.stl'))
+    foot = bpy.context.object
+    foot.name = 'One broad foot flat-down print orientation'
+    foot.scale = (.001, .001, .001)
+    bpy.ops.object.transform_apply(location=False, rotation=False, scale=True)
+    foot.data.materials.append(sage)
+    camera((.40, -.38, .37), (0, 0, .007), .37)
+    render(OUT / 'print-foot.png')
+    print('PREVIEW_FILES: stand.png in-use.png side.png underside.png assembly.png print.png print-foot.png')
     print(f'LAPTOP_REFERENCE_MM: {width * 1000:.1f} x {depth * 1000:.1f}')
     print(f'SUPPORT_HEIGHT_WITH_PADS_MM: {laptop_z * 1000:.1f}')
 

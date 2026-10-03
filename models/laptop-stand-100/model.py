@@ -1,4 +1,4 @@
-"""100 mm高の水平ノートPCスタンド用フレームを生成する。"""
+"""広い流線型底を持つ100 mm高ノートPCスタンドを生成する。"""
 import math
 import os
 import sys
@@ -16,36 +16,49 @@ from params import *
 
 
 def rounded_rectangle(y_min, y_max, z_min, z_max, radius):
-    """YZ平面の角丸長方形を反時計回りの点列で返す。"""
-    if y_max <= y_min or z_max <= z_min:
-        raise ValueError("rounded rectangle must have positive dimensions")
-    if radius <= 0 or radius * 2 >= min(y_max - y_min, z_max - z_min):
+    """YZ平面の角丸長方形を反時計回りの対応点列で返す。"""
+    if radius <= 0 or radius * 2.0 >= min(y_max - y_min, z_max - z_min):
         raise ValueError("rounded rectangle radius is outside its valid range")
     per_corner = ROUND_SEGMENTS // 4
-    if per_corner < 2:
-        raise ValueError("ROUND_SEGMENTS must provide at least two steps per corner")
     corners = (
         (y_min + radius, z_min + radius, math.pi, 1.5 * math.pi),
         (y_max - radius, z_min + radius, -0.5 * math.pi, 0.0),
         (y_max - radius, z_max - radius, 0.0, 0.5 * math.pi),
         (y_min + radius, z_max - radius, 0.5 * math.pi, math.pi),
     )
-    points = []
-    for center_y, center_z, start, end in corners:
-        for step in range(per_corner):
-            angle = start + (end - start) * step / per_corner
-            points.append((
-                center_y + radius * math.cos(angle),
-                center_z + radius * math.sin(angle),
-            ))
-    return points
+    return [
+        (center_y + radius * math.cos(start + (end - start) * step / per_corner),
+         center_z + radius * math.sin(start + (end - start) * step / per_corner))
+        for center_y, center_z, start, end in corners
+        for step in range(per_corner + 1)
+    ]
+
+
+def rounded_rectangle_xy(width, depth, radius):
+    """原点X、FRAME_DEPTH中央Yの角丸長方形を返す。"""
+    half_width = width / 2.0
+    y_min = (FRAME_DEPTH - depth) / 2.0
+    y_max = y_min + depth
+    per_corner = ROUND_SEGMENTS // 4
+    corners = (
+        (-half_width + radius, y_min + radius, math.pi, 1.5 * math.pi),
+        (half_width - radius, y_min + radius, -0.5 * math.pi, 0.0),
+        (half_width - radius, y_max - radius, 0.0, 0.5 * math.pi),
+        (-half_width + radius, y_max - radius, 0.5 * math.pi, math.pi),
+    )
+    return [
+        (center_x + radius * math.cos(start + (end - start) * step / per_corner),
+         center_y + radius * math.sin(start + (end - start) * step / per_corner))
+        for center_x, center_y, start, end in corners
+        for step in range(per_corner + 1)
+    ]
 
 
 def create_chamfered_ring(name, outer, inner, outer_end, inner_end):
-    """対応点を持つ角丸輪郭から、X端面取り済みの閉じた部品を作る。"""
+    """現行の閉じたextruded ring構造を使ってフレームを作る。"""
     point_count = len(outer)
     if point_count < 3 or any(len(profile) != point_count for profile in (inner, outer_end, inner_end)):
-        raise ValueError("ring profiles must have the same nonzero point count")
+        raise ValueError("ring profiles must have the same point count")
     half = FRAME_WIDTH / 2.0
     x_layers = (-half, -half + SIDE_CHAMFER, half - SIDE_CHAMFER, half)
     outer_profiles = (outer_end, outer, outer, outer_end)
@@ -59,28 +72,20 @@ def create_chamfered_ring(name, outer, inner, outer_end, inner_end):
     for layer in range(len(x_layers) - 1):
         for index in range(point_count):
             following = (index + 1) % point_count
-            bm.faces.new((
-                outer_loops[layer][index],
-                outer_loops[layer + 1][index],
-                outer_loops[layer + 1][following],
-                outer_loops[layer][following],
-            ))
-            bm.faces.new((
-                inner_loops[layer][following],
-                inner_loops[layer + 1][following],
-                inner_loops[layer + 1][index],
-                inner_loops[layer][index],
-            ))
+            bm.faces.new((outer_loops[layer][index], outer_loops[layer + 1][index],
+                          outer_loops[layer + 1][following], outer_loops[layer][following]))
+            bm.faces.new((inner_loops[layer][following], inner_loops[layer + 1][following],
+                          inner_loops[layer + 1][index], inner_loops[layer][index]))
     for layer in (0, len(x_layers) - 1):
         for index in range(point_count):
             following = (index + 1) % point_count
-            bm.faces.new((
-                outer_loops[layer][index],
-                outer_loops[layer][following],
-                inner_loops[layer][following],
-                inner_loops[layer][index],
-            ))
+            bm.faces.new((outer_loops[layer][index], outer_loops[layer][following],
+                          inner_loops[layer][following], inner_loops[layer][index]))
     bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
+    return object_from_bmesh(name, bm)
+
+
+def object_from_bmesh(name, bm):
     mesh = bpy.data.meshes.new(name)
     bm.to_mesh(mesh)
     bm.free()
@@ -88,21 +93,36 @@ def create_chamfered_ring(name, outer, inner, outer_end, inner_end):
     mesh.update()
     obj = bpy.data.objects.new(name, mesh)
     bpy.context.collection.objects.link(obj)
+    bpy.context.view_layer.objects.active = obj
+    obj.select_set(True)
+    bpy.ops.object.transform_apply(location=False, rotation=False, scale=True)
     return obj
 
 
+def create_closed_loft(name, layers):
+    """対応点を持つ輪郭段から上下を閉じたloft meshを作る。"""
+    point_count = len(layers[0][1])
+    if point_count < 3 or any(len(profile) != point_count for _, profile in layers):
+        raise ValueError("loft profiles must have the same point count")
+    bm = bmesh.new()
+    loops = [[bm.verts.new((x, y, z)) for x, y in profile] for z, profile in layers]
+    for layer in range(len(loops) - 1):
+        for index in range(point_count):
+            following = (index + 1) % point_count
+            bm.faces.new((loops[layer][index], loops[layer + 1][index],
+                          loops[layer + 1][following], loops[layer][following]))
+    bm.faces.new(tuple(reversed(loops[0])))
+    bm.faces.new(tuple(loops[-1]))
+    bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
+    return object_from_bmesh(name, bm)
+
+
 def clean_mesh(obj):
-    """面取り後の微小重複を整理して三角形化する。"""
     bm = bmesh.new()
     bm.from_mesh(obj.data)
     bmesh.ops.remove_doubles(bm, verts=bm.verts, dist=CLEANUP_DISTANCE)
     bmesh.ops.dissolve_degenerate(bm, edges=bm.edges, dist=1e-10)
-    bmesh.ops.triangulate(
-        bm,
-        faces=list(bm.faces),
-        quad_method="BEAUTY",
-        ngon_method="BEAUTY",
-    )
+    bmesh.ops.triangulate(bm, faces=list(bm.faces), quad_method="BEAUTY", ngon_method="BEAUTY")
     bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
     bm.to_mesh(obj.data)
     bm.free()
@@ -131,8 +151,7 @@ def mesh_metrics(obj, label):
         components += 1
         queue = deque([unseen.pop()])
         while queue:
-            current = queue.popleft()
-            reached = adjacency[current] & unseen
+            reached = adjacency[queue.popleft()] & unseen
             unseen.difference_update(reached)
             queue.extend(reached)
     bm.free()
@@ -155,67 +174,116 @@ def mesh_metrics(obj, label):
 
 
 def build_frame():
-    if abs(BASE_THICKNESS - BOTTOM_BEAM) > 1e-9:
-        raise RuntimeError("BASE_THICKNESS must reference BOTTOM_BEAM")
-    if PAD_WIDTH > FRAME_WIDTH - 2.0 * SIDE_CHAMFER:
-        raise RuntimeError("PAD_WIDTH exceeds the flat X contact surface")
-    for pad_y in (PAD_FRONT_Y, PAD_REAR_Y):
-        if pad_y < OUTER_R or pad_y + PAD_LENGTH > FRAME_DEPTH - OUTER_R:
-            raise RuntimeError("pad leaves the flat Y contact surface")
-    outer = rounded_rectangle(0.0, FRAME_DEPTH, 0.0, BODY_HEIGHT, OUTER_R)
-    inner = rounded_rectangle(
-        END_COLUMN,
-        FRAME_DEPTH - END_COLUMN,
-        BOTTOM_BEAM,
-        BODY_HEIGHT - TOP_BEAM,
-        INNER_R,
-    )
-    outer_end = rounded_rectangle(
-        SIDE_CHAMFER,
-        FRAME_DEPTH - SIDE_CHAMFER,
-        SIDE_CHAMFER,
-        BODY_HEIGHT - SIDE_CHAMFER,
-        OUTER_R - SIDE_CHAMFER,
-    )
-    inner_end = rounded_rectangle(
-        END_COLUMN - SIDE_CHAMFER,
-        FRAME_DEPTH - END_COLUMN + SIDE_CHAMFER,
-        BOTTOM_BEAM - SIDE_CHAMFER,
-        BODY_HEIGHT - TOP_BEAM + SIDE_CHAMFER,
-        INNER_R + SIDE_CHAMFER,
-    )
+    z_min = 0.0
+    z_max = z_min + BODY_HEIGHT
+    outer = rounded_rectangle(0.0, FRAME_DEPTH, z_min, z_max, OUTER_R)
+    inner = rounded_rectangle(END_COLUMN, FRAME_DEPTH - END_COLUMN,
+                              z_min + BOTTOM_BEAM, z_max - TOP_BEAM, INNER_R)
+    outer_end = rounded_rectangle(SIDE_CHAMFER, FRAME_DEPTH - SIDE_CHAMFER,
+                                  z_min + SIDE_CHAMFER, z_max - SIDE_CHAMFER,
+                                  OUTER_R - SIDE_CHAMFER)
+    inner_end = rounded_rectangle(END_COLUMN - SIDE_CHAMFER,
+                                  FRAME_DEPTH - END_COLUMN + SIDE_CHAMFER,
+                                  z_min + BOTTOM_BEAM - SIDE_CHAMFER,
+                                  z_max - TOP_BEAM + SIDE_CHAMFER,
+                                  INNER_R + SIDE_CHAMFER)
     frame = create_chamfered_ring("frame_local", outer, inner, outer_end, inner_end)
     clean_mesh(frame)
     metrics = mesh_metrics(frame, "use_frame_local")
     expected = (FRAME_WIDTH * 1000.0, FRAME_DEPTH * 1000.0, BODY_HEIGHT * 1000.0)
-    for actual, target in zip(metrics["dimensions_mm"], expected):
-        if abs(actual - target) > 0.02:
-            raise RuntimeError(f"frame dimension {actual:.4f} mm differs from {target:.4f} mm")
+    if any(abs(actual - target) > 0.02 for actual, target in zip(metrics["dimensions_mm"], expected)):
+        raise RuntimeError("frame dimensions differ from the specification")
     return frame
 
 
-def make_print_copy(frame):
-    print_obj = frame.copy()
-    print_obj.data = frame.data.copy()
-    print_obj.name = "frame_print_side_down"
-    bpy.context.collection.objects.link(print_obj)
+def smoothstep(value):
+    return value * value * (3.0 - 2.0 * value)
+
+
+def build_foot():
+    layers = [(0.0, rounded_rectangle_xy(FOOT_BOTTOM_WIDTH, FOOT_BOTTOM_DEPTH, FOOT_BOTTOM_ROUND)),
+              (FOOT_CHAMFER, rounded_rectangle_xy(FOOT_WIDTH, FOOT_DEPTH, FOOT_ROUND))]
+    for step in range(1, FOOT_LOFT_STEPS + 1):
+        amount = step / FOOT_LOFT_STEPS
+        blend = smoothstep(amount)
+        z = FOOT_CHAMFER + (FOOT_HEIGHT - FOOT_CHAMFER) * amount
+        width = FOOT_WIDTH + (FOOT_TOP_WIDTH - FOOT_WIDTH) * blend
+        depth = FOOT_DEPTH + (FOOT_TOP_DEPTH - FOOT_DEPTH) * blend
+        radius = FOOT_ROUND + (FOOT_TOP_ROUND - FOOT_ROUND) * blend
+        layers.append((z, rounded_rectangle_xy(width, depth, radius)))
+    foot = create_closed_loft("foot_local", layers)
+    slot_y_min = (FRAME_DEPTH - SLOT_DEPTH) / 2.0
+    slot_y_max = slot_y_min + SLOT_DEPTH
+
+    def rectangle(width, y_min, y_max):
+        half = width / 2.0
+        return [(-half, y_min), (half, y_min), (half, y_max), (-half, y_max)]
+
+    slot = create_closed_loft("slot_cutter", (
+        (FOOT_FLOOR, rectangle(SLOT_WIDTH, slot_y_min, slot_y_max)),
+        (FOOT_HEIGHT - ENTRY_CHAMFER, rectangle(SLOT_WIDTH, slot_y_min, slot_y_max)),
+        (FOOT_HEIGHT,
+         rectangle(SLOT_WIDTH + 2.0 * ENTRY_CHAMFER,
+                   slot_y_min - ENTRY_CHAMFER, slot_y_max + ENTRY_CHAMFER)),
+        (FOOT_HEIGHT + ENTRY_CHAMFER,
+         rectangle(SLOT_WIDTH + 2.0 * ENTRY_CHAMFER,
+                   slot_y_min - ENTRY_CHAMFER, slot_y_max + ENTRY_CHAMFER)),
+    ))
+    bpy.context.view_layer.objects.active = foot
+    foot.select_set(True)
+    modifier = foot.modifiers.new("frame_slot", "BOOLEAN")
+    modifier.operation = "DIFFERENCE"
+    modifier.solver = "EXACT"
+    modifier.object = slot
+    bpy.ops.object.modifier_apply(modifier=modifier.name)
+    bpy.data.objects.remove(slot, do_unlink=True)
+    clean_mesh(foot)
+    for polygon in foot.data.polygons:
+        center = polygon.center
+        is_outer_side = (abs(center.x) >= FOOT_TOP_WIDTH / 2.0 - 0.0001 or
+                         center.y <= (FRAME_DEPTH - FOOT_TOP_DEPTH) / 2.0 + 0.0001 or
+                         center.y >= (FRAME_DEPTH + FOOT_TOP_DEPTH) / 2.0 - 0.0001)
+        polygon.use_smooth = is_outer_side and abs(polygon.normal.z) < 0.95
+    foot.data.update()
+    metrics = mesh_metrics(foot, "use_foot_local")
+    expected = (FOOT_WIDTH * 1000.0, FOOT_DEPTH * 1000.0, FOOT_HEIGHT * 1000.0)
+    if any(abs(actual - target) > 0.02 for actual, target in zip(metrics["dimensions_mm"], expected)):
+        raise RuntimeError("foot dimensions differ from the specification")
+    return foot
+
+
+def copy_object(source, name):
+    result = source.copy()
+    result.data = source.data.copy()
+    result.name = name
+    bpy.context.collection.objects.link(result)
+    return result
+
+
+def make_print_frame(frame):
+    result = copy_object(frame, "frame_print_side_down")
     root_two = math.sqrt(2.0)
-    for vertex in print_obj.data.vertices:
+    center_z = BODY_HEIGHT / 2.0
+    for vertex in result.data.vertices:
         x, y, z = vertex.co
-        vertex.co = (
-            (y - FRAME_DEPTH / 2.0 - (z - BODY_HEIGHT / 2.0)) / root_two,
-            (y - FRAME_DEPTH / 2.0 + z - BODY_HEIGHT / 2.0) / root_two,
-            x + FRAME_WIDTH / 2.0,
-        )
-    print_obj.data.update()
-    metrics = mesh_metrics(print_obj, "print_frame")
-    if abs(metrics["minimum_mm"][2]) > 0.01 or abs(metrics["maximum_mm"][2] - FRAME_WIDTH * 1000) > 0.01:
-        raise RuntimeError("print frame must lie on Z=0 at the frame width")
-    return print_obj
+        vertex.co = ((y - FRAME_DEPTH / 2.0 - (z - center_z)) / root_two,
+                     (y - FRAME_DEPTH / 2.0 + z - center_z) / root_two,
+                     x + FRAME_WIDTH / 2.0)
+    result.data.update()
+    mesh_metrics(result, "print_frame")
+    return result
 
 
-def remove_object(obj):
-    bpy.data.objects.remove(obj, do_unlink=True)
+def make_print_foot(foot):
+    result = copy_object(foot, "foot_print_45deg")
+    root_two = math.sqrt(2.0)
+    for vertex in result.data.vertices:
+        x, y, z = vertex.co
+        vertex.co = ((x - (y - FRAME_DEPTH / 2.0)) / root_two,
+                     (x + y - FRAME_DEPTH / 2.0) / root_two, z)
+    result.data.update()
+    mesh_metrics(result, "print_foot")
+    return result
 
 
 def assert_scene_meshes(expected_names):
@@ -224,58 +292,68 @@ def assert_scene_meshes(expected_names):
         raise RuntimeError(f"unexpected scene meshes: {sorted(actual)}")
 
 
-def export_print_frame(frame, print_obj):
-    remove_object(frame)
-    assert_scene_meshes([print_obj.name])
-    os.makedirs(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
-                             "exports", MODEL_NAME), exist_ok=True)
-    export_stl(f"{MODEL_NAME}/frame", only=[print_obj])
+def keep_only(obj):
+    for other in list(bpy.context.scene.objects):
+        if other != obj:
+            bpy.data.objects.remove(other, do_unlink=True)
+    assert_scene_meshes([obj.name])
 
 
-def create_assembly(frame_mesh, print_obj):
-    remove_object(print_obj)
-    left = bpy.data.objects.new("left_frame", frame_mesh.copy())
-    right = bpy.data.objects.new("right_frame", frame_mesh.copy())
-    bpy.context.collection.objects.link(left)
-    bpy.context.collection.objects.link(right)
-    left.location = (-RAIL_CENTER, 0.0, PAD_THICKNESS)
-    right.location = (RAIL_CENTER, 0.0, PAD_THICKNESS)
-    mesh_metrics(left, "left_use_frame")
-    mesh_metrics(right, "right_use_frame")
-    assert_scene_meshes([left.name, right.name])
-    bpy.context.view_layer.update()
-    minimum = Vector((
-        min((obj.matrix_world @ Vector(corner)).x for obj in (left, right) for corner in obj.bound_box),
-        min((obj.matrix_world @ Vector(corner)).y for obj in (left, right) for corner in obj.bound_box),
-        min((obj.matrix_world @ Vector(corner)).z for obj in (left, right) for corner in obj.bound_box),
-    ))
-    maximum = Vector((
-        max((obj.matrix_world @ Vector(corner)).x for obj in (left, right) for corner in obj.bound_box),
-        max((obj.matrix_world @ Vector(corner)).y for obj in (left, right) for corner in obj.bound_box),
-        max((obj.matrix_world @ Vector(corner)).z for obj in (left, right) for corner in obj.bound_box),
-    ))
-    dimensions = (maximum - minimum) * 1000.0
-    print(f"[{MODEL_NAME}] assembly_components 2")
-    print(f"[{MODEL_NAME}] assembly_dimensions_mm", tuple(dimensions))
-    print(f"[{MODEL_NAME}] assembly_minimum_mm", tuple(minimum * 1000.0))
-    expected = ((RAIL_CENTER * 2 + FRAME_WIDTH) * 1000, FRAME_DEPTH * 1000, BODY_HEIGHT * 1000)
-    for actual, target in zip(dimensions, expected):
-        if abs(actual - target) > 0.02:
-            raise RuntimeError(f"assembly dimension {actual:.4f} mm differs from {target:.4f} mm")
-    if abs(minimum.z - PAD_THICKNESS) > 0.00001 or abs(maximum.z - PAD_THICKNESS - BODY_HEIGHT) > 0.00001:
-        raise RuntimeError("assembly body must allow for the bottom pad")
-    return left, right
+def build_assembly(frame_mesh, foot_mesh):
+    clear_scene()
+    left_frame = bpy.data.objects.new("left_frame", frame_mesh.copy())
+    right_frame = bpy.data.objects.new("right_frame", frame_mesh.copy())
+    left_foot = bpy.data.objects.new("left_foot", foot_mesh.copy())
+    right_foot = bpy.data.objects.new("right_foot", foot_mesh.copy())
+    for obj in (left_frame, right_frame, left_foot, right_foot):
+        bpy.context.collection.objects.link(obj)
+    left_frame.location = (-RAIL_CENTER, 0.0, FRAME_ASSEMBLY_Z)
+    right_frame.location = (RAIL_CENTER, 0.0, FRAME_ASSEMBLY_Z)
+    left_foot.location = (-RAIL_CENTER, 0.0, PAD_THICKNESS)
+    right_foot.location = (RAIL_CENTER, 0.0, PAD_THICKNESS)
+    objects = (left_frame, right_frame, left_foot, right_foot)
+    for obj in objects:
+        mesh_metrics(obj, obj.name)
+    assert_scene_meshes([obj.name for obj in objects])
+    corners = [obj.matrix_world @ Vector(corner) for obj in objects for corner in obj.bound_box]
+    low = Vector(tuple(min(point[axis] for point in corners) for axis in range(3)))
+    high = Vector(tuple(max(point[axis] for point in corners) for axis in range(3)))
+    dimensions = tuple(value * 1000.0 for value in high - low)
+    print(f"[{MODEL_NAME}] assembly_components 4")
+    print(f"[{MODEL_NAME}] assembly_dimensions_mm", dimensions)
+    print(f"[{MODEL_NAME}] assembly_minimum_mm", tuple(value * 1000.0 for value in low))
+    expected = ((2.0 * RAIL_CENTER + FOOT_WIDTH) * 1000.0,
+                FOOT_DEPTH * 1000.0,
+                (FOOT_FLOOR + BODY_HEIGHT) * 1000.0)
+    if any(abs(actual - target) > 0.02 for actual, target in zip(dimensions, expected)):
+        raise RuntimeError("assembly dimensions differ from the derived specification")
+    expected_top = FRAME_ASSEMBLY_Z + BODY_HEIGHT
+    if abs(low.z - PAD_THICKNESS) > 1e-8 or abs(high.z - expected_top) > 1e-8:
+        raise RuntimeError("assembly object Z bounds differ from the derived specification")
+    return objects
 
 
 def main():
     clear_scene()
     bpy.context.preferences.filepaths.save_version = 0
     frame = build_frame()
-    frame_mesh = frame.data
-    print_obj = make_print_copy(frame)
-    export_print_frame(frame, print_obj)
-    left, right = create_assembly(frame_mesh, print_obj)
-    export_stl(MODEL_NAME, only=[left, right])
+    foot = build_foot()
+    frame_mesh = frame.data.copy()
+    foot_mesh = foot.data.copy()
+
+    print_frame = make_print_frame(frame)
+    keep_only(print_frame)
+    export_stl(f"{MODEL_NAME}/frame", only=[print_frame])
+
+    clear_scene()
+    source_foot = bpy.data.objects.new("foot_export_source", foot_mesh.copy())
+    bpy.context.collection.objects.link(source_foot)
+    print_foot = make_print_foot(source_foot)
+    keep_only(print_foot)
+    export_stl(f"{MODEL_NAME}/foot", only=[print_foot])
+
+    assembly = build_assembly(frame_mesh, foot_mesh)
+    export_stl(MODEL_NAME, only=list(assembly))
 
 
 if __name__ == "__main__":

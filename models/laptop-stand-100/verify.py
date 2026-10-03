@@ -142,7 +142,95 @@ def unrotate_print(triangles, params):
     return restored
 
 
-def geometry_checks(frame, printing, assembly, params):
+def unrotate_foot(triangles, params):
+    restored = np.empty_like(triangles)
+    restored[:, :, 0] = (triangles[:, :, 0] + triangles[:, :, 1]) / math.sqrt(2)
+    restored[:, :, 1] = (triangles[:, :, 1] - triangles[:, :, 0]) / math.sqrt(2) + params.FRAME_DEPTH * 500
+    restored[:, :, 2] = triangles[:, :, 2]
+    return restored
+
+
+def print_checks(triangles):
+    cross = np.cross(triangles[:, 1] - triangles[:, 0], triangles[:, 2] - triangles[:, 0])
+    lengths = np.linalg.norm(cross, axis=1)
+    normals = cross / lengths[:, None]
+    bed = triangles[:, :, 2].max(axis=1) < 0.001
+    steep = (normals[:, 2] < -math.sin(math.radians(45.5))) & ~bed
+    if steep.any():
+        raise ValueError(f"Steep faces in print orientation: {int(steep.sum())}")
+    if abs(float(triangles[:, :, 2].min())) > 0.001 or not bed.any():
+        raise ValueError("Print is not on the bed")
+    brim = np.ptp(triangles, axis=(0, 1))[:2] + 8
+    if brim.max() > 256:
+        raise ValueError("Part plus brim does not fit the assumed 256 mm bed")
+    return {"steep_downward_faces_above_bed": int(steep.sum()),
+            "maximum_downward_overhang_deg": float(np.degrees(np.arcsin(np.clip(-normals[~bed, 2], 0, 1))).max()),
+            "bed_contact_area_cm2": float(lengths[bed].sum() / 200),
+            "print_xy_with_4mm_brim_mm": brim.tolist()}
+
+
+def fit_checks(frame, foot, params):
+    floor = params.FOOT_FLOOR * 1000
+    height = params.FOOT_HEIGHT * 1000
+    frame_width = params.FRAME_WIDTH * 1000
+    depth = params.FRAME_DEPTH * 1000
+    gap = params.FIT_CLEARANCE * 1000
+    widths, floors, walls = [], [], []
+    for y in np.linspace(20, depth - 20, 17):
+        hits = ray_hits(foot, (0, y, -0.01), (0, 0, 1))
+        if len(hits) != 2:
+            raise ValueError("Slot floor is not one continuous solid")
+        floors.append(float(hits[1] - hits[0]))
+        for z in (floor + .2, (floor + height) / 2, height - .8):
+            left = ray_hits(foot, (0, y, z), (-1, 0, 0))
+            right = ray_hits(foot, (0, y, z), (1, 0, 0))
+            if len(left) < 2 or len(right) < 2:
+                raise ValueError("Slot side wall is missing")
+            widths.append(float(left[0] + right[0]))
+            walls.extend([float(left[1] - left[0]), float(right[1] - right[0])])
+    if not np.allclose(widths, frame_width + 2 * gap, atol=.015):
+        raise ValueError("Slot clearance differs from its parameter")
+    if not np.allclose(floors, floor, atol=.01) or min(walls) < 1.2:
+        raise ValueError("Slot floor or wall is too thin")
+    end_walls = []
+    for x in (-frame_width / 2, 0, frame_width / 2):
+        for direction in ((0, 1, 0), (0, -1, 0)):
+            hits = ray_hits(foot, (x, depth / 2, height - .8), direction)
+            if len(hits) < 2 or abs(float(hits[0]) - (depth / 2 + gap)) > .015:
+                raise ValueError("Slot end clearance or end wall is missing")
+            end_walls.append(float(hits[1] - hits[0]))
+    # Test points lie 0.02 mm inside the actual frame surface. Boundary contact
+    # with the slot floor is excluded. A deliberate sideways collision calibrates
+    # the same detector before the five unobstructed vertical insertion poses.
+    cross = np.cross(frame[:, 1] - frame[:, 0], frame[:, 2] - frame[:, 0])
+    inward = frame.mean(axis=1) - cross / np.linalg.norm(cross, axis=1)[:, None] * .02
+
+    def collision_points(dx=0, lift=0):
+        points = inward + (dx, 0, floor + lift)
+        points = points[(points[:, 2] > floor + .05) & (points[:, 2] < height - .05)]
+        return len(points), sum(contains(foot, point) for point in points)
+
+    bad_count, bad_hits = collision_points(dx=1)
+    if not bad_count or not bad_hits:
+        raise ValueError("Fit detector did not reject deliberate 1 mm penetration")
+    checked = 0
+    for lift in (0, .5, 5, 15, 25):
+        count, hits = collision_points(lift=lift)
+        checked += count
+        if hits:
+            raise ValueError(f"Frame intersects the foot during insertion at lift {lift}")
+    if not checked:
+        raise ValueError("No insertion sample points checked")
+    return {"slot_width_mm": [min(widths), max(widths)], "side_clearance_mm": gap,
+            "minimum_sampled_floor_mm": min(floors), "minimum_sampled_side_wall_mm": min(walls),
+            "minimum_sampled_end_wall_mm": min(end_walls),
+            "engagement_height_mm": height - floor, "insertion_sample_points": checked,
+            "deliberate_collision_points_rejected": bad_hits,
+            "angular_play_upper_bound_deg": math.degrees(math.atan(2 * gap / (height - floor))),
+            "note": "Sampled geometry only. Print shrinkage and friction need physical fit checks."}
+
+
+def geometry_checks(frame, foot, assembly, params):
     width = params.FRAME_WIDTH * 1000
     depth = params.FRAME_DEPTH * 1000
     height = params.BODY_HEIGHT * 1000
@@ -180,30 +268,36 @@ def geometry_checks(frame, printing, assembly, params):
     minimum = {name: min(values) for name, values in measured.items()}
     if any(minimum[name] < limit - 0.01 for name, limit in limits.items()):
         raise ValueError(f"A section is thinner than designed: {minimum}")
-    cross = np.cross(printing[:, 1] - printing[:, 0], printing[:, 2] - printing[:, 0])
-    lengths = np.linalg.norm(cross, axis=1)
-    normals = cross / lengths[:, None]
-    bed = printing[:, :, 2].max(axis=1) < 0.001
-    steep = (normals[:, 2] < -math.sin(math.radians(45.5))) & ~bed
-    if steep.any():
-        raise ValueError(f"Steep faces in print orientation: {int(steep.sum())}")
-    if abs(float(printing[:, :, 2].min())) > 0.001:
-        raise ValueError("Print is not on the bed")
-    pad_points = 0
+    foot_info = inspect_mesh(foot)
+    if not np.allclose(foot_info['dimensions_mm'],
+                       np.array([params.FOOT_WIDTH, params.FOOT_DEPTH, params.FOOT_HEIGHT]) * 1000, atol=.01):
+        raise ValueError("Foot outer dimensions differ from parameters")
+    assembly_info = inspect_mesh(assembly, expected_components=4)
+    expected = [(2 * params.RAIL_CENTER + params.FOOT_WIDTH) * 1000,
+                params.FOOT_DEPTH * 1000, (params.FOOT_FLOOR + params.BODY_HEIGHT) * 1000]
+    if not np.allclose(assembly_info['dimensions_mm'], expected, atol=.015):
+        raise ValueError("Assembly dimensions differ from parameters")
+    lower_points = upper_points = 0
+    upper_bottom = (params.PAD_THICKNESS + params.FOOT_FLOOR + params.BODY_HEIGHT) * 1000
     for x in (-params.RAIL_CENTER * 1000, params.RAIL_CENTER * 1000):
+        for start in (params.BASE_PAD_FRONT_Y * 1000, params.BASE_PAD_REAR_Y * 1000):
+            for dx in (-params.BASE_PAD_WIDTH * 500, 0, params.BASE_PAD_WIDTH * 500):
+                for dy in (0, params.BASE_PAD_LENGTH * 500, params.BASE_PAD_LENGTH * 1000):
+                    hits = ray_hits(assembly, (x + dx, start + dy, 0), (0, 0, 1))
+                    if not len(hits) or abs(float(hits[0]) - params.PAD_THICKNESS * 1000) > 0.01:
+                        raise ValueError("Bottom pad is not beneath flat foot material")
+                    lower_points += 1
         for start in (params.PAD_FRONT_Y * 1000, params.PAD_REAR_Y * 1000):
             for dx in (-params.PAD_WIDTH * 500, 0, params.PAD_WIDTH * 500):
                 for dy in (0, params.PAD_LENGTH * 500, params.PAD_LENGTH * 1000):
-                    hits = ray_hits(assembly, (x + dx, start + dy, 0), (0, 0, 1))
-                    if len(hits) < 2 or abs(float(hits[0]) - params.PAD_THICKNESS * 1000) > 0.01:
-                        raise ValueError("Pad is not beneath flat stand material")
-                    pad_points += 1
-    return {"minimum_sampled_sections_mm": minimum, "flat_bottom_pad_points": pad_points,
-            "height_with_two_1mm_pads_mm": height + 2 * params.PAD_THICKNESS * 1000,
-            "steep_downward_faces_above_bed": int(steep.sum()),
-            "maximum_downward_overhang_deg": float(np.degrees(np.arcsin(np.clip(-normals[~bed, 2], 0, 1))).max()),
-            "bed_contact_area_cm2": float(lengths[bed].sum() / 200),
-            "print_xy_with_4mm_brim_mm": (np.ptp(printing, axis=(0, 1))[:2] + 8).tolist()}
+                    hits = ray_hits(assembly, (x + dx, start + dy, upper_bottom + .1), (0, 0, -1))
+                    if not len(hits) or abs(float(hits[0]) - .1) > .01:
+                        raise ValueError("Top pad is not on flat frame material")
+                    upper_points += 1
+    return {"minimum_sampled_sections_mm": minimum, "flat_bottom_pad_points": lower_points,
+            "flat_top_pad_points": upper_points,
+            "height_with_two_1mm_pads_mm": height + (params.FOOT_FLOOR + 2 * params.PAD_THICKNESS) * 1000,
+            "fit": fit_checks(frame, foot, params)}
 
 
 def load_estimate(params, stand_mass):
@@ -229,9 +323,9 @@ def load_estimate(params, stand_mass):
                       "midspan_deflection_mm": deflection,
                       "allowable_to_stress_ratio": allowable / stress})
     # Support coordinates use the actual four pad locations, with a 1mm inset.
-    half = params.RAIL_CENTER * 1000 + params.PAD_WIDTH * 500 - 1
-    front = params.PAD_FRONT_Y * 1000 + 1
-    rear = (params.PAD_REAR_Y + params.PAD_LENGTH) * 1000 - 1
+    half = params.RAIL_CENTER * 1000 + params.BASE_PAD_WIDTH * 500 - 1
+    front = params.BASE_PAD_FRONT_Y * 1000 + 1
+    rear = (params.BASE_PAD_REAR_Y + params.BASE_PAD_LENGTH) * 1000 - 1
     center_y = params.FRAME_DEPTH * 500
     stability = []
     for mass in (3.0, 4.0):
@@ -247,30 +341,83 @@ def load_estimate(params, stand_mass):
                         if margin <= 0:
                             raise ValueError("Resultant vertical load leaves support polygon")
                         stability.append(margin)
+    horizontal = []
+    force_height = (params.BODY_HEIGHT + params.FOOT_FLOOR + 2 * params.PAD_THICKNESS + params.LAPTOP_BASE_THICKNESS) * 1000
+    for mass in (3.0, 4.0):
+        for dx in (-30, 30):
+            for dy in (-60, 60):
+                weight = (mass + stand_mass) * g
+                cx = mass * g * dx / weight
+                cy = center_y + mass * g * dy / weight
+                for fx, fy in ((10, 0), (-10, 0), (0, 10), (0, -10)):
+                    rx = cx + fx * force_height / weight
+                    ry = cy + fy * force_height / weight
+                    margin = min(half - abs(rx), ry - front, rear - ry)
+                    if margin <= 0:
+                        raise ValueError("Horizontal body-level push tips the assumed coupled system")
+                    horizontal.append(margin)
+    individual = []
+    local_half = params.BASE_PAD_WIDTH * 500 - 1
+    rail_spacing = params.RAIL_CENTER * 2000
+    # 3 mm allowance includes imperfect placement and the slot's angular play.
+    placement_allowance = 3.0
+    for mass in (3.0, 4.0):
+        for dx in (-30, 30):
+            for side in (-1, 1):
+                laptop_reaction = mass * g * (.5 + side * dx / rail_spacing)
+                total_reaction = laptop_reaction + stand_mass * g / 2
+                cop_shift = 5 * force_height / total_reaction
+                margin = local_half - cop_shift - placement_allowance
+                if margin <= 0:
+                    raise ValueError("Lighter individual support tips under assumed 5 N push")
+                individual.append({"laptop_mass_kg": mass, "com_side_offset_mm": dx,
+                                   "support_side": side, "normal_force_n": total_reaction,
+                                   "horizontal_force_n": 5, "cop_shift_mm": cop_shift,
+                                   "margin_mm": margin})
+    old_half, old_front, old_rear = 171, 9, 236
+    old_area = 2 * old_half * (old_rear - old_front)
+    new_area = 2 * half * (rear - front)
     return {"design_laptop_mass_kg": params.LOAD_MASS_KG, "beam_span_mm": span,
             "assumed_modulus_mpa": modulus, "assumed_stress_threshold_mpa": allowable,
             "beam_cases": cases, "contact_polygon_mm": [[-half, front], [half, front], [half, rear], [-half, rear]],
             "assumed_laptop_com_offsets_mm": {"side": 30, "front_rear": 60},
             "vertical_keyboard_press_n": 20, "static_cases_checked": len(stability),
             "minimum_vertical_resultant_margin_mm": min(stability),
-            "limitations": "Assumed solid-beam static calculation only. Printed strength, heat, creep, friction and laptop contact require physical tests."}
+            "support_polygon_area_mm2": new_area,
+            "previous_support_polygon_area_mm2": old_area,
+            "support_polygon_area_increase_percent": (new_area / old_area - 1) * 100,
+            "individual_contact_half_width_mm": local_half,
+            "previous_individual_contact_half_width_mm": 11,
+            "horizontal_body_push_n": 10, "horizontal_force_height_mm": force_height,
+            "horizontal_static_cases_checked": len(horizontal),
+            "minimum_horizontal_resultant_margin_mm": min(horizontal),
+            "individual_lighter_support_cases": individual,
+            "individual_placement_allowance_mm": placement_allowance,
+            "minimum_individual_horizontal_margin_mm": min(case['margin_mm'] for case in individual),
+            "limitations": "Assumed solid-beam statics only. Whole-system polygon assumes a rigid laptop contacts both non-slipping supports. Horizontal cases are at keyboard height, split 5 N per support, separately from vertical pressing. Screen-level pushing, unequal horizontal force, impacts, printed strength, heat, creep and friction need physical tests."}
 
 
 def main():
     import params
     calibration = calibrate()
     printing = load_stl(OUT / "frame.stl")
+    foot_printing = load_stl(OUT / "foot.stl")
     assembly = load_stl(ROOT / "exports/laptop-stand-100.stl")
     canonical = unrotate_print(printing, params)
+    foot = unrotate_foot(foot_printing, params)
     frame_info = inspect_mesh(canonical)
     print_info = inspect_mesh(printing)
-    assembly_info = inspect_mesh(assembly, expected_components=2)
-    if abs(assembly_info["volume_cm3"] - 2 * frame_info["volume_cm3"]) > .01:
-        raise ValueError("Assembly volume differs from two identical frames")
+    foot_info = inspect_mesh(foot)
+    foot_print_info = inspect_mesh(foot_printing)
+    assembly_info = inspect_mesh(assembly, expected_components=4)
+    if abs(assembly_info["volume_cm3"] - 2 * (frame_info["volume_cm3"] + foot_info["volume_cm3"])) > .01:
+        raise ValueError("Assembly volume differs from two frames and two feet")
     density = 1.27
     mass = assembly_info["volume_cm3"] * density / 1000
-    report = {"calibration": calibration, "frame": frame_info, "print": print_info,
-              "assembly": assembly_info, "geometry": geometry_checks(canonical, printing, assembly, params),
+    report = {"calibration": calibration, "frame": frame_info, "foot": foot_info,
+              "print": print_info, "foot_print": foot_print_info,
+              "print_checks": {"frame": print_checks(printing), "foot": print_checks(foot_printing)},
+              "assembly": assembly_info, "geometry": geometry_checks(canonical, foot, assembly, params),
               "material": {"assumed_petg_density_g_cm3": density, "solid_pair_mass_g": mass * 1000,
                            "note": "Volume conversion only; excludes brim and startup waste."},
               "load_estimate": load_estimate(params, mass)}
