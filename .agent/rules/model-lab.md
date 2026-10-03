@@ -135,3 +135,13 @@ EXACTが入力の結合を空やごく少数の面へ崩す場合は、工程ご
 | `new-model <name>` | 新モデルのスキャフォールドを生成 |
 | `build <name>` | モデルをビルドしてビューワーに反映 |
 | `print-check <name>` | 3Dプリント適性チェック |
+
+## Bambu Studio CLIで材料量を見積もるとき
+
+`inherits` を持つ導入済みprofileのJSONは、そのままCLIへ渡さない。
+公式CLI資料にある完全な設定を使う。材料量は出力3MFやG-codeの実在を確認して読む。
+Windows版02.03.01.51ではA1の設定を再帰統合しても `process not compatible with printer` が出た。
+設定IDの補完と互換機種の一覧を空にする変更でも同じエラーが出た。
+この状態ではID変更を繰り返さず、完全な設定の書き出しへ切り替える。
+書き出せない場合はSTL体積と指定密度から計算する。スライサーの使用量として報告しない。
+2026-10-03の実例は [Redmi Pad SEスタンド](../../models/tablet-stand-45/README.md) を参照する。
