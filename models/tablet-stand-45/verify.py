@@ -1,6 +1,6 @@
 """Read the exported binary STL directly. Units in this script are millimetres.
 
-Run: py -3.11 models/tablet-stand-45/verify.py --stand-mass 1.0
+Run: py -3.11 models/tablet-stand-45/verify.py --stand-mass 0.15
 The static calculation is an assumption-based estimate, not a strength test.
 """
 from __future__ import annotations
@@ -145,51 +145,90 @@ def frame(params):
 
 def geometric_checks(triangles, printing, params):
     origin, u, n = frame(params)
-    # The case spans 16mm, with 1mm backing and bottom cushioning.
+    # Bare Redmi Pad SE. Soft backing and bottom pads are separate dimensions.
+    floor_pad = params.FLOOR_PAD * 1000
+    back_pad = params.BACK_PAD * 1000
+    height = params.TABLET_HEIGHT * 1000
+    thickness_mm = params.TABLET_THICKNESS * 1000
+    rib = params.RIB_CENTER * 1000
     tested = 0
     for lift in np.linspace(0.0, 50.0, 101):
-        for along in (1.0, 4.0, 10.0, 40.0, 90.0, 160.0, 226.0):
-            for thickness in (1.0, 9.0, 17.0):
-                for x in (-80.0, 0.0, 80.0):
+        for along in (floor_pad, 2.0, 6.0, 20.0, 60.0, 110.0, 150.0, height + floor_pad):
+            for thickness in (back_pad, back_pad + thickness_mm / 2, back_pad + thickness_mm):
+                for x in (-params.TABLET_WIDTH * 500, -rib, -rib + 8, 0, rib - 8, rib,
+                          params.TABLET_WIDTH * 500):
                     point = origin + u * along + n * thickness + np.array([x, 0.0, lift])
                     if contains(triangles, point):
                         raise ValueError(f"Tablet lift intersects stand: {point.tolist()}")
                     tested += 1
     # Check material and void using the same occupancy instrument.
-    assert contains(triangles, (0, 100, 5))
+    assert contains(triangles, (rib, 100, 2))
     assert not contains(triangles, (0, 110, 40))
     deck = []
-    for along in np.linspace(45, 140, 16):
-        hits = ray_hits(triangles, origin + u * along + n * 0.01, -n)
-        if len(hits) < 2:
-            raise ValueError("Deck ray did not cross both faces")
-        deck.append(float(hits[1] - hits[0]))
+    for x in (-rib, rib):
+        for along in np.linspace(40, 135, 16):
+            hits = ray_hits(triangles, origin + u * along + n * 0.01 + (x, 0, 0), -n)
+            if len(hits) < 2:
+                raise ValueError("Deck ray did not cross both faces")
+            deck.append(float(hits[1] - hits[0]))
     base = []
-    for y in np.linspace(65, 195, 16):
-        hits = ray_hits(triangles, (0, y, -0.01), (0, 0, 1))
+    for x in (-rib, rib):
+        for y in np.linspace(65, 185, 16):
+            hits = ray_hits(triangles, (x, y, -0.01), (0, 0, 1))
+            if len(hits) < 2:
+                raise ValueError("Base ray did not cross both faces")
+            base.append(float(hits[1] - hits[0]))
+    lip = []
+    for x in (-rib, rib):
+        hits = ray_hits(triangles, (x, -1, 22), (0, 1, 0))
         if len(hits) < 2:
-            raise ValueError("Base ray did not cross both faces")
-        base.append(float(hits[1] - hits[0]))
+            raise ValueError("Lip ray did not cross both faces")
+        lip.append(float(hits[1] - hits[0]))
+    rear = []
+    top = origin + u * (params.SUPPORT_LENGTH * 1000) - n * (params.DECK_THICKNESS * 1000)
+    rear_direction = np.array([0.0, params.DEPTH * 1000, params.BASE_THICKNESS * 1000]) - top
+    rear_direction /= np.linalg.norm(rear_direction)
+    inward = np.array([0.0, rear_direction[2], -rear_direction[1]])
+    for x in (-rib, rib):
+        for along in (30, 50, 80, 100):
+            point = top + rear_direction * along + (x, 0, 0) - inward * 0.01
+            hits = ray_hits(triangles, point, inward)
+            if len(hits) < 2:
+                raise ValueError("Rear post ray did not cross both faces")
+            rear.append(float(hits[1] - hits[0]))
     if min(deck) < params.DECK_THICKNESS * 1000 - 0.01:
         raise ValueError("Deck is thinner than its design dimension")
     if min(base) < params.BASE_THICKNESS * 1000 - 0.01:
         raise ValueError("Base is thinner than its design dimension")
+    if min(lip) < params.LIP_THICKNESS * 1000 - 0.01:
+        raise ValueError("Lip is thinner than its design dimension")
+    if min(rear) < params.REAR_THICKNESS * 1000 - 0.01:
+        raise ValueError("Rear post is thinner than its design dimension")
     cross = np.cross(printing[:, 1] - printing[:, 0], printing[:, 2] - printing[:, 0])
     lengths = np.linalg.norm(cross, axis=1)
     normals = cross / lengths[:, None]
     bed = printing[:, :, 2].max(axis=1) < 0.001
-    # Bevel mitres on tessellated arcs can exceed exactly 45 degrees very slightly.
-    # Report their actual maximum. A 0.5 degree tolerance is explicit, not hidden.
     limit = math.sin(math.radians(45.5))
     steep = (normals[:, 2] < -limit) & ~bed
-    if np.any(steep):
-        raise ValueError(f"Print has steep unsupported faces: {int(steep.sum())}")
+    # The small apex radius produces short bridges. Bottom edge rounding is low.
+    roof = steep & (printing[:, :, 2].min(axis=1) > params.BASE_THICKNESS * 1000 + 8)
+    roof_y_spans = []
+    for side in (-1, 1):
+        roof_side = roof & (printing[:, :, 0].mean(axis=1) * side > 0)
+        if np.any(roof_side):
+            roof_y_spans.append(float(np.ptp(printing[roof_side, :, 1])))
+    if roof_y_spans and max(roof_y_spans) > 2.0:
+        raise ValueError("Hole apex bridge exceeds 2mm")
     if abs(float(printing[:, :, 2].min())) > 0.001:
         raise ValueError("Print is not on Z=0")
     return {"vertical_lift_samples_clear": tested, "vertical_lift_mm": 50,
-            "sampled_case_thickness_mm": 16, "back_and_floor_pad_mm": 1,
+            "sampled_tablet_thickness_mm": thickness_mm,
+            "back_pad_mm": back_pad, "floor_pad_mm": floor_pad,
             "minimum_sampled_deck_mm": min(deck), "minimum_sampled_base_mm": min(base),
+            "minimum_sampled_lip_mm": min(lip),
+            "minimum_sampled_rear_post_mm": min(rear),
             "steep_downward_faces_above_bed": int(steep.sum()),
+            "hole_apex_bridge_y_spans_mm": roof_y_spans,
             "overhang_threshold_deg": 45.5,
             "maximum_downward_overhang_deg": float(np.degrees(np.arcsin(
                 np.clip(-normals[~bed, 2], 0, 1))).max()),
@@ -199,24 +238,24 @@ def geometric_checks(triangles, printing, params):
 
 def static_estimate(info, params, stand_mass):
     origin, u, n = frame(params)
-    # Continuous strips extend to x=+-108, front y=10..24, rear y=222..236.
-    # This polygon uses 2mm inset from their outer edges.
-    half_width = params.WIDTH * 500 - 6
-    front = 12.0
-    rear = params.DEPTH * 1000 - 6
+    # Four 14x14mm patches at rib centres, y=2..16 and 194..208.
+    # The conservative contact polygon insets their outer edges by 1mm.
+    half_width = params.RIB_CENTER * 1000 + 6
+    front = 3.0
+    rear = 206.0
     stand_y = info["uniform_density_centroid_mm"][1]
     stand_y_conservative = stand_y + 10.0
     g = 9.80665
     touch_n = 10.0
     safety = 1.5
     rows = []
-    for width, height, mass, thickness in [(281.6, 215.5, 0.579, 5.1),
-                                            (326.4, 208.6, 0.718, 5.4),
-                                            (340.0, 225.0, 0.600, 16.0),
-                                            (340.0, 225.0, 1.000, 16.0)]:
-        center = origin + u * (height / 2 + 1) + n * (1 + thickness / 2)
-        top = origin + u * (height + 1) + n * (1 + thickness)
-        top[2] += 1.5  # Adhesive feet lift the assembly above the tabletop.
+    for width, height, mass, thickness in [(params.TABLET_WIDTH * 1000,
+                                            params.TABLET_HEIGHT * 1000,
+                                            params.TABLET_MASS_KG,
+                                            params.TABLET_THICKNESS * 1000)]:
+        center = origin + u * (height / 2 + params.FLOOR_PAD * 1000) + n * (params.BACK_PAD * 1000 + thickness / 2)
+        top = origin + u * (height + params.FLOOR_PAD * 1000) + n * (params.BACK_PAD * 1000 + thickness)
+        top[2] += params.FEET_PAD * 1000
         rear_lever_per_n = max(0.0, math.sin(math.radians(params.ANGLE_DEG)) * top[2]
                               + math.cos(math.radians(params.ANGLE_DEG)) * (top[1] - rear)) / 1000
         rear_moment = g * (stand_mass * (rear - stand_y_conservative)
@@ -227,18 +266,22 @@ def static_estimate(info, params, stand_mass):
         side_force = side_moment / side_lever_per_n if side_lever_per_n else float("inf")
         minimum_mass = max(0.0, (safety * touch_n * rear_lever_per_n * 1000 / g
                                 - mass * (rear - center[1])) / (rear - stand_y_conservative))
+        minimum_side_mass = max(0.0, safety * touch_n * side_lever_per_n * 1000 /
+                                (g * half_width) - mass)
         mu_required = safety * touch_n * math.sin(math.radians(params.ANGLE_DEG)) / (
             (stand_mass + mass) * g + touch_n * math.cos(math.radians(params.ANGLE_DEG)))
         rows.append({"tablet_width_height_mm": [width, height], "tablet_mass_kg": mass,
-                     "case_thickness_mm": thickness, "rear_tip_threshold_normal_press_n": rear_force,
+                     "tablet_thickness_mm": thickness, "rear_tip_threshold_normal_press_n": rear_force,
                      "side_tip_threshold_normal_press_n": side_force,
                      "rear_safety_factor_at_10n": rear_force / touch_n,
                      "side_safety_factor_at_10n": side_force / touch_n,
                      "stand_mass_for_rear_factor_1_5_kg": minimum_mass,
+                     "stand_mass_for_side_factor_1_5_kg": minimum_side_mass,
                      "friction_coefficient_for_slide_factor_1_5": mu_required,
                      "unloaded_center_from_front_mm": (
                          stand_mass * stand_y + mass * center[1]) / (stand_mass + mass) - front})
-    minimum = max(row["stand_mass_for_rear_factor_1_5_kg"] for row in rows)
+    minimum = max(max(row["stand_mass_for_rear_factor_1_5_kg"],
+                      row["stand_mass_for_side_factor_1_5_kg"]) for row in rows)
     return {"assumed_stand_mass_kg": stand_mass, "screen_normal_press_n": touch_n,
             "contact_polygon_mm": [[-half_width, front], [half_width, front],
                                    [half_width, rear], [-half_width, rear]],
@@ -249,9 +292,9 @@ def static_estimate(info, params, stand_mass):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--stand-mass", type=float, default=1.0, help="Finished printed stand mass, kg")
+    parser.add_argument("--stand-mass", type=float, default=None, help="Finished printed stand mass, kg")
     args = parser.parse_args()
-    if args.stand_mass <= 0:
+    if args.stand_mass is not None and args.stand_mass <= 0:
         parser.error("stand mass must be positive")
     import params
     calibration = calibrate()
@@ -263,9 +306,17 @@ def main():
         raise ValueError("Print orientation changed volume")
     if not np.allclose(sorted(stand_info["dimensions_mm"]), sorted(print_info["dimensions_mm"]), atol=0.01):
         raise ValueError("Print orientation changed dimensions")
+    solid_mass = stand_info["volume_cm3"] * 1.27 / 1000
+    mass = args.stand_mass if args.stand_mass is not None else solid_mass
+    baseline_volume = 1752.7735322620545
     report = {"calibration": calibration, "stand": stand_info, "print": print_info,
               "geometry": geometric_checks(stand, printing, params),
-              "static_estimate": static_estimate(stand_info, params, args.stand_mass)}
+              "material": {"old_geometry_volume_cm3": baseline_volume,
+                           "geometry_volume_reduction_percent": 100 * (1 - stand_info["volume_cm3"] / baseline_volume),
+                           "petg_assumed_density_g_cm3": 1.27,
+                           "solid_petg_mass_g": solid_mass * 1000,
+                           "mass_source": "User argument" if args.stand_mass is not None else "Solid-volume estimate; verify by slicer or weighing"},
+              "static_estimate": static_estimate(stand_info, params, mass)}
     OUT.mkdir(parents=True, exist_ok=True)
     report_path = OUT / "verification.json"
     temporary = report_path.with_suffix(".json.tmp")

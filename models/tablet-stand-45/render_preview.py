@@ -125,10 +125,10 @@ def main():
     u = Vector((0, math.cos(angle), math.sin(angle)))
     n = Vector((0, -math.sin(angle), math.cos(angle)))
     origin = Vector((0, params.SEAT_Y, params.SEAT_Z))
-    width, height, thickness = 0.3264, 0.2086, 0.014
+    width, height, thickness = params.TABLET_WIDTH, params.TABLET_HEIGHT, params.TABLET_THICKNESS
     pose = Matrix(((1, 0, 0), (0, u.y, n.y), (0, u.z, n.z)))
-    center = origin + u * (height / 2 + 0.001) + n * (thickness / 2 + 0.001)
-    tablet = box("14.6 inch landscape reference", (width, height, thickness), center, dark, 0.003)
+    center = origin + u * (height / 2 + params.FLOOR_PAD) + n * (thickness / 2 + params.BACK_PAD)
+    tablet = box("Redmi Pad SE 11 inch landscape reference", (width, height, thickness), center, dark, 0.002)
     tablet.rotation_euler = pose.to_euler()
     glass = box("Screen reference", (width - 0.017, height - 0.017, 0.0005),
                 center + n * (thickness / 2 + 0.0001), screen, 0.00024)
@@ -136,24 +136,24 @@ def main():
     tablet.hide_render = True
     glass.hide_render = True
     # A little above the front-right exposes the lip, deck and side opening together.
-    camera((0.48, -0.30, 0.31), (0, 0.112, 0.067), 0.39)
+    camera((0.48, -0.30, 0.31), (0, 0.10, 0.055), 0.33)
     render(OUT / "stand.png")
     tablet.hide_render = False
     glass.hide_render = False
-    camera((0.50, -0.36, 0.36), (0, 0.11, 0.083), 0.45)
+    camera((0.50, -0.36, 0.36), (0, 0.10, 0.07), 0.38)
     render(OUT / "in-use.png")
-    camera((0.5, 0.12, 0.095), (0, 0.12, 0.095), 0.36)
+    camera((0.5, 0.105, 0.07), (0, 0.105, 0.07), 0.31)
     render(OUT / "side.png")
     tablet.hide_render = True
     glass.hide_render = True
     ground.hide_render = True
-    camera((0.40, -0.18, -0.25), (0, 0.10, 0.05), 0.39)
+    camera((0.40, -0.18, -0.25), (0, 0.10, 0.05), 0.33)
     render(OUT / "underside.png")
     ground.hide_render = False
     stand.hide_render = True
     bpy.ops.wm.stl_import(filepath=str(OUT / "print.stl"))
     printing = bpy.context.object
-    printing.name = "Side-down print orientation"
+    printing.name = "Flat-bottom print orientation"
     printing.scale = (0.001, 0.001, 0.001)
     bpy.ops.object.transform_apply(location=False, rotation=False, scale=True)
     printing.data.materials.append(stand.data.materials[0])
@@ -161,7 +161,7 @@ def main():
     lo = Vector(tuple(min(point[i] for point in bounds) for i in range(3)))
     hi = Vector(tuple(max(point[i] for point in bounds) for i in range(3)))
     target = (lo + hi) / 2
-    camera(target + Vector((0.45, -0.40, 0.32)), target, 0.39)
+    camera(target + Vector((0.45, -0.40, 0.32)), target, 0.33)
     render(OUT / "print.png")
     print("PREVIEW_FILES: stand.png in-use.png side.png underside.png print.png")
     print(f"TABLET_REFERENCE_MM: {width * 1000:.1f} x {height * 1000:.1f} x {thickness * 1000:.1f}")
