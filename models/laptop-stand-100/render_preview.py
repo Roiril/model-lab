@@ -88,9 +88,8 @@ def main():
     OUT.mkdir(parents=True, exist_ok=True)
     bpy.ops.wm.open_mainfile(filepath=str(ROOT / 'exports/laptop-stand-100.blend'))
     parts = [obj for obj in bpy.context.scene.objects if obj.type == 'MESH']
-    if {obj.name for obj in parts} != {'left_frame', 'right_frame', 'left_foot', 'right_foot'}:
-        raise ValueError('Assembly scene must contain exactly two frames and two feet')
-    frames = [obj for obj in parts if obj.name.endswith('_frame')]
+    if {obj.name for obj in parts} != {'left_body', 'right_body'}:
+        raise ValueError('Assembly scene must contain two monolithic support bodies')
     sage = material('Matte sage frame', '526c61', .78)
     dark = material('Graphite laptop', '2b2723', .55)
     glass_mat = material('Unlit glass', '191512', .32)
@@ -127,7 +126,7 @@ def main():
         lamp.location = position
         lamp.rotation_euler = (Vector((0, .12, .10)) - lamp.location).to_track_quat('-Z', 'Y').to_euler()
     pads = []
-    laptop_z = params.BODY_HEIGHT + params.FOOT_FLOOR + 2 * params.PAD_THICKNESS
+    laptop_z = params.BODY_HEIGHT + 2 * params.PAD_THICKNESS
     for x in (-params.RAIL_CENTER, params.RAIL_CENTER):
         for start in (params.PAD_FRONT_Y, params.PAD_REAR_Y):
             pads.append(box('Non-print upper protective pad',
@@ -168,8 +167,12 @@ def main():
     laptop.append(glass)
     for obj in laptop:
         obj.hide_render = True
+    for obj in pads:
+        obj.hide_render = True
     camera((.58, -.38, .34), (0, yc, .05), .50)
     render(OUT / 'stand.png')
+    for obj in pads:
+        obj.hide_render = False
     for obj in laptop:
         obj.hide_render = False
     camera((.72, -.55, .55), (0, yc, .18), .66)
@@ -184,30 +187,24 @@ def main():
     ground.hide_render = False
     for obj in pads:
         obj.hide_render = True
-    for obj in frames:
-        obj.location.z += .065
-    camera((.55, -.40, .37), (0, yc, .075), .55)
-    render(OUT / 'assembly.png')
+    camera((.58, yc, .18), (0, yc, .05), .50)
+    render(OUT / 'sculpture-side.png')
+    for obj in parts:
+        if obj.name == 'left_body':
+            obj.hide_render = True
+    camera((.46, -.20, .19), (params.RAIL_CENTER, yc, .05), .33)
+    render(OUT / 'flow-detail.png')
     for obj in parts + pads:
         obj.hide_render = True
-    bpy.ops.wm.stl_import(filepath=str(OUT / 'frame.stl'))
+    bpy.ops.wm.stl_import(filepath=str(OUT / 'body.stl'))
     printing = bpy.context.object
-    printing.name = 'One frame side-down print orientation'
+    printing.name = 'One seamless body upright print orientation'
     printing.scale = (.001, .001, .001)
     bpy.ops.object.transform_apply(location=False, rotation=False, scale=True)
     printing.data.materials.append(sage)
-    camera((.40, -.38, .37), (0, 0, .013), .37)
+    camera((.40, -.38, .37), (0, 0, .049), .37)
     render(OUT / 'print.png')
-    printing.hide_render = True
-    bpy.ops.wm.stl_import(filepath=str(OUT / 'foot.stl'))
-    foot = bpy.context.object
-    foot.name = 'One broad foot flat-down print orientation'
-    foot.scale = (.001, .001, .001)
-    bpy.ops.object.transform_apply(location=False, rotation=False, scale=True)
-    foot.data.materials.append(sage)
-    camera((.40, -.38, .37), (0, 0, .007), .37)
-    render(OUT / 'print-foot.png')
-    print('PREVIEW_FILES: stand.png in-use.png side.png underside.png assembly.png print.png print-foot.png')
+    print('PREVIEW_FILES: stand.png in-use.png side.png underside.png sculpture-side.png flow-detail.png print.png')
     print(f'LAPTOP_REFERENCE_MM: {width * 1000:.1f} x {depth * 1000:.1f}')
     print(f'SUPPORT_HEIGHT_WITH_PADS_MM: {laptop_z * 1000:.1f}')
 
