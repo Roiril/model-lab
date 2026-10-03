@@ -1,4 +1,4 @@
-"""2つの曲線開口を持つ連続曲面の100 mm高ノートPCスタンドを生成する。"""
+"""長いS字の連続曲面を持つ100 mm高ノートPCスタンドを生成する。"""
 import math
 import os
 import sys
@@ -15,29 +15,6 @@ from blender_utils import clear_scene, export_stl
 from params import *
 
 
-def rounded_rectangle_xy(width, depth, radius):
-    """円弧端点を含む132点の角丸長方形を反時計回りで返す。"""
-    half_width = width / 2.0
-    y_min = (FRAME_DEPTH - depth) / 2.0
-    y_max = y_min + depth
-    per_corner = LOFT_PROFILE_POINTS // 4
-    corners = (
-        (-half_width + radius, y_min + radius, math.pi, 1.5 * math.pi),
-        (half_width - radius, y_min + radius, -0.5 * math.pi, 0.0),
-        (half_width - radius, y_max - radius, 0.0, 0.5 * math.pi),
-        (-half_width + radius, y_max - radius, 0.5 * math.pi, math.pi),
-    )
-    result = [
-        (center_x + radius * math.cos(start + (end - start) * step / (per_corner - 1)),
-         center_y + radius * math.sin(start + (end - start) * step / (per_corner - 1)))
-        for center_x, center_y, start, end in corners
-        for step in range(per_corner)
-    ]
-    if len(result) != LOFT_PROFILE_POINTS:
-        raise RuntimeError("rounded rectangle profile has an unexpected point count")
-    return result
-
-
 def object_from_bmesh(name, bm):
     mesh = bpy.data.meshes.new(name)
     bm.to_mesh(mesh)
@@ -52,10 +29,27 @@ def object_from_bmesh(name, bm):
     return obj
 
 
-def create_closed_loft(name, layers):
+def rounded_rectangle(width, y_min, depth, radius, segments=16):
+    half_width = width / 2.0
+    y_max = y_min + depth
+    corners = (
+        (-half_width + radius, y_min + radius, math.pi, 1.5 * math.pi),
+        (half_width - radius, y_min + radius, -0.5 * math.pi, 0.0),
+        (half_width - radius, y_max - radius, 0.0, 0.5 * math.pi),
+        (-half_width + radius, y_max - radius, 0.5 * math.pi, math.pi),
+    )
+    return [
+        (cx + radius * math.cos(start + (end - start) * step / segments),
+         cy + radius * math.sin(start + (end - start) * step / segments))
+        for cx, cy, start, end in corners
+        for step in range(segments)
+    ]
+
+
+def create_layered_prism(name, layers):
     point_count = len(layers[0][1])
-    if point_count < 3 or any(len(profile) != point_count for _, profile in layers):
-        raise ValueError("loft profiles must have the same point count")
+    if any(len(profile) != point_count for _, profile in layers):
+        raise ValueError("Prism profiles must have the same point count")
     bm = bmesh.new()
     loops = [[bm.verts.new((x, y, z)) for x, y in profile] for z, profile in layers]
     for lower, upper in zip(loops, loops[1:]):
@@ -68,107 +62,156 @@ def create_closed_loft(name, layers):
     return object_from_bmesh(name, bm)
 
 
-def rounded_polygon(points, radii, segments=8):
-    """各頂点を指定半径の接線円弧で結んだ反時計回り輪郭を返す。"""
-    result = []
-    count = len(points)
-    for index, point in enumerate(points):
-        previous = Vector(points[(index - 1) % count])
-        current = Vector(point)
-        following = Vector(points[(index + 1) % count])
-        incoming = (current - previous).normalized()
-        outgoing = (following - current).normalized()
-        interior = math.acos(max(-1.0, min(1.0, (-incoming).dot(outgoing))))
-        radius = radii[index]
-        tangent_distance = radius / math.tan(interior / 2.0)
-        if tangent_distance >= min((current - previous).length, (following - current).length) / 2.0:
-            raise ValueError("fillet radius is too large for opening profile")
-        start = current - incoming * tangent_distance
-        center = start + Vector((-incoming.y, incoming.x)) * radius
-        end = current + outgoing * tangent_distance
-        start_angle = math.atan2(start.y - center.y, start.x - center.x)
-        end_angle = math.atan2(end.y - center.y, end.x - center.x)
-        while end_angle <= start_angle:
-            end_angle += 2.0 * math.pi
-        result.extend(tuple(center + Vector((
-            math.cos(start_angle + (end_angle - start_angle) * step / segments),
-            math.sin(start_angle + (end_angle - start_angle) * step / segments),
-        )) * radius) for step in range(segments + 1))
-    return result
-
-
-def opening_profile(center_y):
-    shoulder_z = HOLE_THEORETICAL_PEAK - HOLE_ROOF_SLOPE * HOLE_HALF_WIDTH
-    points = (
-        (center_y - HOLE_HALF_WIDTH, HOLE_FLOOR),
-        (center_y + HOLE_HALF_WIDTH, HOLE_FLOOR),
-        (center_y + HOLE_HALF_WIDTH, shoulder_z),
-        (center_y, HOLE_THEORETICAL_PEAK),
-        (center_y - HOLE_HALF_WIDTH, shoulder_z),
+def create_rounded_prism(name, width, y_min, depth, radius, z_min, z_max, edge_radius):
+    layers = (
+        (z_min, rounded_rectangle(width - 2.0 * edge_radius,
+                                  y_min + edge_radius,
+                                  depth - 2.0 * edge_radius,
+                                  radius - edge_radius)),
+        (z_min + edge_radius, rounded_rectangle(width, y_min, depth, radius)),
+        (z_max - edge_radius, rounded_rectangle(width, y_min, depth, radius)),
+        (z_max, rounded_rectangle(width - 2.0 * edge_radius,
+                                  y_min + edge_radius,
+                                  depth - 2.0 * edge_radius,
+                                  radius - edge_radius)),
     )
-    return rounded_polygon(
-        points,
-        (HOLE_FLOOR_R, HOLE_FLOOR_R, HOLE_SHOULDER_R,
-         HOLE_CROWN_R, HOLE_SHOULDER_R),
-    )
+    return create_layered_prism(name, layers)
 
 
-def create_prism_cutter(name, profile):
-    """穴の内面から外面までを丸い断面でつなぐ閉じたカッター。"""
-    points = [Vector(point) for point in profile]
-    outward = []
-    for index, point in enumerate(points):
-        incoming = (point - points[index - 1]).normalized()
-        outgoing = (points[(index + 1) % len(points)] - point).normalized()
-        previous_normal = Vector((incoming.y, -incoming.x))
-        following_normal = Vector((outgoing.y, -outgoing.x))
-        bisector = (previous_normal + following_normal).normalized()
-        outward.append(bisector / bisector.dot(previous_normal))
+def cubic_bezier(points, t):
+    p0, p1, p2, p3 = (Vector(point) for point in points)
+    u = 1.0 - t
+    center = u ** 3 * p0 + 3.0 * u * u * t * p1 + 3.0 * u * t * t * p2 + t ** 3 * p3
+    tangent = 3.0 * u * u * (p1 - p0) + 6.0 * u * t * (p2 - p1) + 3.0 * t * t * (p3 - p2)
+    return center, tangent
 
-    def ring(side, theta, outside=False):
-        offset = HOLE_EDGE_R * (1.0 - math.cos(theta))
-        result = []
-        for point, normal in zip(points, outward):
-            y, z = point + normal * offset
-            width, *_ = flow_section(z)
-            x = .060 if outside else width / 2.0 - HOLE_EDGE_R * (1.0 - math.sin(theta))
-            if not outside:
-                x += 1e-7 * math.sin(theta) ** 2
-            result.append((side * x, y, z))
-        return result
 
-    # The cutter carries the rounding itself. Beveling a Boolean-created face
-    # with two holes can fold its connecting triangles into the exterior face.
-    angles = [math.pi * step / 16.0 for step in range(9)]
-    rings = [ring(-1, math.pi / 2, outside=True)]
-    rings.extend(ring(-1, theta) for theta in reversed(angles))
-    rings.extend(ring(1, theta) for theta in angles)
-    rings.append(ring(1, math.pi / 2, outside=True))
+def smoothstep(value):
+    value = max(0.0, min(1.0, value))
+    return value * value * (3.0 - 2.0 * value)
+
+
+def create_bezier_sweep(name, points, side_radius, x_radius,
+                        root_side_radius, root_x_radius):
     bm = bmesh.new()
-    loops = [[bm.verts.new(co) for co in coordinates] for coordinates in rings]
-    count = len(profile)
-    for low, high in zip(loops, loops[1:]):
-        for index in range(count):
-            following = (index + 1) % count
-            bm.faces.new((low[index], low[following], high[following], high[index]))
+    loops = []
+    for step in range(CURVE_STEPS + 1):
+        t = step / CURVE_STEPS
+        center, tangent = cubic_bezier(points, t)
+        if tangent.length < 1e-10:
+            raise ValueError(f"{name} has a zero-length tangent")
+        tangent.normalize()
+        normal = Vector((-tangent.y, tangent.x))
+        root_amount = smoothstep((t - 0.62) / 0.38)
+        local_side_radius = side_radius + (root_side_radius - side_radius) * root_amount
+        local_x_radius = x_radius + (root_x_radius - x_radius) * root_amount
+        ring = []
+        for ring_step in range(RING_STEPS):
+            angle = 2.0 * math.pi * ring_step / RING_STEPS
+            yz = center + normal * (local_side_radius * math.sin(angle))
+            ring.append(bm.verts.new((local_x_radius * math.cos(angle), yz.x, yz.y)))
+        loops.append(ring)
+    for lower, upper in zip(loops, loops[1:]):
+        for index in range(RING_STEPS):
+            following = (index + 1) % RING_STEPS
+            bm.faces.new((lower[index], upper[index], upper[following], lower[following]))
     bm.faces.new(tuple(reversed(loops[0])))
     bm.faces.new(tuple(loops[-1]))
     bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
     return object_from_bmesh(name, bm)
 
 
-def clean_mesh(obj, triangulate=True):
+def join_objects(objects, name):
+    bpy.ops.object.select_all(action="DESELECT")
+    for obj in objects:
+        obj.select_set(True)
+    bpy.context.view_layer.objects.active = objects[0]
+    bpy.ops.object.join()
+    objects[0].name = name
+    return objects[0]
+
+
+def clean_mesh(obj):
     bm = bmesh.new()
     bm.from_mesh(obj.data)
     bmesh.ops.remove_doubles(bm, verts=bm.verts, dist=CLEANUP_DISTANCE)
     bmesh.ops.dissolve_degenerate(bm, edges=bm.edges, dist=1e-10)
-    if triangulate:
+    bmesh.ops.triangulate(bm, faces=list(bm.faces), quad_method="BEAUTY", ngon_method="BEAUTY")
+    bmesh.ops.dissolve_degenerate(bm, edges=list(bm.edges), dist=1e-9)
+    previous_tiny_count = None
+    for _ in range(8):
+        tiny_faces = [face for face in bm.faces if face.calc_area() < 1e-12]
+        if not tiny_faces:
+            break
+        if previous_tiny_count is not None and len(tiny_faces) >= previous_tiny_count:
+            break
+        previous_tiny_count = len(tiny_faces)
+        collapse_edges = {min(face.edges, key=lambda edge: edge.calc_length())
+                          for face in tiny_faces}
+        bmesh.ops.collapse(bm, edges=list(collapse_edges), uvs=True)
+        bmesh.ops.remove_doubles(bm, verts=list(bm.verts), dist=1e-10)
         bmesh.ops.triangulate(bm, faces=list(bm.faces), quad_method="BEAUTY", ngon_method="BEAUTY")
+    loose = [vertex for vertex in bm.verts if not vertex.link_faces]
+    if loose:
+        bmesh.ops.delete(bm, geom=loose, context="VERTS")
     bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
     bm.to_mesh(obj.data)
     bm.free()
     obj.data.validate(verbose=True)
     obj.data.update()
+
+
+def apply_voxel_fusion(obj):
+    bpy.context.view_layer.objects.active = obj
+    modifier = obj.modifiers.new("flow_fusion", "REMESH")
+    modifier.mode = "VOXEL"
+    modifier.voxel_size = REMESH_VOXEL
+    modifier.use_smooth_shade = True
+    bpy.ops.object.modifier_apply(modifier=modifier.name)
+    if SMOOTH_ITERATIONS:
+        modifier = obj.modifiers.new("surface_relax", "SMOOTH")
+        modifier.factor = SMOOTH_FACTOR
+        modifier.iterations = SMOOTH_ITERATIONS
+        bpy.ops.object.modifier_apply(modifier=modifier.name)
+
+
+def normalize_xy_bounds(obj):
+    low_x = min(vertex.co.x for vertex in obj.data.vertices)
+    high_x = max(vertex.co.x for vertex in obj.data.vertices)
+    low_y = min(vertex.co.y for vertex in obj.data.vertices)
+    high_y = max(vertex.co.y for vertex in obj.data.vertices)
+    center_x = (low_x + high_x) / 2.0
+    scale_x = FOOT_WIDTH / (high_x - low_x)
+    scale_y = FOOT_DEPTH / (high_y - low_y)
+    for vertex in obj.data.vertices:
+        vertex.co.x = (vertex.co.x - center_x) * scale_x
+        vertex.co.y = FOOT_FRONT_Y + (vertex.co.y - low_y) * scale_y
+    obj.data.update()
+
+
+def create_clip_box():
+    bpy.ops.mesh.primitive_cube_add(location=(0.0, FOOT_FRONT_Y + FOOT_DEPTH / 2.0,
+                                               BODY_HEIGHT / 2.0))
+    clip = bpy.context.object
+    clip.name = "dimension_clip"
+    clip.dimensions = (FOOT_WIDTH + 2.0 * CLIP_OVERLAP,
+                       FOOT_DEPTH + 2.0 * CLIP_OVERLAP,
+                       BODY_HEIGHT)
+    bpy.ops.object.transform_apply(location=False, rotation=False, scale=True)
+    return clip
+
+
+def clip_to_dimensions(body):
+    clip = create_clip_box()
+    bpy.context.view_layer.objects.active = body
+    body.select_set(True)
+    modifier = body.modifiers.new("exact_dimensions", "BOOLEAN")
+    modifier.operation = "INTERSECT"
+    modifier.solver = "EXACT"
+    modifier.object = clip
+    bpy.ops.object.modifier_apply(modifier=modifier.name)
+    bpy.data.objects.remove(clip, do_unlink=True)
+    clean_mesh(body)
 
 
 def mesh_metrics(obj, label):
@@ -214,145 +257,74 @@ def mesh_metrics(obj, label):
     return result
 
 
-def flow_section(z):
-    """外形曲面とその接線を同じ寸法式から求める。"""
-    height = z - BOTTOM_CHAMFER
-    raw = math.exp(-((height / FLOW_HEIGHT) ** 2))
-    raw_derivative = -2.0 * height * raw / FLOW_HEIGHT ** 2
-    # Fade the last small tail to an exactly planar upper surface. Its position,
-    # slope and curvature are continuous at both ends of this transition.
-    fade_start, fade_end = 2.0 * FLOW_HEIGHT, 2.6 * FLOW_HEIGHT
-    amount = (height - fade_start) / (fade_end - fade_start)
-    if amount <= 0:
-        weight, weight_derivative = 1.0, 0.0
-    elif amount >= 1:
-        weight, weight_derivative = 0.0, 0.0
-    else:
-        weight = 1.0 - (6 * amount ** 5 - 15 * amount ** 4 + 10 * amount ** 3)
-        weight_derivative = -30 * amount ** 2 * (amount - 1) ** 2 / (fade_end - fade_start)
-    f = raw * weight
-    derivative = raw_derivative * weight + raw * weight_derivative
-    return (
-        UPPER_WIDTH + (FOOT_WIDTH - UPPER_WIDTH) * f,
-        FLOW_UPPER_DEPTH + (FOOT_DEPTH - FLOW_UPPER_DEPTH) * f,
-        FLOW_UPPER_ROUND + (FOOT_ROUND - FLOW_UPPER_ROUND) * f,
-        (FOOT_WIDTH - UPPER_WIDTH) * derivative,
-        (FOOT_DEPTH - FLOW_UPPER_DEPTH) * derivative,
-        (FOOT_ROUND - FLOW_UPPER_ROUND) * derivative,
-    )
-
-
-def shade_continuous_outer_surface(body):
-    """穴加工で不均一になった頂点の陰影を実際の外形接線へ戻す。"""
-    mesh = body.data
-    mesh.update()
-    normals = [tuple(normal.vector) for normal in mesh.corner_normals]
-    adjusted = 0
-    for loop in mesh.loops:
-        x, y, z = mesh.vertices[loop.vertex_index].co
-        if z < BOTTOM_CHAMFER or z > BODY_HEIGHT + 1e-7:
-            continue
-        if z <= FLOW_TOP_Z:
-            width, depth, radius, width_d, depth_d, radius_d = flow_section(z)
-            horizontal_factor = 1.0
-            vertical_factor = None
-        else:
-            theta = math.asin(max(0.0, min(1.0, (z - FLOW_TOP_Z) / TOP_FILLET)))
-            offset = TOP_FILLET * (1.0 - math.cos(theta))
-            width = UPPER_WIDTH - 2.0 * offset
-            depth = FLOW_UPPER_DEPTH - 2.0 * offset
-            radius = FLOW_UPPER_ROUND - offset
-            horizontal_factor = math.cos(theta)
-            vertical_factor = math.sin(theta)
-        minimum_y = (FRAME_DEPTH - depth) / 2.0
-        maximum_y = (FRAME_DEPTH + depth) / 2.0
-        side_sign = 1.0 if x >= 0 else -1.0
-        end_sign = 1.0 if y >= FRAME_DEPTH / 2.0 else -1.0
-        corner_x = side_sign * (width / 2.0 - radius)
-        corner_y = maximum_y - radius if end_sign > 0 else minimum_y + radius
-        # The whole outer outline uses the same tangent field. A Boolean-created
-        # large triangle must not interpolate between corrected sides and an
-        # uncorrected round end. Opening rolls and interior faces stay untouched.
-        tolerance = .00008
-        if minimum_y + radius <= y <= maximum_y - radius:
-            if abs(abs(x) - width / 2.0) > tolerance:
-                continue
-            nx, ny = side_sign, 0.0
-            nz = -width_d / 2.0 if vertical_factor is None else vertical_factor
-        elif abs(x) <= width / 2.0 - radius:
-            edge_y = maximum_y if end_sign > 0 else minimum_y
-            if abs(y - edge_y) > tolerance:
-                continue
-            nx, ny = 0.0, end_sign
-            nz = -depth_d / 2.0 if vertical_factor is None else vertical_factor
-        else:
-            radial = Vector((x - corner_x, y - corner_y))
-            if abs(radial.length - radius) > tolerance:
-                continue
-            radial.normalize()
-            nx, ny = radial
-            if vertical_factor is None:
-                center_x_d = side_sign * (width_d / 2.0 - radius_d)
-                center_y_d = end_sign * (depth_d / 2.0 - radius_d)
-                nz = -nx * center_x_d - ny * center_y_d - radius_d
-            else:
-                nz = vertical_factor
-        normal = Vector((nx * horizontal_factor, ny * horizontal_factor, nz))
-        if normal.length < 1e-8:
-            continue
-        normal.normalize()
-        normals[loop.index] = tuple(normal)
-        adjusted += 1
-    if not adjusted:
-        raise RuntimeError("No outer-surface corner normals were assigned")
-    mesh.normals_split_custom_set(normals)
-    print(f"[{MODEL_NAME}] continuous_outer_corner_normals", adjusted)
+def verify_contact_planes(body):
+    samples = []
+    for label, y_start in (("top_front", PAD_FRONT_Y), ("top_rear", PAD_REAR_Y)):
+        y = y_start + PAD_LENGTH / 2.0
+        for x in (-PAD_WIDTH / 2.0, 0.0, PAD_WIDTH / 2.0):
+            hit, location, normal, _ = body.ray_cast((x, y, BODY_HEIGHT + 0.010),
+                                                      (0.0, 0.0, -1.0),
+                                                      distance=BODY_HEIGHT + 0.020)
+            if not hit or abs(location.z - BODY_HEIGHT) > 0.00005 or normal.z < 0.99:
+                raise RuntimeError(f"{label} pad sample is not on the top plane")
+            samples.append((label, x * 1000.0, y * 1000.0, location.z * 1000.0))
+    for label, y_start in (("base_front", BASE_PAD_FRONT_Y), ("base_rear", BASE_PAD_REAR_Y)):
+        y = y_start + BASE_PAD_LENGTH / 2.0
+        for x in (-BASE_PAD_WIDTH / 2.0, 0.0, BASE_PAD_WIDTH / 2.0):
+            hit, location, normal, _ = body.ray_cast((x, y, -0.010),
+                                                      (0.0, 0.0, 1.0),
+                                                      distance=BODY_HEIGHT + 0.020)
+            if not hit or abs(location.z) > 0.00005 or normal.z > -0.99:
+                raise RuntimeError(f"{label} pad sample is not on the bottom plane")
+            samples.append((label, x * 1000.0, y * 1000.0, location.z * 1000.0))
+    print(f"[{MODEL_NAME}] contact_plane_samples_mm", samples)
 
 
 def build_body():
-    layers = [
-        (0.0, rounded_rectangle_xy(FOOT_WIDTH - 2.0 * BOTTOM_CHAMFER,
-                                   FOOT_DEPTH - 2.0 * BOTTOM_CHAMFER,
-                                   FOOT_ROUND - BOTTOM_CHAMFER)),
-        (BOTTOM_CHAMFER, rounded_rectangle_xy(FOOT_WIDTH, FOOT_DEPTH, FOOT_ROUND)),
-    ]
-    for step in range(FLOW_STEPS + 1):
-        z = BOTTOM_CHAMFER + (FLOW_TOP_Z - BOTTOM_CHAMFER) * step / FLOW_STEPS
-        width, depth, radius, *_ = flow_section(z)
-        if step == 0:
-            layers[-1] = (z, rounded_rectangle_xy(width, depth, radius))
-        else:
-            layers.append((z, rounded_rectangle_xy(width, depth, radius)))
-    for step in range(1, TOP_FILLET_STEPS + 1):
-        theta = 0.5 * math.pi * step / TOP_FILLET_STEPS
-        offset = TOP_FILLET * (1.0 - math.cos(theta))
-        z = FLOW_TOP_Z + TOP_FILLET * math.sin(theta)
-        layers.append((z, rounded_rectangle_xy(
-            UPPER_WIDTH - 2.0 * offset,
-            FLOW_UPPER_DEPTH - 2.0 * offset,
-            FLOW_UPPER_ROUND - offset,
-        )))
-    body = create_closed_loft("body_local", layers)
-    profiles = [opening_profile(center) for center in HOLE_CENTERS]
-    for index, profile in enumerate(profiles, start=1):
-        cutter = create_prism_cutter(f"opening_{index}_cutter", profile)
-        bpy.context.view_layer.objects.active = body
-        body.select_set(True)
-        modifier = body.modifiers.new(f"opening_{index}", "BOOLEAN")
-        modifier.operation = "DIFFERENCE"
-        modifier.solver = "EXACT"
-        modifier.object = cutter
-        bpy.ops.object.modifier_apply(modifier=modifier.name)
-        bpy.data.objects.remove(cutter, do_unlink=True)
-    clean_mesh(body)
+    # The planted footprint rolls continuously into a narrow rounded ridge.
+    # No horizontal platform remains around the roots of the curved supports.
+    foot_center = FOOT_FRONT_Y + FOOT_DEPTH / 2
+    foot = create_layered_prism("foot", [
+        (z, rounded_rectangle(width, foot_center - depth / 2, depth,
+                               min(FOOT_ROUND, width * 0.48), segments=32))
+        for z, width, depth in FOOT_PROFILE
+    ])
+    top = create_rounded_prism(
+        "top_beam",
+        UPPER_WIDTH,
+        0.0,
+        FRAME_DEPTH,
+        TOP_END_RADIUS,
+        BODY_HEIGHT - TOP_BEAM - 0.001,
+        BODY_HEIGHT + CLIP_OVERLAP,
+        TOP_EDGE_RADIUS,
+    )
+    main_s = create_bezier_sweep(
+        "main_s_support", S_CURVE_POINTS, S_SIDE_RADIUS, S_X_RADIUS,
+        S_ROOT_SIDE_RADIUS, S_ROOT_X_RADIUS,
+    )
+    rear = create_bezier_sweep(
+        "rear_support", REAR_CURVE_POINTS, REAR_SIDE_RADIUS, REAR_X_RADIUS,
+        REAR_ROOT_SIDE_RADIUS, REAR_ROOT_X_RADIUS,
+    )
+    body = join_objects((foot, top, main_s, rear), "body_local")
+    apply_voxel_fusion(body)
+    normalize_xy_bounds(body)
+    clip_to_dimensions(body)
     for polygon in body.data.polygons:
-        polygon.use_smooth = polygon.normal.z < 0.999
+        heights = [body.data.vertices[index].co.z for index in polygon.vertices]
+        is_cap = (max(abs(z) for z in heights) < 1e-7 or
+                  max(abs(z - BODY_HEIGHT) for z in heights) < 1e-7)
+        polygon.use_smooth = not is_cap
     body.data.update()
-    shade_continuous_outer_surface(body)
     metrics = mesh_metrics(body, "body_local")
     expected = (FOOT_WIDTH * 1000.0, FOOT_DEPTH * 1000.0, BODY_HEIGHT * 1000.0)
-    if any(abs(actual - target) > 0.03 for actual, target in zip(metrics["dimensions_mm"], expected)):
+    if any(abs(actual - target) > 0.05 for actual, target in zip(metrics["dimensions_mm"], expected)):
         raise RuntimeError("body dimensions differ from the specification")
+    expected_minimum = (-FOOT_WIDTH * 500.0, FOOT_FRONT_Y * 1000.0, 0.0)
+    if any(abs(actual - target) > 0.05 for actual, target in zip(metrics["minimum_mm"], expected_minimum)):
+        raise RuntimeError("body minimum bounds differ from the specification")
+    verify_contact_planes(body)
     return body
 
 
@@ -377,18 +349,20 @@ def keep_only(objects):
 
 def make_print_body(body):
     result = copy_object(body, "body")
+    center_y = FOOT_FRONT_Y + FOOT_DEPTH / 2.0
     root_two = math.sqrt(2.0)
-    normals = [tuple(normal.vector) for normal in result.data.corner_normals]
     for vertex in result.data.vertices:
         x, y, z = vertex.co
-        vertex.co = ((x - (y - FRAME_DEPTH / 2.0)) / root_two,
-                     (x + y - FRAME_DEPTH / 2.0) / root_two,
-                     z)
+        y -= center_y
+        vertex.co = ((x - y) / root_two, (x + y) / root_two, z)
     result.data.update()
-    result.data.normals_split_custom_set([
-        ((x - y) / root_two, (x + y) / root_two, z) for x, y, z in normals
-    ])
-    mesh_metrics(result, "print_body")
+    clean_mesh(result)
+    metrics = mesh_metrics(result, "print_body")
+    extreme = max(result.data.vertices, key=lambda vertex: vertex.co.x)
+    print(f"[{MODEL_NAME}] print_positive_x_extreme_mm",
+          tuple(value * 1000.0 for value in extreme.co))
+    if max(metrics["dimensions_mm"][:2]) + 8.0 > 248.40:
+        raise RuntimeError("45-degree print body exceeds the 248.4 mm brim target")
     return result
 
 
@@ -410,10 +384,10 @@ def build_assembly(body_mesh):
     print(f"[{MODEL_NAME}] assembly_minimum_mm", tuple(value * 1000.0 for value in low))
     expected = ((2.0 * RAIL_CENTER + FOOT_WIDTH) * 1000.0,
                 FOOT_DEPTH * 1000.0, BODY_HEIGHT * 1000.0)
-    if any(abs(actual - target) > 0.03 for actual, target in zip(dimensions, expected)):
+    if any(abs(actual - target) > 0.05 for actual, target in zip(dimensions, expected)):
         raise RuntimeError("assembly dimensions differ from the specification")
-    if abs(low.z - PAD_THICKNESS) > 1e-8 or abs(high.z - (PAD_THICKNESS + BODY_HEIGHT)) > 1e-8:
-        raise RuntimeError("assembly Z bounds differ from the specification")
+    if abs(low.z - PAD_THICKNESS) > 0.00005:
+        raise RuntimeError("assembly bottom is not on the lower pads")
     return left, right
 
 

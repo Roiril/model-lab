@@ -77,7 +77,8 @@ def inspect_mesh(triangles, expected_components=1):
     low = triangles.min(axis=(0, 1))
     high = triangles.max(axis=(0, 1))
     return {"triangles": len(triangles), "vertices": len(vertices),
-            "components": components, "nonmanifold_edges": 0,
+            "components": components, "closed": True, "nonmanifold_edges": 0,
+            "duplicate_triangles": 0, "inconsistent_winding_edges": 0,
             "euler_characteristic": len(vertices) - len(edges) + len(triangles),
             "degenerate_triangles": 0, "dimensions_mm": (high - low).tolist(),
             "bounds_mm": [low.tolist(), high.tolist()], "volume_cm3": volume / 1000.0,
@@ -113,11 +114,11 @@ def contains(triangles, point):
     return len(ray_hits(triangles, point, (1, 0.0000137, 0.0000173))) % 2 == 1
 
 
-def projected_cover_counts(triangles, points):
-    """Count interior coverage in YZ without merging coincident surfaces."""
-    yz = triangles[:, :, 1:]
-    a = yz[:, 0]
-    v0, v1 = yz[:, 1] - a, yz[:, 2] - a
+def projected_cover_counts(triangles, points, axes=(0, 1)):
+    """Count projected triangle interiors without merging coincident surfaces."""
+    projected = triangles[:, :, axes]
+    a = projected[:, 0]
+    v0, v1 = projected[:, 1] - a, projected[:, 2] - a
     det = v0[:, 0] * v1[:, 1] - v1[:, 0] * v0[:, 1]
     valid = np.abs(det) > 1e-6
     result = []
@@ -131,24 +132,20 @@ def projected_cover_counts(triangles, points):
     return np.asarray(result)
 
 
-def exterior_overlap_checks(body, params):
-    checked = 0
-    for side in (-1, 1):
-        plane_x = side * params.UPPER_WIDTH * 500
-        selected = body[np.max(np.abs(body[:, :, 0] - plane_x), axis=1) < .01]
+def cap_overlap_checks(body, params):
+    result = {}
+    for label, height in (("bottom", 0.0), ("top", params.BODY_HEIGHT * 1000)):
+        selected = body[np.max(np.abs(body[:, :, 2] - height), axis=1) < .01]
         if not len(selected):
-            raise ValueError("No upper planar exterior faces were found")
-        # Include the centroid of each nondegenerate projected face and an
-        # independent regular grid across the two opening crowns.
-        centers = selected.mean(axis=1)[:, 1:]
-        grid = np.array([(y, z) for y in np.linspace(20.123, 224.123, 31)
-                         for z in np.linspace(70.157, 90.157, 41)])
-        points = np.concatenate((centers, grid))
-        counts = projected_cover_counts(selected, points)
-        if np.any(counts > 1):
-            raise ValueError(f"Coplanar exterior overlap on side {side}: {int(np.sum(counts > 1))}")
-        checked += len(points)
-    return {"planar_side_projection_samples": checked, "overlapping_exterior_samples": 0}
+            raise ValueError(f"No {label} planar cap faces were found")
+        step = max(1, len(selected) // 512)
+        points = selected[::step].mean(axis=1)[:, :2]
+        counts = projected_cover_counts(selected, points, axes=(0, 1))
+        if np.any(counts != 1):
+            raise ValueError(f"Coplanar {label} cap overlap: {np.unique(counts, return_counts=True)}")
+        result[label] = {"cap_triangles": len(selected), "projection_samples": len(points),
+                         "overlapping_samples": 0}
+    return result
 
 
 def calibrate():
@@ -169,12 +166,12 @@ def calibrate():
         except ValueError:
             rejected += 1
     assert rejected == 3
-    plane = np.array([[[15, 0, 0], [15, 4, 0], [15, 0, 4]]], dtype=float)
-    assert projected_cover_counts(plane, [(1, 1)]).tolist() == [1]
-    assert projected_cover_counts(np.concatenate((plane, plane)), [(1, 1)]).tolist() == [2]
+    plane = np.array([[[0, 0, 15], [4, 0, 15], [0, 4, 15]]], dtype=float)
+    assert projected_cover_counts(plane, [(1, 1)], axes=(0, 1)).tolist() == [1]
+    assert projected_cover_counts(np.concatenate((plane, plane)), [(1, 1)], axes=(0, 1)).tolist() == [2]
     return {"closed_cube_accepted": True, "open_inverted_empty_rejected": 3,
             "inside_and_outside_ray_checks": True,
-            "single_and_overlapping_plane_checks": True}
+            "single_and_overlapping_xy_plane_checks": True}
 
 
 def unrotate_body(triangles, params):
@@ -190,98 +187,124 @@ def print_checks(printing, body, params):
     lengths = np.linalg.norm(cross, axis=1)
     normals = cross / lengths[:, None]
     bed = body[:, :, 2].max(axis=1) < .001
-    steep = (normals[:, 2] < -math.sin(math.radians(45.5))) & ~bed
-    accepted = np.zeros(len(body), dtype=bool)
-    crowns = []
-    for center in params.HOLE_CENTERS:
-        y = center * 1000
-        region = ((np.abs(body[:, :, 1] - y).max(axis=1) <= 7.0) &
-                  (body[:, :, 2].min(axis=1) >= params.HOLE_PEAK * 1000 - 8))
-        accepted |= region
-        crown = body[steep & region]
-        if len(crown):
-            low = crown.min(axis=(0, 1))
-            high = crown.max(axis=(0, 1))
-            span = float(high[1] - low[1])
-            if span > 14.0:
-                raise ValueError("Rounded crown bridge exceeds 14 mm")
-            crowns.append({"center_y_mm": y, "downward_triangles": len(crown),
-                           "projected_bridge_span_y_mm": span,
-                           "z_bounds_mm": [float(low[2]), float(high[2])]})
-    unsupported = steep & ~accepted
-    if unsupported.any():
-        bounds = body[unsupported].min(axis=(0, 1)), body[unsupported].max(axis=(0, 1))
-        raise ValueError(f"Steep faces outside the two short crowns: {int(unsupported.sum())}, {bounds}")
+    underside = (normals[:, 2] < -math.sin(math.radians(45.0))) & ~bed
     if abs(float(printing[:, :, 2].min())) > .001 or not bed.any():
         raise ValueError("Body does not start on the print bed")
     brim = np.ptp(printing, axis=(0, 1))[:2] + 8
-    if brim.max() > 256:
-        raise ValueError("Part and 4 mm brim exceed the assumed 256 mm bed")
-    return {"steep_faces_outside_short_crowns": int(unsupported.sum()),
-            "short_rounded_crowns": crowns,
+    if brim.max() > 248.4:
+        raise ValueError("Part and 4 mm brim exceed the 248.4 mm print target")
+    return {"downward_support_candidate_triangles": int(underside.sum()),
+            "downward_support_candidate_area_cm2": float(lengths[underside].sum() / 200),
+            "needs_support": True,
             "maximum_downward_overhang_deg": float(np.degrees(np.arcsin(np.clip(-normals[~bed, 2], 0, 1))).max()),
             "bed_contact_area_cm2": float(lengths[bed].sum() / 200),
             "print_xy_with_4mm_brim_mm": brim.tolist(),
-            "note": "Two short rounded crowns require bridge tuning. This geometry check does not replace slicing or a trial print."}
+            "note": "The S underside and rear support need slicer support. Counts and areas describe the STL only; slicing and a trial print remain required."}
 
 
 def geometry_checks(body, assembly, params):
     height = params.BODY_HEIGHT * 1000
-    depth = params.FRAME_DEPTH * 1000
     info = inspect_mesh(body)
     expected = np.array([params.FOOT_WIDTH, params.FOOT_DEPTH, params.BODY_HEIGHT]) * 1000
     if not np.allclose(info['dimensions_mm'], expected, atol=.015):
         raise ValueError(f"Body dimensions differ: {info['dimensions_mm']}")
-    if info['euler_characteristic'] != -2:
-        raise ValueError("Body must be one connected solid with exactly two through openings")
-    assert contains(body, (0, depth / 2, height / 2))
-    assert contains(body, (0, depth / 2, height - 4))
-    for center in params.HOLE_CENTERS:
-        assert not contains(body, (0, center * 1000, 45))
-    top, bottom, width, pier = [], [], [], []
-    for center in params.HOLE_CENTERS:
-        for y in np.linspace(center * 1000 - 20, center * 1000 + 20, 9):
-            for x in (-12, 0, 12):
-                hits = ray_hits(body, (x, y, height + .01), (0, 0, -1))
-                if len(hits) < 2:
-                    raise ValueError("Missing upper beam surfaces")
-                top.append(float(hits[1] - hits[0]))
-            for x in (-40, 0, 40):
-                hits = ray_hits(body, (x, y, -.01), (0, 0, 1))
-                if len(hits) < 2:
-                    raise ValueError("Missing lower beam surfaces")
-                bottom.append(float(hits[1] - hits[0]))
-    for y in (40, 65, 90, 122.5, 155, 181, 205):
-        hits = ray_hits(body, (-100, y, height - 4), (1, 0, 0))
-        if len(hits) < 2:
-            raise ValueError("Missing upper section width")
-        width.append(float(hits[1] - hits[0]))
-    for z in np.linspace(25, 65, 9):
-        plus = ray_hits(body, (0, depth / 2, z), (0, 1, 0))
-        minus = ray_hits(body, (0, depth / 2, z), (0, -1, 0))
-        if not len(plus) or not len(minus):
-            raise ValueError("Missing central pier")
-        pier.append(float(plus[0] + minus[0]))
-    minima = {"top_beam": min(top), "bottom_beam": min(bottom),
-              "upper_width": min(width), "central_pier_center_section": min(pier)}
-    limits = {"top_beam": params.TOP_BEAM * 1000, "bottom_beam": params.BOTTOM_BEAM * 1000,
-              "upper_width": params.FRAME_WIDTH * 1000, "central_pier_center_section": 23}
-    if any(minima[name] < limit - .03 for name, limit in limits.items()):
-        raise ValueError(f"A sampled load section is too thin: {minima}")
-    # The bottom beam calculation uses an 80 mm-wide, 12 mm-high central
-    # rectangular core. Confirm actual solid material at its limiting faces.
+    expected_bounds = np.array([[-params.FOOT_WIDTH * 500, params.FOOT_FRONT_Y * 1000, 0],
+                                [params.FOOT_WIDTH * 500,
+                                 (params.FOOT_FRONT_Y + params.FOOT_DEPTH) * 1000, height]])
+    if not np.allclose(info['bounds_mm'], expected_bounds, atol=.015):
+        raise ValueError(f"Body bounds differ: {info['bounds_mm']}")
+    if info['euler_characteristic'] != 0:
+        raise ValueError("Body must have one closed side opening")
+
+    def curve_point(points, amount):
+        p = np.asarray(points, dtype=float) * 1000
+        return ((1-amount)**3*p[0] + 3*(1-amount)**2*amount*p[1]
+                + 3*(1-amount)*amount**2*p[2] + amount**3*p[3])
+
+    centerline = {}
+    for label, points, radius, side_radius in (
+            ("main_s", params.S_CURVE_POINTS, params.S_X_RADIUS, params.S_SIDE_RADIUS),
+            ("rear_support", params.REAR_CURVE_POINTS, params.REAR_X_RADIUS, params.REAR_SIDE_RADIUS)):
+        thicknesses = []
+        side_thicknesses = []
+        samples = []
+        for amount in np.linspace(.08, .92, 9):
+            y, z = curve_point(points, amount)
+            point = (0, float(y), float(z))
+            if not contains(body, point):
+                raise ValueError(f"{label} centerline leaves the solid at t={amount}")
+            plus = ray_hits(body, point, (1, 0, 0))
+            minus = ray_hits(body, point, (-1, 0, 0))
+            if not len(plus) or not len(minus):
+                raise ValueError(f"{label} core thickness ray missed the surface")
+            thicknesses.append(float(plus[0] + minus[0]))
+            import mechanics
+            tangent = mechanics.bezier_tangent(points, amount)
+            normal = np.array([0, -tangent[1], tangent[0]])
+            side_plus = ray_hits(body, point, normal)
+            side_minus = ray_hits(body, point, -normal)
+            if not len(side_plus) or not len(side_minus):
+                raise ValueError(f"{label} side thickness ray missed the surface")
+            side_thicknesses.append(float(side_plus[0] + side_minus[0]))
+            samples.append([float(amount), float(y), float(z)])
+        assumed_core = 2 * (radius * 1000 - .8)
+        if min(thicknesses) < assumed_core - .1:
+            raise ValueError(f"{label} is thinner than the mechanics core assumption")
+        assumed_side_core = 2 * (side_radius * 1000 - .8)
+        if min(side_thicknesses) < assumed_side_core - .1:
+            raise ValueError(f"{label} is thinner in YZ than the mechanics core assumption")
+        centerline[label] = {"solid_samples": len(samples), "samples_t_y_z_mm": samples,
+                             "actual_core_thickness_x_mm": thicknesses,
+                             "minimum_actual_core_thickness_x_mm": min(thicknesses),
+                             "mechanics_assumed_core_thickness_x_mm": assumed_core,
+                             "actual_core_thickness_normal_yz_mm": side_thicknesses,
+                             "minimum_actual_core_thickness_normal_yz_mm": min(side_thicknesses),
+                             "mechanics_assumed_core_thickness_normal_yz_mm": assumed_side_core}
+
+    main_mid = curve_point(params.S_CURVE_POINTS, .5)
+    rear_mid = curve_point(params.REAR_CURVE_POINTS, .5)
+    closed_opening = (main_mid + rear_mid) / 2
+    front_concavity = np.array([
+        params.REAR_CURVE_POINTS[0][0] * 1000 - 16,
+        (params.BODY_HEIGHT - params.TOP_BEAM - params.S_SIDE_RADIUS) * 1000])
+    if contains(body, (0, *closed_opening)):
+        raise ValueError("Closed side opening is filled")
+    if contains(body, (0, *front_concavity)):
+        raise ValueError("Front-open concavity is filled")
+
+    # The frame calculation uses a conservative 80 x 10 mm bottom core.
     base_core_points = 0
+    bottom_widths = []
+    bottom_heights = []
     for y in np.linspace(22, 223, 11):
         for x in (-39.9, 0, 39.9):
-            for z in (.05, 6, params.BOTTOM_BEAM * 1000 - .05):
+            for z in (.05, params.BOTTOM_BEAM * 500,
+                      params.BOTTOM_BEAM * 1000 - .05):
                 if not contains(body, (x, y, z)):
                     raise ValueError("Assumed bottom beam core contains a void")
                 base_core_points += 1
+        x_hits = ray_hits(body, (0, y, params.BOTTOM_BEAM * 500), (1, 0, 0))
+        x_back = ray_hits(body, (0, y, params.BOTTOM_BEAM * 500), (-1, 0, 0))
+        z_hits = ray_hits(body, (0, y, .001), (0, 0, 1))
+        if not len(x_hits) or not len(x_back) or not len(z_hits):
+            raise ValueError("Bottom core thickness ray missed the surface")
+        bottom_widths.append(float(x_hits[0] + x_back[0]))
+        bottom_heights.append(float(z_hits[0] + .001))
+    if min(bottom_widths) < 80 or min(bottom_heights) < params.BOTTOM_BEAM * 1000:
+        raise ValueError("Actual bottom core is smaller than 80 x 10 mm")
+
     assembly_info = inspect_mesh(assembly, expected_components=2)
     expected = [(2 * params.RAIL_CENTER + params.FOOT_WIDTH) * 1000,
                 params.FOOT_DEPTH * 1000, height]
     if not np.allclose(assembly_info['dimensions_mm'], expected, atol=.015):
         raise ValueError("Assembly dimensions differ from parameters")
+    assembly_bounds = np.array([[-(params.RAIL_CENTER + params.FOOT_WIDTH/2)*1000,
+                                  params.FOOT_FRONT_Y*1000, params.PAD_THICKNESS*1000],
+                                 [(params.RAIL_CENTER + params.FOOT_WIDTH/2)*1000,
+                                  (params.FOOT_FRONT_Y + params.FOOT_DEPTH)*1000,
+                                  (params.PAD_THICKNESS + params.BODY_HEIGHT)*1000]])
+    if not np.allclose(assembly_info['bounds_mm'], assembly_bounds, atol=.015):
+        raise ValueError("Assembly bounds differ from the two padded support positions")
     lower_points = upper_points = 0
     upper_bottom = (params.PAD_THICKNESS + params.BODY_HEIGHT) * 1000
     for x in (-params.RAIL_CENTER * 1000, params.RAIL_CENTER * 1000):
@@ -299,46 +322,34 @@ def geometry_checks(body, assembly, params):
                     if not len(hits) or abs(float(hits[0]) - .1) > .01:
                         raise ValueError("Top pad is not on flat body material")
                     upper_points += 1
-    return {"minimum_sampled_sections_mm": minima, "bottom_beam_solid_core_points": base_core_points,
+    if lower_points != 36 or upper_points != 36:
+        raise ValueError("Expected 36 ray samples on each pad level")
+    return {"centerline_core_checks": centerline,
+            "closed_side_opening_sample_y_z_mm": closed_opening.tolist(),
+            "front_open_concavity_sample_y_z_mm": front_concavity.tolist(),
+            "bottom_beam_solid_core_points": base_core_points,
+            "bottom_core_actual_width_x_mm": bottom_widths,
+            "bottom_core_actual_height_z_mm": bottom_heights,
+            "bottom_core_assumption_mm": [80, params.BOTTOM_BEAM * 1000],
             "flat_bottom_pad_points": lower_points, "flat_top_pad_points": upper_points,
             "height_with_two_1mm_pads_mm": height + 2 * params.PAD_THICKNESS * 1000,
-            "one_piece_per_support": True, "through_openings_per_support": 2}
+            "one_piece_per_support": True, "closed_side_openings_per_support": 1,
+            "front_open_concavities_per_support": 1}
 
 
 def load_estimate(params, stand_mass):
+    import mechanics
+
     g = 9.80665
-    span = (params.FRAME_DEPTH - 2 * params.END_COLUMN) * 1000
-    width = params.FRAME_WIDTH * 1000
-    thickness = params.TOP_BEAM * 1000
-    modulus = 1000.0  # MPa, deliberately an assumption rather than a material claim.
-    allowable = 5.0  # MPa, assumed design check threshold, not a tested rating.
-    inertia = width * thickness ** 3 / 12
-    section = width * thickness ** 2 / 6
-    cases = []
-    for name, force in [("4kg_total_75_percent_on_one_frame", params.LOAD_MASS_KG * g * .75),
-                        ("3kg_concentrated_on_one_frame", 3 * g),
-                        ("3kg_on_one_frame_plus_20n_keyboard_press", 3 * g + 20),
-                        ("4kg_concentrated_on_one_frame", 4 * g),
-                        ("4kg_on_one_frame_plus_20n_keyboard_press", 4 * g + 20)]:
-        stress = force * span / (4 * section)
-        deflection = force * span ** 3 / (48 * modulus * inertia)
-        if stress > allowable or deflection > 1.5:
-            raise ValueError(f"Assumed beam check failed: {name}")
-        cases.append({"case": name, "load_n": force, "bending_stress_mpa": stress,
-                      "midspan_deflection_mm": deflection,
-                      "allowable_to_stress_ratio": allowable / stress})
-    # A central pier also transfers load into the bottom beam. The rectangular
-    # 80 x 12 mm core is checked for actual solid material by geometry_checks.
-    base_span = (params.BASE_PAD_REAR_Y - params.BASE_PAD_FRONT_Y) * 1000
-    base_width = 80.0
-    base_thickness = params.BOTTOM_BEAM * 1000
-    base_force = params.LOAD_MASS_KG * g + 20
-    base_inertia = base_width * base_thickness ** 3 / 12
-    base_section = base_width * base_thickness ** 2 / 6
-    base_stress = base_force * base_span / (4 * base_section)
-    base_deflection = base_force * base_span ** 3 / (48 * modulus * base_inertia)
-    if base_stress > allowable or base_deflection > 1.5:
-        raise ValueError("Assumed bottom beam check failed")
+    frame = mechanics.sculpture_frame(params)
+    if len(frame["cases"]) != 9:
+        raise ValueError("The beam-frame calculation must cover nine load cases")
+    if frame["calibration"] != {"known_cantilever_deflection_mm": 2.0,
+                                 "known_cantilever_stress_mpa": 3.0,
+                                 "passed": True}:
+        raise ValueError("The beam-frame calibration result changed")
+    if frame["maximum_section_stress_mpa"] > 5.0:
+        raise ValueError("Assumed beam-frame stress exceeds 5 MPa")
     # Support coordinates use the actual four pad locations, with a 1mm inset.
     half = params.RAIL_CENTER * 1000 + params.BASE_PAD_WIDTH * 500 - 1
     front = params.BASE_PAD_FRONT_Y * 1000 + 1
@@ -392,13 +403,9 @@ def load_estimate(params, stand_mass):
                                    "horizontal_force_n": 5, "cop_shift_mm": cop_shift,
                                    "margin_mm": margin})
     new_area = 2 * half * (rear - front)
-    return {"design_laptop_mass_kg": params.LOAD_MASS_KG, "beam_span_mm": span,
-            "assumed_modulus_mpa": modulus, "assumed_stress_threshold_mpa": allowable,
-            "bottom_beam_case": {"span_mm": base_span, "width_mm": base_width,
-                                 "thickness_mm": base_thickness, "load_n": base_force,
-                                 "bending_stress_mpa": base_stress,
-                                 "midspan_deflection_mm": base_deflection},
-            "beam_cases": cases, "contact_polygon_mm": [[-half, front], [half, front], [half, rear], [-half, rear]],
+    return {"design_laptop_mass_kg": params.LOAD_MASS_KG,
+            "beam_frame": frame,
+            "contact_polygon_mm": [[-half, front], [half, front], [half, rear], [-half, rear]],
             "assumed_laptop_com_offsets_mm": {"side": 30, "front_rear": 60},
             "vertical_keyboard_press_n": 20, "static_cases_checked": len(stability),
             "minimum_vertical_resultant_margin_mm": min(stability),
@@ -410,7 +417,7 @@ def load_estimate(params, stand_mass):
             "individual_lighter_support_cases": individual,
             "individual_placement_allowance_mm": placement_allowance,
             "minimum_individual_horizontal_margin_mm": min(case['margin_mm'] for case in individual),
-            "limitations": "Assumed solid-beam statics only. Whole-system polygon assumes a rigid laptop contacts both non-slipping supports. Horizontal cases are at keyboard height, split 5 N per support, separately from vertical pressing. Screen-level pushing, unequal horizontal force, impacts, printed strength, heat, creep and friction need physical tests."}
+            "limitations": "The 1000 MPa modulus and 5 MPa stress threshold are assumptions in a linear two-dimensional beam-frame calculation. It is not FEA or a physical load rating. Whole-system stability assumes a rigid laptop contacts both non-slipping supports. Screen-level pushing, unequal horizontal force, impacts, printed strength, heat, creep and friction remain unverified and require physical tests."}
 
 
 def main():
@@ -428,7 +435,7 @@ def main():
     mass = assembly_info["volume_cm3"] * density / 1000
     report = {"calibration": calibration, "body": body_info, "print": print_info,
               "print_checks": print_checks(printing, canonical, params),
-              "exterior_surface_checks": exterior_overlap_checks(canonical, params),
+              "cap_surface_checks": cap_overlap_checks(canonical, params),
               "assembly": assembly_info, "geometry": geometry_checks(canonical, assembly, params),
               "material": {"assumed_petg_density_g_cm3": density, "solid_pair_mass_g": mass * 1000,
                            "note": "Volume conversion only; excludes brim and startup waste."},

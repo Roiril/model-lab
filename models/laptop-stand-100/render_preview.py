@@ -90,7 +90,7 @@ def main():
     parts = [obj for obj in bpy.context.scene.objects if obj.type == 'MESH']
     if {obj.name for obj in parts} != {'left_body', 'right_body'}:
         raise ValueError('Assembly scene must contain two monolithic support bodies')
-    sage = material('Matte sage frame', '526c61', .78)
+    sage = material('Matte warm ivory body', 'bcae94', .65)
     dark = material('Graphite laptop', '2b2723', .55)
     glass_mat = material('Unlit glass', '191512', .32)
     pad_mat = material('Soft protective pads', '59534d', .9)
