@@ -4,6 +4,7 @@ import sys
 sys.stdout.reconfigure(encoding="utf-8")
 
 import json
+import math
 import struct
 from pathlib import Path
 
@@ -21,6 +22,27 @@ BOTTOM_TOLERANCE_MM = 0.001
 DIMENSION_TOLERANCE_MM = 2.0
 AREA_EPSILON_MM2 = 1e-12
 VOLUME_EPSILON_MM3 = 1e-9
+
+
+def inspect_overhangs(triangles):
+    """印刷姿勢のZから測る。接地面以外の下向き面を全数検査する。"""
+    triangles = np.asarray(triangles, dtype=np.float64)
+    cross = np.cross(triangles[:, 1] - triangles[:, 0],
+                     triangles[:, 2] - triangles[:, 0])
+    lengths = np.linalg.norm(cross, axis=1)
+    bottom = np.all(np.abs(triangles[:, :, 2]) <= BOTTOM_TOLERANCE_MM, axis=1)
+    down = (~bottom) & (cross[:, 2] < 0) & (lengths > 0)
+    angles = np.degrees(np.arctan2(-cross[:, 2], np.linalg.norm(cross[:, :2], axis=1)))
+    over = down & (angles > 45.0 + 1e-5)
+    return {
+        "angle_reference": "vertical build direction; horizontal underside is 90 degrees",
+        "max_downward_overhang_deg": float(angles[down].max()) if down.any() else 0.0,
+        "over_45deg_triangles": int(over.sum()),
+        "over_45deg_area_mm2": float((lengths[over] / 2).sum()),
+        "downward_area_mm2": float((lengths[down] / 2).sum()),
+        "excluded_bed_triangles": int(bottom.sum()),
+        "passed": not bool(over.any()),
+    }
 
 
 def read_binary_stl(path):
@@ -149,6 +171,10 @@ def inspect_triangles(triangles, check_design=False):
             f"actual={dimensions.tolist()}, expected={expected_dimensions.tolist()}"
         )
 
+    overhangs = inspect_overhangs(triangles)
+    if check_design and not overhangs["passed"]:
+        failures.append(f"45度を超える下向き面があります: {overhangs}")
+
     report = {
         "passed": not failures,
         "triangles": int(len(triangles)),
@@ -171,6 +197,7 @@ def inspect_triangles(triangles, check_design=False):
         "flat_bottom_triangles": int(np.count_nonzero(bottom_faces)),
         "flat_bottom_area_mm2": bottom_area_mm2,
         "failures": failures,
+        "overhangs": overhangs,
     }
     if failures:
         raise ValueError("; ".join(failures))
@@ -202,20 +229,55 @@ def calibrate():
             rejected.append(name)
     if rejected != ["empty", "single_open_triangle"]:
         raise RuntimeError(f"検査器の校正に失敗しました: rejected={rejected}")
+    angle_checks = {}
+    for angle in (42.0, 45.0, 46.0, 89.0):
+        slope = 1 / math.tan(math.radians(angle))
+        sample = np.array([[[0., 0., 1.], [1., 0., 1. + slope], [0., -1., 1.]]])
+        measured = inspect_overhangs(sample)
+        expected = angle <= 45.0
+        if measured["passed"] != expected or not math.isclose(
+                measured["max_downward_overhang_deg"], angle, abs_tol=1e-8):
+            raise RuntimeError(f"角度検査器の校正に失敗しました: {angle}, {measured}")
+        angle_checks[str(angle)] = measured
+    upward = np.array([[[0., 0., 1.], [1., 0., 1.], [0., 1., 1.]]])
+    bed = upward[:, ::-1].copy()
+    bed[:, :, 2] = 0.
+    if not inspect_overhangs(upward)["passed"] or not inspect_overhangs(bed)["passed"]:
+        raise RuntimeError("上向き面または接地面の角度検査に失敗しました")
     return {
         "closed_tetrahedron_accepted": tetrahedron["passed"],
         "closed_tetrahedron_volume_mm3": tetrahedron["signed_volume_cm3"] * 1000.0,
         "rejected": rejected,
+        "overhang_angles": angle_checks,
+        "upward_and_bed_faces_accepted": True,
     }
 
 
 def main():
     calibration = calibrate()
-    mesh = inspect_triangles(read_binary_stl(STL_PATH), check_design=True)
+    triangles = read_binary_stl(STL_PATH)
+    mesh = inspect_triangles(triangles, check_design=True)
+    xy = np.unique(triangles[:, :, :2].reshape(-1, 2), axis=0)
+    best = None
+    for angle in np.linspace(0, math.pi / 2, 901):
+        rotation = np.array([[math.cos(angle), -math.sin(angle)],
+                             [math.sin(angle), math.cos(angle)]])
+        size = np.ptp(xy @ rotation, axis=0)
+        if best is None or float(size.max()) < best[0]:
+            best = (float(size.max()), angle, size)
+    bed = {
+        "rotation_about_z_deg": math.degrees(best[1]),
+        "rotated_xy_dimensions_mm": best[2].tolist(),
+        "minimum_square_bed_mm": best[0],
+        "square_bed_with_5mm_brim_mm": best[0] + 10,
+        "fits_256mm_square_without_brim": best[0] <= 256,
+        "fits_256mm_square_with_5mm_brim": best[0] + 10 <= 256,
+    }
     report = {
         "source": str(STL_PATH.relative_to(ROOT)).replace("\\", "/"),
         "calibration": calibration,
         "mesh": mesh,
+        "upright_bed_fit": bed,
     }
     REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
     temporary = REPORT_PATH.with_suffix(".json.tmp")
