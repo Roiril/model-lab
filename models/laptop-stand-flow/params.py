@@ -17,11 +17,14 @@ PLANK_HALF_WIDTH = 0.012  # 幅24mm
 PLANK_EDGE_RADIUS = 0.0020  # 2mm
 PLANK_END_RADIUS = 0.010  # 平面の角R 10mm
 PLANK_THICKNESS = 0.0075  # 7.5mm
-LIP_DROP = 0.0085  # 前端の返しの出っ張り
-LIP_LENGTH = 0.026  # 前端の返しの長さ
+LIP_DROP = 0.0055  # 前端の返しの出っ張り 5.5mm
+LIP_LENGTH = 0.022  # 前端の返しの長さ 22mm
 
 # 断面の丸み: 1 で楕円、大きいほど角張る
 SECTION_POWER = 2.0
+
+# 柱の上面（レール板の座）を板の下面より高くして、板に食い込ませる量。歪みを掛けても板と柱が離れない
+SEAT_RAISE = 0.0035  # 3.5mm
 
 # 接地面の下へ延長して切り落とす量（平らな底面をつくる）
 GROUND_OVERSHOOT = 0.0045
@@ -29,3 +32,6 @@ GROUND_OVERSHOOT = 0.0045
 # 立体化の解像度
 GRID = 0.0006  # 0.6mm
 SMOOTH_ITERATIONS = 30
+
+# 参考画像のカメラから見た輪郭を目標に寄せる、小さな歪み（fit/view_warp.npz があるとき）
+USE_VIEW_WARP = True

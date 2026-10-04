@@ -52,27 +52,30 @@ def smooth_min(a, b, k):
 
 def build_field(x, y, z):
     yy, zz = np.meshgrid(y, z, indexing="ij")
-    d, r, h = P.section_params(yy.astype(np.float64), zz.astype(np.float64), mm(GRID))
-    # 断面: |x/H|^p + (1 - d/R)^p = 1。d は輪郭からの深さ（内側が正）。
+    fit = P.load_fit()
+    d, r, h, xc = P.section_params(yy.astype(np.float64), zz.astype(np.float64), mm(GRID), fit=fit)
+    # 断面: |(x - xc)/H|^p + (1 - d/R)^p = 1。d は輪郭からの深さ（内側が正）。
     u = np.maximum(0.0, 1.0 - d / r)
     p = SECTION_POWER
-    body = (np.abs(x)[:, None, None] / h[None, :, :]) ** p + (u ** p)[None, :, :] - 1.0
+    body = (np.abs(x[:, None, None] - xc[None, :, :]) / h[None, :, :]) ** p + (u ** p)[None, :, :] - 1.0
     body *= 10.0
     # 本体は座の高さで水平に切る。足の底は z=0 で切る。
-    seat_z = (T.GROUND_Y - T.PLANK_BOTTOM_Y) * P.S + 0.75
+    seat_z = (T.GROUND_Y - T.PLANK_BOTTOM_Y) * P.S + mm(SEAT_RAISE)
     body = np.maximum(body, z[None, None, :] - seat_z)
     body = np.maximum(body, -z[None, None, :])
 
     px, py, pz = np.meshgrid(x, y, z, indexing="ij")
     plank_top = (T.GROUND_Y - T.PLANK_TOP_Y) * P.S
     plank_bottom = plank_top - mm(PLANK_THICKNESS)
-    plank_y0 = (T.PLANK_X[0] - T.ORIGIN_X) * P.S
-    plank_y1 = (T.PLANK_X[1] - T.ORIGIN_X) * P.S
+    off = fit["plank"] if fit is not None else (0.0, 0.0, 0.0)
+    plank_y0 = (T.PLANK_X[0] - T.ORIGIN_X) * P.S + off[0]
+    plank_y1 = (T.PLANK_X[1] - T.ORIGIN_X) * P.S + off[1]
+    half = mm(PLANK_HALF_WIDTH) + off[2]
     plank = rounded_box(px, py, pz, plank_y0, plank_y1, plank_bottom, plank_top,
-                        mm(PLANK_HALF_WIDTH), mm(PLANK_EDGE_RADIUS), mm(PLANK_END_RADIUS))
+                        half, mm(PLANK_EDGE_RADIUS), mm(PLANK_END_RADIUS))
     lip = rounded_box(px, py, pz, plank_y1 - mm(LIP_LENGTH), plank_y1,
                       plank_bottom - mm(LIP_DROP), plank_bottom + 3.0,
-                      mm(PLANK_HALF_WIDTH), 3.0, mm(PLANK_END_RADIUS))
+                      half, 3.0, mm(PLANK_END_RADIUS))
     top = smooth_min(plank, lip, 3.0)
     return np.minimum(body, top)
 
@@ -164,6 +167,27 @@ def mesh_object(name, verts_mm, quads):
     return obj
 
 
+def apply_view_warp(verts):
+    """fit/view_warp.npz があれば、参考画像のカメラから見た輪郭を目標に寄せる小さな歪みを再生する。"""
+    path = os.path.join(os.path.dirname(__file__), "fit", "view_warp.npz")
+    if not USE_VIEW_WARP or not os.path.exists(path):
+        return verts
+    import json
+    sys.path.insert(0, os.path.join(os.path.dirname(__file__), "fit"))
+    import view_warp as VW
+    z = np.load(path)
+    cam = json.loads(str(z["cam"]))
+    spacing = int(z["spacing"])
+    v = verts.astype(np.float64)
+    before = v.copy()
+    for grid in z["grids"]:
+        v = VW.apply(v, cam, grid.astype(np.float64), spacing, 1.0)
+        v[:, 2] = np.maximum(v[:, 2], 0.0)
+    shift = np.linalg.norm(v - before, axis=1)
+    print(f"view warp: mean {shift.mean():.2f} mm, p95 {np.percentile(shift, 95):.2f} mm, max {shift.max():.2f} mm")
+    return v.astype(np.float32)
+
+
 def main():
     clear_scene()
     x, y, z = build_grid()
@@ -173,6 +197,13 @@ def main():
     verts = taubin(verts, quads, SMOOTH_ITERATIONS)
     verts[:, 2] = np.maximum(verts[:, 2], 0.0)  # 平滑化で底が沈んだ分を接地面へ戻す
     verts *= SIZE_FACTOR
+    np.savez(os.path.join(os.path.dirname(__file__), "fit", "unit_mesh.npz"), verts=verts, quads=quads)
+    verts = apply_view_warp(verts)
+    # X を中心に寄せる（歪みの再生は x=0 の位置で行った。位置は fit/unit_offset.json に残す）
+    cx = float((verts[:, 0].min() + verts[:, 0].max()) / 2.0)
+    verts[:, 0] -= cx
+    import json
+    json.dump({"x": cx}, open(os.path.join(os.path.dirname(__file__), "fit", "unit_offset.json"), "w"))
     unit_a = mesh_object("leg_left", verts + np.array([-mm(PAIR_SPACING) / 2, 0, 0], np.float32), quads)
     unit_b = mesh_object("leg_right", verts + np.array([mm(PAIR_SPACING) / 2, 0, 0], np.float32), quads)
     bpy.context.view_layer.update()

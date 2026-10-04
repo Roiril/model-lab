@@ -5,6 +5,9 @@
 立体は |x| <= h(y, z) の領域。H と R は位置ごとに SEEDS から滑らかに補間する。
 単位はこのファイルの中では mm。
 """
+import json
+from pathlib import Path
+
 import numpy as np
 
 import ref_trace as T
@@ -163,16 +166,68 @@ def local_thickness(d, window_mm, pitch):
     return out
 
 
-def section_params(py, pz, pitch, window_mm=9.0, blur_mm=1.6):
-    """格子 (y, z) 上の、符号付き距離 d（内側が正）・丸み R・半幅 H。"""
+FIT_PATH = Path(__file__).with_name("fit_state.json")
+SIGMA_W = 16.0
+
+
+def load_fit():
+    """fit/export_fit.py が書く fit_state.json（参考画像の輪郭にあわせた結果）。無ければ None。"""
+    if not FIT_PATH.exists():
+        return None
+    raw = json.load(open(FIT_PATH, encoding="utf-8"))
+    return {k: np.array(v, float) if isinstance(v, list) else v for k, v in raw.items()}
+
+
+def warp_nodes():
+    out = np.array([to_mm(p) for p in T.OUTER], float)
+    return out[list(range(0, len(T.OUTER), 3))]
+
+
+def bilerp(a, y0, z0, pitch, py, pz):
+    gy = np.clip((py - y0) / pitch, 0, a.shape[0] - 1.001)
+    gz = np.clip((pz - z0) / pitch, 0, a.shape[1] - 1.001)
+    iy, iz = np.floor(gy).astype(int), np.floor(gz).astype(int)
+    fy, fz = gy - iy, gz - iz
+    return ((1 - fy) * (1 - fz) * a[iy, iz] + fy * (1 - fz) * a[iy + 1, iz]
+            + (1 - fy) * fz * a[iy, iz + 1] + fy * fz * a[iy + 1, iz + 1])
+
+
+def section_params(py, pz, pitch, window_mm=9.0, blur_mm=1.6, fit=None):
+    """格子 (y, z) 上の、符号付き距離 d（内側が正）・丸み R・半幅 H・中心ずれ xc。
+
+    fit があれば、側面の滑らかな変位場 W で位置を引き戻して（p' = p - W）、
+    輪郭の距離場・厚み・シードの補間をその位置で読む。"""
     outer, hole = silhouette_polygons()
     inside = inside_mask(py, pz, [outer, hole])
     dist = boundary_distance(py, pz, [outer, hole])
     d = np.where(inside, dist, -dist).astype(np.float32)
-    r_seed, h_max = seed_fields(py, pz)
     # R が厚みの半分を超えると中心線に尾根（折れ目）ができるので、厚みで頭打ちにする
     thick = local_thickness(np.maximum(d, 0.0), window_mm, pitch)
-    r = np.minimum(r_seed, np.maximum(thick, 1.0))
-    r = blur(r, 2.5, pitch)
     d = blur(d, blur_mm, pitch)
-    return d.astype(np.float32), r.astype(np.float32), h_max.astype(np.float32)
+    qy, qz = py, pz
+    h_seed = np.array([s[3] for s in SEEDS], float)
+    xc_seed = np.zeros(len(SEEDS))
+    if fit is not None:
+        nodes = warp_nodes()
+        disp = fit["disp"].reshape(-1, 2)
+        d2 = (py[None] - nodes[:, 0, None, None]) ** 2 + (pz[None] - nodes[:, 1, None, None]) ** 2
+        w = np.exp(-d2 / (2 * SIGMA_W ** 2)) + 1e-12
+        w /= w.sum(axis=0)
+        qy = py - (w * disp[:, 0, None, None]).sum(axis=0)
+        qz = pz - (w * disp[:, 1, None, None]).sum(axis=0)
+        d = bilerp(d, py[0, 0], pz[0, 0], pitch, qy, qz)
+        thick = bilerp(thick, py[0, 0], pz[0, 0], pitch, qy, qz)
+        h_seed = fit["h"]
+        xc_seed = fit["xc"]
+    sy = np.array([to_mm((s[0], s[1]))[0] for s in SEEDS])
+    sz = np.array([to_mm((s[0], s[1]))[1] for s in SEEDS])
+    g2 = (qy[None] - sy[:, None, None]) ** 2 + (qz[None] - sz[:, None, None]) ** 2
+    lw = -g2 / (2.0 * 17.0 ** 2)
+    lw -= lw.max(axis=0)
+    ww = np.exp(lw)
+    den = ww.sum(axis=0)
+    r_seed = (ww * np.array([s[2] for s in SEEDS], float)[:, None, None]).sum(axis=0) / den
+    h_max = (ww * h_seed[:, None, None]).sum(axis=0) / den
+    xc = (ww * xc_seed[:, None, None]).sum(axis=0) / den
+    r = blur(np.minimum(r_seed, np.maximum(thick, 1.0)), 2.5, pitch)
+    return d.astype(np.float32), r.astype(np.float32), h_max.astype(np.float32), xc.astype(np.float32)
