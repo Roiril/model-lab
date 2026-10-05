@@ -84,7 +84,7 @@ def _component_count(vertex_count, edges):
     return len({find(index) for index in range(vertex_count)})
 
 
-def inspect_triangles(triangles, check_design=False):
+def inspect_triangles(triangles, check_design=False, require_overhangs=False):
     triangles = np.asarray(triangles, dtype=np.float64)
     if triangles.shape == (0,):
         triangles = triangles.reshape(0, 3, 3)
@@ -172,7 +172,7 @@ def inspect_triangles(triangles, check_design=False):
         )
 
     overhangs = inspect_overhangs(triangles)
-    if check_design and not overhangs["passed"]:
+    if require_overhangs and not overhangs["passed"]:
         failures.append(f"45度を超える下向き面があります: {overhangs}")
 
     report = {
@@ -244,12 +244,31 @@ def calibrate():
     bed[:, :, 2] = 0.
     if not inspect_overhangs(upward)["passed"] or not inspect_overhangs(bed)["passed"]:
         raise RuntimeError("上向き面または接地面の角度検査に失敗しました")
+    wedge_vertices = np.array([
+        [0., 0., 0.], [.2, 0., 0.], [.2, 1., 0.], [0., 1., 0.],
+        [0., 0., 1.], [1.5, 0., 1.], [1.5, 1., 1.], [0., 1., 1.],
+    ])
+    wedge_faces = np.array([
+        [0, 2, 1], [0, 3, 2], [4, 5, 6], [4, 6, 7],
+        [0, 1, 5], [0, 5, 4], [1, 2, 6], [1, 6, 5],
+        [2, 3, 7], [2, 7, 6], [3, 0, 4], [3, 4, 7],
+    ])
+    inspect_triangles(wedge_vertices[wedge_faces])
+    try:
+        inspect_triangles(wedge_vertices[wedge_faces], require_overhangs=True)
+    except ValueError as error:
+        if "45度" not in str(error):
+            raise RuntimeError("閉じた張り出し形状の校正で別の検査が失敗しました") from error
+    else:
+        raise RuntimeError("45度超の閉じたメッシュを印刷用検査が通しました")
+    inspect_triangles(vertices[faces], require_overhangs=True)
     return {
         "closed_tetrahedron_accepted": tetrahedron["passed"],
         "closed_tetrahedron_volume_mm3": tetrahedron["signed_volume_cm3"] * 1000.0,
         "rejected": rejected,
         "overhang_angles": angle_checks,
         "upward_and_bed_faces_accepted": True,
+        "strict_print_accepts_tetrahedron_rejects_overhanging_wedge": True,
     }
 
 
@@ -278,6 +297,8 @@ def main():
         "calibration": calibration,
         "mesh": mesh,
         "upright_bed_fit": bed,
+        "print_ready_upright": mesh["overhangs"]["passed"],
+        "validation_scope": "mesh closure and dimensions; printing angles assessed separately",
     }
     REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
     temporary = REPORT_PATH.with_suffix(".json.tmp")
