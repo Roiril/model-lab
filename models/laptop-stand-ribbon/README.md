@@ -25,6 +25,32 @@
 直立姿勢で45度以内にするための全面壁化は採用しない。
 サポートを使わずに45度以内へ収める版は次のSTLを用いる。
 
+## 中央で左右に二分割した印刷版
+
+2026-10-05の上面画像に描かれた長手方向の白線で左右へ切る。
+幅方向の中央面 `x = 0` が切断面になる。元の形状と倍率を保つ。
+左右の中央面を下に置いた印刷用STLを用意する。
+印刷後は平らな中央面を合わせて接着する。位置決め用の穴や突起は付けない。
+
+| ファイル | 用途 |
+|---|---|
+| `halves/print-left.stl` | 左半分の原寸印刷 |
+| `halves/print-right.stl` | 右半分の原寸印刷 |
+| `halves/usage-left.stl` | 左半分を使用姿勢で確認 |
+| `halves/usage-right.stl` | 右半分を使用姿勢で確認 |
+| `halves/laptop-stand-ribbon-halves.zip` | 印刷用2ファイルと印刷手順 |
+
+上表のパスは `exports/laptop-stand-ribbon/` からの相対パス。
+今回の二分割印刷には `halves/print-left.stl` と `halves/print-right.stl` を各1個使う。
+使用時の外形は各幅42.494 × 奥行279.000 × 高さ約152.895mm。
+印刷時は各約278.294 × 172.210 × 42.494mmになる。
+原寸では256mm角の造形台に収まらない。各側5mmのブリムを使う場合は
+約288.294mm四方の範囲を必要とする。
+受け面の設計厚6mmを保つ。左右の切断面には隙間や位置決めの加工を加えない。
+`export_halves.py` で再生成する。入力STLの指紋と各部品の検査結果は
+`halves/verification.json` に保存する。
+左右の体積の和と元STLの体積を比較する。中央面の面積も左右で比較する。
+
 ## 横置きで印刷する一体版
 
 `export_onepiece.py` が片側平面の一体版を作る。
@@ -66,6 +92,7 @@
 & 'C:/Program Files/Blender Foundation/Blender 5.1/blender.exe' --background --python-exit-code 1 --python models/laptop-stand-ribbon/model.py
 py -3.11 models/laptop-stand-ribbon/verify.py
 & 'C:/Program Files/Blender Foundation/Blender 5.1/blender.exe' --background --python-exit-code 1 --python models/laptop-stand-ribbon/export_onepiece.py
+& 'C:/Program Files/Blender Foundation/Blender 5.1/blender.exe' --background --python-exit-code 1 --python models/laptop-stand-ribbon/export_halves.py
 & 'C:/Program Files/Blender Foundation/Blender 5.1/blender.exe' --background --python-exit-code 1 --python models/laptop-stand-ribbon/render_preview.py
 ```
 
