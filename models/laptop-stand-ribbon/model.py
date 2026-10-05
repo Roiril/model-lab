@@ -14,6 +14,8 @@ sys.path.insert(0, str(HERE))
 import bpy
 import bmesh
 import numpy as np
+from mathutils import Vector
+from mathutils.bvhtree import BVHTree
 from blender_utils import clear_scene, export_stl
 from params import *
 
@@ -222,15 +224,45 @@ def bezier_point(points, t):
                 3*u*t*t*points[2], t**3*points[3]), np.zeros(2))
 
 
+def check_buried_cap(obj):
+    bpy.context.view_layer.update()
+    tree = BVHTree.FromObject(obj, bpy.context.evaluated_depsgraph_get())
+    sy, sz = LENGTH/.280, HEIGHT/.152
+    centre = np.array((shoulder_root_yz[0]*sy, shoulder_root_yz[1]*sz))
+    control = np.array((shoulder_bend_yz[0]*sy, shoulder_bend_yz[1]*sz))
+    tangent = control-centre
+    tangent /= np.linalg.norm(tangent)
+    normal = np.array((-tangent[1], tangent[0]))
+    def signed_distance(point):
+        point = Vector(point)
+        nearest, outward, _, distance = tree.find_nearest(point)
+        return distance if (point-nearest).dot(outward) > 0 else -distance
+    if signed_distance((FOOT_WIDTH*2, centre[0], centre[1])) <= 0:
+        raise ValueError("Cap containment inspection did not reject an outside point")
+    if signed_distance((0, .14*sy, .003*sz)) >= 0:
+        raise ValueError("Cap containment inspection did not accept an inside point")
+    width = shoulder_buried_section*FOOT_WIDTH/.084
+    height = shoulder_buried_section*sz
+    distances = []
+    for x, depth in rounded_section(width, height, min(width, height)*.425):
+        yz = centre+normal*depth
+        distances.append(signed_distance((x, yz[0], yz[1])))
+    clearance = -max(distances)
+    if clearance <= shoulder_voxel_size:
+        raise ValueError(f"Shoulder cap is not safely inside body: {clearance*1000}mm")
+    return clearance*1000
+
+
 def shoulder_bridge():
     """胴の内部から受け面へ接線を合わせた閉鎖ロフトを作る。"""
     sy, sz = LENGTH/.280, HEIGHT/.152
-    rail_join_y = .052
+    rail_join_y = shoulder_join_y
     rail_join_z = .148-.177*(rail_join_y-.012)
-    path = np.array(((.032*sy, .124*sz), (-.008*sy, .162*sz),
-                     (.040*sy, (rail_join_z+.012*.177)*sz),
+    path = np.array(((shoulder_root_yz[0]*sy, shoulder_root_yz[1]*sz),
+                     (shoulder_bend_yz[0]*sy, shoulder_bend_yz[1]*sz),
+                     ((rail_join_y-.030)*sy, (rail_join_z+.030*.177)*sz),
                      (rail_join_y*sy, rail_join_z*sz)))
-    ring_count, around = 49, 64
+    ring_count, around = 97, 64
     vertices, faces = [], []
     for i in range(ring_count):
         t = i/(ring_count-1)
@@ -240,14 +272,23 @@ def shoulder_bridge():
         tangent = after-before
         tangent /= np.linalg.norm(tangent)
         normal = np.array((-tangent[1], tangent[0]))
-        taper_t = min(1.0, t/.55)
-        ease = taper_t*taper_t*(3-2*taper_t)
-        half_width = (1-ease)*.016 + ease*RAIL_WIDTH/2
-        half_height = (1-ease)*.009 + ease*RAIL_THICKNESS/2
-        for j in range(around):
-            angle = math.tau*j/around
-            yz = centre + normal*(half_height*math.cos(angle))
-            vertices.append((half_width*math.sin(angle), yz[0], yz[1]))
+        if t < .35:
+            fraction = t/.35
+            ease = fraction**3*(10-15*fraction+6*fraction*fraction)
+            width = ((1-ease)*shoulder_buried_section + ease*shoulder_root_width)*FOOT_WIDTH/.084
+            height = ((1-ease)*shoulder_buried_section + ease*shoulder_root_thickness)*sz
+        else:
+            fraction = (t-.35)/.65
+            ease = fraction**3*(10-15*fraction+6*fraction*fraction)
+            width = (1-ease)*shoulder_root_width*FOOT_WIDTH/.084 + ease*RAIL_WIDTH
+            height = ((1-ease)*shoulder_root_thickness + ease*RAIL_THICKNESS)*sz
+        root_radius = min(shoulder_root_width*FOOT_WIDTH/.084,
+                          shoulder_root_thickness*sz)*.425
+        radius = (min(width, height)*.425 if t < .35
+                  else (1-ease)*root_radius + ease*RAIL_EDGE_RADIUS)
+        for x, depth in rounded_section(width, height, radius):
+            yz = centre + normal*depth
+            vertices.append((x, yz[0], yz[1]))
     for i in range(ring_count-1):
         for j in range(around):
             faces.append((i*around+j, (i+1)*around+j,
@@ -272,9 +313,15 @@ def remesh_and_smooth_shoulder(obj):
     restore_previous_depth(obj)
 
     group = obj.vertex_groups.new(name="Shoulder only")
-    indices = [vertex.index for vertex in obj.data.vertices
-               if vertex.co.y < .062*LENGTH/.280 and vertex.co.z > .116*HEIGHT/.152]
-    group.add(indices, 1.0, "REPLACE")
+    indices = []
+    for vertex in obj.data.vertices:
+        height_weight = max(0.0, min(1.0, (vertex.co.z/(HEIGHT/.152)-.100)/.020))
+        length_weight = max(0.0, min(1.0, (.125-vertex.co.y/(LENGTH/.280))/.040))
+        weight = (height_weight**3*(10-15*height_weight+6*height_weight**2)
+                  * length_weight**3*(10-15*length_weight+6*length_weight**2))
+        if weight > 0:
+            group.add([vertex.index], weight, "REPLACE")
+            indices.append(vertex.index)
     modifier = obj.modifiers.new("Shoulder tangent smoothing", "SMOOTH")
     modifier.vertex_group = group.name
     modifier.factor = shoulder_smooth_factor
@@ -328,7 +375,8 @@ def validate(obj):
         "volume_cm3": round(abs(bm.calc_volume(signed=True))*1e6, 3),
         "upright_max_downward_overhang_deg": round(max(downward, default=0.0), 4),
         "print_orientation_note": "The upright pose is not asserted to satisfy 45 degrees",
-        "shoulder_transition_mm": [32.0, 52.0],
+        "shoulder_transition_mm": [shoulder_root_yz[0]*1000, shoulder_join_y*1000],
+        "shoulder_peak_section_mm": [shoulder_root_width*1000, shoulder_root_thickness*1000],
         "shoulder_method": "closed tangent loft, 0.45mm voxel union, local smoothing",
     }
     bm.to_mesh(obj.data)
@@ -347,11 +395,14 @@ def main():
     load_overrides()
     clear_scene()
     OUT.mkdir(parents=True, exist_ok=True)
-    obj = join_meshes((body(), rail(), shoulder_bridge()))
+    lower = body()
+    cap_clearance = check_buried_cap(lower)
+    obj = join_meshes((lower, rail(), shoulder_bridge()))
     remesh_and_smooth_shoulder(obj)
     flatten_floor(obj)
     obj.name = MODEL_NAME
     stats = validate(obj)
+    stats["buried_cap_clearance_mm"] = cap_clearance
     stats["design"] = "Organic loop body and narrow support joined by a local smooth shoulder"
     export_stl(MODEL_NAME, only=[obj])
     (OUT / "build.json").write_text(json.dumps(stats, indent=2), encoding="utf-8")
