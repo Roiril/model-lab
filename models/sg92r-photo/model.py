@@ -27,9 +27,10 @@ def require_positive(*names):
 
 require_positive(
     "BODY_L", "BODY_W", "BODY_H", "FLANGE_L", "FLANGE_W", "FLANGE_T",
-    "GEAR_COVER_L", "GEAR_COVER_W", "GEAR_COVER_H", "SHAFT_DIA", "SHAFT_H",
+    "GEAR_COVER_L", "GEAR_COVER_W", "GEAR_NECK_DIA", "GEAR_COVER_H", "SHAFT_DIA", "SHAFT_H",
     "HORN_SPAN_Y", "HORN_ROOT_W", "HORN_TIP_W", "HORN_SHORT_W", "HORN_ARM_T",
-    "HORN_HUB_DIA", "MOUNT_HOLE_SPACING", "MOUNT_HOLE_DIA", "HORN_SOCKET_DIA",
+    "HORN_HUB_DIA", "MOUNT_HOLE_SPACING", "MOUNT_HOLE_DIA", "MOUNT_SLOT_W",
+    "WIRE_W", "WIRE_LENGTH", "WIRE_T", "WIRE_EXIT_Z", "HORN_SOCKET_DIA",
     "CENTER_HOLE_DIA", "ARM_HOLE_DIA",
 )
 if HORN_LEFT_X >= 0 or HORN_RIGHT_X <= 0:
@@ -38,6 +39,8 @@ if HORN_TIP_W > HORN_ROOT_W or HORN_SHORT_W > HORN_HUB_DIA:
     raise ValueError("Horn arm widths must fit the hub and taper toward the tips")
 if HORN_SOCKET_TOP_Z <= HORN_HUB_BOTTOM_Z or HORN_SOCKET_TOP_Z >= HORN_TOP_Z:
     raise ValueError("Horn socket top must be inside the hub")
+if (WIRE_W - WIRE_T) / 2 >= WIRE_T or WIRE_T >= WIRE_LENGTH:
+    raise ValueError("Cable dimensions must make the three wires overlap along their length")
 
 
 def add_box(name, size, location):
@@ -58,6 +61,14 @@ def add_cylinder(name, diameter, height, location, vertices=64):
     return obj
 
 
+def add_cylinder_x(name, diameter, length, location, vertices=48):
+    obj = add_cylinder(name, diameter, length, location, vertices)
+    obj.rotation_euler[1] = math.pi / 2
+    bpy.context.view_layer.objects.active = obj
+    bpy.ops.object.transform_apply(location=False, rotation=True, scale=False)
+    return obj
+
+
 def boolean(target, other, operation):
     modifier = target.modifiers.new(f"{operation.lower()}_{other.name}", "BOOLEAN")
     modifier.operation = operation
@@ -72,23 +83,6 @@ def union(target, *parts):
     for part in parts:
         boolean(target, part, "UNION")
     return target
-
-
-def add_capsule_x(name, left, right, width, bottom, top):
-    radius = width / 2
-    if right - left <= width:
-        raise ValueError(f"{name} length must be greater than its width")
-    height = top - bottom
-    z = (bottom + top) / 2
-    left_center = left + radius
-    right_center = right - radius
-    base = add_box(name, (right_center - left_center + 2 * EPS, width, height),
-                   ((left_center + right_center) / 2, 0, z))
-    return union(
-        base,
-        add_cylinder(f"{name}_left", width, height, (left_center, 0, z)),
-        add_cylinder(f"{name}_right", width, height, (right_center, 0, z)),
-    )
 
 
 def add_capsule_y(name, span, width, bottom, top):
@@ -161,22 +155,19 @@ def build_body():
         (BODY_L, BODY_W, BODY_H),
         (BODY_CENTER_X, 0, BODY_H / 2),
     )
-    flange = add_capsule_x(
-        "mounting_flange",
-        BODY_CENTER_X - FLANGE_L / 2,
-        BODY_CENTER_X + FLANGE_L / 2,
-        FLANGE_W,
-        FLANGE_BOTTOM_Z,
-        FLANGE_BOTTOM_Z + FLANGE_T,
+    flange = add_box(
+        "mounting_flange", (FLANGE_L, FLANGE_W, FLANGE_T),
+        (BODY_CENTER_X, 0, FLANGE_BOTTOM_Z + FLANGE_T / 2),
     )
-    cover = add_capsule_x(
-        "gear_cover",
-        GEAR_COVER_LEFT_X,
-        GEAR_COVER_LEFT_X + GEAR_COVER_L,
-        GEAR_COVER_W,
-        GEAR_COVER_BOTTOM_Z - EPS,
-        GEAR_COVER_BOTTOM_Z + GEAR_COVER_H,
+    cover_z = GEAR_COVER_BOTTOM_Z + GEAR_COVER_H / 2 - EPS / 2
+    cover = add_cylinder(
+        "gear_cover", GEAR_COVER_W, GEAR_COVER_H + EPS, (0, 0, cover_z)
     )
+    neck_center_x = -GEAR_COVER_L + GEAR_COVER_W / 2 + GEAR_NECK_DIA / 2
+    union(cover, add_cylinder(
+        "gear_cover_neck", GEAR_NECK_DIA, GEAR_COVER_H + EPS,
+        (neck_center_x, 0, cover_z),
+    ))
     shaft = add_cylinder(
         "output_shaft",
         SHAFT_DIA,
@@ -186,17 +177,51 @@ def build_body():
     union(body, flange, cover, shaft)
     hole_z = FLANGE_BOTTOM_Z + FLANGE_T / 2
     for sign in (-1, 1):
+        hole_x = BODY_CENTER_X + sign * MOUNT_HOLE_SPACING / 2
         hole = add_cylinder(
             "mount_hole",
             MOUNT_HOLE_DIA,
             FLANGE_T + 0.002,
-            (BODY_CENTER_X + sign * MOUNT_HOLE_SPACING / 2, 0, hole_z),
+            (hole_x, 0, hole_z),
             vertices=48,
         )
         boolean(body, hole, "DIFFERENCE")
+        outer_x = BODY_CENTER_X + sign * (FLANGE_L / 2 + 0.0005)
+        slot = add_box(
+            "mount_slot",
+            (abs(outer_x - hole_x), MOUNT_SLOT_W, FLANGE_T + 0.002),
+            ((outer_x + hole_x) / 2, 0, hole_z),
+        )
+        boolean(body, slot, "DIFFERENCE")
     body.name = "sg92r-photo-body"
     body.data.materials.append(material("SG92R translucent blue", (0.025, 0.12, 0.8), alpha=0.72))
     return body
+
+
+def build_cable():
+    pitch = (WIRE_W - WIRE_T) / 2
+    start_x = BODY_CENTER_X + BODY_L / 2
+    cable_x = start_x + WIRE_LENGTH / 2
+    colors = (
+        ("Cable brown", (0.22, 0.055, 0.018)),
+        ("Cable red", (0.7, 0.025, 0.018)),
+        ("Cable yellow", (0.95, 0.58, 0.025)),
+    )
+    cable_materials = [material(name, color, roughness=0.5) for name, color in colors]
+    wires = []
+    for index, y in enumerate((-pitch, 0, pitch)):
+        wire = add_cylinder_x(
+            f"wire_{index + 1}", WIRE_T, WIRE_LENGTH,
+            (cable_x, y, WIRE_EXIT_Z),
+        )
+        for mat in cable_materials:
+            wire.data.materials.append(mat)
+        for polygon in wire.data.polygons:
+            polygon.material_index = index
+        wires.append(wire)
+    cable = union(wires[0], wires[1], wires[2])
+    cable.name = "sg92r-photo-wire"
+    return cable
 
 
 def build_horn():
@@ -273,21 +298,22 @@ def mesh_metrics(obj):
     return {"nonManifoldEdges": non_manifold, "connectedComponents": components}
 
 
-def write_validation(body, horn):
-    boxes = [object_bbox_mm(body), object_bbox_mm(horn)]
+def write_validation(body, horn, cable):
+    boxes = [object_bbox_mm(body), object_bbox_mm(horn), object_bbox_mm(cable)]
     assembly_min = [min(box["min"][i] for box in boxes) for i in range(3)]
     assembly_max = [max(box["max"][i] for box in boxes) for i in range(3)]
     data = {
         "units": "mm",
         "body": {"bbox": boxes[0], **mesh_metrics(body)},
         "horn": {"bbox": boxes[1], **mesh_metrics(horn)},
+        "wire": {"bbox": boxes[2], **mesh_metrics(cable)},
         "assembly": {
             "bbox": {
                 "min": assembly_min,
                 "max": assembly_max,
                 "size": [round(assembly_max[i] - assembly_min[i], 4) for i in range(3)],
             },
-            "separateClosedParts": 2,
+            "separateClosedParts": 3,
         },
         "note": "The photo-consistent flange is centred at body X=-5 mm, so the assembly X envelope is 37 mm rather than 34 mm.",
     }
@@ -303,8 +329,10 @@ def write_validation(body, horn):
 clear_scene()
 body = build_body()
 horn = build_horn()
+cable = build_cable()
 
 export_stl("sg92r-photo-body", only=[body])
 export_stl("sg92r-photo-horn", only=[horn])
-export_stl("sg92r-photo", only=[body, horn])
-write_validation(body, horn)
+export_stl("sg92r-photo-wire", only=[cable])
+export_stl("sg92r-photo", only=[body, horn, cable])
+write_validation(body, horn, cable)

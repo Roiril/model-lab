@@ -92,7 +92,7 @@ else:
 
 results={"calibration":"closed tetrahedron passes; missing face fails","files":{}}
 meshes={}
-for suffix,dims,components in [("",[37,17,32],2),("-body",[32,12,30.5],1),("-horn",[34,17,4.5],1)]:
+for suffix,dims,components in [("",[37,17,32],3),("-body",[32,12,30.5],1),("-horn",[34,17,4.5],1),("-wire",[8,4,1.6],1)]:
     name="sg92r-photo"+suffix+".stl"
     tri=read_stl(ROOT/"exports"/name)
     result=inspect(tri)
@@ -102,13 +102,36 @@ for suffix,dims,components in [("",[37,17,32],2),("-body",[32,12,30.5],1),("-hor
     results["files"][name]=result
 body,horn=meshes["-body"],meshes["-horn"]
 sections=[]
-for z,expected in [(10,[23,12]),(17,[32,12]),(24,[19,12]),(29,[4.6,4.6])]:
+for z,expected in [(10,[23,12]),(17,[32,12]),(24,[14,12]),(29,[4.6,4.6])]:
     actual=cross_section_size(body,z)
     close(actual,expected)
     sections.append({"z_mm":z,"dimensions_mm":actual})
 results["body_cross_sections"]=sections
 close(ray_heights(body,-20,3),[16,18])
 close(ray_heights(horn,-10,1),[30.5,32])
+# 上面写真の丸穴と外端へ抜ける幅1mmの溝を検査する。
+mount_centers=[-5-28.84/2,-5+28.84/2]
+for x in mount_centers:
+    for y in [-0.99,0,0.99]:
+        assert not ray_heights(body,x,y),(x,y,"Mount hole blocked")
+    for y in [-1.01,1.01]:
+        close(ray_heights(body,x,y),[16,18])
+for x in [-20.8,10.8]:
+    for y in [-0.49,0,0.49]:
+        assert not ray_heights(body,x,y),(x,y,"Mount slot blocked")
+    for y in [-0.51,0.51]:
+        close(ray_heights(body,x,y),[16,18])
+results["mounting_features"]={"hole_diameter_mm":2,"open_slot_width_mm":1,"center_spacing_mm":28.84}
+# 小円の中心を通る平面形状は幅4mm。幅12mmのカプセルが残っていないことも見る。
+for y in [-1.99,1.99]:
+    close(ray_heights(body,-6,y),[0,27])
+for y in [-2.01,2.01]:
+    close(ray_heights(body,-6,y),[0,22])
+results["gear_cover"]={"length_mm":14,"main_diameter_mm":12,"neck_diameter_mm":4,"neck_center_x_mm":-6}
+wire=meshes["-wire"]
+close(results["files"]["sg92r-photo-wire.stl"]["min_mm"],[6.5,-2,4.2])
+close(results["files"]["sg92r-photo-wire.stl"]["max_mm"],[14.5,2,5.8])
+results["wire"]={"width_mm":4,"display_length_mm":8,"provisional_thickness_mm":1.6,"exit_side":"+X"}
 holes=[(x,0) for x in [-16.5,-14.5,-12.5,-10.5,-8.5,-6.5,-4.5,5,7,9,11,13,15]]
 holes.extend((0,y) for y in [-6.8,-4.8,4.8,6.8])
 holes.append((0,0))

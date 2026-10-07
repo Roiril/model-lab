@@ -12,11 +12,11 @@ FLANGE_W = 0.012  # 取付耳の奥行（12mm）
 FLANGE_BOTTOM_Z = 0.016  # 本体底から取付耳下面までの高さ（16mm）
 FLANGE_T = 0.002  # 取付耳の厚み（2mm）
 
-GEAR_COVER_L = 0.019  # ギアカバーのX方向幅（19mm）
-GEAR_COVER_W = 0.012  # ギアカバーのY方向幅（12mm）
+GEAR_COVER_L = 0.014  # 上面カバーの全長（14mm、訂正画像）
+GEAR_COVER_W = 0.012  # 上面カバーの円形部分の直径（12mm、写真からの推定）
+GEAR_NECK_DIA = 0.004  # 上面カバーの細い部分の幅（4mm）
 GEAR_COVER_BOTTOM_Z = 0.022  # 本体底からギアカバー下面までの高さ（22mm）
 GEAR_COVER_H = 0.005  # ギアカバーの高さ（5mm）
-GEAR_COVER_LEFT_X = -0.013  # 軸原点からギアカバー左端までのX距離（-13mm）
 
 SHAFT_DIA = 0.0046  # 出力軸の直径（4.6mm）
 SHAFT_BOTTOM_Z = 0.027  # 本体底から出力軸下面までの高さ（27mm）
@@ -37,7 +37,14 @@ HORN_TOP_Z = 0.032  # 本体底からホーン最上面までの高さ（32mm）
 # Existing physical measurements, kept separate from the shared servo profile
 BODY_CENTER_X = -0.005  # 軸原点から本体中心までのX距離（-5mm、既存の計測値）
 MOUNT_HOLE_SPACING = 0.02884  # 取付穴の中心間ピッチ（28.84mm）
-MOUNT_HOLE_DIA = 0.003  # 取付穴の直径（3mm）
+MOUNT_HOLE_DIA = 0.002  # 取付穴の直径（2mm）
+MOUNT_SLOT_W = 0.001  # 取付穴から外端へ開く溝の幅（1mm）
+
+# 配線の全幅は写真由来。表示長、1本の太さ、出口高さは仮置き
+WIRE_W = 0.004  # 3本配線の全幅（4mm）
+WIRE_LENGTH = 0.008  # 配線の表示長さ（8mm、仮置き）
+WIRE_T = 0.0016  # 1本の配線直径（1.6mm、仮置き）
+WIRE_EXIT_Z = 0.005  # 本体底から配線中心までの高さ（5mm、仮置き）
 
 # Provisional dimensions not visible in the photos
 HORN_SOCKET_DIA = 0.0046  # 軸用ソケットの直径（4.6mm、スプライン歯は省略）
