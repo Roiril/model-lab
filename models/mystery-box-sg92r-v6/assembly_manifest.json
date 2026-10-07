@@ -1,0 +1,267 @@
+{
+  "size_mm": 70.0,
+  "wall_mm": 2.4,
+  "lid_skin_mm": 2.4,
+  "O": [
+    40.0,
+    37.0
+  ],
+  "H": [
+    22.0,
+    61.79999923706055
+  ],
+  "crank_r_mm": 14.0,
+  "rocker_local_mm": [
+    14.0,
+    -4.0
+  ],
+  "link_length_mm": 29.25869387023603,
+  "lid_range_deg": [
+    0,
+    65.0
+  ],
+  "servo_range_deg": [
+    -10.00000553509803,
+    55.578141001863656
+  ],
+  "parts": [
+    {
+      "name": "01_body",
+      "group": "fixed",
+      "print_bounds_mm": [
+        70.00000762939453,
+        70.00000762939453,
+        67.5999984741211
+      ],
+      "print_axis": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "quantity": 1
+    },
+    {
+      "name": "02_fixed_rear_cover",
+      "group": "fixed",
+      "print_bounds_mm": [
+        70.0,
+        26.799999237060547,
+        11.500020027160645
+      ],
+      "print_axis": [
+        4.371138828673793e-08,
+        0.0,
+        1.0,
+        0.0
+      ],
+      "quantity": 1
+    },
+    {
+      "name": "03_planar_lid",
+      "group": "lid",
+      "print_bounds_mm": [
+        70.0,
+        42.400001525878906,
+        12.399999618530273
+      ],
+      "print_axis": [
+        4.371138828673793e-08,
+        0.0,
+        1.0,
+        0.0
+      ],
+      "quantity": 1
+    },
+    {
+      "name": "04_main_cassette",
+      "group": "fixed",
+      "print_bounds_mm": [
+        49.29999923706055,
+        61.599998474121094,
+        51.800010681152344
+      ],
+      "print_axis": [
+        0.7071067690849304,
+        -0.0,
+        -0.7071067690849304,
+        -0.0
+      ],
+      "quantity": 1
+    },
+    {
+      "name": "05_front_closure",
+      "group": "fixed",
+      "print_bounds_mm": [
+        49.29999923706055,
+        61.599998474121094,
+        53.20000076293945
+      ],
+      "print_axis": [
+        0.7071067690849304,
+        0.0,
+        0.7071067690849304,
+        0.0
+      ],
+      "quantity": 1
+    },
+    {
+      "name": "06_horn_cup_journal",
+      "group": "crank",
+      "print_bounds_mm": [
+        31.84514045715332,
+        36.129669189453125,
+        20.799999237060547
+      ],
+      "print_axis": [
+        0.7071067690849304,
+        0.0,
+        0.7071067690849304,
+        0.0
+      ],
+      "quantity": 1
+    },
+    {
+      "name": "07_rear_rocker",
+      "group": "lid",
+      "print_bounds_mm": [
+        17.899999618530273,
+        32.5,
+        4.0
+      ],
+      "print_axis": [
+        0.7071067690849304,
+        -0.0,
+        -0.7071067690849304,
+        -0.0
+      ],
+      "quantity": 1
+    },
+    {
+      "name": "08_front_rocker",
+      "group": "lid",
+      "print_bounds_mm": [
+        17.900009155273438,
+        32.5,
+        14.5
+      ],
+      "print_axis": [
+        0.7071067690849304,
+        0.0,
+        0.7071067690849304,
+        0.0
+      ],
+      "quantity": 1
+    },
+    {
+      "name": "09_link",
+      "group": "link",
+      "print_bounds_mm": [
+        33.2287712097168,
+        27.783599853515625,
+        3.0
+      ],
+      "print_axis": [
+        0.7071067690849304,
+        -0.0,
+        -0.7071067690849304,
+        -0.0
+      ],
+      "quantity": 1
+    },
+    {
+      "name": "10_hinge_axle",
+      "group": "fixed",
+      "print_bounds_mm": [
+        16.400009155273438,
+        6.0,
+        4.242640018463135
+      ],
+      "print_axis": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "quantity": 1
+    },
+    {
+      "name": "11_drive_axle",
+      "group": "crank",
+      "print_bounds_mm": [
+        14.600000381469727,
+        5.0,
+        3.5355300903320312
+      ],
+      "print_axis": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "quantity": 1
+    },
+    {
+      "name": "12_link_axle",
+      "group": "lid",
+      "print_bounds_mm": [
+        7.599999904632568,
+        5.0,
+        3.5355300903320312
+      ],
+      "print_axis": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "quantity": 1
+    },
+    {
+      "name": "13_body_cross_key",
+      "group": "fixed",
+      "print_bounds_mm": [
+        67.00000762939453,
+        9.600000381469727,
+        4.199999809265137
+      ],
+      "print_axis": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "quantity": 1
+    }
+  ],
+  "reference_source": "C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\sg92r-photo",
+  "physical_tested": false,
+  "boolean_solver_fallbacks": [
+    [
+      "06_horn_cup_journal",
+      "UNION",
+      "drive boss"
+    ],
+    [
+      "06_horn_cup_journal",
+      "DIFFERENCE",
+      "hub rear clearance"
+    ],
+    [
+      "07_rear_rocker",
+      "UNION",
+      "rocker elbow"
+    ],
+    [
+      "08_front_rocker",
+      "UNION",
+      "hinge eye"
+    ]
+  ],
+  "notes": [
+    "13 print parts including three thick axles; actual servo/horn/screw/cable are additional",
+    "Fixed cover and roof locating pegs are integral; front closure and body receivers capture them",
+    "Support allowed only on marked inner nonfunctional surfaces of cassette and cup",
+    "Hinge carries radial weight; servo supplies gravity torque; unpowered lid can close"
+  ]
+}

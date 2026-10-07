@@ -1,0 +1,132 @@
+{
+  "translation_step_mm": 2,
+  "physical_tested": false,
+  "stages": [
+    {
+      "name": "servo_top_entry",
+      "moving": [
+        "REFERENCE SG92R body",
+        "REFERENCE SG92R wire"
+      ],
+      "fixed": [
+        "04_main_cassette"
+      ],
+      "travel_mm": 60,
+      "collisions": []
+    },
+    {
+      "name": "cup_axial_entry",
+      "moving": [
+        "06_horn_cup_journal"
+      ],
+      "fixed": [
+        "04_main_cassette",
+        "REFERENCE SG92R body",
+        "REFERENCE SG92R horn",
+        "REFERENCE SG92R wire"
+      ],
+      "travel_mm": 30,
+      "collisions": []
+    },
+    {
+      "name": "front_rocker_and_peg_entry",
+      "moving": [
+        "08_front_rocker"
+      ],
+      "fixed": [
+        "03_planar_lid",
+        "07_rear_rocker",
+        "09_link",
+        "10_hinge_axle",
+        "12_link_axle"
+      ],
+      "travel_mm": 24,
+      "collisions": []
+    },
+    {
+      "name": "rear_cover_axial_entry",
+      "moving": [
+        "02_fixed_rear_cover"
+      ],
+      "fixed": [
+        "04_main_cassette",
+        "03_planar_lid",
+        "07_rear_rocker",
+        "08_front_rocker"
+      ],
+      "travel_mm": 24,
+      "collisions": []
+    },
+    {
+      "name": "closure_axial_entry",
+      "moving": [
+        "05_front_closure"
+      ],
+      "fixed": [
+        "02_fixed_rear_cover",
+        "03_planar_lid",
+        "04_main_cassette",
+        "06_horn_cup_journal",
+        "07_rear_rocker",
+        "08_front_rocker",
+        "09_link",
+        "10_hinge_axle",
+        "11_drive_axle",
+        "12_link_axle",
+        "REFERENCE SG92R body",
+        "REFERENCE SG92R horn",
+        "REFERENCE SG92R wire"
+      ],
+      "travel_mm": 30,
+      "collisions": []
+    },
+    {
+      "name": "complete_cassette_vertical_drop",
+      "moving": [
+        "02_fixed_rear_cover",
+        "03_planar_lid",
+        "04_main_cassette",
+        "05_front_closure",
+        "06_horn_cup_journal",
+        "07_rear_rocker",
+        "08_front_rocker",
+        "09_link",
+        "10_hinge_axle",
+        "11_drive_axle",
+        "12_link_axle",
+        "REFERENCE SG92R body",
+        "REFERENCE SG92R horn",
+        "REFERENCE SG92R wire"
+      ],
+      "fixed": [
+        "01_body",
+        "REFERENCE exciter25x10"
+      ],
+      "travel_mm": 76,
+      "collisions": []
+    },
+    {
+      "name": "cross_key_from_right",
+      "moving": [
+        "13_body_cross_key"
+      ],
+      "fixed": [
+        "01_body",
+        "02_fixed_rear_cover",
+        "03_planar_lid",
+        "04_main_cassette",
+        "05_front_closure",
+        "06_horn_cup_journal",
+        "07_rear_rocker",
+        "08_front_rocker",
+        "09_link",
+        "10_hinge_axle",
+        "11_drive_axle",
+        "12_link_axle"
+      ],
+      "travel_mm": 70,
+      "collisions": []
+    }
+  ],
+  "input_blend_sha256": "995b09c2ee156a9482472335966a181d1615804860c8d3f02c3fc57225133514"
+}

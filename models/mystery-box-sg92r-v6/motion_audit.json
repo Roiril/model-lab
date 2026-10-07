@@ -1,0 +1,3445 @@
+{
+  "angle_step_deg": 0.5,
+  "physical_tested": false,
+  "collision_method": "BVH triangle intersections and containment sampled every half degree; exact intersection volumes; does not prove continuous motion or real fit",
+  "collisions": [],
+  "touches": [
+    {
+      "lid_deg": 0.0,
+      "parts": [
+        "01_body",
+        "05_front_closure"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 0.0,
+      "parts": [
+        "01_body",
+        "07_rear_rocker"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 0.0,
+      "parts": [
+        "01_body",
+        "08_front_rocker"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 0.0,
+      "parts": [
+        "01_body",
+        "11_drive_axle"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 0.0,
+      "parts": [
+        "01_body",
+        "12_link_axle"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 0.0,
+      "parts": [
+        "01_body",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 0.0,
+      "parts": [
+        "01_body",
+        "REFERENCE SG92R horn"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 0.0,
+      "parts": [
+        "01_body",
+        "REFERENCE SG92R wire"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 0.0,
+      "parts": [
+        "04_main_cassette",
+        "05_front_closure"
+      ],
+      "overlap_tri_pairs": 6,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 0.0,
+      "parts": [
+        "04_main_cassette",
+        "10_hinge_axle"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 0.0,
+      "parts": [
+        "05_front_closure",
+        "06_horn_cup_journal"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 0.0,
+      "parts": [
+        "05_front_closure",
+        "07_rear_rocker"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 0.0,
+      "parts": [
+        "05_front_closure",
+        "08_front_rocker"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 0.0,
+      "parts": [
+        "05_front_closure",
+        "09_link"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 0.0,
+      "parts": [
+        "05_front_closure",
+        "10_hinge_axle"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 0.0,
+      "parts": [
+        "05_front_closure",
+        "11_drive_axle"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 0.0,
+      "parts": [
+        "05_front_closure",
+        "12_link_axle"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 0.0,
+      "parts": [
+        "06_horn_cup_journal",
+        "11_drive_axle"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 0.0,
+      "parts": [
+        "07_rear_rocker",
+        "08_front_rocker"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 0.0,
+      "parts": [
+        "07_rear_rocker",
+        "12_link_axle"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 0.0,
+      "parts": [
+        "08_front_rocker",
+        "12_link_axle"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 0.0,
+      "parts": [
+        "09_link",
+        "12_link_axle"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 30.0,
+      "parts": [
+        "01_body",
+        "09_link"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 30.0,
+      "parts": [
+        "01_body",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 30.0,
+      "parts": [
+        "01_body",
+        "REFERENCE SG92R horn"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 30.0,
+      "parts": [
+        "01_body",
+        "REFERENCE SG92R wire"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 30.0,
+      "parts": [
+        "05_front_closure",
+        "06_horn_cup_journal"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 30.0,
+      "parts": [
+        "05_front_closure",
+        "07_rear_rocker"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 30.0,
+      "parts": [
+        "05_front_closure",
+        "09_link"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 30.0,
+      "parts": [
+        "05_front_closure",
+        "REFERENCE SG92R horn"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 30.0,
+      "parts": [
+        "06_horn_cup_journal",
+        "11_drive_axle"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 30.0,
+      "parts": [
+        "07_rear_rocker",
+        "08_front_rocker"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 30.0,
+      "parts": [
+        "07_rear_rocker",
+        "12_link_axle"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 30.0,
+      "parts": [
+        "09_link",
+        "11_drive_axle"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 65.0,
+      "parts": [
+        "01_body",
+        "09_link"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 65.0,
+      "parts": [
+        "01_body",
+        "11_drive_axle"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 65.0,
+      "parts": [
+        "01_body",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 65.0,
+      "parts": [
+        "01_body",
+        "REFERENCE SG92R horn"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 65.0,
+      "parts": [
+        "01_body",
+        "REFERENCE SG92R wire"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 65.0,
+      "parts": [
+        "03_planar_lid",
+        "07_rear_rocker"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 65.0,
+      "parts": [
+        "05_front_closure",
+        "06_horn_cup_journal"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 65.0,
+      "parts": [
+        "05_front_closure",
+        "09_link"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 65.0,
+      "parts": [
+        "05_front_closure",
+        "11_drive_axle"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 65.0,
+      "parts": [
+        "05_front_closure",
+        "REFERENCE SG92R horn"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 65.0,
+      "parts": [
+        "06_horn_cup_journal",
+        "11_drive_axle"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 65.0,
+      "parts": [
+        "07_rear_rocker",
+        "08_front_rocker"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 65.0,
+      "parts": [
+        "07_rear_rocker",
+        "12_link_axle"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 65.0,
+      "parts": [
+        "09_link",
+        "11_drive_axle"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    }
+  ],
+  "invalid_intersection_volumes": [],
+  "input_blend_sha256": "995b09c2ee156a9482472335966a181d1615804860c8d3f02c3fc57225133514",
+  "flat_contact_intersections": [
+    {
+      "lid_deg": 0.0,
+      "parts": [
+        "01_body",
+        "03_planar_lid"
+      ],
+      "overlap_tri_pairs": 6,
+      "volume_mm3": 7.152545226270693e-05,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          0.0,
+          66.0,
+          67.5999984741211
+        ],
+        [
+          70.0,
+          70.0,
+          67.5999984741211
+        ]
+      ]
+    },
+    {
+      "lid_deg": 0.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 0.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 1.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 1.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 2.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 2.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 3.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 3.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 4.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 4.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 5.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 5.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 6.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 6.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 7.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 7.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 8.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 8.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 9.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 9.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 10.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 10.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 11.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 11.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 12.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 12.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 13.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 13.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 14.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 14.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 15.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 15.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 16.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 16.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 17.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 17.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 18.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 18.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 19.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 19.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 20.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 20.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 21.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 21.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 22.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 22.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 23.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 23.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 24.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 24.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 25.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 25.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 26.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 26.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 27.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 27.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 28.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 28.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 29.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 29.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 30.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 30.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 31.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 31.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 32.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 32.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 33.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 33.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 34.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 34.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 35.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 35.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 36.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 36.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 37.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 37.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 38.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 38.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 39.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 39.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 40.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 40.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 41.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 41.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 42.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 42.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 43.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 43.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 44.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 44.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 45.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 45.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 46.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 46.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 47.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 47.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 48.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 48.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 49.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 49.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 50.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 50.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 51.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 51.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 52.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 52.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 53.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 53.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 54.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 54.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 55.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 55.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 56.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 56.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 57.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 57.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 58.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 58.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 59.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 59.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 60.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 60.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 61.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 61.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 62.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 62.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 63.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 63.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 64.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 64.5,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    },
+    {
+      "lid_deg": 65.0,
+      "parts": [
+        "04_main_cassette",
+        "REFERENCE SG92R body"
+      ],
+      "overlap_tri_pairs": 201,
+      "volume_mm3": 0.0014640395197243793,
+      "nonmanifold_edges": 0,
+      "bounds_mm": [
+        [
+          9.000000953674316,
+          19.000001907348633,
+          31.0
+        ],
+        [
+          36.000003814697266,
+          51.000003814697266,
+          31.000003814697266
+        ]
+      ]
+    }
+  ],
+  "flat_contact_tolerance_mm": 5e-05
+}

@@ -1,0 +1,106 @@
+[
+  {
+    "name": "test_01_servo_cradle",
+    "source": "04_main_cassette",
+    "bounds_mm": [
+      19.299999237060547,
+      32.599998474121094,
+      27.200000762939453
+    ],
+    "purpose_ja": "手元のSG92R本体・耳・配線の上入れ確認。無理に押さない。"
+  },
+  {
+    "name": "test_02_actual_horn_pocket",
+    "source": "06_horn_cup_journal",
+    "bounds_mm": [
+      31.84514045715332,
+      36.129669189453125,
+      4.900010108947754
+    ],
+    "purpose_ja": "付属十字ホーンの翼形状と0.3 mmクリアランスを確認。スプラインは印刷しない。"
+  },
+  {
+    "name": "test_03_bearing_bar",
+    "bounds_mm": [
+      22.0,
+      50.0,
+      4.0
+    ],
+    "purpose_ja": "D5.6/D6.6/D12.6 mmの軸受け。対応軸が指で軽く回ることを確認。"
+  },
+  {
+    "name": "test_04_actual_axle5",
+    "source": "11_drive_axle",
+    "purpose_ja": "本体用の実部品を同じ印刷向きで試験。適合すれば本組立へ再利用可能。"
+  },
+  {
+    "name": "test_05_actual_axle6",
+    "source": "10_hinge_axle",
+    "purpose_ja": "本体用の実部品を同じ印刷向きで試験。適合すれば本組立へ再利用可能。"
+  },
+  {
+    "name": "test_08_actual_front_rocker",
+    "source": "08_front_rocker",
+    "purpose_ja": "本体用の実部品を同じ印刷向きで試験。適合すれば本組立へ再利用可能。"
+  },
+  {
+    "name": "test_06_actual_journal",
+    "source": "06_horn_cup_journal",
+    "bounds_mm": [
+      12.0,
+      12.0,
+      11.800000190734863
+    ],
+    "purpose_ja": "D12 mmジャーナルを本部品と同じ向き・端面で印刷する嵌合試験。"
+  },
+  {
+    "name": "test_07_roof_dock",
+    "source": "03_planar_lid",
+    "bounds_mm": [
+      15.399999618530273,
+      12.0,
+      12.399999618530273
+    ],
+    "purpose_ja": "前側ロッカーの一体ペグを屋根の穴へ通し、抜き差しできることを確認。"
+  },
+  {
+    "name": "test_09_cover_socket",
+    "source": "02_fixed_rear_cover",
+    "bounds_mm": [
+      6.5,
+      9.0,
+      11.5
+    ],
+    "purpose_ja": "後部固定カバーの45°菱形穴。相手ペグと0.3 mm隙間。"
+  },
+  {
+    "name": "test_10_cover_peg",
+    "source": "04_main_cassette",
+    "bounds_mm": [
+      6.900010108947754,
+      5.199999809265137,
+      10.100000381469727
+    ],
+    "purpose_ja": "カセットの一体ペグ。カバー試験片に挿入し、強い圧入を避ける。"
+  },
+  {
+    "name": "test_11_side_key_access",
+    "source": "01_body",
+    "bounds_mm": [
+      6.0,
+      16.000009536743164,
+      12.0
+    ],
+    "purpose_ja": "側面キー入口の10.2 mm橋渡しと外面の仕上がりを先に確認。"
+  },
+  {
+    "name": "test_12_side_key_end",
+    "source": "13_body_cross_key",
+    "bounds_mm": [
+      10.0,
+      9.600000381469727,
+      4.199999809265137
+    ],
+    "purpose_ja": "キー頭部と側面入口の嵌合。入口のブリッジ垂れが引っかからないことを確認。"
+  }
+]

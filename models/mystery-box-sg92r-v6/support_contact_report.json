@@ -1,0 +1,103 @@
+{
+  "physical_tested": false,
+  "input_slice_sha256": "217b22db2a9c1d71575284a33ba8c77f1f1be62ce87772831398e1b4618c1f29",
+  "input_plate_sha256": "90cefe680f1adf1e28e26e1473f468f7f60d38b0572d0b085486028b622790b2",
+  "method": "Extruding G0/G1 endpoints in Support interface; source object transform inverted. Low interface projections are checked against actual upward STL facets. Interface paths extend beyond model edges into air. Does not prove every deposited filament contact or removability.",
+  "objects": {
+    "04_main_cassette": {
+      "interface_extrusion_endpoints": 231,
+      "bounds_print_local_mm": [
+        [
+          27.126009600000003,
+          20.029489199999997,
+          3.1999999999999993
+        ],
+        [
+          39.43700960000001,
+          46.2324892,
+          27.2
+        ]
+      ],
+      "interface_z_counts": {
+        "3.20": 26,
+        "3.47": 63,
+        "3.73": 23,
+        "8.80": 18,
+        "9.08": 11,
+        "9.36": 19,
+        "26.92": 33,
+        "27.20": 38
+      },
+      "extrusion_endpoints_outside_expected_landing_projection": 22,
+      "outside_examples_print_xyz": [
+        [
+          29.035009599999995,
+          40.0764892,
+          8.8
+        ],
+        [
+          29.912009600000005,
+          40.0764892,
+          8.8
+        ],
+        [
+          30.789009599999986,
+          40.0764892,
+          8.8
+        ],
+        [
+          31.6670096,
+          40.0764892,
+          8.8
+        ],
+        [
+          32.54400960000001,
+          40.0764892,
+          8.8
+        ]
+      ],
+      "low_interface_world_yz_bounds_mm": [
+        [
+          25.4294892,
+          27.862990399999987
+        ],
+        [
+          51.462489199999986,
+          40.173990399999994
+        ]
+      ],
+      "actual_landing_projection_endpoint_check": {
+        "allowed_nonfunctional_surface": 136,
+        "outside_material_in_interface_margin": 24,
+        "functional_or_other_surface": 0,
+        "expected_print_surface_z_mm": [
+          2.7,
+          8.4
+        ],
+        "sampling_limitation": "Endpoint projection only, not a complete continuous filament envelope test"
+      }
+    },
+    "05_front_closure": {
+      "interface_extrusion_endpoints": 0
+    },
+    "06_horn_cup_journal": {
+      "interface_extrusion_endpoints": 178,
+      "bounds_print_local_mm": [
+        [
+          -0.741329799999999,
+          -0.5994853999999883,
+          11.524
+        ],
+        [
+          32.586670199999986,
+          36.204514599999996,
+          11.8
+        ]
+      ],
+      "interface_z_counts": {
+        "11.52": 90,
+        "11.80": 88
+      }
+    }
+  }
+}
