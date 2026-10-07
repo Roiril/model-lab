@@ -1,7 +1,7 @@
 # model-lab — Agent Instructions
 
 3Dプリンター用モデルをBlender Python API (`bpy`) でコード化するプロジェクト。
-ユーザーはモデルのアイデアを伝え、Claudeがスクリプトを書いて即座にブラウザで確認できる。
+ユーザーはモデルのアイデアを伝え、Codexがスクリプトを書いて即座にブラウザで確認できる。
 
 ---
 
@@ -46,60 +46,13 @@ server.js            # HTTP + WebSocket サーバー
 
 ---
 
-## 参考モデルを読む（3mf / STL）
-
-ユーザーが既存の設計を「これを参考に」と渡してきたら、**画像ではなく 3mf を受け取る**。
-3mf には寸法・部品構成・造形姿勢・スライス設定が数値で入っており、画像は 3mf から作れる。
-
-```bash
-# 寸法・穴径・部品名・造形姿勢・スライス設定を表で出す（Blender 不要）
-py -3.11 lib/read_3mf.py "C:/Users/kouga/Downloads/<name>.3mf"
-
-# 部品ごとに大きさをそろえた格子で描く（小さい部品が潰れない）
-"C:/Program Files/Blender Foundation/Blender 5.1/blender.exe" --background \
-  --python lib/import_3mf.py -- "<name>.3mf" exports/_ref.png --sheet
-```
-
-`--sheet` は部品ごとに倍率が違う。実寸は必ず `read_3mf.py` の表で読む。
-`--assembled` を付けると造形プレート上の配置、無指定だと実寸のまま 1 列に並ぶ。
-
-作るときの順番:
-
-1. `read_3mf.py` を全参考ファイルに通し、**穴径・肉厚・クリアランスの実績値を集める**
-2. その値を `params.py` に書く（自分で決めた数字より、実際に刷られた数字を優先する）
-3. `--sheet` で描いて**部品の分け方**を見る（どこで割ったか、リブをどう入れたか）
-4. 造形姿勢とサポート設定を見て、**サポート無しで刷れる向き**があるかを確かめる
-
-### 刷るときに渡す形
-
-STL を並べた 3mf にまとめる。プリンタは既存 3mf から読んだ X1C の値
-（256 x 256 x 250mm / 手前左 18 x 28mm は除外域）に合わせてある。
-
-```bash
-py -3.11 tools/plate_3mf.py hug-arm-pla exports/hug-arm-upper-l.stl <...>
-```
-
-部品ごとの名前とフィラメント番号が入るので、スライサー側で見分けられる。
-重なり・はみ出し・除外域を突き合わせて報告するので、その行を読んでから渡すこと。
-
-### 読み取りの限界
-
-`read_3mf.py` の円筒検出は面の法線から軸を求める。フィレットや球は落ちるが、
-**低ポリのメッシュでは径が数 % 内側に出る**。0.1mm を争う嵌合は
-表の値をそのまま使わず、`--sheet` の絵と突き合わせる。
-
-同じ部品の参考が複数あると値が食い違うことがある（SG90 の取り付け穴間隔が
-`SG90実寸.3mf` で 28.8mm、`つまむサーボ.3mf` で 27.6mm）。**食い違ったら公称値を調べ直す**。
-
----
-
 ## インタラクティブ・モデリング（Blender 共同編集）
 
 ユーザーが Blender で目視確認しながら一緒に詰めるときのワークフロー。
 
 ### 役割分担
 
-- **Claude**: コード編集後に `./run.sh models/<name>/model.py` を実行してビルド
+- **Codex**: コード編集後に `./run.sh models/<name>/model.py` を実行してビルド
 - **Blender 側 watch.py**: `exports/<MODEL>.stl` の mtime を監視し、変化したらシーンをクリアして STL を再読込
 
 ソース（`model.py` / `params.py`）の import キャッシュ問題が起きないよう、**watch.py はビルド成果物（STL）のみを監視**する設計。
@@ -111,9 +64,9 @@ py -3.11 tools/plate_3mf.py hug-arm-pla exports/hug-arm-upper-l.stl <...>
 3. 上部の `MODEL = "<name>"` を編集対象モデル名に書き換え
 4. **Run Script**（`Alt+P`）
 5. コンソールに `[watch] watching ...` と出れば常駐開始
-6. 以降、Claude がビルドする度に Blender のシーンが自動更新される
+6. 以降、Codex がビルドする度に Blender のシーンが自動更新される
 
-### Claude 側の振る舞い
+### Codex 側の振る舞い
 
 - 編集後は **必ず** `./run.sh models/<name>/model.py` を実行する（watch.py は STL の mtime 変化でしか発火しない）
 - ユーザーが「壊れた」「見えなくなった」等と言ったらすぐ前の状態に戻せるよう、大きな構造変更は段階的に行う
@@ -184,12 +137,6 @@ bm.to_mesh(mesh)
 bm.free()
 ```
 
-⚠⚠ **凹んだ輪郭を n-gon の蓋（`bm.faces.new(poly)`）で閉じない。**
-三角化が凹みをまたいで膜を張り、へこみが塞がって板になる（Blender 5.1 で実測）。
-たちが悪いのは**体積も非多様体エッジ数も正しいまま**なところで、数値の検証では気づけない。
-弧やくびれのある断面は、蓋も**四角形の帯**で作る（下端の点列と上端の点列を並べて quad で埋める）。
-気づいた経緯は 2026-09-05 の pipe-foot-pair。ユーザーがビューワーで「変な面が一つある」と見つけた。
-
 ### Boolean カッターの配置
 
 カッターの面がターゲットと **面一（coplanar）** だと Boolean が不安定になる。
@@ -223,8 +170,8 @@ dt.location = (0, 0, COVER_H + 0.0005)
 http://localhost:3000 が Studio。ユーザーは面を選んで「ここを厚く」、断面に線を描いて「この線に沿って」と指示し、
 「シュビーに送る」を押す。依頼は `requests/<model>/<id>/` に届く。
 
-- 未対応の依頼はセッション開始時と発話時に hook（`.claude/hooks/studio-inbox.js`）が差し込む。差し込まれたらスキル `studio-inbox` に従う。Studio を開いている間は `tools/requests.py watch` を Monitor で張って待ち受ける
-- 受け方・読み方・返し方は **`.claude/skills/studio-inbox/SKILL.md`**（座標系・意図の意味・返信の書き方・やってよい操作の範囲）
+- **作業を始めたら最初に `py -3.11 tools/requests.py list` を実行する**。未対応があればスキル `studio-inbox` に従う。ユーザーが Studio で指示すると言ったら `tools/requests.py wait --agent codex` で待つ
+- 受け方・読み方・返し方は **`.agents/skills/studio-inbox/SKILL.md`**（座標系・意図の意味・返信の書き方・やってよい操作の範囲）
 - 直したら `py -3.11 tools/requests.py reply <id> "<何をどう変えたか>" --status done`。Studio 側で変更前と重ねて比べられる
 - 設計の正本は `.agent/plans/2026-10-07_studio.md`、モジュールの約束は `viewer/studio/CONTRACT.md`
 
@@ -234,18 +181,12 @@ http://localhost:3000 が Studio。ユーザーは面を選んで「ここを厚
 
 モデルを作成・更新した後、必ず以下を伝える。
 
-1. **⭐ ビューワーは「そのモデルを開いた状態」にして渡す**（2026-08-25 ユーザー指摘。
-   モデルが 65 個あるので、URL だけ渡されると探すのに一苦労）。手順:
-   - サーバーが起動していなければ `node server.js`（バックグラウンド実行）
-   - `mcp__Claude_Browser__preview_start` で **`http://localhost:3000/?model=<name>`** を開く
-   - `?model=` はカテゴリごと選択済みで開く。存在しない名前なら既定モデルへ落ちる
-   - ブラウザペインが非表示だと canvas が 0x0 のままだが、表示すれば描画される（異常ではない）
-   - URL は現在のモデルに追従するので、そのままリンクとして渡してよい
+1. **ビューワーURL**: http://localhost:3000 を開くよう促す
 2. **外形寸法**: W × D × H mm で明記する
 3. **設計上の判断**: クリアランス・肉厚・特記事項を簡潔に説明する
 4. **次のアクション**: 「フィットが合わなければクリアランスを変えます」など
 
-サーバーが起動していない場合は先に `node server.js` を起動する（`viewer/index.html` の `?model=` 対応は 2026-08-25 に追加）。
+サーバーが起動していない場合は先に `node server.js` を起動する。
 
 ---
 
@@ -259,21 +200,20 @@ http://localhost:3000 が Studio。ユーザーは面を選んで「ここを厚
 
 ---
 
-## Claude Code ハーネス (.claude/)
+## Codex ハーネス (.Codex/)
 
-- **[memory/](.claude/memory/)** — 自動メモリ（`MEMORY.md` がインデックス、topic ごとに分割）
-- **[skills/](.claude/skills/)** — `servo-robot-design`：1サーボ・ロボット（round/square-bot 等）とサーボ/ホーン嵌合部品・アクセサリの設計原則・落とし穴・ワークフロー集（サーボ機構/ホーン結合/配線/目耳/単位/boolean/検証/印刷分割を扱う。サーボ系を触る前に必読）
-- **[hooks/](.claude/hooks/)** — プロジェクト固有 PreToolUse ガード、`studio-inbox.js`（Studio の未対応依頼を SessionStart / UserPromptSubmit で差し込む）
-- **[skills/studio-inbox](.claude/skills/studio-inbox/SKILL.md)** — Studio の依頼の受け方・読み方・返し方
-- **[settings.json](.claude/settings.json)** — `bypassPermissions`（書き込み前承認なし）
-- **[settings.local.json](.claude/settings.local.json)** — ローカル個別 allow リスト
-- **[commands/](.claude/commands/)** — `/new-model` `/build` `/print-check` の本体
+- **[memory/](.Codex/memory/)** — 自動メモリ（`MEMORY.md` がインデックス、topic ごとに分割）
+- **[skills/](.Codex/skills/)** — `servo-robot-design`：1サーボ・ロボット（round/square-bot 等）とサーボ/ホーン嵌合部品・アクセサリの設計原則・落とし穴・ワークフロー集（サーボ機構/ホーン結合/配線/目耳/単位/boolean/検証/印刷分割を扱う。サーボ系を触る前に必読）
+- **[hooks/](.Codex/hooks/)** — プロジェクト固有 PreToolUse ガード
+- **[settings.json](.Codex/settings.json)** — `bypassPermissions`（書き込み前承認なし）
+- **[settings.local.json](.Codex/settings.local.json)** — ローカル個別 allow リスト
+- **[commands/](.Codex/commands/)** — `/new-model` `/build` `/print-check` の本体
 
-汎用 hook（SessionStart 状態注入 / 不可逆操作ガード / Windows エンコーディング修正）とスラッシュコマンド（`/commit`, `/plan`）は `~/.claude/` にグローバル配置済み。
+汎用 hook（SessionStart 状態注入 / 不可逆操作ガード / Windows エンコーディング修正）とスラッシュコマンド（`/commit`, `/plan`）は `~/.Codex/` にグローバル配置済み。
 
 ## 共有ハーネス (.agent/)
 
-`.agent/` 配下は他エージェント (Cline / Roo Code) 用の資産だが、**領域別ルールと計画は Claude Code からも参照する**。
+`.agent/` 配下は他エージェント (Cline / Roo Code) 用の資産だが、**領域別ルールと計画は Codex からも参照する**。
 
 ### 領域別ルール（該当領域の作業前に読む）
 
@@ -282,8 +222,8 @@ http://localhost:3000 が Studio。ユーザーは面を選んで「ここを厚
 
 ### その他
 
-- **ワークフロー**: `.agent/workflows/` — 他エージェント用（Claude Code は `.claude/commands/` を使う）
+- **ワークフロー**: `.agent/workflows/` — 他エージェント用（Codex は `.Codex/commands/` を使う）
 - **計画**: `.agent/plans/` — 実装計画（`YYYY-MM-DD_<slug>.md`）。`/plan <slug>` で作成
 - **タスク**: `.agent/tasks/` — チェックリスト
 
-動作モードはグローバル `~/.claude/CLAUDE.md` 参照（書き込み前承認なし、git コミット規約 等）。
+動作モードはグローバル `~/.Codex/AGENTS.md` 参照（書き込み前承認なし、git コミット規約 等）。

@@ -9,5 +9,28 @@
     ],
     "defaultMode": "bypassPermissions"
   },
-  "hooks": {}
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/studio-inbox.js"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/studio-inbox.js"
+          }
+        ]
+      }
+    ]
+  }
 }

@@ -1,0 +1,45 @@
+{
+  "id": "20261007-153000-ab12",
+  "model": "laptop-stand-ribbon",
+  "createdAt": "2026-10-07T15:30:00+09:00",
+  "message": "付け根をもう少し太くして、背中の線をこの曲線に合わせて滑らかに",
+  "frame": "blender-mm",
+  "provenance": {
+    "gitHead": "2a10a00",
+    "stl": [
+      { "file": "laptop-stand-ribbon.stl", "mtime": "2026-10-05T11:41:00+09:00", "size": 54490284, "sha1": "…", "unitScale": 1, "bbox": { "min": [-80, -60, 0], "max": [80, 60, 140] }, "placed": false }
+    ],
+    "params": { "source": "params.py", "values": { "RIBBON_W": 0.024 } },
+    "overrides": null
+  },
+  "camera": { "position": [210, -260, 180], "target": [0, 0, 60], "up": [0, 0, 1], "fov": 45 },
+  "images": ["view.png", "section-1.png", "section-1.svg"],
+  "items": [
+    {
+      "id": "iab12cd", "type": "faces", "color": "#c792ea", "note": "ここが細くて折れそう", "file": "laptop-stand-ribbon.stl",
+      "action": "thicken", "amount": 1.5, "side": "both",
+      "summary": {
+        "faceCount": 412, "area": 380.5, "thickness": { "min": 3.1, "median": 3.6 },
+        "centroid": [12.0, -4.5, 22.0], "normal": [0.1, -0.9, 0.4],
+        "bbox": { "min": [2.0, -9.0, 15.0], "max": [22.0, 1.0, 30.0] },
+        "samples": [[12.0, -4.5, 22.0, 0.1, -0.9, 0.4]]
+      }
+    },
+    { "id": "ief34gh", "type": "pin", "color": "#ffd166", "note": "この角を丸く", "file": "laptop-stand-ribbon.stl", "point": [40.0, 10.0, 90.0], "normal": [0, 1, 0] },
+    { "id": "iij56kl", "type": "measure", "color": "#e6e8ea", "note": "", "file": "laptop-stand-ribbon.stl", "a": [0, 0, 0], "b": [0, 0, 120], "distance": 120.0 },
+    {
+      "id": "imn78op", "type": "section", "color": "#5ad1e6", "note": "背中の線", "file": "laptop-stand-ribbon.stl",
+      "plane": { "axis": "x", "origin": [0, 0, 0], "normal": [1, 0, 0], "u": [0, 1, 0], "v": [0, 0, 1] }, "offset": 0, "clip": false,
+      "image": "section-1.png", "svg": "section-1.svg",
+      "loops": [{ "points": [[-60, 0], [60, 0], [60, 5], [-60, 5]], "closed": true }],
+      "shapes": [
+        {
+          "id": "s1", "kind": "curve", "intent": "target", "closed": false, "text": "", "note": "この曲線に沿わせる",
+          "nodes": [{ "p": [-40, 80], "in": null, "out": [-20, 100] }, { "p": [20, 120], "in": [0, 115], "out": null }],
+          "polyline": [[-40, 80], [-39.6, 80.4]],
+          "polyline3d": [[0, -40, 80], [0, -39.6, 80.4]]
+        }
+      ]
+    }
+  ]
+}

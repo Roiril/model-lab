@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>sketch 単体確認</title>
+<style>
+:root{
+  --bg:#0e1013; --panel:#15181c; --raised:#1c2026; --hover:#232830;
+  --line:#2a3038; --line-strong:#3a424d;
+  --text:#e6e8ea; --text-2:#aab2bc; --mute:#78818c;
+  --accent:#7c9cff; --accent-ink:#0b1020;
+  --radius:6px; --radius-sm:4px;
+}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--text);font:13px/1.5 "Inter","Noto Sans JP","Yu Gothic UI",system-ui,sans-serif}
+#app{display:grid;grid-template-rows:auto minmax(0,1fr);grid-template-columns:minmax(0,1fr);height:100vh;overflow:hidden}
+#bar{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--line);background:var(--raised)}
+#bar button{height:26px;padding:0 10px;border:1px solid var(--line);border-radius:var(--radius-sm);background:transparent;color:var(--text-2);font:inherit;cursor:pointer}
+#bar button:hover{background:var(--hover);color:var(--text)}
+#log{color:var(--mute);font-size:12px}
+#sk{min-height:0;min-width:0;display:flex;justify-content:center}
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="bar">
+    <button id="sec1">断面 1（Y 断面）</button>
+    <button id="sec2">断面 2（X 断面）</button>
+    <button id="closeSec">activeSectionId = null</button>
+    <button id="svgBtn">SVG を開く</button>
+    <button id="pngBtn">PNG を開く</button>
+    <span id="log"></span>
+  </div>
+  <div id="sk"></div>
+</div>
+<script type="module">
+import { store } from "./store.js";
+import { createSketch } from "./sketch.js";
+
+const log = (t) => { document.getElementById("log").textContent = t; };
+
+// --- 架空の断面（section.js の代役）-------------------------------------------
+// 直方体（60 x 40 mm）に半径 8 mm の穴。位置 offset で大きさが少し変わる
+function rectLoop(x0, y0, x1, y1) {
+  const pts = [];
+  const N = 6; // 辺を分けておくと線上スナップが確かめやすい
+  for (let i = 0; i < N; i++) pts.push([x0 + (x1 - x0) * i / N, y0]);
+  for (let i = 0; i < N; i++) pts.push([x1, y0 + (y1 - y0) * i / N]);
+  for (let i = 0; i < N; i++) pts.push([x1 - (x1 - x0) * i / N, y1]);
+  for (let i = 0; i < N; i++) pts.push([x0, y1 - (y1 - y0) * i / N]);
+  return { points: pts, closed: true };
+}
+function circleLoop(cx, cy, r, n = 64) {
+  const pts = [];
+  for (let i = 0; i < n; i++) { const t = (i / n) * Math.PI * 2; pts.push([cx + r * Math.cos(t), cy + r * Math.sin(t)]); }
+  return { points: pts, closed: true };
+}
+function loopsFor(kind, offset) {
+  const k = 1 + offset / 100;
+  if (kind === "a") {
+    const w = 60 * k, h = 40;
+    return {
+      loops: [rectLoop(-w / 2, -h / 2, w / 2, h / 2), circleLoop(0, 0, 8)],
+      ghostLoops: [rectLoop(-w / 2 + 1.5, -h / 2 + 1, w / 2 + 1.5, h / 2 + 1), circleLoop(1.5, 1, 8)],
+      bounds: { min: [-w / 2, -h / 2], max: [w / 2 + 1.5, h / 2 + 1] },
+    };
+  }
+  // 断面 2: 台形っぽい別の形
+  const pts = [[-25, -10], [25, -10], [18, 18], [-18, 18]];
+  return {
+    loops: [{ points: pts, closed: true }],
+    ghostLoops: [{ points: pts.map(([u, v]) => [u + 2, v + 1]), closed: true }],
+    bounds: { min: [-25, -10], max: [27, 19] },
+  };
+}
+
+const kinds = new Map(); // id -> "a" | "b"
+function emitLoops(id) {
+  const it = store.getItem(id);
+  if (!it) return;
+  store.emit("section:loops", { id, ...loopsFor(kinds.get(id), it.offset || 0) });
+}
+
+const sketch = createSketch(document.getElementById("sk"), store, {
+  // 本番では app.js から bbox を渡す。ここでは 60x40x20 の箱を想定
+  modelBox: () => ({ min: [-30, -20, -10], max: [30, 20, 10] }),
+});
+
+function addSection(kind, axis, u, v) {
+  const id = store.addItem({
+    type: "section",
+    plane: { axis, origin: [0, 0, 0], normal: [0, 0, 1], u, v },
+    offset: 0, clip: false,
+  });
+  kinds.set(id, kind);
+  store.set({ activeSectionId: id });
+  emitLoops(id);
+  return id;
+}
+
+// offset が変わったら切り直した体で再送（section.js の動きの真似）
+let lastOffsets = new Map();
+store.on("items", () => {
+  for (const it of store.state.draft.items) {
+    if (it.type !== "section" || !kinds.has(it.id)) continue;
+    if (lastOffsets.get(it.id) !== (it.offset || 0)) { lastOffsets.set(it.id, it.offset || 0); emitLoops(it.id); }
+  }
+});
+
+let sec1 = null, sec2 = null;
+document.getElementById("sec1").onclick = () => {
+  if (sec1 && store.getItem(sec1)) store.set({ activeSectionId: sec1 });
+  else sec1 = addSection("a", "y", [1, 0, 0], [0, 0, 1]);
+};
+document.getElementById("sec2").onclick = () => {
+  if (sec2 && store.getItem(sec2)) store.set({ activeSectionId: sec2 });
+  else sec2 = addSection("b", "x", [0, 1, 0], [0, 0, 1]);
+};
+document.getElementById("closeSec").onclick = () => store.set({ activeSectionId: null });
+
+function cur() { return store.state.activeSectionId; }
+document.getElementById("svgBtn").onclick = () => {
+  if (!cur()) return log("断面が開いていません");
+  const svg = sketch.exportSVG(cur());
+  window.open(URL.createObjectURL(new Blob([svg], { type: "image/svg+xml" })));
+  log(`SVG ${svg.length} 文字`);
+};
+document.getElementById("pngBtn").onclick = async () => {
+  if (!cur()) return log("断面が開いていません");
+  const url = await sketch.exportPNG(cur(), { width: 1400 });
+  const w = window.open();
+  if (w) w.document.write(`<body style="margin:0;background:#222"><img src="${url}" style="max-width:100%"></body>`);
+  log(`PNG ${url.length} 文字`);
+};
+
+// app.js の代役: ポインタが 2D 上なら先に渡す
+window.addEventListener("keydown", (e) => {
+  if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
+  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "z") { e.preventDefault(); e.shiftKey ? store.redo() : store.undo(); return; }
+  if (sketch.isFocused()) sketch.handleKey(e);
+});
+
+window.store = store;
+window.sketch = sketch;
+
+document.getElementById("sec1").click();
+</script>
+</body>
+</html>

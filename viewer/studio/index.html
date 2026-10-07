@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<base href="/viewer/studio/">
+<title>model-lab</title>
+<link rel="stylesheet" href="styles.css">
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/",
+    "three-mesh-bvh": "https://cdn.jsdelivr.net/npm/three-mesh-bvh@0.9.15/build/index.module.js"
+  }
+}
+</script>
+</head>
+<body>
+<div id="app">
+  <header id="topbar"></header>
+  <nav id="rail" aria-label="道具"></nav>
+  <main id="stage">
+    <section id="viewwrap" aria-label="3D 表示">
+      <div id="viewport"></div>
+      <div id="viewtools"></div>
+      <div id="hintbar"></div>
+    </section>
+    <div id="splitter" role="separator" aria-orientation="vertical" aria-label="3D と断面の境目" tabindex="0" hidden></div>
+    <section id="sketch" aria-label="断面" hidden></section>
+  </main>
+  <aside id="inspector" aria-label="インスペクタ"></aside>
+</div>
+<div id="layer-popover"></div>
+<div id="layer-palette"></div>
+<div id="toasts" role="status" aria-live="polite"></div>
+<noscript>このページには JavaScript が必要です。</noscript>
+<script type="module" src="app.js"></script>
+</body>
+</html>

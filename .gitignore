@@ -7,3 +7,7 @@ __pycache__/
 # ローカル設定（マシン固有・コミット対象外）
 .claude/settings.local.json
 .claude/worktrees/
+
+# Studio（依頼と待ち受けの実行時データ）
+requests/
+.studio.json
