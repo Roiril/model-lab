@@ -5,6 +5,8 @@ const path = require("path");
 const crypto = require("crypto");
 const { spawn, execFile } = require("child_process");
 const { WebSocketServer } = require("ws");
+const { listModelCatalog, loadGroups, loadModelMetadata, readLegacyCategory } = require("./lib/model_catalog");
+const { decorateControls } = require("./lib/parameter_units");
 
 // 待ち受けは 127.0.0.1 だけ。依頼で models/ の編集とビルドまで頼めるので、LAN には出さない
 const HOST = "127.0.0.1";
@@ -91,7 +93,8 @@ function validModel(name) {
 function parseParams(modelName) {
   const file = path.join(MODELS_DIR, modelName, "params.py");
   if (!fs.existsSync(file)) return [];
-  const lines = fs.readFileSync(file, "utf8").split(/\r?\n/);
+  const sourceText = fs.readFileSync(file, "utf8");
+  const lines = sourceText.split(/\r?\n/);
   const controls = [];
   const numScalar = /^([A-Z][A-Z0-9_]*)\s*=\s*(-?\d+(?:\.\d+)?(?:[eE]-?\d+)?)\s*(?:#\s*(.*))?$/;
   const numTuple = /^([A-Z][A-Z0-9_]*)\s*=\s*\(\s*(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)\s*\)\s*(?:#\s*(.*))?$/;
@@ -107,7 +110,7 @@ function parseParams(modelName) {
       controls.push({ name, value: parseFloat(val), isInt: !val.includes("."), label: (label || name).trim() });
     }
   }
-  return controls;
+  return decorateControls(controls, sourceText);
 }
 
 // parseParams の結果を {名前: 値} に。タプルは配列
@@ -122,13 +125,9 @@ function paramValues(modelName) {
 
 function listModels() {
   if (!fs.existsSync(MODELS_DIR)) return [];
-  return fs.readdirSync(MODELS_DIR)
-    .filter((d) => {
-      const p = path.join(MODELS_DIR, d);
-      return fs.statSync(p).isDirectory() &&
-        fs.existsSync(path.join(p, "params.py")) &&
-        fs.existsSync(path.join(p, "model.py"));
-    })
+  return fs.readdirSync(MODELS_DIR, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => entry.name)
     .sort();
 }
 
@@ -137,14 +136,12 @@ function hasPreview(modelName) {
   return fs.existsSync(path.join(PREVIEW_DIR, modelName + ".js"));
 }
 
-// params.py 内の `# CATEGORY: 名前` コメントを読む。無ければ "その他"
+// catalog.json の分類名を優先し、不正・未整理なら従来コメントへ戻す
 function readCategory(modelName) {
-  try {
-    const txt = fs.readFileSync(path.join(MODELS_DIR, modelName, "params.py"), "utf8");
-    const m = txt.match(/#\s*CATEGORY:\s*(.+)/);
-    if (m) return m[1].trim();
-  } catch { /* noop */ }
-  return "その他";
+  const groups = loadGroups(MODELS_DIR);
+  const metadata = loadModelMetadata(MODELS_DIR, modelName, groups);
+  if (metadata.organized) return groups.categories.get(metadata.value.categoryId).title;
+  return readLegacyCategory(MODELS_DIR, modelName);
 }
 
 // models/<name>/viewer.json（カメラ・材質など）。無ければ null
@@ -580,7 +577,7 @@ async function main() {
     // --- API ---
     if (p.startsWith("/api/")) {
       if (p === "/api/models") {
-        const models = listModels().map((m) => ({ name: m, preview: hasPreview(m), category: readCategory(m) }));
+        const models = listModelCatalog({ modelsDir: MODELS_DIR, previewDir: PREVIEW_DIR });
         return sendJSON(res, { models });
       }
       if (p === "/api/config") return sendJSON(res, { http: HTTP_PORT, ws: WS_PORT });

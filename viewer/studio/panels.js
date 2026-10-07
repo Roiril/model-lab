@@ -4,6 +4,7 @@
 
 import { ACTIONS, SELECTION_COLOR } from "./store.js";
 import { REQUEST_STATUS, requestStatus, requestBefore } from "./api.js";
+import { createCatalog } from "./catalog.js";
 
 // --- 小さな DOM 道具 ----------------------------------------------------------
 
@@ -90,6 +91,7 @@ function lsGet(key, fallback) {
   try { const v = localStorage.getItem(key); return v === null ? fallback : JSON.parse(v); } catch { return fallback; }
 }
 function lsSet(key, val) { try { localStorage.setItem(key, JSON.stringify(val)); } catch { /* 無くても動く */ } }
+function lsRemove(key) { try { localStorage.removeItem(key); } catch { /* 無くても動く */ } }
 
 // 道具。ショートカットは app.js が受ける
 const TOOL_DEFS = [
@@ -103,8 +105,6 @@ const TYPE_LABEL = { faces: "面", pin: "ピン", measure: "計測", section: "�
 const DEFAULT_AMOUNT = { thicken: 1.5, thin: 1, round: 2, cut: 1, add: 1, hole: 3 };
 const AMOUNT_LABEL = { thicken: "厚くする量", thin: "薄くする量", round: "半径", cut: "削る量", add: "足す量", hole: "径" };
 const SIDES = [["out", "外側"], ["in", "内側"], ["both", "両側"]];
-const DEFAULT_CAT = "かわいいロボット";
-
 function sideLabel(s) { return (SIDES.find(([v]) => v === s) || SIDES[0])[1]; }
 function actionText(it) {
   const a = ACTIONS[it.action];
@@ -145,6 +145,20 @@ export function createPanels({ store, ctx }) {
   const replyDrafts = new Map();
 
   const keyOf = (c) => (c.index === undefined ? c.name : `${c.name}__${c.index}`);
+  const paramsKey = () => `studio.params.${store.state.model}`;
+  const catalog = createCatalog({
+    store,
+    onOpen: (name) => ctx.openModel(name),
+    getModels: () => models,
+    getRecent: () => recent,
+  });
+
+  function openPalette() {
+    closePopover();
+    closeMenu();
+    catalog.open();
+  }
+  function closePalette() { catalog.close(); }
 
   // ===========================================================================
   // ツールチップ
@@ -197,6 +211,7 @@ export function createPanels({ store, ctx }) {
   const partsLabel = h("span", {}, "パーツ");
   const partsBtn = h("button", { type: "button", class: "sel-btn", "aria-haspopup": "menu", onclick: () => togglePartsMenu() },
     icon("layers", "sm"), partsLabel, icon("chevron", "sm"));
+  partsBtn.setAttribute("aria-expanded", "false");
   tip(partsBtn, "同じモデルの STL を選んで表示する");
   const listenerDot = h("span", { class: "dot-live" });
   const listenerText = h("span", { class: "lbl-text" }, "シュビー 確認中");
@@ -209,6 +224,15 @@ export function createPanels({ store, ctx }) {
   tip(sendBtn, "下書きの指示をシュビーに送る", "Ctrl+Enter");
   const undoBtn = h("button", { type: "button", class: "icon-btn", onclick: () => store.undo() }, icon("undo"));
   const redoBtn = h("button", { type: "button", class: "icon-btn", onclick: () => store.redo() }, icon("redo"));
+  const inspectorToggle = h("button", {
+    type: "button", class: "btn inspector-toggle", id: "inspector-toggle",
+    "aria-controls": "inspector", "aria-expanded": "true",
+    onclick: () => {
+      const app = $("#app");
+      app.dataset.inspector = app.dataset.inspector === "closed" ? "open" : "closed";
+      inspectorToggle.setAttribute("aria-expanded", String(app.dataset.inspector === "open"));
+    },
+  }, "指示・設定");
   tip(undoBtn, "元に戻す", "Ctrl+Z");
   tip(redoBtn, "やり直す", "Ctrl+Shift+Z");
 
@@ -218,8 +242,11 @@ export function createPanels({ store, ctx }) {
     h("div", { class: "sp" }),
     listenerPill, statusEl,
     h("div", { class: "tb-group" }, undoBtn, redoBtn),
+    inspectorToggle,
     sendBtn,
   );
+  if (!$("#app").dataset.inspector) $("#app").dataset.inspector = "open";
+  inspectorToggle.setAttribute("aria-expanded", String($("#app").dataset.inspector !== "closed"));
 
   function noteListener() {
     if (listener && listener.listening) store.toast(`シュビーが待ち受けています${listener.agent ? `（${listener.agent}）` : ""}`);
@@ -227,7 +254,8 @@ export function createPanels({ store, ctx }) {
   }
 
   function syncTopbar() {
-    modelNameEl.textContent = store.state.model || "モデルを選ぶ";
+    const model = models.find((m) => m.name === store.state.model);
+    modelNameEl.textContent = model ? (model.title || model.name) : (store.state.model || "モデルを選ぶ");
     const n = store.state.draft.items.length;
     sendCount.textContent = String(n);
     sendCount.hidden = n === 0;
@@ -235,6 +263,11 @@ export function createPanels({ store, ctx }) {
     sendBtn.disabled = sending || empty;
     sendBtn.classList.toggle("busy", sending);
     sendBtn2.disabled = sendBtn.disabled;
+    modelBtn.disabled = sending;
+    messageBox.disabled = sending;
+    for (const note of itemList.querySelectorAll("textarea.note")) note.disabled = sending;
+    undoBtn.disabled = !(store.canUndo?.() ?? false);
+    redoBtn.disabled = !(store.canRedo?.() ?? false);
 
     const c = parts.candidates.length;
     partsBtn.disabled = c === 0;
@@ -259,7 +292,7 @@ export function createPanels({ store, ctx }) {
   const railBtns = new Map();
   for (const t of TOOL_DEFS) {
     const b = h("button", { type: "button", class: "rail-btn", "data-tool": t.id, onclick: () => ctx.setTool(t.id) },
-      icon(t.icon), h("span", { class: "key" }, t.key));
+      icon(t.icon), h("span", { class: "tool-label" }, t.label), h("span", { class: "key" }, t.key));
     tip(b, t.label, t.key);
     b.dataset.tipPos = "right";
     railBtns.set(t.id, b);
@@ -403,7 +436,8 @@ export function createPanels({ store, ctx }) {
   const inspector = $("#inspector");
   const tabNotesBtn = h("button", { type: "button", role: "tab", id: "tab-notes-btn", "aria-controls": "tab-notes", onclick: () => setTab("notes") },
     "指示", h("span", { class: "tab-count", hidden: true }));
-  const tabParamsBtn = h("button", { type: "button", role: "tab", id: "tab-params-btn", "aria-controls": "tab-params", onclick: () => setTab("params") }, "パラメータ");
+  const tabParamsBtn = h("button", { type: "button", role: "tab", id: "tab-params-btn", "aria-controls": "tab-params", onclick: () => setTab("params") }, "寸法・設定");
+  const tabButtons = [tabNotesBtn, tabParamsBtn];
   const tabCount = tabNotesBtn.querySelector(".tab-count");
 
   // 指示タブ
@@ -427,8 +461,23 @@ export function createPanels({ store, ctx }) {
     tab = t;
     tabNotesBtn.setAttribute("aria-selected", String(t === "notes"));
     tabParamsBtn.setAttribute("aria-selected", String(t === "params"));
+    tabNotesBtn.tabIndex = t === "notes" ? 0 : -1;
+    tabParamsBtn.tabIndex = t === "params" ? 0 : -1;
     notesPanel.hidden = t !== "notes";
     paramsPanel.hidden = t !== "params";
+  }
+  for (const [index, button] of tabButtons.entries()) {
+    button.addEventListener("keydown", (e) => {
+      let next = index;
+      if (e.key === "ArrowRight") next = (index + 1) % tabButtons.length;
+      else if (e.key === "ArrowLeft") next = (index - 1 + tabButtons.length) % tabButtons.length;
+      else if (e.key === "Home") next = 0;
+      else if (e.key === "End") next = tabButtons.length - 1;
+      else return;
+      e.preventDefault();
+      setTab(next === 0 ? "notes" : "params");
+      tabButtons[next].focus();
+    });
   }
 
   // --- 下書きの指示カード ---
@@ -456,7 +505,7 @@ export function createPanels({ store, ctx }) {
 
   function itemCard(it, pinNo) {
     const sum = itemSummary(it, pinNo);
-    const note = h("textarea", { class: "field note", rows: "1", placeholder: "メモ", "aria-label": "この指示のメモ", value: it.note || "" });
+    const note = h("textarea", { class: "field note", rows: "1", placeholder: "メモ", "aria-label": "この指示のメモ", value: it.note || "", disabled: sending });
     let checkpointed = false;
     note.addEventListener("focus", () => { checkpointed = false; });
     note.addEventListener("input", () => {
@@ -470,19 +519,16 @@ export function createPanels({ store, ctx }) {
     const delBtn = h("button", { type: "button", class: "icon-btn sm danger", onclick: () => store.removeItem(it.id) }, icon("trash"));
     tip(delBtn, "この指示を消す", "Delete");
 
-    const head = h("div", { class: "card-head", tabindex: "0", role: "button", "aria-label": `${sum.t1} を開く` },
+    const opener = h("button", { type: "button", class: "card-opener", "aria-label": `${sum.t1} を開く` },
       h("span", { class: "dot", style: `--c:${it.color}` }),
       icon(it.type, "type-ic"),
-      h("div", { class: "card-title" }, h("div", { class: "t1" }, sum.t1), sum.t2 ? h("div", { class: "t2" }, sum.t2) : null),
-      h("div", { class: "card-actions" }, focusBtn, delBtn));
+      h("div", { class: "card-title" }, h("div", { class: "t1" }, sum.t1), sum.t2 ? h("div", { class: "t2" }, sum.t2) : null));
+    const head = h("div", { class: "card-head" }, opener, h("div", { class: "card-actions" }, focusBtn, delBtn));
     const activate = () => {
       store.set({ activeItemId: it.id });
       if (it.type === "section") store.set({ activeSectionId: it.id });
     };
-    head.addEventListener("click", (e) => { if (!e.target.closest("button")) activate(); });
-    head.addEventListener("keydown", (e) => {
-      if (e.target === head && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); activate(); }
-    });
+    opener.addEventListener("click", activate);
     return h("article", { class: "card item", "data-id": it.id, "data-type": it.type, style: `--c:${it.color}` }, head, note);
   }
 
@@ -611,7 +657,8 @@ export function createPanels({ store, ctx }) {
         ctx.replyRequest(r.id, text);
       };
       reply.addEventListener("keydown", (e) => {
-        if (e.key === "Enter" && !e.shiftKey && !e.ctrlKey && !composing(e)) { e.preventDefault(); submit(); }
+        if (e.key === "Enter" && e.ctrlKey && !composing(e)) { e.preventDefault(); e.stopPropagation(); submit(); }
+        else if (e.key === "Enter" && !e.shiftKey && !e.ctrlKey && !composing(e)) { e.preventDefault(); submit(); }
         else if (e.key === "Escape") reply.blur();
       });
       body.append(h("div", { class: "reply-row" }, reply, h("button", { type: "button", class: "btn sm", onclick: submit }, "追記")));
@@ -665,7 +712,8 @@ export function createPanels({ store, ctx }) {
   // --- パラメータタブ ---
   const modeNote = h("div", { class: "mode-note" });
   const ctrlList = h("div", { class: "params" });
-  const exportBtn = h("button", { type: "button", class: "btn primary block", onclick: () => ctx.exportStl() }, icon("build", "sm"), "STL 生成");
+  const paramFields = new Map();
+  const exportBtn = h("button", { type: "button", class: "btn primary block", onclick: () => { if (validateParams()) ctx.exportStl(); } }, icon("build", "sm"), "STL 生成");
   const resetBtn = h("button", { type: "button", class: "btn", onclick: () => resetParams() }, icon("reset", "sm"), "既定に戻す");
   const copyBtn = h("button", { type: "button", class: "btn", onclick: () => copyParams() }, icon("copy", "sm"), "コピー");
   const paramsPanel = h("div", { class: "tabpanel", id: "tab-params", role: "tabpanel", "aria-labelledby": "tab-params-btn", hidden: true },
@@ -686,6 +734,34 @@ export function createPanels({ store, ctx }) {
     return { min, max, step: (max - min) / 200 };
   }
 
+  function displayScaleFor(c) {
+    const scale = Number(c.displayScale);
+    return c.unit === "mm" && Number.isFinite(scale) && scale > 0 ? scale : 1;
+  }
+  function toDisplay(c, raw) { return raw * displayScaleFor(c); }
+  function toRaw(c, display) { return display / displayScaleFor(c); }
+  function cleanNumber(v) { return Number(Number(v).toPrecision(12)); }
+  function displayStepFor(c, rawStep) {
+    if (c.isInt) return 1;
+    if (c.unit === "mm") return 0.01;
+    if (c.unit === "°") return 0.1;
+    return cleanNumber(rawStep * displayScaleFor(c));
+  }
+  function alignedDisplayRange(c, rawRange, current) {
+    const scale = displayScaleFor(c);
+    const step = displayStepFor(c, rawRange.step);
+    const min = current + Math.floor((rawRange.min * scale - current) / step) * step;
+    const max = current + Math.ceil((rawRange.max * scale - current) / step) * step;
+    return { min: cleanNumber(Math.min(min, current)), max: cleanNumber(Math.max(max, current)), step };
+  }
+  function savedParams() {
+    const saved = lsGet(paramsKey(), null);
+    return saved && saved.values && typeof saved.values === "object" ? saved.values : null;
+  }
+  function saveParams() {
+    if (store.state.model) lsSet(paramsKey(), { values: collectParams() });
+  }
+
   function collectParams() {
     const out = {};
     for (const c of controlsDef) {
@@ -697,39 +773,95 @@ export function createPanels({ store, ctx }) {
 
   function buildParams() {
     ctrlList.replaceChildren();
+    paramFields.clear();
     if (!controlsDef.length) {
       ctrlList.append(h("p", { class: "empty" }, "このモデルには調整できる数値がありません。"));
       return;
     }
-    for (const c of controlsDef) {
+    for (const [index, c] of controlsDef.entries()) {
       const key = keyOf(c);
       const r = rangeFor(c);
       const dispName = c.index === undefined ? c.name : `${c.name}[${c.index}]`;
-      const numIn = h("input", { type: "number", class: "field num", step: "any", value: String(values[key]), "aria-label": `${dispName} の値` });
-      const slider = h("input", { type: "range", class: "slider", min: String(r.min), max: String(r.max), step: String(r.step), value: String(values[key]), "aria-label": `${dispName} のスライダー` });
-      const rowReset = h("button", { type: "button", class: "icon-btn xs", onclick: () => { setValue(defaults[key]); } }, icon("reset"));
+      const currentDisplay = cleanNumber(toDisplay(c, values[key]));
+      const unit = c.unit || "元の値";
+      const displayRange = alignedDisplayRange(c, r, currentDisplay);
+      const errorId = `param-error-${index}`;
+      const numIn = h("input", {
+        type: "number", class: "field num", step: "any", value: String(currentDisplay),
+        "aria-label": `${c.label || dispName} の値（${unit}）`, "aria-describedby": errorId,
+      });
+      const slider = h("input", {
+        type: "range", class: "slider", min: String(displayRange.min), max: String(displayRange.max),
+        step: String(displayRange.step), value: String(currentDisplay), "aria-label": `${c.label || dispName} のスライダー（${unit}）`,
+      });
+      const error = h("p", { class: "field-error", id: errorId, role: "alert", hidden: true }, "数値を入力してください。");
+      const rowReset = h("button", { type: "button", class: "icon-btn xs", onclick: () => { setRawValue(defaults[key]); } }, icon("reset"));
       tip(rowReset, "この値だけ既定に戻す");
       const row = h("div", { class: "p-row" },
         h("div", { class: "p-head" },
-          h("div", { class: "p-name" }, h("span", { class: "mono" }, dispName), c.label && c.label !== c.name ? h("span", { class: "p-label" }, c.label) : null),
-          rowReset, numIn),
-        slider);
+          h("div", { class: "p-name", title: dispName },
+            h("span", { class: "p-label" }, c.label || dispName),
+            c.label && c.label !== dispName ? h("span", { class: "p-key mono" }, dispName) : null),
+          rowReset, h("div", { class: "p-input" }, numIn, h("span", { class: "unit" }, unit))),
+        slider, error);
       const syncChanged = () => { row.classList.toggle("changed", values[key] !== defaults[key]); };
-      const commit = (v) => {
-        if (Number.isNaN(v)) return; // 入力途中（空や「22.」）は確定しない
-        values[key] = v;
-        syncChanged();
-        ctx.paramsChanged();
+      const setInvalid = (invalid) => {
+        numIn.setAttribute("aria-invalid", String(invalid));
+        error.hidden = !invalid;
       };
-      function setValue(v) { numIn.value = v; slider.value = v; commit(v); }
-      // スライダー → 数値欄。数値欄 → スライダーだけ（入力途中の欄は書き戻さない）
-      slider.addEventListener("input", () => { const v = parseFloat(slider.value); numIn.value = v; commit(v); });
-      numIn.addEventListener("input", () => { const v = parseFloat(numIn.value); if (!Number.isNaN(v)) slider.value = v; commit(v); });
+      const alignSliderRange = (display) => {
+        const step = Number(slider.step);
+        const min = display + Math.floor((Number(slider.min) - display) / step) * step;
+        const max = display + Math.ceil((Number(slider.max) - display) / step) * step;
+        slider.min = String(cleanNumber(Math.min(min, display)));
+        slider.max = String(cleanNumber(Math.max(max, display)));
+      };
+      const commitRaw = (raw, { syncInput = true } = {}) => {
+        if (!Number.isFinite(raw)) { setInvalid(true); return false; }
+        const next = c.isInt ? Math.round(raw) : raw;
+        values[key] = cleanNumber(next);
+        const display = cleanNumber(toDisplay(c, values[key]));
+        alignSliderRange(display);
+        slider.value = String(display);
+        if (syncInput || c.isInt) numIn.value = String(display);
+        setInvalid(false);
+        syncChanged();
+        saveParams();
+        ctx.paramsChanged();
+        return true;
+      };
+      const validate = ({ commit = true } = {}) => {
+        const display = numIn.value.trim() === "" ? NaN : Number(numIn.value);
+        if (!Number.isFinite(display)) { setInvalid(true); return false; }
+        if (!commit) { setInvalid(false); return true; }
+        return commitRaw(toRaw(c, display), { syncInput: false });
+      };
+      function setRawValue(raw) { commitRaw(raw); }
+      slider.addEventListener("input", () => commitRaw(toRaw(c, Number(slider.value))));
+      numIn.addEventListener("input", validate);
+      numIn.addEventListener("change", () => {
+        if (validate({ commit: false })) numIn.value = String(cleanNumber(toDisplay(c, values[key])));
+      });
+      paramFields.set(key, { input: numIn, validate: () => validate({ commit: false }) });
+      setInvalid(false);
       syncChanged();
       ctrlList.append(row);
     }
   }
+  function validateParams() {
+    let first = null;
+    for (const field of paramFields.values()) {
+      if (!field.validate() && !first) first = field.input;
+    }
+    if (first) {
+      first.focus({ preventScroll: true });
+      first.scrollIntoView({ block: "nearest" });
+      return false;
+    }
+    return true;
+  }
   function resetParams() {
+    lsRemove(paramsKey());
     for (const c of controlsDef) values[keyOf(c)] = defaults[keyOf(c)];
     buildParams();
     ctx.paramsChanged();
@@ -763,6 +895,7 @@ export function createPanels({ store, ctx }) {
     } else {
       modeNote.append(h("p", {}, "このモデルには即時プレビューがありません。値を変えたら「STL 生成」で作り直します。"));
     }
+    modeNote.append(h("p", { class: "saved-note" }, "調整値はモデルごとにこのブラウザへ保存されます。"));
     exportBtn.disabled = exporting || !store.state.model;
     exportBtn.replaceChildren(icon("build", "sm"), exporting ? "生成中…（Blender）" : "STL 生成");
     exportBtn.classList.toggle("busy", exporting);
@@ -772,26 +905,34 @@ export function createPanels({ store, ctx }) {
   // パーツのメニュー
   // ===========================================================================
   let menuEl = null;
-  function closeMenu() {
+  let menuOrigin = null;
+  function closeMenu({ restoreFocus = true } = {}) {
     if (!menuEl) return;
     menuEl.remove(); menuEl = null;
     partsBtn.setAttribute("aria-expanded", "false");
+    const origin = menuOrigin;
+    menuOrigin = null;
+    if (restoreFocus && origin && origin.focus && document.contains(origin)) origin.focus({ preventScroll: true });
   }
   function togglePartsMenu() {
     if (menuEl) { closeMenu(); return; }
-    renderPartsMenu();
+    menuOrigin = document.activeElement;
+    renderPartsMenu({ initial: true });
   }
-  function renderPartsMenu() {
+  function renderPartsMenu({ initial = false } = {}) {
     const prev = menuEl;
     const scrollTop = prev ? prev.scrollTop : 0;
+    const focusedPart = prev && prev.contains(document.activeElement) ? document.activeElement.dataset.part : null;
     if (prev) prev.remove();
     const el = h("div", { class: "menu", role: "menu", "aria-label": "表示するパーツ" });
+    const options = [];
     el.append(h("div", { class: "menu-head" }, "表示するパーツ"));
     if (!parts.candidates.length) el.append(h("p", { class: "empty" }, "STL がまだありません。"));
     for (const name of parts.candidates) {
       const on = parts.shown.includes(name);
       const row = h("button", {
         type: "button", class: "menu-row", role: "menuitemcheckbox", "aria-checked": String(on),
+        tabindex: "-1", "data-part": name,
         onclick: () => {
           let next = on ? parts.shown.filter((n) => n !== name) : [...parts.shown, name];
           if (!next.length) return; // 1 つは残す
@@ -800,10 +941,29 @@ export function createPanels({ store, ctx }) {
         },
       }, h("span", { class: "check" }, on ? icon("check", "sm") : null), h("span", { class: "menu-name mono" }, name));
       el.append(row);
+      options.push(row);
     }
     if (parts.custom) {
-      el.append(h("button", { type: "button", class: "menu-row reset", onclick: () => ctx.setParts(null) }, icon("reset", "sm"), "自動で選ぶ"));
+      const reset = h("button", { type: "button", class: "menu-row reset", role: "menuitem", tabindex: "-1", "data-part": "__auto", onclick: () => ctx.setParts(null) }, icon("reset", "sm"), "自動で選ぶ");
+      el.append(reset);
+      options.push(reset);
     }
+    el.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !composing(e)) {
+        e.preventDefault(); e.stopPropagation(); closeMenu(); return;
+      }
+      if (!options.length) return;
+      const current = options.indexOf(document.activeElement);
+      let next = current < 0 ? 0 : current;
+      if (e.key === "ArrowDown") next = (next + 1) % options.length;
+      else if (e.key === "ArrowUp") next = (next - 1 + options.length) % options.length;
+      else if (e.key === "Home") next = 0;
+      else if (e.key === "End") next = options.length - 1;
+      else return;
+      e.preventDefault();
+      options.forEach((option, i) => { option.tabIndex = i === next ? 0 : -1; });
+      options[next].focus();
+    });
     document.body.append(el);
     const r = partsBtn.getBoundingClientRect();
     el.style.left = `${Math.min(r.left, innerWidth - el.offsetWidth - 8)}px`;
@@ -811,11 +971,20 @@ export function createPanels({ store, ctx }) {
     el.scrollTop = scrollTop;
     menuEl = el;
     partsBtn.setAttribute("aria-expanded", "true");
+    const target = options.find((option) => option.dataset.part === focusedPart)
+      || options.find((option) => option.getAttribute("aria-checked") === "true")
+      || options[0];
+    if (target) {
+      target.tabIndex = 0;
+      if (initial || focusedPart) target.focus({ preventScroll: true });
+    }
   }
   document.addEventListener("pointerdown", (e) => {
     if (menuEl && !menuEl.contains(e.target) && !partsBtn.contains(e.target)) closeMenu();
   });
-  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && menuEl) { closeMenu(); partsBtn.focus(); } });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && menuEl && !composing(e)) { e.preventDefault(); closeMenu(); }
+  });
 
   // ===========================================================================
   // ポップオーバー（面の動作・ピンのメモ）
@@ -823,10 +992,28 @@ export function createPanels({ store, ctx }) {
   const popLayer = $("#layer-popover");
   let pop = null;
 
-  function closePopover() {
+  function setPopoverBackgroundInert() {
+    const changed = [];
+    for (const el of document.body.children) {
+      if (el === popLayer || el.tagName === "SCRIPT" || el.tagName === "NOSCRIPT") continue;
+      changed.push({ el, had: el.hasAttribute("inert") });
+      el.dataset.popoverInert = "true";
+      el.inert = true;
+    }
+    return () => {
+      for (const { el, had } of changed) {
+        delete el.dataset.popoverInert;
+        if (!had && !catalog.isOpen()) el.inert = false;
+      }
+    };
+  }
+  function closePopover({ restoreFocus = true } = {}) {
     if (!pop) return;
+    const { prevFocus, restoreInert } = pop;
     pop.el.remove();
     pop = null;
+    restoreInert?.();
+    if (restoreFocus && prevFocus && prevFocus.focus && document.contains(prevFocus)) prevFocus.focus({ preventScroll: true });
   }
   function placePopover(el, x, y) {
     const w = el.offsetWidth, hgt = el.offsetHeight;
@@ -843,6 +1030,23 @@ export function createPanels({ store, ctx }) {
     closePopover();
   }
 
+  function handlePopoverKeydown(e, { cancel, confirm, enterTargets }) {
+    if (e.key === "Escape" && !composing(e)) {
+      e.preventDefault(); e.stopPropagation(); cancel(); return;
+    }
+    if (e.key === "Tab") {
+      const focusable = [...e.currentTarget.querySelectorAll("button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex='-1'])")];
+      if (!focusable.length) return;
+      const first = focusable[0], last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      return;
+    }
+    if (e.key === "Enter" && !e.shiftKey && !composing(e) && enterTargets.includes(e.target)) {
+      e.preventDefault(); confirm();
+    }
+  }
+
   function popFoot(onCancel, onAdd) {
     return h("div", { class: "pop-foot" },
       h("button", { type: "button", class: "btn sm subtle", onclick: onCancel }, "取り消し", kbd("Esc")),
@@ -850,6 +1054,8 @@ export function createPanels({ store, ctx }) {
   }
 
   function openFacesPopover(p) {
+    closePalette();
+    const prevFocus = document.activeElement;
     const sum = p.summary || {};
     let action = lsGet("studio.lastAction", "thicken");
     if (!ACTIONS[action]) action = "thicken";
@@ -863,24 +1069,32 @@ export function createPanels({ store, ctx }) {
       chips.append(b);
       return [id, b];
     });
-    const amountInput = h("input", { type: "number", class: "field num", min: "0.1", step: "0.1", "aria-label": "量（mm）" });
+    const amountErrorId = "face-amount-error";
+    const amountInput = h("input", { type: "number", class: "field num", min: "0.1", step: "0.1", "aria-label": "量（mm）", "aria-describedby": amountErrorId });
     const amountLabel = h("span", { class: "set-label" }, "量");
+    const amountError = h("p", { class: "field-error", id: amountErrorId, role: "alert", hidden: true }, "0 より大きい数値を入力してください。");
+    const setAmountInvalid = (invalid) => {
+      amountInput.setAttribute("aria-invalid", String(invalid));
+      amountError.hidden = !invalid;
+    };
     const stepBy = (d) => {
       const cur = parseFloat(amountInput.value);
       const base = Number.isNaN(cur) ? (amount ?? 1) : cur;
       amount = Math.max(0.1, Math.round((base + d) * 100) / 100);
       amountEdited = true;
       amountInput.value = amount;
+      setAmountInvalid(false);
     };
     const minus = h("button", { type: "button", class: "icon-btn sm", onclick: () => stepBy(-0.5) }, icon("minus"));
     const plus = h("button", { type: "button", class: "icon-btn sm", onclick: () => stepBy(0.5) }, icon("plus"));
     tip(minus, "0.5 減らす");
     tip(plus, "0.5 増やす");
     amountInput.addEventListener("input", () => {
-      const v = parseFloat(amountInput.value);
-      if (!Number.isNaN(v) && v > 0) { amount = v; amountEdited = true; }
+      amountEdited = true;
+      const v = amountInput.value.trim() === "" ? NaN : Number(amountInput.value);
+      if (Number.isFinite(v) && v > 0) { amount = v; setAmountInvalid(false); }
     });
-    const amountRow = h("div", { class: "pop-row" }, amountLabel, h("div", { class: "stepper" }, minus, amountInput, h("span", { class: "unit" }, "mm"), plus));
+    const amountRow = h("div", { class: "pop-row" }, amountLabel, h("div", { class: "stepper" }, minus, amountInput, h("span", { class: "unit" }, "mm"), plus), amountError);
 
     const sideSeg = segmented(SIDES, () => side, (v) => { side = v; sideSeg.sync(); }, "どちら側");
     const sideRow = h("div", { class: "pop-row" }, h("span", { class: "set-label" }, "どちら側"), sideSeg.el);
@@ -904,8 +1118,13 @@ export function createPanels({ store, ctx }) {
       const a = ACTIONS[action];
       let amt = null;
       if (a.amount) {
-        const v = parseFloat(amountInput.value);
-        amt = !Number.isNaN(v) && v > 0 ? v : (amount ?? DEFAULT_AMOUNT[action] ?? 1);
+        const v = amountInput.value.trim() === "" ? NaN : Number(amountInput.value);
+        if (!Number.isFinite(v) || v <= 0) {
+          setAmountInvalid(true);
+          amountInput.focus({ preventScroll: true });
+          return;
+        }
+        amt = v;
       }
       const item = { type: "faces", file: p.file, faceIds: p.faceIds, summary: p.summary, action, amount: amt, note: note.value.trim() };
       if (action === "thicken" || action === "thin") item.side = side;
@@ -918,7 +1137,7 @@ export function createPanels({ store, ctx }) {
     };
 
     const n = sum.faceCount ?? (p.faceIds ? p.faceIds.length : 0);
-    const el = h("div", { class: "popover", role: "dialog", "aria-label": "選んだ面への指示" },
+    const el = h("div", { class: "popover", role: "dialog", "aria-modal": "true", "aria-label": "選んだ面への指示" },
       h("div", { class: "pop-head" },
         h("span", { class: "dot", style: `--c:${SELECTION_COLOR}` }),
         h("b", {}, `面 ${n.toLocaleString("ja-JP")} 枚`),
@@ -926,18 +1145,17 @@ export function createPanels({ store, ctx }) {
       sum.thickness ? h("div", { class: "pop-sub" }, `今の肉厚 ${num1(sum.thickness.min)}〜${num1(sum.thickness.median)} mm`) : null,
       chips, amountRow, sideRow, note,
       popFoot(cancelPopover, confirm));
-    el.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") { e.preventDefault(); e.stopPropagation(); cancelPopover(); }
-      else if (e.key === "Enter" && !e.shiftKey && !composing(e) && (e.target === note || e.target === amountInput)) { e.preventDefault(); confirm(); }
-    });
+    el.addEventListener("keydown", (e) => handlePopoverKeydown(e, { cancel: cancelPopover, confirm, enterTargets: [note, amountInput] }));
     popLayer.append(el);
     sync();
     placePopover(el, p.x, p.y);
-    pop = { el, kind: "faces" };
+    pop = { el, kind: "faces", prevFocus, restoreInert: setPopoverBackgroundInert() };
     note.focus({ preventScroll: true });
   }
 
   function openPinPopover(p) {
+    closePalette();
+    const prevFocus = document.activeElement;
     const no = store.state.draft.items.filter((it) => it.type === "pin").length + 1;
     const note = h("textarea", { class: "field", rows: "3", placeholder: "この点について（例: ここの角を丸く）", "aria-label": "ピンのメモ" });
     const confirm = () => {
@@ -947,17 +1165,14 @@ export function createPanels({ store, ctx }) {
       setTab("notes");
       markActive(true);
     };
-    const el = h("div", { class: "popover", role: "dialog", "aria-label": "ピンのメモ" },
+    const el = h("div", { class: "popover", role: "dialog", "aria-modal": "true", "aria-label": "ピンのメモ" },
       h("div", { class: "pop-head" }, icon("pin", "sm"), h("b", {}, `ピン ${no}`)),
       note,
       popFoot(() => closePopover(), confirm));
-    el.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") { e.preventDefault(); e.stopPropagation(); closePopover(); }
-      else if (e.key === "Enter" && !e.shiftKey && !composing(e) && e.target === note) { e.preventDefault(); confirm(); }
-    });
+    el.addEventListener("keydown", (e) => handlePopoverKeydown(e, { cancel: closePopover, confirm, enterTargets: [note] }));
     popLayer.append(el);
     placePopover(el, p.x, p.y);
-    pop = { el, kind: "pin" };
+    pop = { el, kind: "pin", prevFocus, restoreInert: setPopoverBackgroundInert() };
     note.focus({ preventScroll: true });
   }
 
@@ -968,106 +1183,6 @@ export function createPanels({ store, ctx }) {
     else if (p.kind === "pin") openPinPopover(p);
   });
   store.on("popover:close", closePopover);
-
-  // ===========================================================================
-  // コマンドパレット
-  // ===========================================================================
-  const palLayer = $("#layer-palette");
-  let pal = null;
-
-  const palNorm = (s) => String(s).toLowerCase().replace(/_/g, "-");
-  function palGroups(query) {
-    const q = palNorm(query).split(/\s+/).filter(Boolean);
-    const match = (m) => {
-      const hay = palNorm(`${m.name} ${m.category || ""}`);
-      return q.every((t) => hay.includes(t));
-    };
-    const cats = [...new Set(models.map((m) => m.category || "その他"))];
-    cats.sort((a, b) => {
-      if (a === DEFAULT_CAT) return -1; if (b === DEFAULT_CAT) return 1;
-      if (a === "その他") return 1; if (b === "その他") return -1;
-      return a.localeCompare(b, "ja");
-    });
-    const groups = [];
-    if (!q.length) {
-      const rec = recent.map((n) => models.find((m) => m.name === n)).filter(Boolean).slice(0, 5);
-      if (rec.length) groups.push({ title: "最近開いた", models: rec });
-    }
-    for (const c of cats) {
-      let list = models.filter((m) => (m.category || "その他") === c && match(m));
-      if (q.length) {
-        const first = q[0];
-        list = [...list].sort((a, b) => (palNorm(b.name).startsWith(first) ? 1 : 0) - (palNorm(a.name).startsWith(first) ? 1 : 0));
-      }
-      if (list.length) groups.push({ title: c, models: list });
-    }
-    return groups;
-  }
-
-  function openPalette() {
-    if (pal) { closePalette(); return; }
-    closeMenu();
-    const prevFocus = document.activeElement;
-    const input = h("input", { type: "text", class: "pal-input", placeholder: "モデルを探す（名前・カテゴリ）", "aria-label": "モデルを探す", autocomplete: "off", spellcheck: "false", role: "combobox", "aria-expanded": "true", "aria-controls": "pal-list" });
-    const list = h("div", { class: "pal-list", id: "pal-list", role: "listbox" });
-    const foot = h("div", { class: "pal-foot" }, kbd("↑↓"), "選ぶ", kbd("Enter"), "開く", kbd("Esc"), "閉じる");
-    const box = h("div", { class: "palette", role: "dialog", "aria-modal": "true", "aria-label": "モデルを開く" },
-      h("div", { class: "pal-search" }, icon("search", "sm"), input), list, foot);
-    const backdrop = h("div", { class: "pal-backdrop", onclick: (e) => { if (e.target === backdrop) closePalette(); } }, box);
-    pal = { backdrop, input, list, rows: [], index: 0, prevFocus };
-
-    const render = () => {
-      list.replaceChildren();
-      pal.rows = [];
-      const groups = palGroups(input.value);
-      if (!groups.length) list.append(h("p", { class: "empty" }, models.length ? "見つかりません" : "モデルの一覧を読み込み中です"));
-      for (const g of groups) {
-        list.append(h("div", { class: "pal-head" }, g.title, h("span", { class: "muted" }, ` ${g.models.length}`)));
-        for (const m of g.models) {
-          const idx = pal.rows.length;
-          const row = h("div", { class: "pal-row", role: "option", id: `pal-opt-${idx}`, "data-name": m.name },
-            h("span", { class: "pal-name mono" }, m.name),
-            m.preview ? h("span", { class: "tag" }, "即時プレビュー") : null,
-            m.name === store.state.model ? h("span", { class: "tag cur" }, "表示中") : null);
-          row.addEventListener("pointermove", () => { if (pal.index !== idx) { pal.index = idx; mark(false); } });
-          row.addEventListener("click", () => choose(m.name));
-          list.append(row);
-          pal.rows.push({ el: row, name: m.name });
-        }
-      }
-      pal.index = Math.min(pal.index, Math.max(0, pal.rows.length - 1));
-      mark(true);
-    };
-    const mark = (scroll) => {
-      pal.rows.forEach((r, i) => r.el.setAttribute("aria-selected", String(i === pal.index)));
-      const cur = pal.rows[pal.index];
-      if (cur) input.setAttribute("aria-activedescendant", cur.el.id);
-      if (cur && scroll) cur.el.scrollIntoView({ block: "nearest" });
-    };
-    const choose = (name) => { closePalette(); ctx.openModel(name); };
-
-    input.addEventListener("input", () => { pal.index = 0; render(); });
-    box.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") { e.preventDefault(); e.stopPropagation(); closePalette(); }
-      else if (e.key === "ArrowDown") { e.preventDefault(); if (pal.rows.length) { pal.index = (pal.index + 1) % pal.rows.length; mark(true); } }
-      else if (e.key === "ArrowUp") { e.preventDefault(); if (pal.rows.length) { pal.index = (pal.index - 1 + pal.rows.length) % pal.rows.length; mark(true); } }
-      else if (e.key === "Enter" && !composing(e)) { e.preventDefault(); const r = pal.rows[pal.index]; if (r) choose(r.name); }
-      else if (e.key === "Tab") { e.preventDefault(); input.focus(); }
-    });
-    palLayer.append(backdrop);
-    // 現在のモデルを最初の選択にする
-    render();
-    const curIdx = pal.rows.findIndex((r) => r.name === store.state.model);
-    if (curIdx >= 0 && !input.value) { pal.index = curIdx; mark(true); }
-    input.focus();
-  }
-  function closePalette() {
-    if (!pal) return;
-    pal.backdrop.remove();
-    const f = pal.prevFocus;
-    pal = null;
-    if (f && f.focus && document.contains(f)) f.focus({ preventScroll: true });
-  }
 
   function noteOpened(name) {
     recent = [name, ...recent.filter((n) => n !== name)].slice(0, 12);
@@ -1136,24 +1251,30 @@ export function createPanels({ store, ctx }) {
   // app.js から使う口
   // ===========================================================================
   return {
-    setModels(list) { models = list || []; },
+    setModels(list) { models = list || []; syncTopbar(); },
     noteOpened,
     openPalette, closePalette,
-    isPaletteOpen: () => !!pal,
+    isPaletteOpen: () => catalog.isOpen(),
     showTab: setTab,
 
     setParams({ controls, preview }) {
       controlsDef = controls || [];
       values = {};
       defaults = {};
-      for (const c of controlsDef) { values[keyOf(c)] = c.value; defaults[keyOf(c)] = c.value; }
+      const saved = savedParams();
+      for (const c of controlsDef) {
+        const key = keyOf(c);
+        defaults[key] = c.value;
+        const restored = c.index === undefined ? saved?.[c.name] : saved?.[c.name]?.[c.index];
+        values[key] = Number.isFinite(restored) ? restored : c.value;
+      }
       hasPreview = !!preview;
       buildParams();
       syncModeNote();
     },
     getParams: collectParams,
     setExporting(b) { exporting = !!b; syncModeNote(); },
-    setSending(b) { sending = !!b; syncTopbar(); },
+    setSending(b) { sending = !!b; if (sending) closePalette(); syncTopbar(); },
 
     setMode(m) {
       if (m.mode !== undefined) mode = m.mode;

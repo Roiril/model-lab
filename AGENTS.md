@@ -35,6 +35,8 @@ server.js            # HTTP + WebSocket サーバー
 
 ## モデル作成ワークフロー
 
+モデルを作成・派生・追加するときは先に [.agents/skills/model-catalog/SKILL.md](.agents/skills/model-catalog/SKILL.md) を読む。表示名と用途を `models/<name>/catalog.json` に記録する。分類の正本は `models/catalog-groups.json`。完了前に `node tools/catalog.js check` を実行する。既存のモデルIDを改名せず整理する。
+
 新しいモデルを作るとき、必ずこの順番で進める。
 
 1. **寸法調査** — 実物がある場合は公式スペックを確認する

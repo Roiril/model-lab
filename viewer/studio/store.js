@@ -141,6 +141,8 @@ export const store = {
     if (undoStack.length > UNDO_MAX) undoStack.shift();
     redoStack.length = 0;
   },
+  canUndo() { return undoStack.length > 0; },
+  canRedo() { return redoStack.length > 0; },
   undo() {
     if (!undoStack.length) return false;
     redoStack.push(clone(this.state.draft.items));
@@ -177,7 +179,9 @@ export const store = {
     undoStack.length = 0; redoStack.length = 0;
     let d = null;
     try { d = JSON.parse(localStorage.getItem(this._key()) || "null"); } catch { d = null; }
-    this.state.draft = d && Array.isArray(d.items) ? d : { message: "", items: [] };
+    this.state.draft = d && Array.isArray(d.items)
+      ? { message: typeof d.message === "string" ? d.message : "", items: d.items.filter((it) => it && typeof it === "object" && typeof it.id === "string" && typeof it.type === "string") }
+      : { message: "", items: [] };
     this.set({ activeSectionId: null, activeItemId: null, selection: [] });
     this.emit("items", { reason: "load", id: null });
   },

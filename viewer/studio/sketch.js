@@ -680,8 +680,11 @@ export function createSketch(container, store, opts = {}) {
   const toS = (p) => [p[0] * view.s + view.tx, view.ty - p[1] * view.s];
 
   // ---- DOM -------------------------------------------------------------------
-  const toolBtns = TOOL_DEFS.map((t) =>
-    h("button", { class: "sk-tool", type: "button", "data-tool": t.id, title: `${t.label} (${t.key})`, "aria-label": t.label, "aria-pressed": "false", html: icon(t.id) }));
+  const toolBtns = TOOL_DEFS.map((t) => {
+    const button = h("button", { class: "sk-tool", type: "button", "data-tool": t.id, title: `${t.label} (${t.key})`, "aria-label": t.label, "aria-pressed": "false", html: icon(t.id) });
+    button.append(h("span", { class: "sk-tool-label" }, t.label));
+    return button;
+  });
   const intentBtns = Object.entries(INTENTS).map(([id, def]) =>
     h("button", { class: "sk-chip", type: "button", "data-intent": id, title: def.hint, "aria-pressed": "false" },
       h("span", { class: "sk-dot", style: `background:${def.color}` }), def.label));

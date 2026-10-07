@@ -176,10 +176,22 @@ export function sampleShape(shape, step = 0.5) -> [[u, v], ...]   // 図形を s
 
 ## 5. デザイントークン（styles.css が正本。JS で色が要る時は store.js の定数）
 
+### モデル一覧と保存（2026-10-07 更新）
+
+- `/api/models` はモデルディレクトリ全件を返す。既存 `name / preview / category` を維持する。`title / description / categoryId / projectId / project / tags / status / organized / available / unavailableReason` を追加する。
+- 分類は `models/catalog-groups.json`。モデルの表示情報は `models/<id>/catalog.json`。不正や欠損は未整理として表示する。`available:false` も一覧から除外しない。
+- `catalog.js` の `createCatalog({store,onOpen,getModels,getRecent})` がモデルを選ぶ画面を管理する。`onOpen(name)` は永続IDを渡す。お気に入りは `studio.favorites`。最近開いたモデルは `studio.recent`。
+- 寸法入力は controls の `unit / displayScale` を使う。表示値は `value * displayScale`。APIへは元の単位で送る。不明な単位は「元の値」と表示する。
+- 調整した値は `studio.params.<id>` にモデル別で保存する。モデルの切替でも維持する。下書きは既存 `studio.draft.<id>`。
+- 送信中は入力とモデル切替を止める。送信した後の下書きが送信開始時と一致する場合だけ空にする。
+- 狭幅では `#app[data-inspector="open"]` で指示・設定を開く。道具は下部へ移す。断面は3Dの下に表示する。
+
+以下の色は既存 Studio の正本。小さい補助文字は読みやすさのため `--text-2` と同じ明るさに揃えた。
+
 ```css
 --bg:#0e1013;  --panel:#15181c; --raised:#1c2026; --hover:#232830;
 --line:#2a3038; --line-strong:#3a424d;
---text:#e6e8ea; --text-2:#aab2bc; --mute:#78818c;
+--text:#e6e8ea; --text-2:#aab2bc; --mute:var(--text-2);
 --accent:#7c9cff; --accent-ink:#0b1020;
 --ok:#2fd08f; --warn:#ffb020; --err:#ff6b6b;
 --radius:6px; --radius-sm:4px;

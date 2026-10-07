@@ -9,6 +9,7 @@ import { createSections } from "./section.js";
 import { createSketch } from "./sketch.js";
 import { createPanels } from "./panels.js";
 import { buildRequest } from "./bundle.js";
+import { filesForModel, selectModelFile } from "./model-files.js";
 
 const $ = (sel) => document.querySelector(sel);
 const VIEW_ORDER = ["front", "back", "left", "right", "top", "bottom", "iso"];
@@ -63,26 +64,12 @@ const mtimeOf = (name) => (stlList.find((f) => f.name === name) || {}).mtime ?? 
 const norm = (s) => s.toLowerCase().replace(/-/g, "_");
 
 function headsFor(name, files) {
-  const want = norm(name);
-  const heads = files.filter((x) => norm(x).startsWith(want + "_") || norm(x).startsWith(want + "."));
-  // 同名で始まるものが複数あるとき（pipe_joint_28 と pipe_joint_28_print）は短い名前 = 本体を取る。
-  // 同じ長さなら名前順（pipe_foot_corner_a が _b より先）
-  heads.sort((a, b) => a.length - b.length || a.localeCompare(b));
-  return heads;
+  return filesForModel(name, files, models.map((m) => m.name));
 }
 
 // files は新しい順
 function pickStl(name, files) {
-  const want = norm(name);
-  const heads = headsFor(name, files);
-  // 組んだ状態の確認用（<name>_asm.stl / <name>-asm.stl）があれば、部品より先にそれを見せる
-  const asm = heads.find((x) => /[_-]asm\.stl$/.test(norm(x)));
-  if (asm) return asm;
-  const exact = files.find((x) => norm(x) === want + ".stl");
-  // 旧版と同じ式。heads は短い順に並べるので heads[0] は exact になり、「新しい同名始まりを優先」の側は
-  // 実際には働かない（旧版の挙動をそのまま移している）
-  return (exact && heads[0] && files.indexOf(heads[0]) < files.indexOf(exact)) ? heads[0]
-    : exact || heads[0] || files[0] || null;
+  return selectModelFile(name, files, models.map((m) => m.name));
 }
 
 // 自動で選ぶ表示対象。preview があり、このモデルの STL が無いときは STL を出さない
@@ -127,6 +114,7 @@ function modeStlAction() {
 }
 
 function setTool(t) {
+  if (sending) return;
   if (!TOOLS.includes(t)) return;
   if (store.state.frame === "preview-m-yup" && t !== "view") {
     store.toast("プレビュー表示中は指示を付けられません。STL を表示してください", { action: modeStlAction() || undefined });
@@ -261,9 +249,11 @@ async function exportStl() {
 
 // --- モデルを開く ------------------------------------------------------------------
 
-async function openModel(name) {
+async function openModel(name, { fromHistory = false } = {}) {
+  if (sending) return false;
   const info = models.find((m) => m.name === name);
   if (!info) { store.status(`モデル「${name}」が見つかりません`, "err"); return false; }
+  if (info.available === false) { store.toast(info.unavailableReason || "このモデルは別の形式で作成されています"); return false; }
   const seq = ++openSeq;
   opening = true;
   try {
@@ -280,8 +270,12 @@ async function openModel(name) {
     modelName = name;
     store.set({ model: name, files: [], selection: [], activeItemId: null, activeSectionId: null });
     store.loadDraft();
-    history.replaceState(null, "", `${location.pathname}?model=${encodeURIComponent(name)}`);
-    document.title = `${name} · model-lab`;
+    if (!fromHistory) {
+      const url = `${location.pathname}?model=${encodeURIComponent(name)}`;
+      if (booted) history.pushState(null, "", url);
+      else history.replaceState(null, "", url);
+    }
+    document.title = `${info.title || name} · model-lab`;
     store.status(`${name} を読み込み中…`, "busy");
     loadRequests(); // 3D の読み込みを待たずに依頼の一覧を出す
 
@@ -446,6 +440,7 @@ async function setRequestStatus(id, status) {
 async function sendRequest() {
   if (sending || !store.state.model) return;
   const model = store.state.model;
+  const sentDraft = JSON.stringify(store.state.draft);
   sending = true;
   panels.setSending(true);
   try {
@@ -458,7 +453,8 @@ async function sendRequest() {
     }
     store.status("送っています…", "busy");
     await api.createRequest({ model, request: bundle.request, images: bundle.images });
-    if (store.state.model === model) store.clearDraft();
+    // Keep any input made while image capture / network submission was running.
+    if (store.state.model === model && JSON.stringify(store.state.draft) === sentDraft) store.clearDraft();
     panels.syncAll();
     panels.showTab("notes");
     store.status("送りました", "ok");
@@ -596,9 +592,15 @@ window.addEventListener("keydown", (e) => {
   const k = e.key;
   const lk = k.length === 1 ? k.toLowerCase() : k;
 
+  if (e.defaultPrevented || e.isComposing || e.keyCode === 229) return;
+
   if (mod && !e.altKey && lk === "k") { e.preventDefault(); panels.openPalette(); return; }
   if (panels.isPaletteOpen()) return; // パレットの中は自分でキーを受ける
-  if (mod && !e.altKey && k === "Enter") { e.preventDefault(); sendRequest(); return; }
+  if (mod && !e.altKey && k === "Enter") {
+    // Follow-up fields own their submission. Only the overall draft uses this shortcut.
+    if (isTextTarget(e.target) && e.target !== panels.messageBox) return;
+    e.preventDefault(); sendRequest(); return;
+  }
   if (e.isComposing || isTextTarget(e.target)) return;
 
   if (!sketchEl.hidden && sketch.isFocused() && sketch.handleKey(e)) { e.preventDefault(); return; }
@@ -701,8 +703,8 @@ async function boot() {
 
   const want = new URLSearchParams(location.search).get("model");
   const recent = lsGet("studio.recent", []);
-  const byName = (n) => models.find((m) => m.name === n);
-  const start = byName(want) || byName(recent[0]) || byName("round-bot") || models[0];
+  const byName = (n) => models.find((m) => m.name === n && m.available !== false);
+  const start = byName(want) || byName(Array.isArray(recent) && recent[0]) || byName("round-bot") || models.find((m) => m.available !== false);
   if (want && !byName(want) && start) store.toast(`モデル「${want}」が見つからないので ${start.name} を開きます`);
   if (start) await openModel(start.name);
   booted = true;
@@ -712,3 +714,8 @@ async function boot() {
 }
 
 boot();
+
+window.addEventListener("popstate", () => {
+  const name = new URLSearchParams(location.search).get("model");
+  if (name && name !== modelName) openModel(name, { fromHistory: true });
+});

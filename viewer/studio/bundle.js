@@ -29,7 +29,9 @@ function meshFileInfo(mesh, fileInfos) {
 
 // 戻り値: { request, images } | null（指示もメッセージも無いときは送らないので null）
 export async function buildRequest({ store, viewport, sections, sketch }) {
-  const draft = store.state.draft;
+  const draft = clone(store.state.draft);
+  const model = store.state.model;
+  const frame = store.state.frame;
   const message = (draft.message || "").trim();
   if (!draft.items.length && !message) return null;
 
@@ -88,9 +90,9 @@ export async function buildRequest({ store, viewport, sections, sketch }) {
   }
 
   const request = {
-    model: store.state.model,
+    model,
     message,
-    frame: store.state.frame,
+    frame,
     files,
     camera: viewport.cameraInfo(),
     images: Object.keys(images),

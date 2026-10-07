@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "categories": [
+    { "id": "robots", "title": "ロボット" },
+    { "id": "stands", "title": "スタンド" },
+    { "id": "pipe-parts", "title": "パイプ部品" },
+    { "id": "games", "title": "ゲーム" },
+    { "id": "text-maps", "title": "文字と地図" },
+    { "id": "shapes-mechanisms", "title": "形状と機構" },
+    { "id": "cases-displays", "title": "ケースと展示" },
+    { "id": "figures", "title": "フィギュア" }
+  ],
+  "projects": [
+    { "id": "cute-robots", "title": "かわいいロボット", "categoryId": "robots" },
+    { "id": "robot-arms", "title": "ロボットアーム", "categoryId": "robots" },
+    { "id": "laser-robots", "title": "レーザーカットロボット", "categoryId": "robots" },
+    { "id": "laptop-stands", "title": "ノートPCスタンド", "categoryId": "stands" },
+    { "id": "pixel7a", "title": "Pixel 7a スタンド", "categoryId": "stands" },
+    { "id": "pipe-handrail", "title": "パイプ手すり", "categoryId": "pipe-parts" },
+    { "id": "pipe-phone", "title": "パイプ用スマホ固定", "categoryId": "pipe-parts" },
+    { "id": "board-game-components", "title": "ボードゲーム部品", "categoryId": "games" },
+    { "id": "geister", "title": "ガイスター", "categoryId": "games" },
+    { "id": "toio", "title": "toio シリーズ", "categoryId": "games" },
+    { "id": "kanji", "title": "漢字立体", "categoryId": "text-maps" },
+    { "id": "prefectures", "title": "都道府県", "categoryId": "text-maps" },
+    { "id": "world-maps", "title": "世界地図", "categoryId": "text-maps" }
+  ]
+}

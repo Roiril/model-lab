@@ -1,0 +1,10 @@
+import assert from "node:assert/strict";
+import { filesForModel, selectModelFile } from "./model-files.js";
+const models = ["pipe-foot", "pipe-foot-corner", "round-bot"];
+const files = ["pipe_foot_corner_a.stl", "round-bot.stl", "pipe_foot.stl", "pipe_foot_asm.stl"];
+assert.deepEqual(filesForModel("pipe-foot", files, models), ["pipe_foot.stl", "pipe_foot_asm.stl"]);
+assert.equal(selectModelFile("pipe-foot", files, models), "pipe_foot_asm.stl");
+assert.equal(selectModelFile("missing", files, models), null);
+assert.equal(selectModelFile("round-bot", files, models), "round-bot.stl");
+assert.equal(selectModelFile("pipe-foot", ["pipe_foot_corner_a.stl"], models), null);
+console.log("model files: 5 assertions passed");
