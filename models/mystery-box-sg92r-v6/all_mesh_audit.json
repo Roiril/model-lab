@@ -2,6 +2,10 @@
   "calibration": {
     "closed_tetrahedron": {
       "triangles": 4,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        0.16666666666666666
+      ],
       "nonmanifold_edges": 0,
       "inconsistent_winding_edges": 0,
       "zero_area": 0,
@@ -22,6 +26,10 @@
     },
     "open_tetrahedron": {
       "triangles": 3,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        0.0
+      ],
       "nonmanifold_edges": 3,
       "inconsistent_winding_edges": 3,
       "zero_area": 0,
@@ -42,6 +50,10 @@
     },
     "collinear_triangle": {
       "triangles": 1,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        0.0
+      ],
       "nonmanifold_edges": 3,
       "inconsistent_winding_edges": 3,
       "zero_area": 1,
@@ -64,12 +76,16 @@
   "saved_meshes": [
     {
       "file": "stl/01_body.stl",
-      "triangles": 466,
+      "triangles": 1542,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        66101.96491598577
+      ],
       "nonmanifold_edges": 0,
       "inconsistent_winding_edges": 0,
       "zero_area": 0,
-      "minimum_area_mm2": 3.0517636332660913e-05,
-      "signed_volume_mm3": 62277.249357420405,
+      "minimum_area_mm2": 0.001442068132746499,
+      "signed_volume_mm3": 66101.96491598577,
       "bounds_mm": [
         [
           0.0,
@@ -85,12 +101,16 @@
     },
     {
       "file": "stl/02_fixed_rear_cover.stl",
-      "triangles": 96,
+      "triangles": 100,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        5053.584122385572
+      ],
       "nonmanifold_edges": 0,
       "inconsistent_winding_edges": 0,
       "zero_area": 0,
       "minimum_area_mm2": 0.4335434162751426,
-      "signed_volume_mm3": 5113.585554219148,
+      "signed_volume_mm3": 5053.584122385572,
       "bounds_mm": [
         [
           0.0,
@@ -107,11 +127,15 @@
     {
       "file": "stl/03_planar_lid.stl",
       "triangles": 106,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        7921.1622583222725
+      ],
       "nonmanifold_edges": 0,
       "inconsistent_winding_edges": 0,
       "zero_area": 0,
       "minimum_area_mm2": 0.02499805688859169,
-      "signed_volume_mm3": 7891.855365375456,
+      "signed_volume_mm3": 7921.1622583222725,
       "bounds_mm": [
         [
           0.0,
@@ -127,12 +151,16 @@
     },
     {
       "file": "stl/04_main_cassette.stl",
-      "triangles": 978,
+      "triangles": 1226,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        26392.074991107358
+      ],
       "nonmanifold_edges": 0,
       "inconsistent_winding_edges": 0,
       "zero_area": 0,
       "minimum_area_mm2": 8.654387784190476e-08,
-      "signed_volume_mm3": 24069.163506571047,
+      "signed_volume_mm3": 26392.074991107358,
       "bounds_mm": [
         [
           0.0,
@@ -140,20 +168,24 @@
           0.0
         ],
         [
-          49.29999923706055,
+          64.30000305175781,
           61.599998474121094,
-          51.800010681152344
+          50.599998474121094
         ]
       ]
     },
     {
       "file": "stl/05_front_closure.stl",
-      "triangles": 1824,
+      "triangles": 2182,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        16279.201441971756
+      ],
       "nonmanifold_edges": 0,
       "inconsistent_winding_edges": 0,
       "zero_area": 0,
-      "minimum_area_mm2": 0.0005229747730481904,
-      "signed_volume_mm3": 13379.212110796427,
+      "minimum_area_mm2": 0.0006143662394606508,
+      "signed_volume_mm3": 16279.201441971756,
       "bounds_mm": [
         [
           0.0,
@@ -161,20 +193,24 @@
           0.0
         ],
         [
-          49.29999923706055,
+          64.30000305175781,
           61.599998474121094,
-          53.20000076293945
+          14.900010108947754
         ]
       ]
     },
     {
       "file": "stl/06_horn_cup_journal.stl",
-      "triangles": 2010,
+      "triangles": 2902,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        5936.56796851857
+      ],
       "nonmanifold_edges": 0,
       "inconsistent_winding_edges": 0,
       "zero_area": 0,
-      "minimum_area_mm2": 2.620099621708505e-07,
-      "signed_volume_mm3": 5753.590233705182,
+      "minimum_area_mm2": 5.105812306283042e-07,
+      "signed_volume_mm3": 5936.56796851857,
       "bounds_mm": [
         [
           0.0,
@@ -190,12 +226,16 @@
     },
     {
       "file": "stl/07_rear_rocker.stl",
-      "triangles": 2664,
+      "triangles": 2592,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        1113.2453823806293
+      ],
       "nonmanifold_edges": 0,
       "inconsistent_winding_edges": 0,
       "zero_area": 0,
-      "minimum_area_mm2": 3.09046299662441e-09,
-      "signed_volume_mm3": 1053.1003247959034,
+      "minimum_area_mm2": 3.830791683867574e-09,
+      "signed_volume_mm3": 1113.2453823806293,
       "bounds_mm": [
         [
           0.0,
@@ -203,7 +243,7 @@
           0.0
         ],
         [
-          17.899999618530273,
+          18.700000762939453,
           32.5,
           4.0
         ]
@@ -211,12 +251,16 @@
     },
     {
       "file": "stl/08_front_rocker.stl",
-      "triangles": 3030,
+      "triangles": 3502,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        1426.28608395996
+      ],
       "nonmanifold_edges": 0,
       "inconsistent_winding_edges": 0,
       "zero_area": 0,
-      "minimum_area_mm2": 8.130427886499092e-09,
-      "signed_volume_mm3": 1366.141214968424,
+      "minimum_area_mm2": 3.022705641342327e-09,
+      "signed_volume_mm3": 1426.28608395996,
       "bounds_mm": [
         [
           0.0,
@@ -224,7 +268,7 @@
           0.0
         ],
         [
-          17.900009155273438,
+          18.700000762939453,
           32.5,
           14.5
         ]
@@ -233,11 +277,15 @@
     {
       "file": "stl/09_link.stl",
       "triangles": 1044,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        845.6185492016236
+      ],
       "nonmanifold_edges": 0,
       "inconsistent_winding_edges": 0,
       "zero_area": 0,
-      "minimum_area_mm2": 0.005529913805133901,
-      "signed_volume_mm3": 704.7515288286749,
+      "minimum_area_mm2": 0.004133877868298441,
+      "signed_volume_mm3": 845.6185492016236,
       "bounds_mm": [
         [
           0.0,
@@ -245,8 +293,8 @@
           0.0
         ],
         [
-          33.2287712097168,
-          27.783599853515625,
+          33.229148864746094,
+          27.784549713134766,
           3.0
         ]
       ]
@@ -254,11 +302,15 @@
     {
       "file": "stl/10_hinge_axle.stl",
       "triangles": 132,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        436.8634309962596
+      ],
       "nonmanifold_edges": 0,
       "inconsistent_winding_edges": 0,
       "zero_area": 0,
       "minimum_area_mm2": 0.004245862489369756,
-      "signed_volume_mm3": 379.07748214547127,
+      "signed_volume_mm3": 436.8634309962596,
       "bounds_mm": [
         [
           0.0,
@@ -266,7 +318,7 @@
           0.0
         ],
         [
-          16.400009155273438,
+          18.899999618530273,
           6.0,
           4.242640018463135
         ]
@@ -275,11 +327,15 @@
     {
       "file": "stl/11_drive_axle.stl",
       "triangles": 132,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        253.61685754733503
+      ],
       "nonmanifold_edges": 0,
       "inconsistent_winding_edges": 0,
       "zero_area": 0,
       "minimum_area_mm2": 0.0029483696329108966,
-      "signed_volume_mm3": 234.35482102776015,
+      "signed_volume_mm3": 253.61685754733503,
       "bounds_mm": [
         [
           0.0,
@@ -287,7 +343,7 @@
           0.0
         ],
         [
-          14.600000381469727,
+          15.800000190734863,
           5.0,
           3.5355300903320312
         ]
@@ -296,11 +352,15 @@
     {
       "file": "stl/12_link_axle.stl",
       "triangles": 132,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        152.4911378139084
+      ],
       "nonmanifold_edges": 0,
       "inconsistent_winding_edges": 0,
       "zero_area": 0,
       "minimum_area_mm2": 0.0029478907339424154,
-      "signed_volume_mm3": 121.99290872031746,
+      "signed_volume_mm3": 152.4911378139084,
       "bounds_mm": [
         [
           0.0,
@@ -308,7 +368,7 @@
           0.0
         ],
         [
-          7.599999904632568,
+          9.5,
           5.0,
           3.5355300903320312
         ]
@@ -316,12 +376,16 @@
     },
     {
       "file": "stl/13_body_cross_key.stl",
-      "triangles": 36,
+      "triangles": 506,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        3372.341039834274
+      ],
       "nonmanifold_edges": 0,
       "inconsistent_winding_edges": 0,
       "zero_area": 0,
-      "minimum_area_mm2": 0.12001648426121392,
-      "signed_volume_mm3": 1411.2001714324963,
+      "minimum_area_mm2": 0.004189507253613556,
+      "signed_volume_mm3": 3372.341039834274,
       "bounds_mm": [
         [
           0.0,
@@ -329,20 +393,174 @@
           0.0
         ],
         [
-          67.00000762939453,
-          9.600000381469727,
-          4.199999809265137
+          41.20000076293945,
+          15.800000190734863,
+          11.699999809265137
+        ]
+      ]
+    },
+    {
+      "file": "stl/14_servo_top_keeper.stl",
+      "triangles": 60,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        1236.2046527341383
+      ],
+      "nonmanifold_edges": 0,
+      "inconsistent_winding_edges": 0,
+      "zero_area": 0,
+      "minimum_area_mm2": 0.1499992847448084,
+      "signed_volume_mm3": 1236.2046527341383,
+      "bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          52.700008392333984,
+          5.800000190734863,
+          5.600009918212891
+        ]
+      ]
+    },
+    {
+      "file": "stl/15_flat_spacer.stl",
+      "triangles": 44,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        1627.278474439263
+      ],
+      "nonmanifold_edges": 0,
+      "inconsistent_winding_edges": 0,
+      "zero_area": 0,
+      "minimum_area_mm2": 0.17537004206047332,
+      "signed_volume_mm3": 1627.278474439263,
+      "bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          52.70000076293945,
+          5.599999904632568,
+          5.599999904632568
+        ]
+      ]
+    },
+    {
+      "file": "stl/16_flat_spacer.stl",
+      "triangles": 44,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        1627.278474439263
+      ],
+      "nonmanifold_edges": 0,
+      "inconsistent_winding_edges": 0,
+      "zero_area": 0,
+      "minimum_area_mm2": 0.17537004206047332,
+      "signed_volume_mm3": 1627.278474439263,
+      "bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          52.70000076293945,
+          5.599999904632568,
+          5.599999904632568
+        ]
+      ]
+    },
+    {
+      "file": "stl/17_local_cup_capture.stl",
+      "triangles": 412,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        1469.9039305694912
+      ],
+      "nonmanifold_edges": 0,
+      "inconsistent_winding_edges": 0,
+      "zero_area": 0,
+      "minimum_area_mm2": 3.9403266782755964e-07,
+      "signed_volume_mm3": 1469.9039305694912,
+      "bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          21.809999465942383,
+          41.79999923706055,
+          3.5
+        ]
+      ]
+    },
+    {
+      "file": "stl/18_local_capture_stop.stl",
+      "triangles": 12,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        106.49599926757803
+      ],
+      "nonmanifold_edges": 0,
+      "inconsistent_winding_edges": 0,
+      "zero_area": 0,
+      "minimum_area_mm2": 8.319999818801875,
+      "signed_volume_mm3": 106.49599926757803,
+      "bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          5.199999809265137,
+          6.400000095367432,
+          3.200000047683716
+        ]
+      ]
+    },
+    {
+      "file": "stl/19_local_capture_stop.stl",
+      "triangles": 12,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        190.46400958251968
+      ],
+      "nonmanifold_edges": 0,
+      "inconsistent_winding_edges": 0,
+      "zero_area": 0,
+      "minimum_area_mm2": 10.240000305175784,
+      "signed_volume_mm3": 190.46400958251968,
+      "bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          9.300000190734863,
+          6.400000095367432,
+          3.200000047683716
         ]
       ]
     },
     {
       "file": "coupons/test_01_servo_cradle.stl",
-      "triangles": 146,
+      "triangles": 174,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        8389.430049624929
+      ],
       "nonmanifold_edges": 0,
       "inconsistent_winding_edges": 0,
       "zero_area": 0,
       "minimum_area_mm2": 0.00029379995839917683,
-      "signed_volume_mm3": 8385.980036755092,
+      "signed_volume_mm3": 8389.430049624929,
       "bounds_mm": [
         [
           0.0,
@@ -358,12 +576,16 @@
     },
     {
       "file": "coupons/test_02_actual_horn_pocket.stl",
-      "triangles": 1174,
+      "triangles": 1192,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        1753.94723778962
+      ],
       "nonmanifold_edges": 0,
       "inconsistent_winding_edges": 0,
       "zero_area": 0,
-      "minimum_area_mm2": 9.718584988149814e-05,
-      "signed_volume_mm3": 1712.7623268338987,
+      "minimum_area_mm2": 6.544196367030963e-07,
+      "signed_volume_mm3": 1753.94723778962,
       "bounds_mm": [
         [
           0.0,
@@ -380,11 +602,15 @@
     {
       "file": "coupons/test_03_bearing_bar.stl",
       "triangles": 800,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        3667.0515775592216
+      ],
       "nonmanifold_edges": 0,
       "inconsistent_winding_edges": 0,
       "zero_area": 0,
       "minimum_area_mm2": 0.018062659294628247,
-      "signed_volume_mm3": 3667.0515775592235,
+      "signed_volume_mm3": 3667.0515775592216,
       "bounds_mm": [
         [
           0.0,
@@ -401,11 +627,15 @@
     {
       "file": "coupons/test_04_actual_axle5.stl",
       "triangles": 132,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        253.61685754733503
+      ],
       "nonmanifold_edges": 0,
       "inconsistent_winding_edges": 0,
       "zero_area": 0,
       "minimum_area_mm2": 0.0029483696329108966,
-      "signed_volume_mm3": 234.35482102776015,
+      "signed_volume_mm3": 253.61685754733503,
       "bounds_mm": [
         [
           0.0,
@@ -413,7 +643,7 @@
           0.0
         ],
         [
-          14.600000381469727,
+          15.800000190734863,
           5.0,
           3.5355300903320312
         ]
@@ -422,11 +652,15 @@
     {
       "file": "coupons/test_05_actual_axle6.stl",
       "triangles": 132,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        436.8634309962596
+      ],
       "nonmanifold_edges": 0,
       "inconsistent_winding_edges": 0,
       "zero_area": 0,
       "minimum_area_mm2": 0.004245862489369756,
-      "signed_volume_mm3": 379.07748214547127,
+      "signed_volume_mm3": 436.8634309962596,
       "bounds_mm": [
         [
           0.0,
@@ -434,7 +668,7 @@
           0.0
         ],
         [
-          16.400009155273438,
+          18.899999618530273,
           6.0,
           4.242640018463135
         ]
@@ -442,12 +676,16 @@
     },
     {
       "file": "coupons/test_06_actual_journal.stl",
-      "triangles": 264,
+      "triangles": 252,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        1264.6561662809752
+      ],
       "nonmanifold_edges": 0,
       "inconsistent_winding_edges": 0,
       "zero_area": 0,
-      "minimum_area_mm2": 0.0024273107263752536,
-      "signed_volume_mm3": 1332.4056455461052,
+      "minimum_area_mm2": 0.01698681270164215,
+      "signed_volume_mm3": 1264.6561662809752,
       "bounds_mm": [
         [
           0.0,
@@ -457,18 +695,22 @@
         [
           12.0,
           12.0,
-          11.800000190734863
+          11.199999809265137
         ]
       ]
     },
     {
       "file": "coupons/test_07_roof_dock.stl",
       "triangles": 108,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        1171.100618574426
+      ],
       "nonmanifold_edges": 0,
       "inconsistent_winding_edges": 0,
       "zero_area": 0,
       "minimum_area_mm2": 0.048516084691527794,
-      "signed_volume_mm3": 1155.6473802907803,
+      "signed_volume_mm3": 1171.100618574426,
       "bounds_mm": [
         [
           0.0,
@@ -484,12 +726,16 @@
     },
     {
       "file": "coupons/test_08_actual_front_rocker.stl",
-      "triangles": 3030,
+      "triangles": 3502,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        1426.28608395996
+      ],
       "nonmanifold_edges": 0,
       "inconsistent_winding_edges": 0,
       "zero_area": 0,
-      "minimum_area_mm2": 8.130427886499092e-09,
-      "signed_volume_mm3": 1366.141214968424,
+      "minimum_area_mm2": 3.022705641342327e-09,
+      "signed_volume_mm3": 1426.28608395996,
       "bounds_mm": [
         [
           0.0,
@@ -497,7 +743,7 @@
           0.0
         ],
         [
-          17.900009155273438,
+          18.700000762939453,
           32.5,
           14.5
         ]
@@ -506,11 +752,15 @@
     {
       "file": "coupons/test_09_cover_socket.stl",
       "triangles": 58,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        448.847867759088
+      ],
       "nonmanifold_edges": 0,
       "inconsistent_winding_edges": 0,
       "zero_area": 0,
-      "minimum_area_mm2": 0.04898500442504883,
-      "signed_volume_mm3": 448.8478677590879,
+      "minimum_area_mm2": 0.03840005397796631,
+      "signed_volume_mm3": 448.847867759088,
       "bounds_mm": [
         [
           0.0,
@@ -527,11 +777,15 @@
     {
       "file": "coupons/test_10_cover_peg.stl",
       "triangles": 32,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        236.13611982653012
+      ],
       "nonmanifold_edges": 0,
       "inconsistent_winding_edges": 0,
       "zero_area": 0,
-      "minimum_area_mm2": 0.18366682894992437,
-      "signed_volume_mm3": 236.13611982653015,
+      "minimum_area_mm2": 0.033324968814838485,
+      "signed_volume_mm3": 236.13611982653012,
       "bounds_mm": [
         [
           0.0,
@@ -546,13 +800,17 @@
       ]
     },
     {
-      "file": "coupons/test_11_side_key_access.stl",
-      "triangles": 54,
+      "file": "coupons/test_11_bottom_key_floor.stl",
+      "triangles": 722,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        3679.932436994327
+      ],
       "nonmanifold_edges": 0,
       "inconsistent_winding_edges": 0,
       "zero_area": 0,
-      "minimum_area_mm2": 0.11018370925285126,
-      "signed_volume_mm3": 446.9765749053986,
+      "minimum_area_mm2": 0.005536796561500523,
+      "signed_volume_mm3": 3679.932436994327,
       "bounds_mm": [
         [
           0.0,
@@ -560,20 +818,24 @@
           0.0
         ],
         [
-          6.0,
-          16.000009536743164,
-          12.0
+          33.0,
+          47.0,
+          8.199999809265137
         ]
       ]
     },
     {
-      "file": "coupons/test_12_side_key_end.stl",
-      "triangles": 36,
+      "file": "coupons/test_12_actual_bottom_key.stl",
+      "triangles": 506,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        3372.341039834274
+      ],
       "nonmanifold_edges": 0,
       "inconsistent_winding_edges": 0,
       "zero_area": 0,
-      "minimum_area_mm2": 0.11999989032744907,
-      "signed_volume_mm3": 262.0799844932558,
+      "minimum_area_mm2": 0.004189507253613556,
+      "signed_volume_mm3": 3372.341039834274,
       "bounds_mm": [
         [
           0.0,
@@ -581,9 +843,409 @@
           0.0
         ],
         [
-          10.0,
-          9.600000381469727,
-          4.199999809265137
+          41.20000076293945,
+          15.800000190734863,
+          11.699999809265137
+        ]
+      ]
+    },
+    {
+      "file": "coupons/test_13_keeper_rear_socket.stl",
+      "triangles": 54,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        103.79209555601547
+      ],
+      "nonmanifold_edges": 0,
+      "inconsistent_winding_edges": 0,
+      "zero_area": 0,
+      "minimum_area_mm2": 0.015000066757238528,
+      "signed_volume_mm3": 103.79209555601547,
+      "bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          5.599999904632568,
+          7.400000095367432,
+          5.199999809265137
+        ]
+      ]
+    },
+    {
+      "file": "coupons/test_14_keeper_front_socket.stl",
+      "triangles": 34,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        133.05591252136992
+      ],
+      "nonmanifold_edges": 0,
+      "inconsistent_winding_edges": 0,
+      "zero_area": 0,
+      "minimum_area_mm2": 0.09068799952816953,
+      "signed_volume_mm3": 133.05591252136992,
+      "bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          5.599999904632568,
+          7.400000095367432,
+          5.199999809265137
+        ]
+      ]
+    },
+    {
+      "file": "coupons/test_15_actual_long_keeper.stl",
+      "triangles": 60,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        1236.2046527341383
+      ],
+      "nonmanifold_edges": 0,
+      "inconsistent_winding_edges": 0,
+      "zero_area": 0,
+      "minimum_area_mm2": 0.1499992847448084,
+      "signed_volume_mm3": 1236.2046527341383,
+      "bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          52.700008392333984,
+          5.800000190734863,
+          5.600009918212891
+        ]
+      ]
+    },
+    {
+      "file": "coupons/test_16_actual_local_capture.stl",
+      "triangles": 412,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        1469.9039305694912
+      ],
+      "nonmanifold_edges": 0,
+      "inconsistent_winding_edges": 0,
+      "zero_area": 0,
+      "minimum_area_mm2": 3.9403266782755964e-07,
+      "signed_volume_mm3": 1469.9039305694912,
+      "bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          21.809999465942383,
+          41.79999923706055,
+          3.5
+        ]
+      ]
+    },
+    {
+      "file": "coupons/test_17_local_capture_socket.stl",
+      "triangles": 46,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        91.8584930430651
+      ],
+      "nonmanifold_edges": 0,
+      "inconsistent_winding_edges": 0,
+      "zero_area": 0,
+      "minimum_area_mm2": 0.1383847522649262,
+      "signed_volume_mm3": 91.8584930430651,
+      "bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          6.099999904632568,
+          5.699999809265137,
+          6.599999904632568
+        ]
+      ]
+    },
+    {
+      "file": "coupons/test_18_body_receiver.stl",
+      "triangles": 82,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        948.7001370032632
+      ],
+      "nonmanifold_edges": 0,
+      "inconsistent_winding_edges": 0,
+      "zero_area": 0,
+      "minimum_area_mm2": 0.09625783568571933,
+      "signed_volume_mm3": 948.7001370032632,
+      "bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          16.60000991821289,
+          8.0,
+          10.0
+        ]
+      ]
+    },
+    {
+      "file": "coupons/test_19_closure_foot.stl",
+      "triangles": 42,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        196.66405507278978
+      ],
+      "nonmanifold_edges": 0,
+      "inconsistent_winding_edges": 0,
+      "zero_area": 0,
+      "minimum_area_mm2": 0.0002673326535376219,
+      "signed_volume_mm3": 196.66405507278978,
+      "bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          8.0,
+          5.199999809265137,
+          5.199999809265137
+        ]
+      ]
+    },
+    {
+      "file": "coupons/test_20_capture_rear_socket.stl",
+      "triangles": 52,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        87.5120055232048
+      ],
+      "nonmanifold_edges": 0,
+      "inconsistent_winding_edges": 0,
+      "zero_area": 0,
+      "minimum_area_mm2": 0.1383847522649262,
+      "signed_volume_mm3": 87.5120055232048,
+      "bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          4.0,
+          6.800000190734863,
+          6.599999904632568
+        ]
+      ]
+    },
+    {
+      "file": "coupons/test_21_front_stop_socket.stl",
+      "triangles": 66,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        62.57700245952607
+      ],
+      "nonmanifold_edges": 0,
+      "inconsistent_winding_edges": 0,
+      "zero_area": 0,
+      "minimum_area_mm2": 0.2580891855241134,
+      "signed_volume_mm3": 62.57700245952607,
+      "bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          6.099999904632568,
+          6.800000190734863,
+          5.400000095367432
+        ]
+      ]
+    },
+    {
+      "file": "coupons/test_22_rear_stop_socket.stl",
+      "triangles": 72,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        48.765005297661006
+      ],
+      "nonmanifold_edges": 0,
+      "inconsistent_winding_edges": 0,
+      "zero_area": 0,
+      "minimum_area_mm2": 0.016629469702458266,
+      "signed_volume_mm3": 48.765005297661006,
+      "bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          4.0,
+          6.800000190734863,
+          5.400000095367432
+        ]
+      ]
+    },
+    {
+      "file": "coupons/test_23_actual_stop.stl",
+      "triangles": 12,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        106.49599926757803
+      ],
+      "nonmanifold_edges": 0,
+      "inconsistent_winding_edges": 0,
+      "zero_area": 0,
+      "minimum_area_mm2": 8.319999818801875,
+      "signed_volume_mm3": 106.49599926757803,
+      "bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          5.199999809265137,
+          6.400000095367432,
+          3.200000047683716
+        ]
+      ]
+    },
+    {
+      "file": "coupons/test_24_actual_stop.stl",
+      "triangles": 12,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        190.46400958251968
+      ],
+      "nonmanifold_edges": 0,
+      "inconsistent_winding_edges": 0,
+      "zero_area": 0,
+      "minimum_area_mm2": 10.240000305175784,
+      "signed_volume_mm3": 190.46400958251968,
+      "bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          9.300000190734863,
+          6.400000095367432,
+          3.200000047683716
+        ]
+      ]
+    },
+    {
+      "file": "coupons/test_25_actual_U_support.stl",
+      "triangles": 360,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        8468.359475478166
+      ],
+      "nonmanifold_edges": 0,
+      "inconsistent_winding_edges": 0,
+      "zero_area": 0,
+      "minimum_area_mm2": 8.653478289488703e-08,
+      "signed_volume_mm3": 8468.359475478166,
+      "bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          25.399999618530273,
+          31.0,
+          33.0000114440918
+        ]
+      ]
+    },
+    {
+      "file": "coupons/test_26_actual_cup_with_support.stl",
+      "triangles": 2902,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        5936.56796851857
+      ],
+      "nonmanifold_edges": 0,
+      "inconsistent_winding_edges": 0,
+      "zero_area": 0,
+      "minimum_area_mm2": 5.105812306283042e-07,
+      "signed_volume_mm3": 5936.56796851857,
+      "bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          31.84514045715332,
+          36.129669189453125,
+          20.799999237060547
+        ]
+      ]
+    },
+    {
+      "file": "coupons/test_27_rear_retention_foot.stl",
+      "triangles": 52,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        958.199987411499
+      ],
+      "nonmanifold_edges": 0,
+      "inconsistent_winding_edges": 0,
+      "zero_area": 0,
+      "minimum_area_mm2": 0.06828703299970584,
+      "signed_volume_mm3": 958.199987411499,
+      "bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          17.0,
+          6.0,
+          18.0
+        ]
+      ]
+    },
+    {
+      "file": "coupons/test_28_front_retention_foot.stl",
+      "triangles": 52,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        714.0006551742554
+      ],
+      "nonmanifold_edges": 0,
+      "inconsistent_winding_edges": 0,
+      "zero_area": 0,
+      "minimum_area_mm2": 0.07823542047930232,
+      "signed_volume_mm3": 714.0006551742554,
+      "bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          17.0,
+          6.0,
+          10.300000190734863
         ]
       ]
     },
@@ -591,11 +1253,15 @@
       "file": "plates/plate_00_fit_tests.3mf",
       "object": "test_03_bearing_bar",
       "triangles": 800,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        3667.0515774822716
+      ],
       "nonmanifold_edges": 0,
       "inconsistent_winding_edges": 0,
       "zero_area": 0,
       "minimum_area_mm2": 0.018062649065122116,
-      "signed_volume_mm3": 3667.0515774822657,
+      "signed_volume_mm3": 3667.0515774822716,
       "bounds_mm": [
         [
           0.0,
@@ -611,13 +1277,69 @@
     },
     {
       "file": "plates/plate_00_fit_tests.3mf",
-      "object": "test_02_actual_horn_pocket",
-      "triangles": 1174,
+      "object": "test_11_bottom_key_floor",
+      "triangles": 722,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        3679.93243899449
+      ],
       "nonmanifold_edges": 0,
       "inconsistent_winding_edges": 0,
       "zero_area": 0,
-      "minimum_area_mm2": 9.718584942781418e-05,
-      "signed_volume_mm3": 1712.7623285322104,
+      "minimum_area_mm2": 0.005536795550661604,
+      "signed_volume_mm3": 3679.93243899449,
+      "bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          33.0,
+          47.0,
+          8.19999981
+        ]
+      ]
+    },
+    {
+      "file": "plates/plate_00_fit_tests.3mf",
+      "object": "test_16_actual_local_capture",
+      "triangles": 412,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        1469.9039312159978
+      ],
+      "nonmanifold_edges": 0,
+      "inconsistent_winding_edges": 0,
+      "zero_area": 0,
+      "minimum_area_mm2": 3.9403349999990543e-07,
+      "signed_volume_mm3": 1469.9039312159978,
+      "bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          21.80999947,
+          41.79999924,
+          3.5
+        ]
+      ]
+    },
+    {
+      "file": "plates/plate_00_fit_tests.3mf",
+      "object": "test_02_actual_horn_pocket",
+      "triangles": 1192,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        1753.9472378232097
+      ],
+      "nonmanifold_edges": 0,
+      "inconsistent_winding_edges": 0,
+      "zero_area": 0,
+      "minimum_area_mm2": 6.540894224255046e-07,
+      "signed_volume_mm3": 1753.9472378232097,
       "bounds_mm": [
         [
           0.0,
@@ -634,12 +1356,16 @@
     {
       "file": "plates/plate_00_fit_tests.3mf",
       "object": "test_01_servo_cradle",
-      "triangles": 146,
+      "triangles": 174,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        8389.430051468205
+      ],
       "nonmanifold_edges": 0,
       "inconsistent_winding_edges": 0,
       "zero_area": 0,
       "minimum_area_mm2": 0.0002937999023906229,
-      "signed_volume_mm3": 8385.980038651707,
+      "signed_volume_mm3": 8389.430051468205,
       "bounds_mm": [
         [
           0.0,
@@ -656,12 +1382,16 @@
     {
       "file": "plates/plate_00_fit_tests.3mf",
       "object": "test_08_actual_front_rocker",
-      "triangles": 3030,
+      "triangles": 3502,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        1426.286083962077
+      ],
       "nonmanifold_edges": 0,
       "inconsistent_winding_edges": 0,
       "zero_area": 0,
-      "minimum_area_mm2": 8.297956856362365e-09,
-      "signed_volume_mm3": 1366.1412145513357,
+      "minimum_area_mm2": 3.0138382006981283e-09,
+      "signed_volume_mm3": 1426.286083962077,
       "bounds_mm": [
         [
           0.0,
@@ -669,7 +1399,7 @@
           0.0
         ],
         [
-          17.90000916,
+          18.70000076,
           32.5,
           14.5
         ]
@@ -677,13 +1407,17 @@
     },
     {
       "file": "plates/plate_00_fit_tests.3mf",
-      "object": "test_11_side_key_access",
-      "triangles": 54,
+      "object": "test_12_actual_bottom_key",
+      "triangles": 506,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        3372.3410393459944
+      ],
       "nonmanifold_edges": 0,
       "inconsistent_winding_edges": 0,
       "zero_area": 0,
-      "minimum_area_mm2": 0.1101837055726167,
-      "signed_volume_mm3": 446.97657561600266,
+      "minimum_area_mm2": 0.0041895074200676286,
+      "signed_volume_mm3": 3372.3410393459944,
       "bounds_mm": [
         [
           0.0,
@@ -691,21 +1425,25 @@
           0.0
         ],
         [
-          6.0,
-          16.00000954,
-          12.0
+          41.20000076,
+          15.80000019,
+          11.69999981
         ]
       ]
     },
     {
       "file": "plates/plate_00_fit_tests.3mf",
       "object": "test_06_actual_journal",
-      "triangles": 264,
+      "triangles": 252,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        1264.6561664467777
+      ],
       "nonmanifold_edges": 0,
       "inconsistent_winding_edges": 0,
       "zero_area": 0,
-      "minimum_area_mm2": 0.0024273105648020127,
-      "signed_volume_mm3": 1332.4056455356563,
+      "minimum_area_mm2": 0.016986811963551868,
+      "signed_volume_mm3": 1264.6561664467777,
       "bounds_mm": [
         [
           0.0,
@@ -715,7 +1453,7 @@
         [
           12.0,
           12.0,
-          11.80000019
+          11.19999981
         ]
       ]
     },
@@ -723,11 +1461,15 @@
       "file": "plates/plate_00_fit_tests.3mf",
       "object": "test_07_roof_dock",
       "triangles": 108,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        1171.1006192007837
+      ],
       "nonmanifold_edges": 0,
       "inconsistent_winding_edges": 0,
       "zero_area": 0,
       "minimum_area_mm2": 0.04851608602150269,
-      "signed_volume_mm3": 1155.6473808456228,
+      "signed_volume_mm3": 1171.1006192007837,
       "bounds_mm": [
         [
           0.0,
@@ -743,35 +1485,17 @@
     },
     {
       "file": "plates/plate_00_fit_tests.3mf",
-      "object": "test_12_side_key_end",
-      "triangles": 36,
-      "nonmanifold_edges": 0,
-      "inconsistent_winding_edges": 0,
-      "zero_area": 0,
-      "minimum_area_mm2": 0.11999988499999531,
-      "signed_volume_mm3": 262.0799844060001,
-      "bounds_mm": [
-        [
-          0.0,
-          0.0,
-          0.0
-        ],
-        [
-          10.0,
-          9.60000038,
-          4.19999981
-        ]
-      ]
-    },
-    {
-      "file": "plates/plate_00_fit_tests.3mf",
       "object": "test_09_cover_socket",
       "triangles": 58,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        448.84786803417956
+      ],
       "nonmanifold_edges": 0,
       "inconsistent_winding_edges": 0,
       "zero_area": 0,
-      "minimum_area_mm2": 0.048985005000000026,
-      "signed_volume_mm3": 448.8478680341795,
+      "minimum_area_mm2": 0.0384000550000001,
+      "signed_volume_mm3": 448.84786803417956,
       "bounds_mm": [
         [
           0.0,
@@ -787,13 +1511,17 @@
     },
     {
       "file": "plates/plate_00_fit_tests.3mf",
-      "object": "test_05_actual_axle6",
-      "triangles": 132,
+      "object": "test_18_body_receiver",
+      "triangles": 82,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        948.7001369850002
+      ],
       "nonmanifold_edges": 0,
       "inconsistent_winding_edges": 0,
       "zero_area": 0,
-      "minimum_area_mm2": 0.00424586413430135,
-      "signed_volume_mm3": 379.0774823880452,
+      "minimum_area_mm2": 0.09625782299638914,
+      "signed_volume_mm3": 948.7001369850002,
       "bounds_mm": [
         [
           0.0,
@@ -801,7 +1529,215 @@
           0.0
         ],
         [
-          16.40000916,
+          16.60000992,
+          8.0,
+          10.0
+        ]
+      ]
+    },
+    {
+      "file": "plates/plate_00_fit_tests.3mf",
+      "object": "test_13_keeper_rear_socket",
+      "triangles": 54,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        103.79209538619492
+      ],
+      "nonmanifold_edges": 0,
+      "inconsistent_winding_edges": 0,
+      "zero_area": 0,
+      "minimum_area_mm2": 0.015000067000038107,
+      "signed_volume_mm3": 103.79209538619492,
+      "bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          5.5999999,
+          7.4000001,
+          5.19999981
+        ]
+      ]
+    },
+    {
+      "file": "plates/plate_00_fit_tests.3mf",
+      "object": "test_14_keeper_front_socket",
+      "triangles": 34,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        133.0559125136077
+      ],
+      "nonmanifold_edges": 0,
+      "inconsistent_winding_edges": 0,
+      "zero_area": 0,
+      "minimum_area_mm2": 0.0906879966864,
+      "signed_volume_mm3": 133.0559125136077,
+      "bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          5.5999999,
+          7.4000001,
+          5.19999981
+        ]
+      ]
+    },
+    {
+      "file": "plates/plate_00_fit_tests.3mf",
+      "object": "test_20_capture_rear_socket",
+      "triangles": 52,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        87.51200560345004
+      ],
+      "nonmanifold_edges": 0,
+      "inconsistent_winding_edges": 0,
+      "zero_area": 0,
+      "minimum_area_mm2": 0.13838474971928766,
+      "signed_volume_mm3": 87.51200560345004,
+      "bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          4.0,
+          6.80000019,
+          6.5999999
+        ]
+      ]
+    },
+    {
+      "file": "plates/plate_00_fit_tests.3mf",
+      "object": "test_21_front_stop_socket",
+      "triangles": 66,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        62.577002458699916
+      ],
+      "nonmanifold_edges": 0,
+      "inconsistent_winding_edges": 0,
+      "zero_area": 0,
+      "minimum_area_mm2": 0.25808918818724375,
+      "signed_volume_mm3": 62.577002458699916,
+      "bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          6.0999999,
+          6.80000019,
+          5.4000001
+        ]
+      ]
+    },
+    {
+      "file": "plates/plate_00_fit_tests.3mf",
+      "object": "test_22_rear_stop_socket",
+      "triangles": 72,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        48.765005466100185
+      ],
+      "nonmanifold_edges": 0,
+      "inconsistent_winding_edges": 0,
+      "zero_area": 0,
+      "minimum_area_mm2": 0.016629488690009797,
+      "signed_volume_mm3": 48.765005466100185,
+      "bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          4.0,
+          6.80000019,
+          5.4000001
+        ]
+      ]
+    },
+    {
+      "file": "plates/plate_00_fit_tests.3mf",
+      "object": "test_23_actual_stop",
+      "triangles": 12,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        106.49599943679989
+      ],
+      "nonmanifold_edges": 0,
+      "inconsistent_winding_edges": 0,
+      "zero_area": 0,
+      "minimum_area_mm2": 8.319999825999995,
+      "signed_volume_mm3": 106.49599943679989,
+      "bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          5.19999981,
+          6.4000001,
+          3.20000005
+        ]
+      ]
+    },
+    {
+      "file": "plates/plate_00_fit_tests.3mf",
+      "object": "test_24_actual_stop",
+      "triangles": 12,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        190.46400984320016
+      ],
+      "nonmanifold_edges": 0,
+      "inconsistent_winding_edges": 0,
+      "zero_area": 0,
+      "minimum_area_mm2": 10.240000320000002,
+      "signed_volume_mm3": 190.46400984320016,
+      "bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          9.30000019,
+          6.4000001,
+          3.20000005
+        ]
+      ]
+    },
+    {
+      "file": "plates/plate_00_fit_tests.3mf",
+      "object": "test_05_actual_axle6",
+      "triangles": 132,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        436.86343118387697
+      ],
+      "nonmanifold_edges": 0,
+      "inconsistent_winding_edges": 0,
+      "zero_area": 0,
+      "minimum_area_mm2": 0.00424586413430135,
+      "signed_volume_mm3": 436.86343118387697,
+      "bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          18.89999962,
           6.0,
           4.24264002
         ]
@@ -809,13 +1745,121 @@
     },
     {
       "file": "plates/plate_00_fit_tests.3mf",
-      "object": "test_10_cover_peg",
-      "triangles": 32,
+      "object": "test_27_rear_retention_foot",
+      "triangles": 52,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        958.1999874599999
+      ],
       "nonmanifold_edges": 0,
       "inconsistent_winding_edges": 0,
       "zero_area": 0,
-      "minimum_area_mm2": 0.18366683919969468,
-      "signed_volume_mm3": 236.13611989384978,
+      "minimum_area_mm2": 0.06828702984684441,
+      "signed_volume_mm3": 958.1999874599999,
+      "bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          17.0,
+          6.0,
+          18.0
+        ]
+      ]
+    },
+    {
+      "file": "plates/plate_00_fit_tests.3mf",
+      "object": "test_28_front_retention_foot",
+      "triangles": 52,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        714.0006549599999
+      ],
+      "nonmanifold_edges": 0,
+      "inconsistent_winding_edges": 0,
+      "zero_area": 0,
+      "minimum_area_mm2": 0.0782354167645052,
+      "signed_volume_mm3": 714.0006549599999,
+      "bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          17.0,
+          6.0,
+          10.30000019
+        ]
+      ]
+    },
+    {
+      "file": "plates/plate_00_fit_tests.3mf",
+      "object": "test_15_actual_long_keeper",
+      "triangles": 60,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        1236.2046517444453
+      ],
+      "nonmanifold_edges": 0,
+      "inconsistent_winding_edges": 0,
+      "zero_area": 0,
+      "minimum_area_mm2": 0.14999927800057097,
+      "signed_volume_mm3": 1236.2046517444453,
+      "bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          52.70000839,
+          5.80000019,
+          5.60000992
+        ]
+      ]
+    },
+    {
+      "file": "plates/plate_00_fit_tests.3mf",
+      "object": "test_17_local_capture_socket",
+      "triangles": 46,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        91.85849294324997
+      ],
+      "nonmanifold_edges": 0,
+      "inconsistent_winding_edges": 0,
+      "zero_area": 0,
+      "minimum_area_mm2": 0.13838474971928766,
+      "signed_volume_mm3": 91.85849294324997,
+      "bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          6.0999999,
+          5.69999981,
+          6.5999999
+        ]
+      ]
+    },
+    {
+      "file": "plates/plate_00_fit_tests.3mf",
+      "object": "test_10_cover_peg",
+      "triangles": 32,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        236.13611989384975
+      ],
+      "nonmanifold_edges": 0,
+      "inconsistent_winding_edges": 0,
+      "zero_area": 0,
+      "minimum_area_mm2": 0.03332497449998793,
+      "signed_volume_mm3": 236.13611989384975,
       "bounds_mm": [
         [
           0.0,
@@ -831,13 +1875,17 @@
     },
     {
       "file": "plates/plate_00_fit_tests.3mf",
-      "object": "test_04_actual_axle5",
-      "triangles": 132,
+      "object": "test_19_closure_foot",
+      "triangles": 42,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        196.66405512880533
+      ],
       "nonmanifold_edges": 0,
       "inconsistent_winding_edges": 0,
       "zero_area": 0,
-      "minimum_area_mm2": 0.0029483707186000116,
-      "signed_volume_mm3": 234.3548209786654,
+      "minimum_area_mm2": 0.00026733264999999703,
+      "signed_volume_mm3": 196.66405512880533,
       "bounds_mm": [
         [
           0.0,
@@ -845,7 +1893,33 @@
           0.0
         ],
         [
-          14.60000038,
+          8.0,
+          5.19999981,
+          5.19999981
+        ]
+      ]
+    },
+    {
+      "file": "plates/plate_00_fit_tests.3mf",
+      "object": "test_04_actual_axle5",
+      "triangles": 132,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        253.61685750793993
+      ],
+      "nonmanifold_edges": 0,
+      "inconsistent_winding_edges": 0,
+      "zero_area": 0,
+      "minimum_area_mm2": 0.0029483707186000116,
+      "signed_volume_mm3": 253.61685750793993,
+      "bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          15.80000019,
           5.0,
           3.53553009
         ]
@@ -854,12 +1928,16 @@
     {
       "file": "plates/plate_01_shells.3mf",
       "object": "01_body",
-      "triangles": 466,
+      "triangles": 1542,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        66101.96499182915
+      ],
       "nonmanifold_edges": 0,
       "inconsistent_winding_edges": 0,
       "zero_area": 0,
-      "minimum_area_mm2": 3.0520058212603967e-05,
-      "signed_volume_mm3": 62277.249447923874,
+      "minimum_area_mm2": 0.0014420681345915232,
+      "signed_volume_mm3": 66101.96499182915,
       "bounds_mm": [
         [
           0.0,
@@ -877,11 +1955,15 @@
       "file": "plates/plate_01_shells.3mf",
       "object": "03_planar_lid",
       "triangles": 106,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        7921.162264602744
+      ],
       "nonmanifold_edges": 0,
       "inconsistent_winding_edges": 0,
       "zero_area": 0,
       "minimum_area_mm2": 0.02499804550000917,
-      "signed_volume_mm3": 7891.8553725404445,
+      "signed_volume_mm3": 7921.162264602744,
       "bounds_mm": [
         [
           0.0,
@@ -898,12 +1980,16 @@
     {
       "file": "plates/plate_01_shells.3mf",
       "object": "02_fixed_rear_cover",
-      "triangles": 96,
+      "triangles": 100,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        5053.584128381671
+      ],
       "nonmanifold_edges": 0,
       "inconsistent_winding_edges": 0,
       "zero_area": 0,
       "minimum_area_mm2": 0.43354341881371994,
-      "signed_volume_mm3": 5113.58556012745,
+      "signed_volume_mm3": 5053.584128381671,
       "bounds_mm": [
         [
           0.0,
@@ -920,12 +2006,16 @@
     {
       "file": "plates/plate_02_cassette.3mf",
       "object": "04_main_cassette",
-      "triangles": 978,
+      "triangles": 1226,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        26392.074999436565
+      ],
       "nonmanifold_edges": 0,
       "inconsistent_winding_edges": 0,
       "zero_area": 0,
       "minimum_area_mm2": 8.748137105357095e-08,
-      "signed_volume_mm3": 24069.163512189236,
+      "signed_volume_mm3": 26392.074999436565,
       "bounds_mm": [
         [
           0.0,
@@ -933,21 +2023,25 @@
           0.0
         ],
         [
-          49.29999924,
+          64.30000305,
           61.59999847,
-          51.80001068
+          50.59999847
         ]
       ]
     },
     {
       "file": "plates/plate_02_cassette.3mf",
       "object": "05_front_closure",
-      "triangles": 1824,
+      "triangles": 2182,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        16279.201432896802
+      ],
       "nonmanifold_edges": 0,
       "inconsistent_winding_edges": 0,
       "zero_area": 0,
-      "minimum_area_mm2": 0.0005229741295680185,
-      "signed_volume_mm3": 13379.212109454951,
+      "minimum_area_mm2": 0.0006143658012497267,
+      "signed_volume_mm3": 16279.201432896802,
       "bounds_mm": [
         [
           0.0,
@@ -955,21 +2049,25 @@
           0.0
         ],
         [
-          49.29999924,
+          64.30000305,
           61.59999847,
-          53.20000076
+          14.90001011
         ]
       ]
     },
     {
       "file": "plates/plate_02_cassette.3mf",
       "object": "06_horn_cup_journal",
-      "triangles": 2010,
+      "triangles": 2902,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        5936.567970583282
+      ],
       "nonmanifold_edges": 0,
       "inconsistent_winding_edges": 0,
       "zero_area": 0,
-      "minimum_area_mm2": 2.614472932455092e-07,
-      "signed_volume_mm3": 5753.590233016432,
+      "minimum_area_mm2": 5.096436549931194e-07,
+      "signed_volume_mm3": 5936.567970583282,
       "bounds_mm": [
         [
           0.0,
@@ -985,13 +2083,17 @@
     },
     {
       "file": "plates/plate_03_links.3mf",
-      "object": "07_rear_rocker",
-      "triangles": 2664,
+      "object": "17_local_cup_capture",
+      "triangles": 412,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        1469.9039312159978
+      ],
       "nonmanifold_edges": 0,
       "inconsistent_winding_edges": 0,
       "zero_area": 0,
-      "minimum_area_mm2": 3.094544107710962e-09,
-      "signed_volume_mm3": 1053.100324603661,
+      "minimum_area_mm2": 3.9403349999990543e-07,
+      "signed_volume_mm3": 1469.9039312159978,
       "bounds_mm": [
         [
           0.0,
@@ -999,7 +2101,33 @@
           0.0
         ],
         [
-          17.89999962,
+          21.80999947,
+          41.79999924,
+          3.5
+        ]
+      ]
+    },
+    {
+      "file": "plates/plate_03_links.3mf",
+      "object": "07_rear_rocker",
+      "triangles": 2592,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        1113.2453824186107
+      ],
+      "nonmanifold_edges": 0,
+      "inconsistent_winding_edges": 0,
+      "zero_area": 0,
+      "minimum_area_mm2": 3.8510692509211605e-09,
+      "signed_volume_mm3": 1113.2453824186107,
+      "bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          18.70000076,
           32.5,
           4.0
         ]
@@ -1008,12 +2136,16 @@
     {
       "file": "plates/plate_03_links.3mf",
       "object": "08_front_rocker",
-      "triangles": 3030,
+      "triangles": 3502,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        1426.286083962077
+      ],
       "nonmanifold_edges": 0,
       "inconsistent_winding_edges": 0,
       "zero_area": 0,
-      "minimum_area_mm2": 8.297956856362365e-09,
-      "signed_volume_mm3": 1366.1412145513357,
+      "minimum_area_mm2": 3.0138382006981283e-09,
+      "signed_volume_mm3": 1426.286083962077,
       "bounds_mm": [
         [
           0.0,
@@ -1021,7 +2153,7 @@
           0.0
         ],
         [
-          17.90000916,
+          18.70000076,
           32.5,
           14.5
         ]
@@ -1031,11 +2163,15 @@
       "file": "plates/plate_03_links.3mf",
       "object": "09_link",
       "triangles": 1044,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        845.6185490722485
+      ],
       "nonmanifold_edges": 0,
       "inconsistent_winding_edges": 0,
       "zero_area": 0,
-      "minimum_area_mm2": 0.00552990885339355,
-      "signed_volume_mm3": 704.7515291395106,
+      "minimum_area_mm2": 0.004133881116523852,
+      "signed_volume_mm3": 845.6185490722485,
       "bounds_mm": [
         [
           0.0,
@@ -1043,8 +2179,8 @@
           0.0
         ],
         [
-          33.22877121,
-          27.78359985,
+          33.22914886,
+          27.78454971,
           3.0
         ]
       ]
@@ -1052,12 +2188,16 @@
     {
       "file": "plates/plate_03_links.3mf",
       "object": "13_body_cross_key",
-      "triangles": 36,
+      "triangles": 506,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        3372.3410393459944
+      ],
       "nonmanifold_edges": 0,
       "inconsistent_winding_edges": 0,
       "zero_area": 0,
-      "minimum_area_mm2": 0.12001648100068721,
-      "signed_volume_mm3": 1411.2001706376016,
+      "minimum_area_mm2": 0.0041895074200676286,
+      "signed_volume_mm3": 3372.3410393459944,
       "bounds_mm": [
         [
           0.0,
@@ -1065,9 +2205,61 @@
           0.0
         ],
         [
-          67.00000763,
-          9.60000038,
-          4.19999981
+          41.20000076,
+          15.80000019,
+          11.69999981
+        ]
+      ]
+    },
+    {
+      "file": "plates/plate_03_links.3mf",
+      "object": "18_local_capture_stop",
+      "triangles": 12,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        106.49599943679989
+      ],
+      "nonmanifold_edges": 0,
+      "inconsistent_winding_edges": 0,
+      "zero_area": 0,
+      "minimum_area_mm2": 8.319999825999995,
+      "signed_volume_mm3": 106.49599943679989,
+      "bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          5.19999981,
+          6.4000001,
+          3.20000005
+        ]
+      ]
+    },
+    {
+      "file": "plates/plate_03_links.3mf",
+      "object": "19_local_capture_stop",
+      "triangles": 12,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        190.46400984320016
+      ],
+      "nonmanifold_edges": 0,
+      "inconsistent_winding_edges": 0,
+      "zero_area": 0,
+      "minimum_area_mm2": 10.240000320000002,
+      "signed_volume_mm3": 190.46400984320016,
+      "bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          9.30000019,
+          6.4000001,
+          3.20000005
         ]
       ]
     },
@@ -1075,11 +2267,15 @@
       "file": "plates/plate_03_links.3mf",
       "object": "10_hinge_axle",
       "triangles": 132,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        436.86343118387697
+      ],
       "nonmanifold_edges": 0,
       "inconsistent_winding_edges": 0,
       "zero_area": 0,
       "minimum_area_mm2": 0.00424586413430135,
-      "signed_volume_mm3": 379.0774823880452,
+      "signed_volume_mm3": 436.86343118387697,
       "bounds_mm": [
         [
           0.0,
@@ -1087,7 +2283,7 @@
           0.0
         ],
         [
-          16.40000916,
+          18.89999962,
           6.0,
           4.24264002
         ]
@@ -1095,13 +2291,17 @@
     },
     {
       "file": "plates/plate_03_links.3mf",
-      "object": "11_drive_axle",
-      "triangles": 132,
+      "object": "14_servo_top_keeper",
+      "triangles": 60,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        1236.2046517444453
+      ],
       "nonmanifold_edges": 0,
       "inconsistent_winding_edges": 0,
       "zero_area": 0,
-      "minimum_area_mm2": 0.0029483707186000116,
-      "signed_volume_mm3": 234.3548209786654,
+      "minimum_area_mm2": 0.14999927800057097,
+      "signed_volume_mm3": 1236.2046517444453,
       "bounds_mm": [
         [
           0.0,
@@ -1109,7 +2309,85 @@
           0.0
         ],
         [
-          14.60000038,
+          52.70000839,
+          5.80000019,
+          5.60000992
+        ]
+      ]
+    },
+    {
+      "file": "plates/plate_03_links.3mf",
+      "object": "15_flat_spacer",
+      "triangles": 44,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        1627.2784719996996
+      ],
+      "nonmanifold_edges": 0,
+      "inconsistent_winding_edges": 0,
+      "zero_area": 0,
+      "minimum_area_mm2": 0.17537003774524063,
+      "signed_volume_mm3": 1627.2784719996996,
+      "bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          52.70000076,
+          5.5999999,
+          5.5999999
+        ]
+      ]
+    },
+    {
+      "file": "plates/plate_03_links.3mf",
+      "object": "16_flat_spacer",
+      "triangles": 44,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        1627.2784719996996
+      ],
+      "nonmanifold_edges": 0,
+      "inconsistent_winding_edges": 0,
+      "zero_area": 0,
+      "minimum_area_mm2": 0.17537003774524063,
+      "signed_volume_mm3": 1627.2784719996996,
+      "bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          52.70000076,
+          5.5999999,
+          5.5999999
+        ]
+      ]
+    },
+    {
+      "file": "plates/plate_03_links.3mf",
+      "object": "11_drive_axle",
+      "triangles": 132,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        253.61685750793993
+      ],
+      "nonmanifold_edges": 0,
+      "inconsistent_winding_edges": 0,
+      "zero_area": 0,
+      "minimum_area_mm2": 0.0029483707186000116,
+      "signed_volume_mm3": 253.61685750793993,
+      "bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          15.80000019,
           5.0,
           3.53553009
         ]
@@ -1119,11 +2397,15 @@
       "file": "plates/plate_03_links.3mf",
       "object": "12_link_axle",
       "triangles": 132,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        152.4911378407568
+      ],
       "nonmanifold_edges": 0,
       "inconsistent_winding_edges": 0,
       "zero_area": 0,
       "minimum_area_mm2": 0.0029478908820005194,
-      "signed_volume_mm3": 121.99290866743559,
+      "signed_volume_mm3": 152.4911378407568,
       "bounds_mm": [
         [
           0.0,
@@ -1131,9 +2413,61 @@
           0.0
         ],
         [
-          7.5999999,
+          9.5,
           5.0,
           3.53553009
+        ]
+      ]
+    },
+    {
+      "file": "plates/plate_04_support_tests.3mf",
+      "object": "test_26_actual_cup_with_support",
+      "triangles": 2902,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        5936.567970583282
+      ],
+      "nonmanifold_edges": 0,
+      "inconsistent_winding_edges": 0,
+      "zero_area": 0,
+      "minimum_area_mm2": 5.096436549931194e-07,
+      "signed_volume_mm3": 5936.567970583282,
+      "bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          31.84514046,
+          36.12966919,
+          20.79999924
+        ]
+      ]
+    },
+    {
+      "file": "plates/plate_04_support_tests.3mf",
+      "object": "test_25_actual_U_support",
+      "triangles": 360,
+      "connected_components": 1,
+      "component_signed_volumes_mm3": [
+        8468.359477173783
+      ],
+      "nonmanifold_edges": 0,
+      "inconsistent_winding_edges": 0,
+      "zero_area": 0,
+      "minimum_area_mm2": 8.747228895356117e-08,
+      "signed_volume_mm3": 8468.359477173783,
+      "bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          25.39999962,
+          31.0,
+          33.00001144
         ]
       ]
     }

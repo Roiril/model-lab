@@ -19,7 +19,7 @@ def setpose(deg):
   else:o.matrix_world=neutral[o.name]
 scene=bpy.context.scene;scene.render.engine='BLENDER_WORKBENCH';scene.render.resolution_x=1500;scene.render.resolution_y=1100;scene.render.resolution_percentage=100
 scene.display.shading.light='STUDIO';scene.display.shading.color_type='MATERIAL';scene.display.shading.show_shadows=True;scene.display.shading.show_cavity=True;scene.display.shading.cavity_type='BOTH';scene.display.shading.show_object_outline=True;scene.display.shading.background_type='WORLD';scene.world.color=(.90,.92,.94)
-scene.render.image_settings.file_format='PNG';scene.render.film_transparent=False
+scene.render.image_settings.file_format='PNG';scene.render.image_settings.compression=100;scene.render.dither_intensity=0;scene.render.film_transparent=False
 camdata=bpy.data.cameras.new('Preview camera');cam=bpy.data.objects.new('Preview camera',camdata);bpy.context.collection.objects.link(cam);scene.camera=cam;camdata.type='ORTHO'
 def camera(pos,target,scale):
  cam.location=Vector(pos)*.001;cam.rotation_euler=(Vector(target)*.001-cam.location).to_track_quat('-Z','Y').to_euler();camdata.ortho_scale=scale*.001

@@ -4,7 +4,7 @@ from mathutils import Vector,Matrix
 R=pathlib.Path(__file__).resolve().parent;sys.path.insert(0,str(R));from cad_utils import read_stl,color
 def setup(w=1500,h=1100):
     s=bpy.context.scene;s.render.engine='BLENDER_WORKBENCH';s.render.resolution_x=w;s.render.resolution_y=h;s.render.resolution_percentage=100
-    s.display.shading.light='STUDIO';s.display.shading.color_type='MATERIAL';s.display.shading.show_shadows=True;s.display.shading.show_cavity=True;s.display.shading.cavity_type='BOTH';s.display.shading.show_object_outline=True;s.display.shading.background_type='WORLD';s.world.color=(.92,.94,.96);s.render.image_settings.file_format='PNG'
+    s.display.shading.light='STUDIO';s.display.shading.color_type='MATERIAL';s.display.shading.show_shadows=True;s.display.shading.show_cavity=True;s.display.shading.cavity_type='BOTH';s.display.shading.show_object_outline=True;s.display.shading.background_type='WORLD';s.world.color=(.92,.94,.96);s.render.image_settings.file_format='PNG';s.render.image_settings.compression=100;s.render.dither_intensity=0
     d=bpy.data.cameras.new('Engineering camera');o=bpy.data.objects.new('Engineering camera',d);bpy.context.collection.objects.link(o);s.camera=o;d.type='ORTHO';return s,o
 def render(s,cam,path,pos,target,scale):
     cam.location=Vector(pos)*.001;cam.rotation_euler=(Vector(target)*.001-cam.location).to_track_quat('-Z','Y').to_euler();cam.data.ortho_scale=scale*.001;s.render.filepath=str(R/path);bpy.ops.render.render(write_still=True)
@@ -23,7 +23,7 @@ for o in list(bpy.data.objects):
 render(s,cam,'section_actual3d.png',(190,-55,125),(29,35,35),148)
 render(s,cam,'section_side_actual3d.png',(180,35,36),(30,35,36),116)
 bpy.ops.wm.open_mainfile(filepath=str(R/'editable_cube_v6.blend'));s,cam=setup(1900,1400)
-offset={'01_body':(0,0,-65),'02_fixed_rear_cover':(0,0,55),'03_planar_lid':(0,20,86),'04_main_cassette':(-35,0,0),'05_front_closure':(90,0,0),'06_horn_cup_journal':(15,0,-15),'07_rear_rocker':(20,0,27),'08_front_rocker':(60,0,27),'09_link':(50,0,-7),'10_hinge_axle':(95,0,50),'11_drive_axle':(95,0,-25),'12_link_axle':(95,0,20),'13_body_cross_key':(40,0,-58)}
+offset={'01_body':(0,0,-65),'02_fixed_rear_cover':(0,0,55),'03_planar_lid':(0,20,86),'04_main_cassette':(-35,0,0),'05_front_closure':(105,0,0),'06_horn_cup_journal':(15,0,-15),'07_rear_rocker':(20,0,27),'08_front_rocker':(60,0,27),'09_link':(50,0,-7),'10_hinge_axle':(95,0,50),'11_drive_axle':(95,0,-25),'12_link_axle':(95,0,20),'13_body_cross_key':(40,0,-58),'14_servo_top_keeper':(-15,-40,55),'15_flat_spacer':(-15,-35,-20),'16_flat_spacer':(-15,40,-20),'17_local_cup_capture':(50,0,-40),'18_local_capture_stop':(85,-25,-55),'19_local_capture_stop':(85,25,-55)}
 for n,delta in offset.items():bpy.data.objects[n].matrix_world.translation+=Vector(delta)*.001
 for o in bpy.data.objects:
     if o.name.startswith('REFERENCE'):o.hide_render=True

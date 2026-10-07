@@ -1,0 +1,24 @@
+{
+  "input_blend_sha256": "d1cad135be74b404c40905c8d54cbbd180aebbc04e09c131c02055e5a78a98a3",
+  "physical_tested": false,
+  "tool_diameter_mm": 2.0,
+  "service_hole_yz_mm": [
+    61.5,
+    59.5
+  ],
+  "service_hole_diamond_diagonal_mm": 5.0,
+  "lid_angle_deg": 65,
+  "paths": [
+    {
+      "tool": "rear lift hook",
+      "horizontal_insertion_samples": 41,
+      "obstacles": []
+    },
+    {
+      "tool": "front lift hook",
+      "horizontal_insertion_samples": 41,
+      "obstacles": []
+    }
+  ],
+  "scope": "Conservative cylinders for2mm L hooks with28.5mm straight handles and12mm short legs. Horizontal insertion sampled0.5mm. A real Allen-key bend/handle, grip strength and simultaneous human access remain untested. Use both plates, support the lid and lift gently; do not lift by linkage or planar lid."
+}

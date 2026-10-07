@@ -1,35 +1,50 @@
-// Reference only: board unspecified; not compiled or physically tested.
-// Test the unloaded servo first. Supply servo from a suitable external source.
-// Common GND with controller. Calibrate actual direction and endpoints.
+// Reference sketch only: board unspecified, not compiled or physically tested.
+// Use a separate suitable servo supply and common controller GND.
+// Slow pulse ramps DO NOT limit stall force. Keep hands away from the lid.
 #include <Servo.h>
-Servo opener;
-const uint8_t SIGNAL_PIN = 9;
-const int CLOSED_US = 1500; // Set only after unloaded calibration.
-const int OPEN_US = 1700;   // Small initial trial, NOT the CAD 65 degree endpoint.
-const int LOWER_US = 1200, UPPER_US = 1800;
-const unsigned long STEP_MS = 20;
-int currentUs = CLOSED_US, targetUs = CLOSED_US;
-unsigned long previousStep = 0;
+Servo actuator;
+const int SERVO_PIN = 9; // change for the actual board
+const bool CALIBRATED = false;
+// Fill measured pulses after unloaded-servo and horn-phase calibration.
+// They should represent a supported starting lid pose and roughly1..63deg.
+const int PULSE_START_US = 0;
+const int PULSE_CLOSED_US = 0;
+const int PULSE_OPEN_US = 0;
+int currentPulse = PULSE_START_US;
+bool armed = false;
+bool ready() {
+  return CALIBRATED && PULSE_START_US >= 600 && PULSE_START_US <= 2400
+    && PULSE_CLOSED_US >= 600 && PULSE_CLOSED_US <= 2400
+    && PULSE_OPEN_US >= 600 && PULSE_OPEN_US <= 2400;
+}
+void rampTo(int target) {
+  if (!armed) return;
+  while (currentPulse != target) {
+    if (Serial.available() && Serial.peek() == 'x') {
+      Serial.read(); actuator.detach(); armed = false; return;
+    }
+    int delta = target - currentPulse;
+    currentPulse += delta > 0 ? min(delta, 2) : max(delta, -2);
+    actuator.writeMicroseconds(currentPulse);
+    delay(20);
+  }
+}
 void setup() {
   Serial.begin(115200);
-  // First power-on motion cannot be slowed by this loop. Keep servo unloaded.
-  opener.writeMicroseconds(currentUs);
-  opener.attach(SIGNAL_PIN, 1000, 2000);
-  opener.writeMicroseconds(currentUs);
-  Serial.println("o=open, c=close, s=hold current position");
+  Serial.println("Disabled until actual pulse calibration. No automatic motion.");
+  Serial.println("a: arm at aligned supported start; o: open; c: close; x: detach");
 }
 void loop() {
-  if (Serial.available()) {
-    char command = Serial.read();
-    if (command == 'o') targetUs = constrain(OPEN_US, LOWER_US, UPPER_US);
-    if (command == 'c') targetUs = constrain(CLOSED_US, LOWER_US, UPPER_US);
-    if (command == 's') targetUs = currentUs; // Still energized: holds position.
-  }
-  unsigned long now = millis();
-  if (now - previousStep >= STEP_MS) {
-    previousStep = now;
-    if (currentUs < targetUs) ++currentUs;
-    else if (currentUs > targetUs) --currentUs;
-    opener.writeMicroseconds(currentUs);
-  }
+  if (!Serial.available()) return;
+  char cmd = Serial.read();
+  if (cmd == 'x') { actuator.detach(); armed = false; return; }
+  if (!ready()) { Serial.println("Set CALIBRATED and all measured pulses first."); return; }
+  if (cmd == 'a' && !armed) {
+    currentPulse = PULSE_START_US;
+    // Check the actual board/library behavior. Support/align the lid first.
+    actuator.writeMicroseconds(currentPulse);
+    actuator.attach(SERVO_PIN);
+    armed = true;
+  } else if (cmd == 'o') rampTo(PULSE_OPEN_US);
+  else if (cmd == 'c') rampTo(PULSE_CLOSED_US);
 }

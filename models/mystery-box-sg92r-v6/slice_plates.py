@@ -2,7 +2,7 @@
 from pathlib import Path
 import subprocess,json,sys,concurrent.futures
 R=Path(__file__).resolve().parent;EXE=r'C:\Program Files\Bambu Studio\bambu-studio.exe'
-jobs=[('plate_01_shells',False),('plate_02_cassette',True),('plate_03_links',False),('plate_00_fit_tests',False)]
+jobs=[('plate_01_shells',False),('plate_02_cassette',True),('plate_03_links',False),('plate_00_fit_tests',False),('plate_04_support_tests',True)]
 if len(sys.argv)>1:jobs=[j for j in jobs if j[0] in sys.argv[1:]]
 jobs=[j for j in jobs if (R/'plates'/(j[0]+'.3mf')).exists()]
 def run(job):

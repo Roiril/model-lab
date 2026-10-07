@@ -57,8 +57,8 @@ def boolean(a,b,op='DIFFERENCE'):
     else:bpy.data.meshes.remove(original)
     bpy.data.objects.remove(b,do_unlink=True);clean(a)
     assert len(a.data.vertices)>0,(label,'Boolean produced empty mesh')
-    check=bmesh.new();check.from_mesh(a.data);badout=sum(not e.is_manifold for e in check.edges);check.free()
-    assert badout==0,(label,'Boolean nonmanifold',badout)
+    check=bmesh.new();check.from_mesh(a.data);badout=sum(not e.is_manifold for e in check.edges);vol=abs(check.calc_volume());check.free()
+    assert badout==0 and vol>1e-12,(label,'Boolean requires closed positive volume',badout,vol)
     return a
 def cut(a,b):return boolean(a,b)
 def add(a,b):return boolean(a,b,'UNION')
@@ -85,8 +85,8 @@ def export(o,path,T=None,normalize=True):
     me=bpy.data.meshes.new('export '+o.name);o.data.calc_loop_triangles()
     me.from_pydata([tuple(round(v[k]-lo[k],5) for k in range(3)) for v in points],[],[list(t.vertices) for t in o.data.loop_triangles]);me.update()
     bm=bmesh.new();bm.from_mesh(me)
-    bmesh.ops.remove_doubles(bm,verts=list(bm.verts),dist=.000015)
-    bmesh.ops.dissolve_degenerate(bm,edges=list(bm.edges),dist=.000015)
+    bmesh.ops.remove_doubles(bm,verts=list(bm.verts),dist=.00004)
+    bmesh.ops.dissolve_degenerate(bm,edges=list(bm.edges),dist=.00004)
     bmesh.ops.recalc_face_normals(bm,faces=list(bm.faces));bmesh.ops.triangulate(bm,faces=list(bm.faces))
     bm.to_mesh(me);bm.free();me.calc_loop_triangles()
     # Round to float32 now, then repair collinear diagonals without dropping solid faces.

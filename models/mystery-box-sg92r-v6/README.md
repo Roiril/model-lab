@@ -1,13 +1,9 @@
-# 住人の箱 — SG92R v6
+# SG92R 開蓋デモ v6 修正3
 
-70 × 70 × 70 mm、軽量蓋0〜65°、13印刷部品。実機未検証。
+70×70×70mm、底キー込み70×70×70mm、0〜65度、19印刷部品。CAD検証済み／実物印刷・駆動未検証の試作です。
 
-日本語の全説明：[README_日本語.txt](README_日本語.txt)。画像付き：[assembly_guide.html](assembly_guide.html)。
+[日本語の印刷・組立説明](README_日本語.txt) ／ [画像付きガイド](assembly_guide.html) ／ [レビュー対応](REVIEW_RESPONSE_日本語.md)
 
-`stl/` は印刷部品、`coupons/` は事前試験、`plates/` は形状3MFです。参照サーボは印刷しません。組立全体のSTLを一括印刷しないでください。
+先に28試験片の関連する小部品を確認し、サーボ無しで箱・固定カバー・キーまで組んで手動確認してください。初版の部品を混ぜないでください。中心ねじの代わりに局所捕捉を使うため、実ホーン歯の掛かりを確認できなければ通電しません。
 
-編集は `params.py` と `model.py`、または `editable_cube_v6.blend`。Blender 5.1.1 / Python API。寸法はm、局所ヘルパーはmm。
-
-生成例：`blender --background --python-exit-code 1 --python model.py`
-
-検査：`verify_motion.py` / `check_assembly.py`、`make_coupons.py` → `make_plates.py` → `audit_all.py`。スライス確認はローカルのBambu Studioプロファイルが必要です。配布にG-codeは含めません。
+`stl/` 印刷姿勢済み19部品、`coupons/` 試験片、`plates/` 200mm形状3MF、`.blend` とPythonが編集CADです。参考サーボ/ホーン/配線は印刷しません。G-codeは含めません。

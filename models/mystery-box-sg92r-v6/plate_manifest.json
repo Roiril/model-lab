@@ -6,8 +6,8 @@
       200
     ],
     "occupied_mm": [
-      172.44514846801758,
-      67.60000038146973
+      177.6000108718872,
+      119.10000038146973
     ],
     "manual_support": false,
     "parts": [
@@ -15,8 +15,8 @@
         "name": "test_03_bearing_bar",
         "object_id": 1,
         "position_mm": [
-          13.777425765991211,
-          66.19999980926514
+          11.199994564056396,
+          40.44999980926514
         ],
         "bounds_mm": [
           22.0,
@@ -29,188 +29,426 @@
         "support_blocked_faces": 0
       },
       {
-        "name": "test_02_actual_horn_pocket",
+        "name": "test_11_bottom_key_floor",
         "object_id": 2,
         "position_mm": [
-          43.77742576599121,
-          66.19999980926514
+          41.1999945640564,
+          40.44999980926514
+        ],
+        "bounds_mm": [
+          33.0,
+          47.0,
+          8.199999809265137
+        ],
+        "stl_sha256": "509f66f859aa57ba385d3b4dc06ce4bc67ba611ea985d03a43e356a1f18b189c",
+        "support_enforced_faces": 0,
+        "support_enforced_area_mm2": 0.0,
+        "support_blocked_faces": 0
+      },
+      {
+        "name": "test_16_actual_local_capture",
+        "object_id": 3,
+        "position_mm": [
+          82.1999945640564,
+          40.44999980926514
+        ],
+        "bounds_mm": [
+          21.809999465942383,
+          41.79999923706055,
+          3.5
+        ],
+        "stl_sha256": "a57bd517f6095c687a7542198cf3ac255640e9c0d0afff67d501a266dcf9bd52",
+        "support_enforced_faces": 0,
+        "support_enforced_area_mm2": 0.0,
+        "support_blocked_faces": 0
+      },
+      {
+        "name": "test_02_actual_horn_pocket",
+        "object_id": 4,
+        "position_mm": [
+          112.00999402999878,
+          40.44999980926514
         ],
         "bounds_mm": [
           31.84514045715332,
           36.129669189453125,
           4.900010108947754
         ],
-        "stl_sha256": "1131bf38e31c85bcea10b935110ee49449109809c37bbc7d96a072792d644d43",
+        "stl_sha256": "752e5927bc6b2914888ef2778448b83bf75b3882293b94034209d9b79698558a",
         "support_enforced_faces": 0,
         "support_enforced_area_mm2": 0.0,
         "support_blocked_faces": 0
       },
       {
         "name": "test_01_servo_cradle",
-        "object_id": 3,
+        "object_id": 5,
         "position_mm": [
-          83.62256622314453,
-          66.19999980926514
+          151.8551344871521,
+          40.44999980926514
         ],
         "bounds_mm": [
           19.299999237060547,
           32.599998474121094,
           27.200000762939453
         ],
-        "stl_sha256": "8995ff9c3c5c8cdef38bc5aa9944bff6e565bed202c63d841f38ed3fa2f4d721",
+        "stl_sha256": "eae6c60642a1582bad3e07e33d2fab62515cfe9e93a8ded441695303547aaaf8",
         "support_enforced_faces": 0,
         "support_enforced_area_mm2": 0.0,
         "support_blocked_faces": 0
       },
       {
         "name": "test_08_actual_front_rocker",
-        "object_id": 4,
+        "object_id": 6,
         "position_mm": [
-          110.92256546020508,
-          66.19999980926514
+          11.199994564056396,
+          98.44999980926514
         ],
         "bounds_mm": [
-          17.900009155273438,
+          18.700000762939453,
           32.5,
           14.5
         ],
-        "stl_sha256": "cff5c65ba04263981b9f86bbfa9fbc9de4235cdfabd415ce21a64d86e5bfc7e4",
+        "stl_sha256": "473a4a717da9ff0c83818834020c1ba5ddf74a0de82325f29502183978b93152",
         "support_enforced_faces": 0,
         "support_enforced_area_mm2": 0.0,
         "support_blocked_faces": 0
       },
       {
-        "name": "test_11_side_key_access",
-        "object_id": 5,
+        "name": "test_12_actual_bottom_key",
+        "object_id": 7,
         "position_mm": [
-          136.82257461547852,
-          66.19999980926514
+          37.89999532699585,
+          98.44999980926514
         ],
         "bounds_mm": [
-          6.0,
-          16.000009536743164,
-          12.0
+          41.20000076293945,
+          15.800000190734863,
+          11.699999809265137
         ],
-        "stl_sha256": "c26320d1099b57676e1113faa629b65bbaded4746858f2d0fe9ca3ea9b459dd2",
+        "stl_sha256": "936639a1dead727f5c1b799fe897697f94597fd0bb33952ff374eba091bfc900",
         "support_enforced_faces": 0,
         "support_enforced_area_mm2": 0.0,
         "support_blocked_faces": 0
       },
       {
         "name": "test_06_actual_journal",
-        "object_id": 6,
+        "object_id": 8,
         "position_mm": [
-          150.82257461547852,
-          66.19999980926514
+          87.0999960899353,
+          98.44999980926514
         ],
         "bounds_mm": [
           12.0,
           12.0,
-          11.800000190734863
+          11.199999809265137
         ],
-        "stl_sha256": "d9607473f310603aad4802b85ea038947abb9514449e443f4ab620339a4cee64",
+        "stl_sha256": "bee5f636b7f496c4d6f22f5da42e9c63080fe8413227cb033af7e000b383b44b",
         "support_enforced_faces": 0,
         "support_enforced_area_mm2": 0.0,
         "support_blocked_faces": 0
       },
       {
         "name": "test_07_roof_dock",
-        "object_id": 7,
+        "object_id": 9,
         "position_mm": [
-          170.82257461547852,
-          66.19999980926514
+          107.0999960899353,
+          98.44999980926514
         ],
         "bounds_mm": [
           15.399999618530273,
           12.0,
           12.399999618530273
         ],
-        "stl_sha256": "fdd24f5f27aecb6d47e94cde64a169e8b63c21ec5dff821a36827beb49a990ab",
-        "support_enforced_faces": 0,
-        "support_enforced_area_mm2": 0.0,
-        "support_blocked_faces": 0
-      },
-      {
-        "name": "test_12_side_key_end",
-        "object_id": 8,
-        "position_mm": [
-          13.777425765991211,
-          124.19999980926514
-        ],
-        "bounds_mm": [
-          10.0,
-          9.600000381469727,
-          4.199999809265137
-        ],
-        "stl_sha256": "01db8ae211766f2f100539c39c05bb534b784d74747cdd4a3a10403c898b63cb",
+        "stl_sha256": "877d7fb45721cb3f5133debc4e8f93e7be040a64d9da28691083f85cd30cadb7",
         "support_enforced_faces": 0,
         "support_enforced_area_mm2": 0.0,
         "support_blocked_faces": 0
       },
       {
         "name": "test_09_cover_socket",
-        "object_id": 9,
+        "object_id": 10,
         "position_mm": [
-          31.77742576599121,
-          124.19999980926514
+          130.49999570846558,
+          98.44999980926514
         ],
         "bounds_mm": [
           6.5,
           9.0,
           11.5
         ],
-        "stl_sha256": "e174aa584dd3ad87e68dfbf831a05183f42bf6d16b92f13d95cb1c13ad8410a6",
+        "stl_sha256": "3a3d0d096a43f05f49082088f4b928b4edc14025dde4621b825f38f1daff4a7f",
+        "support_enforced_faces": 0,
+        "support_enforced_area_mm2": 0.0,
+        "support_blocked_faces": 0
+      },
+      {
+        "name": "test_18_body_receiver",
+        "object_id": 11,
+        "position_mm": [
+          144.99999570846558,
+          98.44999980926514
+        ],
+        "bounds_mm": [
+          16.60000991821289,
+          8.0,
+          10.0
+        ],
+        "stl_sha256": "5f6c651ea678f5b42cdde1919dcd5612cd949c510c8cc1f2114faaeba1cdede8",
+        "support_enforced_faces": 0,
+        "support_enforced_area_mm2": 0.0,
+        "support_blocked_faces": 0
+      },
+      {
+        "name": "test_13_keeper_rear_socket",
+        "object_id": 12,
+        "position_mm": [
+          169.60000562667847,
+          98.44999980926514
+        ],
+        "bounds_mm": [
+          5.599999904632568,
+          7.400000095367432,
+          5.199999809265137
+        ],
+        "stl_sha256": "6f682c39f61f462c9bd3d821f33e2dbfd6ad10d87b2c087e1e09da87ecc95d5c",
+        "support_enforced_faces": 0,
+        "support_enforced_area_mm2": 0.0,
+        "support_blocked_faces": 0
+      },
+      {
+        "name": "test_14_keeper_front_socket",
+        "object_id": 13,
+        "position_mm": [
+          183.20000553131104,
+          98.44999980926514
+        ],
+        "bounds_mm": [
+          5.599999904632568,
+          7.400000095367432,
+          5.199999809265137
+        ],
+        "stl_sha256": "c4bce932ac30f7e2bed8863a21ee621f804a920d54ee0fa50bd5932f23bd5085",
+        "support_enforced_faces": 0,
+        "support_enforced_area_mm2": 0.0,
+        "support_blocked_faces": 0
+      },
+      {
+        "name": "test_20_capture_rear_socket",
+        "object_id": 14,
+        "position_mm": [
+          11.199994564056396,
+          138.94999980926514
+        ],
+        "bounds_mm": [
+          4.0,
+          6.800000190734863,
+          6.599999904632568
+        ],
+        "stl_sha256": "655e22e945212dd227e61a8bf97405a00467604d8c2beb681040a04a4f386ea2",
+        "support_enforced_faces": 0,
+        "support_enforced_area_mm2": 0.0,
+        "support_blocked_faces": 0
+      },
+      {
+        "name": "test_21_front_stop_socket",
+        "object_id": 15,
+        "position_mm": [
+          23.199994564056396,
+          138.94999980926514
+        ],
+        "bounds_mm": [
+          6.099999904632568,
+          6.800000190734863,
+          5.400000095367432
+        ],
+        "stl_sha256": "1bf3b1cbe76e093c75686a1ec0fdd52ca0bda448756d13fbfa784fedbc6e5582",
+        "support_enforced_faces": 0,
+        "support_enforced_area_mm2": 0.0,
+        "support_blocked_faces": 0
+      },
+      {
+        "name": "test_22_rear_stop_socket",
+        "object_id": 16,
+        "position_mm": [
+          37.299994468688965,
+          138.94999980926514
+        ],
+        "bounds_mm": [
+          4.0,
+          6.800000190734863,
+          5.400000095367432
+        ],
+        "stl_sha256": "0a2808e5e25dcbe39d92ed18a43f7d3ed140d3a0a10aec04006b38467ab878ec",
+        "support_enforced_faces": 0,
+        "support_enforced_area_mm2": 0.0,
+        "support_blocked_faces": 0
+      },
+      {
+        "name": "test_23_actual_stop",
+        "object_id": 17,
+        "position_mm": [
+          49.299994468688965,
+          138.94999980926514
+        ],
+        "bounds_mm": [
+          5.199999809265137,
+          6.400000095367432,
+          3.200000047683716
+        ],
+        "stl_sha256": "d66243efedc69200a632c559dc202569086ef37359687afdd465c9771ae07ceb",
+        "support_enforced_faces": 0,
+        "support_enforced_area_mm2": 0.0,
+        "support_blocked_faces": 0
+      },
+      {
+        "name": "test_24_actual_stop",
+        "object_id": 18,
+        "position_mm": [
+          62.4999942779541,
+          138.94999980926514
+        ],
+        "bounds_mm": [
+          9.300000190734863,
+          6.400000095367432,
+          3.200000047683716
+        ],
+        "stl_sha256": "bf2cbcb64d009d784f1d385ddc91a249b4cea5baeeff528053e857623048c0d6",
         "support_enforced_faces": 0,
         "support_enforced_area_mm2": 0.0,
         "support_blocked_faces": 0
       },
       {
         "name": "test_05_actual_axle6",
-        "object_id": 10,
+        "object_id": 19,
         "position_mm": [
-          46.27742576599121,
-          124.19999980926514
+          79.79999446868896,
+          138.94999980926514
         ],
         "bounds_mm": [
-          16.400009155273438,
+          18.899999618530273,
           6.0,
           4.242640018463135
         ],
-        "stl_sha256": "0bcc6b460e17042e0a88df7617b09653f46a7a82bdf9222cc116333cd8ca702a",
+        "stl_sha256": "4a6a118b3ddcf509f7a7f1e50598587792d054b710f1d9b68ede07b779b5ea6e",
+        "support_enforced_faces": 0,
+        "support_enforced_area_mm2": 0.0,
+        "support_blocked_faces": 0
+      },
+      {
+        "name": "test_27_rear_retention_foot",
+        "object_id": 20,
+        "position_mm": [
+          106.69999408721924,
+          138.94999980926514
+        ],
+        "bounds_mm": [
+          17.0,
+          6.0,
+          18.0
+        ],
+        "stl_sha256": "38e61afde3e57b945cf5c2f30046a371b4d8471c5a6af2ddbda804de029ed295",
+        "support_enforced_faces": 0,
+        "support_enforced_area_mm2": 0.0,
+        "support_blocked_faces": 0
+      },
+      {
+        "name": "test_28_front_retention_foot",
+        "object_id": 21,
+        "position_mm": [
+          131.69999408721924,
+          138.94999980926514
+        ],
+        "bounds_mm": [
+          17.0,
+          6.0,
+          10.300000190734863
+        ],
+        "stl_sha256": "8bd14cea99b4d88ffc16e8dd3a29d4cd7638fc5df5b8fb9a573178c648adf97e",
+        "support_enforced_faces": 0,
+        "support_enforced_area_mm2": 0.0,
+        "support_blocked_faces": 0
+      },
+      {
+        "name": "test_15_actual_long_keeper",
+        "object_id": 22,
+        "position_mm": [
+          11.199994564056396,
+          153.75
+        ],
+        "bounds_mm": [
+          52.700008392333984,
+          5.800000190734863,
+          5.600009918212891
+        ],
+        "stl_sha256": "314f4db46ff2f6d50eba6ad2d6172f4b7800e01211a829f03a5e635d4ef9d192",
+        "support_enforced_faces": 0,
+        "support_enforced_area_mm2": 0.0,
+        "support_blocked_faces": 0
+      },
+      {
+        "name": "test_17_local_capture_socket",
+        "object_id": 23,
+        "position_mm": [
+          71.90000295639038,
+          153.75
+        ],
+        "bounds_mm": [
+          6.099999904632568,
+          5.699999809265137,
+          6.599999904632568
+        ],
+        "stl_sha256": "1b9eae6128bc8bd292c70baf9e3a1027484794ed69864186705f53d38f70c099",
         "support_enforced_faces": 0,
         "support_enforced_area_mm2": 0.0,
         "support_blocked_faces": 0
       },
       {
         "name": "test_10_cover_peg",
-        "object_id": 11,
+        "object_id": 24,
         "position_mm": [
-          70.67743492126465,
-          124.19999980926514
+          86.00000286102295,
+          153.75
         ],
         "bounds_mm": [
           6.900010108947754,
           5.199999809265137,
           10.100000381469727
         ],
-        "stl_sha256": "4a1344605720fef777e02bdcbd6420ba0dc52fef955619637c9a2bff31f0f96a",
+        "stl_sha256": "2d5b7e761db0e9dd458d1244a35db90c06f0b9104272b8625bc3e5f3d00c2f7f",
+        "support_enforced_faces": 0,
+        "support_enforced_area_mm2": 0.0,
+        "support_blocked_faces": 0
+      },
+      {
+        "name": "test_19_closure_foot",
+        "object_id": 25,
+        "position_mm": [
+          100.9000129699707,
+          153.75
+        ],
+        "bounds_mm": [
+          8.0,
+          5.199999809265137,
+          5.199999809265137
+        ],
+        "stl_sha256": "6e9f17adb409a6ee8f27df5e7d1be7ae73438a377d412dd112ed629a5aba1b21",
         "support_enforced_faces": 0,
         "support_enforced_area_mm2": 0.0,
         "support_blocked_faces": 0
       },
       {
         "name": "test_04_actual_axle5",
-        "object_id": 12,
+        "object_id": 26,
         "position_mm": [
-          85.5774450302124,
-          124.19999980926514
+          116.9000129699707,
+          153.75
         ],
         "bounds_mm": [
-          14.600000381469727,
+          15.800000190734863,
           5.0,
           3.5355300903320312
         ],
-        "stl_sha256": "51648eb042c44d8bc72623ffb7647907c00889b9d4d485ea0814a9b38e53c731",
+        "stl_sha256": "566474f473d17f536453aeab1329674ef1459f5f2053a51158abfe6b0311d53b",
         "support_enforced_faces": 0,
         "support_enforced_area_mm2": 0.0,
         "support_blocked_faces": 0
@@ -241,7 +479,7 @@
           70.00000762939453,
           67.5999984741211
         ],
-        "stl_sha256": "60f5fa903d7962506a7c194ca15961441c4e647afd865dea580788080f2c9eb9",
+        "stl_sha256": "6e0fe157a970933d34aa23137479453321454b832b2a290cb60c4ea4bab78019",
         "support_enforced_faces": 0,
         "support_enforced_area_mm2": 0.0,
         "support_blocked_faces": 0
@@ -258,7 +496,7 @@
           42.400001525878906,
           12.399999618530273
         ],
-        "stl_sha256": "285d95fb7384fd233fc6b3a6ad828338e3613c05c26e1218e0018b21bb68d7b2",
+        "stl_sha256": "8f389dd1b1988e1687c804bb0ed4125b7a249aa6008cc5ba25f98f4f49670825",
         "support_enforced_faces": 0,
         "support_enforced_area_mm2": 0.0,
         "support_blocked_faces": 0
@@ -275,7 +513,7 @@
           26.799999237060547,
           11.500020027160645
         ],
-        "stl_sha256": "5b21478556f89a16bb029d691a80b80cfcb6c602ee68a9d61bd2b3edc9ffe242",
+        "stl_sha256": "1fdbd13a0f401a079ef2c6de7d3a6b5f63aa6e15ef594f089e871d910fcd4665",
         "support_enforced_faces": 0,
         "support_enforced_area_mm2": 0.0,
         "support_blocked_faces": 0
@@ -289,7 +527,7 @@
       200
     ],
     "occupied_mm": [
-      146.4451389312744,
+      176.44514656066895,
       61.599998474121094
     ],
     "manual_support": true,
@@ -298,18 +536,18 @@
         "name": "04_main_cassette",
         "object_id": 1,
         "position_mm": [
-          26.777430534362793,
+          11.777426719665527,
           69.20000076293945
         ],
         "bounds_mm": [
-          49.29999923706055,
+          64.30000305175781,
           61.599998474121094,
-          51.800010681152344
+          50.599998474121094
         ],
-        "stl_sha256": "3dd0282565f9516854f6143d2484be70265389b7b6f60f76b2829ac6c798810c",
+        "stl_sha256": "b5d5821bd40ab6581cdd2c59e7848108e707df6cec9e07f68f090c2cfbf33f25",
         "support_enforced_faces": 28,
-        "support_enforced_area_mm2": 40.76527371002718,
-        "support_blocked_faces": 950
+        "support_enforced_area_mm2": 40.765273710887534,
+        "support_blocked_faces": 1198
       },
       {
         "name": "05_front_closure",
@@ -319,20 +557,20 @@
           69.20000076293945
         ],
         "bounds_mm": [
-          49.29999923706055,
+          64.30000305175781,
           61.599998474121094,
-          53.20000076293945
+          14.900010108947754
         ],
-        "stl_sha256": "d7d9210bbe326a218926b8b4f010847a634d7867af6bdbee51bfa19b9825c1f6",
+        "stl_sha256": "4e58f4dce37989ee32839ae8eed9002d8253a35d0d4215c2950dba63bdbdd95c",
         "support_enforced_faces": 0,
         "support_enforced_area_mm2": 0.0,
-        "support_blocked_faces": 1824
+        "support_blocked_faces": 2182
       },
       {
         "name": "06_horn_cup_journal",
         "object_id": 3,
         "position_mm": [
-          141.3774290084839,
+          156.37743282318115,
           69.20000076293945
         ],
         "bounds_mm": [
@@ -340,10 +578,10 @@
           36.129669189453125,
           20.799999237060547
         ],
-        "stl_sha256": "f7f942afb8a931d10f9f5a9fba8694db77211adfe9d00fb1ded1d82cbd6a39be",
+        "stl_sha256": "fed8e6399a79864f1751147183c5c589e57836a6a177dcf673898308616bb842",
         "support_enforced_faces": 556,
-        "support_enforced_area_mm2": 555.2207765605922,
-        "support_blocked_faces": 1454
+        "support_enforced_area_mm2": 354.4817511695792,
+        "support_blocked_faces": 2346
       }
     ]
   },
@@ -354,129 +592,279 @@
       200
     ],
     "occupied_mm": [
-      160.02878761291504,
-      46.5
+      178.83915042877197,
+      69.79999923706055
     ],
     "manual_support": false,
     "parts": [
       {
-        "name": "07_rear_rocker",
+        "name": "17_local_cup_capture",
         "object_id": 1,
         "position_mm": [
-          19.98560619354248,
-          76.75
+          10.580424785614014,
+          65.10000038146973
         ],
         "bounds_mm": [
-          17.899999618530273,
+          21.809999465942383,
+          41.79999923706055,
+          3.5
+        ],
+        "stl_sha256": "a57bd517f6095c687a7542198cf3ac255640e9c0d0afff67d501a266dcf9bd52",
+        "support_enforced_faces": 0,
+        "support_enforced_area_mm2": 0.0,
+        "support_blocked_faces": 0
+      },
+      {
+        "name": "07_rear_rocker",
+        "object_id": 2,
+        "position_mm": [
+          40.3904242515564,
+          65.10000038146973
+        ],
+        "bounds_mm": [
+          18.700000762939453,
           32.5,
           4.0
         ],
-        "stl_sha256": "441082dff2ef70f76c3209fc849915c72d35101e9e1b6c2f2aad8c615adfab2a",
+        "stl_sha256": "6d5462cf7fcd47d9227d91d21dee4a506e20b7b88c690b177ffed3c2ddba2ef4",
         "support_enforced_faces": 0,
         "support_enforced_area_mm2": 0.0,
         "support_blocked_faces": 0
       },
       {
         "name": "08_front_rocker",
-        "object_id": 2,
+        "object_id": 3,
         "position_mm": [
-          45.885605812072754,
-          76.75
+          67.09042501449585,
+          65.10000038146973
         ],
         "bounds_mm": [
-          17.900009155273438,
+          18.700000762939453,
           32.5,
           14.5
         ],
-        "stl_sha256": "cff5c65ba04263981b9f86bbfa9fbc9de4235cdfabd415ce21a64d86e5bfc7e4",
+        "stl_sha256": "473a4a717da9ff0c83818834020c1ba5ddf74a0de82325f29502183978b93152",
         "support_enforced_faces": 0,
         "support_enforced_area_mm2": 0.0,
         "support_blocked_faces": 0
       },
       {
         "name": "09_link",
-        "object_id": 3,
+        "object_id": 4,
         "position_mm": [
-          71.78561496734619,
-          76.75
+          93.7904257774353,
+          65.10000038146973
         ],
         "bounds_mm": [
-          33.2287712097168,
-          27.783599853515625,
+          33.229148864746094,
+          27.784549713134766,
           3.0
         ],
-        "stl_sha256": "ddf9cda5755bbcb9a5a5b6377e6216ed553167a42f45c2629c6ca7e9c28f8808",
+        "stl_sha256": "fe2f0e609f49fcc42c497cf02a86782fbc81e23d59ea9a1e88be7240acab842b",
         "support_enforced_faces": 0,
         "support_enforced_area_mm2": 0.0,
         "support_blocked_faces": 0
       },
       {
         "name": "13_body_cross_key",
-        "object_id": 4,
+        "object_id": 5,
         "position_mm": [
-          113.01438617706299,
-          76.75
+          135.0195746421814,
+          65.10000038146973
         ],
         "bounds_mm": [
-          67.00000762939453,
-          9.600000381469727,
-          4.199999809265137
+          41.20000076293945,
+          15.800000190734863,
+          11.699999809265137
         ],
-        "stl_sha256": "068ac5e9d09eced0956760cabeed288cf124839781e8deccd6dbca21020e2b07",
+        "stl_sha256": "936639a1dead727f5c1b799fe897697f94597fd0bb33952ff374eba091bfc900",
+        "support_enforced_faces": 0,
+        "support_enforced_area_mm2": 0.0,
+        "support_blocked_faces": 0
+      },
+      {
+        "name": "18_local_capture_stop",
+        "object_id": 6,
+        "position_mm": [
+          184.21957540512085,
+          65.10000038146973
+        ],
+        "bounds_mm": [
+          5.199999809265137,
+          6.400000095367432,
+          3.200000047683716
+        ],
+        "stl_sha256": "d66243efedc69200a632c559dc202569086ef37359687afdd465c9771ae07ceb",
+        "support_enforced_faces": 0,
+        "support_enforced_area_mm2": 0.0,
+        "support_blocked_faces": 0
+      },
+      {
+        "name": "19_local_capture_stop",
+        "object_id": 7,
+        "position_mm": [
+          10.580424785614014,
+          114.89999961853027
+        ],
+        "bounds_mm": [
+          9.300000190734863,
+          6.400000095367432,
+          3.200000047683716
+        ],
+        "stl_sha256": "bf2cbcb64d009d784f1d385ddc91a249b4cea5baeeff528053e857623048c0d6",
         "support_enforced_faces": 0,
         "support_enforced_area_mm2": 0.0,
         "support_blocked_faces": 0
       },
       {
         "name": "10_hinge_axle",
-        "object_id": 5,
+        "object_id": 8,
         "position_mm": [
-          19.98560619354248,
-          117.25
+          27.880424976348877,
+          114.89999961853027
         ],
         "bounds_mm": [
-          16.400009155273438,
+          18.899999618530273,
           6.0,
           4.242640018463135
         ],
-        "stl_sha256": "0bcc6b460e17042e0a88df7617b09653f46a7a82bdf9222cc116333cd8ca702a",
+        "stl_sha256": "4a6a118b3ddcf509f7a7f1e50598587792d054b710f1d9b68ede07b779b5ea6e",
+        "support_enforced_faces": 0,
+        "support_enforced_area_mm2": 0.0,
+        "support_blocked_faces": 0
+      },
+      {
+        "name": "14_servo_top_keeper",
+        "object_id": 9,
+        "position_mm": [
+          54.78042459487915,
+          114.89999961853027
+        ],
+        "bounds_mm": [
+          52.700008392333984,
+          5.800000190734863,
+          5.600009918212891
+        ],
+        "stl_sha256": "314f4db46ff2f6d50eba6ad2d6172f4b7800e01211a829f03a5e635d4ef9d192",
+        "support_enforced_faces": 0,
+        "support_enforced_area_mm2": 0.0,
+        "support_blocked_faces": 0
+      },
+      {
+        "name": "15_flat_spacer",
+        "object_id": 10,
+        "position_mm": [
+          115.48043298721313,
+          114.89999961853027
+        ],
+        "bounds_mm": [
+          52.70000076293945,
+          5.599999904632568,
+          5.599999904632568
+        ],
+        "stl_sha256": "c369a0d949bac840c9bbdd7669dfc4ec3fde4455d19bd221f9b5a2d666fd67a5",
+        "support_enforced_faces": 0,
+        "support_enforced_area_mm2": 0.0,
+        "support_blocked_faces": 0
+      },
+      {
+        "name": "16_flat_spacer",
+        "object_id": 11,
+        "position_mm": [
+          10.580424785614014,
+          129.2999997138977
+        ],
+        "bounds_mm": [
+          52.70000076293945,
+          5.599999904632568,
+          5.599999904632568
+        ],
+        "stl_sha256": "87b33286c026f7922e449091484165ec7d2f8650b5035e74b4bcbbcc010bae9f",
         "support_enforced_faces": 0,
         "support_enforced_area_mm2": 0.0,
         "support_blocked_faces": 0
       },
       {
         "name": "11_drive_axle",
-        "object_id": 6,
+        "object_id": 12,
         "position_mm": [
-          44.38561534881592,
-          117.25
+          71.28042554855347,
+          129.2999997138977
         ],
         "bounds_mm": [
-          14.600000381469727,
+          15.800000190734863,
           5.0,
           3.5355300903320312
         ],
-        "stl_sha256": "51648eb042c44d8bc72623ffb7647907c00889b9d4d485ea0814a9b38e53c731",
+        "stl_sha256": "566474f473d17f536453aeab1329674ef1459f5f2053a51158abfe6b0311d53b",
         "support_enforced_faces": 0,
         "support_enforced_area_mm2": 0.0,
         "support_blocked_faces": 0
       },
       {
         "name": "12_link_axle",
-        "object_id": 7,
+        "object_id": 13,
         "position_mm": [
-          66.98561573028564,
-          117.25
+          95.08042573928833,
+          129.2999997138977
         ],
         "bounds_mm": [
-          7.599999904632568,
+          9.5,
           5.0,
           3.5355300903320312
         ],
-        "stl_sha256": "ea3c646283d766aad4fa3182c8713f23c34471c0317eb011116ae039ffbd3449",
+        "stl_sha256": "698b2731b7ed1fd2d645afa07c0d24557eb0d96efa7e3f42d1b26ee0f5d793a7",
         "support_enforced_faces": 0,
         "support_enforced_area_mm2": 0.0,
         "support_blocked_faces": 0
+      }
+    ]
+  },
+  {
+    "plate": "plate_04_support_tests",
+    "bed_mm": [
+      200,
+      200
+    ],
+    "occupied_mm": [
+      65.2451400756836,
+      36.129669189453125
+    ],
+    "manual_support": true,
+    "parts": [
+      {
+        "name": "test_26_actual_cup_with_support",
+        "object_id": 1,
+        "position_mm": [
+          67.3774299621582,
+          81.93516540527344
+        ],
+        "bounds_mm": [
+          31.84514045715332,
+          36.129669189453125,
+          20.799999237060547
+        ],
+        "stl_sha256": "fed8e6399a79864f1751147183c5c589e57836a6a177dcf673898308616bb842",
+        "support_enforced_faces": 556,
+        "support_enforced_area_mm2": 354.4817511695792,
+        "support_blocked_faces": 2346
+      },
+      {
+        "name": "test_25_actual_U_support",
+        "object_id": 2,
+        "position_mm": [
+          107.22257041931152,
+          81.93516540527344
+        ],
+        "bounds_mm": [
+          25.399999618530273,
+          31.0,
+          33.0000114440918
+        ],
+        "stl_sha256": "dd4daf30ee70fd9c6c412ecf793ffd0a78ea358b58fd38d51099ba7fc7ed7ef8",
+        "support_enforced_faces": 28,
+        "support_enforced_area_mm2": 40.765218999307365,
+        "support_blocked_faces": 332
       }
     ]
   }

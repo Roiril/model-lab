@@ -1,0 +1,486 @@
+{
+  "components": 23,
+  "component_checks": [
+    {
+      "file": "01_01_body.stl",
+      "triangles": 1542,
+      "nonmanifold_edges": 0,
+      "winding_errors": 0,
+      "zero_area_facets": 0,
+      "volume_mm3": 66101.9649159861,
+      "bounds_mm": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          70.00000762939453,
+          70.00000762939453,
+          67.5999984741211
+        ]
+      ]
+    },
+    {
+      "file": "02_02_fixed_rear_cover.stl",
+      "triangles": 100,
+      "nonmanifold_edges": 0,
+      "winding_errors": 0,
+      "zero_area_facets": 0,
+      "volume_mm3": 5053.5735091929955,
+      "bounds_mm": [
+        [
+          0.0,
+          0.0,
+          58.5
+        ],
+        [
+          70.0,
+          26.799999237060547,
+          70.00000762939453
+        ]
+      ]
+    },
+    {
+      "file": "03_03_planar_lid.stl",
+      "triangles": 106,
+      "nonmanifold_edges": 0,
+      "winding_errors": 0,
+      "zero_area_facets": 0,
+      "volume_mm3": 7921.166134305182,
+      "bounds_mm": [
+        [
+          0.0,
+          27.600000381469727,
+          57.599998474121094
+        ],
+        [
+          70.0,
+          70.0,
+          70.0
+        ]
+      ]
+    },
+    {
+      "file": "04_04_main_cassette.stl",
+      "triangles": 1226,
+      "nonmanifold_edges": 0,
+      "winding_errors": 0,
+      "zero_area_facets": 0,
+      "volume_mm3": 26392.07612583683,
+      "bounds_mm": [
+        [
+          4.0,
+          5.400000095367432,
+          3.0
+        ],
+        [
+          54.599998474121094,
+          67.0,
+          67.30000305175781
+        ]
+      ]
+    },
+    {
+      "file": "05_05_front_closure.stl",
+      "triangles": 2182,
+      "nonmanifold_edges": 0,
+      "winding_errors": 0,
+      "zero_area_facets": 0,
+      "volume_mm3": 16279.189444738562,
+      "bounds_mm": [
+        [
+          46.400001525878906,
+          5.400000095367432,
+          3.0
+        ],
+        [
+          61.300010681152344,
+          67.0,
+          67.30000305175781
+        ]
+      ]
+    },
+    {
+      "file": "06_06_horn_cup_journal.stl",
+      "triangles": 2902,
+      "nonmanifold_edges": 0,
+      "winding_errors": 0,
+      "zero_area_facets": 0,
+      "volume_mm3": 5936.568450212429,
+      "bounds_mm": [
+        [
+          37.20000076293945,
+          21.57887077331543,
+          22.508079528808594
+        ],
+        [
+          58.0,
+          59.2859992980957,
+          50.34476852416992
+        ]
+      ]
+    },
+    {
+      "file": "07_07_rear_rocker.stl",
+      "triangles": 2592,
+      "nonmanifold_edges": 0,
+      "winding_errors": 0,
+      "zero_area_facets": 0,
+      "volume_mm3": 1113.2455165912822,
+      "bounds_mm": [
+        [
+          43.900001525878906,
+          16.5,
+          48.599998474121094
+        ],
+        [
+          47.900001525878906,
+          49.0,
+          67.30000305175781
+        ]
+      ]
+    },
+    {
+      "file": "08_08_front_rocker.stl",
+      "triangles": 3502,
+      "nonmanifold_edges": 0,
+      "winding_errors": 0,
+      "zero_area_facets": 0,
+      "volume_mm3": 1426.2856309483202,
+      "bounds_mm": [
+        [
+          41.20000076293945,
+          16.5,
+          48.599998474121094
+        ],
+        [
+          55.70000076293945,
+          49.0,
+          67.30000305175781
+        ]
+      ]
+    },
+    {
+      "file": "09_09_link.stl",
+      "triangles": 1044,
+      "nonmanifold_edges": 0,
+      "winding_errors": 0,
+      "zero_area_facets": 0,
+      "volume_mm3": 845.6185811812005,
+      "bounds_mm": [
+        [
+          48.29999923706055,
+          31.000019073486328,
+          29.569509506225586
+        ],
+        [
+          51.29999923706055,
+          58.78456115722656,
+          62.79866027832031
+        ]
+      ]
+    },
+    {
+      "file": "10_10_hinge_axle.stl",
+      "triangles": 132,
+      "nonmanifold_edges": 0,
+      "winding_errors": 0,
+      "zero_area_facets": 0,
+      "volume_mm3": 436.86354691102855,
+      "bounds_mm": [
+        [
+          40.150001525878906,
+          19.0,
+          59.678680419921875
+        ],
+        [
+          59.04999923706055,
+          25.0,
+          63.921321868896484
+        ]
+      ]
+    },
+    {
+      "file": "11_11_drive_axle.stl",
+      "triangles": 132,
+      "nonmanifold_edges": 0,
+      "winding_errors": 0,
+      "zero_area_facets": 0,
+      "volume_mm3": 253.6168429607817,
+      "bounds_mm": [
+        [
+          43.25,
+          51.287899017333984,
+          32.52104949951172
+        ],
+        [
+          59.04999923706055,
+          56.286720275878906,
+          36.6168098449707
+        ]
+      ]
+    },
+    {
+      "file": "12_12_link_axle.stl",
+      "triangles": 132,
+      "nonmanifold_edges": 0,
+      "winding_errors": 0,
+      "zero_area_facets": 0,
+      "volume_mm3": 152.49135819290387,
+      "bounds_mm": [
+        [
+          45.04999923706055,
+          33.5,
+          56.032230377197266
+        ],
+        [
+          54.54999923706055,
+          38.5,
+          59.56776809692383
+        ]
+      ]
+    },
+    {
+      "file": "13_13_body_cross_key.stl",
+      "triangles": 506,
+      "nonmanifold_edges": 0,
+      "winding_errors": 0,
+      "zero_area_facets": 0,
+      "volume_mm3": 3372.341639981302,
+      "bounds_mm": [
+        [
+          13.5,
+          21.299999237060547,
+          0.20000000298023224
+        ],
+        [
+          54.70000076293945,
+          33.0,
+          16.0
+        ]
+      ]
+    },
+    {
+      "file": "14_14_servo_top_keeper.stl",
+      "triangles": 60,
+      "nonmanifold_edges": 0,
+      "winding_errors": 0,
+      "zero_area_facets": 0,
+      "volume_mm3": 1236.2036169302003,
+      "bounds_mm": [
+        [
+          5.900000095367432,
+          23.200000762939453,
+          42.0
+        ],
+        [
+          58.599998474121094,
+          29.0,
+          47.599998474121094
+        ]
+      ]
+    },
+    {
+      "file": "15_15_flat_spacer.stl",
+      "triangles": 44,
+      "nonmanifold_edges": 0,
+      "winding_errors": 0,
+      "zero_area_facets": 0,
+      "volume_mm3": 1627.2786353449785,
+      "bounds_mm": [
+        [
+          5.900000095367432,
+          7.0,
+          24.5
+        ],
+        [
+          58.599998474121094,
+          12.600000381469727,
+          30.100000381469727
+        ]
+      ]
+    },
+    {
+      "file": "16_16_flat_spacer.stl",
+      "triangles": 44,
+      "nonmanifold_edges": 0,
+      "winding_errors": 0,
+      "zero_area_facets": 0,
+      "volume_mm3": 1627.2781467347802,
+      "bounds_mm": [
+        [
+          5.900000095367432,
+          60.5,
+          22.0
+        ],
+        [
+          58.599998474121094,
+          66.0999984741211,
+          27.600000381469727
+        ]
+      ]
+    },
+    {
+      "file": "17_17_local_cup_capture.stl",
+      "triangles": 412,
+      "nonmanifold_edges": 0,
+      "winding_errors": 0,
+      "zero_area_facets": 0,
+      "volume_mm3": 1469.9038382360106,
+      "bounds_mm": [
+        [
+          46.20000076293945,
+          14.0,
+          15.199999809265137
+        ],
+        [
+          49.70000076293945,
+          55.79999923706055,
+          37.0099983215332
+        ]
+      ]
+    },
+    {
+      "file": "18_18_local_capture_stop.stl",
+      "triangles": 12,
+      "nonmanifold_edges": 0,
+      "winding_errors": 0,
+      "zero_area_facets": 0,
+      "volume_mm3": 106.4964313965814,
+      "bounds_mm": [
+        [
+          49.79999923706055,
+          13.199999809265137,
+          19.299999237060547
+        ],
+        [
+          53.0000114440918,
+          19.600000381469727,
+          24.5
+        ]
+      ]
+    },
+    {
+      "file": "19_19_local_capture_stop.stl",
+      "triangles": 12,
+      "nonmanifold_edges": 0,
+      "winding_errors": 0,
+      "zero_area_facets": 0,
+      "volume_mm3": 190.46466235326912,
+      "bounds_mm": [
+        [
+          49.79999923706055,
+          49.20000076293945,
+          15.199999809265137
+        ],
+        [
+          53.0000114440918,
+          55.599998474121094,
+          24.5
+        ]
+      ]
+    },
+    {
+      "file": "20_REFERENCE_SG92R_body.stl",
+      "triangles": 1150,
+      "nonmanifold_edges": 0,
+      "winding_errors": 0,
+      "zero_area_facets": 0,
+      "volume_mm3": 6929.305555459207,
+      "bounds_mm": [
+        [
+          9.0,
+          19.0,
+          31.0
+        ],
+        [
+          39.5,
+          51.0,
+          43.0
+        ]
+      ]
+    },
+    {
+      "file": "21_REFERENCE_SG92R_horn.stl",
+      "triangles": 4224,
+      "nonmanifold_edges": 0,
+      "winding_errors": 0,
+      "zero_area_facets": 0,
+      "volume_mm3": 369.58265318984405,
+      "bounds_mm": [
+        [
+          36.5,
+          24.89405059814453,
+          25.823259353637695
+        ],
+        [
+          41.0,
+          53.46765899658203,
+          47.02959060668945
+        ]
+      ]
+    },
+    {
+      "file": "22_REFERENCE_SG92R_wire.stl",
+      "triangles": 846,
+      "nonmanifold_edges": 0,
+      "winding_errors": 0,
+      "zero_area_facets": 0,
+      "volume_mm3": 43.51748171725194,
+      "bounds_mm": [
+        [
+          13.199999809265137,
+          46.5,
+          35.0
+        ],
+        [
+          14.800000190734863,
+          54.5,
+          39.0
+        ]
+      ]
+    },
+    {
+      "file": "23_REFERENCE_exciter25x10.stl",
+      "triangles": 252,
+      "nonmanifold_edges": 0,
+      "winding_errors": 0,
+      "zero_area_facets": 0,
+      "volume_mm3": 4900.857099034448,
+      "bounds_mm": [
+        [
+          4.5,
+          32.5,
+          2.9000000953674316
+        ],
+        [
+          29.5,
+          57.5,
+          12.899999618530273
+        ]
+      ]
+    }
+  ],
+  "preview_stl_sha256": "d27e8ee93b821d49ca404da4a5e9174d9d2c79493b6471359e0df861d9402416",
+  "preview_blend_sha256": "6fd65ed0fc17a8ecb788d6f7e69154b6c566185169a6f74b8be193f924f45810",
+  "assembly_preview_printable": false,
+  "no_geometry_rebuild": true,
+  "revision": 3,
+  "label": "修正3試作・実機未検証",
+  "native_model_path": "C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-v6",
+  "old_native_preserved_path": "C:\\Users\\kouga\\Documents\\Codex\\2026-10-05\\task\\native_sync_sg92r_v6_revision3_20261007_2326\\before_revision3",
+  "reviewed_source_files_exact": 152,
+  "print_parts_exact": 19,
+  "fit_and_support_tests_exact": 28,
+  "geometry_plates_exact": 5,
+  "validated_editable_sha256": "d1cad135be74b404c40905c8d54cbbd180aebbc04e09c131c02055e5a78a98a3",
+  "protected_files": 1883,
+  "protected_files_unchanged": true,
+  "parent_review": "Parent reviewed revision3 images/documents and delivered it for trial; no further mechanism changes requested.",
+  "physical_tested": false,
+  "key_reverse_rotation_automatically_locked": false,
+  "vibration_retention_verified": false,
+  "push_performed": false,
+  "saved_utc": "2026-10-07T23:32:20.784831+00:00"
+}

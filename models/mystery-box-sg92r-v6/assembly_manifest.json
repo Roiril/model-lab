@@ -1,5 +1,8 @@
 {
+  "revision": 3,
+  "center_screw_required": false,
   "size_mm": 70.0,
+  "overall_closed_with_key_width_mm": 70.0,
   "wall_mm": 2.4,
   "lid_skin_mm": 2.4,
   "O": [
@@ -77,9 +80,9 @@
       "name": "04_main_cassette",
       "group": "fixed",
       "print_bounds_mm": [
-        49.29999923706055,
+        64.30000305175781,
         61.599998474121094,
-        51.800010681152344
+        50.599998474121094
       ],
       "print_axis": [
         0.7071067690849304,
@@ -93,9 +96,9 @@
       "name": "05_front_closure",
       "group": "fixed",
       "print_bounds_mm": [
-        49.29999923706055,
+        64.30000305175781,
         61.599998474121094,
-        53.20000076293945
+        14.900010108947754
       ],
       "print_axis": [
         0.7071067690849304,
@@ -125,7 +128,7 @@
       "name": "07_rear_rocker",
       "group": "lid",
       "print_bounds_mm": [
-        17.899999618530273,
+        18.700000762939453,
         32.5,
         4.0
       ],
@@ -141,7 +144,7 @@
       "name": "08_front_rocker",
       "group": "lid",
       "print_bounds_mm": [
-        17.900009155273438,
+        18.700000762939453,
         32.5,
         14.5
       ],
@@ -157,8 +160,8 @@
       "name": "09_link",
       "group": "link",
       "print_bounds_mm": [
-        33.2287712097168,
-        27.783599853515625,
+        33.229148864746094,
+        27.784549713134766,
         3.0
       ],
       "print_axis": [
@@ -173,7 +176,7 @@
       "name": "10_hinge_axle",
       "group": "fixed",
       "print_bounds_mm": [
-        16.400009155273438,
+        18.899999618530273,
         6.0,
         4.242640018463135
       ],
@@ -189,7 +192,7 @@
       "name": "11_drive_axle",
       "group": "crank",
       "print_bounds_mm": [
-        14.600000381469727,
+        15.800000190734863,
         5.0,
         3.5355300903320312
       ],
@@ -205,7 +208,7 @@
       "name": "12_link_axle",
       "group": "lid",
       "print_bounds_mm": [
-        7.599999904632568,
+        9.5,
         5.0,
         3.5355300903320312
       ],
@@ -221,14 +224,110 @@
       "name": "13_body_cross_key",
       "group": "fixed",
       "print_bounds_mm": [
-        67.00000762939453,
-        9.600000381469727,
-        4.199999809265137
+        41.20000076293945,
+        15.800000190734863,
+        11.699999809265137
+      ],
+      "print_axis": [
+        0.7071067690849304,
+        0.7071067690849304,
+        0.0,
+        0.0
+      ],
+      "quantity": 1
+    },
+    {
+      "name": "14_servo_top_keeper",
+      "group": "fixed",
+      "print_bounds_mm": [
+        52.700008392333984,
+        5.800000190734863,
+        5.600009918212891
+      ],
+      "print_axis": [
+        4.371138828673793e-08,
+        0.0,
+        1.0,
+        0.0
+      ],
+      "quantity": 1
+    },
+    {
+      "name": "15_flat_spacer",
+      "group": "fixed",
+      "print_bounds_mm": [
+        52.70000076293945,
+        5.599999904632568,
+        5.599999904632568
       ],
       "print_axis": [
         1.0,
         0.0,
         0.0,
+        0.0
+      ],
+      "quantity": 1
+    },
+    {
+      "name": "16_flat_spacer",
+      "group": "fixed",
+      "print_bounds_mm": [
+        52.70000076293945,
+        5.599999904632568,
+        5.599999904632568
+      ],
+      "print_axis": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "quantity": 1
+    },
+    {
+      "name": "17_local_cup_capture",
+      "group": "fixed",
+      "print_bounds_mm": [
+        21.809999465942383,
+        41.79999923706055,
+        3.5
+      ],
+      "print_axis": [
+        0.7071067690849304,
+        0.0,
+        0.7071067690849304,
+        0.0
+      ],
+      "quantity": 1
+    },
+    {
+      "name": "18_local_capture_stop",
+      "group": "fixed",
+      "print_bounds_mm": [
+        5.199999809265137,
+        6.400000095367432,
+        3.200000047683716
+      ],
+      "print_axis": [
+        0.7071067690849304,
+        0.0,
+        0.7071067690849304,
+        0.0
+      ],
+      "quantity": 1
+    },
+    {
+      "name": "19_local_capture_stop",
+      "group": "fixed",
+      "print_bounds_mm": [
+        9.300000190734863,
+        6.400000095367432,
+        3.200000047683716
+      ],
+      "print_axis": [
+        0.7071067690849304,
+        0.0,
+        0.7071067690849304,
         0.0
       ],
       "quantity": 1
@@ -238,14 +337,19 @@
   "physical_tested": false,
   "boolean_solver_fallbacks": [
     [
-      "06_horn_cup_journal",
+      "pad short outer",
       "UNION",
-      "drive boss"
+      "pad short outer end1"
     ],
     [
-      "06_horn_cup_journal",
-      "DIFFERENCE",
-      "hub rear clearance"
+      "outer nonmating support pad",
+      "UNION",
+      "pad A boss"
+    ],
+    [
+      "actual short horn pocket",
+      "UNION",
+      "actual short horn pocket end1"
     ],
     [
       "07_rear_rocker",
@@ -259,11 +363,14 @@
     ]
   ],
   "notes": [
-    "13 print parts including three thick axles; actual servo/horn/cable are additional; no center screw is used",
+    "19 print parts; no required spring, tie, center screw or metal hinge/link pins. Servo, stock horn, power/wiring and optional speaker are separate.",
+    "Revision3 parts only. Do not mix v1/revision2 STLs.",
     "Fixed cover and roof locating pegs are integral; front closure and body receivers capture them",
-    "Support allowed only on marked inner nonfunctional surfaces of cassette and cup",
+    "Marked support facets are candidates only; sliced contacts and removal paths must be checked",
+    "Cup axial capture uses local plate17 and positive stops18/19 on the same cassette as the rear servo stop; closure retains the stops vertically; actual teeth are unmeasured",
+    "Body floor pads support bearing loads after complete assembly. Support the rails gently on the bench",
     "Hinge carries radial weight; servo supplies gravity torque; unpowered lid can close",
-    "Original horn is axially captured only after the body receivers and cross key are assembled; reference tooth engagement remains provisional"
+    "Bottom crossbar13 captures rigid feet on04/05. Head is inside70mm exterior. It rotates manually between two stops; reverse rotation is not automatically locked. Check slot orientation before use; vibration/transport retention is untested. Smooth cable guides do not prove tensile strain relief."
   ],
-  "center_screw_required": false
+  "overall_closed_with_key_depth_mm": 70.0
 }

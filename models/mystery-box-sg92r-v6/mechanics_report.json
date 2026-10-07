@@ -1,6 +1,6 @@
 {
   "physical_tested": false,
-  "geometry_sha256": "995b09c2ee156a9482472335966a181d1615804860c8d3f02c3fc57225133514",
+  "geometry_sha256": "1d6e576c7c2e9ea0d45b7c780cee04bdabe0423e1796baf86f69853f1a0cd7e3",
   "lid_angle_step_deg": 0.1,
   "servo_range_deg": [
     -10.000003663495628,
@@ -17,52 +17,52 @@
     1.0799507481957662
   ],
   "assumed_density_g_cm3": 1.26,
-  "moving_solid_mass_g": 13.145695428265602,
+  "moving_solid_mass_g": 13.372615938330966,
   "moving_parts": [
     {
       "name": "03_planar_lid",
-      "solid_volume_mm3": 7891.856546788775,
-      "solid_mass_g": 9.943739248953856,
+      "solid_volume_mm3": 7921.164375049657,
+      "solid_mass_g": 9.980667112562568,
       "centroid_mm": [
-        36.53622228861955,
-        48.86919834438234,
-        68.0686429099272
+        36.573794442552405,
+        48.83921776750256,
+        68.05077772009297
       ]
     },
     {
       "name": "07_rear_rocker",
-      "solid_volume_mm3": 1053.1007037336658,
-      "solid_mass_g": 1.3269068867044187,
+      "solid_volume_mm3": 1113.245504003515,
+      "solid_mass_g": 1.402689335044429,
       "centroid_mm": [
-        45.85376732459249,
-        33.73952809096321,
-        59.87379801497099
+        45.866867926324744,
+        33.56837386579852,
+        59.454904602767755
       ]
     },
     {
       "name": "08_front_rocker",
-      "solid_volume_mm3": 1366.1412857215805,
-      "solid_mass_g": 1.7213380200091914,
+      "solid_volume_mm3": 1426.2861388839829,
+      "solid_mass_g": 1.7971205349938184,
       "centroid_mm": [
-        52.59444259443922,
-        36.31977532344979,
-        60.590141681337705
+        52.63278720953945,
+        36.07737978998304,
+        60.232979245613336
       ]
     },
     {
       "name": "12_link_axle",
-      "solid_volume_mm3": 121.99307349058493,
-      "solid_mass_g": 0.15371127259813702,
+      "solid_volume_mm3": 152.49123470646927,
+      "solid_mass_g": 0.1921389557301513,
       "centroid_mm": [
-        49.80000142287851,
+        49.80000149249569,
         36.00000205164046,
-        57.800001676557294
+        57.80000167655737
       ]
     }
   ],
-  "max_ideal_servo_gravity_torque_Nm": 0.003310122697978873,
-  "conservative_gravity_bound_Nm": 0.006887803226943993,
-  "conservative_gravity_bound_kgf_cm": 0.07023604622316482,
+  "max_ideal_servo_gravity_torque_Nm": 0.003337177495659611,
+  "conservative_gravity_bound_Nm": 0.007006700232432748,
+  "conservative_gravity_bound_kgf_cm": 0.07144845826487892,
   "notes": [
     "Uniform solid mass calculation; actual sparse-infill mass distribution differs",
     "Friction, backlash, startup acceleration, wiring drag, support residue and servo capability are not tested",

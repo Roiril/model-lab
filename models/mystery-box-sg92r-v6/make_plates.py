@@ -27,8 +27,8 @@ def write(name,paths,manual=False):
     for i,(path,v,f,t,dx,dy) in enumerate(placed,1):
         norms=np.cross(t[:,1]-t[:,0],t[:,2]-t[:,0]);length=np.linalg.norm(norms,axis=1);nz=norms[:,2]/length
         allowed=np.zeros(len(f),dtype=bool)
-        if manual and path.name=='04_main_cassette.stl':allowed=(nz<-.9)&np.all(np.abs(t[:,:,2]-27.3)<.0001,axis=1)
-        if manual and path.name=='06_horn_cup_journal.stl':allowed=(nz<-.9)&np.all(np.abs(t[:,:,2]-11.9)<.0001,axis=1)
+        if manual and path.name in ['04_main_cassette.stl','test_25_actual_U_support.stl']:allowed=(nz<-.9)&np.all(np.abs(t[:,:,2]-27.3)<.0001,axis=1)
+        if manual and path.name in ['06_horn_cup_journal.stl','test_26_actual_cup_with_support.stl']:allowed=(nz<-.9)&np.all(np.abs(t[:,:,2]-11.5)<.0001,axis=1)
         model.append(f'<object id="{i}" name="{html.escape(path.stem)}" type="model"><mesh><vertices>')
         model.extend(f'<vertex x="{x:.8f}" y="{y:.8f}" z="{z:.8f}"/>' for x,y,z in v);model.append('</vertices><triangles>')
         for k,(a,b,c) in enumerate(f):
@@ -54,8 +54,9 @@ def write(name,paths,manual=False):
         obsolete.unlink()
     return dict(plate=name,bed_mm=[200,200],occupied_mm=size,manual_support=manual,parts=records)
 if __name__=='__main__':
-    jobs=[('plate_01_shells',['01_body','02_fixed_rear_cover','03_planar_lid'],False),('plate_02_cassette',['04_main_cassette','05_front_closure','06_horn_cup_journal'],True),('plate_03_links',['07_rear_rocker','08_front_rocker','09_link','10_hinge_axle','11_drive_axle','12_link_axle','13_body_cross_key'],False)]
+    jobs=[('plate_01_shells',['01_body','02_fixed_rear_cover','03_planar_lid'],False),('plate_02_cassette',['04_main_cassette','05_front_closure','06_horn_cup_journal'],True),('plate_03_links',['07_rear_rocker','08_front_rocker','09_link','10_hinge_axle','11_drive_axle','12_link_axle','13_body_cross_key','14_servo_top_keeper','15_flat_spacer','16_flat_spacer','17_local_cup_capture','18_local_capture_stop','19_local_capture_stop'],False)]
     report=[write(n,[R/'stl'/(f+'.stl') for f in fs],support) for n,fs,support in jobs]
-    coupons=sorted((R/'coupons').glob('*.stl'))
+    coupons=sorted(f for f in (R/'coupons').glob('*.stl') if not f.name.startswith(('test_25','test_26')))
     if coupons:report.insert(0,write('plate_00_fit_tests',coupons))
+    report.append(write('plate_04_support_tests',[R/'coupons/test_25_actual_U_support.stl',R/'coupons/test_26_actual_cup_with_support.stl'],True))
     (R/'plate_manifest.json').write_text(json.dumps(report,indent=2),encoding='utf8');print(json.dumps(report,indent=2))

@@ -49,9 +49,9 @@
     "bounds_mm": [
       12.0,
       12.0,
-      11.800000190734863
+      11.199999809265137
     ],
-    "purpose_ja": "D12 mmジャーナルを本部品と同じ向き・端面で印刷する嵌合試験。"
+    "purpose_ja": "D12 mmジャーナルの先端と径を同じ向きで確認。支持用段より先だけの試験片。全カップの印刷/保持強度試験ではない。"
   },
   {
     "name": "test_07_roof_dock",
@@ -84,23 +84,153 @@
     "purpose_ja": "カセットの一体ペグ。カバー試験片に挿入し、強い圧入を避ける。"
   },
   {
-    "name": "test_11_side_key_access",
+    "name": "test_11_bottom_key_floor",
     "source": "01_body",
     "bounds_mm": [
-      6.0,
-      16.000009536743164,
-      12.0
+      33.0,
+      47.0,
+      8.199999809265137
     ],
-    "purpose_ja": "側面キー入口の10.2 mm橋渡しと外面の仕上がりを先に確認。"
+    "purpose_ja": "実際の底面回転座と長い挿入窓。キーを90度で下から入れ、0度まで軽く回す。ばね/結束バンドは不要。回転端/工具/傷と指での着脱を確認。"
   },
   {
-    "name": "test_12_side_key_end",
+    "name": "test_12_actual_bottom_key",
     "source": "13_body_cross_key",
+    "purpose_ja": "本体に再利用できる厚い底面キー。床座と両方の足27/28で0度の引抜き止めと90度の解除を確認。角度は自動固定されない。"
+  },
+  {
+    "name": "test_13_keeper_rear_socket",
+    "source": "04_main_cassette",
     "bounds_mm": [
-      10.0,
-      9.600000381469727,
-      4.199999809265137
+      5.599999904632568,
+      7.400000095367432,
+      5.199999809265137
     ],
-    "purpose_ja": "キー頭部と側面入口の嵌合。入口のブリッジ垂れが引っかからないことを確認。"
+    "purpose_ja": "52.7mm実寸押さえの後受け。独立隙間0.3/面取り0.45を確認。"
+  },
+  {
+    "name": "test_14_keeper_front_socket",
+    "source": "05_front_closure",
+    "bounds_mm": [
+      5.599999904632568,
+      7.400000095367432,
+      5.199999809265137
+    ],
+    "purpose_ja": "実寸押さえの前受け。後受けと同時に、指で滑り入ることを確認。"
+  },
+  {
+    "name": "test_15_actual_long_keeper",
+    "source": "14_servo_top_keeper",
+    "purpose_ja": "全長52.7mmの実部品。両端受けと組み合わせ、たわみ/反りと組立向きを確認。適合品は再利用可。"
+  },
+  {
+    "name": "test_16_actual_local_capture",
+    "source": "17_local_cup_capture",
+    "purpose_ja": "局所捕捉肩の実部品。寝かせて支持なし。ジャーナル/舌/盲受けを試験、適合品は再利用可。"
+  },
+  {
+    "name": "test_17_local_capture_socket",
+    "source": "04_main_cassette",
+    "bounds_mm": [
+      6.099999904632568,
+      5.699999809265137,
+      6.599999904632568
+    ],
+    "purpose_ja": "捕捉肩の盲受け。0.15mm軸方向隙間と短い橋渡し。17の実寸部品と手で滑り嵌めする。"
+  },
+  {
+    "name": "test_18_body_receiver",
+    "source": "01_body",
+    "bounds_mm": [
+      16.60000991821289,
+      8.0,
+      10.0
+    ],
+    "purpose_ja": "0.2mm片側隙間の外壁へ一体接続した実受け。実前板試験片と比較。"
+  },
+  {
+    "name": "test_19_closure_foot",
+    "source": "05_front_closure",
+    "bounds_mm": [
+      8.0,
+      5.199999809265137,
+      5.199999809265137
+    ],
+    "purpose_ja": "実前板の足。receiver試験片へ軽く入ること。無理な圧入をしない。"
+  },
+  {
+    "name": "test_20_capture_rear_socket",
+    "source": "04_main_cassette",
+    "bounds_mm": [
+      4.0,
+      6.800000190734863,
+      6.599999904632568
+    ],
+    "purpose_ja": "局所捕捉肩の第2受け。舌を2箇所とも座へ入れ、18/19と05で保持したときに肩が傾かないことを全カセットでも確認。"
+  },
+  {
+    "name": "test_21_front_stop_socket",
+    "source": "04_main_cassette",
+    "bounds_mm": [
+      6.099999904632568,
+      6.800000190734863,
+      5.400000095367432
+    ],
+    "purpose_ja": "前側の止め18の実受け。18を上入れし、17の抜け方向を止める。軸方向の0.1mm遊びは試験片と実物で確認。"
+  },
+  {
+    "name": "test_22_rear_stop_socket",
+    "source": "04_main_cassette",
+    "bounds_mm": [
+      4.0,
+      6.800000190734863,
+      5.400000095367432
+    ],
+    "purpose_ja": "後側の止め19の実受け。05の押さえ棚まで組むと上方向を捕捉。受け単体では止めは抜ける。"
+  },
+  {
+    "name": "test_23_actual_stop",
+    "source": "18_local_capture_stop",
+    "purpose_ja": "実止め部品。指で滑り入ることを受け試験片と確認。適合品は本組立に再利用可。"
+  },
+  {
+    "name": "test_24_actual_stop",
+    "source": "19_local_capture_stop",
+    "purpose_ja": "実止め部品。指で滑り入ることを受け試験片と確認。適合品は本組立に再利用可。"
+  },
+  {
+    "name": "test_25_actual_U_support",
+    "source": "04_main_cassette",
+    "bounds_mm": [
+      25.399999618530273,
+      31.0,
+      33.0000114440918
+    ],
+    "purpose_ja": "04の実U受け・支持着地点・保護面を残す支持除去試験片。plate04の手動支持を使用。実物除去・嵌合は未検証。"
+  },
+  {
+    "name": "test_26_actual_cup_with_support",
+    "source": "06_horn_cup_journal",
+    "purpose_ja": "06実部品そのもの。plate04で支持位置・内周ブリッジ・支持除去・ホーンと局所保持の面を確認。適合品は本組立へ再利用可。"
+  },
+  {
+    "name": "test_27_rear_retention_foot",
+    "source": "04_main_cassette",
+    "bounds_mm": [
+      17.0,
+      6.0,
+      18.0
+    ],
+    "purpose_ja": "底キーで捕捉される後板の実足。0.3mm名目上下隙間と引抜き止めを全体組立でも確認。"
+  },
+  {
+    "name": "test_28_front_retention_foot",
+    "source": "05_front_closure",
+    "bounds_mm": [
+      17.0,
+      6.0,
+      10.300000190734863
+    ],
+    "purpose_ja": "前板の実足。底キー先端との名目重なり3.7mm。強度/反り/実際の掛かりは未検証。"
   }
 ]

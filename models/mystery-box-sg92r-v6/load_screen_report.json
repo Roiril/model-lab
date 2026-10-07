@@ -1,0 +1,148 @@
+{
+  "physical_tested": false,
+  "revision": 3,
+  "method": "Elementary nominal beam/axial stress using rectangular solid sections. No FEM, anisotropic PLA data, notch factors, bearing concentration, fatigue or tested safety factor. 5MPa allowable is a stipulated screening assumption only.",
+  "stipulated_cases": {
+    "joint_force_N": 25,
+    "servo_like_joint_moment_Nm": 0.1,
+    "cup_axial_pull_N": 1.0,
+    "bottom_key_total_upward_pull_N": 25.0,
+    "free_lid_edge_hand_load_N": 1.0
+  },
+  "joint_pin_double_shear_nominal_MPa": 0.6366197723675814,
+  "local_web_support_reactions_N": [
+    9.473684210526315,
+    15.526315789473685
+  ],
+  "sections": [
+    {
+      "part": "09 curved link, in-plane bending",
+      "moment_Nmm": 110.00000000000001,
+      "section_mm": [
+        3.0,
+        8.0
+      ],
+      "calculated_nominal_stress_MPa": 4.479166666666667,
+      "assumed_screening_allowable_MPa": 5.0,
+      "ratio": 1.1162790697674418,
+      "passes_assumed_screen": true
+    },
+    {
+      "part": "07/08 rocker, all assumed 0.10Nm on one leg",
+      "moment_Nmm": 100.0,
+      "section_mm": [
+        4.0,
+        6.4
+      ],
+      "calculated_nominal_stress_MPa": 3.662109374999999,
+      "assumed_screening_allowable_MPa": 5.0,
+      "ratio": 1.3653333333333337,
+      "passes_assumed_screen": true
+    },
+    {
+      "part": "17 deep web between two seated tongues",
+      "moment_Nmm": 223.57894736842104,
+      "section_mm": [
+        3.0,
+        10.5
+      ],
+      "calculated_nominal_stress_MPa": 4.055853920515575,
+      "assumed_screening_allowable_MPa": 5.0,
+      "ratio": 1.2327860169491525,
+      "passes_assumed_screen": true
+    },
+    {
+      "part": "17 front step next to seated tongue",
+      "moment_Nmm": 37.89473684210526,
+      "section_mm": [
+        3.0,
+        4.4
+      ],
+      "calculated_nominal_stress_MPa": 3.914745541539799,
+      "assumed_screening_allowable_MPa": 5.0,
+      "ratio": 1.2772222222222225,
+      "passes_assumed_screen": true
+    },
+    {
+      "part": "17 axial cup pull, 1N with both tongues seated",
+      "moment_Nmm": 8.943157894736842,
+      "section_mm": [
+        10.5,
+        3.0
+      ],
+      "calculated_nominal_stress_MPa": 0.5678195488721804,
+      "assumed_screening_allowable_MPa": 5.0,
+      "ratio": 8.805614406779661,
+      "passes_assumed_screen": true
+    },
+    {
+      "part": "04 front loose bench rail, stipulated1N before body seating",
+      "moment_Nmm": 43.8,
+      "section_mm": [
+        6.8,
+        6.1
+      ],
+      "calculated_nominal_stress_MPa": 1.0386202317530076,
+      "assumed_screening_allowable_MPa": 5.0,
+      "ratio": 4.814079147640792,
+      "passes_assumed_screen": true
+    },
+    {
+      "part": "04 rear loose bench rail, stipulated1N before body seating",
+      "moment_Nmm": 43.8,
+      "section_mm": [
+        6.8,
+        4.0
+      ],
+      "calculated_nominal_stress_MPa": 2.4154411764705883,
+      "assumed_screening_allowable_MPa": 5.0,
+      "ratio": 2.070015220700152,
+      "passes_assumed_screen": true
+    },
+    {
+      "part": "13 bottom bar at stiffening hub, stipulated12.5N per foot",
+      "moment_Nmm": 153.125,
+      "section_mm": [
+        10.4,
+        4.5
+      ],
+      "calculated_nominal_stress_MPa": 4.362535612535613,
+      "assumed_screening_allowable_MPa": 5.0,
+      "ratio": 1.1461224489795918,
+      "passes_assumed_screen": true
+    },
+    {
+      "part": "04 rear foot cantilever, stipulated12.5N",
+      "moment_Nmm": 113.12500000000001,
+      "section_mm": [
+        6.0,
+        6.0
+      ],
+      "calculated_nominal_stress_MPa": 3.1423611111111116,
+      "assumed_screening_allowable_MPa": 5.0,
+      "ratio": 1.5911602209944748,
+      "passes_assumed_screen": true
+    },
+    {
+      "part": "05 front foot cantilever, stipulated12.5N",
+      "moment_Nmm": 40.625,
+      "section_mm": [
+        6.0,
+        6.0
+      ],
+      "calculated_nominal_stress_MPa": 1.1284722222222223,
+      "assumed_screening_allowable_MPa": 5.0,
+      "ratio": 4.43076923076923,
+      "passes_assumed_screen": true
+    }
+  ],
+  "all_pass_stipulated_nominal_screen": true,
+  "limits": [
+    "Real servo stall torque/force may exceed the assumed cases. Slow pulses do not limit stall torque. This is not a servo rating or an allowable user-force claim.",
+    "Both local-capture tongues must be seated and plates/bottom key installed. Support loose bench parts during assembly, avoid sideways bending.",
+    "Material, layer adhesion, scars, creep, corner stresses and contacts are untested. Fit by gentle hand before power.",
+    "Do not push a powered lid. Calibrate pulse endpoints before hard contact and cut power immediately if humming or stuck.",
+    "Radial bearing loads require both broad body-floor pads to seat under04 rails. The local lip is not a free-standing radial bearing. No vibration survival or automatic angular lock guarantee is made."
+  ],
+  "input_blend_sha256": "d1cad135be74b404c40905c8d54cbbd180aebbc04e09c131c02055e5a78a98a3"
+}

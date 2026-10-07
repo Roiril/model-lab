@@ -8,7 +8,18 @@
       "lid_deg": 0.0,
       "parts": [
         "01_body",
-        "05_front_closure"
+        "04_main_cassette"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 0.0,
+      "parts": [
+        "01_body",
+        "06_horn_cup_journal"
       ],
       "overlap_tri_pairs": 0,
       "volume_mm3": 0.0,
@@ -30,7 +41,7 @@
       "lid_deg": 0.0,
       "parts": [
         "01_body",
-        "08_front_rocker"
+        "09_link"
       ],
       "overlap_tri_pairs": 0,
       "volume_mm3": 0.0,
@@ -53,6 +64,72 @@
       "parts": [
         "01_body",
         "12_link_axle"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 0.0,
+      "parts": [
+        "01_body",
+        "13_body_cross_key"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 0.0,
+      "parts": [
+        "01_body",
+        "14_servo_top_keeper"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 0.0,
+      "parts": [
+        "01_body",
+        "15_flat_spacer"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 0.0,
+      "parts": [
+        "01_body",
+        "17_local_cup_capture"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 0.0,
+      "parts": [
+        "01_body",
+        "18_local_capture_stop"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 0.0,
+      "parts": [
+        "01_body",
+        "19_local_capture_stop"
       ],
       "overlap_tri_pairs": 0,
       "volume_mm3": 0.0,
@@ -98,17 +175,6 @@
         "04_main_cassette",
         "05_front_closure"
       ],
-      "overlap_tri_pairs": 6,
-      "volume_mm3": 0.0,
-      "nonmanifold_edges": 0,
-      "bounds_mm": []
-    },
-    {
-      "lid_deg": 0.0,
-      "parts": [
-        "04_main_cassette",
-        "10_hinge_axle"
-      ],
       "overlap_tri_pairs": 0,
       "volume_mm3": 0.0,
       "nonmanifold_edges": 0,
@@ -117,8 +183,8 @@
     {
       "lid_deg": 0.0,
       "parts": [
-        "05_front_closure",
-        "06_horn_cup_journal"
+        "04_main_cassette",
+        "15_flat_spacer"
       ],
       "overlap_tri_pairs": 0,
       "volume_mm3": 0.0,
@@ -140,40 +206,7 @@
       "lid_deg": 0.0,
       "parts": [
         "05_front_closure",
-        "08_front_rocker"
-      ],
-      "overlap_tri_pairs": 0,
-      "volume_mm3": 0.0,
-      "nonmanifold_edges": 0,
-      "bounds_mm": []
-    },
-    {
-      "lid_deg": 0.0,
-      "parts": [
-        "05_front_closure",
-        "09_link"
-      ],
-      "overlap_tri_pairs": 0,
-      "volume_mm3": 0.0,
-      "nonmanifold_edges": 0,
-      "bounds_mm": []
-    },
-    {
-      "lid_deg": 0.0,
-      "parts": [
-        "05_front_closure",
         "10_hinge_axle"
-      ],
-      "overlap_tri_pairs": 0,
-      "volume_mm3": 0.0,
-      "nonmanifold_edges": 0,
-      "bounds_mm": []
-    },
-    {
-      "lid_deg": 0.0,
-      "parts": [
-        "05_front_closure",
-        "11_drive_axle"
       ],
       "overlap_tri_pairs": 0,
       "volume_mm3": 0.0,
@@ -194,8 +227,41 @@
     {
       "lid_deg": 0.0,
       "parts": [
+        "05_front_closure",
+        "15_flat_spacer"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 0.0,
+      "parts": [
+        "05_front_closure",
+        "17_local_cup_capture"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 0.0,
+      "parts": [
+        "05_front_closure",
+        "18_local_capture_stop"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 0.0,
+      "parts": [
         "06_horn_cup_journal",
-        "11_drive_axle"
+        "REFERENCE SG92R horn"
       ],
       "overlap_tri_pairs": 0,
       "volume_mm3": 0.0,
@@ -207,6 +273,17 @@
       "parts": [
         "07_rear_rocker",
         "08_front_rocker"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 0.0,
+      "parts": [
+        "07_rear_rocker",
+        "10_hinge_axle"
       ],
       "overlap_tri_pairs": 0,
       "volume_mm3": 0.0,
@@ -239,6 +316,17 @@
       "lid_deg": 0.0,
       "parts": [
         "09_link",
+        "11_drive_axle"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 0.0,
+      "parts": [
+        "09_link",
         "12_link_axle"
       ],
       "overlap_tri_pairs": 0,
@@ -250,7 +338,29 @@
       "lid_deg": 30.0,
       "parts": [
         "01_body",
+        "06_horn_cup_journal"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 30.0,
+      "parts": [
+        "01_body",
         "09_link"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 30.0,
+      "parts": [
+        "01_body",
+        "11_drive_axle"
       ],
       "overlap_tri_pairs": 0,
       "volume_mm3": 0.0,
@@ -293,50 +403,6 @@
     {
       "lid_deg": 30.0,
       "parts": [
-        "05_front_closure",
-        "06_horn_cup_journal"
-      ],
-      "overlap_tri_pairs": 0,
-      "volume_mm3": 0.0,
-      "nonmanifold_edges": 0,
-      "bounds_mm": []
-    },
-    {
-      "lid_deg": 30.0,
-      "parts": [
-        "05_front_closure",
-        "07_rear_rocker"
-      ],
-      "overlap_tri_pairs": 0,
-      "volume_mm3": 0.0,
-      "nonmanifold_edges": 0,
-      "bounds_mm": []
-    },
-    {
-      "lid_deg": 30.0,
-      "parts": [
-        "05_front_closure",
-        "09_link"
-      ],
-      "overlap_tri_pairs": 0,
-      "volume_mm3": 0.0,
-      "nonmanifold_edges": 0,
-      "bounds_mm": []
-    },
-    {
-      "lid_deg": 30.0,
-      "parts": [
-        "05_front_closure",
-        "REFERENCE SG92R horn"
-      ],
-      "overlap_tri_pairs": 0,
-      "volume_mm3": 0.0,
-      "nonmanifold_edges": 0,
-      "bounds_mm": []
-    },
-    {
-      "lid_deg": 30.0,
-      "parts": [
         "06_horn_cup_journal",
         "11_drive_axle"
       ],
@@ -348,8 +414,8 @@
     {
       "lid_deg": 30.0,
       "parts": [
-        "07_rear_rocker",
-        "08_front_rocker"
+        "06_horn_cup_journal",
+        "REFERENCE SG92R horn"
       ],
       "overlap_tri_pairs": 0,
       "volume_mm3": 0.0,
@@ -360,7 +426,7 @@
       "lid_deg": 30.0,
       "parts": [
         "07_rear_rocker",
-        "12_link_axle"
+        "10_hinge_axle"
       ],
       "overlap_tri_pairs": 0,
       "volume_mm3": 0.0,
@@ -379,10 +445,21 @@
       "bounds_mm": []
     },
     {
+      "lid_deg": 30.0,
+      "parts": [
+        "09_link",
+        "12_link_axle"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
       "lid_deg": 65.0,
       "parts": [
         "01_body",
-        "09_link"
+        "06_horn_cup_journal"
       ],
       "overlap_tri_pairs": 0,
       "volume_mm3": 0.0,
@@ -447,50 +524,6 @@
     {
       "lid_deg": 65.0,
       "parts": [
-        "05_front_closure",
-        "06_horn_cup_journal"
-      ],
-      "overlap_tri_pairs": 0,
-      "volume_mm3": 0.0,
-      "nonmanifold_edges": 0,
-      "bounds_mm": []
-    },
-    {
-      "lid_deg": 65.0,
-      "parts": [
-        "05_front_closure",
-        "09_link"
-      ],
-      "overlap_tri_pairs": 0,
-      "volume_mm3": 0.0,
-      "nonmanifold_edges": 0,
-      "bounds_mm": []
-    },
-    {
-      "lid_deg": 65.0,
-      "parts": [
-        "05_front_closure",
-        "11_drive_axle"
-      ],
-      "overlap_tri_pairs": 0,
-      "volume_mm3": 0.0,
-      "nonmanifold_edges": 0,
-      "bounds_mm": []
-    },
-    {
-      "lid_deg": 65.0,
-      "parts": [
-        "05_front_closure",
-        "REFERENCE SG92R horn"
-      ],
-      "overlap_tri_pairs": 0,
-      "volume_mm3": 0.0,
-      "nonmanifold_edges": 0,
-      "bounds_mm": []
-    },
-    {
-      "lid_deg": 65.0,
-      "parts": [
         "06_horn_cup_journal",
         "11_drive_axle"
       ],
@@ -502,8 +535,8 @@
     {
       "lid_deg": 65.0,
       "parts": [
-        "07_rear_rocker",
-        "08_front_rocker"
+        "06_horn_cup_journal",
+        "REFERENCE SG92R horn"
       ],
       "overlap_tri_pairs": 0,
       "volume_mm3": 0.0,
@@ -524,8 +557,19 @@
     {
       "lid_deg": 65.0,
       "parts": [
+        "08_front_rocker",
+        "10_hinge_axle"
+      ],
+      "overlap_tri_pairs": 0,
+      "volume_mm3": 0.0,
+      "nonmanifold_edges": 0,
+      "bounds_mm": []
+    },
+    {
+      "lid_deg": 65.0,
+      "parts": [
         "09_link",
-        "11_drive_axle"
+        "12_link_axle"
       ],
       "overlap_tri_pairs": 0,
       "volume_mm3": 0.0,
@@ -3440,5 +3484,5 @@
       ]
     }
   ],
-  "input_blend_sha256": "995b09c2ee156a9482472335966a181d1615804860c8d3f02c3fc57225133514"
+  "input_blend_sha256": "d1cad135be74b404c40905c8d54cbbd180aebbc04e09c131c02055e5a78a98a3"
 }

@@ -1,40 +1,93 @@
 {
+  "revision": 2,
   "physical_tested": false,
-  "geometry_changed": false,
-  "input_blend_sha256": "995b09c2ee156a9482472335966a181d1615804860c8d3f02c3fc57225133514",
-  "center_screw_required": false,
-  "printed_spline": false,
-  "additional_print_parts": 0,
-  "capture_condition": "Body receivers and cross key 13 fully assembled; cassette alone is not axially secured. Hard stops, not friction, bound withdrawal.",
-  "actual_mesh_stop_planes_world_x_mm": {
-    "main_receiver_rear_wall": 3.6999995354563,
-    "closure_receiver_front_wall": 60.40000170469284,
-    "servo_rear_case": 9.000000543892384,
-    "servo_rear_stop": 8.700000122189522,
-    "servo_front_case": 31.000003218650818,
-    "servo_front_stop": 31.300000846385956,
-    "horn_front_face": 41.00000113248825,
-    "cup_captive_roof": 41.30000248551369,
-    "journal_tip": 58.000002056360245,
-    "journal_blind_end": 58.30000340938568
+  "geometry_sha256": "d1cad135be74b404c40905c8d54cbbd180aebbc04e09c131c02055e5a78a98a3",
+  "actual_cad_x_planes_mm": {
+    "case_back": 9.000001475214958,
+    "same_cassette_case_stop": 8.79999902099371,
+    "horn_front": 41.00000113248825,
+    "cup_roof": 41.200004518032074,
+    "cup_functional_front": 46.10000550746918,
+    "local_lip_stop_face": 46.20000347495079,
+    "local_lip_forward_tongue": 49.70000311732292,
+    "front_positive_stop_rear": 49.80000481009483,
+    "front_positive_stop_forward": 53.00000682473183,
+    "same_cassette_mortise_forward_stop": 53.10000106692314
   },
-  "worst_nominal_withdrawal_terms_mm": {
-    "main_cassette_rearward_in_body_receiver": 0.3000004645437002,
-    "servo_rearward_in_cassette": 0.3000004217028618,
-    "front_closure_forward_in_body_receiver": 0.30000170469283916,
-    "journal_forward_in_blind_bore": 0.3000013530254364,
-    "horn_forward_to_cup_roof": 0.3000013530254364
+  "nominal_withdrawal_terms_mm": {
+    "case_rear_gap": 0.20000245422124863,
+    "horn_roof_gap": 0.20000338554382324,
+    "cup_to_local_lip": 0.09999796748161316,
+    "lip_to_positive_stop": 0.10000169277191162,
+    "positive_stop_in_cassette": 0.0999942421913147
   },
-  "worst_nominal_relative_withdrawal_mm": 1.500005296990274,
-  "reference_smooth_socket_overlap_mm": 2.999999999999999,
-  "reference_remaining_overlap_mm": 1.4999947030097251,
-  "cup_roof_thickness_mm": 4.799999999999999,
-  "closure_blind_wall_thickness_mm": 1.7999965906143203,
-  "limits": [
-    "Shaft height 3.5 mm and socket internal positions are provisional reference values, not measurements of the actual tooth engagement.",
-    "Bound covers nominal axial translations, not print dimensional error, flex, tilt, servo internal endplay, tooth stripping or retention force.",
-    "Spline is the original horn/servo interface. Tooth geometry is absent from reference CAD and never printed.",
-    "Do not power the cassette alone. The body receivers and cross key retain the two closure planes.",
-    "Prototype acceptance target: measured effective seated tooth engagement minus measured total withdrawal must leave at least 1.0 mm; this is a trial criterion, not a validated strength specification. If unsuitable, do not energize and revise the capture geometry."
-  ]
+  "nominal_relative_withdrawal_mm": 0.6999997422099113,
+  "reference_smooth_overlap_mm": 3.0,
+  "unvalidated_acceptance_budget_mm": {
+    "ten_stop_plane_errors_0p10_each": 1.0,
+    "servo_internal_endplay_acceptance": 0.1,
+    "capture_loop_relative_flex_acceptance": 0.1,
+    "effective_axial_tilt_acceptance": 0.1
+  },
+  "assumed_budget_total_withdrawal_mm": 1.9999997422099114,
+  "remaining_if_reference_and_all_budgets_hold_mm": 1.0000002577900886,
+  "axis_engagement_screen": [
+    {
+      "name": "10_hinge_axle",
+      "nominal_end_engagement_mm": [
+        3.6,
+        3.2
+      ],
+      "nominal_worst_engagement_loss_mm": 0.55,
+      "nominal_loss_basis": "0.15 blind-end clearance + 2x0.20 receiver separation",
+      "manufacture_budget_mm": 0.5,
+      "tilt_budget_mm": 0.2,
+      "remaining_with_assumed_budgets_mm": [
+        2.35,
+        1.95
+      ],
+      "limits": "Conditional measurement acceptance: fully assembled support-face spread, including all receiver/shoulder dimensional errors, is no more than0.2mm above nominal. Additional bore-mouth, bore-floor and shaft-length errors each <=0.1mm. Tilt loss <=0.2mm. This is a stipulated aggregate measured bound, not an assertion about individual printer accuracy. Front roof fork is open axially; H shoulders, not that open slot, bound the rocker spread."
+    },
+    {
+      "name": "11_drive_axle",
+      "nominal_end_engagement_mm": [
+        3.25,
+        2.95
+      ],
+      "nominal_worst_engagement_loss_mm": 0.75,
+      "nominal_loss_basis": "0.15 blind-end clearance + 2x0.20 receiver separation +0.20 cup rear saddle clearance",
+      "manufacture_budget_mm": 0.5,
+      "tilt_budget_mm": 0.2,
+      "remaining_with_assumed_budgets_mm": [
+        1.8,
+        1.5
+      ],
+      "limits": "Conditional measurement acceptance: fully assembled support-face spread, including all receiver/shoulder dimensional errors, is no more than0.2mm above nominal. Additional bore-mouth, bore-floor and shaft-length errors each <=0.1mm. Tilt loss <=0.2mm. This is a stipulated aggregate measured bound, not an assertion about individual printer accuracy. Front roof fork is open axially; H shoulders, not that open slot, bound the rocker spread."
+    },
+    {
+      "name": "12_link_axle",
+      "nominal_end_engagement_mm": [
+        2.85,
+        2.85
+      ],
+      "nominal_worst_engagement_loss_mm": 0.85,
+      "nominal_loss_basis": "0.15 blind-end clearance + 2x0.15 rocker/H-shoulder gap + 2x0.20 receiver separation",
+      "manufacture_budget_mm": 0.5,
+      "tilt_budget_mm": 0.2,
+      "remaining_with_assumed_budgets_mm": [
+        1.3,
+        1.3
+      ],
+      "limits": "Conditional measurement acceptance: fully assembled support-face spread, including all receiver/shoulder dimensional errors, is no more than0.2mm above nominal. Additional bore-mouth, bore-floor and shaft-length errors each <=0.1mm. Tilt loss <=0.2mm. This is a stipulated aggregate measured bound, not an assertion about individual printer accuracy. Front roof fork is open axially; H shoulders, not that open slot, bound the rocker spread."
+    }
+  ],
+  "capture_condition": "17 seated in two axially open mortises of04;18/19 stop outward motion and05 shelf prevents their vertical release. Body receivers and spring-seated bayonet retain both plates. Common body/main-plate translation cancels from the axial case-to-local-lip loop. The lip/stops must not lift out. Real spline teeth are absent from CAD.",
+  "physical_measurements_required": [
+    "actual effective tooth engagement E",
+    "total relative horn/case withdrawal including internal servo endplay, after full assembly",
+    "axis ends/receiver/fork play under gentle hand displacement",
+    "spring OD/ID/free/solid height and force at 5.4/3.9mm heights",
+    "D3 cable and8x5x15 connector including required bend radius"
+  ],
+  "trial_acceptance": "Effective tooth engagement minus measured total withdrawal >=1.0mm; every measured axle end insertion >=1.0mm. These are prototype trial targets, not manufacturer strength specifications. Dimensional errors must meet stipulated budgets; if any unknown, do not power."
 }

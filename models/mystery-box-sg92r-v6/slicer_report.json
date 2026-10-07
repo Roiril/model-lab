@@ -1,6 +1,6 @@
 {
   "physical_tested": false,
-  "note": "Actual offline slices, no printer connection or print. G-code and sliced machine-specific 3MF are excluded from the deliverable. Support removability, mating fits and bridge finish remain untested. Facet enforcers retained and manual support paths generated only on plate02.",
+  "note": "Actual offline slices, no printer connection or print. G-code and sliced machine-specific3MF excluded. Support removal, fits and bridging remain untested. Manual painted support paths on plate02 and support trial plate04; independent support layer height disabled.",
   "plates": [
     {
       "plate": "plate_00_fit_tests",
@@ -15,46 +15,52 @@
       "statistics": {
         "total layer number": "136",
         "max_z_height": "27.20",
-        "total filament weight [g]": "20.20",
-        "model printing time": "42m 14s; total estimated time: 50m 31s"
+        "total filament weight [g]": "34.03",
+        "model printing time": "1h 13m 58s; total estimated time: 1h 22m 15s"
       },
       "feature_blocks": {
         "Custom": 2,
-        "Inner wall": 802,
-        "Outer wall": 811,
-        "Bottom surface": 9,
-        "Gap infill": 249,
-        "Internal solid infill": 211,
-        "Top surface": 26,
-        "Sparse infill": 222,
-        "Floating vertical shell": 52,
-        "Bridge": 12,
-        "Overhang wall": 14
+        "Inner wall": 1181,
+        "Outer wall": 1359,
+        "Gap infill": 592,
+        "Bottom surface": 23,
+        "Internal solid infill": 457,
+        "Top surface": 54,
+        "Sparse infill": 401,
+        "Floating vertical shell": 92,
+        "Bridge": 29,
+        "Overhang wall": 22
       },
       "paint_counts": {
         "3D/3dmodel.model": {},
-        "3D/Objects/object_10.model": {},
-        "3D/Objects/object_12.model": {},
-        "3D/Objects/object_8.model": {},
-        "3D/Objects/object_9.model": {},
-        "3D/Objects/object_1.model": {},
-        "3D/Objects/object_5.model": {},
+        "3D/Objects/object_16.model": {},
+        "3D/Objects/object_22.model": {},
         "3D/Objects/object_11.model": {},
+        "3D/Objects/object_23.model": {},
+        "3D/Objects/object_13.model": {},
+        "3D/Objects/object_18.model": {},
+        "3D/Objects/object_10.model": {},
+        "3D/Objects/object_1.model": {},
+        "3D/Objects/object_8.model": {},
+        "3D/Objects/object_21.model": {},
+        "3D/Objects/object_24.model": {},
+        "3D/Objects/object_25.model": {},
+        "3D/Objects/object_17.model": {},
+        "3D/Objects/object_26.model": {},
+        "3D/Objects/object_20.model": {},
+        "3D/Objects/object_15.model": {},
+        "3D/Objects/object_19.model": {},
+        "3D/Objects/object_14.model": {},
+        "3D/Objects/object_9.model": {},
+        "3D/Objects/object_12.model": {},
+        "3D/Objects/object_5.model": {},
         "3D/Objects/object_6.model": {},
-        "3D/Objects/object_7.model": {},
         "3D/Objects/object_2.model": {},
         "3D/Objects/object_3.model": {},
-        "3D/Objects/object_4.model": {}
+        "3D/Objects/object_4.model": {},
+        "3D/Objects/object_7.model": {}
       },
       "mesh_statistics": [
-        {
-          "face_count": "36",
-          "edges_fixed": "0",
-          "degenerate_facets": "0",
-          "facets_removed": "0",
-          "facets_reversed": "0",
-          "backwards_edges": "0"
-        },
         {
           "face_count": "800",
           "edges_fixed": "0",
@@ -64,7 +70,7 @@
           "backwards_edges": "0"
         },
         {
-          "face_count": "1174",
+          "face_count": "722",
           "edges_fixed": "0",
           "degenerate_facets": "0",
           "facets_removed": "0",
@@ -72,7 +78,7 @@
           "backwards_edges": "0"
         },
         {
-          "face_count": "3030",
+          "face_count": "412",
           "edges_fixed": "0",
           "degenerate_facets": "0",
           "facets_removed": "0",
@@ -80,7 +86,7 @@
           "backwards_edges": "0"
         },
         {
-          "face_count": "54",
+          "face_count": "1192",
           "edges_fixed": "0",
           "degenerate_facets": "0",
           "facets_removed": "0",
@@ -88,7 +94,39 @@
           "backwards_edges": "0"
         },
         {
-          "face_count": "264",
+          "face_count": "174",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "252",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "3502",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "506",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "82",
           "edges_fixed": "0",
           "degenerate_facets": "0",
           "facets_removed": "0",
@@ -104,14 +142,6 @@
           "backwards_edges": "0"
         },
         {
-          "face_count": "32",
-          "edges_fixed": "0",
-          "degenerate_facets": "0",
-          "facets_removed": "0",
-          "facets_reversed": "0",
-          "backwards_edges": "0"
-        },
-        {
           "face_count": "58",
           "edges_fixed": "0",
           "degenerate_facets": "0",
@@ -120,7 +150,39 @@
           "backwards_edges": "0"
         },
         {
-          "face_count": "132",
+          "face_count": "72",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "54",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "34",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "52",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "66",
           "edges_fixed": "0",
           "degenerate_facets": "0",
           "facets_removed": "0",
@@ -136,7 +198,71 @@
           "backwards_edges": "0"
         },
         {
-          "face_count": "146",
+          "face_count": "12",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "12",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "52",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "52",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "60",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "42",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "46",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "32",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "132",
           "edges_fixed": "0",
           "degenerate_facets": "0",
           "facets_removed": "0",
@@ -144,7 +270,7 @@
           "backwards_edges": "0"
         }
       ],
-      "input_plate_sha256": "68ea032aeb09dd14dfd1e4c99244fa2131eb8df08c77a907f155ef1c149fd0b2",
+      "input_plate_sha256": "d1bb65aa5a091517ac8d04d2767988071f1a5d54c80a1794eb6191669fdec8a6",
       "crc_ok": true
     },
     {
@@ -160,21 +286,21 @@
       "statistics": {
         "total layer number": "338",
         "max_z_height": "67.60",
-        "total filament weight [g]": "88.52",
-        "model printing time": "2h 25m 52s; total estimated time: 2h 34m 9s"
+        "total filament weight [g]": "90.35",
+        "model printing time": "2h 38m 43s; total estimated time: 2h 47m 0s"
       },
       "feature_blocks": {
         "Custom": 2,
-        "Outer wall": 2105,
-        "Inner wall": 2039,
+        "Inner wall": 1732,
+        "Outer wall": 1777,
+        "Gap infill": 867,
         "Bottom surface": 3,
-        "Gap infill": 422,
-        "Internal solid infill": 94,
-        "Sparse infill": 238,
-        "Floating vertical shell": 17,
-        "Bridge": 12,
-        "Top surface": 29,
-        "Overhang wall": 12
+        "Internal solid infill": 135,
+        "Sparse infill": 490,
+        "Floating vertical shell": 61,
+        "Bridge": 23,
+        "Top surface": 37,
+        "Overhang wall": 13
       },
       "paint_counts": {
         "3D/3dmodel.model": {},
@@ -184,7 +310,15 @@
       },
       "mesh_statistics": [
         {
-          "face_count": "466",
+          "face_count": "1542",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "100",
           "edges_fixed": "0",
           "degenerate_facets": "0",
           "facets_removed": "0",
@@ -198,17 +332,9 @@
           "facets_removed": "0",
           "facets_reversed": "0",
           "backwards_edges": "0"
-        },
-        {
-          "face_count": "96",
-          "edges_fixed": "0",
-          "degenerate_facets": "0",
-          "facets_removed": "0",
-          "facets_reversed": "0",
-          "backwards_edges": "0"
         }
       ],
-      "input_plate_sha256": "77dc41d2ecb82412ef7f0ac6d1ebcfe6c1d99d42cc094cfab07ffddb00561af0",
+      "input_plate_sha256": "ac59fd7d6d223c1061f85d620cd0d7393e511b3c82a350282535f0d3f56e9589",
       "crc_ok": true
     },
     {
@@ -222,44 +348,44 @@
       "actual_support_paths": true,
       "support_type": "normal(manual)",
       "statistics": {
-        "total layer number": "384",
-        "max_z_height": "53.20",
-        "total filament weight [g]": "43.31",
-        "model printing time": "1h 23m 28s; total estimated time: 1h 31m 45s"
+        "total layer number": "253",
+        "max_z_height": "50.60",
+        "total filament weight [g]": "48.24",
+        "model printing time": "1h 34m 40s; total estimated time: 1h 42m 57s"
       },
       "feature_blocks": {
         "Custom": 2,
-        "Inner wall": 1405,
-        "Outer wall": 1419,
-        "Gap infill": 873,
+        "Inner wall": 1147,
+        "Outer wall": 1237,
         "Bottom surface": 3,
-        "Support": 109,
-        "Internal solid infill": 348,
-        "Sparse infill": 322,
-        "Floating vertical shell": 37,
-        "Bridge": 16,
-        "Top surface": 22,
+        "Support": 172,
+        "Internal solid infill": 595,
+        "Sparse infill": 354,
+        "Bridge": 24,
+        "Floating vertical shell": 57,
+        "Gap infill": 560,
+        "Top surface": 35,
         "Support interface": 10,
-        "Overhang wall": 17,
-        "Support transition": 3
+        "Overhang wall": 22,
+        "Support transition": 2
       },
       "paint_counts": {
         "3D/3dmodel.model": {},
         "3D/Objects/object_1.model": {
-          "8": 950,
+          "8": 1198,
           "4": 28
         },
         "3D/Objects/object_2.model": {
-          "8": 1824
+          "8": 2182
         },
         "3D/Objects/object_3.model": {
-          "8": 1454,
+          "8": 2346,
           "4": 556
         }
       },
       "mesh_statistics": [
         {
-          "face_count": "1824",
+          "face_count": "1226",
           "edges_fixed": "0",
           "degenerate_facets": "0",
           "facets_removed": "0",
@@ -267,7 +393,7 @@
           "backwards_edges": "0"
         },
         {
-          "face_count": "2010",
+          "face_count": "2182",
           "edges_fixed": "0",
           "degenerate_facets": "0",
           "facets_removed": "0",
@@ -275,7 +401,7 @@
           "backwards_edges": "0"
         },
         {
-          "face_count": "978",
+          "face_count": "2902",
           "edges_fixed": "0",
           "degenerate_facets": "0",
           "facets_removed": "0",
@@ -283,7 +409,7 @@
           "backwards_edges": "0"
         }
       ],
-      "input_plate_sha256": "0a37d36a740d53bb9f827bc6996835a10a02315d24f15a1b295c0c6fdad7e9c7",
+      "input_plate_sha256": "5c44d018de94da7a3f6d37dfb70ecc850938c523c6ad333bb40cb3f64b07faa6",
       "crc_ok": true
     },
     {
@@ -299,34 +425,41 @@
       "statistics": {
         "total layer number": "73",
         "max_z_height": "14.60",
-        "total filament weight [g]": "6.38",
-        "model printing time": "16m 20s; total estimated time: 24m 37s"
+        "total filament weight [g]": "14.98",
+        "model printing time": "32m 36s; total estimated time: 40m 52s"
       },
       "feature_blocks": {
         "Custom": 2,
-        "Inner wall": 284,
-        "Outer wall": 292,
-        "Bottom surface": 4,
-        "Gap infill": 147,
-        "Internal solid infill": 156,
-        "Sparse infill": 49,
-        "Top surface": 10,
-        "Floating vertical shell": 19,
-        "Bridge": 3
+        "Inner wall": 456,
+        "Outer wall": 471,
+        "Gap infill": 256,
+        "Bottom surface": 10,
+        "Internal solid infill": 202,
+        "Top surface": 20,
+        "Sparse infill": 170,
+        "Floating vertical shell": 43,
+        "Bridge": 11,
+        "Overhang wall": 2
       },
       "paint_counts": {
         "3D/3dmodel.model": {},
-        "3D/Objects/object_1.model": {},
-        "3D/Objects/object_5.model": {},
         "3D/Objects/object_7.model": {},
+        "3D/Objects/object_11.model": {},
+        "3D/Objects/object_8.model": {},
+        "3D/Objects/object_13.model": {},
         "3D/Objects/object_6.model": {},
+        "3D/Objects/object_12.model": {},
+        "3D/Objects/object_9.model": {},
+        "3D/Objects/object_10.model": {},
+        "3D/Objects/object_1.model": {},
+        "3D/Objects/object_2.model": {},
+        "3D/Objects/object_5.model": {},
         "3D/Objects/object_4.model": {},
-        "3D/Objects/object_3.model": {},
-        "3D/Objects/object_2.model": {}
+        "3D/Objects/object_3.model": {}
       },
       "mesh_statistics": [
         {
-          "face_count": "3030",
+          "face_count": "2592",
           "edges_fixed": "0",
           "degenerate_facets": "0",
           "facets_removed": "0",
@@ -334,7 +467,63 @@
           "backwards_edges": "0"
         },
         {
-          "face_count": "2664",
+          "face_count": "412",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "12",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "12",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "44",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "132",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "60",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "44",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "3502",
           "edges_fixed": "0",
           "degenerate_facets": "0",
           "facets_removed": "0",
@@ -350,7 +539,7 @@
           "backwards_edges": "0"
         },
         {
-          "face_count": "132",
+          "face_count": "506",
           "edges_fixed": "0",
           "degenerate_facets": "0",
           "facets_removed": "0",
@@ -367,14 +556,6 @@
         },
         {
           "face_count": "132",
-          "edges_fixed": "0",
-          "degenerate_facets": "0",
-          "facets_removed": "0",
-          "facets_reversed": "0",
-          "backwards_edges": "0"
-        },
-        {
-          "face_count": "36",
           "edges_fixed": "0",
           "degenerate_facets": "0",
           "facets_removed": "0",
@@ -382,7 +563,71 @@
           "backwards_edges": "0"
         }
       ],
-      "input_plate_sha256": "4ca36bc94d63973e7408b99eaaee7bcc63686f3fdd4b3a9a93b0330e85799a28",
+      "input_plate_sha256": "35e52ac71d30f2d6d31ec7e6fa63f9e30fd75b03c2fbd2bd0d25f405d21c90d5",
+      "crc_ok": true
+    },
+    {
+      "plate": "plate_04_support_tests",
+      "printer_profile": "Bambu Lab X1 Carbon 0.4 nozzle (locally selected saved profile)",
+      "material": "Bambu PLA Basic",
+      "slicer": "Bambu Studio02.03.01.51",
+      "layer_height": "0.2",
+      "wall_loops": "4",
+      "supports_enabled": true,
+      "actual_support_paths": true,
+      "support_type": "normal(manual)",
+      "statistics": {
+        "total layer number": "165",
+        "max_z_height": "33.00",
+        "total filament weight [g]": "16.71",
+        "model printing time": "34m 43s; total estimated time: 43m 0s"
+      },
+      "feature_blocks": {
+        "Custom": 2,
+        "Inner wall": 327,
+        "Outer wall": 321,
+        "Bottom surface": 2,
+        "Support": 171,
+        "Internal solid infill": 46,
+        "Sparse infill": 228,
+        "Floating vertical shell": 22,
+        "Top surface": 9,
+        "Bridge": 11,
+        "Gap infill": 118,
+        "Support interface": 10,
+        "Overhang wall": 18,
+        "Support transition": 2
+      },
+      "paint_counts": {
+        "3D/3dmodel.model": {},
+        "3D/Objects/object_1.model": {
+          "8": 332,
+          "4": 28
+        },
+        "3D/Objects/object_2.model": {
+          "8": 2346,
+          "4": 556
+        }
+      },
+      "mesh_statistics": [
+        {
+          "face_count": "2902",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "360",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        }
+      ],
+      "input_plate_sha256": "e7e15bfcd9b33ee9e3a7384e52d2cb6e9cc4507e4870abc6c8b0beda3f5cf553",
       "crc_ok": true
     }
   ]
