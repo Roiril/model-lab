@@ -1,0 +1,40 @@
+{
+  "physical_tested": false,
+  "geometry_changed": false,
+  "input_blend_sha256": "995b09c2ee156a9482472335966a181d1615804860c8d3f02c3fc57225133514",
+  "center_screw_required": false,
+  "printed_spline": false,
+  "additional_print_parts": 0,
+  "capture_condition": "Body receivers and cross key 13 fully assembled; cassette alone is not axially secured. Hard stops, not friction, bound withdrawal.",
+  "actual_mesh_stop_planes_world_x_mm": {
+    "main_receiver_rear_wall": 3.6999995354563,
+    "closure_receiver_front_wall": 60.40000170469284,
+    "servo_rear_case": 9.000000543892384,
+    "servo_rear_stop": 8.700000122189522,
+    "servo_front_case": 31.000003218650818,
+    "servo_front_stop": 31.300000846385956,
+    "horn_front_face": 41.00000113248825,
+    "cup_captive_roof": 41.30000248551369,
+    "journal_tip": 58.000002056360245,
+    "journal_blind_end": 58.30000340938568
+  },
+  "worst_nominal_withdrawal_terms_mm": {
+    "main_cassette_rearward_in_body_receiver": 0.3000004645437002,
+    "servo_rearward_in_cassette": 0.3000004217028618,
+    "front_closure_forward_in_body_receiver": 0.30000170469283916,
+    "journal_forward_in_blind_bore": 0.3000013530254364,
+    "horn_forward_to_cup_roof": 0.3000013530254364
+  },
+  "worst_nominal_relative_withdrawal_mm": 1.500005296990274,
+  "reference_smooth_socket_overlap_mm": 2.999999999999999,
+  "reference_remaining_overlap_mm": 1.4999947030097251,
+  "cup_roof_thickness_mm": 4.799999999999999,
+  "closure_blind_wall_thickness_mm": 1.7999965906143203,
+  "limits": [
+    "Shaft height 3.5 mm and socket internal positions are provisional reference values, not measurements of the actual tooth engagement.",
+    "Bound covers nominal axial translations, not print dimensional error, flex, tilt, servo internal endplay, tooth stripping or retention force.",
+    "Spline is the original horn/servo interface. Tooth geometry is absent from reference CAD and never printed.",
+    "Do not power the cassette alone. The body receivers and cross key retain the two closure planes.",
+    "Prototype acceptance target: measured effective seated tooth engagement minus measured total withdrawal must leave at least 1.0 mm; this is a trial criterion, not a validated strength specification. If unsuitable, do not energize and revise the capture geometry."
+  ]
+}

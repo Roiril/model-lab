@@ -12,7 +12,7 @@ def sample(name,source,lo,hi,T,note):
     bounds=export(o,OUT/(name+'.stl'),T);rows.append(dict(name=name,source=source,bounds_mm=bounds,purpose_ja=note));bpy.data.objects.remove(o,do_unlink=True)
 up=Matrix.Rotation(-math.pi/2,4,'Y');down=Matrix.Rotation(math.pi/2,4,'Y');roofdown=Matrix.Rotation(math.pi,4,'Y')
 sample('test_01_servo_cradle','04_main_cassette',(4,18.7,24),(31.2,51.3,43.3),up,'手元のSG92R本体・耳・配線の上入れ確認。無理に押さない。')
-sample('test_02_actual_horn_pocket','06_horn_cup_journal',(37.2,0,0),(42.1,80,80),down,'付属十字ホーンの翼形状と0.3 mmクリアランスを確認。スプラインは印刷しない。')
+sample('test_02_actual_horn_pocket','06_horn_cup_journal',(37.2,0,0),(42.1,80,80),down,'付属十字ホーンの翼形状と0.3 mmクリアランスを確認。輪郭確認用で、軸方向の捕捉強度の試験ではない。スプラインは印刷しない。')
 bar=cube('test_03_bearing_bar',(0,0,0),(4,50,22))
 for y,d in ((8,5.6),(21,6.6),(39,12.6)):cut(bar,cyl('bearing nominal', (2,y,11),d/2,5))
 rows.append(dict(name=bar.name,bounds_mm=export(bar,OUT/(bar.name+'.stl'),up),purpose_ja='D5.6/D6.6/D12.6 mmの軸受け。対応軸が指で軽く回ることを確認。'))

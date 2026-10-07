@@ -1,7 +1,7 @@
 {
   "physical_tested": false,
-  "input_slice_sha256": "217b22db2a9c1d71575284a33ba8c77f1f1be62ce87772831398e1b4618c1f29",
-  "input_plate_sha256": "90cefe680f1adf1e28e26e1473f468f7f60d38b0572d0b085486028b622790b2",
+  "input_slice_sha256": "f23c7803851917280dddcc770c8cf8d3a415e8ecfd123055d7cf017f88caffc2",
+  "input_plate_sha256": "0a37d36a740d53bb9f827bc6996835a10a02315d24f15a1b295c0c6fdad7e9c7",
   "method": "Extruding G0/G1 endpoints in Support interface; source object transform inverted. Low interface projections are checked against actual upward STL facets. Interface paths extend beyond model edges into air. Does not prove every deposited filament contact or removability.",
   "objects": {
     "04_main_cassette": {

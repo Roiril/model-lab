@@ -1,5 +1,5 @@
 {
-  "created_utc": "2026-10-07T17:00:57.918284+00:00",
+  "created_utc": "2026-10-07T18:02:27.704792+00:00",
   "physical_tested": false,
   "servo_source": "User approved model-lab/models/sg92r-photo on 2026-10-07. No manufacturer browser lookup was performed in this revision, per user instruction. Measurements, photo estimates, and assumptions are distinguished in reference/SOURCE_README.md.",
   "reference_snapshots_sha256": {
@@ -11,7 +11,7 @@
   },
   "source_sha256": {
     "params.py": "4b750b97f6383c5907cb5112b17392637459093f1e59d98af830b837af95108c",
-    "model.py": "c982be54e2c54408228e58ce68dda99a3616622ce49008748e9af20ffb93956f",
+    "model.py": "425e08c134f7676554e918b214ff0e13091846826eb96b05bbb76b7b8f5b1127",
     "cad_utils.py": "97e676052e0efbf69f92423c7b93293547c9885fb1be8ec497804a66492d2ed8"
   },
   "input_editable_sha256": "995b09c2ee156a9482472335966a181d1615804860c8d3f02c3fc57225133514",
@@ -33,5 +33,19 @@
     "Collision tests sample discrete positions, not continuous mathematical proof.",
     "Support contact analysis samples extruding endpoints and planar projections, not the complete filament envelope or actual removability.",
     "No actual printer, servo, electronics, speaker mount, or endurance test performed."
-  ]
+  ],
+  "screwless_horn_capture": {
+    "geometry_changed": false,
+    "additional_print_parts": 0,
+    "nominal_max_relative_withdrawal_mm": 1.500005296990274,
+    "reference_remaining_smooth_socket_overlap_mm": 1.4999947030097251,
+    "condition": "Body receivers and cross key 13 fully assembled; cassette alone is not axially secured. Hard stops, not friction, bound withdrawal.",
+    "limits": [
+      "Shaft height 3.5 mm and socket internal positions are provisional reference values, not measurements of the actual tooth engagement.",
+      "Bound covers nominal axial translations, not print dimensional error, flex, tilt, servo internal endplay, tooth stripping or retention force.",
+      "Spline is the original horn/servo interface. Tooth geometry is absent from reference CAD and never printed.",
+      "Do not power the cassette alone. The body receivers and cross key retain the two closure planes.",
+      "Prototype acceptance target: measured effective seated tooth engagement minus measured total withdrawal must leave at least 1.0 mm; this is a trial criterion, not a validated strength specification. If unsuitable, do not energize and revise the capture geometry."
+    ]
+  }
 }

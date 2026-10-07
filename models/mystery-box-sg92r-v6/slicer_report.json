@@ -33,22 +33,30 @@
       },
       "paint_counts": {
         "3D/3dmodel.model": {},
-        "3D/Objects/object_1.model": {},
-        "3D/Objects/object_12.model": {},
-        "3D/Objects/object_11.model": {},
         "3D/Objects/object_10.model": {},
-        "3D/Objects/object_5.model": {},
-        "3D/Objects/object_7.model": {},
+        "3D/Objects/object_12.model": {},
         "3D/Objects/object_8.model": {},
         "3D/Objects/object_9.model": {},
+        "3D/Objects/object_1.model": {},
+        "3D/Objects/object_5.model": {},
+        "3D/Objects/object_11.model": {},
         "3D/Objects/object_6.model": {},
+        "3D/Objects/object_7.model": {},
         "3D/Objects/object_2.model": {},
         "3D/Objects/object_3.model": {},
         "3D/Objects/object_4.model": {}
       },
       "mesh_statistics": [
         {
-          "face_count": "132",
+          "face_count": "36",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "800",
           "edges_fixed": "0",
           "degenerate_facets": "0",
           "facets_removed": "0",
@@ -64,7 +72,15 @@
           "backwards_edges": "0"
         },
         {
-          "face_count": "800",
+          "face_count": "3030",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "54",
           "edges_fixed": "0",
           "degenerate_facets": "0",
           "facets_removed": "0",
@@ -112,31 +128,15 @@
           "backwards_edges": "0"
         },
         {
+          "face_count": "132",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
           "face_count": "146",
-          "edges_fixed": "0",
-          "degenerate_facets": "0",
-          "facets_removed": "0",
-          "facets_reversed": "0",
-          "backwards_edges": "0"
-        },
-        {
-          "face_count": "3030",
-          "edges_fixed": "0",
-          "degenerate_facets": "0",
-          "facets_removed": "0",
-          "facets_reversed": "0",
-          "backwards_edges": "0"
-        },
-        {
-          "face_count": "54",
-          "edges_fixed": "0",
-          "degenerate_facets": "0",
-          "facets_removed": "0",
-          "facets_reversed": "0",
-          "backwards_edges": "0"
-        },
-        {
-          "face_count": "36",
           "edges_fixed": "0",
           "degenerate_facets": "0",
           "facets_removed": "0",
@@ -144,7 +144,7 @@
           "backwards_edges": "0"
         }
       ],
-      "input_plate_sha256": "9942108dfe28ffcc8498aaeb0d189286126e3a05bee8ad7af6f19fa8ae1c3103",
+      "input_plate_sha256": "68ea032aeb09dd14dfd1e4c99244fa2131eb8df08c77a907f155ef1c149fd0b2",
       "crc_ok": true
     },
     {
@@ -161,11 +161,11 @@
         "total layer number": "338",
         "max_z_height": "67.60",
         "total filament weight [g]": "88.52",
-        "model printing time": "2h 25m 53s; total estimated time: 2h 34m 10s"
+        "model printing time": "2h 25m 52s; total estimated time: 2h 34m 9s"
       },
       "feature_blocks": {
         "Custom": 2,
-        "Outer wall": 2107,
+        "Outer wall": 2105,
         "Inner wall": 2039,
         "Bottom surface": 3,
         "Gap infill": 422,
@@ -178,11 +178,19 @@
       },
       "paint_counts": {
         "3D/3dmodel.model": {},
-        "3D/Objects/object_3.model": {},
         "3D/Objects/object_2.model": {},
+        "3D/Objects/object_3.model": {},
         "3D/Objects/object_1.model": {}
       },
       "mesh_statistics": [
+        {
+          "face_count": "466",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
         {
           "face_count": "106",
           "edges_fixed": "0",
@@ -198,17 +206,9 @@
           "facets_removed": "0",
           "facets_reversed": "0",
           "backwards_edges": "0"
-        },
-        {
-          "face_count": "466",
-          "edges_fixed": "0",
-          "degenerate_facets": "0",
-          "facets_removed": "0",
-          "facets_reversed": "0",
-          "backwards_edges": "0"
         }
       ],
-      "input_plate_sha256": "904ab9e7267b8ed4487a58930b70672a44c17e4cc74148e86a290df320cb5790",
+      "input_plate_sha256": "77dc41d2ecb82412ef7f0ac6d1ebcfe6c1d99d42cc094cfab07ffddb00561af0",
       "crc_ok": true
     },
     {
@@ -259,14 +259,6 @@
       },
       "mesh_statistics": [
         {
-          "face_count": "978",
-          "edges_fixed": "0",
-          "degenerate_facets": "0",
-          "facets_removed": "0",
-          "facets_reversed": "0",
-          "backwards_edges": "0"
-        },
-        {
           "face_count": "1824",
           "edges_fixed": "0",
           "degenerate_facets": "0",
@@ -281,9 +273,17 @@
           "facets_removed": "0",
           "facets_reversed": "0",
           "backwards_edges": "0"
+        },
+        {
+          "face_count": "978",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
         }
       ],
-      "input_plate_sha256": "90cefe680f1adf1e28e26e1473f468f7f60d38b0572d0b085486028b622790b2",
+      "input_plate_sha256": "0a37d36a740d53bb9f827bc6996835a10a02315d24f15a1b295c0c6fdad7e9c7",
       "crc_ok": true
     },
     {
@@ -317,16 +317,48 @@
       "paint_counts": {
         "3D/3dmodel.model": {},
         "3D/Objects/object_1.model": {},
-        "3D/Objects/object_6.model": {},
         "3D/Objects/object_5.model": {},
         "3D/Objects/object_7.model": {},
+        "3D/Objects/object_6.model": {},
         "3D/Objects/object_4.model": {},
         "3D/Objects/object_3.model": {},
         "3D/Objects/object_2.model": {}
       },
       "mesh_statistics": [
         {
+          "face_count": "3030",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
           "face_count": "2664",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "1044",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "132",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "132",
           "edges_fixed": "0",
           "degenerate_facets": "0",
           "facets_removed": "0",
@@ -348,41 +380,9 @@
           "facets_removed": "0",
           "facets_reversed": "0",
           "backwards_edges": "0"
-        },
-        {
-          "face_count": "132",
-          "edges_fixed": "0",
-          "degenerate_facets": "0",
-          "facets_removed": "0",
-          "facets_reversed": "0",
-          "backwards_edges": "0"
-        },
-        {
-          "face_count": "132",
-          "edges_fixed": "0",
-          "degenerate_facets": "0",
-          "facets_removed": "0",
-          "facets_reversed": "0",
-          "backwards_edges": "0"
-        },
-        {
-          "face_count": "3030",
-          "edges_fixed": "0",
-          "degenerate_facets": "0",
-          "facets_removed": "0",
-          "facets_reversed": "0",
-          "backwards_edges": "0"
-        },
-        {
-          "face_count": "1044",
-          "edges_fixed": "0",
-          "degenerate_facets": "0",
-          "facets_removed": "0",
-          "facets_reversed": "0",
-          "backwards_edges": "0"
         }
       ],
-      "input_plate_sha256": "4211207c2a4f8958c000958c35af1063e79a7d05adc440d18a27601979669903",
+      "input_plate_sha256": "4ca36bc94d63973e7408b99eaaee7bcc63686f3fdd4b3a9a93b0330e85799a28",
       "crc_ok": true
     }
   ]
