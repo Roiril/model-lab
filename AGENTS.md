@@ -37,6 +37,8 @@ server.js            # HTTP + WebSocket サーバー
 
 モデルを作成・派生・追加するときは先に [.agents/skills/model-catalog/SKILL.md](.agents/skills/model-catalog/SKILL.md) を読む。表示名と用途を `models/<name>/catalog.json` に記録する。分類の正本は `models/catalog-groups.json`。完了前に `node tools/catalog.js check` を実行する。既存のモデルIDを改名せず整理する。
 
+SG92Rサーボと付属ホーンの正本は `models/sg92r-photo/`。2026-10-07にユーザーが形状を確定した。寸法は同フォルダの `params.py`、出典と仮値は `README.md` を参照する。旧 `models/sg92r/` と `models/horn/` は削除済み。単独の実寸モデルや計測UIを作り直さず、正本を更新する。古いスキルの計測UI手順よりこの指定を優先する。既存ロボットが使う `lib/servo_core.py` の値を正本として扱わない。既存ロボットの形状変更はその依頼の範囲で行う。
+
 新しいモデルを作るとき、必ずこの順番で進める。
 
 1. **寸法調査** — 実物がある場合は公式スペックを確認する

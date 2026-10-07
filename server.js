@@ -671,12 +671,7 @@ async function main() {
   });
 
   function latestStlFiles() {
-    if (!fs.existsSync(EXPORTS_DIR)) return [];
-    return fs.readdirSync(EXPORTS_DIR)
-      .filter((f) => f.endsWith(".stl"))
-      .sort((a, b) =>
-        fs.statSync(path.join(EXPORTS_DIR, b)).mtimeMs -
-        fs.statSync(path.join(EXPORTS_DIR, a)).mtimeMs);
+    return listStls().map((file) => file.name);
   }
 
   fs.mkdirSync(EXPORTS_DIR, { recursive: true });
