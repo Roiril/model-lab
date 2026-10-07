@@ -29,7 +29,7 @@
 | `ghost:loaded` | `{geometry \| null}` | viewport | 比較用ゴーストが入れ替わった（geometry はモデル座標） |
 | `section:loops` | `{id, loops, ghostLoops, bounds}` | section | 断面を切り直した。loops = `[{points:[[u,v],...], closed}]`、bounds = `{min:[u,v], max:[u,v]}` |
 | `popover` | 下記 | picking | 確定待ちの入力を UI に出してほしい |
-| `popover:close` | — | picking / panels | 出ているポップオーバーを閉じる |
+| `popover:close` | — | picking / panels | サイドの編集欄を閉じ、仮置きのピンを消す |
 | `status` | `{text, kind}` | 誰でも | 右下の状態表示 |
 | `toast` | `{text, action?}` | 誰でも | 一時通知 |
 | `viewport:pointer` | `{point \| null}` | viewport | 3D でカーソル下のモデル座標（ヒント行の座標表示用、間引いて出す） |
@@ -37,6 +37,10 @@
 `popover` payload:
 - 面: `{kind:"faces", x, y, file, faceIds, summary}`（x,y は画面座標 px）。UI が確定したら `store.addItem({type:"faces", file, faceIds, summary, action, amount, note})` → `store.set({selection: []})`
 - ピン: `{kind:"pin", x, y, file, point, normal}`。UI が確定したら `store.addItem({type:"pin", file, point, normal, note})`
+
+面とピンの編集欄は `#inspector` 内へ表示する。3D画面を覆わず、操作を無効にしない。小画面ではモデルと編集欄を上下に分ける。面の再選択では件数と範囲だけ更新し、入力中の内容を保つ。通常クリックでモデルに当たらなければ既存の面選択処理で解除する。Shift/Alt と視点ドラッグの動作は変えない。
+
+`state.showFaceOutlines`（既定 false）は表示だけの設定。上部「面の輪郭」で切り替える。viewport が STL とプレビューの全三角形の辺を描く。比較用モデルと選択の重ね描きは対象外。断面とモデルの再読込にも追従する。
 
 ## 2. 指示（draft.items）の形
 

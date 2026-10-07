@@ -192,6 +192,7 @@ export function createViewport(container, store) {
   let loadGen = 0;
   const frameCbs = new Set();
   const geomCache = new WeakMap();  // geometry -> { promise, result, smooth }
+  const faceOutlines = new Map();   // Mesh -> 輪郭の LineSegments
 
   const invalidate = () => { dirty = true; };
   controls.addEventListener("change", invalidate);
@@ -436,6 +437,50 @@ export function createViewport(container, store) {
     return mat;
   }
 
+  // --- 全三角形の輪郭 ---
+  function displayedMeshes() {
+    if (!previewGroup) return meshes;
+    const found = [];
+    previewGroup.traverse((o) => { if (o.isMesh) found.push(o); });
+    return found;
+  }
+  function addFaceOutline(mesh) {
+    let lines = faceOutlines.get(mesh);
+    if (lines) {
+      lines.visible = true;
+      return;
+    }
+    const geometry = new THREE.WireframeGeometry(mesh.geometry);
+    const material = new THREE.LineBasicMaterial({
+      color: new THREE.Color(bgColor), depthTest: true, depthWrite: false,
+    });
+    material.clippingPlanes = clipArr;
+    clipMaterials.add(material);
+    lines = new THREE.LineSegments(geometry, material);
+    lines.name = "face-outlines";
+    lines.raycast = () => {};
+    lines.renderOrder = mesh.renderOrder + 1;
+    mesh.add(lines);
+    faceOutlines.set(mesh, lines);
+  }
+  function disposeFaceOutline(mesh) {
+    const lines = faceOutlines.get(mesh);
+    if (!lines) return;
+    lines.parent?.remove(lines);
+    lines.geometry.dispose();
+    clipMaterials.delete(lines.material);
+    lines.material.dispose();
+    faceOutlines.delete(mesh);
+  }
+  function syncFaceOutlines(on = store.state.showFaceOutlines) {
+    if (on) {
+      for (const mesh of displayedMeshes()) addFaceOutline(mesh);
+    } else {
+      for (const lines of faceOutlines.values()) lines.visible = false;
+    }
+    invalidate();
+  }
+
   // --- 片側を隠す ---
   function applyClip() {
     const was = clipArr.length;
@@ -553,6 +598,7 @@ export function createViewport(container, store) {
   }
 
   function disposeMesh(mesh) {
+    disposeFaceOutline(mesh);
     mesh.geometry.disposeBoundsTree && mesh.geometry.disposeBoundsTree();
     mesh.geometry.dispose();
     if (mesh.material) { clipMaterials.delete(mesh.material); mesh.material.dispose(); }
@@ -564,6 +610,7 @@ export function createViewport(container, store) {
   }
   function clearPreview() {
     if (!previewGroup) return;
+    previewGroup.traverse((o) => { if (o.isMesh) disposeFaceOutline(o); });
     scene.remove(previewGroup);
     previewGroup = null;
     previewBox = null;
@@ -610,6 +657,7 @@ export function createViewport(container, store) {
       meshes.push(mesh);
       modelRoot.add(mesh);
     }
+    syncFaceOutlines();
     store.set({ frame: "blender-mm" });
     updatePlacement();
     updateScale();
@@ -644,6 +692,7 @@ export function createViewport(container, store) {
     if (ghost) setGhost(null);
     previewGroup = group;
     scene.add(group);
+    syncFaceOutlines();
     group.updateMatrixWorld(true);
     const box = new THREE.Box3().setFromObject(group);
     group.position.y -= box.min.y;
@@ -922,11 +971,13 @@ export function createViewport(container, store) {
 
   // 断面などで平面の向きが変わったら、片側を隠す平面もモデルの動きに合わせ直す
   const offMesh = store.on("mesh:loaded", () => applyClip());
+  const offFaceOutlines = store.on("change:showFaceOutlines", syncFaceOutlines);
 
   function dispose() {
     cancelAnimationFrame(raf);
     ro.disconnect();
     offMesh();
+    offFaceOutlines();
     canvas.removeEventListener("pointermove", onMove);
     canvas.removeEventListener("pointerleave", onLeave);
     clearMeshes();

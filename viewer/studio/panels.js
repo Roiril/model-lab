@@ -1,4 +1,4 @@
-// Studio の画面部品。上部バー・左レール・ヒント行・インスペクタ・ポップオーバー・
+// Studio の画面部品。上部バー・左レール・ヒント行・インスペクタ・サイドの編集欄・
 // コマンドパレット・トースト・ツールチップ。状態は store、モデルや 3D への働きかけは ctx（app.js）経由。
 // 画面の文字は日本語で短く。実装の呼び名は出さない。
 
@@ -205,11 +205,11 @@ export function createPanels({ store, ctx }) {
   // ===========================================================================
   const topbar = $("#topbar");
   const modelNameEl = h("span", { class: "sel-name" }, "モデルを選ぶ");
-  const modelBtn = h("button", { type: "button", class: "sel-btn", "aria-haspopup": "dialog", onclick: () => openPalette() },
+  const modelBtn = h("button", { type: "button", class: "sel-btn model-select", "aria-haspopup": "dialog", onclick: () => openPalette() },
     modelNameEl, icon("chevron", "sm"), kbd("Ctrl K"));
   tip(modelBtn, "モデルを選ぶ", "Ctrl+K");
   const partsLabel = h("span", {}, "パーツ");
-  const partsBtn = h("button", { type: "button", class: "sel-btn", "aria-haspopup": "menu", onclick: () => togglePartsMenu() },
+  const partsBtn = h("button", { type: "button", class: "sel-btn parts-select", "aria-haspopup": "menu", onclick: () => togglePartsMenu() },
     icon("layers", "sm"), partsLabel, icon("chevron", "sm"));
   partsBtn.setAttribute("aria-expanded", "false");
   tip(partsBtn, "同じモデルの STL を選んで表示する");
@@ -224,6 +224,11 @@ export function createPanels({ store, ctx }) {
   tip(sendBtn, "下書きの指示をシュビーに送る", "Ctrl+Enter");
   const undoBtn = h("button", { type: "button", class: "icon-btn", onclick: () => store.undo() }, icon("undo"));
   const redoBtn = h("button", { type: "button", class: "icon-btn", onclick: () => store.redo() }, icon("redo"));
+  const outlinesBtn = h("button", {
+    type: "button", class: "btn outlines-toggle", "aria-pressed": "false",
+    onclick: () => store.set({ showFaceOutlines: !store.state.showFaceOutlines }),
+  }, "面の輪郭");
+  tip(outlinesBtn, "すべての面の輪郭を表示");
   const inspectorToggle = h("button", {
     type: "button", class: "btn inspector-toggle", id: "inspector-toggle",
     "aria-controls": "inspector", "aria-expanded": "true",
@@ -238,7 +243,7 @@ export function createPanels({ store, ctx }) {
 
   topbar.append(
     h("div", { class: "logo" }, icon("logo", "logo-mark"), h("span", {}, "model-lab")),
-    modelBtn, partsBtn,
+    modelBtn, partsBtn, outlinesBtn,
     h("div", { class: "sp" }),
     listenerPill, statusEl,
     h("div", { class: "tb-group" }, undoBtn, redoBtn),
@@ -268,6 +273,7 @@ export function createPanels({ store, ctx }) {
     for (const note of itemList.querySelectorAll("textarea.note")) note.disabled = sending;
     undoBtn.disabled = !(store.canUndo?.() ?? false);
     redoBtn.disabled = !(store.canRedo?.() ?? false);
+    outlinesBtn.setAttribute("aria-pressed", String(!!store.state.showFaceOutlines));
 
     const c = parts.candidates.length;
     partsBtn.disabled = c === 0;
@@ -987,60 +993,36 @@ export function createPanels({ store, ctx }) {
   });
 
   // ===========================================================================
-  // ポップオーバー（面の動作・ピンのメモ）
+  // サイドの編集欄（面の動作・ピンのメモ）。3D の操作を妨げない。
   // ===========================================================================
   const popLayer = $("#layer-popover");
+  inspector.prepend(popLayer);
   let pop = null;
 
-  function setPopoverBackgroundInert() {
-    const changed = [];
-    for (const el of document.body.children) {
-      if (el === popLayer || el.tagName === "SCRIPT" || el.tagName === "NOSCRIPT") continue;
-      changed.push({ el, had: el.hasAttribute("inert") });
-      el.dataset.popoverInert = "true";
-      el.inert = true;
-    }
-    return () => {
-      for (const { el, had } of changed) {
-        delete el.dataset.popoverInert;
-        if (!had && !catalog.isOpen()) el.inert = false;
-      }
-    };
-  }
-  function closePopover({ restoreFocus = true } = {}) {
+  function closePopover({ restoreFocus = true, notify = true } = {}) {
     if (!pop) return;
-    const { prevFocus, restoreInert } = pop;
+    const { prevFocus } = pop;
     pop.el.remove();
     pop = null;
-    restoreInert?.();
+    delete inspector.dataset.editing;
+    // 仮ピンも消す。イベントから呼ばれたときは再通知しない。
+    if (notify) store.emit("popover:close");
     if (restoreFocus && prevFocus && prevFocus.focus && document.contains(prevFocus)) prevFocus.focus({ preventScroll: true });
   }
-  function placePopover(el, x, y) {
-    const w = el.offsetWidth, hgt = el.offsetHeight;
-    let left = x + 16;
-    if (left + w > innerWidth - 8) left = x - w - 16;
-    left = Math.min(Math.max(8, left), Math.max(8, innerWidth - w - 8));
-    let top = y - 16;
-    top = Math.min(Math.max(8, top), Math.max(8, innerHeight - hgt - 8));
-    el.style.left = `${left}px`;
-    el.style.top = `${top}px`;
+  function showEditor(kind) {
+    inspector.dataset.editing = kind;
+    $("#app").dataset.inspector = "open";
+    inspectorToggle.setAttribute("aria-expanded", "true");
+    popLayer.scrollTop = 0;
   }
   function cancelPopover() {
-    store.set({ selection: [] });
-    closePopover();
+    store.set({ selection: [], selectionFile: null });
+    store.emit("popover:close");
   }
 
   function handlePopoverKeydown(e, { cancel, confirm, enterTargets }) {
     if (e.key === "Escape" && !composing(e)) {
       e.preventDefault(); e.stopPropagation(); cancel(); return;
-    }
-    if (e.key === "Tab") {
-      const focusable = [...e.currentTarget.querySelectorAll("button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex='-1'])")];
-      if (!focusable.length) return;
-      const first = focusable[0], last = focusable[focusable.length - 1];
-      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
-      return;
     }
     if (e.key === "Enter" && !e.shiftKey && !composing(e) && enterTargets.includes(e.target)) {
       e.preventDefault(); confirm();
@@ -1056,7 +1038,6 @@ export function createPanels({ store, ctx }) {
   function openFacesPopover(p) {
     closePalette();
     const prevFocus = document.activeElement;
-    const sum = p.summary || {};
     let action = lsGet("studio.lastAction", "thicken");
     if (!ACTIONS[action]) action = "thicken";
     let amount = DEFAULT_AMOUNT[action] ?? null;
@@ -1136,20 +1117,32 @@ export function createPanels({ store, ctx }) {
       markActive(true);
     };
 
-    const n = sum.faceCount ?? (p.faceIds ? p.faceIds.length : 0);
-    const el = h("div", { class: "popover", role: "dialog", "aria-modal": "true", "aria-label": "選んだ面への指示" },
+    const count = h("span", {});
+    const area = h("span", { class: "muted mono" });
+    const thickness = h("div", { class: "pop-sub" });
+    const updateSelection = (next) => {
+      p = next;
+      const sum = p.summary || {};
+      const n = sum.faceCount ?? p.faceIds?.length ?? 0;
+      count.textContent = `面 ${n.toLocaleString("ja-JP")} 枚`;
+      area.textContent = sum.area == null ? "" : `${Math.round(sum.area).toLocaleString("ja-JP")} mm²`;
+      thickness.hidden = !sum.thickness;
+      thickness.textContent = sum.thickness ? `今の肉厚 ${num1(sum.thickness.min)}〜${num1(sum.thickness.median)} mm` : "";
+    };
+    const el = h("div", { class: "popover", role: "region", "aria-label": "選んだ面への指示" },
+      h("h2", { class: "editor-title" }, "選んだ面への指示"),
       h("div", { class: "pop-head" },
         h("span", { class: "dot", style: `--c:${SELECTION_COLOR}` }),
-        h("b", {}, `面 ${n.toLocaleString("ja-JP")} 枚`),
-        sum.area != null ? h("span", { class: "muted mono" }, `${Math.round(sum.area).toLocaleString("ja-JP")} mm²`) : null),
-      sum.thickness ? h("div", { class: "pop-sub" }, `今の肉厚 ${num1(sum.thickness.min)}〜${num1(sum.thickness.median)} mm`) : null,
+        count, area),
+      thickness,
       chips, amountRow, sideRow, note,
       popFoot(cancelPopover, confirm));
     el.addEventListener("keydown", (e) => handlePopoverKeydown(e, { cancel: cancelPopover, confirm, enterTargets: [note, amountInput] }));
     popLayer.append(el);
+    updateSelection(p);
     sync();
-    placePopover(el, p.x, p.y);
-    pop = { el, kind: "faces", prevFocus, restoreInert: setPopoverBackgroundInert() };
+    pop = { el, kind: "faces", file: p.file, prevFocus, updateSelection };
+    showEditor("faces");
     note.focus({ preventScroll: true });
   }
 
@@ -1165,24 +1158,30 @@ export function createPanels({ store, ctx }) {
       setTab("notes");
       markActive(true);
     };
-    const el = h("div", { class: "popover", role: "dialog", "aria-modal": "true", "aria-label": "ピンのメモ" },
+    const el = h("div", { class: "popover", role: "region", "aria-label": "ピンのメモ" },
       h("div", { class: "pop-head" }, icon("pin", "sm"), h("b", {}, `ピン ${no}`)),
       note,
-      popFoot(() => closePopover(), confirm));
-    el.addEventListener("keydown", (e) => handlePopoverKeydown(e, { cancel: closePopover, confirm, enterTargets: [note] }));
+      popFoot(cancelPopover, confirm));
+    el.addEventListener("keydown", (e) => handlePopoverKeydown(e, { cancel: cancelPopover, confirm, enterTargets: [note] }));
     popLayer.append(el);
-    placePopover(el, p.x, p.y);
-    pop = { el, kind: "pin", prevFocus, restoreInert: setPopoverBackgroundInert() };
+    pop = { el, kind: "pin", prevFocus };
+    showEditor("pin");
     note.focus({ preventScroll: true });
   }
 
   store.on("popover", (p) => {
-    closePopover();
+    if (p?.kind === "faces" && pop?.kind === "faces" && pop.file === p.file) {
+      pop.updateSelection(p);
+      return;
+    }
+    // ピンは picking が次の仮置きを描いた後にここへ届く。
+    // 編集欄の置き換えで、その新しい仮置きを消さない。
+    closePopover({ restoreFocus: false, notify: false });
     if (!p) return;
     if (p.kind === "faces") openFacesPopover(p);
     else if (p.kind === "pin") openPinPopover(p);
   });
-  store.on("popover:close", closePopover);
+  store.on("popover:close", () => closePopover({ notify: false }));
 
   function noteOpened(name) {
     recent = [name, ...recent.filter((n) => n !== name)].slice(0, 12);
@@ -1228,6 +1227,7 @@ export function createPanels({ store, ctx }) {
   store.on("change:sectionAxis", renderHint);
   store.on("change:selection", renderHint);
   store.on("change:compare", syncCompare);
+  store.on("change:showFaceOutlines", syncTopbar);
   store.on("change:model", () => { syncTopbar(); closePopover(); });
   store.on("change:files", () => { syncWarn(); refreshRequestButtons(); });
   store.on("mesh:loaded", () => { syncWarn(); refreshRequestButtons(); });

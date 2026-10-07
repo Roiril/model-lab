@@ -59,7 +59,8 @@ export const store = {
     activeSectionId: null,  // 2D エディタで開いている断面
     sketchTool: "select",   // SKETCH_TOOLS のどれか
     intent: "target",       // 次に描く図形の意図
-    compare: null,          // 比較表示中 {label, url} | null
+    compare: null,           // 比較表示中 {label, url} | null
+    showFaceOutlines: false, // 全三角形の輪郭を表示
     draft: { message: "", items: [] },
   },
 

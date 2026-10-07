@@ -2,6 +2,12 @@ import assert from "node:assert/strict";
 import { store } from "./store.js";
 const memory = new Map();
 globalThis.localStorage = { getItem: (k) => memory.get(k) ?? null, setItem: (k, v) => memory.set(k, v) };
+assert.equal(store.state.showFaceOutlines, false);
+let outlineChange = null;
+const offOutline = store.on("change:showFaceOutlines", (value) => { outlineChange = value; });
+store.set({ showFaceOutlines: true });
+assert.equal(outlineChange, true);
+offOutline();
 store.set({ model: "first" });
 store.loadDraft();
 assert.equal(store.canUndo(), false);
@@ -24,4 +30,4 @@ memory.set("studio.draft.first", JSON.stringify({ message: null, items: [null, 5
 store.loadDraft();
 assert.equal(store.state.draft.message, "");
 assert.equal(store.state.draft.items.length, 1);
-console.log("store: 10 assertions passed");
+console.log("store: 12 assertions passed");

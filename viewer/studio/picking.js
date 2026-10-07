@@ -615,7 +615,11 @@ export function createPicking(viewport, store) {
 
     if (tool === "faces") {
       if (!hit) {
-        if (mode === "replace") { setSelection(null, null); store.emit("popover:close"); }
+        if (mode === "replace") {
+          setSelection(null, null);
+          store.emit("popover:close");
+          store.status("選択を解除しました", "ok");
+        }
         return;
       }
       if (busyClick) return;

@@ -193,6 +193,9 @@ textarea.field { min-height: 30px; field-sizing: content; max-height: 160px; lin
 .sel-name { font-family: var(--mono); font-size: 12.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .sel-btn .ic { color: var(--mute); }
 .sel-btn[aria-expanded="true"] { border-color: var(--accent); }
+.outlines-toggle { flex: none; white-space: nowrap; }
+.outlines-toggle[aria-pressed="true"] { color: var(--accent); background: var(--accent-soft); border-color: var(--accent); }
+.model-select { flex: 0 1 auto; min-width: 100px; }
 
 .pill {
   display: inline-flex; align-items: center; gap: 7px; flex: none;
@@ -304,6 +307,11 @@ textarea.field { min-height: 30px; field-sizing: content; max-height: 160px; lin
   display: flex; flex-direction: column; min-height: 0; min-width: 0;
   background: var(--panel); border-left: 1px solid var(--line);
 }
+#layer-popover { display: none; min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
+#inspector[data-editing] #layer-popover { display: block; flex: 1; }
+#inspector[data-editing] > .tabs,
+#inspector[data-editing] > .tabpanel { display: none; }
+.editor-title { font-size: 14px; line-height: 1.5; }
 
 /* --- インスペクタ ---------------------------------------------------------------- */
 
@@ -404,20 +412,17 @@ textarea.field { min-height: 30px; field-sizing: content; max-height: 160px; lin
 
 /* --- 浮いているもの（影はここだけ）------------------------------------------------ */
 
-.popover, .menu, .palette, .toast {
+.menu, .palette, .toast {
   background: var(--raised);
   border: 1px solid var(--line-strong);
   box-shadow: var(--shadow);
 }
 
 .popover {
-  position: fixed; z-index: 120; width: 300px;
-  max-width: calc(100vw - 16px); max-height: calc(100dvh - 16px); overflow-y: auto; overscroll-behavior: contain;
+  position: relative; width: 100%; min-width: 0;
   display: flex; flex-direction: column; gap: 10px;
-  padding: 12px; border-radius: var(--radius-lg);
-  animation: pop-in 0.12s ease-out;
+  padding: 12px;
 }
-@keyframes pop-in { from { opacity: 0; transform: translateY(4px) scale(0.98); } }
 .pop-head { display: flex; align-items: center; gap: 8px; }
 .pop-head .muted { margin-left: auto; font-size: 12px; }
 .pop-sub { margin-top: -4px; color: var(--mute); font-size: 12px; }
@@ -432,7 +437,7 @@ textarea.field { min-height: 30px; field-sizing: content; max-height: 160px; lin
 .chip:active { transform: translateY(1px); }
 .chip[aria-checked="true"] { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); font-weight: 600; }
 .pop-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-.pop-foot { display: flex; justify-content: flex-end; gap: 6px; position: sticky; bottom: -12px; background: var(--raised); padding: 8px 0; }
+.pop-foot { display: flex; justify-content: flex-end; gap: 8px; position: sticky; bottom: -12px; background: var(--panel); padding: 8px 0; }
 
 .menu {
   position: fixed; z-index: 130; min-width: 260px; max-width: 460px; max-height: 60vh; overflow-y: auto;
@@ -536,14 +541,21 @@ button, input, select { touch-action: manipulation; }
 #hintbar { overflow-wrap: anywhere; }
 
 @media (max-width: 760px) {
-  :root { --rail-w: 0px; --top-h: 52px; }
+  :root { --rail-w: 0px; --top-h: 104px; }
   #app { grid-template-columns: minmax(0, 1fr); grid-template-rows: var(--top-h) minmax(0, 1fr) 68px; height: 100dvh; }
-  #topbar { grid-column: 1; min-width: 0; padding: 0 6px; gap: 6px; }
+  #topbar { grid-column: 1; display: grid; grid-template-columns: minmax(0, 1fr) auto auto auto; grid-template-rows: 48px 48px; min-width: 0; padding: 4px 8px; gap: 0 8px; }
   #topbar .logo, #topbar .pill, #topbar .sp { display: none; }
   #topbar .sel-btn { min-width: 0; max-width: none; flex: 1; }
   #topbar .sel-name { max-width: 100%; }
   #topbar .sel-btn:has(.ic) { flex: 0 0 auto; }
   #topbar .sel-btn:has(.sel-name) { flex: 1; }
+  #topbar .model-select { grid-column: 1 / 4; grid-row: 1; width: 100%; height: 44px; }
+  #topbar .parts-select { grid-column: 4; grid-row: 1; height: 44px; padding: 0 8px; }
+  #topbar .parts-select > span:not(.ic) { display: none; }
+  #topbar .outlines-toggle { grid-column: 1; grid-row: 2; padding: 0 8px; }
+  #topbar .tb-group { display: inline-flex; grid-column: 2; grid-row: 2; }
+  #topbar #inspector-toggle { grid-column: 3; grid-row: 2; }
+  #topbar .send-btn { grid-column: 4; grid-row: 2; }
   #topbar .send-btn { height: 44px; width: 44px; padding: 0; position: relative; }
   #topbar .send-btn .count { position: absolute; right: 0; top: 0; }
   #inspector-toggle { display: inline-flex; height: 44px; padding: 0 8px; flex: none; }
@@ -554,8 +566,10 @@ button, input, select { touch-action: manipulation; }
   #rail { grid-row: 3; grid-column: 1; flex-direction: row; justify-content: space-around; gap: 0; padding: 0 4px env(safe-area-inset-bottom); border-right: 0; border-top: 1px solid var(--line); }
   .rail-btn { flex: 1; width: auto; height: 60px; }
   .rail-btn[aria-pressed="true"]::before { display: none; }
-  #inspector { display: none; position: absolute; z-index: 40; inset: var(--top-h) 0 68px; grid-column: auto; grid-row: auto; width: 100%; border-left: 0; }
+  #inspector { display: none; position: static; grid-column: 1; grid-row: 3; width: 100%; border-left: 0; border-top: 1px solid var(--line); }
+  #app[data-inspector="open"] { grid-template-rows: var(--top-h) minmax(0, 1fr) minmax(0, 42%) 68px; }
   #app[data-inspector="open"] #inspector { display: flex; }
+  #app[data-inspector="open"] #rail { grid-row: 4; }
   #hintbar { gap: 6px; padding: 6px; }
   .hint-main { font-size: 12px; }
   .hint-right .coord { font-size: 12px; white-space: normal; }
