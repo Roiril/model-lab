@@ -50,7 +50,7 @@ txt(s,5,171,'実物の重力戻り・指の入りやすさ・振動保持は未�
 operation=save(s,'B3_bottom_operation.svg')
 # Actual triangle-plane sections, manually clipped to the drawing bounds.
 s=svg_start();txt(s,5,7,'B3の保持断面 — 最新CADの三角形と断面平面の交線',4)
-sections=json.loads((R/'actual_sections.json').read_text())['plane_sections'];colors={'01_body':'#777777','13_body_cross_key':'#e69f00','20_short_body_bolt':'#0072b2','21_separate_bolt_cap':'#222222','22_symmetric_cap_stop':'#009e73'}
+sections=json.loads((R/'actual_sections.json').read_text())['plane_sections'];colors={'01_body':'#777777','13_body_cross_key':'#e69f00','20_short_body_bolt':'#0072b2','21_separate_bolt_cap':'#222222','22_symmetric_cap_stop':'#444444'}
 def clipped(a,b,lo,hi):
  a=np.array(a,float);b=np.array(b,float);v=b-a;t0=0;t1=1
  for k in range(2):
@@ -163,7 +163,7 @@ python make_plates.py
 python slice_plates.py  # インストール済みBambu Studioで診断のみ</pre>
 <p>正式な新候補IDは <code>mystery-box-sg92r-b3-candidate</code>。model-labではケース・ディスプレイ分類から日本語「住人の箱」「B3」で検索できます。旧v6修正3、B2、B3中間資料は保持。新候補の全体STLは表示専用で、印刷は <code>stl/</code> の分離22点を使います。</p>
 <footer><p>凍結CAD SHA256: <code>{SHA}</code></p><p>試験片を経て本体へ進める設計・印刷用候補。実物で組める保証、低速による力制限、振動/輸送の安全保持を示す完成品ではありません。</p></footer>'''
-doc='<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>住人の箱 B3 — 印刷・組立手順</title><style>'+css+'''\nbody{margin:0}.report{max-width:1080px;margin:auto;padding:32px}img{max-width:100%;height:auto}figure{margin:20px 0}figcaption{font-size:.85rem;color:#555}table{width:100%;border-collapse:collapse;display:block;overflow-x:auto}td,th{padding:10px;border-bottom:1px solid #ddd;text-align:left}pre{white-space:pre-wrap;overflow-wrap:anywhere}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}code{overflow-wrap:anywhere}p,li{line-height:1.8}h2{margin-top:64px}h3{margin-top:32px}footer{border-top:1px solid #ccc;margin-top:48px;font-size:.8rem}@media(max-width:650px){.report{padding:18px}.grid{grid-template-columns:1fr}h1{font-size:2rem}td,th{min-width:90px}}@media print{.report{padding:0}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}figure,tr{break-inside:avoid}h2,h3{break-after:avoid}}</style></head><body><main class="report">'''+body+'</main></body></html>'
+doc='<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>住人の箱 B3 — 印刷・組立手順</title><style>'+css+'''\nbody{margin:0}.report{max-width:1080px;margin:auto;padding:32px}img{max-width:100%;height:auto}figure{margin:20px 0}figcaption{font-size:.85rem;color:var(--mute)}table{width:100%;border-collapse:collapse;display:block;overflow-x:auto}td,th{padding:10px;border-bottom:1px solid #ddd;text-align:left}pre{white-space:pre-wrap;overflow-wrap:anywhere}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}code{overflow-wrap:anywhere}p,li{line-height:1.8}h2{margin-top:64px}h3{margin-top:32px}footer{border-top:1px solid #ccc;margin-top:48px;font-size:.8rem}@media(max-width:650px){.report{padding:18px}.grid{grid-template-columns:1fr}h1{font-size:2rem}td,th{min-width:90px}}@media print{.report{padding:0}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}figure,tr{break-inside:avoid}h2,h3{break-after:avoid}}</style></head><body><main class="report">'''+body+'</main></body></html>'
 (R/'B3_print_assembly_guide.html').write_text(doc,encoding='utf8')
 inventory=[]
 for p in sorted((R/'coupons').glob('*.stl')):
