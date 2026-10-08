@@ -1,0 +1,551 @@
+{
+  "physical_tested": false,
+  "mesh_consistency": [
+    {
+      "plate": "plate_00_fit_tests",
+      "objects": [
+        {
+          "part": "test_30_local_bottom_lock",
+          "triangles_source": 2644,
+          "triangles_slice": 2644,
+          "canonical_centroids_match": true,
+          "ordered_triangle_vertices_max_error_mm": 1.0026489256631521e-06,
+          "all_triangle_vertices_match": true,
+          "source_stl_sha256": "de7713e5376b19a58138520991337f5081294cc0932b816678c689d651ef3720"
+        },
+        {
+          "part": "test_01_servo_cradle",
+          "triangles_source": 174,
+          "triangles_slice": 174,
+          "canonical_centroids_match": true,
+          "ordered_triangle_vertices_max_error_mm": 4.953674324070789e-07,
+          "all_triangle_vertices_match": true,
+          "source_stl_sha256": "eae6c60642a1582bad3e07e33d2fab62515cfe9e93a8ded441695303547aaaf8"
+        },
+        {
+          "part": "test_02_actual_horn_pocket",
+          "triangles_source": 1192,
+          "triangles_slice": 1192,
+          "canonical_centroids_match": true,
+          "ordered_triangle_vertices_max_error_mm": 6.889373800333942e-07,
+          "all_triangle_vertices_match": true,
+          "source_stl_sha256": "752e5927bc6b2914888ef2778448b83bf75b3882293b94034209d9b79698558a"
+        },
+        {
+          "part": "test_33_actual_key",
+          "triangles_source": 542,
+          "triangles_slice": 542,
+          "canonical_centroids_match": true,
+          "ordered_triangle_vertices_max_error_mm": 2.4231628437121344e-07,
+          "all_triangle_vertices_match": true,
+          "source_stl_sha256": "880aac355552c37c1cb0a39d39b5514d159abd67c4e69aa83311ada9ddea26cc"
+        },
+        {
+          "part": "test_41_actual_cap",
+          "triangles_source": 324,
+          "triangles_slice": 324,
+          "canonical_centroids_match": true,
+          "ordered_triangle_vertices_max_error_mm": 2.419561768718381e-07,
+          "all_triangle_vertices_match": true,
+          "source_stl_sha256": "c76ed87f82ed1fe0c23d87956519d8c66e66cba0e23f815f681a6b884503477b"
+        },
+        {
+          "part": "test_40_actual_bolt",
+          "triangles_source": 134,
+          "triangles_slice": 134,
+          "canonical_centroids_match": true,
+          "ordered_triangle_vertices_max_error_mm": 2.3768371626431417e-07,
+          "all_triangle_vertices_match": true,
+          "source_stl_sha256": "47ab33badbd487e013f6c9086c931a25f6f8167c885c8fd63cb075be42ef5e8c"
+        },
+        {
+          "part": "test_42_actual_stop",
+          "triangles_source": 784,
+          "triangles_slice": 784,
+          "canonical_centroids_match": true,
+          "ordered_triangle_vertices_max_error_mm": 1.7807907148892355e-07,
+          "all_triangle_vertices_match": true,
+          "source_stl_sha256": "f1385ca3f8a2e3feda8c3982f2f4491bdda622c6059f47747e659458c7e0519b"
+        }
+      ],
+      "crc_ok": true
+    },
+    {
+      "plate": "plate_01_shells",
+      "objects": [
+        {
+          "part": "01_body",
+          "triangles_source": 3418,
+          "triangles_slice": 3418,
+          "canonical_centroids_match": true,
+          "ordered_triangle_vertices_max_error_mm": 1.7851608262731133e-06,
+          "all_triangle_vertices_match": true,
+          "source_stl_sha256": "68d6e02e56ee85160eee606255797aa60f3b7bcec2d37690962db6c7621bca88"
+        },
+        {
+          "part": "03_planar_lid",
+          "triangles_source": 106,
+          "triangles_slice": 106,
+          "canonical_centroids_match": true,
+          "ordered_triangle_vertices_max_error_mm": 9.089477543966495e-07,
+          "all_triangle_vertices_match": true,
+          "source_stl_sha256": "979fb42cc04614e81633bcd795cb59056763c91f80f2000a065ac40fbdc18b0a"
+        },
+        {
+          "part": "02_fixed_rear_cover",
+          "triangles_source": 100,
+          "triangles_slice": 100,
+          "canonical_centroids_match": true,
+          "ordered_triangle_vertices_max_error_mm": 9.725219740630564e-07,
+          "all_triangle_vertices_match": true,
+          "source_stl_sha256": "53f418dc7fe997f0b10155755d99743fa1abea6581fc02fa1d492173f8185f96"
+        }
+      ],
+      "crc_ok": true
+    },
+    {
+      "plate": "plate_02_cassette",
+      "objects": [
+        {
+          "part": "04_main_cassette",
+          "triangles_source": 1226,
+          "triangles_slice": 1226,
+          "canonical_centroids_match": false,
+          "ordered_triangle_vertices_max_error_mm": 1.0247192356871437e-06,
+          "all_triangle_vertices_match": true,
+          "source_stl_sha256": "34d0542ec51e62296b52bc1a108d70423363ce7399054a88012a524486089be2"
+        },
+        {
+          "part": "05_front_closure",
+          "triangles_source": 2182,
+          "triangles_slice": 2182,
+          "canonical_centroids_match": true,
+          "ordered_triangle_vertices_max_error_mm": 1.0114868196353655e-06,
+          "all_triangle_vertices_match": true,
+          "source_stl_sha256": "80679317bc3444d8a857520d956189d7118105c725a6c23f74fd83e94b494ea8"
+        },
+        {
+          "part": "06_horn_cup_journal",
+          "triangles_source": 2902,
+          "triangles_slice": 2902,
+          "canonical_centroids_match": true,
+          "ordered_triangle_vertices_max_error_mm": 6.889373800333942e-07,
+          "all_triangle_vertices_match": true,
+          "source_stl_sha256": "826a91b581c69e20fc1d5b639c3a15b2039e42fd78965e036387df59e8fdf42d"
+        }
+      ],
+      "crc_ok": true
+    },
+    {
+      "plate": "plate_03_links",
+      "objects": [
+        {
+          "part": "17_local_cup_capture",
+          "triangles_source": 412,
+          "triangles_slice": 412,
+          "canonical_centroids_match": true,
+          "ordered_triangle_vertices_max_error_mm": 1.009265137241755e-06,
+          "all_triangle_vertices_match": true,
+          "source_stl_sha256": "423cb0a695e1a477502eac0ccfed5a416aaeae15ef75e62da42a6d44d8cc11d3"
+        },
+        {
+          "part": "13_body_cross_key",
+          "triangles_source": 542,
+          "triangles_slice": 542,
+          "canonical_centroids_match": true,
+          "ordered_triangle_vertices_max_error_mm": 2.4231628437121344e-07,
+          "all_triangle_vertices_match": true,
+          "source_stl_sha256": "880aac355552c37c1cb0a39d39b5514d159abd67c4e69aa83311ada9ddea26cc"
+        },
+        {
+          "part": "08_front_rocker",
+          "triangles_source": 3502,
+          "triangles_slice": 3502,
+          "canonical_centroids_match": true,
+          "ordered_triangle_vertices_max_error_mm": 6.991452679017129e-07,
+          "all_triangle_vertices_match": true,
+          "source_stl_sha256": "40e342b81b2b44e657f7e4830e530900c7f768e72935cd8c51833a0610ed0574"
+        },
+        {
+          "part": "07_rear_rocker",
+          "triangles_source": 2592,
+          "triangles_slice": 2592,
+          "canonical_centroids_match": true,
+          "ordered_triangle_vertices_max_error_mm": 6.991452679017129e-07,
+          "all_triangle_vertices_match": true,
+          "source_stl_sha256": "f1ee997ff9c1598469c20f8e68f3296c9563a06aaf6434df07e0ec69e47688d0"
+        },
+        {
+          "part": "09_link",
+          "triangles_source": 1044,
+          "triangles_slice": 1044,
+          "canonical_centroids_match": true,
+          "ordered_triangle_vertices_max_error_mm": 8.980735763941539e-07,
+          "all_triangle_vertices_match": true,
+          "source_stl_sha256": "72642276fa55e732084c05eabed6b471754d248f93cf2fb6e04184de931c4aaa"
+        },
+        {
+          "part": "14_servo_top_keeper",
+          "triangles_source": 60,
+          "triangles_slice": 60,
+          "canonical_centroids_match": true,
+          "ordered_triangle_vertices_max_error_mm": 8.11920930487986e-07,
+          "all_triangle_vertices_match": true,
+          "source_stl_sha256": "1ed9e48c04f4ab5002348b447a4f432249e54b076d603921077154d17592ce3f"
+        },
+        {
+          "part": "15_flat_spacer",
+          "triangles_source": 44,
+          "triangles_slice": 44,
+          "canonical_centroids_match": true,
+          "ordered_triangle_vertices_max_error_mm": 8.119209269352723e-07,
+          "all_triangle_vertices_match": true,
+          "source_stl_sha256": "fb13f79f180da5c7efaacd7684cdd51e7c088504103a612e809705985c8ffd00"
+        },
+        {
+          "part": "16_flat_spacer",
+          "triangles_source": 44,
+          "triangles_slice": 44,
+          "canonical_centroids_match": true,
+          "ordered_triangle_vertices_max_error_mm": 8.119209269352723e-07,
+          "all_triangle_vertices_match": true,
+          "source_stl_sha256": "1202a5fe41247e7371d2eb512836c9a841e7cf2473bb70f36da0970037b27d20"
+        },
+        {
+          "part": "10_hinge_axle",
+          "triangles_source": 132,
+          "triangles_slice": 132,
+          "canonical_centroids_match": true,
+          "ordered_triangle_vertices_max_error_mm": 7.882221231270137e-08,
+          "all_triangle_vertices_match": true,
+          "source_stl_sha256": "8f11eecb14f8baead4ee4b373bc3dd924592fc0765c602b1c651ec3687388a77"
+        },
+        {
+          "part": "11_drive_axle",
+          "triangles_source": 132,
+          "triangles_slice": 132,
+          "canonical_centroids_match": true,
+          "ordered_triangle_vertices_max_error_mm": 1.2027252216384454e-07,
+          "all_triangle_vertices_match": true,
+          "source_stl_sha256": "1fe17320f641984d5475d0c7fae02266af3ed559fcd0a4b09b2ffc9bd23dd78e"
+        },
+        {
+          "part": "19_local_capture_stop",
+          "triangles_source": 12,
+          "triangles_slice": 12,
+          "canonical_centroids_match": true,
+          "ordered_triangle_vertices_max_error_mm": 9.265136213798542e-09,
+          "all_triangle_vertices_match": true,
+          "source_stl_sha256": "bf2cbcb64d009d784f1d385ddc91a249b4cea5baeeff528053e857623048c0d6"
+        },
+        {
+          "part": "12_link_axle",
+          "triangles_source": 132,
+          "triangles_slice": 132,
+          "canonical_centroids_match": true,
+          "ordered_triangle_vertices_max_error_mm": 1.2027252216384454e-07,
+          "all_triangle_vertices_match": true,
+          "source_stl_sha256": "637c122312c2fa6db940ddddc406dd7fdbcc3f298f7cebb329fd4a3d4e429229"
+        },
+        {
+          "part": "18_local_capture_stop",
+          "triangles_source": 12,
+          "triangles_slice": 12,
+          "canonical_centroids_match": true,
+          "ordered_triangle_vertices_max_error_mm": 9.265137101976961e-09,
+          "all_triangle_vertices_match": true,
+          "source_stl_sha256": "d66243efedc69200a632c559dc202569086ef37359687afdd465c9771ae07ceb"
+        }
+      ],
+      "crc_ok": true
+    },
+    {
+      "plate": "plate_04_support_tests",
+      "objects": [
+        {
+          "part": "test_25_actual_U_support",
+          "triangles_source": 360,
+          "triangles_slice": 360,
+          "canonical_centroids_match": true,
+          "ordered_triangle_vertices_max_error_mm": 5.221252443732283e-07,
+          "all_triangle_vertices_match": true,
+          "source_stl_sha256": "dd4daf30ee70fd9c6c412ecf793ffd0a78ea358b58fd38d51099ba7fc7ed7ef8"
+        },
+        {
+          "part": "test_26_actual_cup_with_support",
+          "triangles_source": 2902,
+          "triangles_slice": 2902,
+          "canonical_centroids_match": true,
+          "ordered_triangle_vertices_max_error_mm": 6.889373800333942e-07,
+          "all_triangle_vertices_match": true,
+          "source_stl_sha256": "826a91b581c69e20fc1d5b639c3a15b2039e42fd78965e036387df59e8fdf42d"
+        }
+      ],
+      "crc_ok": true
+    },
+    {
+      "plate": "plate_05_local_lock",
+      "objects": [
+        {
+          "part": "21_separate_bolt_cap",
+          "triangles_source": 324,
+          "triangles_slice": 324,
+          "canonical_centroids_match": true,
+          "ordered_triangle_vertices_max_error_mm": 2.419561768718381e-07,
+          "all_triangle_vertices_match": true,
+          "source_stl_sha256": "c76ed87f82ed1fe0c23d87956519d8c66e66cba0e23f815f681a6b884503477b"
+        },
+        {
+          "part": "20_short_body_bolt",
+          "triangles_source": 134,
+          "triangles_slice": 134,
+          "canonical_centroids_match": true,
+          "ordered_triangle_vertices_max_error_mm": 2.3768371626431417e-07,
+          "all_triangle_vertices_match": true,
+          "source_stl_sha256": "47ab33badbd487e013f6c9086c931a25f6f8167c885c8fd63cb075be42ef5e8c"
+        },
+        {
+          "part": "22_symmetric_cap_stop",
+          "triangles_source": 784,
+          "triangles_slice": 784,
+          "canonical_centroids_match": true,
+          "ordered_triangle_vertices_max_error_mm": 1.7807907148892355e-07,
+          "all_triangle_vertices_match": true,
+          "source_stl_sha256": "f1385ca3f8a2e3feda8c3982f2f4491bdda622c6059f47747e659458c7e0519b"
+        }
+      ],
+      "crc_ok": true
+    }
+  ],
+  "root_layers": [
+    {
+      "part": "20_short_body_bolt",
+      "layer_Z_mm": 0.8,
+      "ROI_mm": [
+        5.5,
+        -0.4,
+        9,
+        3.1
+      ],
+      "section_axis_position": [
+        "y",
+        2.0
+      ],
+      "section_span_mm": [
+        6.3,
+        8.3
+      ],
+      "extrusion_centerline_crossings": 5,
+      "crossing_positions_width_mm": [
+        [
+          6.902,
+          0.45
+        ],
+        [
+          7.698,
+          0.45
+        ],
+        [
+          6.51,
+          0.42
+        ],
+        [
+          8.09,
+          0.42
+        ],
+        [
+          7.3,
+          0.43172
+        ]
+      ],
+      "line_widths_mm": [
+        0.42,
+        0.43172,
+        0.45
+      ],
+      "trace_segments": 15,
+      "label": "20 の位置決め足／根元"
+    },
+    {
+      "part": "22_symmetric_cap_stop",
+      "layer_Z_mm": 0.8,
+      "ROI_mm": [
+        -0.2,
+        0.5,
+        4.1,
+        4.2
+      ],
+      "section_axis_position": [
+        "x",
+        2.0
+      ],
+      "section_span_mm": [
+        1,
+        3.6
+      ],
+      "extrusion_centerline_crossings": 7,
+      "crossing_positions_width_mm": [
+        [
+          2.591,
+          0.45
+        ],
+        [
+          2.009,
+          0.45
+        ],
+        [
+          2.998,
+          0.45
+        ],
+        [
+          1.602,
+          0.45
+        ],
+        [
+          3.39,
+          0.42
+        ],
+        [
+          1.21,
+          0.42
+        ],
+        [
+          2.3,
+          0.2176
+        ]
+      ],
+      "line_widths_mm": [
+        0.102549,
+        0.102588,
+        0.196015,
+        0.196049,
+        0.2176,
+        0.237053,
+        0.237063,
+        0.42,
+        0.45
+      ],
+      "trace_segments": 74,
+      "label": "22 の位置決め足／根元"
+    },
+    {
+      "part": "01_body",
+      "layer_Z_mm": 8.0,
+      "ROI_mm": [
+        40,
+        8.5,
+        50,
+        12
+      ],
+      "section_axis_position": [
+        "x",
+        45
+      ],
+      "section_span_mm": [
+        9.5,
+        10.7
+      ],
+      "extrusion_centerline_crossings": 3,
+      "crossing_positions_width_mm": [
+        [
+          10.509,
+          0.45
+        ],
+        [
+          10.102,
+          0.45
+        ],
+        [
+          9.71,
+          0.42
+        ]
+      ],
+      "line_widths_mm": [
+        0.42,
+        0.45,
+        0.50344
+      ],
+      "trace_segments": 16,
+      "label": "T 案内の 1.2 mm 根元"
+    },
+    {
+      "part": "01_body",
+      "layer_Z_mm": 4.2,
+      "ROI_mm": [
+        53,
+        7,
+        63,
+        18
+      ],
+      "section_axis_position": [
+        "x",
+        59.8
+      ],
+      "section_span_mm": [
+        11.2,
+        13.8
+      ],
+      "extrusion_centerline_crossings": 2,
+      "crossing_positions_width_mm": [
+        [
+          13.609,
+          0.45
+        ],
+        [
+          11.391,
+          0.45
+        ]
+      ],
+      "line_widths_mm": [
+        0.115122,
+        0.115818,
+        0.151524,
+        0.153603,
+        0.168465,
+        0.189425,
+        0.191388,
+        0.206062,
+        0.217313,
+        0.230765,
+        0.23172,
+        0.237278,
+        0.271747,
+        0.272891,
+        0.298808,
+        0.312729,
+        0.320657,
+        0.351416,
+        0.364002,
+        0.367668,
+        0.387819,
+        0.393244,
+        0.39516,
+        0.406824,
+        0.413008,
+        0.414691,
+        0.418087,
+        0.41999,
+        0.42,
+        0.445495,
+        0.45,
+        0.504839,
+        0.61216,
+        0.612813,
+        0.62238
+      ],
+      "trace_segments": 732,
+      "label": "22 の下向き保持段差"
+    }
+  ],
+  "bridge_and_support": {
+    "plate_01_shells": {
+      "max_single_bridge_extrusion_run_mm": 65.3614314791223,
+      "support_extrusion_segments": 0
+    },
+    "plate_05_local_lock": {
+      "max_single_bridge_extrusion_run_mm": 4.671000000000021,
+      "support_extrusion_segments": 0
+    }
+  },
+  "limits": "Actual offline centreline traces and nominal widths, not deposited-polymer effective strength. At0.2mm layers20/22 feet1.6mm=8 layers and21 base1.8mm=9layers. Root cross-sections20>=3.2mm2 and22>=4.16mm2 are CAD values; cracks/layer bonding/bridge sag untested."
+}

@@ -1,0 +1,2891 @@
+{
+  "source_blend": "editable_cube_B3.blend",
+  "source_sha256": "1ababb93dba4ef81368ba7767d3b13f180b4e43a407c336acef9d6a9150ac4c6",
+  "method": "BVH candidate then exact finite-solid intersections>1e-6mm3 and minimum overlap depth>0.00005mm; flat coplanar bearing touches excluded. coarse0.1 degree bracket then12 bisections (0.0000245 degree), numerical reporting only. Not physical contact force.",
+  "bias_disk_mm": 0.339,
+  "bias_samples": 65,
+  "nominal": {
+    "bias_XY_mm": [
+      0,
+      0
+    ],
+    "minus": {
+      "01_body": {
+        "angle_abs_deg": 4.662402343750001,
+        "bracket_deg": [
+          4.662377929687501,
+          4.662402343750001
+        ]
+      },
+      "20_short_body_bolt": {
+        "angle_abs_deg": 4.2154296875,
+        "bracket_deg": [
+          4.215405273437501,
+          4.2154296875
+        ]
+      },
+      "REFERENCE exciter25x10": {
+        "angle_abs_deg": 9.585400390625,
+        "bracket_deg": [
+          9.585375976562501,
+          9.585400390625
+        ]
+      }
+    },
+    "plus": {
+      "01_body": {
+        "angle_abs_deg": null,
+        "clear_through_abs_deg": 10
+      },
+      "20_short_body_bolt": {
+        "angle_abs_deg": 4.2154296875,
+        "bracket_deg": [
+          4.215405273437501,
+          4.2154296875
+        ]
+      },
+      "REFERENCE exciter25x10": {
+        "angle_abs_deg": null,
+        "clear_through_abs_deg": 10
+      }
+    }
+  },
+  "minus_summary": {
+    "valid_nonintersecting_start_biases": 43,
+    "unsafe_first_speaker_biases": [],
+    "minimum_angle_margin_deg": 4.57421875
+  },
+  "plus_summary": {
+    "valid_nonintersecting_start_biases": 43,
+    "unsafe_first_speaker_biases": [],
+    "minimum_angle_margin_deg": null
+  },
+  "rows": [
+    {
+      "bias_XY_mm": [
+        0,
+        0
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": 4.662402343750001,
+          "bracket_deg": [
+            4.662377929687501,
+            4.662402343750001
+          ]
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 4.2154296875,
+          "bracket_deg": [
+            4.215405273437501,
+            4.2154296875
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": 9.585400390625,
+          "bracket_deg": [
+            9.585375976562501,
+            9.585400390625
+          ]
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 4.2154296875,
+          "bracket_deg": [
+            4.215405273437501,
+            4.2154296875
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        0.17,
+        0.0
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": 7.026562500000001,
+          "bracket_deg": [
+            7.026538085937501,
+            7.026562500000001
+          ]
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 3.6614257812500006,
+          "bracket_deg": [
+            3.6614013671875005,
+            3.6614257812500006
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": 9.514379882812499,
+          "bracket_deg": [
+            9.514355468749999,
+            9.514379882812499
+          ]
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 3.6614257812500006,
+          "bracket_deg": [
+            3.6614013671875005,
+            3.6614257812500006
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        0.1667334976685492,
+        0.03316535474274181
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": 6.4849853515625,
+          "bracket_deg": [
+            6.4849609375,
+            6.4849853515625
+          ]
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 3.8123779296875,
+          "bracket_deg": [
+            3.8123535156250004,
+            3.8123779296875
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": 9.43359375,
+          "bracket_deg": [
+            9.4335693359375,
+            9.43359375
+          ]
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 3.6924804687500004,
+          "bracket_deg": [
+            3.6924560546875003,
+            3.6924804687500004
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        0.15705952052691877,
+        0.06505618350206527
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": 5.8926025390625,
+          "bracket_deg": [
+            5.892578125,
+            5.8926025390625
+          ]
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 4.1471923828125,
+          "bracket_deg": [
+            4.147167968750001,
+            4.1471923828125
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": 9.358544921875001,
+          "bracket_deg": [
+            9.3585205078125,
+            9.358544921875001
+          ]
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 3.3152099609374996,
+          "bracket_deg": [
+            3.315185546875,
+            3.3152099609374996
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        0.1413498340914327,
+        0.09444693961333238
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": 5.276708984375,
+          "bracket_deg": [
+            5.276684570312501,
+            5.276708984375
+          ]
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 4.6581787109375,
+          "bracket_deg": [
+            4.658154296875,
+            4.6581787109375
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": 9.292041015625,
+          "bracket_deg": [
+            9.2920166015625,
+            9.292041015625
+          ]
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 2.9061767578125006,
+          "bracket_deg": [
+            2.9061523437500005,
+            2.9061767578125006
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        0.1202081528017131,
+        0.1202081528017131
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": 4.662402343750001,
+          "bracket_deg": [
+            4.662377929687501,
+            4.662402343750001
+          ]
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 4.901171875000001,
+          "bracket_deg": [
+            4.901147460937501,
+            4.901171875000001
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": 9.236621093750001,
+          "bracket_deg": [
+            9.236596679687501,
+            9.236621093750001
+          ]
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 2.54638671875,
+          "bracket_deg": [
+            2.5463623046875,
+            2.54638671875
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        0.09444693961333239,
+        0.1413498340914327
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": 4.071826171875001,
+          "bracket_deg": [
+            4.071801757812501,
+            4.071826171875001
+          ]
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 5.016455078125,
+          "bracket_deg": [
+            5.016430664062501,
+            5.016455078125
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": 9.19443359375,
+          "bracket_deg": [
+            9.1944091796875,
+            9.19443359375
+          ]
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 2.250244140625,
+          "bracket_deg": [
+            2.2502197265625,
+            2.250244140625
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        0.06505618350206528,
+        0.15705952052691877
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": 3.5237060546875,
+          "bracket_deg": [
+            3.523681640625,
+            3.5237060546875
+          ]
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 5.102221679687501,
+          "bracket_deg": [
+            5.1021972656250005,
+            5.102221679687501
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": 9.167138671875001,
+          "bracket_deg": [
+            9.1671142578125,
+            9.167138671875001
+          ]
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 2.0296875,
+          "bracket_deg": [
+            2.0296630859375,
+            2.0296875
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        0.03316535474274182,
+        0.1667334976685492
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": 3.0340820312499996,
+          "bracket_deg": [
+            3.0340576171874996,
+            3.0340820312499996
+          ]
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 5.155078124999999,
+          "bracket_deg": [
+            5.1550537109375,
+            5.155078124999999
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": 9.155810546875,
+          "bracket_deg": [
+            9.1557861328125,
+            9.155810546875
+          ]
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 1.8936523437500004,
+          "bracket_deg": [
+            1.8936279296875003,
+            1.8936523437500004
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        1.0409497792752502e-17,
+        0.17
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": 2.6161376953124997,
+          "bracket_deg": [
+            2.6161132812499996,
+            2.6161376953124997
+          ]
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 5.172924804687501,
+          "bracket_deg": [
+            5.172900390625001,
+            5.172924804687501
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": 9.161010742187502,
+          "bracket_deg": [
+            9.160986328125002,
+            9.161010742187502
+          ]
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 1.84765625,
+          "bracket_deg": [
+            1.8476318359375,
+            1.84765625
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        -0.03316535474274179,
+        0.1667334976685492
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": 2.2804199218750005,
+          "bracket_deg": [
+            2.280395507812501,
+            2.2804199218750005
+          ]
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 5.155078124999999,
+          "bracket_deg": [
+            5.1550537109375,
+            5.155078124999999
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": 9.1825927734375,
+          "bracket_deg": [
+            9.182568359375,
+            9.1825927734375
+          ]
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 1.8936523437500004,
+          "bracket_deg": [
+            1.8936279296875003,
+            1.8936523437500004
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        -0.06505618350206525,
+        0.15705952052691877
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": 2.034912109375,
+          "bracket_deg": [
+            2.0348876953125,
+            2.034912109375
+          ]
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 5.102221679687501,
+          "bracket_deg": [
+            5.1021972656250005,
+            5.102221679687501
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": 9.219750976562503,
+          "bracket_deg": [
+            9.219726562500004,
+            9.219750976562503
+          ]
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 2.0296875,
+          "bracket_deg": [
+            2.0296630859375,
+            2.0296875
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        -0.09444693961333234,
+        0.14134983409143273
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": 1.8854248046875002,
+          "bracket_deg": [
+            1.885400390625,
+            1.8854248046875002
+          ]
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 5.016455078125,
+          "bracket_deg": [
+            5.016430664062501,
+            5.016455078125
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": 9.271166992187503,
+          "bracket_deg": [
+            9.271142578125001,
+            9.271166992187503
+          ]
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 2.250244140625,
+          "bracket_deg": [
+            2.2502197265625,
+            2.250244140625
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        -0.12020815280171308,
+        0.1202081528017131
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": 1.835205078125,
+          "bracket_deg": [
+            1.8351806640625,
+            1.835205078125
+          ]
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 4.901147460937501,
+          "bracket_deg": [
+            4.901123046875001,
+            4.901147460937501
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": 9.334814453125002,
+          "bracket_deg": [
+            9.3347900390625,
+            9.334814453125002
+          ]
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 2.5464111328125,
+          "bracket_deg": [
+            2.54638671875,
+            2.5464111328125
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        -0.14134983409143273,
+        0.09444693961333238
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": 1.8854736328125004,
+          "bracket_deg": [
+            1.8854492187500003,
+            1.8854736328125004
+          ]
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 4.76083984375,
+          "bracket_deg": [
+            4.760815429687501,
+            4.76083984375
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": 9.408251953125,
+          "bracket_deg": [
+            9.4082275390625,
+            9.408251953125
+          ]
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 2.9061767578125006,
+          "bracket_deg": [
+            2.9061523437500005,
+            2.9061767578125006
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        -0.15705952052691877,
+        0.06505618350206528
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": 2.0349609375,
+          "bracket_deg": [
+            2.0349365234375,
+            2.0349609375
+          ]
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 4.601000976562501,
+          "bracket_deg": [
+            4.6009765625000005,
+            4.601000976562501
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": 9.488647460937502,
+          "bracket_deg": [
+            9.488623046875002,
+            9.488647460937502
+          ]
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 3.315185546875,
+          "bracket_deg": [
+            3.3151611328125,
+            3.315185546875
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        -0.1667334976685492,
+        0.03316535474274187
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": 2.2804199218750005,
+          "bracket_deg": [
+            2.280395507812501,
+            2.2804199218750005
+          ]
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 4.4278564453125,
+          "bracket_deg": [
+            4.42783203125,
+            4.4278564453125
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": 9.572827148437502,
+          "bracket_deg": [
+            9.572802734375003,
+            9.572827148437502
+          ]
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 3.7573486328125,
+          "bracket_deg": [
+            3.75732421875,
+            3.7573486328125
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        -0.17,
+        2.0818995585505005e-17
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": 2.6162109375,
+          "bracket_deg": [
+            2.6161865234375,
+            2.6162109375
+          ]
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 4.2154296875,
+          "bracket_deg": [
+            4.215405273437501,
+            4.2154296875
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": 9.657446289062502,
+          "bracket_deg": [
+            9.657421875000002,
+            9.657446289062502
+          ]
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 4.215380859375,
+          "bracket_deg": [
+            4.2153564453125,
+            4.215380859375
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        -0.1667334976685492,
+        -0.03316535474274182
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": 3.0340820312499996,
+          "bracket_deg": [
+            3.0340576171874996,
+            3.0340820312499996
+          ]
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 3.7573486328125,
+          "bracket_deg": [
+            3.75732421875,
+            3.7573486328125
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": 9.7392578125,
+          "bracket_deg": [
+            9.7392333984375,
+            9.7392578125
+          ]
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 4.671679687500001,
+          "bracket_deg": [
+            4.671655273437501,
+            4.671679687500001
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        -0.15705952052691877,
+        -0.06505618350206525
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": 3.5237548828125003,
+          "bracket_deg": [
+            3.52373046875,
+            3.5237548828125003
+          ]
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 3.315185546875,
+          "bracket_deg": [
+            3.3151611328125,
+            3.315185546875
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": 9.815039062500002,
+          "bracket_deg": [
+            9.815014648437502,
+            9.815039062500002
+          ]
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 5.108813476562501,
+          "bracket_deg": [
+            5.1087890625000005,
+            5.108813476562501
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        -0.14134983409143273,
+        -0.09444693961333234
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": 4.071826171875001,
+          "bracket_deg": [
+            4.071801757812501,
+            4.071826171875001
+          ]
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 2.9061523437500005,
+          "bracket_deg": [
+            2.9061279296875004,
+            2.9061523437500005
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": 9.8817626953125,
+          "bracket_deg": [
+            9.88173828125,
+            9.8817626953125
+          ]
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 5.510327148437501,
+          "bracket_deg": [
+            5.510302734375,
+            5.510327148437501
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        -0.12020815280171311,
+        -0.12020815280171308
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": 4.662451171875,
+          "bracket_deg": [
+            4.662426757812501,
+            4.662451171875
+          ]
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 2.5464111328125,
+          "bracket_deg": [
+            2.54638671875,
+            2.5464111328125
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": 9.936938476562501,
+          "bracket_deg": [
+            9.936914062500001,
+            9.936938476562501
+          ]
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 5.861181640625,
+          "bracket_deg": [
+            5.861157226562501,
+            5.861181640625
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        -0.09444693961333238,
+        -0.1413498340914327
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": 5.2767333984375,
+          "bracket_deg": [
+            5.276708984375,
+            5.2767333984375
+          ]
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 2.2502685546875,
+          "bracket_deg": [
+            2.250244140625,
+            2.2502685546875
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": 9.978442382812498,
+          "bracket_deg": [
+            9.978417968749998,
+            9.978442382812498
+          ]
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 6.1484375,
+          "bracket_deg": [
+            6.1484130859375,
+            6.1484375
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        -0.06505618350206537,
+        -0.1570595205269187
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": 5.8926025390625,
+          "bracket_deg": [
+            5.892578125,
+            5.8926025390625
+          ]
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 2.0296875,
+          "bracket_deg": [
+            2.0296630859375,
+            2.0296875
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 6.3614746093750005,
+          "bracket_deg": [
+            6.3614501953125,
+            6.3614746093750005
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        -0.033165354742741876,
+        -0.16673349766854917
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": 6.4850830078125,
+          "bracket_deg": [
+            6.485058593750001,
+            6.4850830078125
+          ]
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 1.8936523437500004,
+          "bracket_deg": [
+            1.8936279296875003,
+            1.8936523437500004
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 6.492480468749999,
+          "bracket_deg": [
+            6.4924560546875,
+            6.492480468749999
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        -3.1228493378257505e-17,
+        -0.17
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": 7.026562500000001,
+          "bracket_deg": [
+            7.026538085937501,
+            7.026562500000001
+          ]
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 1.84765625,
+          "bracket_deg": [
+            1.8476318359375,
+            1.84765625
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 6.536669921875,
+          "bracket_deg": [
+            6.5366455078125,
+            6.536669921875
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        0.033165354742741814,
+        -0.1667334976685492
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": 7.4886474609375,
+          "bracket_deg": [
+            7.4886230468749995,
+            7.4886474609375
+          ]
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 1.8936523437500004,
+          "bracket_deg": [
+            1.8936279296875003,
+            1.8936523437500004
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": 9.985717773437502,
+          "bracket_deg": [
+            9.985693359375002,
+            9.985717773437502
+          ]
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 6.492480468749999,
+          "bracket_deg": [
+            6.4924560546875,
+            6.492480468749999
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        0.06505618350206531,
+        -0.15705952052691874
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": 7.8435302734375,
+          "bracket_deg": [
+            7.843505859375,
+            7.8435302734375
+          ]
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 2.0296875,
+          "bracket_deg": [
+            2.0296630859375,
+            2.0296875
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": 9.947827148437499,
+          "bracket_deg": [
+            9.947802734375,
+            9.947827148437499
+          ]
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 6.3614746093750005,
+          "bracket_deg": [
+            6.3614501953125,
+            6.3614746093750005
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        0.09444693961333232,
+        -0.14134983409143273
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": 8.067333984375,
+          "bracket_deg": [
+            8.0673095703125,
+            8.067333984375
+          ]
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 2.2502685546875,
+          "bracket_deg": [
+            2.250244140625,
+            2.2502685546875
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": 9.896191406250002,
+          "bracket_deg": [
+            9.896166992187503,
+            9.896191406250002
+          ]
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 6.127368164062499,
+          "bracket_deg": [
+            6.12734375,
+            6.127368164062499
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        0.12020815280171306,
+        -0.12020815280171311
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": 8.143847656250001,
+          "bracket_deg": [
+            8.143823242187501,
+            8.143847656250001
+          ]
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 2.5464111328125,
+          "bracket_deg": [
+            2.54638671875,
+            2.5464111328125
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": 9.832788085937501,
+          "bracket_deg": [
+            9.832763671875,
+            9.832788085937501
+          ]
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 5.32763671875,
+          "bracket_deg": [
+            5.3276123046875,
+            5.32763671875
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        0.1413498340914327,
+        -0.09444693961333238
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": 8.067236328124999,
+          "bracket_deg": [
+            8.067211914062499,
+            8.067236328124999
+          ]
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 2.9061523437500005,
+          "bracket_deg": [
+            2.9061279296875004,
+            2.9061523437500005
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": 9.760034179687498,
+          "bracket_deg": [
+            9.760009765624996,
+            9.760034179687498
+          ]
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 4.6581787109375,
+          "bracket_deg": [
+            4.658154296875,
+            4.6581787109375
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        0.1570595205269187,
+        -0.06505618350206537
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": 7.843505859375,
+          "bracket_deg": [
+            7.8434814453125,
+            7.843505859375
+          ]
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 3.315185546875,
+          "bracket_deg": [
+            3.3151611328125,
+            3.315185546875
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": 9.680712890625,
+          "bracket_deg": [
+            9.6806884765625,
+            9.680712890625
+          ]
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 4.1471923828125,
+          "bracket_deg": [
+            4.147167968750001,
+            4.1471923828125
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        0.16673349766854917,
+        -0.03316535474274188
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": 7.488671875,
+          "bracket_deg": [
+            7.4886474609375,
+            7.488671875
+          ]
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 3.6924560546875003,
+          "bracket_deg": [
+            3.692431640625,
+            3.6924560546875003
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": 9.5977783203125,
+          "bracket_deg": [
+            9.59775390625,
+            9.5977783203125
+          ]
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 3.8123779296875,
+          "bracket_deg": [
+            3.8123535156250004,
+            3.8123779296875
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        0.339,
+        0.0
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": 0.7943359375000001,
+          "bracket_deg": [
+            0.7943115234375001,
+            0.7943359375000001
+          ]
+        },
+        "20_short_body_bolt": {
+          "start_intersection": true,
+          "angle_abs_deg": 0
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": 9.444775390625,
+          "bracket_deg": [
+            9.444750976562501,
+            9.444775390625
+          ]
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "start_intersection": true,
+          "angle_abs_deg": 0
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        0.33248621005669515,
+        0.06613561916346748
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": 1.5558349609374997,
+          "bracket_deg": [
+            1.5558105468749999,
+            1.5558349609374997
+          ]
+        },
+        "20_short_body_bolt": {
+          "start_intersection": true,
+          "angle_abs_deg": 0
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": 9.284765625,
+          "bracket_deg": [
+            9.2847412109375,
+            9.284765625
+          ]
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "start_intersection": true,
+          "angle_abs_deg": 0
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        0.3131951615213262,
+        0.12972968357176545
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": 7.2326171875,
+          "bracket_deg": [
+            7.232592773437499,
+            7.2326171875
+          ]
+        },
+        "20_short_body_bolt": {
+          "start_intersection": true,
+          "angle_abs_deg": 0
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": 9.1357666015625,
+          "bracket_deg": [
+            9.1357421875,
+            9.1357666015625
+          ]
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "start_intersection": true,
+          "angle_abs_deg": 0
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        0.28186819857056283,
+        0.18833830899364515
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": 5.9138671875,
+          "bracket_deg": [
+            5.9138427734375,
+            5.9138671875
+          ]
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 0.5745849609375001,
+          "bracket_deg": [
+            0.5745605468750001,
+            0.5745849609375001
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": 9.0033935546875,
+          "bracket_deg": [
+            9.003369140625,
+            9.0033935546875
+          ]
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 0.47592773437499997,
+          "bracket_deg": [
+            0.47590332031249993,
+            0.47592773437499997
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        0.23970919882223965,
+        0.23970919882223965
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": 4.6625000000000005,
+          "bracket_deg": [
+            4.6624755859375,
+            4.6625000000000005
+          ]
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 1.9465576171875,
+          "bracket_deg": [
+            1.9465332031250002,
+            1.9465576171875
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": 8.89267578125,
+          "bracket_deg": [
+            8.8926513671875,
+            8.89267578125
+          ]
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 0.8614990234375001,
+          "bracket_deg": [
+            0.8614746093750001,
+            0.8614990234375001
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        0.18833830899364518,
+        0.28186819857056283
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": 3.5054687500000004,
+          "bracket_deg": [
+            3.5054443359375003,
+            3.5054687500000004
+          ]
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 3.6516845703125003,
+          "bracket_deg": [
+            3.65166015625,
+            3.6516845703125003
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": 8.807861328125,
+          "bracket_deg": [
+            8.8078369140625,
+            8.807861328125
+          ]
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 0.26025390625,
+          "bracket_deg": [
+            0.2602294921875,
+            0.26025390625
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        0.12972968357176545,
+        0.3131951615213262
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": 2.4641357421875,
+          "bracket_deg": [
+            2.464111328125,
+            2.4641357421875
+          ]
+        },
+        "20_short_body_bolt": {
+          "start_intersection": true,
+          "angle_abs_deg": 0
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": 8.752392578125,
+          "bracket_deg": [
+            8.752368164062501,
+            8.752392578125
+          ]
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "start_intersection": true,
+          "angle_abs_deg": 0
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        0.06613561916346751,
+        0.33248621005669515
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": 1.5558349609374997,
+          "bracket_deg": [
+            1.5558105468749999,
+            1.5558349609374997
+          ]
+        },
+        "20_short_body_bolt": {
+          "start_intersection": true,
+          "angle_abs_deg": 0
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": 8.728637695312502,
+          "bracket_deg": [
+            8.728613281250002,
+            8.728637695312502
+          ]
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "start_intersection": true,
+          "angle_abs_deg": 0
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        2.0757763245547637e-17,
+        0.339
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": 0.7944091796875001,
+          "bracket_deg": [
+            0.794384765625,
+            0.7944091796875001
+          ]
+        },
+        "20_short_body_bolt": {
+          "start_intersection": true,
+          "angle_abs_deg": 0
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": 8.7377685546875,
+          "bracket_deg": [
+            8.737744140625,
+            8.7377685546875
+          ]
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "start_intersection": true,
+          "angle_abs_deg": 0
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        -0.06613561916346747,
+        0.33248621005669515
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": 0.19091796875,
+          "bracket_deg": [
+            0.1908935546875,
+            0.19091796875
+          ]
+        },
+        "20_short_body_bolt": {
+          "start_intersection": true,
+          "angle_abs_deg": 0
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": 8.7797119140625,
+          "bracket_deg": [
+            8.7796875,
+            8.7797119140625
+          ]
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "start_intersection": true,
+          "angle_abs_deg": 0
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        -0.12972968357176543,
+        0.3131951615213262
+      ],
+      "minus": {
+        "01_body": {
+          "start_intersection": true,
+          "angle_abs_deg": 0
+        },
+        "20_short_body_bolt": {
+          "start_intersection": true,
+          "angle_abs_deg": 0
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": 8.853149414062502,
+          "bracket_deg": [
+            8.853125000000002,
+            8.853149414062502
+          ]
+        }
+      },
+      "plus": {
+        "01_body": {
+          "start_intersection": true,
+          "angle_abs_deg": 0
+        },
+        "20_short_body_bolt": {
+          "start_intersection": true,
+          "angle_abs_deg": 0
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        -0.18833830899364506,
+        0.2818681985705629
+      ],
+      "minus": {
+        "01_body": {
+          "start_intersection": true,
+          "angle_abs_deg": 0
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 5.7862792968750005,
+          "bracket_deg": [
+            5.7862548828125,
+            5.7862792968750005
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": 8.955346679687498,
+          "bracket_deg": [
+            8.955322265624996,
+            8.955346679687498
+          ]
+        }
+      },
+      "plus": {
+        "01_body": {
+          "start_intersection": true,
+          "angle_abs_deg": 0
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 0.26025390625,
+          "bracket_deg": [
+            0.2602294921875,
+            0.26025390625
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        -0.2397091988222396,
+        0.23970919882223965
+      ],
+      "minus": {
+        "01_body": {
+          "start_intersection": true,
+          "angle_abs_deg": 0
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 5.5546630859375,
+          "bracket_deg": [
+            5.554638671875,
+            5.5546630859375
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": 9.08251953125,
+          "bracket_deg": [
+            9.0824951171875,
+            9.08251953125
+          ]
+        }
+      },
+      "plus": {
+        "01_body": {
+          "start_intersection": true,
+          "angle_abs_deg": 0
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 0.8614990234375001,
+          "bracket_deg": [
+            0.8614746093750001,
+            0.8614990234375001
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        -0.2818681985705629,
+        0.18833830899364515
+      ],
+      "minus": {
+        "01_body": {
+          "start_intersection": true,
+          "angle_abs_deg": 0
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 5.273193359375,
+          "bracket_deg": [
+            5.2731689453125,
+            5.273193359375
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": 9.2296875,
+          "bracket_deg": [
+            9.229663085937501,
+            9.2296875
+          ]
+        }
+      },
+      "plus": {
+        "01_body": {
+          "start_intersection": true,
+          "angle_abs_deg": 0
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 1.5891601562500002,
+          "bracket_deg": [
+            1.5891357421875,
+            1.5891601562500002
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        -0.3131951615213262,
+        0.12972968357176548
+      ],
+      "minus": {
+        "01_body": {
+          "start_intersection": true,
+          "angle_abs_deg": 0
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 4.953076171875,
+          "bracket_deg": [
+            4.953051757812499,
+            4.953076171875
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": 9.391015625,
+          "bracket_deg": [
+            9.3909912109375,
+            9.391015625
+          ]
+        }
+      },
+      "plus": {
+        "01_body": {
+          "start_intersection": true,
+          "angle_abs_deg": 0
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 2.413134765625001,
+          "bracket_deg": [
+            2.413110351562501,
+            2.413134765625001
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        -0.33248621005669515,
+        0.06613561916346761
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": 0.190869140625,
+          "bracket_deg": [
+            0.19084472656249998,
+            0.190869140625
+          ]
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 4.606860351562501,
+          "bracket_deg": [
+            4.606835937500001,
+            4.606860351562501
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": 9.560131835937499,
+          "bracket_deg": [
+            9.560107421875,
+            9.560131835937499
+          ]
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 3.3002197265625006,
+          "bracket_deg": [
+            3.3001953125000005,
+            3.3002197265625006
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        -0.339,
+        4.1515526491095274e-17
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": 0.7943603515625001,
+          "bracket_deg": [
+            0.7943359375000001,
+            0.7943603515625001
+          ]
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 4.215405273437501,
+          "bracket_deg": [
+            4.215380859375,
+            4.215405273437501
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": 9.73017578125,
+          "bracket_deg": [
+            9.730151367187501,
+            9.73017578125
+          ]
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 4.215405273437501,
+          "bracket_deg": [
+            4.215380859375,
+            4.215405273437501
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        -0.33248621005669515,
+        -0.06613561916346752
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": 1.5558349609374997,
+          "bracket_deg": [
+            1.5558105468749999,
+            1.5558349609374997
+          ]
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 3.3002197265625006,
+          "bracket_deg": [
+            3.3001953125000005,
+            3.3002197265625006
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": 9.894360351562499,
+          "bracket_deg": [
+            9.8943359375,
+            9.894360351562499
+          ]
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 5.123608398437499,
+          "bracket_deg": [
+            5.123583984374999,
+            5.123608398437499
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        -0.31319516152132626,
+        -0.1297296835717654
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": 2.46416015625,
+          "bracket_deg": [
+            2.4641357421875,
+            2.46416015625
+          ]
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 2.413134765625001,
+          "bracket_deg": [
+            2.413110351562501,
+            2.413134765625001
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 5.990625,
+          "bracket_deg": [
+            5.9906005859375,
+            5.990625
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        -0.28186819857056294,
+        -0.18833830899364506
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": 3.5054687500000004,
+          "bracket_deg": [
+            3.5054443359375003,
+            3.5054687500000004
+          ]
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 1.5891601562500002,
+          "bracket_deg": [
+            1.5891357421875,
+            1.5891601562500002
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 6.7845458984375,
+          "bracket_deg": [
+            6.784521484375,
+            6.7845458984375
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        -0.23970919882223968,
+        -0.2397091988222396
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": 4.662451171875,
+          "bracket_deg": [
+            4.662426757812501,
+            4.662451171875
+          ]
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 0.8615234375,
+          "bracket_deg": [
+            0.8614990234375001,
+            0.8615234375
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 7.4765869140625,
+          "bracket_deg": [
+            7.4765625,
+            7.4765869140625
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        -0.18833830899364515,
+        -0.28186819857056283
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": 5.9138671875,
+          "bracket_deg": [
+            5.9138427734375,
+            5.9138671875
+          ]
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 0.2602783203125,
+          "bracket_deg": [
+            0.26025390625,
+            0.2602783203125
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 8.041918945312501,
+          "bracket_deg": [
+            8.041894531250001,
+            8.041918945312501
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        -0.12972968357176562,
+        -0.31319516152132615
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": 7.232568359375,
+          "bracket_deg": [
+            7.2325439453125,
+            7.232568359375
+          ]
+        },
+        "20_short_body_bolt": {
+          "start_intersection": true,
+          "angle_abs_deg": 0
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "start_intersection": true,
+          "angle_abs_deg": 0
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        -0.06613561916346762,
+        -0.3324862100566951
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": 8.583227539062499,
+          "bracket_deg": [
+            8.583203124999999,
+            8.583227539062499
+          ]
+        },
+        "20_short_body_bolt": {
+          "start_intersection": true,
+          "angle_abs_deg": 0
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "start_intersection": true,
+          "angle_abs_deg": 0
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        -6.227328973664291e-17,
+        -0.339
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": 9.9170654296875,
+          "bracket_deg": [
+            9.917041015625,
+            9.9170654296875
+          ]
+        },
+        "20_short_body_bolt": {
+          "start_intersection": true,
+          "angle_abs_deg": 0
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "start_intersection": true,
+          "angle_abs_deg": 0
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        0.0661356191634675,
+        -0.33248621005669515
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "start_intersection": true,
+          "angle_abs_deg": 0
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "start_intersection": true,
+          "angle_abs_deg": 0
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        0.1297296835717655,
+        -0.3131951615213262
+      ],
+      "minus": {
+        "01_body": {
+          "start_intersection": true,
+          "angle_abs_deg": 0
+        },
+        "20_short_body_bolt": {
+          "start_intersection": true,
+          "angle_abs_deg": 0
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      },
+      "plus": {
+        "01_body": {
+          "start_intersection": true,
+          "angle_abs_deg": 0
+        },
+        "20_short_body_bolt": {
+          "start_intersection": true,
+          "angle_abs_deg": 0
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        0.18833830899364504,
+        -0.28186819857056294
+      ],
+      "minus": {
+        "01_body": {
+          "start_intersection": true,
+          "angle_abs_deg": 0
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 0.2602783203125,
+          "bracket_deg": [
+            0.26025390625,
+            0.2602783203125
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      },
+      "plus": {
+        "01_body": {
+          "start_intersection": true,
+          "angle_abs_deg": 0
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 3.6517822265625006,
+          "bracket_deg": [
+            3.6517578125000005,
+            3.6517822265625006
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        0.23970919882223957,
+        -0.23970919882223968
+      ],
+      "minus": {
+        "01_body": {
+          "start_intersection": true,
+          "angle_abs_deg": 0
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 0.8615234375,
+          "bracket_deg": [
+            0.8614990234375001,
+            0.8615234375
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      },
+      "plus": {
+        "01_body": {
+          "start_intersection": true,
+          "angle_abs_deg": 0
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 1.9463867187500004,
+          "bracket_deg": [
+            1.9463623046875003,
+            1.9463867187500004
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        0.28186819857056283,
+        -0.18833830899364515
+      ],
+      "minus": {
+        "01_body": {
+          "start_intersection": true,
+          "angle_abs_deg": 0
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 0.47590332031249993,
+          "bracket_deg": [
+            0.47587890624999996,
+            0.47590332031249993
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": 9.9312744140625,
+          "bracket_deg": [
+            9.93125,
+            9.9312744140625
+          ]
+        }
+      },
+      "plus": {
+        "01_body": {
+          "start_intersection": true,
+          "angle_abs_deg": 0
+        },
+        "20_short_body_bolt": {
+          "angle_abs_deg": 0.5745117187500001,
+          "bracket_deg": [
+            0.5744873046875001,
+            0.5745117187500001
+          ]
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        0.31319516152132615,
+        -0.12972968357176565
+      ],
+      "minus": {
+        "01_body": {
+          "start_intersection": true,
+          "angle_abs_deg": 0
+        },
+        "20_short_body_bolt": {
+          "start_intersection": true,
+          "angle_abs_deg": 0
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": 9.7747314453125,
+          "bracket_deg": [
+            9.774707031250001,
+            9.7747314453125
+          ]
+        }
+      },
+      "plus": {
+        "01_body": {
+          "start_intersection": true,
+          "angle_abs_deg": 0
+        },
+        "20_short_body_bolt": {
+          "start_intersection": true,
+          "angle_abs_deg": 0
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    },
+    {
+      "bias_XY_mm": [
+        0.3324862100566951,
+        -0.06613561916346763
+      ],
+      "minus": {
+        "01_body": {
+          "angle_abs_deg": 0.1908935546875,
+          "bracket_deg": [
+            0.190869140625,
+            0.1908935546875
+          ]
+        },
+        "20_short_body_bolt": {
+          "start_intersection": true,
+          "angle_abs_deg": 0
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": 9.610522460937501,
+          "bracket_deg": [
+            9.610498046875001,
+            9.610522460937501
+          ]
+        }
+      },
+      "plus": {
+        "01_body": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        },
+        "20_short_body_bolt": {
+          "start_intersection": true,
+          "angle_abs_deg": 0
+        },
+        "REFERENCE exciter25x10": {
+          "angle_abs_deg": null,
+          "clear_through_abs_deg": 10
+        }
+      }
+    }
+  ],
+  "physical_tested": false
+}

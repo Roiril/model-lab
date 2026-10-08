@@ -1,0 +1,525 @@
+{
+  "physical_tested": false,
+  "note": "Actual offline slices, no printer connection or print. G-code and sliced machine-specific3MF excluded. Support removal, fits and bridging remain untested. Manual painted support paths on plate02 and support trial plate04; independent support layer height disabled.",
+  "plates": [
+    {
+      "plate": "plate_00_fit_tests",
+      "printer_profile": "Bambu Lab X1 Carbon 0.4 nozzle (locally selected saved profile)",
+      "material": "Bambu PLA Basic",
+      "slicer": "Bambu Studio02.03.01.51",
+      "layer_height": "0.2",
+      "wall_loops": "4",
+      "supports_enabled": false,
+      "actual_support_paths": false,
+      "support_type": "normal(manual)",
+      "statistics": {
+        "total layer number": "136",
+        "max_z_height": "27.20",
+        "total filament weight [g]": "26.28",
+        "model printing time": "53m 27s; total estimated time: 1h 1m 44s"
+      },
+      "feature_blocks": {
+        "Custom": 2,
+        "Inner wall": 611,
+        "Outer wall": 637,
+        "Bottom surface": 6,
+        "Gap infill": 354,
+        "Internal solid infill": 146,
+        "Overhang wall": 70,
+        "Bridge": 28,
+        "Top surface": 43,
+        "Sparse infill": 300,
+        "Floating vertical shell": 84
+      },
+      "paint_counts": {
+        "3D/3dmodel.model": {},
+        "3D/Objects/object_6.model": {},
+        "3D/Objects/object_2.model": {},
+        "3D/Objects/object_5.model": {},
+        "3D/Objects/object_4.model": {},
+        "3D/Objects/object_7.model": {},
+        "3D/Objects/object_3.model": {},
+        "3D/Objects/object_1.model": {}
+      },
+      "mesh_statistics": [
+        {
+          "face_count": "2644",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "1192",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "542",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "134",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "324",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "174",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "784",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        }
+      ],
+      "input_plate_sha256": "61a8a6d8bb6cd5da825df78241db53735fd23096b1ff139df75aa4e3c5b0855e",
+      "crc_ok": true
+    },
+    {
+      "plate": "plate_01_shells",
+      "printer_profile": "Bambu Lab X1 Carbon 0.4 nozzle (locally selected saved profile)",
+      "material": "Bambu PLA Basic",
+      "slicer": "Bambu Studio02.03.01.51",
+      "layer_height": "0.2",
+      "wall_loops": "4",
+      "supports_enabled": false,
+      "actual_support_paths": false,
+      "support_type": "normal(manual)",
+      "statistics": {
+        "total layer number": "338",
+        "max_z_height": "67.60",
+        "total filament weight [g]": "89.38",
+        "model printing time": "2h 39m 5s; total estimated time: 2h 47m 22s"
+      },
+      "feature_blocks": {
+        "Custom": 2,
+        "Inner wall": 1742,
+        "Outer wall": 1804,
+        "Gap infill": 995,
+        "Bottom surface": 3,
+        "Internal solid infill": 156,
+        "Overhang wall": 48,
+        "Bridge": 31,
+        "Sparse infill": 497,
+        "Floating vertical shell": 79,
+        "Top surface": 52
+      },
+      "paint_counts": {
+        "3D/3dmodel.model": {},
+        "3D/Objects/object_3.model": {},
+        "3D/Objects/object_2.model": {},
+        "3D/Objects/object_1.model": {}
+      },
+      "mesh_statistics": [
+        {
+          "face_count": "3418",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "106",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "100",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        }
+      ],
+      "input_plate_sha256": "507f11f0d634acdbccac30656ff104feb2113ccbbdf3da8e872d55cf4998c736",
+      "crc_ok": true
+    },
+    {
+      "plate": "plate_02_cassette",
+      "printer_profile": "Bambu Lab X1 Carbon 0.4 nozzle (locally selected saved profile)",
+      "material": "Bambu PLA Basic",
+      "slicer": "Bambu Studio02.03.01.51",
+      "layer_height": "0.2",
+      "wall_loops": "4",
+      "supports_enabled": true,
+      "actual_support_paths": true,
+      "support_type": "normal(manual)",
+      "statistics": {
+        "total layer number": "253",
+        "max_z_height": "50.60",
+        "total filament weight [g]": "48.24",
+        "model printing time": "1h 34m 41s; total estimated time: 1h 42m 58s"
+      },
+      "feature_blocks": {
+        "Custom": 2,
+        "Inner wall": 1147,
+        "Outer wall": 1237,
+        "Bottom surface": 3,
+        "Support": 172,
+        "Internal solid infill": 594,
+        "Sparse infill": 352,
+        "Bridge": 23,
+        "Floating vertical shell": 57,
+        "Gap infill": 559,
+        "Top surface": 35,
+        "Support interface": 10,
+        "Overhang wall": 22,
+        "Support transition": 2
+      },
+      "paint_counts": {
+        "3D/3dmodel.model": {},
+        "3D/Objects/object_1.model": {
+          "8": 1198,
+          "4": 28
+        },
+        "3D/Objects/object_2.model": {
+          "8": 2182
+        },
+        "3D/Objects/object_3.model": {
+          "8": 2346,
+          "4": 556
+        }
+      },
+      "mesh_statistics": [
+        {
+          "face_count": "2902",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "1226",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "2182",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        }
+      ],
+      "input_plate_sha256": "f6cba4f47c698c4580033e810a29d1d90dfff83208b51a0ea272f9bb726ecd3f",
+      "crc_ok": true
+    },
+    {
+      "plate": "plate_03_links",
+      "printer_profile": "Bambu Lab X1 Carbon 0.4 nozzle (locally selected saved profile)",
+      "material": "Bambu PLA Basic",
+      "slicer": "Bambu Studio02.03.01.51",
+      "layer_height": "0.2",
+      "wall_loops": "4",
+      "supports_enabled": false,
+      "actual_support_paths": false,
+      "support_type": "normal(manual)",
+      "statistics": {
+        "total layer number": "73",
+        "max_z_height": "14.60",
+        "total filament weight [g]": "14.85",
+        "model printing time": "32m 45s; total estimated time: 41m 2s"
+      },
+      "feature_blocks": {
+        "Custom": 2,
+        "Inner wall": 459,
+        "Outer wall": 472,
+        "Gap infill": 243,
+        "Bottom surface": 10,
+        "Internal solid infill": 203,
+        "Top surface": 22,
+        "Sparse infill": 198,
+        "Floating vertical shell": 49,
+        "Bridge": 13,
+        "Overhang wall": 6
+      },
+      "paint_counts": {
+        "3D/3dmodel.model": {},
+        "3D/Objects/object_7.model": {},
+        "3D/Objects/object_6.model": {},
+        "3D/Objects/object_8.model": {},
+        "3D/Objects/object_11.model": {},
+        "3D/Objects/object_13.model": {},
+        "3D/Objects/object_9.model": {},
+        "3D/Objects/object_10.model": {},
+        "3D/Objects/object_12.model": {},
+        "3D/Objects/object_1.model": {},
+        "3D/Objects/object_2.model": {},
+        "3D/Objects/object_5.model": {},
+        "3D/Objects/object_4.model": {},
+        "3D/Objects/object_3.model": {}
+      },
+      "mesh_statistics": [
+        {
+          "face_count": "412",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "2592",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "3502",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "1044",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "542",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "132",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "12",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "12",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "44",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "60",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "44",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "132",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "132",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        }
+      ],
+      "input_plate_sha256": "b1c623dc79492549441c5bd26dd5e6af87180e898c924012e947301e4028c84b",
+      "crc_ok": true
+    },
+    {
+      "plate": "plate_04_support_tests",
+      "printer_profile": "Bambu Lab X1 Carbon 0.4 nozzle (locally selected saved profile)",
+      "material": "Bambu PLA Basic",
+      "slicer": "Bambu Studio02.03.01.51",
+      "layer_height": "0.2",
+      "wall_loops": "4",
+      "supports_enabled": true,
+      "actual_support_paths": true,
+      "support_type": "normal(manual)",
+      "statistics": {
+        "total layer number": "165",
+        "max_z_height": "33.00",
+        "total filament weight [g]": "16.71",
+        "model printing time": "34m 42s; total estimated time: 42m 59s"
+      },
+      "feature_blocks": {
+        "Custom": 2,
+        "Inner wall": 327,
+        "Outer wall": 321,
+        "Bottom surface": 2,
+        "Support": 171,
+        "Internal solid infill": 46,
+        "Sparse infill": 228,
+        "Floating vertical shell": 22,
+        "Top surface": 9,
+        "Bridge": 11,
+        "Gap infill": 118,
+        "Support interface": 10,
+        "Overhang wall": 18,
+        "Support transition": 2
+      },
+      "paint_counts": {
+        "3D/3dmodel.model": {},
+        "3D/Objects/object_1.model": {
+          "8": 332,
+          "4": 28
+        },
+        "3D/Objects/object_2.model": {
+          "8": 2346,
+          "4": 556
+        }
+      },
+      "mesh_statistics": [
+        {
+          "face_count": "2902",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "360",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        }
+      ],
+      "input_plate_sha256": "cd79a9ebc1be53c62c9597b5dca8813adaaa6636866656421ae579f89232ee1b",
+      "crc_ok": true
+    },
+    {
+      "plate": "plate_05_local_lock",
+      "printer_profile": "Bambu Lab X1 Carbon 0.4 nozzle (locally selected saved profile)",
+      "material": "Bambu PLA Basic",
+      "slicer": "Bambu Studio02.03.01.51",
+      "layer_height": "0.2",
+      "wall_loops": "4",
+      "supports_enabled": false,
+      "actual_support_paths": false,
+      "support_type": "normal(manual)",
+      "statistics": {
+        "total layer number": "61",
+        "max_z_height": "12.20",
+        "total filament weight [g]": "1.49",
+        "model printing time": "5m 32s; total estimated time: 13m 49s"
+      },
+      "feature_blocks": {
+        "Custom": 2,
+        "Inner wall": 152,
+        "Outer wall": 149,
+        "Gap infill": 97,
+        "Bottom surface": 1,
+        "Internal solid infill": 39,
+        "Bridge": 4,
+        "Overhang wall": 13,
+        "Top surface": 9
+      },
+      "paint_counts": {
+        "3D/3dmodel.model": {},
+        "3D/Objects/object_2.model": {},
+        "3D/Objects/object_1.model": {},
+        "3D/Objects/object_3.model": {}
+      },
+      "mesh_statistics": [
+        {
+          "face_count": "784",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "324",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        },
+        {
+          "face_count": "134",
+          "edges_fixed": "0",
+          "degenerate_facets": "0",
+          "facets_removed": "0",
+          "facets_reversed": "0",
+          "backwards_edges": "0"
+        }
+      ],
+      "input_plate_sha256": "2a2925cda4628d274deb91335cf539fd06e5df50254717d6d00c21d2478a81a9",
+      "crc_ok": true
+    }
+  ]
+}

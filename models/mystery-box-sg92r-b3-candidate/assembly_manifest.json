@@ -1,0 +1,442 @@
+{
+  "revision": "B3",
+  "center_screw_required": false,
+  "size_mm": 70.0,
+  "overall_closed_with_key_width_mm": 70.0,
+  "wall_mm": 2.4,
+  "lid_skin_mm": 2.4,
+  "O": [
+    40.0,
+    37.0
+  ],
+  "H": [
+    22.0,
+    61.79999923706055
+  ],
+  "crank_r_mm": 14.0,
+  "rocker_local_mm": [
+    14.0,
+    -4.0
+  ],
+  "link_length_mm": 29.25869387023603,
+  "lid_range_deg": [
+    0,
+    65.0
+  ],
+  "servo_range_deg": [
+    -10.00000553509803,
+    55.578141001863656
+  ],
+  "parts": [
+    {
+      "name": "01_body",
+      "group": "fixed",
+      "print_bounds_mm": [
+        70.00000762939453,
+        70.00000762939453,
+        67.5999984741211
+      ],
+      "print_axis": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "quantity": 1,
+      "source_blend_sha256": "1ababb93dba4ef81368ba7767d3b13f180b4e43a407c336acef9d6a9150ac4c6"
+    },
+    {
+      "name": "02_fixed_rear_cover",
+      "group": "fixed",
+      "print_bounds_mm": [
+        70.0,
+        26.799999237060547,
+        11.500020027160645
+      ],
+      "print_axis": [
+        4.371138828673793e-08,
+        0.0,
+        1.0,
+        0.0
+      ],
+      "quantity": 1,
+      "source_blend_sha256": "1ababb93dba4ef81368ba7767d3b13f180b4e43a407c336acef9d6a9150ac4c6"
+    },
+    {
+      "name": "03_planar_lid",
+      "group": "lid",
+      "print_bounds_mm": [
+        70.0,
+        42.400001525878906,
+        12.399999618530273
+      ],
+      "print_axis": [
+        4.371138828673793e-08,
+        0.0,
+        1.0,
+        0.0
+      ],
+      "quantity": 1,
+      "source_blend_sha256": "1ababb93dba4ef81368ba7767d3b13f180b4e43a407c336acef9d6a9150ac4c6"
+    },
+    {
+      "name": "04_main_cassette",
+      "group": "fixed",
+      "print_bounds_mm": [
+        64.30000305175781,
+        61.599998474121094,
+        50.599998474121094
+      ],
+      "print_axis": [
+        0.7071067690849304,
+        -0.0,
+        -0.7071067690849304,
+        -0.0
+      ],
+      "quantity": 1,
+      "source_blend_sha256": "1ababb93dba4ef81368ba7767d3b13f180b4e43a407c336acef9d6a9150ac4c6"
+    },
+    {
+      "name": "05_front_closure",
+      "group": "fixed",
+      "print_bounds_mm": [
+        64.30000305175781,
+        61.599998474121094,
+        14.900010108947754
+      ],
+      "print_axis": [
+        0.7071067690849304,
+        0.0,
+        0.7071067690849304,
+        0.0
+      ],
+      "quantity": 1,
+      "source_blend_sha256": "1ababb93dba4ef81368ba7767d3b13f180b4e43a407c336acef9d6a9150ac4c6"
+    },
+    {
+      "name": "06_horn_cup_journal",
+      "group": "crank",
+      "print_bounds_mm": [
+        31.84514045715332,
+        36.129669189453125,
+        20.799999237060547
+      ],
+      "print_axis": [
+        0.7071067690849304,
+        0.0,
+        0.7071067690849304,
+        0.0
+      ],
+      "quantity": 1,
+      "source_blend_sha256": "1ababb93dba4ef81368ba7767d3b13f180b4e43a407c336acef9d6a9150ac4c6"
+    },
+    {
+      "name": "07_rear_rocker",
+      "group": "lid",
+      "print_bounds_mm": [
+        18.700000762939453,
+        32.5,
+        4.0
+      ],
+      "print_axis": [
+        0.7071067690849304,
+        -0.0,
+        -0.7071067690849304,
+        -0.0
+      ],
+      "quantity": 1,
+      "source_blend_sha256": "1ababb93dba4ef81368ba7767d3b13f180b4e43a407c336acef9d6a9150ac4c6"
+    },
+    {
+      "name": "08_front_rocker",
+      "group": "lid",
+      "print_bounds_mm": [
+        18.700000762939453,
+        32.5,
+        14.500009536743164
+      ],
+      "print_axis": [
+        0.7071067690849304,
+        0.0,
+        0.7071067690849304,
+        0.0
+      ],
+      "quantity": 1,
+      "source_blend_sha256": "1ababb93dba4ef81368ba7767d3b13f180b4e43a407c336acef9d6a9150ac4c6"
+    },
+    {
+      "name": "09_link",
+      "group": "link",
+      "print_bounds_mm": [
+        33.229148864746094,
+        27.784549713134766,
+        3.0
+      ],
+      "print_axis": [
+        0.7071067690849304,
+        -0.0,
+        -0.7071067690849304,
+        -0.0
+      ],
+      "quantity": 1,
+      "source_blend_sha256": "1ababb93dba4ef81368ba7767d3b13f180b4e43a407c336acef9d6a9150ac4c6"
+    },
+    {
+      "name": "10_hinge_axle",
+      "group": "fixed",
+      "print_bounds_mm": [
+        18.899999618530273,
+        6.0,
+        4.242640018463135
+      ],
+      "print_axis": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "quantity": 1,
+      "source_blend_sha256": "1ababb93dba4ef81368ba7767d3b13f180b4e43a407c336acef9d6a9150ac4c6"
+    },
+    {
+      "name": "11_drive_axle",
+      "group": "crank",
+      "print_bounds_mm": [
+        15.800000190734863,
+        5.0,
+        3.5355300903320312
+      ],
+      "print_axis": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "quantity": 1,
+      "source_blend_sha256": "1ababb93dba4ef81368ba7767d3b13f180b4e43a407c336acef9d6a9150ac4c6"
+    },
+    {
+      "name": "12_link_axle",
+      "group": "lid",
+      "print_bounds_mm": [
+        9.5,
+        5.0,
+        3.5355300903320312
+      ],
+      "print_axis": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "quantity": 1,
+      "source_blend_sha256": "1ababb93dba4ef81368ba7767d3b13f180b4e43a407c336acef9d6a9150ac4c6"
+    },
+    {
+      "name": "13_body_cross_key",
+      "group": "fixed",
+      "print_bounds_mm": [
+        41.20000076293945,
+        15.800000190734863,
+        11.699999809265137
+      ],
+      "print_axis": [
+        0.7071067690849304,
+        0.7071067690849304,
+        0.0,
+        0.0
+      ],
+      "quantity": 1,
+      "source_blend_sha256": "1ababb93dba4ef81368ba7767d3b13f180b4e43a407c336acef9d6a9150ac4c6"
+    },
+    {
+      "name": "14_servo_top_keeper",
+      "group": "fixed",
+      "print_bounds_mm": [
+        52.700008392333984,
+        5.800000190734863,
+        5.600009918212891
+      ],
+      "print_axis": [
+        4.371138828673793e-08,
+        0.0,
+        1.0,
+        0.0
+      ],
+      "quantity": 1,
+      "source_blend_sha256": "1ababb93dba4ef81368ba7767d3b13f180b4e43a407c336acef9d6a9150ac4c6"
+    },
+    {
+      "name": "15_flat_spacer",
+      "group": "fixed",
+      "print_bounds_mm": [
+        52.70000076293945,
+        5.599999904632568,
+        5.599999904632568
+      ],
+      "print_axis": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "quantity": 1,
+      "source_blend_sha256": "1ababb93dba4ef81368ba7767d3b13f180b4e43a407c336acef9d6a9150ac4c6"
+    },
+    {
+      "name": "16_flat_spacer",
+      "group": "fixed",
+      "print_bounds_mm": [
+        52.70000076293945,
+        5.599999904632568,
+        5.599999904632568
+      ],
+      "print_axis": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "quantity": 1,
+      "source_blend_sha256": "1ababb93dba4ef81368ba7767d3b13f180b4e43a407c336acef9d6a9150ac4c6"
+    },
+    {
+      "name": "17_local_cup_capture",
+      "group": "fixed",
+      "print_bounds_mm": [
+        21.809999465942383,
+        41.79999923706055,
+        3.5
+      ],
+      "print_axis": [
+        0.7071067690849304,
+        0.0,
+        0.7071067690849304,
+        0.0
+      ],
+      "quantity": 1,
+      "source_blend_sha256": "1ababb93dba4ef81368ba7767d3b13f180b4e43a407c336acef9d6a9150ac4c6"
+    },
+    {
+      "name": "18_local_capture_stop",
+      "group": "fixed",
+      "print_bounds_mm": [
+        5.199999809265137,
+        6.400000095367432,
+        3.200000047683716
+      ],
+      "print_axis": [
+        0.7071067690849304,
+        0.0,
+        0.7071067690849304,
+        0.0
+      ],
+      "quantity": 1,
+      "source_blend_sha256": "1ababb93dba4ef81368ba7767d3b13f180b4e43a407c336acef9d6a9150ac4c6"
+    },
+    {
+      "name": "19_local_capture_stop",
+      "group": "fixed",
+      "print_bounds_mm": [
+        9.300000190734863,
+        6.400000095367432,
+        3.200000047683716
+      ],
+      "print_axis": [
+        0.7071067690849304,
+        0.0,
+        0.7071067690849304,
+        0.0
+      ],
+      "quantity": 1,
+      "source_blend_sha256": "1ababb93dba4ef81368ba7767d3b13f180b4e43a407c336acef9d6a9150ac4c6"
+    },
+    {
+      "name": "20_short_body_bolt",
+      "group": "fixed",
+      "quantity": 1,
+      "print_axis": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "print_bounds_mm": [
+        11.300000190734863,
+        15.0,
+        5.5
+      ],
+      "source_blend_sha256": "1ababb93dba4ef81368ba7767d3b13f180b4e43a407c336acef9d6a9150ac4c6"
+    },
+    {
+      "name": "21_separate_bolt_cap",
+      "group": "fixed",
+      "quantity": 1,
+      "print_axis": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "print_bounds_mm": [
+        18.199989318847656,
+        11.100000381469727,
+        8.600000381469727
+      ],
+      "source_blend_sha256": "1ababb93dba4ef81368ba7767d3b13f180b4e43a407c336acef9d6a9150ac4c6"
+    },
+    {
+      "name": "22_symmetric_cap_stop",
+      "group": "fixed",
+      "quantity": 1,
+      "print_axis": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "print_bounds_mm": [
+        9.0,
+        4.599999904632568,
+        12.100000381469727
+      ],
+      "source_blend_sha256": "1ababb93dba4ef81368ba7767d3b13f180b4e43a407c336acef9d6a9150ac4c6"
+    }
+  ],
+  "reference_source": "C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\sg92r-photo",
+  "physical_tested": false,
+  "boolean_solver_fallbacks": [
+    [
+      "pad short outer",
+      "UNION",
+      "pad short outer end1"
+    ],
+    [
+      "outer nonmating support pad",
+      "UNION",
+      "pad A boss"
+    ],
+    [
+      "actual short horn pocket",
+      "UNION",
+      "actual short horn pocket end1"
+    ],
+    [
+      "07_rear_rocker",
+      "UNION",
+      "rocker elbow"
+    ],
+    [
+      "08_front_rocker",
+      "UNION",
+      "hinge eye"
+    ]
+  ],
+  "notes": [
+    "22 tentative print parts; whole cube candidate with stock SG92R horn, no required metal links/pins/springs. Offline slices are diagnosis only.",
+    "Local20/22 index feet1.6mm, intentional+Z1.8 followed by translation/rotation. Normal service does not touch22.",
+    "Unmeasured printer/material fit: print local coupons first. Do not mix old versions."
+  ],
+  "overall_closed_with_key_depth_mm": 70.0,
+  "source_blend_sha256": "1ababb93dba4ef81368ba7767d3b13f180b4e43a407c336acef9d6a9150ac4c6"
+}

@@ -1,0 +1,71 @@
+{
+  "physical_tested": false,
+  "geometry_sha256": "1ababb93dba4ef81368ba7767d3b13f180b4e43a407c336acef9d6a9150ac4c6",
+  "lid_angle_step_deg": 0.1,
+  "servo_range_deg": [
+    -10.000003663495628,
+    55.57813673995145
+  ],
+  "servo_stroke_deg": 65.57814040344708,
+  "monotonic": true,
+  "min_distance_from_toggle_deg": [
+    42.559843640383804,
+    36.614451402956576
+  ],
+  "theta_speed_over_lid_speed": [
+    0.9171061166204547,
+    1.0799507481957662
+  ],
+  "assumed_density_g_cm3": 1.26,
+  "moving_solid_mass_g": 13.372615938330966,
+  "moving_parts": [
+    {
+      "name": "03_planar_lid",
+      "solid_volume_mm3": 7921.164375049657,
+      "solid_mass_g": 9.980667112562568,
+      "centroid_mm": [
+        36.573794442552405,
+        48.83921776750256,
+        68.05077772009297
+      ]
+    },
+    {
+      "name": "07_rear_rocker",
+      "solid_volume_mm3": 1113.245504003515,
+      "solid_mass_g": 1.402689335044429,
+      "centroid_mm": [
+        45.866867926324744,
+        33.56837386579852,
+        59.454904602767755
+      ]
+    },
+    {
+      "name": "08_front_rocker",
+      "solid_volume_mm3": 1426.2861388839829,
+      "solid_mass_g": 1.7971205349938184,
+      "centroid_mm": [
+        52.63278720953945,
+        36.07737978998304,
+        60.232979245613336
+      ]
+    },
+    {
+      "name": "12_link_axle",
+      "solid_volume_mm3": 152.49123470646927,
+      "solid_mass_g": 0.1921389557301513,
+      "centroid_mm": [
+        49.80000149249569,
+        36.00000205164046,
+        57.80000167655737
+      ]
+    }
+  ],
+  "max_ideal_servo_gravity_torque_Nm": 0.003337177495659611,
+  "conservative_gravity_bound_Nm": 0.007006700232432748,
+  "conservative_gravity_bound_kgf_cm": 0.07144845826487892,
+  "notes": [
+    "Uniform solid mass calculation; actual sparse-infill mass distribution differs",
+    "Friction, backlash, startup acceleration, wiring drag, support residue and servo capability are not tested",
+    "Servo still supplies gravity torque while open; losing power may close the lid"
+  ]
+}

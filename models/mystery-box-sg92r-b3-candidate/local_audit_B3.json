@@ -1,0 +1,912 @@
+{
+  "input_blend_sha256": "1ababb93dba4ef81368ba7767d3b13f180b4e43a407c336acef9d6a9150ac4c6",
+  "method": "BVH containment + EXACT sampled solid intersections >0.005 mm3; flat contact tolerance 0.00005 mm",
+  "physical_tested": false,
+  "speaker_always_included": true,
+  "paths": {
+    "bolt_lift": {
+      "samples": 13,
+      "obstacles": []
+    },
+    "bolt_slide": {
+      "samples": 60,
+      "obstacles": []
+    },
+    "bolt_lower_RELEASE": {
+      "samples": 13,
+      "obstacles": []
+    },
+    "key_turn_RELEASE": {
+      "samples": 91,
+      "obstacles": []
+    },
+    "key_withdraw_90": {
+      "samples": 31,
+      "obstacles": []
+    },
+    "whole_unit_removal": {
+      "samples": 71,
+      "obstacles": []
+    },
+    "key_turn_RELEASE_bias_plus0p339": {
+      "samples": 91,
+      "obstacles": [],
+      "note": "Conservative placement error for bolt clearance; not a proven full free-motion or manufacturing tolerance range"
+    },
+    "assembly_bolt_drop": {
+      "samples": 164,
+      "obstacles": []
+    },
+    "assembly_bolt_realign_Y": {
+      "samples": 17,
+      "obstacles": []
+    },
+    "assembly_bolt_realign_X": {
+      "samples": 11,
+      "obstacles": []
+    },
+    "assembly_bolt_lower_intoLOCK": {
+      "samples": 38,
+      "obstacles": []
+    },
+    "assembly_cap_slide": {
+      "samples": 74,
+      "obstacles": []
+    },
+    "assembly_stop_insert90": {
+      "samples": 16,
+      "obstacles": []
+    },
+    "assembly_stop_lift": {
+      "samples": 19,
+      "obstacles": []
+    },
+    "assembly_stop_turn_to_LOCK": {
+      "samples": 91,
+      "obstacles": []
+    },
+    "assembly_stop_lower_LOCK": {
+      "samples": 19,
+      "obstacles": []
+    }
+  },
+  "probes": {
+    "normal_key_positive5": [
+      {
+        "parts": [
+          "13_body_cross_key",
+          "20_short_body_bolt"
+        ],
+        "volume_mm3": 0.045499113467353525,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            40.0294303894043,
+            24.500001907348633,
+            3.3000001907348633
+          ],
+          [
+            40.69026184082031,
+            24.557376861572266,
+            5.700000762939453
+          ]
+        ]
+      }
+    ],
+    "normal_key_negative5": [
+      {
+        "parts": [
+          "13_body_cross_key",
+          "21_separate_bolt_cap"
+        ],
+        "volume_mm3": 2.255297301257794,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            48.846038818359375,
+            19.73355484008789,
+            9.30000114440918
+          ],
+          [
+            54.218345642089844,
+            20.200000762939453,
+            11.100000381469727
+          ]
+        ]
+      },
+      {
+        "parts": [
+          "13_body_cross_key",
+          "20_short_body_bolt"
+        ],
+        "volume_mm3": 0.10107141399397589,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            40.02943420410156,
+            20.361074447631836,
+            2.5
+          ],
+          [
+            47.01708984375,
+            28.500001907348633,
+            5.700000762939453
+          ]
+        ]
+      }
+    ],
+    "key_turn_bolt_only_lifted": [
+      {
+        "parts": [
+          "13_body_cross_key",
+          "20_short_body_bolt"
+        ],
+        "volume_mm3": 0.045499104639363255,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            40.0294303894043,
+            24.500001907348633,
+            5.100000858306885
+          ],
+          [
+            40.69026184082031,
+            24.557376861572266,
+            7.500000476837158
+          ]
+        ]
+      }
+    ],
+    "bolt_slide_without_lift": [
+      {
+        "parts": [
+          "20_short_body_bolt",
+          "01_body"
+        ],
+        "volume_mm3": 6.079999897777782,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            47.150001525878906,
+            13.5,
+            0.2000001221895218
+          ],
+          [
+            49.15000534057617,
+            15.399999618530273,
+            1.8000001907348633
+          ]
+        ]
+      }
+    ],
+    "half_slide_lowered": [
+      {
+        "parts": [
+          "20_short_body_bolt",
+          "01_body"
+        ],
+        "volume_mm3": 6.079999897777782,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            47.150001525878906,
+            13.5,
+            0.2000001221895218
+          ],
+          [
+            49.15000534057617,
+            15.399999618530273,
+            1.8000001907348633
+          ]
+        ]
+      }
+    ],
+    "key_withdraw_LOCK": [
+      {
+        "parts": [
+          "13_body_cross_key",
+          "01_body"
+        ],
+        "volume_mm3": 3.570005378344697,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            51.000003814697266,
+            21.30000114440918,
+            8.30000114440918
+          ],
+          [
+            54.0,
+            23.000001907348633,
+            9.00000286102295
+          ]
+        ]
+      },
+      {
+        "parts": [
+          "13_body_cross_key",
+          "04_main_cassette"
+        ],
+        "volume_mm3": 32.72500503267687,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            13.49999713897705,
+            23.500001907348633,
+            8.30000114440918
+          ],
+          [
+            22.0,
+            29.000003814697266,
+            9.000000953674316
+          ]
+        ]
+      },
+      {
+        "parts": [
+          "13_body_cross_key",
+          "05_front_closure"
+        ],
+        "volume_mm3": 15.539988777676124,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            51.000003814697266,
+            23.500001907348633,
+            8.30000114440918
+          ],
+          [
+            54.70000076293945,
+            29.500001907348633,
+            9.000000953674316
+          ]
+        ]
+      }
+    ],
+    "bolt_up_overtravel": [
+      {
+        "parts": [
+          "13_body_cross_key",
+          "20_short_body_bolt"
+        ],
+        "volume_mm3": 7.280010418094317,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            37.900001525878906,
+            24.500001907348633,
+            7.799999713897705
+          ],
+          [
+            40.500003814697266,
+            28.500001907348633,
+            8.5
+          ]
+        ]
+      }
+    ],
+    "bolt_down_after_key_removed": [
+      {
+        "parts": [
+          "20_short_body_bolt",
+          "01_body"
+        ],
+        "volume_mm3": 7.633063358516596,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            47.61701202392578,
+            21.000001907348633,
+            2.299999952316284
+          ],
+          [
+            50.60000228881836,
+            28.500001907348633,
+            3.000000238418579
+          ]
+        ]
+      }
+    ],
+    "bolt_X_overtravel": [
+      {
+        "parts": [
+          "20_short_body_bolt",
+          "01_body"
+        ],
+        "volume_mm3": 5.926982524747938,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            51.000003814697266,
+            14.643689155578613,
+            2.000000238418579
+          ],
+          [
+            56.10000228881836,
+            23.000001907348633,
+            7.500000476837158
+          ]
+        ]
+      },
+      {
+        "parts": [
+          "20_short_body_bolt",
+          "05_front_closure"
+        ],
+        "volume_mm3": 7.200012946875007,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            51.000003814697266,
+            23.500001907348633,
+            5.100000858306885
+          ],
+          [
+            51.600006103515625,
+            28.500001907348633,
+            7.500000476837158
+          ]
+        ]
+      }
+    ],
+    "bolt_X_reverse_overtravel": [
+      {
+        "parts": [
+          "20_short_body_bolt",
+          "01_body"
+        ],
+        "volume_mm3": 1.3299956411716962,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            43.20000076293945,
+            13.5,
+            2.000000238418579
+          ],
+          [
+            43.900001525878906,
+            15.399999618530273,
+            2.9999985694885254
+          ]
+        ]
+      },
+      {
+        "parts": [
+          "13_body_cross_key",
+          "20_short_body_bolt"
+        ],
+        "volume_mm3": 8.807975897488383,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            36.900001525878906,
+            21.30000114440918,
+            5.100000858306885
+          ],
+          [
+            40.500003814697266,
+            28.500001907348633,
+            7.500000476837158
+          ]
+        ]
+      }
+    ],
+    "bolt_tangential_Y-1.0": [
+      {
+        "parts": [
+          "20_short_body_bolt",
+          "01_body"
+        ],
+        "volume_mm3": 13.446612966357126,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            42.000003814697266,
+            12.5,
+            0.2000001221895218
+          ],
+          [
+            49.20000076293945,
+            15.399999618530273,
+            5.700000762939453
+          ]
+        ]
+      },
+      {
+        "parts": [
+          "20_short_body_bolt",
+          "13_body_cross_key"
+        ],
+        "volume_mm3": 4.368003472254419,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            37.900001525878906,
+            23.500001907348633,
+            3.3000001907348633
+          ],
+          [
+            40.500003814697266,
+            24.200002670288086,
+            5.700000762939453
+          ]
+        ]
+      }
+    ],
+    "bolt_tangential_Y1.0": [
+      {
+        "parts": [
+          "20_short_body_bolt",
+          "01_body"
+        ],
+        "volume_mm3": 4.207682347479419,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            42.704750061035156,
+            21.000001907348633,
+            0.2000001221895218
+          ],
+          [
+            49.20000076293945,
+            29.500001907348633,
+            5.700000762939453
+          ]
+        ]
+      },
+      {
+        "parts": [
+          "20_short_body_bolt",
+          "13_body_cross_key"
+        ],
+        "volume_mm3": 4.768001093841556,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            37.900001525878906,
+            21.30000114440918,
+            2.5
+          ],
+          [
+            47.20000076293945,
+            29.500001907348633,
+            5.700000762939453
+          ]
+        ]
+      }
+    ],
+    "cap_shift_blocked_by_stop": [
+      {
+        "parts": [
+          "21_separate_bolt_cap",
+          "22_symmetric_cap_stop"
+        ],
+        "volume_mm3": 4.171665541483036,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            54.900001525878906,
+            10.605575561523438,
+            9.300000190734863
+          ],
+          [
+            56.68650817871094,
+            14.394424438476562,
+            11.100000381469727
+          ]
+        ]
+      }
+    ],
+    "stop_turn_without_lift": [
+      {
+        "parts": [
+          "22_symmetric_cap_stop",
+          "01_body"
+        ],
+        "volume_mm3": 12.860329130361318,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            52.69878387451172,
+            8.398783683776855,
+            0.20000000298023224
+          ],
+          [
+            60.901222229003906,
+            16.601221084594727,
+            1.8000000715255737
+          ]
+        ]
+      }
+    ],
+    "stop_withdraw_LOCK": [
+      {
+        "parts": [
+          "22_symmetric_cap_stop",
+          "01_body"
+        ],
+        "volume_mm3": 6.098266233423829,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            52.70000076293945,
+            11.200000762939453,
+            4.300000190734863
+          ],
+          [
+            60.89999771118164,
+            13.800000190734863,
+            5.0
+          ]
+        ]
+      }
+    ],
+    "captive_bolt_x0_z0_down": [
+      {
+        "parts": [
+          "20_short_body_bolt",
+          "01_body"
+        ],
+        "volume_mm3": 2.5268928617032,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            42.000003814697266,
+            13.5,
+            2.299999952316284
+          ],
+          [
+            43.900001525878906,
+            15.399999618530273,
+            2.9999990463256836
+          ]
+        ]
+      }
+    ],
+    "captive_bolt_x0_z0_up": [],
+    "captive_bolt_x0_z0_front": [
+      {
+        "parts": [
+          "20_short_body_bolt",
+          "01_body"
+        ],
+        "volume_mm3": 13.446612966357126,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            42.000003814697266,
+            12.5,
+            0.2000001221895218
+          ],
+          [
+            49.20000076293945,
+            15.399999618530273,
+            5.700000762939453
+          ]
+        ]
+      }
+    ],
+    "captive_bolt_x0_z0_rear": [
+      {
+        "parts": [
+          "20_short_body_bolt",
+          "01_body"
+        ],
+        "volume_mm3": 4.207682347479419,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            42.704750061035156,
+            21.000001907348633,
+            0.2000001221895218
+          ],
+          [
+            49.20000076293945,
+            29.500001907348633,
+            5.700000762939453
+          ]
+        ]
+      }
+    ],
+    "captive_bolt_x0_z1.8_down": [],
+    "captive_bolt_x0_z1.8_up": [
+      {
+        "parts": [
+          "20_short_body_bolt",
+          "21_separate_bolt_cap"
+        ],
+        "volume_mm3": 5.468016214665702,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            42.000003814697266,
+            13.5,
+            9.300000190734863
+          ],
+          [
+            47.20000076293945,
+            20.200000762939453,
+            9.500000953674316
+          ]
+        ]
+      }
+    ],
+    "captive_bolt_x0_z1.8_front": [
+      {
+        "parts": [
+          "20_short_body_bolt",
+          "01_body"
+        ],
+        "volume_mm3": 8.105854841653656,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            42.000003814697266,
+            12.5,
+            2.000000238418579
+          ],
+          [
+            46.20000076293945,
+            15.399999618530273,
+            7.500000476837158
+          ]
+        ]
+      }
+    ],
+    "captive_bolt_x0_z1.8_rear": [
+      {
+        "parts": [
+          "20_short_body_bolt",
+          "01_body"
+        ],
+        "volume_mm3": 2.361113666099055,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            42.704750061035156,
+            21.000001907348633,
+            2.000000238418579
+          ],
+          [
+            49.20000076293945,
+            29.500001907348633,
+            6.599999904632568
+          ]
+        ]
+      }
+    ],
+    "captive_bolt_x2.95_z1.8_down": [
+      {
+        "parts": [
+          "20_short_body_bolt",
+          "01_body"
+        ],
+        "volume_mm3": 3.4199939703943762,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            47.150001525878906,
+            13.5,
+            1.0000001192092896
+          ],
+          [
+            49.15000534057617,
+            15.399999618530273,
+            1.899998664855957
+          ]
+        ]
+      }
+    ],
+    "captive_bolt_x2.95_z1.8_up": [
+      {
+        "parts": [
+          "20_short_body_bolt",
+          "21_separate_bolt_cap"
+        ],
+        "volume_mm3": 6.54001472595092,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            44.15000534057617,
+            13.5,
+            9.300000190734863
+          ],
+          [
+            50.150001525878906,
+            20.200000762939453,
+            9.500000953674316
+          ]
+        ]
+      }
+    ],
+    "captive_bolt_x2.95_z1.8_front": [
+      {
+        "parts": [
+          "20_short_body_bolt",
+          "01_body"
+        ],
+        "volume_mm3": 8.119997943974715,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            44.15000534057617,
+            12.5,
+            2.000000238418579
+          ],
+          [
+            49.15000534057617,
+            13.199999809265137,
+            7.500000476837158
+          ]
+        ]
+      }
+    ],
+    "captive_bolt_x2.95_z1.8_rear": [
+      {
+        "parts": [
+          "20_short_body_bolt",
+          "01_body"
+        ],
+        "volume_mm3": 6.895614855077615,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            42.704750061035156,
+            21.000001907348633,
+            2.000000238418579
+          ],
+          [
+            52.15000534057617,
+            29.500001907348633,
+            6.599999904632568
+          ]
+        ]
+      }
+    ],
+    "captive_bolt_x5.9_z1.8_down": [],
+    "captive_bolt_x5.9_z1.8_up": [
+      {
+        "parts": [
+          "20_short_body_bolt",
+          "21_separate_bolt_cap"
+        ],
+        "volume_mm3": 6.54001472595092,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            47.10000228881836,
+            13.5,
+            9.300000190734863
+          ],
+          [
+            53.10000228881836,
+            20.200000762939453,
+            9.500000953674316
+          ]
+        ]
+      }
+    ],
+    "captive_bolt_x5.9_z1.8_front": [
+      {
+        "parts": [
+          "20_short_body_bolt",
+          "01_body"
+        ],
+        "volume_mm3": 9.95488455260727,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            47.10000228881836,
+            12.5,
+            2.000000238418579
+          ],
+          [
+            55.10000228881836,
+            16.200000762939453,
+            7.500000476837158
+          ]
+        ]
+      }
+    ],
+    "captive_bolt_x5.9_z1.8_rear": [
+      {
+        "parts": [
+          "20_short_body_bolt",
+          "01_body"
+        ],
+        "volume_mm3": 13.45656341184196,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            43.79999923706055,
+            20.799999237060547,
+            2.000000238418579
+          ],
+          [
+            55.10000228881836,
+            29.500001907348633,
+            7.500000476837158
+          ]
+        ]
+      }
+    ],
+    "captive_bolt_x5.9_z0_down": [
+      {
+        "parts": [
+          "20_short_body_bolt",
+          "01_body"
+        ],
+        "volume_mm3": 7.633063358516596,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            47.61701202392578,
+            21.000001907348633,
+            2.299999952316284
+          ],
+          [
+            50.60000228881836,
+            28.500001907348633,
+            3.000000238418579
+          ]
+        ]
+      }
+    ],
+    "captive_bolt_x5.9_z0_up": [],
+    "captive_bolt_x5.9_z0_front": [
+      {
+        "parts": [
+          "20_short_body_bolt",
+          "01_body"
+        ],
+        "volume_mm3": 14.464884044173946,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            47.099998474121094,
+            12.5,
+            0.2000001221895218
+          ],
+          [
+            55.10000228881836,
+            15.399999618530273,
+            5.700000762939453
+          ]
+        ]
+      }
+    ],
+    "captive_bolt_x5.9_z0_rear": [
+      {
+        "parts": [
+          "20_short_body_bolt",
+          "01_body"
+        ],
+        "volume_mm3": 19.87820624284952,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            43.79999923706055,
+            21.000001907348633,
+            0.2000001221895218
+          ],
+          [
+            55.10000228881836,
+            29.500001907348633,
+            5.700000762939453
+          ]
+        ]
+      }
+    ]
+  },
+  "baseline_compare": {
+    "whole_unit_removal": {
+      "samples": 71,
+      "obstacles": []
+    },
+    "key_turn": {
+      "samples": 91,
+      "obstacles": []
+    }
+  },
+  "closed_overlaps": []
+}

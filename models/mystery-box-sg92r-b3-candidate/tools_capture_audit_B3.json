@@ -1,0 +1,653 @@
+{
+  "input_blend_sha256": "1ababb93dba4ef81368ba7767d3b13f180b4e43a407c336acef9d6a9150ac4c6",
+  "physical_tested": false,
+  "tools_measured": false,
+  "paths": {
+    "bolt_driver": {
+      "samples": 98,
+      "obstacles": [],
+      "assumed_blade_XY_mm": [
+        0.8,
+        2.2
+      ],
+      "assumed_handle_diameter_mm": 10
+    },
+    "key13_driver": {
+      "samples": 91,
+      "obstacles": [],
+      "assumed_blade_XY_mm": [
+        3.0,
+        0.8
+      ],
+      "assumed_handle_diameter_mm": 10
+    },
+    "stop22_driver": {
+      "samples": 126,
+      "obstacles": [],
+      "assumed_blade_XY_mm": [
+        1.6,
+        0.6
+      ],
+      "assumed_handle_diameter_mm": 10
+    },
+    "bottom_pusher_entry": {
+      "samples": 19,
+      "obstacles": [],
+      "assumed_tip_final_Z_mm": 17.9,
+      "front_rail_bottom_Z_mm": 18.0,
+      "pusher_diameter_mm": 3.0
+    }
+  },
+  "probes": {
+    "bolt_x0_z0_below_floor": [
+      {
+        "parts": [
+          "20_short_body_bolt",
+          "01_body"
+        ],
+        "volume_mm3": 2.5268928617032,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            42.000003814697266,
+            13.5,
+            2.299999952316284
+          ],
+          [
+            43.900001525878906,
+            15.399999618530273,
+            2.9999990463256836
+          ]
+        ]
+      }
+    ],
+    "bolt_x0_z0_above_roof": [],
+    "bolt_x0_z0_front": [
+      {
+        "parts": [
+          "20_short_body_bolt",
+          "01_body"
+        ],
+        "volume_mm3": 13.446612966357126,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            42.000003814697266,
+            12.5,
+            0.2000001221895218
+          ],
+          [
+            49.20000076293945,
+            15.399999618530273,
+            5.700000762939453
+          ]
+        ]
+      }
+    ],
+    "bolt_x0_z0_rear": [
+      {
+        "parts": [
+          "20_short_body_bolt",
+          "01_body"
+        ],
+        "volume_mm3": 4.207682347479419,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            42.704750061035156,
+            21.000001907348633,
+            0.2000001221895218
+          ],
+          [
+            49.20000076293945,
+            29.500001907348633,
+            5.700000762939453
+          ]
+        ]
+      }
+    ],
+    "bolt_x0_z1.8_below_floor": [
+      {
+        "parts": [
+          "20_short_body_bolt",
+          "01_body"
+        ],
+        "volume_mm3": 2.5268928617032,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            42.000003814697266,
+            13.5,
+            2.299999952316284
+          ],
+          [
+            43.900001525878906,
+            15.399999618530273,
+            2.9999990463256836
+          ]
+        ]
+      }
+    ],
+    "bolt_x0_z1.8_above_roof": [
+      {
+        "parts": [
+          "20_short_body_bolt",
+          "21_separate_bolt_cap"
+        ],
+        "volume_mm3": 5.468016214665702,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            42.000003814697266,
+            13.5,
+            9.300000190734863
+          ],
+          [
+            47.20000076293945,
+            20.200000762939453,
+            9.500000953674316
+          ]
+        ]
+      }
+    ],
+    "bolt_x0_z1.8_front": [
+      {
+        "parts": [
+          "20_short_body_bolt",
+          "01_body"
+        ],
+        "volume_mm3": 8.105854841653656,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            42.000003814697266,
+            12.5,
+            2.000000238418579
+          ],
+          [
+            46.20000076293945,
+            15.399999618530273,
+            7.500000476837158
+          ]
+        ]
+      }
+    ],
+    "bolt_x0_z1.8_rear": [
+      {
+        "parts": [
+          "20_short_body_bolt",
+          "01_body"
+        ],
+        "volume_mm3": 2.361113666099055,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            42.704750061035156,
+            21.000001907348633,
+            2.000000238418579
+          ],
+          [
+            49.20000076293945,
+            29.500001907348633,
+            6.599999904632568
+          ]
+        ]
+      }
+    ],
+    "bolt_x2.95_z1.8_below_floor": [
+      {
+        "parts": [
+          "20_short_body_bolt",
+          "01_body"
+        ],
+        "volume_mm3": 3.040379235165663,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            47.150001525878906,
+            13.5,
+            4.6566128730773926e-07
+          ],
+          [
+            49.15000534057617,
+            21.032997131347656,
+            2.9999990463256836
+          ]
+        ]
+      }
+    ],
+    "bolt_x2.95_z1.8_above_roof": [
+      {
+        "parts": [
+          "20_short_body_bolt",
+          "21_separate_bolt_cap"
+        ],
+        "volume_mm3": 6.54001472595092,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            44.15000534057617,
+            13.5,
+            9.300000190734863
+          ],
+          [
+            50.150001525878906,
+            20.200000762939453,
+            9.500000953674316
+          ]
+        ]
+      }
+    ],
+    "bolt_x2.95_z1.8_front": [
+      {
+        "parts": [
+          "20_short_body_bolt",
+          "01_body"
+        ],
+        "volume_mm3": 8.119997943974715,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            44.15000534057617,
+            12.5,
+            2.000000238418579
+          ],
+          [
+            49.15000534057617,
+            13.199999809265137,
+            7.500000476837158
+          ]
+        ]
+      }
+    ],
+    "bolt_x2.95_z1.8_rear": [
+      {
+        "parts": [
+          "20_short_body_bolt",
+          "01_body"
+        ],
+        "volume_mm3": 6.895614855077615,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            42.704750061035156,
+            21.000001907348633,
+            2.000000238418579
+          ],
+          [
+            52.15000534057617,
+            29.500001907348633,
+            6.599999904632568
+          ]
+        ]
+      }
+    ],
+    "bolt_x5.9_z1.8_below_floor": [
+      {
+        "parts": [
+          "20_short_body_bolt",
+          "01_body"
+        ],
+        "volume_mm3": 7.633063358516596,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            47.61701202392578,
+            21.000001907348633,
+            2.299999952316284
+          ],
+          [
+            50.60000228881836,
+            28.500001907348633,
+            3.000000238418579
+          ]
+        ]
+      }
+    ],
+    "bolt_x5.9_z1.8_above_roof": [
+      {
+        "parts": [
+          "20_short_body_bolt",
+          "21_separate_bolt_cap"
+        ],
+        "volume_mm3": 6.54001472595092,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            47.10000228881836,
+            13.5,
+            9.300000190734863
+          ],
+          [
+            53.10000228881836,
+            20.200000762939453,
+            9.500000953674316
+          ]
+        ]
+      }
+    ],
+    "bolt_x5.9_z1.8_front": [
+      {
+        "parts": [
+          "20_short_body_bolt",
+          "01_body"
+        ],
+        "volume_mm3": 9.95488455260727,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            47.10000228881836,
+            12.5,
+            2.000000238418579
+          ],
+          [
+            55.10000228881836,
+            16.200000762939453,
+            7.500000476837158
+          ]
+        ]
+      }
+    ],
+    "bolt_x5.9_z1.8_rear": [
+      {
+        "parts": [
+          "20_short_body_bolt",
+          "01_body"
+        ],
+        "volume_mm3": 13.45656341184196,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            43.79999923706055,
+            20.799999237060547,
+            2.000000238418579
+          ],
+          [
+            55.10000228881836,
+            29.500001907348633,
+            7.500000476837158
+          ]
+        ]
+      }
+    ],
+    "bolt_x5.9_z0_below_floor": [
+      {
+        "parts": [
+          "20_short_body_bolt",
+          "01_body"
+        ],
+        "volume_mm3": 7.633063358516596,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            47.61701202392578,
+            21.000001907348633,
+            2.299999952316284
+          ],
+          [
+            50.60000228881836,
+            28.500001907348633,
+            3.000000238418579
+          ]
+        ]
+      }
+    ],
+    "bolt_x5.9_z0_above_roof": [],
+    "bolt_x5.9_z0_front": [
+      {
+        "parts": [
+          "20_short_body_bolt",
+          "01_body"
+        ],
+        "volume_mm3": 14.464884044173946,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            47.099998474121094,
+            12.5,
+            0.2000001221895218
+          ],
+          [
+            55.10000228881836,
+            15.399999618530273,
+            5.700000762939453
+          ]
+        ]
+      }
+    ],
+    "bolt_x5.9_z0_rear": [
+      {
+        "parts": [
+          "20_short_body_bolt",
+          "01_body"
+        ],
+        "volume_mm3": 19.87820624284952,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            43.79999923706055,
+            21.000001907348633,
+            0.2000001221895218
+          ],
+          [
+            55.10000228881836,
+            29.500001907348633,
+            5.700000762939453
+          ]
+        ]
+      }
+    ],
+    "cap_X": [
+      {
+        "parts": [
+          "21_separate_bolt_cap",
+          "22_symmetric_cap_stop"
+        ],
+        "volume_mm3": 4.171665541483036,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            54.900001525878906,
+            10.605575561523438,
+            9.300000190734863
+          ],
+          [
+            56.68650817871094,
+            14.394424438476562,
+            11.100000381469727
+          ]
+        ]
+      }
+    ],
+    "cap_Y": [
+      {
+        "parts": [
+          "21_separate_bolt_cap",
+          "22_symmetric_cap_stop"
+        ],
+        "volume_mm3": 4.171678281700402,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            54.905574798583984,
+            10.600000381469727,
+            9.300000190734863
+          ],
+          [
+            58.694427490234375,
+            12.38651180267334,
+            11.100000381469727
+          ]
+        ]
+      }
+    ],
+    "cap_reverseY": [
+      {
+        "parts": [
+          "21_separate_bolt_cap",
+          "01_body"
+        ],
+        "volume_mm3": 20.73376089387438,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            42.000003814697266,
+            8.09999942779541,
+            9.300000190734863
+          ],
+          [
+            60.19999694824219,
+            14.80000114440918,
+            14.30000114440918
+          ]
+        ]
+      },
+      {
+        "parts": [
+          "21_separate_bolt_cap",
+          "22_symmetric_cap_stop"
+        ],
+        "volume_mm3": 4.171677927483717,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            54.905574798583984,
+            12.613487243652344,
+            9.300000190734863
+          ],
+          [
+            58.694427490234375,
+            14.399999618530273,
+            11.100000381469727
+          ]
+        ]
+      }
+    ],
+    "cap_Z": [
+      {
+        "parts": [
+          "21_separate_bolt_cap",
+          "01_body"
+        ],
+        "volume_mm3": 9.291316208247135,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            42.000003814697266,
+            9.09999942779541,
+            11.40000057220459
+          ],
+          [
+            60.19999694824219,
+            14.80000114440918,
+            12.000000953674316
+          ]
+        ]
+      }
+    ],
+    "stop22_rotate_15_without_push": [
+      {
+        "parts": [
+          "22_symmetric_cap_stop",
+          "01_body"
+        ],
+        "volume_mm3": 3.886011939727779,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            52.569976806640625,
+            10.079611778259277,
+            0.20000000298023224
+          ],
+          [
+            61.030025482177734,
+            14.920389175415039,
+            1.8000000715255737
+          ]
+        ]
+      }
+    ],
+    "stop22_rotate_-15_without_push": [
+      {
+        "parts": [
+          "22_symmetric_cap_stop",
+          "01_body"
+        ],
+        "volume_mm3": 3.8860146022208557,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            52.569976806640625,
+            10.079610824584961,
+            0.20000000298023224
+          ],
+          [
+            61.03002166748047,
+            14.920388221740723,
+            1.8000000715255737
+          ]
+        ]
+      }
+    ],
+    "stop22_down_-0.3": [],
+    "stop22_down_-0.4": [
+      {
+        "parts": [
+          "22_symmetric_cap_stop",
+          "01_body"
+        ],
+        "volume_mm3": 1.0595754195450946,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            52.70000076293945,
+            11.200000762939453,
+            4.900000095367432
+          ],
+          [
+            60.89999771118164,
+            13.800000190734863,
+            5.000000953674316
+          ]
+        ]
+      }
+    ],
+    "stop22_down_-1": [
+      {
+        "parts": [
+          "22_symmetric_cap_stop",
+          "01_body"
+        ],
+        "volume_mm3": 6.098266233423829,
+        "nonmanifold_edges": 0,
+        "bounds_mm": [
+          [
+            52.70000076293945,
+            11.200000762939453,
+            4.300000190734863
+          ],
+          [
+            60.89999771118164,
+            13.800000190734863,
+            5.0
+          ]
+        ]
+      }
+    ]
+  },
+  "limits": [
+    "Assumed driver dimensions; no real tool/hand/table verification",
+    "Box upright and supported above85mm clearance for underbox tool/handle",
+    "Lowering bolt assumes gravity with lateral tool force removed; no physical friction/force measurement",
+    "Collision-free tool envelope does not prove convenient gripping or sufficient strength"
+  ],
+  "stop22_uniform_CG_mm": [
+    56.79990768432617,
+    12.499967575073242,
+    5.434786319732666
+  ],
+  "stop22_CG_offset_from_axis_XY_mm": [
+    -9.231567382528283e-05,
+    -3.24249267578125e-05
+  ]
+}

@@ -1,0 +1,613 @@
+[
+  {
+    "plate": "plate_00_fit_tests",
+    "bed_mm": [
+      200,
+      200
+    ],
+    "occupied_mm": [
+      166.34514045715332,
+      71.0
+    ],
+    "manual_support": false,
+    "parts": [
+      {
+        "name": "test_30_local_bottom_lock",
+        "object_id": 1,
+        "position_mm": [
+          16.82742977142334,
+          64.5
+        ],
+        "bounds_mm": [
+          50.0,
+          48.0,
+          18.0
+        ],
+        "stl_sha256": "de7713e5376b19a58138520991337f5081294cc0932b816678c689d651ef3720",
+        "support_enforced_faces": 0,
+        "support_enforced_area_mm2": 0.0,
+        "support_blocked_faces": 0
+      },
+      {
+        "name": "test_02_actual_horn_pocket",
+        "object_id": 2,
+        "position_mm": [
+          74.82742977142334,
+          64.5
+        ],
+        "bounds_mm": [
+          31.84514045715332,
+          36.129669189453125,
+          4.900010108947754
+        ],
+        "stl_sha256": "752e5927bc6b2914888ef2778448b83bf75b3882293b94034209d9b79698558a",
+        "support_enforced_faces": 0,
+        "support_enforced_area_mm2": 0.0,
+        "support_blocked_faces": 0
+      },
+      {
+        "name": "test_01_servo_cradle",
+        "object_id": 3,
+        "position_mm": [
+          114.67257022857666,
+          64.5
+        ],
+        "bounds_mm": [
+          19.299999237060547,
+          32.599998474121094,
+          27.200000762939453
+        ],
+        "stl_sha256": "eae6c60642a1582bad3e07e33d2fab62515cfe9e93a8ded441695303547aaaf8",
+        "support_enforced_faces": 0,
+        "support_enforced_area_mm2": 0.0,
+        "support_blocked_faces": 0
+      },
+      {
+        "name": "test_33_actual_key",
+        "object_id": 4,
+        "position_mm": [
+          141.9725694656372,
+          64.5
+        ],
+        "bounds_mm": [
+          41.20000076293945,
+          15.800000190734863,
+          11.699999809265137
+        ],
+        "stl_sha256": "880aac355552c37c1cb0a39d39b5514d159abd67c4e69aa83311ada9ddea26cc",
+        "support_enforced_faces": 0,
+        "support_enforced_area_mm2": 0.0,
+        "support_blocked_faces": 0
+      },
+      {
+        "name": "test_40_actual_bolt",
+        "object_id": 5,
+        "position_mm": [
+          16.82742977142334,
+          120.5
+        ],
+        "bounds_mm": [
+          11.300000190734863,
+          15.0,
+          5.5
+        ],
+        "stl_sha256": "47ab33badbd487e013f6c9086c931a25f6f8167c885c8fd63cb075be42ef5e8c",
+        "support_enforced_faces": 0,
+        "support_enforced_area_mm2": 0.0,
+        "support_blocked_faces": 0
+      },
+      {
+        "name": "test_41_actual_cap",
+        "object_id": 6,
+        "position_mm": [
+          36.1274299621582,
+          120.5
+        ],
+        "bounds_mm": [
+          18.199989318847656,
+          11.100000381469727,
+          8.600000381469727
+        ],
+        "stl_sha256": "c76ed87f82ed1fe0c23d87956519d8c66e66cba0e23f815f681a6b884503477b",
+        "support_enforced_faces": 0,
+        "support_enforced_area_mm2": 0.0,
+        "support_blocked_faces": 0
+      },
+      {
+        "name": "test_42_actual_stop",
+        "object_id": 7,
+        "position_mm": [
+          62.32741928100586,
+          120.5
+        ],
+        "bounds_mm": [
+          9.0,
+          4.599999904632568,
+          12.100000381469727
+        ],
+        "stl_sha256": "f1385ca3f8a2e3feda8c3982f2f4491bdda622c6059f47747e659458c7e0519b",
+        "support_enforced_faces": 0,
+        "support_enforced_area_mm2": 0.0,
+        "support_blocked_faces": 0
+      }
+    ]
+  },
+  {
+    "plate": "plate_01_shells",
+    "bed_mm": [
+      200,
+      200
+    ],
+    "occupied_mm": [
+      148.00000762939453,
+      104.80000686645508
+    ],
+    "manual_support": false,
+    "parts": [
+      {
+        "name": "01_body",
+        "object_id": 1,
+        "position_mm": [
+          25.999996185302734,
+          47.59999656677246
+        ],
+        "bounds_mm": [
+          70.00000762939453,
+          70.00000762939453,
+          67.5999984741211
+        ],
+        "stl_sha256": "68d6e02e56ee85160eee606255797aa60f3b7bcec2d37690962db6c7621bca88",
+        "support_enforced_faces": 0,
+        "support_enforced_area_mm2": 0.0,
+        "support_blocked_faces": 0
+      },
+      {
+        "name": "03_planar_lid",
+        "object_id": 2,
+        "position_mm": [
+          104.00000381469727,
+          47.59999656677246
+        ],
+        "bounds_mm": [
+          70.0,
+          42.400001525878906,
+          12.399999618530273
+        ],
+        "stl_sha256": "979fb42cc04614e81633bcd795cb59056763c91f80f2000a065ac40fbdc18b0a",
+        "support_enforced_faces": 0,
+        "support_enforced_area_mm2": 0.0,
+        "support_blocked_faces": 0
+      },
+      {
+        "name": "02_fixed_rear_cover",
+        "object_id": 3,
+        "position_mm": [
+          25.999996185302734,
+          125.60000419616699
+        ],
+        "bounds_mm": [
+          70.0,
+          26.799999237060547,
+          11.500020027160645
+        ],
+        "stl_sha256": "53f418dc7fe997f0b10155755d99743fa1abea6581fc02fa1d492173f8185f96",
+        "support_enforced_faces": 0,
+        "support_enforced_area_mm2": 0.0,
+        "support_blocked_faces": 0
+      }
+    ]
+  },
+  {
+    "plate": "plate_02_cassette",
+    "bed_mm": [
+      200,
+      200
+    ],
+    "occupied_mm": [
+      176.44514656066895,
+      61.599998474121094
+    ],
+    "manual_support": true,
+    "parts": [
+      {
+        "name": "04_main_cassette",
+        "object_id": 1,
+        "position_mm": [
+          11.777426719665527,
+          69.20000076293945
+        ],
+        "bounds_mm": [
+          64.30000305175781,
+          61.599998474121094,
+          50.599998474121094
+        ],
+        "stl_sha256": "34d0542ec51e62296b52bc1a108d70423363ce7399054a88012a524486089be2",
+        "support_enforced_faces": 28,
+        "support_enforced_area_mm2": 40.76519114202886,
+        "support_blocked_faces": 1198
+      },
+      {
+        "name": "05_front_closure",
+        "object_id": 2,
+        "position_mm": [
+          84.07742977142334,
+          69.20000076293945
+        ],
+        "bounds_mm": [
+          64.30000305175781,
+          61.599998474121094,
+          14.900010108947754
+        ],
+        "stl_sha256": "80679317bc3444d8a857520d956189d7118105c725a6c23f74fd83e94b494ea8",
+        "support_enforced_faces": 0,
+        "support_enforced_area_mm2": 0.0,
+        "support_blocked_faces": 2182
+      },
+      {
+        "name": "06_horn_cup_journal",
+        "object_id": 3,
+        "position_mm": [
+          156.37743282318115,
+          69.20000076293945
+        ],
+        "bounds_mm": [
+          31.84514045715332,
+          36.129669189453125,
+          20.799999237060547
+        ],
+        "stl_sha256": "826a91b581c69e20fc1d5b639c3a15b2039e42fd78965e036387df59e8fdf42d",
+        "support_enforced_faces": 556,
+        "support_enforced_area_mm2": 354.481762968996,
+        "support_blocked_faces": 2346
+      }
+    ]
+  },
+  {
+    "plate": "plate_03_links",
+    "bed_mm": [
+      200,
+      200
+    ],
+    "occupied_mm": [
+      178.83915042877197,
+      69.79999923706055
+    ],
+    "manual_support": false,
+    "parts": [
+      {
+        "name": "17_local_cup_capture",
+        "object_id": 1,
+        "position_mm": [
+          10.580424785614014,
+          65.10000038146973
+        ],
+        "bounds_mm": [
+          21.809999465942383,
+          41.79999923706055,
+          3.5
+        ],
+        "stl_sha256": "423cb0a695e1a477502eac0ccfed5a416aaeae15ef75e62da42a6d44d8cc11d3",
+        "support_enforced_faces": 0,
+        "support_enforced_area_mm2": 0.0,
+        "support_blocked_faces": 0
+      },
+      {
+        "name": "07_rear_rocker",
+        "object_id": 2,
+        "position_mm": [
+          40.3904242515564,
+          65.10000038146973
+        ],
+        "bounds_mm": [
+          18.700000762939453,
+          32.5,
+          4.0
+        ],
+        "stl_sha256": "f1ee997ff9c1598469c20f8e68f3296c9563a06aaf6434df07e0ec69e47688d0",
+        "support_enforced_faces": 0,
+        "support_enforced_area_mm2": 0.0,
+        "support_blocked_faces": 0
+      },
+      {
+        "name": "08_front_rocker",
+        "object_id": 3,
+        "position_mm": [
+          67.09042501449585,
+          65.10000038146973
+        ],
+        "bounds_mm": [
+          18.700000762939453,
+          32.5,
+          14.500009536743164
+        ],
+        "stl_sha256": "40e342b81b2b44e657f7e4830e530900c7f768e72935cd8c51833a0610ed0574",
+        "support_enforced_faces": 0,
+        "support_enforced_area_mm2": 0.0,
+        "support_blocked_faces": 0
+      },
+      {
+        "name": "09_link",
+        "object_id": 4,
+        "position_mm": [
+          93.7904257774353,
+          65.10000038146973
+        ],
+        "bounds_mm": [
+          33.229148864746094,
+          27.784549713134766,
+          3.0
+        ],
+        "stl_sha256": "72642276fa55e732084c05eabed6b471754d248f93cf2fb6e04184de931c4aaa",
+        "support_enforced_faces": 0,
+        "support_enforced_area_mm2": 0.0,
+        "support_blocked_faces": 0
+      },
+      {
+        "name": "13_body_cross_key",
+        "object_id": 5,
+        "position_mm": [
+          135.0195746421814,
+          65.10000038146973
+        ],
+        "bounds_mm": [
+          41.20000076293945,
+          15.800000190734863,
+          11.699999809265137
+        ],
+        "stl_sha256": "880aac355552c37c1cb0a39d39b5514d159abd67c4e69aa83311ada9ddea26cc",
+        "support_enforced_faces": 0,
+        "support_enforced_area_mm2": 0.0,
+        "support_blocked_faces": 0
+      },
+      {
+        "name": "18_local_capture_stop",
+        "object_id": 6,
+        "position_mm": [
+          184.21957540512085,
+          65.10000038146973
+        ],
+        "bounds_mm": [
+          5.199999809265137,
+          6.400000095367432,
+          3.200000047683716
+        ],
+        "stl_sha256": "d66243efedc69200a632c559dc202569086ef37359687afdd465c9771ae07ceb",
+        "support_enforced_faces": 0,
+        "support_enforced_area_mm2": 0.0,
+        "support_blocked_faces": 0
+      },
+      {
+        "name": "19_local_capture_stop",
+        "object_id": 7,
+        "position_mm": [
+          10.580424785614014,
+          114.89999961853027
+        ],
+        "bounds_mm": [
+          9.300000190734863,
+          6.400000095367432,
+          3.200000047683716
+        ],
+        "stl_sha256": "bf2cbcb64d009d784f1d385ddc91a249b4cea5baeeff528053e857623048c0d6",
+        "support_enforced_faces": 0,
+        "support_enforced_area_mm2": 0.0,
+        "support_blocked_faces": 0
+      },
+      {
+        "name": "10_hinge_axle",
+        "object_id": 8,
+        "position_mm": [
+          27.880424976348877,
+          114.89999961853027
+        ],
+        "bounds_mm": [
+          18.899999618530273,
+          6.0,
+          4.242640018463135
+        ],
+        "stl_sha256": "8f11eecb14f8baead4ee4b373bc3dd924592fc0765c602b1c651ec3687388a77",
+        "support_enforced_faces": 0,
+        "support_enforced_area_mm2": 0.0,
+        "support_blocked_faces": 0
+      },
+      {
+        "name": "14_servo_top_keeper",
+        "object_id": 9,
+        "position_mm": [
+          54.78042459487915,
+          114.89999961853027
+        ],
+        "bounds_mm": [
+          52.700008392333984,
+          5.800000190734863,
+          5.600009918212891
+        ],
+        "stl_sha256": "1ed9e48c04f4ab5002348b447a4f432249e54b076d603921077154d17592ce3f",
+        "support_enforced_faces": 0,
+        "support_enforced_area_mm2": 0.0,
+        "support_blocked_faces": 0
+      },
+      {
+        "name": "15_flat_spacer",
+        "object_id": 10,
+        "position_mm": [
+          115.48043298721313,
+          114.89999961853027
+        ],
+        "bounds_mm": [
+          52.70000076293945,
+          5.599999904632568,
+          5.599999904632568
+        ],
+        "stl_sha256": "fb13f79f180da5c7efaacd7684cdd51e7c088504103a612e809705985c8ffd00",
+        "support_enforced_faces": 0,
+        "support_enforced_area_mm2": 0.0,
+        "support_blocked_faces": 0
+      },
+      {
+        "name": "16_flat_spacer",
+        "object_id": 11,
+        "position_mm": [
+          10.580424785614014,
+          129.2999997138977
+        ],
+        "bounds_mm": [
+          52.70000076293945,
+          5.599999904632568,
+          5.599999904632568
+        ],
+        "stl_sha256": "1202a5fe41247e7371d2eb512836c9a841e7cf2473bb70f36da0970037b27d20",
+        "support_enforced_faces": 0,
+        "support_enforced_area_mm2": 0.0,
+        "support_blocked_faces": 0
+      },
+      {
+        "name": "11_drive_axle",
+        "object_id": 12,
+        "position_mm": [
+          71.28042554855347,
+          129.2999997138977
+        ],
+        "bounds_mm": [
+          15.800000190734863,
+          5.0,
+          3.5355300903320312
+        ],
+        "stl_sha256": "1fe17320f641984d5475d0c7fae02266af3ed559fcd0a4b09b2ffc9bd23dd78e",
+        "support_enforced_faces": 0,
+        "support_enforced_area_mm2": 0.0,
+        "support_blocked_faces": 0
+      },
+      {
+        "name": "12_link_axle",
+        "object_id": 13,
+        "position_mm": [
+          95.08042573928833,
+          129.2999997138977
+        ],
+        "bounds_mm": [
+          9.5,
+          5.0,
+          3.5355300903320312
+        ],
+        "stl_sha256": "637c122312c2fa6db940ddddc406dd7fdbcc3f298f7cebb329fd4a3d4e429229",
+        "support_enforced_faces": 0,
+        "support_enforced_area_mm2": 0.0,
+        "support_blocked_faces": 0
+      }
+    ]
+  },
+  {
+    "plate": "plate_05_local_lock",
+    "bed_mm": [
+      200,
+      200
+    ],
+    "occupied_mm": [
+      54.49998950958252,
+      15.0
+    ],
+    "manual_support": false,
+    "parts": [
+      {
+        "name": "20_short_body_bolt",
+        "object_id": 1,
+        "position_mm": [
+          72.75000524520874,
+          92.5
+        ],
+        "bounds_mm": [
+          11.300000190734863,
+          15.0,
+          5.5
+        ],
+        "stl_sha256": "47ab33badbd487e013f6c9086c931a25f6f8167c885c8fd63cb075be42ef5e8c",
+        "support_enforced_faces": 0,
+        "support_enforced_area_mm2": 0.0,
+        "support_blocked_faces": 0
+      },
+      {
+        "name": "21_separate_bolt_cap",
+        "object_id": 2,
+        "position_mm": [
+          92.0500054359436,
+          92.5
+        ],
+        "bounds_mm": [
+          18.199989318847656,
+          11.100000381469727,
+          8.600000381469727
+        ],
+        "stl_sha256": "c76ed87f82ed1fe0c23d87956519d8c66e66cba0e23f815f681a6b884503477b",
+        "support_enforced_faces": 0,
+        "support_enforced_area_mm2": 0.0,
+        "support_blocked_faces": 0
+      },
+      {
+        "name": "22_symmetric_cap_stop",
+        "object_id": 3,
+        "position_mm": [
+          118.24999475479126,
+          92.5
+        ],
+        "bounds_mm": [
+          9.0,
+          4.599999904632568,
+          12.100000381469727
+        ],
+        "stl_sha256": "f1385ca3f8a2e3feda8c3982f2f4491bdda622c6059f47747e659458c7e0519b",
+        "support_enforced_faces": 0,
+        "support_enforced_area_mm2": 0.0,
+        "support_blocked_faces": 0
+      }
+    ]
+  },
+  {
+    "plate": "plate_04_support_tests",
+    "bed_mm": [
+      200,
+      200
+    ],
+    "occupied_mm": [
+      65.2451400756836,
+      36.129669189453125
+    ],
+    "manual_support": true,
+    "parts": [
+      {
+        "name": "test_26_actual_cup_with_support",
+        "object_id": 1,
+        "position_mm": [
+          67.3774299621582,
+          81.93516540527344
+        ],
+        "bounds_mm": [
+          31.84514045715332,
+          36.129669189453125,
+          20.799999237060547
+        ],
+        "stl_sha256": "826a91b581c69e20fc1d5b639c3a15b2039e42fd78965e036387df59e8fdf42d",
+        "support_enforced_faces": 556,
+        "support_enforced_area_mm2": 354.481762968996,
+        "support_blocked_faces": 2346
+      },
+      {
+        "name": "test_25_actual_U_support",
+        "object_id": 2,
+        "position_mm": [
+          107.22257041931152,
+          81.93516540527344
+        ],
+        "bounds_mm": [
+          25.399999618530273,
+          31.0,
+          33.0000114440918
+        ],
+        "stl_sha256": "dd4daf30ee70fd9c6c412ecf793ffd0a78ea358b58fd38d51099ba7fc7ed7ef8",
+        "support_enforced_faces": 28,
+        "support_enforced_area_mm2": 40.765218999307365,
+        "support_blocked_faces": 332
+      }
+    ]
+  }
+]

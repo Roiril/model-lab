@@ -1,0 +1,18 @@
+from pathlib import Path
+R=Path(__file__).resolve().parent
+s=(R/'check_support_revision.py').read_text(encoding='utf8')
+s=s.replace("if not name.startswith(('04','06')):continue", "if not name.startswith(('04','05','06')):continue")
+s=s.replace("  else:\n   journal=", "  elif name.startswith('06'):\n   journal=")
+s=s.replace("  boxes.append(dict", "  else:\n   allowed=np.zeros(len(tri),dtype=bool)\n  boxes.append(dict")
+s=s.replace("R/'support_contact_report.json'", "R/'final_support_contact_report.json'")
+(R/'check_support_final.py').write_text(s,encoding='utf8')
+s=s.replace("P=R/'slice_checks/plate_02_cassette/plate_02_cassette.3mf'", "P=R/'slice_checks/plate_04_support_tests/plate_04_support_tests.3mf'")
+s=s.replace("name=names[oid]", "source_name=names[oid];name={'test_25_actual_U_support':'04_main_cassette','test_26_actual_cup_with_support':'06_horn_cup_journal'}.get(source_name,source_name)")
+s=s.replace("tri=load_stl(name);", "tri=load_stl(source_name);")
+s=s.replace("(R/'stl'/(name+'.stl')).read_bytes()", "((R/'coupons' if name.startswith('test_') else R/'stl')/(name+'.stl')).read_bytes()")
+s=s.replace("R/'plates/plate_02_cassette.3mf'", "R/'plates/plate_04_support_tests.3mf'")
+s=s.replace("R/'final_support_contact_report.json'", "R/'final_support_coupon_report.json'")
+s=s.replace("name=name,cup_center", "name=name,source_name=source_name,cup_center")
+s=s.replace("wy=center[:,1]+5.4;wz=67.3-center[:,0]", "wy=center[:,1]+24.5;wz=49.4-center[:,0]")
+s=s.replace("(R/'stl'/(b['name']+'.stl')).read_bytes()", "((R/'coupons')/(b['source_name']+'.stl')).read_bytes()")
+(R/'check_support_coupons_final.py').write_text(s,encoding='utf8')

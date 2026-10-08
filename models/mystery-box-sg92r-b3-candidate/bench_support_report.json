@@ -1,0 +1,52 @@
+{
+  "source_blend_sha256": "1ababb93dba4ef81368ba7767d3b13f180b4e43a407c336acef9d6a9150ac4c6",
+  "physical_tested": false,
+  "support_top_contact_X_mm": [
+    [
+      0,
+      3
+    ],
+    [
+      67,
+      70
+    ]
+  ],
+  "clear_underside_width_mm": 64,
+  "assumed_support_height_mm": 100,
+  "required_tool_clearance_min_mm": 85,
+  "assumed_stable_block_bounds_mm": [
+    [
+      [
+        -77,
+        -15,
+        -100
+      ],
+      [
+        3,
+        85,
+        0
+      ]
+    ],
+    [
+      [
+        67,
+        -15,
+        -100
+      ],
+      [
+        147,
+        85,
+        0
+      ]
+    ]
+  ],
+  "pusher_tip_XYZ_home_mm": [
+    36.5,
+    16.4,
+    18
+  ],
+  "pusher_D_mm": 3,
+  "full_pusher_and_unit_lift_samples": 21,
+  "obstacles": [],
+  "limits": "No human hand, friction, tipping, slipping or real table qualification. Support only hard outer floor edges; hold unit at fixed cassette top, keep lid closed and unloaded. Stop if binding or support moves. No prying."
+}

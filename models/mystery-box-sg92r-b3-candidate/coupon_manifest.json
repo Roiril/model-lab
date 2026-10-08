@@ -1,0 +1,52 @@
+{
+  "source_blend_sha256": "1ababb93dba4ef81368ba7767d3b13f180b4e43a407c336acef9d6a9150ac4c6",
+  "physical_tested": false,
+  "tests": [
+    {
+      "name": "test_30_local_bottom_lock",
+      "source": "01_body",
+      "window_mm": [
+        [
+          20,
+          0,
+          0
+        ],
+        [
+          70,
+          48,
+          18
+        ]
+      ],
+      "bounds_mm": [
+        50.0,
+        48.0,
+        18.0
+      ],
+      "purpose": "Actual20/21/22guide, cavity side wall and key throat. Front/back floor strips keep coupon one connected solid. Same printZ orientation. Tests gravity return, indexing, cap insertion, removal and roof bridging; no strength qualification."
+    },
+    {
+      "name": "test_33_actual_key",
+      "source": "13_body_cross_key",
+      "reusable_in_assembly": true,
+      "purpose": "Same candidate part, same orientation and clearance; test before full box. Stop if sticking, cracked or damaged."
+    },
+    {
+      "name": "test_40_actual_bolt",
+      "source": "20_short_body_bolt",
+      "reusable_in_assembly": true,
+      "purpose": "Same candidate part, same orientation and clearance; test before full box. Stop if sticking, cracked or damaged."
+    },
+    {
+      "name": "test_41_actual_cap",
+      "source": "21_separate_bolt_cap",
+      "reusable_in_assembly": true,
+      "purpose": "Same candidate part, same orientation and clearance; test before full box. Stop if sticking, cracked or damaged."
+    },
+    {
+      "name": "test_42_actual_stop",
+      "source": "22_symmetric_cap_stop",
+      "reusable_in_assembly": true,
+      "purpose": "Same candidate part, same orientation and clearance; test before full box. Stop if sticking, cracked or damaged."
+    }
+  ]
+}

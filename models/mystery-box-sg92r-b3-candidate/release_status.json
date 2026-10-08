@@ -1,0 +1,26 @@
+{
+  "version": "B3-integrated-3",
+  "native_candidate_id": "mystery-box-sg92r-b3-candidate",
+  "status": "Design/print candidate; coupons first",
+  "date_utc": "2026-10-08T04:44:12.849616+00:00",
+  "frozen_blend_sha256": "1ababb93dba4ef81368ba7767d3b13f180b4e43a407c336acef9d6a9150ac4c6",
+  "print_parts": 22,
+  "conditional_coupons": 9,
+  "geometry_plates": 6,
+  "mechanism_changed_during_final_documentation": false,
+  "lift20_mm": 1.8,
+  "lift22_mm": 1.8,
+  "physical_printed": false,
+  "physical_driven": false,
+  "compiled_firmware": false,
+  "old_v6_revision3_and_B2_preserved": true,
+  "no_external_publish_or_push": true,
+  "limits": [
+    "Not a physical assembly guarantee",
+    "All key Z and bolt slack DOFs not jointly swept for contact order",
+    "Finite pose/tool/support screens; no continuous full escape proof",
+    "Physical fit, gravity return, root strength, support fusing, hands and bench stability, vibration and wear are untested",
+    "X1C slicing is diagnostic only; user printer unknown",
+    "No G-code or machine-specific sliced3MF in archive"
+  ]
+}

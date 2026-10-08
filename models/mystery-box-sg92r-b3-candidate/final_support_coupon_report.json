@@ -1,0 +1,541 @@
+{
+  "physical_tested": false,
+  "input_slice_sha256": "82df44cbc068b9cf6cac02e19588ff7f169d3b87f54fdee7b5c7ca3844f02a55",
+  "input_plate_sha256": "cd79a9ebc1be53c62c9597b5dca8813adaaa6636866656421ae579f89232ee1b",
+  "support_extrusion_segments": 4978,
+  "method": "All normal-support/interface straight extrusion segments sampled <=0.1mm. Actual line width and layer height; enclosing sphere uses width/2+0.06mm and height/2. Covers nominal segment sampling laterally, not sag, fusing or printed deformation. All04/06 other facets conservatively protected. Interface upper/lower nominal Z-gap projections onto horizontal facets separately classified. Not proof of full deposited filament or removal. Extruder XY offset from actual sliced settings added before inverse object transform. Arcs sampled by I/J center; actual independent support layer heights used. Potential interface projection facets within0.6mm vertically and expanded bead width laterally, independent of support Z-gap rounding. Sphere is only broad-phase. Each candidate protected triangle is clipped to nozzleZ-height-0.005..nozzleZ+0.005; XY distance to the clipped polygon is checked against width/2+0.06. This cylindrical envelope avoids sphere-only false corner contacts. A min-margin of1e10 means no nearby protected facet in the broad-phase, not a measured clearance. Support transition paths also included; XY prefilter uses all arc sample points, not endpoint-only arc bounds. Bead-centre containment candidates from nearest outward face are checked by ray parity; nearest-face sign alone is not used at concave/far corners.",
+  "objects": {
+    "04_main_cassette": {
+      "samples_by_feature": {
+        "Support interface": 10407,
+        "Support": 83289,
+        "Support transition": 1785
+      },
+      "line_width_sample_counts": {
+        "0.42": 95481
+      },
+      "min_protected_facet_expanded_bead_margin_mm": null,
+      "bead_envelope_protected_examples": [],
+      "interface_projection_facet_counts": {
+        "allowed_nonfunctional": 6487
+      },
+      "interface_projection_other_examples": [],
+      "approved_surface_triangles": 36,
+      "protected_other_triangles": 324,
+      "z_sample_counts": {
+        "3.00": 1922,
+        "3.20": 1754,
+        "3.40": 1838,
+        "3.60": 766,
+        "3.80": 766,
+        "4.00": 766,
+        "4.20": 766,
+        "4.40": 766,
+        "4.60": 766,
+        "4.80": 766,
+        "5.00": 667,
+        "5.20": 655,
+        "5.40": 655,
+        "5.60": 655,
+        "5.80": 655,
+        "6.00": 655,
+        "6.20": 655,
+        "6.40": 655,
+        "6.60": 655,
+        "6.80": 655,
+        "7.00": 655,
+        "7.20": 655,
+        "7.40": 655,
+        "7.60": 655,
+        "7.80": 655,
+        "8.00": 655,
+        "8.20": 655,
+        "8.40": 655,
+        "8.60": 662,
+        "8.80": 1140,
+        "9.00": 1139,
+        "9.20": 1133,
+        "9.40": 730,
+        "9.60": 730,
+        "9.80": 730,
+        "10.00": 730,
+        "10.20": 730,
+        "10.40": 730,
+        "10.60": 730,
+        "10.80": 730,
+        "11.00": 730,
+        "11.20": 730,
+        "11.40": 730,
+        "11.60": 730,
+        "11.80": 730,
+        "12.00": 730,
+        "12.20": 730,
+        "12.40": 730,
+        "12.60": 730,
+        "12.80": 730,
+        "13.00": 730,
+        "13.20": 730,
+        "13.40": 730,
+        "13.60": 730,
+        "13.80": 730,
+        "14.00": 730,
+        "14.20": 730,
+        "14.40": 730,
+        "14.60": 730,
+        "14.80": 730,
+        "15.00": 730,
+        "15.20": 730,
+        "15.40": 730,
+        "15.60": 730,
+        "15.80": 730,
+        "16.00": 730,
+        "16.20": 730,
+        "16.40": 730,
+        "16.60": 730,
+        "16.80": 730,
+        "17.00": 730,
+        "17.20": 730,
+        "17.40": 730,
+        "17.60": 730,
+        "17.80": 730,
+        "18.00": 730,
+        "18.20": 730,
+        "18.40": 730,
+        "18.60": 730,
+        "18.80": 730,
+        "19.00": 730,
+        "19.20": 730,
+        "19.40": 730,
+        "19.60": 730,
+        "19.80": 730,
+        "20.00": 730,
+        "20.20": 730,
+        "20.40": 730,
+        "20.60": 730,
+        "20.80": 730,
+        "21.00": 730,
+        "21.20": 730,
+        "21.40": 730,
+        "21.60": 730,
+        "21.80": 730,
+        "22.00": 730,
+        "22.20": 730,
+        "22.40": 730,
+        "22.60": 730,
+        "22.80": 730,
+        "23.00": 730,
+        "23.20": 730,
+        "23.40": 730,
+        "23.60": 730,
+        "23.80": 730,
+        "24.00": 730,
+        "24.20": 730,
+        "24.40": 730,
+        "24.60": 730,
+        "24.80": 730,
+        "25.00": 730,
+        "25.20": 730,
+        "25.40": 730,
+        "25.60": 730,
+        "25.80": 730,
+        "26.00": 730,
+        "26.20": 730,
+        "26.40": 730,
+        "26.60": 730,
+        "26.80": 1785,
+        "27.00": 1736,
+        "27.20": 1698
+      },
+      "nominal_bead_protected_overlap_detected": false,
+      "projected_protected_min_vertical_gap_mm": null,
+      "bead_center_inside_model_examples": []
+    },
+    "06_horn_cup_journal": {
+      "samples_by_feature": {
+        "Support": 194100,
+        "Support transition": 8861,
+        "Support interface": 17673
+      },
+      "line_width_sample_counts": {
+        "0.5": 21002,
+        "0.42": 199632
+      },
+      "min_protected_facet_expanded_bead_margin_mm": null,
+      "bead_envelope_protected_examples": [],
+      "interface_projection_facet_counts": {
+        "allowed_nonfunctional": 30465,
+        "unused_outer_transition_band_R8.65_plus": 3489,
+        "other_or_protected": 1907
+      },
+      "interface_projection_other_examples": [
+        {
+          "nozzle_xyz": [
+            18.385594682758626,
+            25.0818446,
+            11.4
+          ],
+          "projected_surface_xyz": [
+            18.385595321655273,
+            25.081844329833984,
+            11.899999618530273
+          ],
+          "surface_triangle": [
+            [
+              18.925779342651367,
+              22.172950744628906,
+              11.899999618530273
+            ],
+            [
+              15.781149864196777,
+              24.973539352416992,
+              11.899999618530273
+            ],
+            [
+              18.58057975769043,
+              26.437530517578125,
+              11.899999618530273
+            ]
+          ]
+        },
+        {
+          "nozzle_xyz": [
+            18.285801579310334,
+            25.0818446,
+            11.4
+          ],
+          "projected_surface_xyz": [
+            18.28580093383789,
+            25.081844329833984,
+            11.899999618530273
+          ],
+          "surface_triangle": [
+            [
+              18.925779342651367,
+              22.172950744628906,
+              11.899999618530273
+            ],
+            [
+              15.781149864196777,
+              24.973539352416992,
+              11.899999618530273
+            ],
+            [
+              18.58057975769043,
+              26.437530517578125,
+              11.899999618530273
+            ]
+          ]
+        },
+        {
+          "nozzle_xyz": [
+            18.18600847586207,
+            25.0818446,
+            11.4
+          ],
+          "projected_surface_xyz": [
+            18.18600845336914,
+            25.081844329833984,
+            11.899999618530273
+          ],
+          "surface_triangle": [
+            [
+              18.925779342651367,
+              22.172950744628906,
+              11.899999618530273
+            ],
+            [
+              15.781149864196777,
+              24.973539352416992,
+              11.899999618530273
+            ],
+            [
+              18.58057975769043,
+              26.437530517578125,
+              11.899999618530273
+            ]
+          ]
+        },
+        {
+          "nozzle_xyz": [
+            18.086215372413808,
+            25.0818446,
+            11.4
+          ],
+          "projected_surface_xyz": [
+            18.08621597290039,
+            25.081844329833984,
+            11.899999618530273
+          ],
+          "surface_triangle": [
+            [
+              18.925779342651367,
+              22.172950744628906,
+              11.899999618530273
+            ],
+            [
+              15.781149864196777,
+              24.973539352416992,
+              11.899999618530273
+            ],
+            [
+              18.58057975769043,
+              26.437530517578125,
+              11.899999618530273
+            ]
+          ]
+        },
+        {
+          "nozzle_xyz": [
+            17.986422268965516,
+            25.0818446,
+            11.4
+          ],
+          "projected_surface_xyz": [
+            17.986421585083008,
+            25.081844329833984,
+            11.899999618530273
+          ],
+          "surface_triangle": [
+            [
+              18.925779342651367,
+              22.172950744628906,
+              11.899999618530273
+            ],
+            [
+              15.781149864196777,
+              24.973539352416992,
+              11.899999618530273
+            ],
+            [
+              18.58057975769043,
+              26.437530517578125,
+              11.899999618530273
+            ]
+          ]
+        },
+        {
+          "nozzle_xyz": [
+            17.886629165517252,
+            25.0818446,
+            11.4
+          ],
+          "projected_surface_xyz": [
+            17.886629104614258,
+            25.081844329833984,
+            11.899999618530273
+          ],
+          "surface_triangle": [
+            [
+              18.925779342651367,
+              22.172950744628906,
+              11.899999618530273
+            ],
+            [
+              15.781149864196777,
+              24.973539352416992,
+              11.899999618530273
+            ],
+            [
+              18.58057975769043,
+              26.437530517578125,
+              11.899999618530273
+            ]
+          ]
+        },
+        {
+          "nozzle_xyz": [
+            17.78683606206896,
+            25.0818446,
+            11.4
+          ],
+          "projected_surface_xyz": [
+            17.786836624145508,
+            25.08184242248535,
+            11.899999618530273
+          ],
+          "surface_triangle": [
+            [
+              18.925779342651367,
+              22.172950744628906,
+              11.899999618530273
+            ],
+            [
+              15.781149864196777,
+              24.973539352416992,
+              11.899999618530273
+            ],
+            [
+              18.58057975769043,
+              26.437530517578125,
+              11.899999618530273
+            ]
+          ]
+        },
+        {
+          "nozzle_xyz": [
+            17.687042958620697,
+            25.0818446,
+            11.4
+          ],
+          "projected_surface_xyz": [
+            17.687042236328125,
+            25.081844329833984,
+            11.899999618530273
+          ],
+          "surface_triangle": [
+            [
+              18.925779342651367,
+              22.172950744628906,
+              11.899999618530273
+            ],
+            [
+              15.781149864196777,
+              24.973539352416992,
+              11.899999618530273
+            ],
+            [
+              18.58057975769043,
+              26.437530517578125,
+              11.899999618530273
+            ]
+          ]
+        },
+        {
+          "nozzle_xyz": [
+            17.587249855172406,
+            25.0818446,
+            11.4
+          ],
+          "projected_surface_xyz": [
+            17.587249755859375,
+            25.081844329833984,
+            11.899999618530273
+          ],
+          "surface_triangle": [
+            [
+              18.925779342651367,
+              22.172950744628906,
+              11.899999618530273
+            ],
+            [
+              15.781149864196777,
+              24.973539352416992,
+              11.899999618530273
+            ],
+            [
+              18.58057975769043,
+              26.437530517578125,
+              11.899999618530273
+            ]
+          ]
+        },
+        {
+          "nozzle_xyz": [
+            17.487456751724142,
+            25.0818446,
+            11.4
+          ],
+          "projected_surface_xyz": [
+            17.487457275390625,
+            25.081844329833984,
+            11.899999618530273
+          ],
+          "surface_triangle": [
+            [
+              18.925779342651367,
+              22.172950744628906,
+              11.899999618530273
+            ],
+            [
+              15.781149864196777,
+              24.973539352416992,
+              11.899999618530273
+            ],
+            [
+              18.58057975769043,
+              26.437530517578125,
+              11.899999618530273
+            ]
+          ]
+        }
+      ],
+      "approved_surface_triangles": 557,
+      "protected_other_triangles": 2345,
+      "z_sample_counts": {
+        "0.20": 21002,
+        "0.40": 3266,
+        "0.60": 3266,
+        "0.80": 3266,
+        "1.00": 3266,
+        "1.20": 3266,
+        "1.40": 3266,
+        "1.60": 3266,
+        "1.80": 3266,
+        "2.00": 3266,
+        "2.20": 3266,
+        "2.40": 3266,
+        "2.60": 3266,
+        "2.80": 3266,
+        "3.00": 3266,
+        "3.20": 3266,
+        "3.40": 3266,
+        "3.60": 3266,
+        "3.80": 3266,
+        "4.00": 3266,
+        "4.20": 3266,
+        "4.40": 3266,
+        "4.60": 3266,
+        "4.80": 3266,
+        "5.00": 3266,
+        "5.20": 3266,
+        "5.40": 3266,
+        "5.60": 3266,
+        "5.80": 3266,
+        "6.00": 3266,
+        "6.20": 3266,
+        "6.40": 3266,
+        "6.60": 3266,
+        "6.80": 3266,
+        "7.00": 3266,
+        "7.20": 3266,
+        "7.40": 3266,
+        "7.60": 3266,
+        "7.80": 3266,
+        "8.00": 3266,
+        "8.20": 3266,
+        "8.40": 3266,
+        "8.60": 3266,
+        "8.80": 3266,
+        "9.00": 3266,
+        "9.20": 3266,
+        "9.40": 3266,
+        "9.60": 3266,
+        "9.80": 3266,
+        "10.00": 3266,
+        "10.20": 3266,
+        "10.40": 3266,
+        "10.60": 3266,
+        "10.80": 3266,
+        "11.00": 8861,
+        "11.20": 8994,
+        "11.40": 8679
+      },
+      "nominal_bead_protected_overlap_detected": false,
+      "projected_protected_min_vertical_gap_mm": 0.4999996185302713,
+      "bead_center_inside_model_examples": []
+    }
+  },
+  "removal_review": {
+    "04": "Sparse columns beneath U saddle can be trapped as one rigid piece. Before electronics, cut/break into3-5mm pieces and remove through open cradle (Y23.2..46.8 aboveZ43.3) or wire-side opening. Never pry on servo locating face, keeper slots, bearings or thrust face. Physical access/damage-free removal require cradle coupon and actual04 trial.",
+    "06": "Support around D12 journal can form a ring. Split into at least two pieces and peel radially outsideR10, before stock horn insertion. Protect D12 journal, A blind bearing, horn pocket and R6.3..8.5 capture annulus. Real bridging/flatness/removal not tested.",
+    "limits": "Geometry-based removal plan, not tested tool/snap mechanics. Stop if fused; change slicing rather than force a protected surface."
+  },
+  "tool_xy_offset_mm": [
+    0.0,
+    2.0
+  ],
+  "input_stl_sha256": {
+    "04_main_cassette": "dd4daf30ee70fd9c6c412ecf793ffd0a78ea358b58fd38d51099ba7fc7ed7ef8",
+    "06_horn_cup_journal": "826a91b581c69e20fc1d5b639c3a15b2039e42fd78965e036387df59e8fdf42d"
+  }
+}
