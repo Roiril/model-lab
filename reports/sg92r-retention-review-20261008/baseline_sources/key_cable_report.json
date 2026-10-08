@@ -1,0 +1,289 @@
+{
+  "input_blend_sha256": "d1cad135be74b404c40905c8d54cbbd180aebbc04e09c131c02055e5a78a98a3",
+  "physical_tested": false,
+  "key_paths": {
+    "vertical_entry_at90deg": {
+      "samples": 31,
+      "obstacles": []
+    },
+    "quarter_turn_90_to0": {
+      "samples": 91,
+      "obstacles": []
+    }
+  },
+  "blocking_probes": [
+    {
+      "name": "withdraw_locked",
+      "z_offset_mm": -1.0,
+      "rotation_deg": 0,
+      "obstacle": true,
+      "hits": [
+        {
+          "fixed": "04_main_cassette",
+          "volume_mm3": 35.69999969694377,
+          "bad_edges": 0,
+          "bounds_mm": [
+            [
+              13.49999713897705,
+              23.500001907348633,
+              8.30000114440918
+            ],
+            [
+              22.0,
+              29.500001907348633,
+              9.000000953674316
+            ]
+          ],
+          "obstacle": true
+        },
+        {
+          "fixed": "05_front_closure",
+          "volume_mm3": 15.539988777676124,
+          "bad_edges": 0,
+          "bounds_mm": [
+            [
+              51.000003814697266,
+              23.500001907348633,
+              8.30000114440918
+            ],
+            [
+              54.70000076293945,
+              29.500001907348633,
+              9.000000953674316
+            ]
+          ],
+          "obstacle": true
+        }
+      ]
+    },
+    {
+      "name": "upward_head_capture",
+      "z_offset_mm": 0.6,
+      "rotation_deg": 0,
+      "obstacle": true,
+      "hits": [
+        {
+          "fixed": "01_body",
+          "volume_mm3": 39.43953925565285,
+          "bad_edges": 0,
+          "bounds_mm": [
+            [
+              25.500003814697266,
+              21.30000114440918,
+              3.200000047683716
+            ],
+            [
+              47.500003814697266,
+              31.700000762939453,
+              3.5999999046325684
+            ]
+          ],
+          "obstacle": true
+        }
+      ]
+    },
+    {
+      "name": "wrong_direction_past_locked_stop",
+      "z_offset_mm": 0,
+      "rotation_deg": -15,
+      "obstacle": true,
+      "hits": [
+        {
+          "fixed": "01_body",
+          "volume_mm3": 77.85846582435181,
+          "bad_edges": 0,
+          "bounds_mm": [
+            [
+              27.02589988708496,
+              16.766681671142578,
+              0.20000000298023224
+            ],
+            [
+              53.60035705566406,
+              34.36982727050781,
+              13.80000114440918
+            ]
+          ],
+          "obstacle": true
+        }
+      ]
+    },
+    {
+      "name": "past_release_stop",
+      "z_offset_mm": 0,
+      "rotation_deg": 105,
+      "obstacle": true,
+      "hits": [
+        {
+          "fixed": "01_body",
+          "volume_mm3": 0.9155387379773292,
+          "bad_edges": 0,
+          "bounds_mm": [
+            [
+              28.63017463684082,
+              17.025903701782227,
+              0.20000000298023224
+            ],
+            [
+              44.369815826416016,
+              35.9741096496582,
+              3.0
+            ]
+          ],
+          "obstacle": true
+        }
+      ]
+    },
+    {
+      "name": "04_main_cassette_lift1mm",
+      "obstacle": true,
+      "hits": [
+        {
+          "volume_mm3": 35.69985720453849,
+          "bad_edges": 0,
+          "bounds_mm": [
+            [
+              13.499998092651367,
+              23.500001907348633,
+              9.30000114440918
+            ],
+            [
+              22.0,
+              29.500001907348633,
+              9.999998092651367
+            ]
+          ],
+          "obstacle": true
+        }
+      ]
+    },
+    {
+      "name": "05_front_closure_lift1mm",
+      "obstacle": true,
+      "hits": [
+        {
+          "volume_mm3": 15.539926751614463,
+          "bad_edges": 0,
+          "bounds_mm": [
+            [
+              51.000003814697266,
+              23.500001907348633,
+              9.30000114440918
+            ],
+            [
+              54.70000076293945,
+              29.500001907348633,
+              9.999998092651367
+            ]
+          ],
+          "obstacle": true
+        }
+      ]
+    }
+  ],
+  "cable": {
+    "connector_8x5x15_vertical_entry": {
+      "center_xy_mm": [
+        41,
+        64.3
+      ],
+      "obstacles": []
+    },
+    "D3_R6_conservative_envelope": {
+      "centerline_yz_mm": [
+        [
+          62.5,
+          14.0
+        ],
+        [
+          62.5,
+          7.65
+        ],
+        [
+          62.52283181144953,
+          7.1270655435140515
+        ],
+        [
+          62.59115348192675,
+          6.608110933998418
+        ],
+        [
+          62.70444504226559,
+          6.097085729384876
+        ],
+        [
+          62.86184427528455,
+          5.597879140045988
+        ],
+        [
+          63.0621532777801,
+          5.114290429555804
+        ],
+        [
+          63.30384757729337,
+          4.65
+        ],
+        [
+          63.58508773426605,
+          4.208541381893724
+        ],
+        [
+          63.903733341286134,
+          3.793274341880765
+        ],
+        [
+          64.25735931288071,
+          3.4073593128807147
+        ],
+        [
+          64.64327434188077,
+          3.053733341286132
+        ],
+        [
+          65.05854138189372,
+          2.73508773426605
+        ],
+        [
+          65.5,
+          2.4538475772933683
+        ],
+        [
+          65.9642904295558,
+          2.212153277780101
+        ],
+        [
+          66.44787914004598,
+          2.0118442752845507
+        ],
+        [
+          66.94708572938488,
+          1.8544450422655903
+        ],
+        [
+          67.45811093399841,
+          1.7411534819267525
+        ],
+        [
+          67.97706554351404,
+          1.6728318114495266
+        ],
+        [
+          68.5,
+          1.6500000000000004
+        ],
+        [
+          76.0,
+          1.65
+        ]
+      ],
+      "x_bounds_mm": [
+        39.48,
+        42.52
+      ],
+      "obstacles": []
+    }
+  },
+  "reverse_rotation_locked": false,
+  "retention_scope": "Rigid head/floor shoulder and crossbar/feet retain vertical translation at0deg. Two broad angular stops limit0..90. Reverse rotation toward90 remains intentionally manual; no automatic angular lock, spring preload or vibration retention claim.",
+  "scope": "Bottom key insertion at1mm and turn at1deg. Reverse paths are the same geometry; tool grip/pull, printed fit, retention strength and vibration are untested. Cable assumes D3 R6 and connector8x5x15 without latch/tails. Smooth posts guide wires but do not prove tensile strain relief."
+}

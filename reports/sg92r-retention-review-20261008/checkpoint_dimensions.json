@@ -1,0 +1,680 @@
+{
+  "status": "design checkpoint; baseline unchanged; no new CAD generated or tested",
+  "baseline": {
+    "model": "mystery-box-sg92r-v6",
+    "revision": 3,
+    "blend_sha256": "d1cad135be74b404c40905c8d54cbbd180aebbc04e09c131c02055e5a78a98a3",
+    "validation": {
+      "revision": 3,
+      "physical_tested": false,
+      "release_label": "CAD-checked prototype; revision3 prototype; physical testing not performed; parent review pending; real fit/teeth/support removal/servo tests required",
+      "blend_sha256": "d1cad135be74b404c40905c8d54cbbd180aebbc04e09c131c02055e5a78a98a3",
+      "print_parts": 19,
+      "fit_and_support_tests": 28,
+      "geometry_plates": 5,
+      "mesh_instances_checked": 94,
+      "mesh_failures": 0,
+      "motion_samples": 131,
+      "motion_obstacles": 0,
+      "invalid_motion_booleans": 0,
+      "assembly_translation_paths": 19,
+      "assembly_obstacles": 0,
+      "stock_coaxial_reference_intersections": 3,
+      "key_paths_clear": true,
+      "no_required_spring_or_tie": true,
+      "key_reverse_rotation_automatically_locked": false,
+      "closed_print_parts_inside70mm_cube": true,
+      "key_blocking_probes_solid": true,
+      "tool_paths_clear": true,
+      "connector_and_cable_envelopes_clear": true,
+      "support_nominal_protected_bead_overlap": false,
+      "support_protected_projection_gap_mm": 0.4999996185302713,
+      "all_offline_slices_succeeded": true,
+      "guide_image_dependencies": [
+        "bottom_key_operation.png",
+        "assembly_overview.png",
+        "dimensions.png",
+        "assembly_steps.png",
+        "horn_capture.png",
+        "support_faces.png",
+        "print_plates.png",
+        "exploded_actual3d.png"
+      ],
+      "no_physical_print_or_servo_actuation": true,
+      "limits": [
+        "No continuous-motion/printed-fit guarantee",
+        "Reference shaft/socket engagement does not model actual spline teeth",
+        "Support proximity under06 about0.5mm requires physical trial26",
+        "Layer strength, bottom key operation, tool grips, power, wire tension and vibration untested",
+        "Electronics/amp mounts unspecified"
+      ]
+    }
+  },
+  "baseline_file_hashes": {
+    "all_mesh_audit.json": "f0e9eea5cefabb3de1b528d44b6ea3985adce7db97a351057593965f727ec81f",
+    "assembly_guide.html": "b73dea13088924c8a15109674dac5deaa68d3ad6f2eb37620228a3e0a0bda48d",
+    "assembly_manifest.json": "9d42d32db19eace9cfdcccbe7400beb46c656f6f2e2afa879d3cc2f17cb78843",
+    "assembly_overview.png": "996d88f61fe5878cdaecf6089ece21dcc0836342c36249102ee23564811dd40c",
+    "assembly_overview.svg": "9d5e5d189b8015629ba91a8f4d72fbe2e33fbbd80675d17d02b6c58aa4827fc0",
+    "assembly_path_audit.json": "82f0174901dfadc8515882b17df7dfb304e1283d499c9768cb02efa676de118d",
+    "assembly_steps.png": "84db4c74c7f756159e99d9e34627a9ebc44f7ed4fc66fcf58ac7d5e9983f68d4",
+    "assembly_steps.svg": "9b479a35d7f694ede1f908059d3ef7d1c39a1172452a9840cdb054ca2356efe3",
+    "audit_all.py": "d5fbc5be39d5fb850df80103ee369247b9b1a279fb7a5d194a35a6fba080b1fb",
+    "audit_stl.py": "aaf55063243435dc7bb16850f85d67b300dfbcabebdbd3dcf7895e5e5e98834a",
+    "bottom_assembled_actual.png": "15c0fe804cbdd0383a6cb13edcc8490820a9feeba1867bbdb780efdb954bc0d4",
+    "bottom_key_capture_actual.png": "a46c677aef23fc0a91f90550495bd234ecb515757871ee7b98ff9178dbc41bd8",
+    "bottom_key_operation.png": "abae361f642ebf8b81ca564b503a3e26749967b1c4f63ff4637bd718b916cf8a",
+    "bottom_key_operation.svg": "e5c48fb0e00711780e4089361320fe0fffbbe61366f585b8874e5aee509b3327",
+    "cad_utils.py": "ba87d537d7636c34e06fc757a8ae0465563fc4e6f95d5c09d75228d9c8c02ace",
+    "capture_axis_actual_section.png": "48e6e27be3d0139382f296d3474d19c5f1518044b2b96b281c8afa86255f4819",
+    "catalog.json": "60e9f6de76a881cf3999cae817dc515977cc222b2306f3485b21f11c29c1850f",
+    "check_assembly.py": "e697a6398e20ad17f825392c7a2ca2407e3b9397a03a027a37202f00db3b779b",
+    "check_assembly_revision.py": "804cae39919aff630bdf186c2d1fbf009ef25958268c498ed5c747d2588a8d81",
+    "check_support_contacts.py": "bce960356d5788f9d65fb8ab9413b4d12aa2f4e354a52b7a6087b347fcdf1dbd",
+    "check_support_revision.py": "c626eab0e9d66724abb28bfe3aefdc48e784bf42e824a0e82833cca75ae11ab2",
+    "coupon_manifest.json": "2126e17847b251c454227c5028b745e7ffab03c3e438c3b3b03e03ce0288d2e0",
+    "dimensions.png": "690eec817ae77f64d203fb37a3916ad564d490ee1c61ff71c65429e11c2631c7",
+    "dimensions.svg": "3f5ac3c2cc2ea6afe23894db1a9901028d95f33ffee4653ac0bc34e6bdf4664d",
+    "distribution_report.json": "2837feec9429a888521fc5ef075bf86d775da385f6ca7b3c660d1ad4c8fa7ae6",
+    "editable_cube_v6.blend": "d1cad135be74b404c40905c8d54cbbd180aebbc04e09c131c02055e5a78a98a3",
+    "exploded_actual3d.png": "3154e87b05423c58fcee1cb47b392c883e882e246c5b901cee763000496740cf",
+    "exterior_bounds_report.json": "4be74afe1fc4d7d0753c5c7b971ee25284d4a8a1e6b6235b09602695cd147f3e",
+    "filament_pla_flat.json": "8eaeabbfab542bfe0dd97c6f73f292c3832404a5d50d44e0dc14fbb3b119dc26",
+    "final_validation_revision.py": "9f59350ea01e601418868a51063fa656d1ae31ccf70077c782e789118e94dd9d",
+    "horn_capture.png": "8fe3ebf6925ec14f6f759f1ad642a9e3414e3eb1737d1c96cdc4d8cec1040a14",
+    "horn_capture.svg": "b3cc118c5a5802fcb5747a1b1810c585008142e5ce1c8c6eb9a149eb02da66b0",
+    "horn_capture_report.json": "22c8779e1d5a5d4b88b15a6ac73d3f576cd72f53cf27339747d6c6c844c175a5",
+    "key_cable_report.json": "71b7111ce2f69c85fccd48c0fc690fd0624b7653bf749c459549fe5728310838",
+    "library_identity.json": "70f9ff1f9a3d0526d9f41158d3939dfd21698170f39e94f22930e8bd25c3f843",
+    "load_screen_report.json": "2bbaac7a9cefd31e879565d7fc463ff4c439053afe60332b702dbd6d9aa3b3cd",
+    "machine_x1c_flat.json": "b7dc2f7f2db602b89f048c91915ca306f511740d59cc0f8ff74702aa9c7489aa",
+    "make_coupons.py": "7d9e439a7a2dca7319075866fab0b6bd9487bdb0f7813584ff19a11c7d750b54",
+    "make_docs.py": "61b1a28c3f77333c394045f86b564f49ccadd8ee77e98d80e46c5ec7d60e8fbc",
+    "make_docs_revision.py": "cd57b517bb3d1f24e2d99cc1e9a15a1dc0ce50c4f3cc1e33e186985ead2b6864",
+    "make_plates.py": "02e0a1882f8aaa6bcec3da5a83bfd718a4e59b338521ce7966bdbdc81cfbde09",
+    "mechanical_screen.py": "9a6acc473670fcd800a8f0ddd3b1c5dd5a935a6838fc0371b8912225160dbb1b",
+    "mechanics_report.json": "c93b5b87334f08a4848252727076824ee398ca9da5b0bd643ee1f77b7751844a",
+    "mechanics_report.py": "90092ba005bb9319347ee6c0c9c8e745ff7e7383f2d150c759511a43746a9836",
+    "model.py": "9b309b7e9749ad65484bedb7a2bdae2a30c93bc6c12777988536e4f12d231e35",
+    "model_lab_revision3_sync.json": "ce204ac3e90afb589e4933dc47646833fa3e8a881532cc8786c8031521f24be6",
+    "motion_audit.json": "1004c8704d4b958ef652e54fc595507129f86972bc02256c0b15c061d12fc6dd",
+    "native_preview_reference_cleanup.json": "c5f40b8cb48c187c0b04015b8c0194606a0b73ea1ef69340afa6803b66503e40",
+    "PACKAGE_01_SHA256.json": "32be40790de61e2300f1abf08d58dd2c5f36d72c8454a1624ff9ba6ae3dd7ac4",
+    "PACKAGE_02_SHA256.json": "d25e099b554f20147e195a08f178e04ec3ad8b65d73c4acda90f3cb17361a19b",
+    "PACKAGE_03_SHA256.json": "2412d626a8422e432471dfa07f39bf91daeafd5277dfd64a2f1129e0c1267792",
+    "package_revision.py": "ab9244cc02f4656e0d67e8617514fd802800ed9b0966418796b8f46b7d1c0b53",
+    "params.py": "551fb7514f18f1043316a8dcdeb46587ac7b99ca7e1ade8bd93ac28ef4372527",
+    "plate_00_fit_tests_preview.png": "c54d4641751aea8124d87f1a98463972040022acc4b438982c53beb544c652b1",
+    "plate_01_shells_preview.png": "cef4c2bc8c72eaccec114797fb92874623bdd087ede598e27baabc868ae3f5ed",
+    "plate_02_cassette_preview.png": "ea0155c0ed5d107b4d82334b6d1af9f1ff26675b9d1335fbb4b2e7c04e0ecbb7",
+    "plate_03_links_preview.png": "8ab269457b8a52a880ddd1e7a6cd33ce0baf17eb7096d24c91f10a125647747c",
+    "plate_04_support_tests_preview.png": "00f01d3dcceeb3cc868e8f558efe903d1906c2e6a1077c52002cbf7b63278bec",
+    "plate_manifest.json": "29e332c7101263df5b79de32601e6216ba9634c0672d0f051f8693ef4de491a4",
+    "prepare_slicer.py": "462e5c95c673bcd0fa6846bf343977d631c312e29baddb158627b63ace385f99",
+    "preview_closed.png": "6a9ff8b5969efddaa10484a9302d22c99a6c2d10744c0cd4197fb0668cd7f0ad",
+    "preview_mechanism65.png": "6ac43e7f091a73bcf248a93ab0d3cbd6078edc5c91fdb1584032c63d0f0ed499",
+    "preview_open65.png": "9f381b5659d00447c2031558d47ae59cb69a58f7060c81cb9dae67a4fb42d439",
+    "preview_side_mechanism0.png": "4d109ea1df6770c0202b0ece9e2775bd884a4a30d936f4506eeb3990e465bc2a",
+    "print_plates.png": "a8f827d9f20f3c945ba4c122dbcbad8005a3ca66bf3feabeae966aa2faa90c08",
+    "print_plates.svg": "c35009587465117010285b5cef046fa9f10f92ab40c10effd8b2e493029a69cb",
+    "process_manual_support.json": "0dd05322b6b9b59a64020198c1226acca3b54144088f4372bf49a8dbf28d6bd3",
+    "process_no_support.json": "8d6fa5d9a447f3bbcbe4e62277c4736810e7bd8a27a14c735c1d4c3af37586cc",
+    "QA_SUMMARY_日本語.md": "8d0060dd967f973c330829426ea6b428f07e7b949a100951c29bbc02d578d90e",
+    "README.md": "b8b1bde321fc61a0b8f371ae4c45ce1ea4005aeaa88c3947f3da002519d18ca8",
+    "README_日本語.txt": "96388420129d1a0560d68f655d601cc30abd35eb86688f619821eef8bf56eacb",
+    "release_validation.json": "07cb6ece1c47b034e1d6dd51c8dc88d6a18e5440cdc735396ef8a8e2efa6052c",
+    "render_assembly_steps.py": "5a28f4d4ff6604955cce1de0389a485b2cc62096ccfbbe981425724723b14912",
+    "render_bottom_key.py": "2d4e081c47001ac68cdde56a02dbca51d19b2bdab3a19d8e8d2da5f8a89fe0c0",
+    "render_capture_section.py": "0a87a9c3c9a740ff1d5e1236f2d4d2a971fb12fec943776a558624a92936e797",
+    "render_engineering.py": "0039c5c68712077de7305cf6c60a92d37e6f10e1c9733f31239321f4b0845cd4",
+    "render_preview.py": "1a380a3628f5312bb512863e9cd19650084da7471d3b49f76b7bd8820dabc30e",
+    "render_support_faces.py": "aeb90f247922a8b1c4b70cd1a243ae1b5ae3202acff51e3409c858c9be24a8bd",
+    "REQUIREMENTS_RESPONSE_日本語.md": "d04920799e607bf568d3e0d7c971f2e58e47df84ee391735bd0acd0150f6473e",
+    "REVIEW_RESPONSE_日本語.md": "2b25bdff6752718a7792d842c5764b0d64239d43b792fc850e02b1fcc2add8f6",
+    "section_actual3d.png": "c41889e1b07c057860f7424b3aa4d97f3f1b23fbd5cce64c107648a26642d55a",
+    "section_side_actual3d.png": "fdec7d243f6811606a1b31ca51b1b5c1b04dba41371d7fde1885a6dfde937372",
+    "SG92R_v6_rev3_01_print.zip": "236d9384cadd1d1c8389dd2c49bb331c5871f5e00f2f857e4ec0d053716e558f",
+    "SG92R_v6_rev3_02_editable_CAD.zip": "20d6ed71c3b9dc7965e4a5e970232f9cb35d2b6d281900bc6a3bd8fb60d6373e",
+    "SG92R_v6_rev3_03_extra_3D_images.zip": "75e34c79514160c073202dd209c16381c584a19dd030c0e8c3a709f431c96bb5",
+    "slicer_report.json": "ddcf7b47741ebbf46adeacab75e47ef792409d7a0aa44c1e38ed86a3c2a6391f",
+    "slice_plates.py": "9c18fceec7e9bfec6f131f97e2d762a64394c72fa3bab80560bc17b4df39aa5d",
+    "START_HERE_日本語.txt": "b055514dc591814b1533dbe5e18123f8e3b520208151f1f479f30dc56d939198",
+    "step_01_rear_frame.png": "ab41bc75a74c687fd4b810ff987091c794896cfb05af2f4666b74690dc34ea46",
+    "step_02_local_capture.png": "eaa99451dda0f23655a535cc45a8856c17c78cf6c60b9a2306f2cbd11a374827",
+    "step_03_lid_front_entry.png": "bbd74fdc890a85fa6001b361a04bf0c98dee17f528232ea67eaf9e3efee702a8",
+    "step_04_complete_cassette.png": "c985e49ed665f2d8484b5a6393546daa4264808a39ab644e876f18fdf1f9dcf5",
+    "step_05_manual_box.png": "ff830c55d87b8822a72a59b5e6330ed1dadd0e7add0f2ad17e80beda08d0566b",
+    "summarize_slices.py": "ae5c70ad9d58191de0075731a8d2370d8859b7da71eac8221df7f6999af00b8f",
+    "support_04_actual.png": "bcaa1800ff7f754558cf7ed0bf50dc952d14602e0d7387570687e16dcbdd3426",
+    "support_06_actual.png": "98c00feed6858e68ab783f415c55affa1e0dc7213debac2bf1b6af7f4a45973c",
+    "support_contact_report.json": "3491e030f14aead02a44ecdddbe3322c8977fa19598a14ced3475c7b68c11858",
+    "support_faces.png": "6b01f0a1318f3bd6a06e6e179521914e110f7a6a8f6364ff20121e4d1d0dbbab",
+    "support_faces.svg": "9853ab5b8d7e190dffe8812f79fea4c80f51505f09119426708f33eb6638c4f5",
+    "tool_access_report.json": "153da6e209fb7d0496bc8c56b01949c400a8016b981f38b8b04438d74d9cfb9e",
+    "verify_exterior_bounds.py": "45f467aa68a79afc7dc599e3b8494b3fc9cbc382043345d78e954d0a300fe4cb",
+    "verify_horn_capture.py": "75ff15c6ddef780ae68299dc13db15ef5633120ee246ea1f1e4c13ead2c4b699",
+    "verify_key_cable.py": "5e919535bc0b66cb8674d2f51e951e5f5c34ae176bdd6f2761afa94bf5bf5960",
+    "verify_motion.py": "a501eba09d238cef0eaefdb86a28d8bf6c30ab6e1a8f3004a6167833b40f3a1c",
+    "verify_revision_capture.py": "417f8d5af90ee6c5dc634036db7c17a4f95240abca9079546bf466bdb181fe83",
+    "verify_tool_access.py": "7feaf4d90b2d4853c54982e0f7c771030968f738e5d641c96fc4106314c1d4e6",
+    "coupons/test_01_servo_cradle.stl": "eae6c60642a1582bad3e07e33d2fab62515cfe9e93a8ded441695303547aaaf8",
+    "coupons/test_02_actual_horn_pocket.stl": "752e5927bc6b2914888ef2778448b83bf75b3882293b94034209d9b79698558a",
+    "coupons/test_03_bearing_bar.stl": "0c9858ad101695ca2032741ab04ae359630bf61dda651ae998a6de934a802484",
+    "coupons/test_04_actual_axle5.stl": "566474f473d17f536453aeab1329674ef1459f5f2053a51158abfe6b0311d53b",
+    "coupons/test_05_actual_axle6.stl": "4a6a118b3ddcf509f7a7f1e50598587792d054b710f1d9b68ede07b779b5ea6e",
+    "coupons/test_06_actual_journal.stl": "bee5f636b7f496c4d6f22f5da42e9c63080fe8413227cb033af7e000b383b44b",
+    "coupons/test_07_roof_dock.stl": "877d7fb45721cb3f5133debc4e8f93e7be040a64d9da28691083f85cd30cadb7",
+    "coupons/test_08_actual_front_rocker.stl": "473a4a717da9ff0c83818834020c1ba5ddf74a0de82325f29502183978b93152",
+    "coupons/test_09_cover_socket.stl": "3a3d0d096a43f05f49082088f4b928b4edc14025dde4621b825f38f1daff4a7f",
+    "coupons/test_10_cover_peg.stl": "2d5b7e761db0e9dd458d1244a35db90c06f0b9104272b8625bc3e5f3d00c2f7f",
+    "coupons/test_11_bottom_key_floor.stl": "509f66f859aa57ba385d3b4dc06ce4bc67ba611ea985d03a43e356a1f18b189c",
+    "coupons/test_12_actual_bottom_key.stl": "936639a1dead727f5c1b799fe897697f94597fd0bb33952ff374eba091bfc900",
+    "coupons/test_13_keeper_rear_socket.stl": "6f682c39f61f462c9bd3d821f33e2dbfd6ad10d87b2c087e1e09da87ecc95d5c",
+    "coupons/test_14_keeper_front_socket.stl": "c4bce932ac30f7e2bed8863a21ee621f804a920d54ee0fa50bd5932f23bd5085",
+    "coupons/test_15_actual_long_keeper.stl": "314f4db46ff2f6d50eba6ad2d6172f4b7800e01211a829f03a5e635d4ef9d192",
+    "coupons/test_16_actual_local_capture.stl": "a57bd517f6095c687a7542198cf3ac255640e9c0d0afff67d501a266dcf9bd52",
+    "coupons/test_17_local_capture_socket.stl": "1b9eae6128bc8bd292c70baf9e3a1027484794ed69864186705f53d38f70c099",
+    "coupons/test_18_body_receiver.stl": "5f6c651ea678f5b42cdde1919dcd5612cd949c510c8cc1f2114faaeba1cdede8",
+    "coupons/test_19_closure_foot.stl": "6e9f17adb409a6ee8f27df5e7d1be7ae73438a377d412dd112ed629a5aba1b21",
+    "coupons/test_20_capture_rear_socket.stl": "655e22e945212dd227e61a8bf97405a00467604d8c2beb681040a04a4f386ea2",
+    "coupons/test_21_front_stop_socket.stl": "1bf3b1cbe76e093c75686a1ec0fdd52ca0bda448756d13fbfa784fedbc6e5582",
+    "coupons/test_22_rear_stop_socket.stl": "0a2808e5e25dcbe39d92ed18a43f7d3ed140d3a0a10aec04006b38467ab878ec",
+    "coupons/test_23_actual_stop.stl": "d66243efedc69200a632c559dc202569086ef37359687afdd465c9771ae07ceb",
+    "coupons/test_24_actual_stop.stl": "bf2cbcb64d009d784f1d385ddc91a249b4cea5baeeff528053e857623048c0d6",
+    "coupons/test_25_actual_U_support.stl": "dd4daf30ee70fd9c6c412ecf793ffd0a78ea358b58fd38d51099ba7fc7ed7ef8",
+    "coupons/test_26_actual_cup_with_support.stl": "fed8e6399a79864f1751147183c5c589e57836a6a177dcf673898308616bb842",
+    "coupons/test_27_rear_retention_foot.stl": "38e61afde3e57b945cf5c2f30046a371b4d8471c5a6af2ddbda804de029ed295",
+    "coupons/test_28_front_retention_foot.stl": "8bd14cea99b4d88ffc16e8dd3a29d4cd7638fc5df5b8fb9a573178c648adf97e",
+    "plates/plate_00_fit_tests.3mf": "d1bb65aa5a091517ac8d04d2767988071f1a5d54c80a1794eb6191669fdec8a6",
+    "plates/plate_01_shells.3mf": "ac59fd7d6d223c1061f85d620cd0d7393e511b3c82a350282535f0d3f56e9589",
+    "plates/plate_02_cassette.3mf": "5c44d018de94da7a3f6d37dfb70ecc850938c523c6ad333bb40cb3f64b07faa6",
+    "plates/plate_03_links.3mf": "35e52ac71d30f2d6d31ec7e6fa63f9e30fd75b03c2fbd2bd0d25f405d21c90d5",
+    "plates/plate_04_support_tests.3mf": "e7e15bfcd9b33ee9e3a7384e52d2cb6e9cc4507e4870abc6c8b0beda3f5cf553",
+    "preview_components/01_01_body.stl": "6e0fe157a970933d34aa23137479453321454b832b2a290cb60c4ea4bab78019",
+    "preview_components/02_02_fixed_rear_cover.stl": "e1d6416e1184175a36422fead840ed3b4b8e1c0526fcfedabad0724539c6d541",
+    "preview_components/03_03_planar_lid.stl": "de236de6c179306504164b04d3dd9a8385cc12ad0806f24b42af2524396b8f94",
+    "preview_components/04_04_main_cassette.stl": "7ee043f4dbe2d1838142674196e96820f6f6fc1800b73bce8664b891ad4cfc94",
+    "preview_components/05_05_front_closure.stl": "bebee2a2abc251c22633a498799b52a3640729ecb8668ed5f789b5db1bbeb414",
+    "preview_components/06_06_horn_cup_journal.stl": "48f8925754f383df6b14fcc839074271794f744c5d2272803ffc3b31eee0f05b",
+    "preview_components/07_07_rear_rocker.stl": "1241b2efc4b4c1f32392ebd0dd31c54c76cf3e3a812b71d880d6e76159d35760",
+    "preview_components/08_08_front_rocker.stl": "5834ae20a8da359d67307ba4e8eca9f2105f3fae2a1d7e08c9f63b0361d98967",
+    "preview_components/09_09_link.stl": "3f6ab9787d09e3d80ee6c49c1d10be99e1e1d8fa6dc658c65e47ff7161487700",
+    "preview_components/10_10_hinge_axle.stl": "9f8d157a4c4e5d38f77439ed46d5bff5418bbaf0d96ccc4aa116afc075c59c10",
+    "preview_components/11_11_drive_axle.stl": "0c27b95a5396b556087a19dba8472134a19e4a4ef82417b9648b778bf263f95f",
+    "preview_components/12_12_link_axle.stl": "26a64b018080a444e9fbff8a9dcf3fd90e94284ddfb64cbaefc6da385c1d1147",
+    "preview_components/13_13_body_cross_key.stl": "4a31ae0d6e7b0c4d431d171d929b1f441aacad06d86e370d5119c7a45c61a330",
+    "preview_components/14_14_servo_top_keeper.stl": "01ffcfa479bfcf172156fb2ec440a37d2b91ddc9165853455bfde2aa901734f5",
+    "preview_components/15_15_flat_spacer.stl": "6a09d5eb9724b185f250de20b09f4bdefeb33ccfbfeca442a0da6e3b886f1ed4",
+    "preview_components/16_16_flat_spacer.stl": "af1396ec9236448bc06c072c5e827bdb4a3eb683b136c23ee766c98599d16c73",
+    "preview_components/17_17_local_cup_capture.stl": "78c38bdc858571bb20aafbf541e1e2be4ebd2a257492c3a7f991758d437a2dea",
+    "preview_components/18_18_local_capture_stop.stl": "3450d87f7e4163dfcb63f189e6894d243d25758f7f7c92b0137c9f86470972af",
+    "preview_components/19_19_local_capture_stop.stl": "42431ab6a0cf1f55a3e298235f7609a7bd97fdc7f262f6eb3f0572be81bc5584",
+    "preview_components/20_REFERENCE_SG92R_body.stl": "6a23888c08771a33225d4b1fbb5e3754522e372db74e7731d207381b37f759ff",
+    "preview_components/21_REFERENCE_SG92R_horn.stl": "03bf8668a7f82dc031ce16c511f2dceab79b5142297442c2e0ffae8f4d43cbfb",
+    "preview_components/22_REFERENCE_SG92R_wire.stl": "182d172629a1cb5a91980b8fcb297a03241af0986d6cbe856504cdeaa402f615",
+    "preview_components/23_REFERENCE_exciter25x10.stl": "184b1ed9f8a2140b298353df4eff7f7726ecc6239149f3a6c085ba8160547767",
+    "reference/dimensions.json": "0ac546436ef2089fc4a2173b5f6d6e1ef30873de799508453871671796b9aaad",
+    "reference/sg92r-photo-body.stl": "3e12a2fc2f3ae0ab8292d8d03f12b998db84942c7b7c7faa68320c15423f10ac",
+    "reference/sg92r-photo-horn.stl": "dd2262e512bd366b34d305cba44a72c5cfb5bcb8fc411fb4917edea2bd11bc64",
+    "reference/sg92r-photo-wire.stl": "1122dfb93c32b36163e9cd9681f27f0f7d4a2555e464adb4249986f2b6672401",
+    "reference/SOURCE_README.md": "40eea4c7e86da2ad296968ed8becd1b583da94f3b229ec6cd8dbdac762a281a7",
+    "slow_open_demo/slow_open_demo.ino": "d50c6bc64589a08d4149d13fa2d0cf5dacf28daa795c6076bafd15f2bf757a5c",
+    "stl/01_body.stl": "6e0fe157a970933d34aa23137479453321454b832b2a290cb60c4ea4bab78019",
+    "stl/02_fixed_rear_cover.stl": "1fdbd13a0f401a079ef2c6de7d3a6b5f63aa6e15ef594f089e871d910fcd4665",
+    "stl/03_planar_lid.stl": "8f389dd1b1988e1687c804bb0ed4125b7a249aa6008cc5ba25f98f4f49670825",
+    "stl/04_main_cassette.stl": "b5d5821bd40ab6581cdd2c59e7848108e707df6cec9e07f68f090c2cfbf33f25",
+    "stl/05_front_closure.stl": "4e58f4dce37989ee32839ae8eed9002d8253a35d0d4215c2950dba63bdbdd95c",
+    "stl/06_horn_cup_journal.stl": "fed8e6399a79864f1751147183c5c589e57836a6a177dcf673898308616bb842",
+    "stl/07_rear_rocker.stl": "6d5462cf7fcd47d9227d91d21dee4a506e20b7b88c690b177ffed3c2ddba2ef4",
+    "stl/08_front_rocker.stl": "473a4a717da9ff0c83818834020c1ba5ddf74a0de82325f29502183978b93152",
+    "stl/09_link.stl": "fe2f0e609f49fcc42c497cf02a86782fbc81e23d59ea9a1e88be7240acab842b",
+    "stl/10_hinge_axle.stl": "4a6a118b3ddcf509f7a7f1e50598587792d054b710f1d9b68ede07b779b5ea6e",
+    "stl/11_drive_axle.stl": "566474f473d17f536453aeab1329674ef1459f5f2053a51158abfe6b0311d53b",
+    "stl/12_link_axle.stl": "698b2731b7ed1fd2d645afa07c0d24557eb0d96efa7e3f42d1b26ee0f5d793a7",
+    "stl/13_body_cross_key.stl": "936639a1dead727f5c1b799fe897697f94597fd0bb33952ff374eba091bfc900",
+    "stl/14_servo_top_keeper.stl": "314f4db46ff2f6d50eba6ad2d6172f4b7800e01211a829f03a5e635d4ef9d192",
+    "stl/15_flat_spacer.stl": "c369a0d949bac840c9bbdd7669dfc4ec3fde4455d19bd221f9b5a2d666fd67a5",
+    "stl/16_flat_spacer.stl": "87b33286c026f7922e449091484165ec7d2f8650b5035e74b4bcbbcc010bae9f",
+    "stl/17_local_cup_capture.stl": "a57bd517f6095c687a7542198cf3ac255640e9c0d0afff67d501a266dcf9bd52",
+    "stl/18_local_capture_stop.stl": "d66243efedc69200a632c559dc202569086ef37359687afdd465c9771ae07ceb",
+    "stl/19_local_capture_stop.stl": "bf2cbcb64d009d784f1d385ddc91a249b4cea5baeeff528053e857623048c0d6"
+  },
+  "constraints": {
+    "closed_cube_mm": 70,
+    "additional_fasteners_pins_springs_ties": false,
+    "reference": "models/sg92r-photo: user-confirmed local canonical geometry, not manufacturer tolerance guarantee",
+    "supports": "only nonfunctional inner rough surfaces",
+    "physical_tested": false
+  },
+  "key_current_mm": {
+    "center_xy": [
+      36.5,
+      26.5
+    ],
+    "head_xyz_lo": [
+      25.5,
+      21.3,
+      0.2
+    ],
+    "head_xyz_hi": [
+      47.5,
+      31.7,
+      3.0
+    ],
+    "bar_xyz_lo": [
+      13.5,
+      21.3,
+      9.3
+    ],
+    "bar_xyz_hi": [
+      54.7,
+      31.7,
+      13.8
+    ],
+    "rear_foot_xyz_lo": [
+      4,
+      23.5,
+      3
+    ],
+    "rear_foot_xyz_hi": [
+      22,
+      29.5,
+      9
+    ],
+    "front_foot_xyz_lo": [
+      51,
+      23.5,
+      3
+    ],
+    "front_foot_xyz_hi": [
+      61.3,
+      29.5,
+      9
+    ],
+    "bar_foot_z_gap": 0.3,
+    "rear_overlap_x": 8.5,
+    "front_overlap_x": 3.7,
+    "head_roof_gap_z": 0.2,
+    "automatic_reverse_rotation_retention": false
+  },
+  "candidate_A": {
+    "status": "preferred next CAD investigation; not a complete geometry",
+    "parts_target_if_paths_pass": 17,
+    "operations_mm": {
+      "lift_z": 1.5,
+      "slide_y": 7,
+      "lower_z": 1.5,
+      "outside_assembly_entry_y_offset": -4.5
+    },
+    "gate_home_beam_xyz_lo": [
+      5.9,
+      5,
+      24.5
+    ],
+    "gate_home_beam_xyz_hi": [
+      58.6,
+      10.6,
+      30.1
+    ],
+    "toe_revised_home_xyz_lo": [
+      21.2,
+      25,
+      0.4
+    ],
+    "toe_revised_home_xyz_hi": [
+      25.2,
+      33,
+      4.8
+    ],
+    "initial_key_toe_x_gap_mm": 0.3,
+    "lifted_head_toe_overlap_z_mm": 1.1,
+    "nominal_release_clearance_at_x25p2_mm": 0.988902572544017,
+    "proposed_rear_foot_end_x_mm": 20.8,
+    "guard_rear_foot_gap_mm": 0.4,
+    "known_obstacles": [
+      "05 upper shelf blocks release translation",
+      "04 rail closed ends block integral 18/19 X insertion",
+      "proposed moved speaker overlaps existing rear receiver"
+    ],
+    "unverified": [
+      "all gate assembly/service paths",
+      "tool first-operation path from underside",
+      "sum of key/gate/plate tolerance and warp",
+      "T groove ceilings and actual printed support removal",
+      "layer strength and creep",
+      "vibration retention in all orientations",
+      "new full lid motion and speaker arrangement"
+    ]
+  },
+  "candidate_B": {
+    "status": "not selected without complete first-release gate",
+    "reason": "existing 02/14/05 are themselves captive; using them first creates circular disassembly",
+    "minimum_y_slide_mm": 8.5,
+    "negative_y_obstacle": "front body load pad",
+    "positive_y_obstacle": "existing optional D25 speaker"
+  },
+  "candidate_C": {
+    "status": "rejected as current cassette retention replacement",
+    "reason": "cassette uplift or inversion can perform the first axial release operation; no return/capture",
+    "push_mm": 3.5,
+    "bar_rail_clearance_after_push_mm": 0.7,
+    "possible_cassette_float_mm": 3.8,
+    "additional_problems": [
+      "0/90 cross entry required for assembly",
+      "deep tool slot access",
+      "functional rotation chamber roof print support",
+      "manual return and incomplete-lock recognition"
+    ]
+  },
+  "reviewers": {
+    "A": "critic_captive_gate: partial adoption with shelf/receiver/tool/capture/tolerance blockers",
+    "B": "critic_capture_plate: geometry and cyclic-disassembly blockers",
+    "C": "critic_push_turn: rejected as replacement retention"
+  },
+  "parts": [
+    {
+      "name": "01_body",
+      "group": "fixed",
+      "print_bounds_mm": [
+        70.00000762939453,
+        70.00000762939453,
+        67.5999984741211
+      ],
+      "print_axis": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "quantity": 1
+    },
+    {
+      "name": "02_fixed_rear_cover",
+      "group": "fixed",
+      "print_bounds_mm": [
+        70.0,
+        26.799999237060547,
+        11.500020027160645
+      ],
+      "print_axis": [
+        4.371138828673793e-08,
+        0.0,
+        1.0,
+        0.0
+      ],
+      "quantity": 1
+    },
+    {
+      "name": "03_planar_lid",
+      "group": "lid",
+      "print_bounds_mm": [
+        70.0,
+        42.400001525878906,
+        12.399999618530273
+      ],
+      "print_axis": [
+        4.371138828673793e-08,
+        0.0,
+        1.0,
+        0.0
+      ],
+      "quantity": 1
+    },
+    {
+      "name": "04_main_cassette",
+      "group": "fixed",
+      "print_bounds_mm": [
+        64.30000305175781,
+        61.599998474121094,
+        50.599998474121094
+      ],
+      "print_axis": [
+        0.7071067690849304,
+        -0.0,
+        -0.7071067690849304,
+        -0.0
+      ],
+      "quantity": 1
+    },
+    {
+      "name": "05_front_closure",
+      "group": "fixed",
+      "print_bounds_mm": [
+        64.30000305175781,
+        61.599998474121094,
+        14.900010108947754
+      ],
+      "print_axis": [
+        0.7071067690849304,
+        0.0,
+        0.7071067690849304,
+        0.0
+      ],
+      "quantity": 1
+    },
+    {
+      "name": "06_horn_cup_journal",
+      "group": "crank",
+      "print_bounds_mm": [
+        31.84514045715332,
+        36.129669189453125,
+        20.799999237060547
+      ],
+      "print_axis": [
+        0.7071067690849304,
+        0.0,
+        0.7071067690849304,
+        0.0
+      ],
+      "quantity": 1
+    },
+    {
+      "name": "07_rear_rocker",
+      "group": "lid",
+      "print_bounds_mm": [
+        18.700000762939453,
+        32.5,
+        4.0
+      ],
+      "print_axis": [
+        0.7071067690849304,
+        -0.0,
+        -0.7071067690849304,
+        -0.0
+      ],
+      "quantity": 1
+    },
+    {
+      "name": "08_front_rocker",
+      "group": "lid",
+      "print_bounds_mm": [
+        18.700000762939453,
+        32.5,
+        14.5
+      ],
+      "print_axis": [
+        0.7071067690849304,
+        0.0,
+        0.7071067690849304,
+        0.0
+      ],
+      "quantity": 1
+    },
+    {
+      "name": "09_link",
+      "group": "link",
+      "print_bounds_mm": [
+        33.229148864746094,
+        27.784549713134766,
+        3.0
+      ],
+      "print_axis": [
+        0.7071067690849304,
+        -0.0,
+        -0.7071067690849304,
+        -0.0
+      ],
+      "quantity": 1
+    },
+    {
+      "name": "10_hinge_axle",
+      "group": "fixed",
+      "print_bounds_mm": [
+        18.899999618530273,
+        6.0,
+        4.242640018463135
+      ],
+      "print_axis": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "quantity": 1
+    },
+    {
+      "name": "11_drive_axle",
+      "group": "crank",
+      "print_bounds_mm": [
+        15.800000190734863,
+        5.0,
+        3.5355300903320312
+      ],
+      "print_axis": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "quantity": 1
+    },
+    {
+      "name": "12_link_axle",
+      "group": "lid",
+      "print_bounds_mm": [
+        9.5,
+        5.0,
+        3.5355300903320312
+      ],
+      "print_axis": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "quantity": 1
+    },
+    {
+      "name": "13_body_cross_key",
+      "group": "fixed",
+      "print_bounds_mm": [
+        41.20000076293945,
+        15.800000190734863,
+        11.699999809265137
+      ],
+      "print_axis": [
+        0.7071067690849304,
+        0.7071067690849304,
+        0.0,
+        0.0
+      ],
+      "quantity": 1
+    },
+    {
+      "name": "14_servo_top_keeper",
+      "group": "fixed",
+      "print_bounds_mm": [
+        52.700008392333984,
+        5.800000190734863,
+        5.600009918212891
+      ],
+      "print_axis": [
+        4.371138828673793e-08,
+        0.0,
+        1.0,
+        0.0
+      ],
+      "quantity": 1
+    },
+    {
+      "name": "15_flat_spacer",
+      "group": "fixed",
+      "print_bounds_mm": [
+        52.70000076293945,
+        5.599999904632568,
+        5.599999904632568
+      ],
+      "print_axis": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "quantity": 1
+    },
+    {
+      "name": "16_flat_spacer",
+      "group": "fixed",
+      "print_bounds_mm": [
+        52.70000076293945,
+        5.599999904632568,
+        5.599999904632568
+      ],
+      "print_axis": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "quantity": 1
+    },
+    {
+      "name": "17_local_cup_capture",
+      "group": "fixed",
+      "print_bounds_mm": [
+        21.809999465942383,
+        41.79999923706055,
+        3.5
+      ],
+      "print_axis": [
+        0.7071067690849304,
+        0.0,
+        0.7071067690849304,
+        0.0
+      ],
+      "quantity": 1
+    },
+    {
+      "name": "18_local_capture_stop",
+      "group": "fixed",
+      "print_bounds_mm": [
+        5.199999809265137,
+        6.400000095367432,
+        3.200000047683716
+      ],
+      "print_axis": [
+        0.7071067690849304,
+        0.0,
+        0.7071067690849304,
+        0.0
+      ],
+      "quantity": 1
+    },
+    {
+      "name": "19_local_capture_stop",
+      "group": "fixed",
+      "print_bounds_mm": [
+        9.300000190734863,
+        6.400000095367432,
+        3.200000047683716
+      ],
+      "print_axis": [
+        0.7071067690849304,
+        0.0,
+        0.7071067690849304,
+        0.0
+      ],
+      "quantity": 1
+    }
+  ]
+}

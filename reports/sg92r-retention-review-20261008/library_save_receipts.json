@@ -1,0 +1,69 @@
+{
+  "report": {
+    "operation": "replace_library_file",
+    "status": "succeeded",
+    "path": "/retention_review.html",
+    "file_id": "file_000000007c0882098cfdf4bb9f06621a",
+    "library_file_id": "libfile_a9efbb9ef35c8191a1ea2dbb165fa166",
+    "file_name": "retention_review.html",
+    "current_version_number": 1,
+    "restored_from_version_number": null,
+    "xattrs": [
+      {
+        "name": "user.library-file-version",
+        "value": "1"
+      }
+    ],
+    "directory_id": "libdir_3a8b668e24ac81919821c3cfcd25d093",
+    "mime_type": "text/html",
+    "library_artifact_type": "report",
+    "file_size_bytes": 716428,
+    "external_connectors_accessed": false
+  },
+  "figures": {
+    "results": [
+      {
+        "operation": "create_library_file",
+        "status": "succeeded",
+        "path": "/current_key_dimensions.png",
+        "file_id": "file_00000000926c8206bb857f929fa3baa5",
+        "library_file_id": "libfile_b6f8f7dd329c8191ba619ddda1d7c98b",
+        "file_name": "current_key_dimensions.png",
+        "current_version_number": 0,
+        "restored_from_version_number": null,
+        "xattrs": [
+          {
+            "name": "user.library-file-version",
+            "value": "0"
+          }
+        ],
+        "directory_id": "libdir_3a8b668e24ac81919821c3cfcd25d093",
+        "mime_type": "image/png",
+        "library_artifact_type": "image",
+        "file_size_bytes": 47626
+      },
+      {
+        "operation": "create_library_file",
+        "status": "succeeded",
+        "path": "/candidate_A_operations.png",
+        "file_id": "file_0000000086a48206a554768ef8dde18b",
+        "library_file_id": "libfile_9a64c5af67f88191802a2a63d067b4d4",
+        "file_name": "candidate_A_operations.png",
+        "current_version_number": 0,
+        "restored_from_version_number": null,
+        "xattrs": [
+          {
+            "name": "user.library-file-version",
+            "value": "0"
+          }
+        ],
+        "directory_id": "libdir_3a8b668e24ac81919821c3cfcd25d093",
+        "mime_type": "image/png",
+        "library_artifact_type": "image",
+        "file_size_bytes": 33938
+      }
+    ],
+    "warnings": [],
+    "external_connectors_accessed": false
+  }
+}
