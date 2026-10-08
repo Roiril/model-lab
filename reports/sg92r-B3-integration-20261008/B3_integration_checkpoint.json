@@ -1,0 +1,79 @@
+{
+  "version": "B3-integrated-3",
+  "checkpoint_requested_by_parent": true,
+  "source_blend_sha256": "1ababb93dba4ef81368ba7767d3b13f180b4e43a407c336acef9d6a9150ac4c6",
+  "physical_tested": false,
+  "ready_to_print_without_fit_trials": false,
+  "running_jobs": [],
+  "completed_jobs": [
+    {
+      "result": "local_audit_B3.json",
+      "start_time": "not_individually_recorded",
+      "completed_output_update_UTC": "2026-10-08T04:03:09.771937+00:00",
+      "status": "completed"
+    },
+    {
+      "result": "motion_audit.json",
+      "start_time": "not_individually_recorded",
+      "completed_output_update_UTC": "2026-10-08T04:04:29.762776+00:00",
+      "status": "completed"
+    },
+    {
+      "result": "assembly_path_audit.json",
+      "start_time": "not_individually_recorded",
+      "completed_output_update_UTC": "2026-10-08T04:04:33.424666+00:00",
+      "status": "completed"
+    },
+    {
+      "result": "contact_order_B3.json",
+      "start_time": "not_individually_recorded",
+      "completed_output_update_UTC": "2026-10-08T04:03:06.175140+00:00",
+      "status": "completed"
+    },
+    {
+      "result": "slice_line_review.json",
+      "start_time": "not_individually_recorded",
+      "completed_output_update_UTC": "2026-10-08T04:10:50.094149+00:00",
+      "status": "completed"
+    },
+    {
+      "result": "support_contact_report.json",
+      "start_time": "not_individually_recorded",
+      "completed_output_update_UTC": "2026-10-08T04:07:35.089382+00:00",
+      "status": "completed"
+    },
+    {
+      "result": "service_render_record.json",
+      "start_time": "not_individually_recorded",
+      "completed_output_update_UTC": "2026-10-08T04:07:36.170957+00:00",
+      "status": "completed"
+    }
+  ],
+  "parts": 22,
+  "local_and_assembly_poses": 819,
+  "whole_lid_poses": 131,
+  "whole_assembly_stages": 19,
+  "assumed_tool_poses": 334,
+  "full_pusher_poses": 21,
+  "combined_release_poses": 2108,
+  "combined_cap_stop_poses": 125,
+  "combined_cap_stop_feasible_poses": 5,
+  "slice_plates": 6,
+  "mesh_instances_audited": 62,
+  "source_and_sliced_triangle_vertices_match": true,
+  "four_points": {
+    "LOCK": "nominal intended-load hard stops checked; no vibration/strength qualification",
+    "speaker": "D25H10 plus provisional6x4x3terminals/D2.2lead envelope included; first nominal finite contact bolt4.215deg,body4.662deg,speaker9.585deg;XYdiskR0.339sampled",
+    "cassette": "key withdrawal31,unit lift71,full bottom-pusher lift21,bench stages19 passed",
+    "wrong_position": "mid-travel cannot enter lower pocket;LOCK needs key0 and boltleftlowerL;printed glyph readability untested"
+  },
+  "remaining": [
+    "Complete diagrammed Japanese assembly/printing guide and dimension image",
+    "Save candidate to model-lab while preserving old version",
+    "Optional more coupled first-contact study including keyZ and boltguide offsets; current first-contact disk study covers keyXY, combined-release study covers keyZ/bolt offsets",
+    "No exhaustive continuous multi-axis escape proof for21/22;finite125 combined starts,5feasible,three directed exits blocked",
+    "Physical fit, gravity return, layer bonding, bridge sag, support removal, actual speaker/wires, finger/grip/support stability, powered servo and vibration remain untested"
+  ],
+  "native_candidate_copy_completed": false,
+  "library_receipt_saved_separately": true
+}
