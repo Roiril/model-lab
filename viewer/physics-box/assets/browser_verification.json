@@ -32,7 +32,7 @@
     {
       "name": "repeat",
       "cycle": 4,
-      "lid": 14.883557624209454,
+      "lid": 14.21669105158199,
       "pass": true
     },
     {
@@ -48,9 +48,9 @@
     },
     {
       "name": "shaft_block",
-      "lid": 3.5581907485387583,
+      "lid": 3.5579827415228147,
       "state": "incomplete",
-      "torque": 0.029994772869568417,
+      "torque": 0.029980227177316066,
       "pass": true
     },
     {
@@ -73,7 +73,7 @@
     },
     {
       "name": "high_viscous",
-      "lid": 66.43465997772549,
+      "lid": 66.43443834589198,
       "state": "incomplete",
       "damping": 0.2,
       "pass": true
@@ -81,30 +81,56 @@
     {
       "name": "free_on_table",
       "fixed": false,
-      "lid": 65.24627169530916,
+      "lid": 65.24600425250215,
       "pass": true
     },
     {
       "name": "power_off",
       "powered": false,
-      "lid": -0.00015529884199866939,
+      "lid": -0.00015896332428799433,
       "contact": true,
       "pass": true
     },
     {
       "name": "recorded_replay",
-      "time": 12.068750000002863,
-      "length": 698,
+      "time": 12.000000000002808,
+      "length": 694,
       "status": "記録再生 ・ 計算は一時停止中（接触・軸表示はライブのみ）",
       "pass": true
     },
     {
       "name": "json_export",
       "engine": "Rapier 0.17.3",
-      "records": 698,
-      "lastTime": 12.05312500000285,
-      "simulationTime": 12.068750000002863,
+      "records": 694,
+      "lastTime": 11.986458333336131,
+      "simulationTime": 12.000000000002808,
       "source": "1ababb93dba4ef81368ba7767d3b13f180b4e43a407c336acef9d6a9150ac4c6",
+      "pass": true
+    },
+    {
+      "name": "bad_numerical_accuracy",
+      "pass": true,
+      "penetration": 1.0897194147109985,
+      "drift": 3.8625885861403777,
+      "state": "numerical_invalid",
+      "text": "一時停止 · 未到達 · 14 秒以内に安定到着しませんでした / 数値精度不合格: 貫通 0.05 mm 超・軸ずれ 0.03 mm 超"
+    },
+    {
+      "name": "injected_diagnostic_penetrationMm",
+      "method": "Synthetic diagnostic latch; not a physical measurement",
+      "state": "precision_failed",
+      "lid": 65.24598627811628,
+      "text": "一時停止 · 角度到達 ・ 数値精度不合格（成功判定を取り消し） / 数値精度不合格: 貫通 0.05 mm 超",
+      "badge": "precision_failed",
+      "pass": true
+    },
+    {
+      "name": "injected_diagnostic_hingeDriftMm",
+      "method": "Synthetic diagnostic latch; not a physical measurement",
+      "state": "precision_failed",
+      "lid": 65.24598627811628,
+      "text": "一時停止 · 角度到達 ・ 数値精度不合格（成功判定を取り消し） / 数値精度不合格: 軸ずれ 0.03 mm 超",
+      "badge": "precision_failed",
       "pass": true
     },
     {

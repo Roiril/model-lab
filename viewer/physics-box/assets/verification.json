@@ -59,6 +59,7 @@
         "hingeDriftMm": 0.00011316169238600707,
         "contacts": 1,
         "command": "closed",
+        "numericalPass": true,
         "poses": {
           "base": {
             "translationM": [
@@ -172,8 +173,8 @@
           "servoDeg": -11.157644646602712
         }
       ],
-      "elapsedMs": 972.6556,
-      "expected": "r=>r.transitions.some(x=>x.state==='opened')&&r.transitions.some(x=>x.state==='closed')&&Math.abs(r.final.lidDeg)<.5&&r.peaks.penetrationMm<.05&&r.peaks.hingeDriftMm<.03",
+      "elapsedMs": 900.6838,
+      "expected": "r=>r.transitions.some(x=>x.state==='opened')&&r.transitions.some(x=>x.state==='closed')&&Math.abs(r.final.lidDeg)<.5&&r.peaks.penetrationMm<=NUMERICAL_LIMITS.maxPenetrationMm&&r.peaks.hingeDriftMm<=NUMERICAL_LIMITS.maxHingeDriftMm",
       "pass": true
     },
     {
@@ -214,6 +215,7 @@
         "hingeDriftMm": 0.00008555381570425802,
         "contacts": 6,
         "command": "incomplete",
+        "numericalPass": true,
         "poses": {
           "base": {
             "translationM": [
@@ -315,7 +317,7 @@
           "servoDeg": -8.972952572890856
         }
       ],
-      "elapsedMs": 987.4878000000001,
+      "elapsedMs": 939.6743,
       "expected": "r=>r.maxLid<.5&&r.final.command==='incomplete'",
       "pass": true
     },
@@ -357,6 +359,7 @@
         "hingeDriftMm": 0.00009263033158624906,
         "contacts": 0,
         "command": "incomplete",
+        "numericalPass": true,
         "poses": {
           "base": {
             "translationM": [
@@ -458,7 +461,7 @@
           "servoDeg": 56.80035236546071
         }
       ],
-      "elapsedMs": 691.0484000000001,
+      "elapsedMs": 674.1962000000001,
       "expected": "r=>r.maxLid<.5&&r.final.servoDeg>50&&r.final.command==='incomplete'",
       "pass": true
     },
@@ -500,6 +503,7 @@
         "hingeDriftMm": 0.0000875013081649354,
         "contacts": 0,
         "command": "ready",
+        "numericalPass": true,
         "poses": {
           "base": {
             "translationM": [
@@ -588,7 +592,7 @@
         "torqueNm": 0
       },
       "transitions": [],
-      "elapsedMs": 194.51060000000007,
+      "elapsedMs": 186.8721999999998,
       "expected": "r=>r.final.lidDeg<1&&r.maxLid>64.9",
       "pass": true
     },
@@ -630,6 +634,7 @@
         "hingeDriftMm": 0.0000035761423534769653,
         "contacts": 0,
         "command": "ready",
+        "numericalPass": true,
         "poses": {
           "base": {
             "translationM": [
@@ -718,7 +723,7 @@
         "torqueNm": 0
       },
       "transitions": [],
-      "elapsedMs": 190.63520000000017,
+      "elapsedMs": 185.6307999999999,
       "expected": "r=>Math.abs(r.final.lidDeg-65)<.1",
       "pass": true
     },
@@ -760,6 +765,7 @@
         "hingeDriftMm": 0.00037758455826684327,
         "contacts": 6,
         "command": "incomplete",
+        "numericalPass": true,
         "poses": {
           "base": {
             "translationM": [
@@ -861,7 +867,7 @@
           "servoDeg": -8.96744744648216
         }
       ],
-      "elapsedMs": 945.6401000000001,
+      "elapsedMs": 904.6292000000003,
       "expected": "r=>r.maxLid<10&&r.final.command==='incomplete'",
       "pass": true
     },
@@ -903,6 +909,7 @@
         "hingeDriftMm": 0.0025689751775710328,
         "contacts": 9,
         "command": "incomplete",
+        "numericalPass": true,
         "poses": {
           "base": {
             "translationM": [
@@ -1004,8 +1011,8 @@
           "servoDeg": -5.652780579060027
         }
       ],
-      "elapsedMs": 1080.8963000000003,
-      "expected": "r=>r.final.servoDeg<40&&r.maxLid<50&&r.final.command==='incomplete'&&r.peaks.penetrationMm<.05",
+      "elapsedMs": 1064.717,
+      "expected": "r=>r.final.servoDeg<40&&r.maxLid<50&&r.final.command==='incomplete'&&r.peaks.penetrationMm<=NUMERICAL_LIMITS.maxPenetrationMm",
       "pass": true
     },
     {
@@ -1046,6 +1053,7 @@
         "hingeDriftMm": 0.00008781213039328882,
         "contacts": 6,
         "command": "unpowered",
+        "numericalPass": true,
         "poses": {
           "base": {
             "translationM": [
@@ -1153,7 +1161,7 @@
           "servoDeg": 56.86998959783388
         }
       ],
-      "elapsedMs": 776.9219999999996,
+      "elapsedMs": 738.5736999999999,
       "expected": "r=>r.final.lidDeg<1&&r.maxLid>64",
       "pass": true
     },
@@ -1195,6 +1203,7 @@
         "hingeDriftMm": 0.013763214163946515,
         "contacts": 6,
         "command": "incomplete",
+        "numericalPass": true,
         "poses": {
           "base": {
             "translationM": [
@@ -1296,8 +1305,152 @@
           "servoDeg": -8.873494315523123
         }
       ],
-      "elapsedMs": 936.3989999999994,
+      "elapsedMs": 910.3773999999994,
       "expected": "r=>r.final.command==='incomplete'",
+      "pass": true
+    },
+    {
+      "id": "coarse_solver_heavy",
+      "parameters": {
+        "dt": 0.004166666666666667,
+        "iterations": 4,
+        "contactFrequency": 6000,
+        "contactMode": "cad_faces",
+        "torqueCap": 0.03,
+        "commandSpeed": 12,
+        "friction": 0.25,
+        "bearingDamping": 0.00025,
+        "lidMassScale": 1,
+        "frontLoadG": 1000,
+        "comShiftMm": 0,
+        "hornBiasMm": 0,
+        "contactSkinMm": 0.01,
+        "contactEnabled": true,
+        "gravity": 9.80665,
+        "fixedBase": true,
+        "shaftBlock": false,
+        "powered": true,
+        "initialLid": 0,
+        "openTarget": 56.8,
+        "closedTarget": -12,
+        "rotorInertia": 5e-7
+      },
+      "final": {
+        "t": 14.995833333332802,
+        "targetDeg": 56.8,
+        "servoDeg": -13.045267020123138,
+        "cupDeg": -10.078374726313847,
+        "lidDeg": 0,
+        "torqueNm": 0,
+        "availableNm": 0,
+        "penetrationMm": 0,
+        "hingeDriftMm": 0.017604488970082804,
+        "contacts": 0,
+        "command": "incomplete",
+        "numericalPass": false,
+        "poses": {
+          "base": {
+            "translationM": [
+              0.03413538360595703,
+              0.03658505630493164,
+              0.023092145919799804
+            ],
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "frame": {
+            "translationM": [
+              0.03128134346008301,
+              0.03245340728759766,
+              0.03973606872558594
+            ],
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "lid": {
+            "translationM": [
+              0.0398967399597168,
+              0.04533790588378906,
+              0.06595122528076172
+            ],
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "cup": {
+            "translationM": [
+              0.04501955413818359,
+              0.04085784530639648,
+              0.03646146011352539
+            ],
+            "rotation": {
+              "x": -0.0006839484558440745,
+              "y": -1.7339803638077855e-12,
+              "z": -1.253415773949662e-12,
+              "w": 0.9999997615814209
+            }
+          },
+          "link": {
+            "translationM": [
+              0.0497998046875,
+              0.04634608840942383,
+              0.04729286956787109
+            ],
+            "rotation": {
+              "x": -0.0003687859862111509,
+              "y": 0.0000066708116719382815,
+              "z": 0.0000026757420528156217,
+              "w": 0.9999998807907104
+            }
+          },
+          "rotor": {
+            "translationM": [
+              0.039859466552734375,
+              0.03945140838623047,
+              0.036654544830322267
+            ],
+            "rotation": {
+              "x": -0.026571840047836304,
+              "y": -2.69056153225089e-13,
+              "z": -2.4768299390631743e-12,
+              "w": 0.9996469020843506
+            }
+          }
+        }
+      },
+      "maxLid": 0,
+      "peaks": {
+        "penetrationMm": 1.0850610733032227,
+        "hingeDriftMm": 8.657227135826696,
+        "torqueNm": 0.029999999079251546
+      },
+      "transitions": [
+        {
+          "t": 0.004166666666666667,
+          "state": "opening",
+          "lidDeg": 0,
+          "servoDeg": -9.699055807053515
+        },
+        {
+          "t": 14.004166666666192,
+          "state": "incomplete",
+          "lidDeg": 0,
+          "servoDeg": -16.17259837210826
+        }
+      ],
+      "elapsedMs": 159.77850000000035,
+      "expected": "(r,sim)=>r.final.command==='incomplete'&&!sim.numericalAccuracy().pass&&r.peaks.penetrationMm>.05&&r.peaks.hingeDriftMm>.03",
       "pass": true
     },
     {
@@ -1338,6 +1491,7 @@
         "hingeDriftMm": 0.00015014594736554665,
         "contacts": 6,
         "command": "incomplete",
+        "numericalPass": true,
         "poses": {
           "base": {
             "translationM": [
@@ -1439,7 +1593,7 @@
           "servoDeg": 57.683125923537176
         }
       ],
-      "elapsedMs": 947.3018000000002,
+      "elapsedMs": 954.3915999999999,
       "expected": "r=>r.final.command==='incomplete'",
       "pass": true
     },
@@ -1481,6 +1635,7 @@
         "hingeDriftMm": 0.00013062680938171254,
         "contacts": 6,
         "command": "closed",
+        "numericalPass": true,
         "poses": {
           "base": {
             "translationM": [
@@ -1594,8 +1749,8 @@
           "servoDeg": -11.04061071245729
         }
       ],
-      "elapsedMs": 1008.2839000000004,
-      "expected": "r=>r.transitions.some(x=>x.state==='opened')&&r.transitions.some(x=>x.state==='closed')&&Math.abs(r.final.lidDeg)<.5&&r.peaks.penetrationMm<.05&&r.peaks.hingeDriftMm<.03",
+      "elapsedMs": 975.1249999999991,
+      "expected": "r=>r.transitions.some(x=>x.state==='opened')&&r.transitions.some(x=>x.state==='closed')&&Math.abs(r.final.lidDeg)<.5&&r.peaks.penetrationMm<=NUMERICAL_LIMITS.maxPenetrationMm&&r.peaks.hingeDriftMm<=NUMERICAL_LIMITS.maxHingeDriftMm",
       "pass": true
     },
     {
@@ -1636,6 +1791,7 @@
         "hingeDriftMm": 0.00013057370624312546,
         "contacts": 6,
         "command": "closed",
+        "numericalPass": true,
         "poses": {
           "base": {
             "translationM": [
@@ -1749,8 +1905,8 @@
           "servoDeg": -11.040827135151952
         }
       ],
-      "elapsedMs": 999.1110000000008,
-      "expected": "r=>r.transitions.some(x=>x.state==='opened')&&r.transitions.some(x=>x.state==='closed')&&Math.abs(r.final.lidDeg)<.5&&r.peaks.penetrationMm<.05&&r.peaks.hingeDriftMm<.03",
+      "elapsedMs": 957.5294999999987,
+      "expected": "r=>r.transitions.some(x=>x.state==='opened')&&r.transitions.some(x=>x.state==='closed')&&Math.abs(r.final.lidDeg)<.5&&r.peaks.penetrationMm<=NUMERICAL_LIMITS.maxPenetrationMm&&r.peaks.hingeDriftMm<=NUMERICAL_LIMITS.maxHingeDriftMm",
       "pass": true
     },
     {
@@ -1791,6 +1947,7 @@
         "hingeDriftMm": 0.00009378787150893128,
         "contacts": 1,
         "command": "closed",
+        "numericalPass": true,
         "poses": {
           "base": {
             "translationM": [
@@ -1904,7 +2061,7 @@
           "servoDeg": -11.606244350293192
         }
       ],
-      "elapsedMs": 791.272500000001,
+      "elapsedMs": 758.9385999999995,
       "expected": "r=>r.transitions.some(x=>x.state==='closed')",
       "pass": true
     },
@@ -1946,6 +2103,7 @@
         "hingeDriftMm": 0.00016379716280255998,
         "contacts": 1,
         "command": "closed",
+        "numericalPass": true,
         "poses": {
           "base": {
             "translationM": [
@@ -2053,7 +2211,7 @@
           "servoDeg": -10.555286574938444
         }
       ],
-      "elapsedMs": 782.0990999999995,
+      "elapsedMs": 746.4189999999999,
       "expected": "r=>r.transitions.some(x=>x.state==='closed')",
       "pass": true
     },
@@ -2095,6 +2253,7 @@
         "hingeDriftMm": 0.00022402437829496325,
         "contacts": 1,
         "command": "incomplete",
+        "numericalPass": true,
         "poses": {
           "base": {
             "translationM": [
@@ -2196,7 +2355,7 @@
           "servoDeg": 55.584235040951285
         }
       ],
-      "elapsedMs": 729.6196,
+      "elapsedMs": 707.4560999999994,
       "expected": "r=>r.final.lidDeg<64.5&&r.final.command==='incomplete'",
       "pass": true
     },
@@ -2238,6 +2397,7 @@
         "hingeDriftMm": 0.00011471399995898174,
         "contacts": 10,
         "command": "closed",
+        "numericalPass": true,
         "poses": {
           "base": {
             "translationM": [
@@ -2351,8 +2511,8 @@
           "servoDeg": -11.041460423648033
         }
       ],
-      "elapsedMs": 1430.1137999999992,
-      "expected": "r=>r.transitions.some(x=>x.state==='opened')&&r.transitions.some(x=>x.state==='closed')&&Math.abs(r.final.lidDeg)<.5&&r.peaks.penetrationMm<.05&&r.peaks.hingeDriftMm<.03",
+      "elapsedMs": 1374.6666999999998,
+      "expected": "r=>r.transitions.some(x=>x.state==='opened')&&r.transitions.some(x=>x.state==='closed')&&Math.abs(r.final.lidDeg)<.5&&r.peaks.penetrationMm<=NUMERICAL_LIMITS.maxPenetrationMm&&r.peaks.hingeDriftMm<=NUMERICAL_LIMITS.maxHingeDriftMm",
       "pass": true
     },
     {
@@ -2393,6 +2553,7 @@
         "hingeDriftMm": 0.0011485152677120397,
         "contacts": 6,
         "command": "opening",
+        "numericalPass": true,
         "poses": {
           "base": {
             "translationM": [
@@ -2512,8 +2673,8 @@
           "servoDeg": -11.028451950805477
         }
       ],
-      "elapsedMs": 1741.575999999999,
-      "expected": "r=>r.transitions.filter(x=>x.state==='closing').length>=2&&r.transitions.filter(x=>x.state==='opening').length>=2&&r.peaks.penetrationMm<.05",
+      "elapsedMs": 1681.5934000000016,
+      "expected": "r=>r.transitions.filter(x=>x.state==='closing').length>=2&&r.transitions.filter(x=>x.state==='opening').length>=2&&r.peaks.penetrationMm<=NUMERICAL_LIMITS.maxPenetrationMm",
       "pass": true
     },
     {
@@ -2554,6 +2715,7 @@
         "hingeDriftMm": 0.00002527405058453583,
         "contacts": 1,
         "command": "closed",
+        "numericalPass": true,
         "poses": {
           "base": {
             "translationM": [
@@ -2667,8 +2829,8 @@
           "servoDeg": -11.151884617920317
         }
       ],
-      "elapsedMs": 1548.8392000000003,
-      "expected": "r=>r.transitions.some(x=>x.state==='opened')&&r.transitions.some(x=>x.state==='closed')&&Math.abs(r.final.lidDeg)<.5&&r.peaks.penetrationMm<.05&&r.peaks.hingeDriftMm<.03",
+      "elapsedMs": 1496.2832999999991,
+      "expected": "r=>r.transitions.some(x=>x.state==='opened')&&r.transitions.some(x=>x.state==='closed')&&Math.abs(r.final.lidDeg)<.5&&r.peaks.penetrationMm<=NUMERICAL_LIMITS.maxPenetrationMm&&r.peaks.hingeDriftMm<=NUMERICAL_LIMITS.maxHingeDriftMm",
       "pass": true
     },
     {
@@ -2709,6 +2871,7 @@
         "hingeDriftMm": 0.000024510686550396165,
         "contacts": 1,
         "command": "closed",
+        "numericalPass": true,
         "poses": {
           "base": {
             "translationM": [
@@ -2822,8 +2985,8 @@
           "servoDeg": -11.151885258218215
         }
       ],
-      "elapsedMs": 1315.5269000000008,
-      "expected": "r=>r.transitions.some(x=>x.state==='opened')&&r.transitions.some(x=>x.state==='closed')&&Math.abs(r.final.lidDeg)<.5&&r.peaks.penetrationMm<.05&&r.peaks.hingeDriftMm<.03",
+      "elapsedMs": 1324.926199999998,
+      "expected": "r=>r.transitions.some(x=>x.state==='opened')&&r.transitions.some(x=>x.state==='closed')&&Math.abs(r.final.lidDeg)<.5&&r.peaks.penetrationMm<=NUMERICAL_LIMITS.maxPenetrationMm&&r.peaks.hingeDriftMm<=NUMERICAL_LIMITS.maxHingeDriftMm",
       "pass": true
     },
     {
@@ -2864,6 +3027,7 @@
         "hingeDriftMm": 0.00013243194868485582,
         "contacts": 6,
         "command": "closed",
+        "numericalPass": true,
         "poses": {
           "base": {
             "translationM": [
@@ -2977,8 +3141,8 @@
           "servoDeg": -11.040764918963863
         }
       ],
-      "elapsedMs": 1014.1895000000004,
-      "expected": "r=>r.transitions.some(x=>x.state==='opened')&&r.transitions.some(x=>x.state==='closed')&&Math.abs(r.final.lidDeg)<.5&&r.peaks.penetrationMm<.05&&r.peaks.hingeDriftMm<.03",
+      "elapsedMs": 970.4940000000024,
+      "expected": "r=>r.transitions.some(x=>x.state==='opened')&&r.transitions.some(x=>x.state==='closed')&&Math.abs(r.final.lidDeg)<.5&&r.peaks.penetrationMm<=NUMERICAL_LIMITS.maxPenetrationMm&&r.peaks.hingeDriftMm<=NUMERICAL_LIMITS.maxHingeDriftMm",
       "pass": true
     },
     {
@@ -3019,6 +3183,7 @@
         "hingeDriftMm": 0.00009263033158624906,
         "contacts": 0,
         "command": "incomplete",
+        "numericalPass": true,
         "poses": {
           "base": {
             "translationM": [
@@ -3120,7 +3285,7 @@
           "servoDeg": 56.80035236546071
         }
       ],
-      "elapsedMs": 656.445300000003,
+      "elapsedMs": 644.8739999999998,
       "expected": "r=>r.maxLid<.5&&r.final.servoDeg>50&&r.final.command==='incomplete'",
       "pass": true
     },
@@ -3162,6 +3327,7 @@
         "hingeDriftMm": 0.00002322699940192299,
         "contacts": 6,
         "command": "closed",
+        "numericalPass": true,
         "poses": {
           "base": {
             "translationM": [
@@ -3275,8 +3441,8 @@
           "servoDeg": -11.032891762883516
         }
       ],
-      "elapsedMs": 1991.1252000000022,
-      "expected": "r=>r.transitions.some(x=>x.state==='opened')&&r.transitions.some(x=>x.state==='closed')&&Math.abs(r.final.lidDeg)<.5&&r.peaks.penetrationMm<.05&&r.peaks.hingeDriftMm<.03",
+      "elapsedMs": 1879.954600000001,
+      "expected": "r=>r.transitions.some(x=>x.state==='opened')&&r.transitions.some(x=>x.state==='closed')&&Math.abs(r.final.lidDeg)<.5&&r.peaks.penetrationMm<=NUMERICAL_LIMITS.maxPenetrationMm&&r.peaks.hingeDriftMm<=NUMERICAL_LIMITS.maxHingeDriftMm",
       "pass": true
     },
     {
@@ -3317,6 +3483,7 @@
         "hingeDriftMm": 0.00002502977244807169,
         "contacts": 6,
         "command": "closed",
+        "numericalPass": true,
         "poses": {
           "base": {
             "translationM": [
@@ -3430,8 +3597,8 @@
           "servoDeg": -11.033020250599739
         }
       ],
-      "elapsedMs": 1664.3672000000006,
-      "expected": "r=>r.transitions.some(x=>x.state==='opened')&&r.transitions.some(x=>x.state==='closed')&&Math.abs(r.final.lidDeg)<.5&&r.peaks.penetrationMm<.05&&r.peaks.hingeDriftMm<.03",
+      "elapsedMs": 1595.2602000000006,
+      "expected": "r=>r.transitions.some(x=>x.state==='opened')&&r.transitions.some(x=>x.state==='closed')&&Math.abs(r.final.lidDeg)<.5&&r.peaks.penetrationMm<=NUMERICAL_LIMITS.maxPenetrationMm&&r.peaks.hingeDriftMm<=NUMERICAL_LIMITS.maxHingeDriftMm",
       "pass": true
     },
     {

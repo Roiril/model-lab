@@ -3,3 +3,5 @@
 .replaybar input{flex:1;min-width:70px}.replaybar{font-size:11px}
 
 @media(max-width:850px){header>a{font-size:14px;white-space:nowrap}header strong{font-size:11px;white-space:nowrap}header #loading,header .divider{display:none}header select{max-width:150px;font-size:11px}.timeline{gap:6px;padding:6px 10px;font-size:11px}.timeline button{white-space:nowrap;padding:6px 8px;font-size:11px}.timeline label{margin-left:0}.timeline label select{max-width:70px}#clock{white-space:nowrap;font-size:12px}#timing{display:none}}
+
+#status[data-state=precision_failed],#status[data-state=numerical_invalid]{background:#351f25;border-color:#a45261;color:#ffb5c2}

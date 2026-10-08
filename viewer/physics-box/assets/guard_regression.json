@@ -1,0 +1,33 @@
+{
+  "physicalTest": false,
+  "tests": [
+    {
+      "name": "injected_penetrationMm",
+      "method": "Synthetic peak diagnostic latch; normal rigid-body motion otherwise unchanged",
+      "injectedValue": 0.051000000000000004,
+      "state": "precision_failed",
+      "lidDeg": 65.24598627811628,
+      "numericalPass": false,
+      "pass": true
+    },
+    {
+      "name": "injected_hingeDriftMm",
+      "method": "Synthetic peak diagnostic latch; normal rigid-body motion otherwise unchanged",
+      "injectedValue": 0.031,
+      "state": "precision_failed",
+      "lidDeg": 65.24598627811628,
+      "numericalPass": false,
+      "pass": true
+    },
+    {
+      "name": "active_convergence_failure_exit",
+      "method": "Synthetic active CAD convergence failure; actual verify.mjs pass and exit path executed",
+      "forcedHingeDriftMm": 0.031,
+      "representativeConvergencePass": true,
+      "outputPass": false,
+      "exitCode": 1,
+      "pass": true
+    }
+  ],
+  "pass": true
+}
