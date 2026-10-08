@@ -1,0 +1,139 @@
+{
+  "method": "Windows user PC Chrome, headless CDP pointer clicks, WebGL SwiftShader software rendering; physics executed in browser",
+  "url": "http://localhost:3000/viewer/physics-box/index.html",
+  "checks": [
+    {
+      "name": "load",
+      "source": "1ababb93dba4ef81368ba7767d3b13f180b4e43a407c336acef9d6a9150ac4c6",
+      "mode": "cad_faces",
+      "meshes": 83252,
+      "webgl": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+      "bodyWidth": 1400,
+      "viewport": 1400,
+      "pass": true
+    },
+    {
+      "name": "open",
+      "lid": 65.24610938975356,
+      "state": "opened",
+      "peak": {
+        "penetrationMm": 0.0008355863392353058,
+        "hingeDriftMm": 0.001740636067347294,
+        "torqueNm": 0.004027136977132535
+      },
+      "pass": true
+    },
+    {
+      "name": "close",
+      "lid": 0.0000029119185910772433,
+      "state": "closed",
+      "pass": true
+    },
+    {
+      "name": "repeat",
+      "cycle": 4,
+      "lid": 14.883557624209454,
+      "pass": true
+    },
+    {
+      "name": "stop",
+      "servoDelta": 0.3648729479371333,
+      "state": "hold",
+      "pass": true
+    },
+    {
+      "name": "single_step",
+      "delta": 0.0010416666666666075,
+      "pass": true
+    },
+    {
+      "name": "shaft_block",
+      "lid": 3.5581907485387583,
+      "state": "incomplete",
+      "torque": 0.029994772869568417,
+      "pass": true
+    },
+    {
+      "name": "zero",
+      "lid": 0,
+      "servo": -8.972952572890856,
+      "pass": true
+    },
+    {
+      "name": "no-contact",
+      "lid": 0,
+      "servo": 56.80027472671057,
+      "pass": true
+    },
+    {
+      "name": "fall",
+      "lid": -0.000002031395950168544,
+      "servo": 53.48431694035663,
+      "pass": true
+    },
+    {
+      "name": "high_viscous",
+      "lid": 66.43465997772549,
+      "state": "incomplete",
+      "damping": 0.2,
+      "pass": true
+    },
+    {
+      "name": "free_on_table",
+      "fixed": false,
+      "lid": 65.24627169530916,
+      "pass": true
+    },
+    {
+      "name": "power_off",
+      "powered": false,
+      "lid": -0.00015529884199866939,
+      "contact": true,
+      "pass": true
+    },
+    {
+      "name": "recorded_replay",
+      "time": 12.068750000002863,
+      "length": 698,
+      "status": "記録再生 ・ 計算は一時停止中（接触・軸表示はライブのみ）",
+      "pass": true
+    },
+    {
+      "name": "json_export",
+      "engine": "Rapier 0.17.3",
+      "records": 698,
+      "lastTime": 12.05312500000285,
+      "simulationTime": 12.068750000002863,
+      "source": "1ababb93dba4ef81368ba7767d3b13f180b4e43a407c336acef9d6a9150ac4c6",
+      "pass": true
+    },
+    {
+      "name": "mobile_layout",
+      "viewport": 390,
+      "body": 375,
+      "document": 375,
+      "pass": true
+    },
+    {
+      "name": "documentation",
+      "title": "B3 物理デモの検証説明",
+      "images": true,
+      "text": true,
+      "pass": true
+    },
+    {
+      "name": "studio_b3_link",
+      "hidden": false,
+      "url": "http://localhost:3000/viewer/physics-box/index.html",
+      "text": "物理検証",
+      "pass": true
+    },
+    {
+      "name": "studio_other_link_hidden",
+      "hidden": true,
+      "pass": true
+    }
+  ],
+  "exceptions": [],
+  "physicalTested": false
+}

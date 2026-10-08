@@ -1,0 +1,482 @@
+{
+  "method": "Actual CAD at selected logged 3D rigid-body poses: AABB/BVH intersection candidates, Blender EXACT boolean volume; same rigid-body and base/frame pairs excluded. No continuous or full CAD guarantee.",
+  "source_sha256": "1ababb93dba4ef81368ba7767d3b13f180b4e43a407c336acef9d6a9150ac4c6",
+  "contact_mode": "cad_faces",
+  "sample_count": 20,
+  "samples": [
+    {
+      "t": 0,
+      "lid_deg": 0,
+      "servo_deg": -9.999999998097355
+    },
+    {
+      "t": 0.5249999999999998,
+      "lid_deg": 5.02329983139161,
+      "servo_deg": -4.286906273403699
+    },
+    {
+      "t": 0.9083333333333522,
+      "lid_deg": 9.97359953726731,
+      "servo_deg": 0.42523009106026244
+    },
+    {
+      "t": 1.3104166666666723,
+      "lid_deg": 15.05781181696849,
+      "servo_deg": 5.35096015235737
+    },
+    {
+      "t": 1.6999999999999835,
+      "lid_deg": 19.902985751429572,
+      "servo_deg": 10.110468881023618
+    },
+    {
+      "t": 2.1072916666666273,
+      "lid_deg": 24.9003063773201,
+      "servo_deg": 15.074999738246472
+    },
+    {
+      "t": 2.532291666666603,
+      "lid_deg": 30.05223585793963,
+      "servo_deg": 20.245176154714382
+    },
+    {
+      "t": 2.9395833333332466,
+      "lid_deg": 34.937375651454055,
+      "servo_deg": 25.19180403005665
+    },
+    {
+      "t": 3.3645833333332225,
+      "lid_deg": 39.984781364392724,
+      "servo_deg": 30.34610135835368
+    },
+    {
+      "t": 3.7895833333331983,
+      "lid_deg": 44.98351613737432,
+      "servo_deg": 35.49389616225694
+    },
+    {
+      "t": 4.214583333333175,
+      "lid_deg": 49.93326238318468,
+      "servo_deg": 40.635575218675264
+    },
+    {
+      "t": 4.657291666666483,
+      "lid_deg": 55.03578260345488,
+      "servo_deg": 45.98600820858243
+    },
+    {
+      "t": 5.099999999999791,
+      "lid_deg": 60.07933434742714,
+      "servo_deg": 51.33110610925948
+    },
+    {
+      "t": 5.542708333333099,
+      "lid_deg": 65.05718772589256,
+      "servo_deg": 56.671163011471265
+    },
+    {
+      "t": 0.17291666666666636,
+      "lid_deg": 0.36391518536450135,
+      "servo_deg": -8.624527348920457
+    },
+    {
+      "t": 8.003124999999628,
+      "lid_deg": 65.24336020669126,
+      "servo_deg": 56.87187830031078
+    },
+    {
+      "t": 10.00312500000122,
+      "lid_deg": 42.23199977237053,
+      "servo_deg": 32.654466385799005
+    },
+    {
+      "t": 12.003125000002811,
+      "lid_deg": 18.358361619098154,
+      "servo_deg": 8.5862343054762
+    },
+    {
+      "t": 14.003125000004403,
+      "lid_deg": 2.911918591077243e-06,
+      "servo_deg": -11.02818637660108
+    },
+    {
+      "t": 15.986458333339314,
+      "lid_deg": 2.911918591077243e-06,
+      "servo_deg": -11.030775692855427
+    }
+  ],
+  "finite_intersections": [],
+  "reference_output_interfaces": [
+    {
+      "t": 0,
+      "lid_deg": 0,
+      "parts": [
+        "REFERENCE SG92R body",
+        "REFERENCE SG92R horn"
+      ],
+      "body_groups": [
+        "frame",
+        "rotor"
+      ],
+      "volume_mm3": 0.020740862833147133,
+      "nonmanifold_edges": 0,
+      "span_mm": [
+        3.0,
+        4.599998474121094,
+        4.600002288818359
+      ],
+      "intended_horn_cup_contact": false
+    },
+    {
+      "t": 0.5249999999999998,
+      "lid_deg": 5.02329983139161,
+      "parts": [
+        "REFERENCE SG92R body",
+        "REFERENCE SG92R horn"
+      ],
+      "body_groups": [
+        "frame",
+        "rotor"
+      ],
+      "volume_mm3": 0.0217553420398815,
+      "nonmanifold_edges": 0,
+      "span_mm": [
+        3.0,
+        4.599998474121094,
+        4.600002288818359
+      ],
+      "intended_horn_cup_contact": false
+    },
+    {
+      "t": 0.9083333333333522,
+      "lid_deg": 9.97359953726731,
+      "parts": [
+        "REFERENCE SG92R body",
+        "REFERENCE SG92R horn"
+      ],
+      "body_groups": [
+        "frame",
+        "rotor"
+      ],
+      "volume_mm3": 0.008386774901729304,
+      "nonmanifold_edges": 0,
+      "span_mm": [
+        3.0,
+        4.599998474121094,
+        4.600002288818359
+      ],
+      "intended_horn_cup_contact": false
+    },
+    {
+      "t": 1.3104166666666723,
+      "lid_deg": 15.05781181696849,
+      "parts": [
+        "REFERENCE SG92R body",
+        "REFERENCE SG92R horn"
+      ],
+      "body_groups": [
+        "frame",
+        "rotor"
+      ],
+      "volume_mm3": 0.005567082255665497,
+      "nonmanifold_edges": 0,
+      "span_mm": [
+        3.0,
+        4.599998474121094,
+        4.600002288818359
+      ],
+      "intended_horn_cup_contact": false
+    },
+    {
+      "t": 1.6999999999999835,
+      "lid_deg": 19.902985751429572,
+      "parts": [
+        "REFERENCE SG92R body",
+        "REFERENCE SG92R horn"
+      ],
+      "body_groups": [
+        "frame",
+        "rotor"
+      ],
+      "volume_mm3": 0.0193861127149903,
+      "nonmanifold_edges": 0,
+      "span_mm": [
+        3.0,
+        4.599998474121094,
+        4.600002288818359
+      ],
+      "intended_horn_cup_contact": false
+    },
+    {
+      "t": 2.1072916666666273,
+      "lid_deg": 24.9003063773201,
+      "parts": [
+        "REFERENCE SG92R body",
+        "REFERENCE SG92R horn"
+      ],
+      "body_groups": [
+        "frame",
+        "rotor"
+      ],
+      "volume_mm3": 0.02611119425379259,
+      "nonmanifold_edges": 0,
+      "span_mm": [
+        3.0,
+        4.599998474121094,
+        4.600002288818359
+      ],
+      "intended_horn_cup_contact": false
+    },
+    {
+      "t": 2.532291666666603,
+      "lid_deg": 30.05223585793963,
+      "parts": [
+        "REFERENCE SG92R body",
+        "REFERENCE SG92R horn"
+      ],
+      "body_groups": [
+        "frame",
+        "rotor"
+      ],
+      "volume_mm3": 0.028817625834389262,
+      "nonmanifold_edges": 0,
+      "span_mm": [
+        3.0,
+        4.599998474121094,
+        4.600002288818359
+      ],
+      "intended_horn_cup_contact": false
+    },
+    {
+      "t": 2.9395833333332466,
+      "lid_deg": 34.937375651454055,
+      "parts": [
+        "REFERENCE SG92R body",
+        "REFERENCE SG92R horn"
+      ],
+      "body_groups": [
+        "frame",
+        "rotor"
+      ],
+      "volume_mm3": 0.029940322238824278,
+      "nonmanifold_edges": 0,
+      "span_mm": [
+        3.0,
+        4.599998474121094,
+        4.600002288818359
+      ],
+      "intended_horn_cup_contact": false
+    },
+    {
+      "t": 3.3645833333332225,
+      "lid_deg": 39.984781364392724,
+      "parts": [
+        "REFERENCE SG92R body",
+        "REFERENCE SG92R horn"
+      ],
+      "body_groups": [
+        "frame",
+        "rotor"
+      ],
+      "volume_mm3": 0.028673324804495,
+      "nonmanifold_edges": 0,
+      "span_mm": [
+        3.0,
+        4.599998474121094,
+        4.600002288818359
+      ],
+      "intended_horn_cup_contact": false
+    },
+    {
+      "t": 3.7895833333331983,
+      "lid_deg": 44.98351613737432,
+      "parts": [
+        "REFERENCE SG92R body",
+        "REFERENCE SG92R horn"
+      ],
+      "body_groups": [
+        "frame",
+        "rotor"
+      ],
+      "volume_mm3": 0.025671652183426524,
+      "nonmanifold_edges": 0,
+      "span_mm": [
+        3.0,
+        4.599998474121094,
+        4.600002288818359
+      ],
+      "intended_horn_cup_contact": false
+    },
+    {
+      "t": 4.214583333333175,
+      "lid_deg": 49.93326238318468,
+      "parts": [
+        "REFERENCE SG92R body",
+        "REFERENCE SG92R horn"
+      ],
+      "body_groups": [
+        "frame",
+        "rotor"
+      ],
+      "volume_mm3": 0.020868977790347992,
+      "nonmanifold_edges": 0,
+      "span_mm": [
+        3.0,
+        4.599998474121094,
+        4.600002288818359
+      ],
+      "intended_horn_cup_contact": false
+    },
+    {
+      "t": 4.657291666666483,
+      "lid_deg": 55.03578260345488,
+      "parts": [
+        "REFERENCE SG92R body",
+        "REFERENCE SG92R horn"
+      ],
+      "body_groups": [
+        "frame",
+        "rotor"
+      ],
+      "volume_mm3": 0.017347968896697454,
+      "nonmanifold_edges": 0,
+      "span_mm": [
+        3.0,
+        4.599998474121094,
+        4.600002288818359
+      ],
+      "intended_horn_cup_contact": false
+    },
+    {
+      "t": 5.099999999999791,
+      "lid_deg": 60.07933434742714,
+      "parts": [
+        "REFERENCE SG92R body",
+        "REFERENCE SG92R horn"
+      ],
+      "body_groups": [
+        "frame",
+        "rotor"
+      ],
+      "volume_mm3": 0.013175646117352016,
+      "nonmanifold_edges": 0,
+      "span_mm": [
+        3.0,
+        4.599998474121094,
+        4.600002288818359
+      ],
+      "intended_horn_cup_contact": false
+    },
+    {
+      "t": 5.542708333333099,
+      "lid_deg": 65.05718772589256,
+      "parts": [
+        "REFERENCE SG92R body",
+        "REFERENCE SG92R horn"
+      ],
+      "body_groups": [
+        "frame",
+        "rotor"
+      ],
+      "volume_mm3": 0.008313363915220138,
+      "nonmanifold_edges": 0,
+      "span_mm": [
+        3.0,
+        4.599998474121094,
+        4.600002288818359
+      ],
+      "intended_horn_cup_contact": false
+    },
+    {
+      "t": 0.17291666666666636,
+      "lid_deg": 0.36391518536450135,
+      "parts": [
+        "REFERENCE SG92R body",
+        "REFERENCE SG92R horn"
+      ],
+      "body_groups": [
+        "frame",
+        "rotor"
+      ],
+      "volume_mm3": 0.02986325478941712,
+      "nonmanifold_edges": 0,
+      "span_mm": [
+        3.0,
+        4.599998474121094,
+        4.600002288818359
+      ],
+      "intended_horn_cup_contact": false
+    },
+    {
+      "t": 8.003124999999628,
+      "lid_deg": 65.24336020669126,
+      "parts": [
+        "REFERENCE SG92R body",
+        "REFERENCE SG92R horn"
+      ],
+      "body_groups": [
+        "frame",
+        "rotor"
+      ],
+      "volume_mm3": 0.011803054245988927,
+      "nonmanifold_edges": 0,
+      "span_mm": [
+        3.0,
+        4.599998474121094,
+        4.600002288818359
+      ],
+      "intended_horn_cup_contact": false
+    },
+    {
+      "t": 10.00312500000122,
+      "lid_deg": 42.23199977237053,
+      "parts": [
+        "REFERENCE SG92R body",
+        "REFERENCE SG92R horn"
+      ],
+      "body_groups": [
+        "frame",
+        "rotor"
+      ],
+      "volume_mm3": 0.018820101297866414,
+      "nonmanifold_edges": 0,
+      "span_mm": [
+        3.0,
+        4.599998474121094,
+        4.600002288818359
+      ],
+      "intended_horn_cup_contact": false
+    },
+    {
+      "t": 12.003125000002811,
+      "lid_deg": 18.358361619098154,
+      "parts": [
+        "REFERENCE SG92R body",
+        "REFERENCE SG92R horn"
+      ],
+      "body_groups": [
+        "frame",
+        "rotor"
+      ],
+      "volume_mm3": 0.029911118017095926,
+      "nonmanifold_edges": 0,
+      "span_mm": [
+        3.0,
+        4.599998474121094,
+        4.600002288818359
+      ],
+      "intended_horn_cup_contact": false
+    }
+  ],
+  "invalid_boolean_results": [],
+  "flat_touches": 2,
+  "physical_tested": false,
+  "exclusions": [
+    "Parts in same rigid body",
+    "Base versus frame fixed attachment",
+    "No containment-only test; fully nested solids may be missed",
+    "Reference servo output-shaft / horn engagement is an ideal motor bearing interface, listed separately"
+  ],
+  "threshold_mm3": 0.005,
+  "source_unchanged": true
+}

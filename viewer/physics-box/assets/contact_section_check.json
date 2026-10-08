@@ -1,0 +1,41 @@
+{
+  "method": "Frozen CAD section x=39.900037mm, horn outer edge sampled at <=0.1mm; compare in cup coordinates using logged relative angle. Translation drift and out-of-plane rotation omitted.",
+  "firstContactRelativeDeg": {
+    "positive": 1.0686564024654217,
+    "negative": -1.0686689522699453
+  },
+  "representative": {
+    "approximateFirstContactDeg": 1.2278606850101752,
+    "actionRadiusMm": 14,
+    "ballRadiusMm": 1.5
+  },
+  "records": [
+    {
+      "name": "normal",
+      "samples": 934,
+      "maxSectionOutside": {
+        "maxOutsideMm": 0.023021626102391463,
+        "whereYZmm": [
+          -12.077368417019503,
+          -11.252677535839775
+        ],
+        "t": 0.17291666666666636,
+        "lidDeg": 0.19404589983148376,
+        "relativeHornDeg": 1.1508191319343766
+      }
+    },
+    {
+      "name": "cad_face_strips",
+      "samples": 934,
+      "maxSectionOutside": {
+        "maxOutsideMm": 0
+      }
+    }
+  ],
+  "fullCadCollisionValidated": false,
+  "limitations": [
+    "Only one shaft-normal section; tip curves and long/short arms included at this section",
+    "Outside distance is geometric section overlap, not a Rapier contact manifold penetration",
+    "Positive residual means collision reduction misses earlier CAD contact; results are illustrative and need collider refinement or physical clearance measurements"
+  ]
+}

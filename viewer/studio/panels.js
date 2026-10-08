@@ -241,9 +241,11 @@ export function createPanels({ store, ctx }) {
   tip(undoBtn, "元に戻す", "Ctrl+Z");
   tip(redoBtn, "やり直す", "Ctrl+Shift+Z");
 
+  const physicsLink = h("a", { class: "sel-btn", href: "/viewer/physics-box/index.html", hidden: true }, "物理検証");
+  tip(physicsLink, "B3の蓋を物理計算で動かす");
   topbar.append(
     h("div", { class: "logo" }, icon("logo", "logo-mark"), h("span", {}, "model-lab")),
-    modelBtn, partsBtn, outlinesBtn,
+    modelBtn, partsBtn, outlinesBtn, physicsLink,
     h("div", { class: "sp" }),
     listenerPill, statusEl,
     h("div", { class: "tb-group" }, undoBtn, redoBtn),
@@ -259,6 +261,7 @@ export function createPanels({ store, ctx }) {
   }
 
   function syncTopbar() {
+    physicsLink.hidden = store.state.model !== "mystery-box-sg92r-b3-candidate";
     const model = models.find((m) => m.name === store.state.model);
     modelNameEl.textContent = model ? (model.title || model.name) : (store.state.model || "モデルを選ぶ");
     const n = store.state.draft.items.length;

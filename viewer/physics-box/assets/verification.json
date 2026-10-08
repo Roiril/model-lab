@@ -1,0 +1,3500 @@
+{
+  "activeDefaultContactMode": "cad_faces",
+  "version": "B3 physics v1 · partial CAD contacts",
+  "sourceSha256": "1ababb93dba4ef81368ba7767d3b13f180b4e43a407c336acef9d6a9150ac4c6",
+  "physicalTested": false,
+  "engine": "Rapier 0.17.3",
+  "manufacturer": {
+    "voltage": 4.8,
+    "stallTorqueNm": 0.24516625,
+    "noLoadRadSec": 10.471975512,
+    "url": "https://towerpro.com.tw/product/sg92r-7/",
+    "linearCurve": "estimated, not measured; no continuous rating supplied"
+  },
+  "successCriteria": {
+    "lidDeg": 65,
+    "toleranceDeg": 0.5,
+    "stableSeconds": 0.4,
+    "windowAngleSpanDeg": 0.15,
+    "closedToleranceDeg": 0.5,
+    "maxPenetrationMm": 0.05,
+    "maxHingeDriftMm": 0.03
+  },
+  "results": [
+    {
+      "id": "normal",
+      "parameters": {
+        "dt": 0.0010416666666666667,
+        "iterations": 12,
+        "contactFrequency": 6000,
+        "contactMode": "representative",
+        "torqueCap": 0.03,
+        "commandSpeed": 12,
+        "friction": 0.25,
+        "bearingDamping": 0.00025,
+        "lidMassScale": 1,
+        "frontLoadG": 0,
+        "comShiftMm": 0,
+        "hornBiasMm": 0,
+        "contactSkinMm": 0.01,
+        "contactEnabled": true,
+        "gravity": 9.80665,
+        "fixedBase": true,
+        "shaftBlock": false,
+        "powered": true,
+        "initialLid": 0,
+        "openTarget": 56.8,
+        "closedTarget": -12,
+        "rotorInertia": 5e-7
+      },
+      "final": {
+        "t": 15.986458333339314,
+        "targetDeg": -11.157644646602712,
+        "servoDeg": -11.149662402966333,
+        "cupDeg": -10.00075790419698,
+        "lidDeg": -0.000003822075536527406,
+        "torqueNm": -0.00008227802302323419,
+        "availableNm": 0.02999356706103544,
+        "penetrationMm": 0.0007097907364368439,
+        "hingeDriftMm": 0.00011316169238600707,
+        "contacts": 1,
+        "command": "closed",
+        "poses": {
+          "base": {
+            "translationM": [
+              0.03413538360595703,
+              0.03658505630493164,
+              0.023092145919799804
+            ],
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "frame": {
+            "translationM": [
+              0.03128134346008301,
+              0.03245340728759766,
+              0.03973606872558594
+            ],
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "lid": {
+            "translationM": [
+              0.0398967399597168,
+              0.04533790588378906,
+              0.06595122528076172
+            ],
+            "rotation": {
+              "x": -3.33538991981186e-8,
+              "y": -4.316201042409151e-12,
+              "z": -2.429645894197474e-12,
+              "w": 0.9999999403953552
+            }
+          },
+          "cup": {
+            "translationM": [
+              0.04501955413818359,
+              0.04085857391357422,
+              0.03646261978149414
+            ],
+            "rotation": {
+              "x": -0.00000661396143186721,
+              "y": -2.84110734938281e-9,
+              "z": -1.5599854741310537e-9,
+              "w": 0.9999999403953552
+            }
+          },
+          "link": {
+            "translationM": [
+              0.04979999923706055,
+              0.046353172302246094,
+              0.04730192947387695
+            ],
+            "rotation": {
+              "x": -0.000002967916316265473,
+              "y": 6.481111114453597e-8,
+              "z": 2.5519824475850328e-8,
+              "w": 0.9999999403953552
+            }
+          },
+          "rotor": {
+            "translationM": [
+              0.039859466552734375,
+              0.03947603225708008,
+              0.03664856719970703
+            ],
+            "rotation": {
+              "x": -0.010032529011368752,
+              "y": -5.644415490557719e-11,
+              "z": -2.6034840949762383e-10,
+              "w": 0.9999496936798096
+            }
+          }
+        }
+      },
+      "maxLid": 65.2834648670136,
+      "peaks": {
+        "penetrationMm": 0.0011110492050647736,
+        "hingeDriftMm": 0.0015925818178418078,
+        "torqueNm": 0.004026788509459657
+      },
+      "transitions": [
+        {
+          "t": 0.0010416666666666667,
+          "state": "opening",
+          "lidDeg": 0,
+          "servoDeg": -9.995743533166417
+        },
+        {
+          "t": 5.943749999999743,
+          "state": "opened",
+          "lidDeg": 65.22464449928269,
+          "servoDeg": 56.971114809877264
+        },
+        {
+          "t": 8.001041666666293,
+          "state": "closing",
+          "lidDeg": 65.13533021368208,
+          "servoDeg": 56.874466004003665
+        },
+        {
+          "t": 13.836458333337603,
+          "state": "closed",
+          "lidDeg": -0.000003822075536527406,
+          "servoDeg": -11.157644646602712
+        }
+      ],
+      "elapsedMs": 972.6556,
+      "expected": "r=>r.transitions.some(x=>x.state==='opened')&&r.transitions.some(x=>x.state==='closed')&&Math.abs(r.final.lidDeg)<.5&&r.peaks.penetrationMm<.05&&r.peaks.hingeDriftMm<.03",
+      "pass": true
+    },
+    {
+      "id": "zero_torque",
+      "parameters": {
+        "dt": 0.0010416666666666667,
+        "iterations": 12,
+        "contactFrequency": 6000,
+        "contactMode": "cad_faces",
+        "torqueCap": 0,
+        "commandSpeed": 12,
+        "friction": 0.25,
+        "bearingDamping": 0.00025,
+        "lidMassScale": 1,
+        "frontLoadG": 0,
+        "comShiftMm": 0,
+        "hornBiasMm": 0,
+        "contactSkinMm": 0.01,
+        "contactEnabled": true,
+        "gravity": 9.80665,
+        "fixedBase": true,
+        "shaftBlock": false,
+        "powered": true,
+        "initialLid": 0,
+        "openTarget": 56.8,
+        "closedTarget": -12,
+        "rotorInertia": 5e-7
+      },
+      "final": {
+        "t": 14.986458333338518,
+        "targetDeg": 56.8,
+        "servoDeg": -8.972952572890856,
+        "cupDeg": -10.000557657077188,
+        "lidDeg": 0,
+        "torqueNm": 0,
+        "availableNm": 0,
+        "penetrationMm": 0.000002864748239517212,
+        "hingeDriftMm": 0.00008555381570425802,
+        "contacts": 6,
+        "command": "incomplete",
+        "poses": {
+          "base": {
+            "translationM": [
+              0.03413538360595703,
+              0.03658505630493164,
+              0.023092145919799804
+            ],
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "frame": {
+            "translationM": [
+              0.03128134346008301,
+              0.03245340728759766,
+              0.03973606872558594
+            ],
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "lid": {
+            "translationM": [
+              0.0398967399597168,
+              0.04533790588378906,
+              0.06595122528076172
+            ],
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "cup": {
+            "translationM": [
+              0.04501955413818359,
+              0.04085857391357422,
+              0.03646262359619141
+            ],
+            "rotation": {
+              "x": -0.0000048664760470273905,
+              "y": 1.1102252450712058e-8,
+              "z": -7.691411951782356e-10,
+              "w": 1
+            }
+          },
+          "link": {
+            "translationM": [
+              0.04979999923706055,
+              0.04635318374633789,
+              0.04730195236206055
+            ],
+            "rotation": {
+              "x": -0.0000022553738290298497,
+              "y": 4.637697514908723e-8,
+              "z": 1.5983388834683865e-8,
+              "w": 1
+            }
+          },
+          "rotor": {
+            "translationM": [
+              0.039859466552734375,
+              0.0394897575378418,
+              0.036628917694091795
+            ],
+            "rotation": {
+              "x": 0.008962559513747692,
+              "y": -1.927607407026244e-9,
+              "z": 1.3581429314513116e-9,
+              "w": 0.9999598264694214
+            }
+          }
+        }
+      },
+      "maxLid": 0,
+      "peaks": {
+        "penetrationMm": 0.00000293925404548645,
+        "hingeDriftMm": 0.00010103960978715966,
+        "torqueNm": 0
+      },
+      "transitions": [
+        {
+          "t": 0.0010416666666666667,
+          "state": "opening",
+          "lidDeg": 0,
+          "servoDeg": -9.999783615006285
+        },
+        {
+          "t": 14.0000000000044,
+          "state": "incomplete",
+          "lidDeg": 0,
+          "servoDeg": -8.972952572890856
+        }
+      ],
+      "elapsedMs": 987.4878000000001,
+      "expected": "r=>r.maxLid<.5&&r.final.command==='incomplete'",
+      "pass": true
+    },
+    {
+      "id": "horn_contact_disabled",
+      "parameters": {
+        "dt": 0.0010416666666666667,
+        "iterations": 12,
+        "contactFrequency": 6000,
+        "contactMode": "cad_faces",
+        "torqueCap": 0.03,
+        "commandSpeed": 12,
+        "friction": 0.25,
+        "bearingDamping": 0.00025,
+        "lidMassScale": 1,
+        "frontLoadG": 0,
+        "comShiftMm": 0,
+        "hornBiasMm": 0,
+        "contactSkinMm": 0.01,
+        "contactEnabled": false,
+        "gravity": 9.80665,
+        "fixedBase": true,
+        "shaftBlock": false,
+        "powered": true,
+        "initialLid": 0,
+        "openTarget": 56.8,
+        "closedTarget": -12,
+        "rotorInertia": 5e-7
+      },
+      "final": {
+        "t": 14.986458333338518,
+        "targetDeg": 56.8,
+        "servoDeg": 56.80027472671057,
+        "cupDeg": -10.000591129079138,
+        "lidDeg": 0,
+        "torqueNm": 0.0000010111828036928329,
+        "availableNm": 0.02999354476620409,
+        "penetrationMm": 0,
+        "hingeDriftMm": 0.00009263033158624906,
+        "contacts": 0,
+        "command": "incomplete",
+        "poses": {
+          "base": {
+            "translationM": [
+              0.03413538360595703,
+              0.03658505630493164,
+              0.023092145919799804
+            ],
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "frame": {
+            "translationM": [
+              0.03128134346008301,
+              0.03245340728759766,
+              0.03973606872558594
+            ],
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "lid": {
+            "translationM": [
+              0.0398967399597168,
+              0.04533790588378906,
+              0.06595122528076172
+            ],
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "cup": {
+            "translationM": [
+              0.04501955795288086,
+              0.04085857391357422,
+              0.03646262359619141
+            ],
+            "rotation": {
+              "x": -0.000005158574367669644,
+              "y": -8.138906215648944e-13,
+              "z": -7.290205223352275e-13,
+              "w": 1
+            }
+          },
+          "link": {
+            "translationM": [
+              0.04979999923706055,
+              0.04635317993164063,
+              0.04730194854736328
+            ],
+            "rotation": {
+              "x": -0.000002445334757794626,
+              "y": 4.997253810756774e-8,
+              "z": 1.774782809604858e-8,
+              "w": 1
+            }
+          },
+          "rotor": {
+            "translationM": [
+              0.039859466552734375,
+              0.040129024505615236,
+              0.036382423400878904
+            ],
+            "rotation": {
+              "x": 0.5504827499389648,
+              "y": -3.918085314374306e-18,
+              "z": -7.663926809796695e-18,
+              "w": 0.834846556186676
+            }
+          }
+        }
+      },
+      "maxLid": 0,
+      "peaks": {
+        "penetrationMm": 0,
+        "hingeDriftMm": 0.00010103960978715966,
+        "torqueNm": 0.00007167343913205513
+      },
+      "transitions": [
+        {
+          "t": 0.0010416666666666667,
+          "state": "opening",
+          "lidDeg": 0,
+          "servoDeg": -9.995743534833943
+        },
+        {
+          "t": 14.0000000000044,
+          "state": "incomplete",
+          "lidDeg": 0,
+          "servoDeg": 56.80035236546071
+        }
+      ],
+      "elapsedMs": 691.0484000000001,
+      "expected": "r=>r.maxLid<.5&&r.final.servoDeg>50&&r.final.command==='incomplete'",
+      "pass": true
+    },
+    {
+      "id": "gravity_fall",
+      "parameters": {
+        "dt": 0.0010416666666666667,
+        "iterations": 12,
+        "contactFrequency": 6000,
+        "contactMode": "cad_faces",
+        "torqueCap": 0.03,
+        "commandSpeed": 12,
+        "friction": 0.25,
+        "bearingDamping": 0.00025,
+        "lidMassScale": 1,
+        "frontLoadG": 0,
+        "comShiftMm": 0,
+        "hornBiasMm": 0,
+        "contactSkinMm": 0.01,
+        "contactEnabled": false,
+        "gravity": 9.80665,
+        "fixedBase": true,
+        "shaftBlock": false,
+        "powered": false,
+        "initialLid": 65,
+        "openTarget": 56.8,
+        "closedTarget": -12,
+        "rotorInertia": 5e-7
+      },
+      "final": {
+        "t": 3.984374999999854,
+        "targetDeg": 55.57813833454449,
+        "servoDeg": 53.48431694035664,
+        "cupDeg": -10.000578219643359,
+        "lidDeg": -0.000002031395950168544,
+        "torqueNm": 0,
+        "availableNm": 0.029051419486090302,
+        "penetrationMm": 0,
+        "hingeDriftMm": 0.0000875013081649354,
+        "contacts": 0,
+        "command": "ready",
+        "poses": {
+          "base": {
+            "translationM": [
+              0.03413538360595703,
+              0.03658505630493164,
+              0.023092145919799804
+            ],
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "frame": {
+            "translationM": [
+              0.03128134346008301,
+              0.03245340728759766,
+              0.03973606872558594
+            ],
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "lid": {
+            "translationM": [
+              0.0398967399597168,
+              0.04533790588378906,
+              0.06595122528076172
+            ],
+            "rotation": {
+              "x": -1.772727387105988e-8,
+              "y": 1.5528434441081096e-11,
+              "z": 8.516038568773254e-12,
+              "w": 1
+            }
+          },
+          "cup": {
+            "translationM": [
+              0.04501955795288086,
+              0.04085857391357422,
+              0.03646262359619141
+            ],
+            "rotation": {
+              "x": -0.0000050459179874451365,
+              "y": -7.669527990125657e-13,
+              "z": -6.917174623886913e-13,
+              "w": 0.9999999403953552
+            }
+          },
+          "link": {
+            "translationM": [
+              0.04979999923706055,
+              0.04635318374633789,
+              0.04730194854736328
+            ],
+            "rotation": {
+              "x": -0.0000023951101866259705,
+              "y": 4.9728807738347314e-8,
+              "z": 1.767102730809711e-8,
+              "w": 0.9999999403953552
+            }
+          },
+          "rotor": {
+            "translationM": [
+              0.039859466552734375,
+              0.04009308624267578,
+              0.03637599563598633
+            ],
+            "rotation": {
+              "x": 0.5260975360870361,
+              "y": 2.089896434510254e-16,
+              "z": 3.060716497211972e-16,
+              "w": 0.8504242300987244
+            }
+          }
+        }
+      },
+      "maxLid": 65.00000406944422,
+      "peaks": {
+        "penetrationMm": 0,
+        "hingeDriftMm": 0.0003415340556762845,
+        "torqueNm": 0
+      },
+      "transitions": [],
+      "elapsedMs": 194.51060000000007,
+      "expected": "r=>r.final.lidDeg<1&&r.maxLid>64.9",
+      "pass": true
+    },
+    {
+      "id": "gravity_zero",
+      "parameters": {
+        "dt": 0.0010416666666666667,
+        "iterations": 12,
+        "contactFrequency": 6000,
+        "contactMode": "cad_faces",
+        "torqueCap": 0.03,
+        "commandSpeed": 12,
+        "friction": 0.25,
+        "bearingDamping": 0,
+        "lidMassScale": 1,
+        "frontLoadG": 0,
+        "comShiftMm": 0,
+        "hornBiasMm": 0,
+        "contactSkinMm": 0.01,
+        "contactEnabled": false,
+        "gravity": 0,
+        "fixedBase": true,
+        "shaftBlock": false,
+        "powered": false,
+        "initialLid": 65,
+        "openTarget": 56.8,
+        "closedTarget": -12,
+        "rotorInertia": 5e-7
+      },
+      "final": {
+        "t": 3.984374999999854,
+        "targetDeg": 55.57813833454449,
+        "servoDeg": 55.57813833454449,
+        "cupDeg": 55.57813833454449,
+        "lidDeg": 65.00000406944422,
+        "torqueNm": 0,
+        "availableNm": 0.03,
+        "penetrationMm": 0,
+        "hingeDriftMm": 0.0000035761423534769653,
+        "contacts": 0,
+        "command": "ready",
+        "poses": {
+          "base": {
+            "translationM": [
+              0.03413538360595703,
+              0.03658505630493164,
+              0.023092145919799804
+            ],
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "frame": {
+            "translationM": [
+              0.03128134346008301,
+              0.03245340728759766,
+              0.03973606872558594
+            ],
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "lid": {
+            "translationM": [
+              0.0398967399597168,
+              0.028100730895996094,
+              0.0847057113647461
+            ],
+            "rotation": {
+              "x": 0.537299633026123,
+              "y": 0,
+              "z": 0,
+              "w": 0.8433914184570312
+            }
+          },
+          "cup": {
+            "translationM": [
+              0.04501955795288086,
+              0.040844268798828125,
+              0.037559585571289064
+            ],
+            "rotation": {
+              "x": 0.5415478348731995,
+              "y": 0,
+              "z": 0,
+              "w": 0.8406699299812317
+            }
+          },
+          "link": {
+            "translationM": [
+              0.04979999923706055,
+              0.04125145721435547,
+              0.06170183181762695
+            ],
+            "rotation": {
+              "x": -0.02979385294020176,
+              "y": 0,
+              "z": 0,
+              "w": 0.9995560646057129
+            }
+          },
+          "rotor": {
+            "translationM": [
+              0.039859466552734375,
+              0.040115821838378904,
+              0.03637981033325195
+            ],
+            "rotation": {
+              "x": 0.5415478348731995,
+              "y": 0,
+              "z": 0,
+              "w": 0.8406699299812317
+            }
+          }
+        }
+      },
+      "maxLid": 65.00000406944422,
+      "peaks": {
+        "penetrationMm": 0,
+        "hingeDriftMm": 0.0000035761423534769653,
+        "torqueNm": 0
+      },
+      "transitions": [],
+      "elapsedMs": 190.63520000000017,
+      "expected": "r=>Math.abs(r.final.lidDeg-65)<.1",
+      "pass": true
+    },
+    {
+      "id": "weak_heavy",
+      "parameters": {
+        "dt": 0.0010416666666666667,
+        "iterations": 12,
+        "contactFrequency": 6000,
+        "contactMode": "cad_faces",
+        "torqueCap": 0.001,
+        "commandSpeed": 12,
+        "friction": 0.25,
+        "bearingDamping": 0.00025,
+        "lidMassScale": 1,
+        "frontLoadG": 100,
+        "comShiftMm": 0,
+        "hornBiasMm": 0,
+        "contactSkinMm": 0.01,
+        "contactEnabled": true,
+        "gravity": 9.80665,
+        "fixedBase": true,
+        "shaftBlock": false,
+        "powered": true,
+        "initialLid": 0,
+        "openTarget": 56.8,
+        "closedTarget": -12,
+        "rotorInertia": 5e-7
+      },
+      "final": {
+        "t": 14.986458333338518,
+        "targetDeg": 56.8,
+        "servoDeg": -8.96744744648216,
+        "cupDeg": -9.997506599923499,
+        "lidDeg": 0,
+        "torqueNm": 0.0009998749322215686,
+        "availableNm": 0.0009998749322215686,
+        "penetrationMm": 0.0007310342043638229,
+        "hingeDriftMm": 0.00037758455826684327,
+        "contacts": 6,
+        "command": "incomplete",
+        "poses": {
+          "base": {
+            "translationM": [
+              0.03413538360595703,
+              0.03658505630493164,
+              0.023092145919799804
+            ],
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "frame": {
+            "translationM": [
+              0.03128134346008301,
+              0.03245340728759766,
+              0.03973606872558594
+            ],
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "lid": {
+            "translationM": [
+              0.0398967399597168,
+              0.04533790588378906,
+              0.06595122528076172
+            ],
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "cup": {
+            "translationM": [
+              0.04501955413818359,
+              0.04085860443115234,
+              0.03646266937255859
+            ],
+            "rotation": {
+              "x": 0.00002175902045564726,
+              "y": -2.8627203718656347e-8,
+              "z": -4.928641317292204e-8,
+              "w": 1
+            }
+          },
+          "link": {
+            "translationM": [
+              0.049800006866455075,
+              0.04635338592529297,
+              0.04730222320556641
+            ],
+            "rotation": {
+              "x": 0.00000863479363033548,
+              "y": -1.98756168856562e-7,
+              "z": -7.775769006457267e-8,
+              "w": 1
+            }
+          },
+          "rotor": {
+            "translationM": [
+              0.039859466552734375,
+              0.03948978042602539,
+              0.036628883361816404
+            ],
+            "rotation": {
+              "x": 0.009010598994791508,
+              "y": -1.1693775725518663e-8,
+              "z": -1.4528646730127548e-8,
+              "w": 0.999959409236908
+            }
+          }
+        }
+      },
+      "maxLid": 0,
+      "peaks": {
+        "penetrationMm": 0.0007310342043638229,
+        "hingeDriftMm": 0.00037758455826684327,
+        "torqueNm": 0.0009998811535300567
+      },
+      "transitions": [
+        {
+          "t": 0.0010416666666666667,
+          "state": "opening",
+          "lidDeg": 0,
+          "servoDeg": -9.995743534833943
+        },
+        {
+          "t": 14.0000000000044,
+          "state": "incomplete",
+          "lidDeg": 0,
+          "servoDeg": -8.96744744648216
+        }
+      ],
+      "elapsedMs": 945.6401000000001,
+      "expected": "r=>r.maxLid<10&&r.final.command==='incomplete'",
+      "pass": true
+    },
+    {
+      "id": "shaft_blocker",
+      "parameters": {
+        "dt": 0.0010416666666666667,
+        "iterations": 12,
+        "contactFrequency": 6000,
+        "contactMode": "cad_faces",
+        "torqueCap": 0.03,
+        "commandSpeed": 12,
+        "friction": 0.25,
+        "bearingDamping": 0.00025,
+        "lidMassScale": 1,
+        "frontLoadG": 0,
+        "comShiftMm": 0,
+        "hornBiasMm": 0,
+        "contactSkinMm": 0.01,
+        "contactEnabled": true,
+        "gravity": 9.80665,
+        "fixedBase": true,
+        "shaftBlock": true,
+        "powered": true,
+        "initialLid": 0,
+        "openTarget": 56.8,
+        "closedTarget": -12,
+        "rotorInertia": 5e-7
+      },
+      "final": {
+        "t": 14.986458333338518,
+        "targetDeg": 56.8,
+        "servoDeg": -5.653404421598537,
+        "cupDeg": -6.686586449096366,
+        "lidDeg": 3.5579961819768613,
+        "torqueNm": 0.029951722408677505,
+        "availableNm": 0.029951722408677505,
+        "penetrationMm": 0.0015848595649003983,
+        "hingeDriftMm": 0.0025689751775710328,
+        "contacts": 9,
+        "command": "incomplete",
+        "poses": {
+          "base": {
+            "translationM": [
+              0.03413538360595703,
+              0.03658505630493164,
+              0.023092145919799804
+            ],
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "frame": {
+            "translationM": [
+              0.03128134346008301,
+              0.03245340728759766,
+              0.03973606872558594
+            ],
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "lid": {
+            "translationM": [
+              0.0398967399597168,
+              0.045035301208496095,
+              0.06739154815673828
+            ],
+            "rotation": {
+              "x": 0.031044384464621544,
+              "y": -6.6386922001338e-12,
+              "z": -6.366829372744798e-12,
+              "w": 0.9995179772377014
+            }
+          },
+          "cup": {
+            "translationM": [
+              0.04501954650878906,
+              0.04088814926147461,
+              0.03651320266723633
+            ],
+            "rotation": {
+              "x": 0.028910957276821136,
+              "y": 0.0000026240268198307604,
+              "z": 0.000003188491291439277,
+              "w": 0.9995819330215454
+            }
+          },
+          "link": {
+            "translationM": [
+              0.049800052642822265,
+              0.04652824401855469,
+              0.04813355255126953
+            ],
+            "rotation": {
+              "x": -0.0021876662503927946,
+              "y": -0.0000012005240250800853,
+              "z": -7.268629929058079e-7,
+              "w": 0.9999975562095642
+            }
+          },
+          "rotor": {
+            "translationM": [
+              0.03985940933227539,
+              0.03951201629638672,
+              0.03660012435913086
+            ],
+            "rotation": {
+              "x": 0.03792210668325424,
+              "y": 3.6980310369472136e-7,
+              "z": -5.511304266292427e-7,
+              "w": 0.9992806911468506
+            }
+          }
+        }
+      },
+      "maxLid": 3.564094059214763,
+      "peaks": {
+        "penetrationMm": 0.0016152318567037582,
+        "hingeDriftMm": 0.0025979273928032312,
+        "torqueNm": 0.029980227177316066
+      },
+      "transitions": [
+        {
+          "t": 0.0010416666666666667,
+          "state": "opening",
+          "lidDeg": 0,
+          "servoDeg": -9.995743534833943
+        },
+        {
+          "t": 14.0000000000044,
+          "state": "incomplete",
+          "lidDeg": 3.5581103191620413,
+          "servoDeg": -5.652780579060027
+        }
+      ],
+      "elapsedMs": 1080.8963000000003,
+      "expected": "r=>r.final.servoDeg<40&&r.maxLid<50&&r.final.command==='incomplete'&&r.peaks.penetrationMm<.05",
+      "pass": true
+    },
+    {
+      "id": "power_off_horn_present",
+      "parameters": {
+        "dt": 0.0010416666666666667,
+        "iterations": 12,
+        "contactFrequency": 6000,
+        "contactMode": "cad_faces",
+        "torqueCap": 0.03,
+        "commandSpeed": 12,
+        "friction": 0.25,
+        "bearingDamping": 0.00025,
+        "lidMassScale": 1,
+        "frontLoadG": 0,
+        "comShiftMm": 0,
+        "hornBiasMm": 0,
+        "contactSkinMm": 0.01,
+        "contactEnabled": true,
+        "gravity": 9.80665,
+        "fixedBase": true,
+        "shaftBlock": false,
+        "powered": false,
+        "initialLid": 0,
+        "openTarget": 56.8,
+        "closedTarget": -12,
+        "rotorInertia": 5e-7
+      },
+      "final": {
+        "t": 11.986458333336131,
+        "targetDeg": 56.8,
+        "servoDeg": -8.972920024077743,
+        "cupDeg": -10.000542224098226,
+        "lidDeg": 3.2450003526412033e-7,
+        "torqueNm": 0,
+        "availableNm": 0.02999549899271537,
+        "penetrationMm": 0.0000052638351917266846,
+        "hingeDriftMm": 0.00008781213039328882,
+        "contacts": 6,
+        "command": "unpowered",
+        "poses": {
+          "base": {
+            "translationM": [
+              0.03413538360595703,
+              0.03658505630493164,
+              0.023092145919799804
+            ],
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "frame": {
+            "translationM": [
+              0.03128134346008301,
+              0.03245340728759766,
+              0.03973606872558594
+            ],
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "lid": {
+            "translationM": [
+              0.0398967399597168,
+              0.04533790588378906,
+              0.06595122528076172
+            ],
+            "rotation": {
+              "x": 2.8317970190983033e-9,
+              "y": 1.2314212149977521e-11,
+              "z": 7.118270382855396e-12,
+              "w": 1
+            }
+          },
+          "cup": {
+            "translationM": [
+              0.04501955413818359,
+              0.040858577728271485,
+              0.03646262359619141
+            ],
+            "rotation": {
+              "x": -0.000004731797616841504,
+              "y": -6.915820693897956e-10,
+              "z": -6.470406432868003e-10,
+              "w": 0.9999999403953552
+            }
+          },
+          "link": {
+            "translationM": [
+              0.04979999923706055,
+              0.04635318374633789,
+              0.04730195236206055
+            ],
+            "rotation": {
+              "x": -0.000002267099944219808,
+              "y": 4.7853731643954234e-8,
+              "z": 1.6644980505020612e-8,
+              "w": 0.9999999403953552
+            }
+          },
+          "rotor": {
+            "translationM": [
+              0.039859466552734375,
+              0.0394897575378418,
+              0.036628917694091795
+            ],
+            "rotation": {
+              "x": 0.00896284356713295,
+              "y": -1.4835813133551312e-11,
+              "z": -1.5139833831057103e-12,
+              "w": 0.9999598264694214
+            }
+          }
+        }
+      },
+      "maxLid": 65.39421876806884,
+      "peaks": {
+        "penetrationMm": 0.0008355863392353058,
+        "hingeDriftMm": 0.001740636067347294,
+        "torqueNm": 0.004027136977132535
+      },
+      "transitions": [
+        {
+          "t": 0.0010416666666666667,
+          "state": "opening",
+          "lidDeg": 0,
+          "servoDeg": -9.995743534833943
+        },
+        {
+          "t": 5.943749999999743,
+          "state": "opened",
+          "lidDeg": 65.33529711592396,
+          "servoDeg": 56.97148990303069
+        },
+        {
+          "t": 8.001041666666293,
+          "state": "unpowered",
+          "lidDeg": 65.24355350313957,
+          "servoDeg": 56.86998959783388
+        }
+      ],
+      "elapsedMs": 776.9219999999996,
+      "expected": "r=>r.final.lidDeg<1&&r.maxLid>64",
+      "pass": true
+    },
+    {
+      "id": "heavy_load",
+      "parameters": {
+        "dt": 0.0010416666666666667,
+        "iterations": 12,
+        "contactFrequency": 6000,
+        "contactMode": "cad_faces",
+        "torqueCap": 0.03,
+        "commandSpeed": 12,
+        "friction": 0.25,
+        "bearingDamping": 0.00025,
+        "lidMassScale": 1,
+        "frontLoadG": 350,
+        "comShiftMm": 0,
+        "hornBiasMm": 0,
+        "contactSkinMm": 0.01,
+        "contactEnabled": true,
+        "gravity": 9.80665,
+        "fixedBase": true,
+        "shaftBlock": false,
+        "powered": true,
+        "initialLid": 0,
+        "openTarget": 56.8,
+        "closedTarget": -12,
+        "rotorInertia": 5e-7
+      },
+      "final": {
+        "t": 14.986458333338518,
+        "targetDeg": 56.8,
+        "servoDeg": -8.873494315523123,
+        "cupDeg": -9.909053101686066,
+        "lidDeg": 0,
+        "torqueNm": 0.0299989253634491,
+        "availableNm": 0.0299989253634491,
+        "penetrationMm": 0.001537887379527092,
+        "hingeDriftMm": 0.013763214163946515,
+        "contacts": 6,
+        "command": "incomplete",
+        "poses": {
+          "base": {
+            "translationM": [
+              0.03413538360595703,
+              0.03658505630493164,
+              0.023092145919799804
+            ],
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "frame": {
+            "translationM": [
+              0.03128134346008301,
+              0.03245340728759766,
+              0.03973606872558594
+            ],
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "lid": {
+            "translationM": [
+              0.0398967399597168,
+              0.04533790588378906,
+              0.06595122528076172
+            ],
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "cup": {
+            "translationM": [
+              0.04501955795288086,
+              0.04085947418212891,
+              0.036463939666748046
+            ],
+            "rotation": {
+              "x": 0.0007936613401398063,
+              "y": -0.000001845547899392841,
+              "z": -0.0000010481279559826362,
+              "w": 0.9999997019767761
+            }
+          },
+          "link": {
+            "translationM": [
+              0.04980023574829102,
+              0.046359386444091794,
+              0.04731017303466797
+            ],
+            "rotation": {
+              "x": 0.00032245469628833234,
+              "y": -0.000007613612069690134,
+              "z": -0.000002769354750853381,
+              "w": 0.9999999403953552
+            }
+          },
+          "rotor": {
+            "translationM": [
+              0.03985942840576172,
+              0.03948995590209961,
+              0.03662849807739258
+            ],
+            "rotation": {
+              "x": 0.009830458089709282,
+              "y": -1.436295207213334e-7,
+              "z": -6.880881073811906e-7,
+              "w": 0.9999516606330872
+            }
+          }
+        }
+      },
+      "maxLid": 0,
+      "peaks": {
+        "penetrationMm": 0.001537887379527092,
+        "hingeDriftMm": 0.013763214163946515,
+        "torqueNm": 0.029999576821964594
+      },
+      "transitions": [
+        {
+          "t": 0.0010416666666666667,
+          "state": "opening",
+          "lidDeg": 0,
+          "servoDeg": -9.995743534833943
+        },
+        {
+          "t": 14.0000000000044,
+          "state": "incomplete",
+          "lidDeg": 0,
+          "servoDeg": -8.873494315523123
+        }
+      ],
+      "elapsedMs": 936.3989999999994,
+      "expected": "r=>r.final.command==='incomplete'",
+      "pass": true
+    },
+    {
+      "id": "high_bearing_friction",
+      "parameters": {
+        "dt": 0.0010416666666666667,
+        "iterations": 12,
+        "contactFrequency": 6000,
+        "contactMode": "cad_faces",
+        "torqueCap": 0.03,
+        "commandSpeed": 12,
+        "friction": 0.25,
+        "bearingDamping": 0.2,
+        "lidMassScale": 1,
+        "frontLoadG": 0,
+        "comShiftMm": 0,
+        "hornBiasMm": 0,
+        "contactSkinMm": 0.01,
+        "contactEnabled": true,
+        "gravity": 9.80665,
+        "fixedBase": true,
+        "shaftBlock": false,
+        "powered": true,
+        "initialLid": 0,
+        "openTarget": 56.8,
+        "closedTarget": -12,
+        "rotorInertia": 5e-7
+      },
+      "final": {
+        "t": 14.986458333338518,
+        "targetDeg": 56.8,
+        "servoDeg": 58.16124375314878,
+        "cupDeg": 57.131254659592344,
+        "lidDeg": 66.43443834589198,
+        "torqueNm": 0.0017787222644891044,
+        "availableNm": 0.029997058765129918,
+        "penetrationMm": 0.0007705967873334885,
+        "hingeDriftMm": 0.00015014594736554665,
+        "contacts": 6,
+        "command": "incomplete",
+        "poses": {
+          "base": {
+            "translationM": [
+              0.03413538360595703,
+              0.03658505630493164,
+              0.023092145919799804
+            ],
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "frame": {
+            "translationM": [
+              0.03128134346008301,
+              0.03245340728759766,
+              0.03973606872558594
+            ],
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "lid": {
+            "translationM": [
+              0.0398967399597168,
+              0.027525413513183595,
+              0.08485124969482422
+            ],
+            "rotation": {
+              "x": 0.547814667224884,
+              "y": -1.1283915425305824e-12,
+              "z": -3.6146934512433504e-13,
+              "w": 0.8365997076034546
+            }
+          },
+          "cup": {
+            "translationM": [
+              0.04501955413818359,
+              0.04082879257202148,
+              0.03758226013183594
+            ],
+            "rotation": {
+              "x": 0.552891731262207,
+              "y": 8.76337669097893e-9,
+              "z": -1.2663155857239872e-8,
+              "w": 0.833253026008606
+            }
+          },
+          "link": {
+            "translationM": [
+              0.049800006866455075,
+              0.04095597457885742,
+              0.061922245025634766
+            ],
+            "rotation": {
+              "x": -0.030566919595003128,
+              "y": -8.044861488087918e-8,
+              "z": -9.297455960677325e-8,
+              "w": 0.9995326995849609
+            }
+          },
+          "rotor": {
+            "translationM": [
+              0.039859466552734375,
+              0.040143653869628905,
+              0.036385665893554686
+            ],
+            "rotation": {
+              "x": 0.5603588819503784,
+              "y": -3.934042425157713e-8,
+              "z": 8.506194859592142e-9,
+              "w": 0.8282498717308044
+            }
+          }
+        }
+      },
+      "maxLid": 66.43443834589198,
+      "peaks": {
+        "penetrationMm": 0.0017150230705738068,
+        "hingeDriftMm": 0.002483018825507893,
+        "torqueNm": 0.029751689668008095
+      },
+      "transitions": [
+        {
+          "t": 0.0010416666666666667,
+          "state": "opening",
+          "lidDeg": 0,
+          "servoDeg": -9.995743534833943
+        },
+        {
+          "t": 14.0000000000044,
+          "state": "incomplete",
+          "lidDeg": 65.99234876696443,
+          "servoDeg": 57.683125923537176
+        }
+      ],
+      "elapsedMs": 947.3018000000002,
+      "expected": "r=>r.final.command==='incomplete'",
+      "pass": true
+    },
+    {
+      "id": "high_contact_friction",
+      "parameters": {
+        "dt": 0.0010416666666666667,
+        "iterations": 12,
+        "contactFrequency": 6000,
+        "contactMode": "cad_faces",
+        "torqueCap": 0.03,
+        "commandSpeed": 12,
+        "friction": 0.8,
+        "bearingDamping": 0.00025,
+        "lidMassScale": 1,
+        "frontLoadG": 0,
+        "comShiftMm": 0,
+        "hornBiasMm": 0,
+        "contactSkinMm": 0.01,
+        "contactEnabled": true,
+        "gravity": 9.80665,
+        "fixedBase": true,
+        "shaftBlock": false,
+        "powered": true,
+        "initialLid": 0,
+        "openTarget": 56.8,
+        "closedTarget": -12,
+        "rotorInertia": 5e-7
+      },
+      "final": {
+        "t": 15.986458333339314,
+        "targetDeg": -11.04061071245729,
+        "servoDeg": -11.030762886768642,
+        "cupDeg": -10.000863976563778,
+        "lidDeg": -0.0000019109335478416895,
+        "torqueNm": -0.00009871659039698371,
+        "availableNm": 0.029994622257894125,
+        "penetrationMm": 0.000707630068063736,
+        "hingeDriftMm": 0.00013062680938171254,
+        "contacts": 6,
+        "command": "closed",
+        "poses": {
+          "base": {
+            "translationM": [
+              0.03413538360595703,
+              0.03658505630493164,
+              0.023092145919799804
+            ],
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "frame": {
+            "translationM": [
+              0.03128134346008301,
+              0.03245340728759766,
+              0.03973606872558594
+            ],
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "lid": {
+            "translationM": [
+              0.0398967399597168,
+              0.04533790588378906,
+              0.06595122528076172
+            ],
+            "rotation": {
+              "x": -1.6676040104357526e-8,
+              "y": -4.176589196019931e-12,
+              "z": -3.022191004398156e-12,
+              "w": 0.9999999403953552
+            }
+          },
+          "cup": {
+            "translationM": [
+              0.04501955413818359,
+              0.04085857391357422,
+              0.03646261978149414
+            ],
+            "rotation": {
+              "x": -0.0000075396173997432925,
+              "y": 5.605528485830291e-9,
+              "z": -3.3437510538192328e-9,
+              "w": 0.9999999403953552
+            }
+          },
+          "link": {
+            "translationM": [
+              0.04979999923706055,
+              0.04635316467285156,
+              0.047301921844482425
+            ],
+            "rotation": {
+              "x": -0.0000033548187730048085,
+              "y": 7.20329893511007e-8,
+              "z": 2.936989851320959e-8,
+              "w": 0.9999999403953552
+            }
+          },
+          "rotor": {
+            "translationM": [
+              0.039859466552734375,
+              0.03947676086425781,
+              0.036647480010986326
+            ],
+            "rotation": {
+              "x": -0.00899498164653778,
+              "y": -1.2163838825074436e-8,
+              "z": 3.189543207327006e-8,
+              "w": 0.9999595284461975
+            }
+          }
+        }
+      },
+      "maxLid": 65.39415433688666,
+      "peaks": {
+        "penetrationMm": 0.0008350629359483719,
+        "hingeDriftMm": 0.0017358959629613824,
+        "torqueNm": 0.004026477310718212
+      },
+      "transitions": [
+        {
+          "t": 0.0010416666666666667,
+          "state": "opening",
+          "lidDeg": 0,
+          "servoDeg": -9.995743534833943
+        },
+        {
+          "t": 5.943749999999743,
+          "state": "opened",
+          "lidDeg": 65.33542966577527,
+          "servoDeg": 56.97168691455708
+        },
+        {
+          "t": 8.001041666666293,
+          "state": "closing",
+          "lidDeg": 65.2455771334258,
+          "servoDeg": 56.87447546732068
+        },
+        {
+          "t": 13.853125000004283,
+          "state": "closed",
+          "lidDeg": -0.0000019109335478416895,
+          "servoDeg": -11.04061071245729
+        }
+      ],
+      "elapsedMs": 1008.2839000000004,
+      "expected": "r=>r.transitions.some(x=>x.state==='opened')&&r.transitions.some(x=>x.state==='closed')&&Math.abs(r.final.lidDeg)<.5&&r.peaks.penetrationMm<.05&&r.peaks.hingeDriftMm<.03",
+      "pass": true
+    },
+    {
+      "id": "low_contact_friction",
+      "parameters": {
+        "dt": 0.0010416666666666667,
+        "iterations": 12,
+        "contactFrequency": 6000,
+        "contactMode": "cad_faces",
+        "torqueCap": 0.03,
+        "commandSpeed": 12,
+        "friction": 0.1,
+        "bearingDamping": 0.00025,
+        "lidMassScale": 1,
+        "frontLoadG": 0,
+        "comShiftMm": 0,
+        "hornBiasMm": 0,
+        "contactSkinMm": 0.01,
+        "contactEnabled": true,
+        "gravity": 9.80665,
+        "fixedBase": true,
+        "shaftBlock": false,
+        "powered": true,
+        "initialLid": 0,
+        "openTarget": 56.8,
+        "closedTarget": -12,
+        "rotorInertia": 5e-7
+      },
+      "final": {
+        "t": 15.986458333339314,
+        "targetDeg": -11.040827135151952,
+        "servoDeg": -11.030770250268546,
+        "cupDeg": -10.000863075421899,
+        "lidDeg": 0.00000327569997411787,
+        "torqueNm": -0.00010019076820797185,
+        "availableNm": 0.02999382156895835,
+        "penetrationMm": 0.0007072240114212036,
+        "hingeDriftMm": 0.00013057370624312546,
+        "contacts": 6,
+        "command": "closed",
+        "poses": {
+          "base": {
+            "translationM": [
+              0.03413538360595703,
+              0.03658505630493164,
+              0.023092145919799804
+            ],
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "frame": {
+            "translationM": [
+              0.03128134346008301,
+              0.03245340728759766,
+              0.03973606872558594
+            ],
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "lid": {
+            "translationM": [
+              0.0398967399597168,
+              0.04533790588378906,
+              0.06595122528076172
+            ],
+            "rotation": {
+              "x": 2.858587322407402e-8,
+              "y": -3.842143617149851e-12,
+              "z": -3.038627509333036e-12,
+              "w": 0.9999999403953552
+            }
+          },
+          "cup": {
+            "translationM": [
+              0.04501955413818359,
+              0.04085857391357422,
+              0.03646261978149414
+            ],
+            "rotation": {
+              "x": -0.000007531753453804413,
+              "y": 3.995823671942844e-9,
+              "z": 1.8040537952401792e-9,
+              "w": 0.9999999403953552
+            }
+          },
+          "link": {
+            "translationM": [
+              0.04979999923706055,
+              0.04635316467285156,
+              0.047301921844482425
+            ],
+            "rotation": {
+              "x": -0.00000335460913447605,
+              "y": 7.18441199865083e-8,
+              "z": 2.9337209994650948e-8,
+              "w": 0.9999999403953552
+            }
+          },
+          "rotor": {
+            "translationM": [
+              0.039859466552734375,
+              0.03947676467895508,
+              0.036647480010986326
+            ],
+            "rotation": {
+              "x": -0.00899504590779543,
+              "y": -8.29592505802168e-10,
+              "z": 3.423885619469047e-9,
+              "w": 0.9999595284461975
+            }
+          }
+        }
+      },
+      "maxLid": 65.39432669718974,
+      "peaks": {
+        "penetrationMm": 0.0008269697427749634,
+        "hingeDriftMm": 0.0017400694777332958,
+        "torqueNm": 0.004026988374710527
+      },
+      "transitions": [
+        {
+          "t": 0.0010416666666666667,
+          "state": "opening",
+          "lidDeg": 0,
+          "servoDeg": -9.995743534833943
+        },
+        {
+          "t": 5.943749999999743,
+          "state": "opened",
+          "lidDeg": 65.3355113466125,
+          "servoDeg": 56.97171154099806
+        },
+        {
+          "t": 8.001041666666293,
+          "state": "closing",
+          "lidDeg": 65.2454273290221,
+          "servoDeg": 56.87422350400483
+        },
+        {
+          "t": 13.853125000004283,
+          "state": "closed",
+          "lidDeg": 0.00000327569997411787,
+          "servoDeg": -11.040827135151952
+        }
+      ],
+      "elapsedMs": 999.1110000000008,
+      "expected": "r=>r.transitions.some(x=>x.state==='opened')&&r.transitions.some(x=>x.state==='closed')&&Math.abs(r.final.lidDeg)<.5&&r.peaks.penetrationMm<.05&&r.peaks.hingeDriftMm<.03",
+      "pass": true
+    },
+    {
+      "id": "small_horn",
+      "parameters": {
+        "dt": 0.0010416666666666667,
+        "iterations": 12,
+        "contactFrequency": 6000,
+        "contactMode": "representative",
+        "torqueCap": 0.03,
+        "commandSpeed": 12,
+        "friction": 0.25,
+        "bearingDamping": 0.00025,
+        "lidMassScale": 1,
+        "frontLoadG": 0,
+        "comShiftMm": 0,
+        "hornBiasMm": -0.15,
+        "contactSkinMm": 0.01,
+        "contactEnabled": true,
+        "gravity": 9.80665,
+        "fixedBase": true,
+        "shaftBlock": false,
+        "powered": true,
+        "initialLid": 0,
+        "openTarget": 56.8,
+        "closedTarget": -12,
+        "rotorInertia": 5e-7
+      },
+      "final": {
+        "t": 15.986458333339314,
+        "targetDeg": -11.606244350293192,
+        "servoDeg": -11.605946423546994,
+        "cupDeg": -10.000617559152843,
+        "lidDeg": -0.000005810913849824719,
+        "torqueNm": -0.0000041336558382458666,
+        "availableNm": 0.029999372936315546,
+        "penetrationMm": 0,
+        "hingeDriftMm": 0.00009378787150893128,
+        "contacts": 1,
+        "command": "closed",
+        "poses": {
+          "base": {
+            "translationM": [
+              0.03413538360595703,
+              0.03658505630493164,
+              0.023092145919799804
+            ],
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "frame": {
+            "translationM": [
+              0.03128134346008301,
+              0.03245340728759766,
+              0.03973606872558594
+            ],
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "lid": {
+            "translationM": [
+              0.0398967399597168,
+              0.04533790588378906,
+              0.06595122528076172
+            ],
+            "rotation": {
+              "x": -5.070978659205139e-8,
+              "y": -3.4612115690918488e-12,
+              "z": -2.513797330017109e-12,
+              "w": 0.9999999403953552
+            }
+          },
+          "cup": {
+            "translationM": [
+              0.04501955795288086,
+              0.04085857391357422,
+              0.03646262359619141
+            ],
+            "rotation": {
+              "x": -0.000005389219950302504,
+              "y": -9.115322429156802e-13,
+              "z": -7.795391394026241e-13,
+              "w": 0.9999999403953552
+            }
+          },
+          "link": {
+            "translationM": [
+              0.04979999923706055,
+              0.04635317993164063,
+              0.04730194473266602
+            ],
+            "rotation": {
+              "x": -0.000002503951463950216,
+              "y": 5.1164576575501997e-8,
+              "z": 1.8132531920400652e-8,
+              "w": 0.9999999403953552
+            }
+          },
+          "rotor": {
+            "translationM": [
+              0.039859466552734375,
+              0.039473251342773436,
+              0.03665274810791016
+            ],
+            "rotation": {
+              "x": -0.014014068059623241,
+              "y": 3.199257007541538e-17,
+              "z": 2.1151306048001437e-17,
+              "w": 0.9999018311500549
+            }
+          }
+        }
+      },
+      "maxLid": 64.71215531382549,
+      "peaks": {
+        "penetrationMm": 0.0011023469269275665,
+        "hingeDriftMm": 0.0015754890878352564,
+        "torqueNm": 0.004027028927290123
+      },
+      "transitions": [
+        {
+          "t": 0.0010416666666666667,
+          "state": "opening",
+          "lidDeg": 0,
+          "servoDeg": -9.995743533166417
+        },
+        {
+          "t": 5.954166666666409,
+          "state": "opened",
+          "lidDeg": 64.65298191850883,
+          "servoDeg": 56.96798339537338
+        },
+        {
+          "t": 8.001041666666293,
+          "state": "closing",
+          "lidDeg": 64.56508292055129,
+          "servoDeg": 56.87306230166536
+        },
+        {
+          "t": 13.786458333337563,
+          "state": "closed",
+          "lidDeg": -0.000005810913849824719,
+          "servoDeg": -11.606244350293192
+        }
+      ],
+      "elapsedMs": 791.272500000001,
+      "expected": "r=>r.transitions.some(x=>x.state==='closed')",
+      "pass": true
+    },
+    {
+      "id": "large_horn",
+      "parameters": {
+        "dt": 0.0010416666666666667,
+        "iterations": 12,
+        "contactFrequency": 6000,
+        "contactMode": "representative",
+        "torqueCap": 0.03,
+        "commandSpeed": 12,
+        "friction": 0.25,
+        "bearingDamping": 0.00025,
+        "lidMassScale": 1,
+        "frontLoadG": 0,
+        "comShiftMm": 0,
+        "hornBiasMm": 0.15,
+        "contactSkinMm": 0.01,
+        "contactEnabled": true,
+        "gravity": 9.80665,
+        "fixedBase": true,
+        "shaftBlock": false,
+        "powered": true,
+        "initialLid": 0,
+        "openTarget": 56.8,
+        "closedTarget": -12,
+        "rotorInertia": 5e-7
+      },
+      "final": {
+        "t": 15.986458333339314,
+        "targetDeg": -10.555286574938444,
+        "servoDeg": -10.53609225724477,
+        "cupDeg": -10.00110263309676,
+        "lidDeg": -0.0000022597853554287794,
+        "torqueNm": -0.00018711025104920675,
+        "availableNm": 0.029999939635384047,
+        "penetrationMm": 0.0007213540375232697,
+        "hingeDriftMm": 0.00016379716280255998,
+        "contacts": 1,
+        "command": "closed",
+        "poses": {
+          "base": {
+            "translationM": [
+              0.03413538360595703,
+              0.03658505630493164,
+              0.023092145919799804
+            ],
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "frame": {
+            "translationM": [
+              0.03128134346008301,
+              0.03245340728759766,
+              0.03973606872558594
+            ],
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "lid": {
+            "translationM": [
+              0.0398967399597168,
+              0.04533790588378906,
+              0.06595122528076172
+            ],
+            "rotation": {
+              "x": -1.972034624486696e-8,
+              "y": -3.647903593778645e-12,
+              "z": -2.5019814779009275e-12,
+              "w": 0.9999999403953552
+            }
+          },
+          "cup": {
+            "translationM": [
+              0.04501955795288086,
+              0.04085857009887695,
+              0.036462615966796875
+            ],
+            "rotation": {
+              "x": -0.000009622288416721858,
+              "y": -1.9780122428869618e-8,
+              "z": 7.911324928500107e-10,
+              "w": 0.9999999403953552
+            }
+          },
+          "link": {
+            "translationM": [
+              0.04979999923706055,
+              0.0463531494140625,
+              0.04730189895629883
+            ],
+            "rotation": {
+              "x": -0.000004203692242299439,
+              "y": 8.43366123604028e-8,
+              "z": 3.781890711707092e-8,
+              "w": 0.9999999403953552
+            }
+          },
+          "rotor": {
+            "translationM": [
+              0.039859466552734375,
+              0.039479827880859374,
+              0.03664297866821289
+            ],
+            "rotation": {
+              "x": -0.004678270313888788,
+              "y": -1.961016904417079e-9,
+              "z": 2.0206520900956093e-9,
+              "w": 0.9999890327453613
+            }
+          }
+        }
+      },
+      "maxLid": 65.85358172597344,
+      "peaks": {
+        "penetrationMm": 0.0013152547180652618,
+        "hingeDriftMm": 0.002604311454900859,
+        "torqueNm": 0.005934685105795543
+      },
+      "transitions": [
+        {
+          "t": 0.0010416666666666667,
+          "state": "opening",
+          "lidDeg": 0,
+          "servoDeg": -9.995743533166417
+        },
+        {
+          "t": 8.001041666666293,
+          "state": "closing",
+          "lidDeg": 65.70386772142189,
+          "servoDeg": 56.87524458415794
+        },
+        {
+          "t": 13.886458333337643,
+          "state": "closed",
+          "lidDeg": -0.0000022597853554287794,
+          "servoDeg": -10.555286574938444
+        }
+      ],
+      "elapsedMs": 782.0990999999995,
+      "expected": "r=>r.transitions.some(x=>x.state==='closed')",
+      "pass": true
+    },
+    {
+      "id": "nominal_uncompensated_angle",
+      "parameters": {
+        "dt": 0.0010416666666666667,
+        "iterations": 12,
+        "contactFrequency": 6000,
+        "contactMode": "representative",
+        "torqueCap": 0.03,
+        "commandSpeed": 12,
+        "friction": 0.25,
+        "bearingDamping": 0.00025,
+        "lidMassScale": 1,
+        "frontLoadG": 0,
+        "comShiftMm": 0,
+        "hornBiasMm": 0,
+        "contactSkinMm": 0.01,
+        "contactEnabled": true,
+        "gravity": 9.80665,
+        "fixedBase": true,
+        "shaftBlock": false,
+        "powered": true,
+        "initialLid": 0,
+        "openTarget": 55.578141,
+        "closedTarget": -12,
+        "rotorInertia": 5e-7
+      },
+      "final": {
+        "t": 14.986458333338518,
+        "targetDeg": 55.578141,
+        "servoDeg": 55.582259027389156,
+        "cupDeg": 54.4329099722531,
+        "lidDeg": 63.937015566290036,
+        "torqueNm": 0.0009495774683623087,
+        "availableNm": 0.029999795519335754,
+        "penetrationMm": 0.0008034892380237579,
+        "hingeDriftMm": 0.00022402437829496325,
+        "contacts": 1,
+        "command": "incomplete",
+        "poses": {
+          "base": {
+            "translationM": [
+              0.03413538360595703,
+              0.03658505630493164,
+              0.023092145919799804
+            ],
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "frame": {
+            "translationM": [
+              0.03128134346008301,
+              0.03245340728759766,
+              0.03973606872558594
+            ],
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "lid": {
+            "translationM": [
+              0.0398967399597168,
+              0.02852462387084961,
+              0.08458858489990234
+            ],
+            "rotation": {
+              "x": 0.5294530391693115,
+              "y": -1.16301857467499e-12,
+              "z": -1.4792446510324825e-13,
+              "w": 0.8483392000198364
+            }
+          },
+          "cup": {
+            "translationM": [
+              0.04501955413818359,
+              0.04085528564453125,
+              0.03754259872436523
+            ],
+            "rotation": {
+              "x": 0.533119261264801,
+              "y": 3.649947544204224e-8,
+              "z": 6.463989166149986e-8,
+              "w": 0.8460400700569153
+            }
+          },
+          "link": {
+            "translationM": [
+              0.04980001068115234,
+              0.04146619033813476,
+              0.06153374862670898
+            ],
+            "rotation": {
+              "x": -0.029237132519483566,
+              "y": -1.4267853032379207e-7,
+              "z": -1.3648667618326726e-7,
+              "w": 0.9995724558830261
+            }
+          },
+          "rotor": {
+            "translationM": [
+              0.039859466552734375,
+              0.04011588287353516,
+              0.03637982177734375
+            ],
+            "rotation": {
+              "x": 0.5415780544281006,
+              "y": 3.4306932406025226e-8,
+              "z": -4.535233966151964e-9,
+              "w": 0.8406504392623901
+            }
+          }
+        }
+      },
+      "maxLid": 64.13608698627498,
+      "peaks": {
+        "penetrationMm": 0.0011110492050647736,
+        "hingeDriftMm": 0.0015925818178418078,
+        "torqueNm": 0.004026788509459657
+      },
+      "transitions": [
+        {
+          "t": 0.0010416666666666667,
+          "state": "opening",
+          "lidDeg": 0,
+          "servoDeg": -9.995743533166417
+        },
+        {
+          "t": 14.0000000000044,
+          "state": "incomplete",
+          "lidDeg": 63.93884438602335,
+          "servoDeg": 55.584235040951285
+        }
+      ],
+      "elapsedMs": 729.6196,
+      "expected": "r=>r.final.lidDeg<64.5&&r.final.command==='incomplete'",
+      "pass": true
+    },
+    {
+      "id": "free_box_on_table",
+      "parameters": {
+        "dt": 0.0010416666666666667,
+        "iterations": 12,
+        "contactFrequency": 6000,
+        "contactMode": "cad_faces",
+        "torqueCap": 0.03,
+        "commandSpeed": 12,
+        "friction": 0.25,
+        "bearingDamping": 0.00025,
+        "lidMassScale": 1,
+        "frontLoadG": 0,
+        "comShiftMm": 0,
+        "hornBiasMm": 0,
+        "contactSkinMm": 0.01,
+        "contactEnabled": true,
+        "gravity": 9.80665,
+        "fixedBase": false,
+        "shaftBlock": false,
+        "powered": true,
+        "initialLid": 0,
+        "openTarget": 56.8,
+        "closedTarget": -12,
+        "rotorInertia": 5e-7
+      },
+      "final": {
+        "t": 15.986458333339314,
+        "targetDeg": -11.041460423648033,
+        "servoDeg": -11.030990012751143,
+        "cupDeg": -10.001048052076454,
+        "lidDeg": -0.00013844181250735507,
+        "torqueNm": -0.000106446622329426,
+        "availableNm": 0.029993482657060495,
+        "penetrationMm": 0.0007317159324884415,
+        "hingeDriftMm": 0.00011471399995898174,
+        "contacts": 10,
+        "command": "closed",
+        "poses": {
+          "base": {
+            "translationM": [
+              0.034135288238525394,
+              0.036575862884521484,
+              0.02308143997192383
+            ],
+            "rotation": {
+              "x": -2.640501861606026e-7,
+              "y": 1.1246744691106869e-7,
+              "z": -2.242941832264478e-8,
+              "w": 1
+            }
+          },
+          "frame": {
+            "translationM": [
+              0.03128125,
+              0.032444221496582035,
+              0.039725360870361326
+            ],
+            "rotation": {
+              "x": -2.5582949092495255e-7,
+              "y": 1.5260675922945666e-7,
+              "z": -3.3525203946283e-8,
+              "w": 1
+            }
+          },
+          "lid": {
+            "translationM": [
+              0.03989665603637695,
+              0.04532875061035156,
+              0.06594043731689453
+            ],
+            "rotation": {
+              "x": -0.0000014639621213063947,
+              "y": 2.1890932089263515e-7,
+              "z": 2.37680986003852e-9,
+              "w": 0.9999999403953552
+            }
+          },
+          "cup": {
+            "translationM": [
+              0.04501946258544922,
+              0.04084937286376953,
+              0.03645191192626953
+            ],
+            "rotation": {
+              "x": -0.000009401808711118065,
+              "y": -1.763725379078096e-7,
+              "z": -2.696951639791223e-7,
+              "w": 0.9999999403953552
+            }
+          },
+          "link": {
+            "translationM": [
+              0.04979990768432617,
+              0.04634397506713867,
+              0.04729116821289062
+            ],
+            "rotation": {
+              "x": -0.0000033849457850010367,
+              "y": 2.1890764401177876e-7,
+              "z": 2.375643681773454e-9,
+              "w": 0.9999999403953552
+            }
+          },
+          "rotor": {
+            "translationM": [
+              0.039859371185302736,
+              0.03946757507324219,
+              0.03663676452636719
+            ],
+            "rotation": {
+              "x": -0.008997219614684582,
+              "y": 1.4193699371389812e-7,
+              "z": -4.391525720848222e-8,
+              "w": 0.9999595284461975
+            }
+          }
+        }
+      },
+      "maxLid": 65.39415711845422,
+      "peaks": {
+        "penetrationMm": 0.0008311308920383453,
+        "hingeDriftMm": 0.0014518454799396984,
+        "torqueNm": 0.0040295965540774244
+      },
+      "transitions": [
+        {
+          "t": 0.0010416666666666667,
+          "state": "opening",
+          "lidDeg": 0,
+          "servoDeg": -9.995991968790703
+        },
+        {
+          "t": 5.943749999999743,
+          "state": "opened",
+          "lidDeg": 65.33525065425583,
+          "servoDeg": 56.97157404588397
+        },
+        {
+          "t": 8.001041666666293,
+          "state": "closing",
+          "lidDeg": 65.24549247762438,
+          "servoDeg": 56.87441001793921
+        },
+        {
+          "t": 13.853125000004283,
+          "state": "closed",
+          "lidDeg": 0.000372144969154538,
+          "servoDeg": -11.041460423648033
+        }
+      ],
+      "elapsedMs": 1430.1137999999992,
+      "expected": "r=>r.transitions.some(x=>x.state==='opened')&&r.transitions.some(x=>x.state==='closed')&&Math.abs(r.final.lidDeg)<.5&&r.peaks.penetrationMm<.05&&r.peaks.hingeDriftMm<.03",
+      "pass": true
+    },
+    {
+      "id": "repeat",
+      "parameters": {
+        "dt": 0.0010416666666666667,
+        "iterations": 12,
+        "contactFrequency": 6000,
+        "contactMode": "cad_faces",
+        "torqueCap": 0.03,
+        "commandSpeed": 12,
+        "friction": 0.25,
+        "bearingDamping": 0.00025,
+        "lidMassScale": 1,
+        "frontLoadG": 0,
+        "comShiftMm": 0,
+        "hornBiasMm": 0,
+        "contactSkinMm": 0.01,
+        "contactEnabled": true,
+        "gravity": 9.80665,
+        "fixedBase": true,
+        "shaftBlock": false,
+        "powered": true,
+        "initialLid": 0,
+        "openTarget": 56.8,
+        "closedTarget": -12,
+        "rotorInertia": 5e-7
+      },
+      "final": {
+        "t": 26.999999999995985,
+        "targetDeg": 4.921836462475964,
+        "servoDeg": 4.530812407756745,
+        "cupDeg": 3.5003520671495973,
+        "lidDeg": 14.21669105158199,
+        "torqueNm": 0.0033650173948747775,
+        "availableNm": 0.029384888019012095,
+        "penetrationMm": 0.0007897671312093735,
+        "hingeDriftMm": 0.0011485152677120397,
+        "contacts": 6,
+        "command": "opening",
+        "poses": {
+          "base": {
+            "translationM": [
+              0.03413538360595703,
+              0.03658505630493164,
+              0.023092145919799804
+            ],
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "frame": {
+            "translationM": [
+              0.03128134346008301,
+              0.03245340728759766,
+              0.03973606872558594
+            ],
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "lid": {
+            "translationM": [
+              0.0398967399597168,
+              0.04360365295410156,
+              0.07155564117431641
+            ],
+            "rotation": {
+              "x": 0.12374600768089294,
+              "y": -4.204579826666555e-12,
+              "z": -1.9943135684541424e-12,
+              "w": 0.9923138618469238
+            }
+          },
+          "cup": {
+            "translationM": [
+              0.04501955795288086,
+              0.04096031188964844,
+              0.036677913665771486
+            ],
+            "rotation": {
+              "x": 0.11754044890403748,
+              "y": -1.31419795934562e-7,
+              "z": -1.6699380012141773e-7,
+              "w": 0.9930680990219116
+            }
+          },
+          "link": {
+            "translationM": [
+              0.049800029754638674,
+              0.046741016387939455,
+              0.05070198059082031
+            ],
+            "rotation": {
+              "x": -0.007831811904907227,
+              "y": -6.116094937169692e-7,
+              "z": -3.3350494277328835e-7,
+              "w": 0.9999693036079407
+            }
+          },
+          "rotor": {
+            "translationM": [
+              0.03985947036743164,
+              0.0395904541015625,
+              0.036520065307617186
+            ],
+            "rotation": {
+              "x": 0.12646569311618805,
+              "y": -5.8855494700083e-8,
+              "z": -3.303499340745475e-8,
+              "w": 0.9919708967208862
+            }
+          }
+        }
+      },
+      "maxLid": 65.39421876806884,
+      "peaks": {
+        "penetrationMm": 0.0008355863392353058,
+        "hingeDriftMm": 0.001740636067347294,
+        "torqueNm": 0.004028012985740759
+      },
+      "transitions": [
+        {
+          "t": 0.0010416666666666667,
+          "state": "opening",
+          "lidDeg": 0,
+          "servoDeg": -9.995743534833943
+        },
+        {
+          "t": 6.4437499999997145,
+          "state": "closing",
+          "lidDeg": 65.30626718787917,
+          "servoDeg": 56.94011160938713
+        },
+        {
+          "t": 12.786458333336768,
+          "state": "opening",
+          "lidDeg": -0.00000829412662027875,
+          "servoDeg": -11.029633800659763
+        },
+        {
+          "t": 19.330208333336294,
+          "state": "closing",
+          "lidDeg": 65.30566267944724,
+          "servoDeg": 56.93935765492361
+        },
+        {
+          "t": 25.669791666663862,
+          "state": "opening",
+          "lidDeg": -0.000006904212131859363,
+          "servoDeg": -11.028451950805477
+        }
+      ],
+      "elapsedMs": 1741.575999999999,
+      "expected": "r=>r.transitions.filter(x=>x.state==='closing').length>=2&&r.transitions.filter(x=>x.state==='opening').length>=2&&r.peaks.penetrationMm<.05",
+      "pass": true
+    },
+    {
+      "id": "half_dt",
+      "parameters": {
+        "dt": 0.0005208333333333333,
+        "iterations": 12,
+        "contactFrequency": 6000,
+        "contactMode": "representative",
+        "torqueCap": 0.03,
+        "commandSpeed": 12,
+        "friction": 0.25,
+        "bearingDamping": 0.00025,
+        "lidMassScale": 1,
+        "frontLoadG": 0,
+        "comShiftMm": 0,
+        "hornBiasMm": 0,
+        "contactSkinMm": 0.01,
+        "contactEnabled": true,
+        "gravity": 9.80665,
+        "fixedBase": true,
+        "shaftBlock": false,
+        "powered": true,
+        "initialLid": 0,
+        "openTarget": 56.8,
+        "closedTarget": -12,
+        "rotorInertia": 5e-7
+      },
+      "final": {
+        "t": 15.98749999999573,
+        "targetDeg": -11.151884617920317,
+        "servoDeg": -11.146306967189178,
+        "cupDeg": -10.000190932190929,
+        "lidDeg": -0.0000021658143605420224,
+        "torqueNm": -0.00005289337911935506,
+        "availableNm": 0.029986502924546164,
+        "penetrationMm": 0.00003435090184211731,
+        "hingeDriftMm": 0.00002527405058453583,
+        "contacts": 1,
+        "command": "closed",
+        "poses": {
+          "base": {
+            "translationM": [
+              0.03413538360595703,
+              0.03658505630493164,
+              0.023092145919799804
+            ],
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "frame": {
+            "translationM": [
+              0.03128134346008301,
+              0.03245340728759766,
+              0.03973606872558594
+            ],
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "lid": {
+            "translationM": [
+              0.0398967399597168,
+              0.04533790588378906,
+              0.06595122528076172
+            ],
+            "rotation": {
+              "x": -1.8900294662671513e-8,
+              "y": -4.135678778605101e-12,
+              "z": -2.3989508296518025e-12,
+              "w": 0.9999999403953552
+            }
+          },
+          "cup": {
+            "translationM": [
+              0.04501955795288086,
+              0.040858577728271485,
+              0.036462631225585934
+            ],
+            "rotation": {
+              "x": -0.0000016661975905662985,
+              "y": 1.6982842909740725e-9,
+              "z": 6.889033787871313e-10,
+              "w": 0.9999999403953552
+            }
+          },
+          "link": {
+            "translationM": [
+              0.04979999923706055,
+              0.04635321426391602,
+              0.04730199050903321
+            ],
+            "rotation": {
+              "x": -7.697116757299227e-7,
+              "y": 1.6196906926779775e-8,
+              "z": 5.661619173480403e-9,
+              "w": 0.9999999403953552
+            }
+          },
+          "rotor": {
+            "translationM": [
+              0.039859466552734375,
+              0.03947605514526367,
+              0.036648536682128904
+            ],
+            "rotation": {
+              "x": -0.010003248229622841,
+              "y": -3.679975768555721e-10,
+              "z": 5.23257881468453e-10,
+              "w": 0.9999499320983887
+            }
+          }
+        }
+      },
+      "maxLid": 65.28206093534504,
+      "peaks": {
+        "penetrationMm": 0.001118440181016922,
+        "hingeDriftMm": 0.00039373251440143637,
+        "torqueNm": 0.004012917832928488
+      },
+      "transitions": [
+        {
+          "t": 0.0005208333333333333,
+          "state": "opening",
+          "lidDeg": 0,
+          "servoDeg": -9.999444513573522
+        },
+        {
+          "t": 5.945312500001361,
+          "state": "opened",
+          "lidDeg": 65.22565815553678,
+          "servoDeg": 56.97138570072933
+        },
+        {
+          "t": 8.000520833336328,
+          "state": "closing",
+          "lidDeg": 65.13617886975987,
+          "servoDeg": 56.874689577342494
+        },
+        {
+          "t": 13.844270833331013,
+          "state": "closed",
+          "lidDeg": -0.0000021658143605420224,
+          "servoDeg": -11.151884617920317
+        }
+      ],
+      "elapsedMs": 1548.8392000000003,
+      "expected": "r=>r.transitions.some(x=>x.state==='opened')&&r.transitions.some(x=>x.state==='closed')&&Math.abs(r.final.lidDeg)<.5&&r.peaks.penetrationMm<.05&&r.peaks.hingeDriftMm<.03",
+      "pass": true
+    },
+    {
+      "id": "solver_24",
+      "parameters": {
+        "dt": 0.0010416666666666667,
+        "iterations": 24,
+        "contactFrequency": 6000,
+        "contactMode": "representative",
+        "torqueCap": 0.03,
+        "commandSpeed": 12,
+        "friction": 0.25,
+        "bearingDamping": 0.00025,
+        "lidMassScale": 1,
+        "frontLoadG": 0,
+        "comShiftMm": 0,
+        "hornBiasMm": 0,
+        "contactSkinMm": 0.01,
+        "contactEnabled": true,
+        "gravity": 9.80665,
+        "fixedBase": true,
+        "shaftBlock": false,
+        "powered": true,
+        "initialLid": 0,
+        "openTarget": 56.8,
+        "closedTarget": -12,
+        "rotorInertia": 5e-7
+      },
+      "final": {
+        "t": 15.986458333339314,
+        "targetDeg": -11.151885258218215,
+        "servoDeg": -11.146172611278098,
+        "cupDeg": -10.000184913461558,
+        "lidDeg": -0.000002306080392576314,
+        "torqueNm": -0.0000541870223205212,
+        "availableNm": 0.02998595356122544,
+        "penetrationMm": 0.0000014491379261016846,
+        "hingeDriftMm": 0.000024510686550396165,
+        "contacts": 1,
+        "command": "closed",
+        "poses": {
+          "base": {
+            "translationM": [
+              0.03413538360595703,
+              0.03658505630493164,
+              0.023092145919799804
+            ],
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "frame": {
+            "translationM": [
+              0.03128134346008301,
+              0.03245340728759766,
+              0.03973606872558594
+            ],
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "lid": {
+            "translationM": [
+              0.0398967399597168,
+              0.04533790588378906,
+              0.06595122528076172
+            ],
+            "rotation": {
+              "x": -2.0124346633565438e-8,
+              "y": -4.334719649196073e-12,
+              "z": -2.5083396731212515e-12,
+              "w": 0.9999999403953552
+            }
+          },
+          "cup": {
+            "translationM": [
+              0.04501955795288086,
+              0.040858577728271485,
+              0.036462631225585934
+            ],
+            "rotation": {
+              "x": -0.0000016136742715389119,
+              "y": 1.9738937151458913e-9,
+              "z": 8.986762445317709e-10,
+              "w": 0.9999999403953552
+            }
+          },
+          "link": {
+            "translationM": [
+              0.04979999923706055,
+              0.04635321426391602,
+              0.04730199050903321
+            ],
+            "rotation": {
+              "x": -7.521197744608799e-7,
+              "y": 1.6015786030720847e-8,
+              "z": 5.553631332588793e-9,
+              "w": 0.9999999403953552
+            }
+          },
+          "rotor": {
+            "translationM": [
+              0.039859466552734375,
+              0.03947605514526367,
+              0.03664853286743164
+            ],
+            "rotation": {
+              "x": -0.0100020756945014,
+              "y": 1.1336276362072795e-9,
+              "z": -1.7318222411688566e-9,
+              "w": 0.9999499320983887
+            }
+          }
+        }
+      },
+      "maxLid": 65.28395938385721,
+      "peaks": {
+        "penetrationMm": 0.0011127181351184845,
+        "hingeDriftMm": 0.0004008386088464235,
+        "torqueNm": 0.004023619174744238
+      },
+      "transitions": [
+        {
+          "t": 0.0010416666666666667,
+          "state": "opening",
+          "lidDeg": 0,
+          "servoDeg": -9.995921620427005
+        },
+        {
+          "t": 5.943749999999743,
+          "state": "opened",
+          "lidDeg": 65.2259101312813,
+          "servoDeg": 56.971666056541764
+        },
+        {
+          "t": 8.001041666666293,
+          "state": "closing",
+          "lidDeg": 65.13597246189259,
+          "servoDeg": 56.87443567792009
+        },
+        {
+          "t": 13.836458333337603,
+          "state": "closed",
+          "lidDeg": -0.000002306080392576314,
+          "servoDeg": -11.151885258218215
+        }
+      ],
+      "elapsedMs": 1315.5269000000008,
+      "expected": "r=>r.transitions.some(x=>x.state==='opened')&&r.transitions.some(x=>x.state==='closed')&&Math.abs(r.final.lidDeg)<.5&&r.peaks.penetrationMm<.05&&r.peaks.hingeDriftMm<.03",
+      "pass": true
+    },
+    {
+      "id": "cad_face_strips",
+      "parameters": {
+        "dt": 0.0010416666666666667,
+        "iterations": 12,
+        "contactFrequency": 6000,
+        "contactMode": "cad_faces",
+        "torqueCap": 0.03,
+        "commandSpeed": 12,
+        "friction": 0.25,
+        "bearingDamping": 0.00025,
+        "lidMassScale": 1,
+        "frontLoadG": 0,
+        "comShiftMm": 0,
+        "hornBiasMm": 0,
+        "contactSkinMm": 0.01,
+        "contactEnabled": true,
+        "gravity": 9.80665,
+        "fixedBase": true,
+        "shaftBlock": false,
+        "powered": true,
+        "initialLid": 0,
+        "openTarget": 56.8,
+        "closedTarget": -12,
+        "rotorInertia": 5e-7
+      },
+      "final": {
+        "t": 15.986458333339314,
+        "targetDeg": -11.040764918963863,
+        "servoDeg": -11.030775692855427,
+        "cupDeg": -10.000862678602642,
+        "lidDeg": 0.000002911918591077243,
+        "torqueNm": -0.00010158146854005615,
+        "availableNm": 0.029997214925832655,
+        "penetrationMm": 0.0007068291306495667,
+        "hingeDriftMm": 0.00013243194868485582,
+        "contacts": 6,
+        "command": "closed",
+        "poses": {
+          "base": {
+            "translationM": [
+              0.03413538360595703,
+              0.03658505630493164,
+              0.023092145919799804
+            ],
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "frame": {
+            "translationM": [
+              0.03128134346008301,
+              0.03245340728759766,
+              0.03973606872558594
+            ],
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "lid": {
+            "translationM": [
+              0.0398967399597168,
+              0.04533790588378906,
+              0.06595122528076172
+            ],
+            "rotation": {
+              "x": 2.5411281967535615e-8,
+              "y": -3.685022773036728e-12,
+              "z": -2.9967790401985717e-12,
+              "w": 0.9999999403953552
+            }
+          },
+          "cup": {
+            "translationM": [
+              0.04501955413818359,
+              0.04085857391357422,
+              0.03646261978149414
+            ],
+            "rotation": {
+              "x": -0.0000075282905527274124,
+              "y": 5.222344778843535e-9,
+              "z": 1.5321955260105824e-8,
+              "w": 0.9999999403953552
+            }
+          },
+          "link": {
+            "translationM": [
+              0.04979999923706055,
+              0.04635316467285156,
+              0.047301925659179685
+            ],
+            "rotation": {
+              "x": -0.0000033336764317937195,
+              "y": 6.98972542068077e-8,
+              "z": 2.8059631063115376e-8,
+              "w": 0.9999999403953552
+            }
+          },
+          "rotor": {
+            "translationM": [
+              0.039859466552734375,
+              0.03947676467895508,
+              0.036647480010986326
+            ],
+            "rotation": {
+              "x": -0.008995093405246735,
+              "y": 6.992860068777418e-9,
+              "z": -1.2766959045507065e-8,
+              "w": 0.9999595284461975
+            }
+          }
+        }
+      },
+      "maxLid": 65.39421876806884,
+      "peaks": {
+        "penetrationMm": 0.0008355863392353058,
+        "hingeDriftMm": 0.001740636067347294,
+        "torqueNm": 0.004027136977132535
+      },
+      "transitions": [
+        {
+          "t": 0.0010416666666666667,
+          "state": "opening",
+          "lidDeg": 0,
+          "servoDeg": -9.995743534833943
+        },
+        {
+          "t": 5.943749999999743,
+          "state": "opened",
+          "lidDeg": 65.33529711592396,
+          "servoDeg": 56.97148990303069
+        },
+        {
+          "t": 8.001041666666293,
+          "state": "closing",
+          "lidDeg": 65.24573798441935,
+          "servoDeg": 56.874585372196634
+        },
+        {
+          "t": 13.853125000004283,
+          "state": "closed",
+          "lidDeg": 0.000002911918591077243,
+          "servoDeg": -11.040764918963863
+        }
+      ],
+      "elapsedMs": 1014.1895000000004,
+      "expected": "r=>r.transitions.some(x=>x.state==='opened')&&r.transitions.some(x=>x.state==='closed')&&Math.abs(r.final.lidDeg)<.5&&r.peaks.penetrationMm<.05&&r.peaks.hingeDriftMm<.03",
+      "pass": true
+    },
+    {
+      "id": "cad_faces_no_contact",
+      "parameters": {
+        "dt": 0.0010416666666666667,
+        "iterations": 12,
+        "contactFrequency": 6000,
+        "contactMode": "cad_faces",
+        "torqueCap": 0.03,
+        "commandSpeed": 12,
+        "friction": 0.25,
+        "bearingDamping": 0.00025,
+        "lidMassScale": 1,
+        "frontLoadG": 0,
+        "comShiftMm": 0,
+        "hornBiasMm": 0,
+        "contactSkinMm": 0.01,
+        "contactEnabled": false,
+        "gravity": 9.80665,
+        "fixedBase": true,
+        "shaftBlock": false,
+        "powered": true,
+        "initialLid": 0,
+        "openTarget": 56.8,
+        "closedTarget": -12,
+        "rotorInertia": 5e-7
+      },
+      "final": {
+        "t": 14.986458333338518,
+        "targetDeg": 56.8,
+        "servoDeg": 56.80027472671057,
+        "cupDeg": -10.000591129079138,
+        "lidDeg": 0,
+        "torqueNm": 0.0000010111828036928329,
+        "availableNm": 0.02999354476620409,
+        "penetrationMm": 0,
+        "hingeDriftMm": 0.00009263033158624906,
+        "contacts": 0,
+        "command": "incomplete",
+        "poses": {
+          "base": {
+            "translationM": [
+              0.03413538360595703,
+              0.03658505630493164,
+              0.023092145919799804
+            ],
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "frame": {
+            "translationM": [
+              0.03128134346008301,
+              0.03245340728759766,
+              0.03973606872558594
+            ],
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "lid": {
+            "translationM": [
+              0.0398967399597168,
+              0.04533790588378906,
+              0.06595122528076172
+            ],
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "cup": {
+            "translationM": [
+              0.04501955795288086,
+              0.04085857391357422,
+              0.03646262359619141
+            ],
+            "rotation": {
+              "x": -0.000005158574367669644,
+              "y": -8.138906215648944e-13,
+              "z": -7.290205223352275e-13,
+              "w": 1
+            }
+          },
+          "link": {
+            "translationM": [
+              0.04979999923706055,
+              0.04635317993164063,
+              0.04730194854736328
+            ],
+            "rotation": {
+              "x": -0.000002445334757794626,
+              "y": 4.997253810756774e-8,
+              "z": 1.774782809604858e-8,
+              "w": 1
+            }
+          },
+          "rotor": {
+            "translationM": [
+              0.039859466552734375,
+              0.040129024505615236,
+              0.036382423400878904
+            ],
+            "rotation": {
+              "x": 0.5504827499389648,
+              "y": -3.918085314374306e-18,
+              "z": -7.663926809796695e-18,
+              "w": 0.834846556186676
+            }
+          }
+        }
+      },
+      "maxLid": 0,
+      "peaks": {
+        "penetrationMm": 0,
+        "hingeDriftMm": 0.00010103960978715966,
+        "torqueNm": 0.00007167343913205513
+      },
+      "transitions": [
+        {
+          "t": 0.0010416666666666667,
+          "state": "opening",
+          "lidDeg": 0,
+          "servoDeg": -9.995743534833943
+        },
+        {
+          "t": 14.0000000000044,
+          "state": "incomplete",
+          "lidDeg": 0,
+          "servoDeg": 56.80035236546071
+        }
+      ],
+      "elapsedMs": 656.445300000003,
+      "expected": "r=>r.maxLid<.5&&r.final.servoDeg>50&&r.final.command==='incomplete'",
+      "pass": true
+    },
+    {
+      "id": "cad_faces_half_dt",
+      "parameters": {
+        "dt": 0.0005208333333333333,
+        "iterations": 12,
+        "contactFrequency": 6000,
+        "contactMode": "cad_faces",
+        "torqueCap": 0.03,
+        "commandSpeed": 12,
+        "friction": 0.25,
+        "bearingDamping": 0.00025,
+        "lidMassScale": 1,
+        "frontLoadG": 0,
+        "comShiftMm": 0,
+        "hornBiasMm": 0,
+        "contactSkinMm": 0.01,
+        "contactEnabled": true,
+        "gravity": 9.80665,
+        "fixedBase": true,
+        "shaftBlock": false,
+        "powered": true,
+        "initialLid": 0,
+        "openTarget": 56.8,
+        "closedTarget": -12,
+        "rotorInertia": 5e-7
+      },
+      "final": {
+        "t": 15.98749999999573,
+        "targetDeg": -11.032891762883516,
+        "servoDeg": -11.027512669571061,
+        "cupDeg": -10.000167291963797,
+        "lidDeg": 0.00000185616245918503,
+        "torqueNm": -0.000050927850408041846,
+        "availableNm": 0.02998654375360275,
+        "penetrationMm": 0.000010475516319274902,
+        "hingeDriftMm": 0.00002322699940192299,
+        "contacts": 6,
+        "command": "closed",
+        "poses": {
+          "base": {
+            "translationM": [
+              0.03413538360595703,
+              0.03658505630493164,
+              0.023092145919799804
+            ],
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "frame": {
+            "translationM": [
+              0.03128134346008301,
+              0.03245340728759766,
+              0.03973606872558594
+            ],
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "lid": {
+            "translationM": [
+              0.0398967399597168,
+              0.04533790588378906,
+              0.06595122528076172
+            ],
+            "rotation": {
+              "x": 1.619807221686642e-8,
+              "y": -4.472695651347447e-12,
+              "z": -2.8128875097233053e-12,
+              "w": 0.9999999403953552
+            }
+          },
+          "cup": {
+            "translationM": [
+              0.04501955413818359,
+              0.040858577728271485,
+              0.036462631225585934
+            ],
+            "rotation": {
+              "x": -0.0000014598977031710092,
+              "y": -6.467285373901177e-9,
+              "z": -7.970601401119382e-10,
+              "w": 0.9999999403953552
+            }
+          },
+          "link": {
+            "translationM": [
+              0.04979999923706055,
+              0.04635321426391602,
+              0.04730199050903321
+            ],
+            "rotation": {
+              "x": -7.58684052470926e-7,
+              "y": 1.723500986372528e-8,
+              "z": 5.5987210423324996e-9,
+              "w": 0.9999999403953552
+            }
+          },
+          "rotor": {
+            "translationM": [
+              0.039859466552734375,
+              0.03947678375244141,
+              0.0366474494934082
+            ],
+            "rotation": {
+              "x": -0.008966619148850441,
+              "y": 2.7358162957291654e-10,
+              "z": -5.278000259067994e-11,
+              "w": 0.9999597668647766
+            }
+          }
+        }
+      },
+      "maxLid": 65.39306681286298,
+      "peaks": {
+        "penetrationMm": 0.0008423756808042526,
+        "hingeDriftMm": 0.0004255934836977105,
+        "torqueNm": 0.0040131498470609905
+      },
+      "transitions": [
+        {
+          "t": 0.0005208333333333333,
+          "state": "opening",
+          "lidDeg": 0,
+          "servoDeg": -9.999444513834073
+        },
+        {
+          "t": 5.945312500001361,
+          "state": "opened",
+          "lidDeg": 65.3366292428841,
+          "servoDeg": 56.97198243185122
+        },
+        {
+          "t": 8.000520833336328,
+          "state": "closing",
+          "lidDeg": 65.24654890944463,
+          "servoDeg": 56.87454934639659
+        },
+        {
+          "t": 13.844270833331013,
+          "state": "closed",
+          "lidDeg": 0.00000185616245918503,
+          "servoDeg": -11.032891762883516
+        }
+      ],
+      "elapsedMs": 1991.1252000000022,
+      "expected": "r=>r.transitions.some(x=>x.state==='opened')&&r.transitions.some(x=>x.state==='closed')&&Math.abs(r.final.lidDeg)<.5&&r.peaks.penetrationMm<.05&&r.peaks.hingeDriftMm<.03",
+      "pass": true
+    },
+    {
+      "id": "cad_faces_solver_24",
+      "parameters": {
+        "dt": 0.0010416666666666667,
+        "iterations": 24,
+        "contactFrequency": 6000,
+        "contactMode": "cad_faces",
+        "torqueCap": 0.03,
+        "commandSpeed": 12,
+        "friction": 0.25,
+        "bearingDamping": 0.00025,
+        "lidMassScale": 1,
+        "frontLoadG": 0,
+        "comShiftMm": 0,
+        "hornBiasMm": 0,
+        "contactSkinMm": 0.01,
+        "contactEnabled": true,
+        "gravity": 9.80665,
+        "fixedBase": true,
+        "shaftBlock": false,
+        "powered": true,
+        "initialLid": 0,
+        "openTarget": 56.8,
+        "closedTarget": -12,
+        "rotorInertia": 5e-7
+      },
+      "final": {
+        "t": 15.986458333339314,
+        "targetDeg": -11.033020250599739,
+        "servoDeg": -11.027553969212045,
+        "cupDeg": -10.00019211264354,
+        "lidDeg": -0.0000015380165934338787,
+        "torqueNm": -0.00005232465567755546,
+        "availableNm": 0.02999271042391242,
+        "penetrationMm": 0.000010492280125617981,
+        "hingeDriftMm": 0.00002502977244807169,
+        "contacts": 6,
+        "command": "closed",
+        "poses": {
+          "base": {
+            "translationM": [
+              0.03413538360595703,
+              0.03658505630493164,
+              0.023092145919799804
+            ],
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "frame": {
+            "translationM": [
+              0.03128134346008301,
+              0.03245340728759766,
+              0.03973606872558594
+            ],
+            "rotation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+            }
+          },
+          "lid": {
+            "translationM": [
+              0.0398967399597168,
+              0.04533790588378906,
+              0.06595122528076172
+            ],
+            "rotation": {
+              "x": -1.3421725952866836e-8,
+              "y": -4.71374588667528e-12,
+              "z": -2.9671241592171826e-12,
+              "w": 0.9999999403953552
+            }
+          },
+          "cup": {
+            "translationM": [
+              0.04501955413818359,
+              0.040858577728271485,
+              0.036462631225585934
+            ],
+            "rotation": {
+              "x": -0.0000016764989823059295,
+              "y": -7.425758674628469e-9,
+              "z": -9.169214276738558e-10,
+              "w": 0.9999999403953552
+            }
+          },
+          "link": {
+            "translationM": [
+              0.04979999923706055,
+              0.04635321044921875,
+              0.04730198669433594
+            ],
+            "rotation": {
+              "x": -6.654468052147422e-7,
+              "y": 1.649212322263338e-8,
+              "z": 5.676156877854055e-9,
+              "w": 0.9999999403953552
+            }
+          },
+          "rotor": {
+            "translationM": [
+              0.039859466552734375,
+              0.03947678375244141,
+              0.0366474494934082
+            ],
+            "rotation": {
+              "x": -0.008966979570686817,
+              "y": -8.558674657876963e-9,
+              "z": 2.6632356764366705e-8,
+              "w": 0.9999597668647766
+            }
+          }
+        }
+      },
+      "maxLid": 65.39468866137143,
+      "peaks": {
+        "penetrationMm": 0.000841362401843071,
+        "hingeDriftMm": 0.00043524102705875243,
+        "torqueNm": 0.004023330608164462
+      },
+      "transitions": [
+        {
+          "t": 0.0010416666666666667,
+          "state": "opening",
+          "lidDeg": 0,
+          "servoDeg": -9.99592162167765
+        },
+        {
+          "t": 5.943749999999743,
+          "state": "opened",
+          "lidDeg": 65.3364679443938,
+          "servoDeg": 56.97196157385018
+        },
+        {
+          "t": 8.001041666666293,
+          "state": "closing",
+          "lidDeg": 65.24629325129905,
+          "servoDeg": 56.874534183356076
+        },
+        {
+          "t": 13.853125000004283,
+          "state": "closed",
+          "lidDeg": -0.0000015380165934338787,
+          "servoDeg": -11.033020250599739
+        }
+      ],
+      "elapsedMs": 1664.3672000000006,
+      "expected": "r=>r.transitions.some(x=>x.state==='opened')&&r.transitions.some(x=>x.state==='closed')&&Math.abs(r.final.lidDeg)<.5&&r.peaks.penetrationMm<.05&&r.peaks.hingeDriftMm<.03",
+      "pass": true
+    },
+    {
+      "id": "parameter_validation",
+      "pass": true
+    },
+    {
+      "id": "stop_spam_reset",
+      "pass": true,
+      "holdDeltaDeg": 0.36378721319618634,
+      "resetFinite": true
+    }
+  ],
+  "convergence": {
+    "halfDt": {
+      "arrivalDifferenceS": 0.0015625000016177282,
+      "arrivalAngleDifferenceDeg": 0.0010136562540878913,
+      "finalDifferenceDeg": 0.000001656261175985384,
+      "peakTorqueDifferenceNm": 0.000013870676531168788,
+      "maxPenetrationMm": 0.001118440181016922,
+      "maxHingeDriftMm": 0.0015925818178418078
+    },
+    "moreIterations": {
+      "arrivalDifferenceS": 0,
+      "arrivalAngleDifferenceDeg": 0.001265631998606409,
+      "finalDifferenceDeg": 0.0000015159951439510925,
+      "peakTorqueDifferenceNm": 0.000003169334715418491,
+      "maxPenetrationMm": 0.0011127181351184845,
+      "maxHingeDriftMm": 0.0015925818178418078
+    }
+  },
+  "activeConvergence": {
+    "halfDt": {
+      "arrivalDifferenceS": 0.0015625000016177282,
+      "arrivalAngleDifferenceDeg": 0.0013321269601362928,
+      "finalDifferenceDeg": 0.0000010557561318922128,
+      "peakTorqueDifferenceNm": 0.000013987130071544708,
+      "maxPenetrationMm": 0.0008423756808042526,
+      "maxHingeDriftMm": 0.001740636067347294
+    },
+    "moreIterations": {
+      "arrivalDifferenceS": 0,
+      "arrivalAngleDifferenceDeg": 0.001170828469838625,
+      "finalDifferenceDeg": 0.000004449935184511122,
+      "peakTorqueDifferenceNm": 0.0000038063689680734036,
+      "maxPenetrationMm": 0.000841362401843071,
+      "maxHingeDriftMm": 0.001740636067347294
+    }
+  },
+  "contactComparison": {
+    "arrivalDifferenceS": 0,
+    "arrivalAngleDifferenceDeg": 0.1106526166412749,
+    "finalDifferenceDeg": 0.000006733994127604649,
+    "peakTorqueDifferenceNm": 3.484676728785635e-7,
+    "maxPenetrationMm": 0.0011110492050647736,
+    "maxHingeDriftMm": 0.001740636067347294
+  },
+  "pass": true,
+  "limitations": [
+    "Single representative horn contact point / two cup faces; optional CAD strips cover only selected straight arm/pocket faces. Full CAD fit and interference not verified by this simulation",
+    "Bearing resistance is passive viscous damping; static bearing stiction is not modeled",
+    "Servo case, cassette, lid attachment, journal and closed stop are ideal constraints. Retention strength/detachment not evaluated",
+    "Solid PLA mass estimate; printed friction / COM / motor dynamics need physical measurements",
+    "No rigid simulation can verify flex, creep, fatigue, heat, wear or fracture"
+  ]
+}
