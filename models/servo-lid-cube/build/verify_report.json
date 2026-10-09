@@ -1,0 +1,1262 @@
+{
+ "calibration": {
+  "must_hit_link_plus1mm_vs_lid": {
+   "hits": 627,
+   "depth": 0.7
+  },
+  "must_not_hit_clip_vs_lid": {
+   "hits": 0,
+   "depth": 0.0
+  },
+  "clearance_crank_vs_box_design_0.3": 0.296,
+  "ok": true
+ },
+ "motion": [
+  {
+   "theta": 0.0,
+   "alpha": 222.6,
+   "hits": [],
+   "contacts": [
+    "lid-box 面で接触（深さ 0.0）"
+   ]
+  },
+  {
+   "theta": 2.5,
+   "alpha": 220.94,
+   "hits": []
+  },
+  {
+   "theta": 5.0,
+   "alpha": 219.17,
+   "hits": []
+  },
+  {
+   "theta": 7.5,
+   "alpha": 217.3,
+   "hits": []
+  },
+  {
+   "theta": 10.0,
+   "alpha": 215.36,
+   "hits": []
+  },
+  {
+   "theta": 12.5,
+   "alpha": 213.34,
+   "hits": []
+  },
+  {
+   "theta": 15.0,
+   "alpha": 211.28,
+   "hits": []
+  },
+  {
+   "theta": 17.5,
+   "alpha": 209.17,
+   "hits": []
+  },
+  {
+   "theta": 20.0,
+   "alpha": 207.03,
+   "hits": []
+  },
+  {
+   "theta": 22.5,
+   "alpha": 204.88,
+   "hits": []
+  },
+  {
+   "theta": 25.0,
+   "alpha": 202.72,
+   "hits": []
+  },
+  {
+   "theta": 27.5,
+   "alpha": 200.56,
+   "hits": []
+  },
+  {
+   "theta": 30.0,
+   "alpha": 198.41,
+   "hits": []
+  },
+  {
+   "theta": 32.5,
+   "alpha": 196.29,
+   "hits": []
+  },
+  {
+   "theta": 35.0,
+   "alpha": 194.18,
+   "hits": []
+  },
+  {
+   "theta": 37.5,
+   "alpha": 192.11,
+   "hits": []
+  },
+  {
+   "theta": 40.0,
+   "alpha": 190.06,
+   "hits": []
+  },
+  {
+   "theta": 42.5,
+   "alpha": 188.05,
+   "hits": []
+  },
+  {
+   "theta": 45.0,
+   "alpha": 186.08,
+   "hits": []
+  },
+  {
+   "theta": 47.5,
+   "alpha": 184.14,
+   "hits": []
+  },
+  {
+   "theta": 50.0,
+   "alpha": 182.24,
+   "hits": []
+  },
+  {
+   "theta": 52.5,
+   "alpha": 180.38,
+   "hits": []
+  },
+  {
+   "theta": 55.0,
+   "alpha": 178.55,
+   "hits": []
+  },
+  {
+   "theta": 57.5,
+   "alpha": 176.76,
+   "hits": []
+  },
+  {
+   "theta": 60.0,
+   "alpha": 175.0,
+   "hits": []
+  },
+  {
+   "theta": 62.5,
+   "alpha": 173.28,
+   "hits": []
+  },
+  {
+   "theta": 65.0,
+   "alpha": 171.58,
+   "hits": []
+  },
+  {
+   "theta": 67.5,
+   "alpha": 169.91,
+   "hits": []
+  },
+  {
+   "theta": 70.0,
+   "alpha": 168.27,
+   "hits": []
+  },
+  {
+   "theta": 72.5,
+   "alpha": 166.65,
+   "hits": []
+  },
+  {
+   "theta": 75.0,
+   "alpha": 165.05,
+   "hits": []
+  },
+  {
+   "theta": 77.5,
+   "alpha": 163.47,
+   "hits": []
+  },
+  {
+   "theta": 80.0,
+   "alpha": 161.9,
+   "hits": []
+  },
+  {
+   "theta": 82.5,
+   "alpha": 160.34,
+   "hits": []
+  },
+  {
+   "theta": 85.0,
+   "alpha": 158.78,
+   "hits": []
+  },
+  {
+   "theta": 87.5,
+   "alpha": 157.22,
+   "hits": []
+  },
+  {
+   "theta": 90.0,
+   "alpha": 155.65,
+   "hits": []
+  },
+  {
+   "theta": 92.5,
+   "alpha": 154.08,
+   "hits": []
+  },
+  {
+   "theta": 95.0,
+   "alpha": 152.48,
+   "hits": []
+  }
+ ],
+ "motion_summary": {
+  "steps": 39,
+  "theta_max": 95.0,
+  "poses_with_hits": [],
+  "contacts": [
+   "lid-box 面で接触（深さ 0.0）"
+  ]
+ },
+ "motion_clearance_mm": {
+  "lid-box": {
+   "min": 0.0,
+   "at_theta": 0.0
+  },
+  "crank-box": {
+   "min": 0.296,
+   "at_theta": 0.0
+  },
+  "crank-ref_body": {
+   "min": 1.5,
+   "at_theta": 0.0
+  },
+  "link-box": {
+   "min": 5.616,
+   "at_theta": 0.0
+  },
+  "link-lid": {
+   "min": 0.147,
+   "at_theta": 0.0
+  },
+  "link-crank": {
+   "min": 0.144,
+   "at_theta": 15.0
+  },
+  "crank-lid": {
+   "min": 13.771,
+   "at_theta": 0.0
+  },
+  "horn-box": {
+   "min": 2.8,
+   "at_theta": 0.0
+  },
+  "link-ref_body": {
+   "min": 12.824,
+   "at_theta": 0.0
+  },
+  "lid-clip": {
+   "min": 24.817,
+   "at_theta": 0.0
+  }
+ },
+ "lid_free_open_limit_deg": 135,
+ "static_closed": {
+  "box-lid": {
+   "hits": 54,
+   "depth": 0.0
+  },
+  "box-pin": {
+   "hits": 670,
+   "depth": 0.05
+  }
+ },
+ "assembly": {
+  "A_hinge_pin_insert": {
+   "worst": {
+    "pin-box": {
+     "depth": 0.05,
+     "hits": 616,
+     "at": 15.0
+    }
+   },
+   "note": "先端の割り（直径 5.3）が左の止まり穴（直径 5.2）に締まるのは設計どおりの圧入"
+  },
+  "B_crank_onto_horn": {
+   "worst": {}
+  },
+  "C1_link_push_at_key": {
+   "worst": {}
+  },
+  "C2_link_turn_to_operating": {
+   "worst": {},
+   "from_deg": 75.0,
+   "to_deg": -125.0
+  },
+  "C3_bayonet_lock": {
+   "operating": [
+    {
+     "theta": 0.0,
+     "rel": -125.0,
+     "pulled_1mm_hits": 60,
+     "depth": 0.336
+    },
+    {
+     "theta": 47.5,
+     "rel": -102.3,
+     "pulled_1mm_hits": 61,
+     "depth": 0.325
+    },
+    {
+     "theta": 95.0,
+     "rel": -54.8,
+     "pulled_1mm_hits": 62,
+     "depth": 0.326
+    }
+   ],
+   "at_key_pulled_1mm": {
+    "hits": 0,
+    "depth": 0.0
+   }
+  },
+  "D_servo_unit_lower": {
+   "worst": {},
+   "crank_alpha": 184.1,
+   "note": "サーボを 90° にしてホーンを付けた状態（クランクは動作範囲の中央）。配線は 8mm の固い棒で近似"
+  },
+  "E_clip_press": {
+   "worst": {
+    "clip-box": {
+     "depth": 0.9,
+     "hits": 18,
+     "at": 4.0
+    }
+   },
+   "note": "爪が台の角を乗り越えるときの食い込み＝脚のたわみ量"
+  },
+  "F_lid_down_with_link_bent": {
+   "hits": {},
+   "bend_deg": 4.97,
+   "b_end_shift_mm": 3.4
+  },
+  "F_release_into_fin": {
+   "hits": {
+    "0.3": {
+     "hits": 138,
+     "depth": 0.04
+    },
+    "0.4": {
+     "hits": 135,
+     "depth": 0.06
+    },
+    "0.5": {
+     "hits": 116,
+     "depth": 0.033
+    },
+    "0.6": {
+     "hits": 42,
+     "depth": 0.004
+    }
+   },
+   "note": "途中で当たるのはピン B の面取りが耳の穴の縁に乗る区間。最後（1.0）が 0 なら入る"
+  },
+  "F_link_bend_strain_pct": 1.33
+ },
+ "mass": {
+  "lid": {
+   "volume_mm3": 20051.1,
+   "mass_g": 24.86,
+   "com_mm": [
+    0.18,
+    -1.13,
+    77.57
+   ],
+   "ixx_com_mm5": 10609071.934819208
+  },
+  "crank": {
+   "volume_mm3": 2561.2,
+   "mass_g": 3.18,
+   "com_mm": [
+    -3.09,
+    0.38,
+    38.2
+   ],
+   "ixx_com_mm5": 581508.8276921875
+  },
+  "link": {
+   "volume_mm3": 1654.4,
+   "mass_g": 2.05,
+   "com_mm": [
+    0.44,
+    -17.8,
+    44.03
+   ],
+   "ixx_com_mm5": 356288.2115682193
+  },
+  "box": {
+   "volume_mm3": 117443.9,
+   "mass_g": 145.63,
+   "com_mm": [
+    -5.37,
+    1.72,
+    29.03
+   ],
+   "ixx_com_mm5": 138411942.63020647
+  },
+  "clip": {
+   "volume_mm3": 1471.3,
+   "mass_g": 1.82,
+   "com_mm": [
+    -24.75,
+    8.0,
+    43.49
+   ],
+   "ixx_com_mm5": 452645.2684637272
+  },
+  "pin": {
+   "volume_mm3": 1379.4,
+   "mass_g": 1.71,
+   "com_mm": [
+    2.46,
+    -35.0,
+    75.12
+   ],
+   "ixx_com_mm5": 4193.4477306547815
+  }
+ },
+ "overhang_calibration": {
+  "floating_plate": [
+   {
+    "area_mm2": 400.0,
+    "z": [
+     10.0,
+     10.0
+    ],
+    "bbox": [
+     [
+      6.7,
+      6.7,
+      10.0
+     ],
+     [
+      13.3,
+      13.3,
+      10.0
+     ]
+    ],
+    "horizontal": true,
+    "supported_edge_ratio": 0.0,
+    "span_mm": 6.67
+   }
+  ],
+  "bridge": [
+   {
+    "area_mm2": 120.0,
+    "z": [
+     10.0,
+     10.0
+    ],
+    "bbox": [
+     [
+      8.0,
+      3.3,
+      10.0
+     ],
+     [
+      12.0,
+      6.7,
+      10.0
+     ]
+    ],
+    "horizontal": true,
+    "supported_edge_ratio": 0.5,
+    "span_mm": 4.0
+   }
+  ],
+  "ok": true
+ },
+ "overhang": {
+  "box": [
+   {
+    "area_mm2": 58.67,
+    "z": [
+     76.84,
+     78.1
+    ],
+    "bbox": [
+     [
+      -30.7,
+      -36.8,
+      76.9
+     ],
+     [
+      -25.3,
+      -33.6,
+      78.1
+     ]
+    ],
+    "horizontal": false,
+    "supported_edge_ratio": 0.56,
+    "span_mm": 5.33
+   },
+   {
+    "area_mm2": 35.5,
+    "z": [
+     77.06,
+     78.3
+    ],
+    "bbox": [
+     [
+      25.7,
+      -35.2,
+      77.5
+     ],
+     [
+      31.3,
+      -33.6,
+      78.3
+     ]
+    ],
+    "horizontal": false,
+    "supported_edge_ratio": 0.19,
+    "span_mm": 5.67
+   },
+   {
+    "area_mm2": 23.18,
+    "z": [
+     4.0,
+     4.0
+    ],
+    "bbox": [
+     [
+      -33.1,
+      -38.9,
+      4.0
+     ],
+     [
+      -29.6,
+      -38.0,
+      4.0
+     ]
+    ],
+    "horizontal": true,
+    "supported_edge_ratio": 0.33,
+    "span_mm": 3.45
+   },
+   {
+    "area_mm2": 10.65,
+    "z": [
+     30.1,
+     30.1
+    ],
+    "bbox": [
+     [
+      -26.9,
+      -10.2,
+      30.1
+     ],
+     [
+      -23.6,
+      -9.7,
+      30.1
+     ]
+    ],
+    "horizontal": true,
+    "supported_edge_ratio": 0.6,
+    "span_mm": 3.31
+   },
+   {
+    "area_mm2": 10.65,
+    "z": [
+     30.1,
+     30.1
+    ],
+    "bbox": [
+     [
+      -25.9,
+      25.7,
+      30.1
+     ],
+     [
+      -22.6,
+      26.2,
+      30.1
+     ]
+    ],
+    "horizontal": true,
+    "supported_edge_ratio": 0.6,
+    "span_mm": 3.31
+   },
+   {
+    "area_mm2": 9.74,
+    "z": [
+     76.98,
+     77.8
+    ],
+    "bbox": [
+     [
+      37.7,
+      -36.9,
+      77.0
+     ],
+     [
+      39.1,
+      -33.1,
+      77.8
+     ]
+    ],
+    "horizontal": false,
+    "supported_edge_ratio": 0.17,
+    "span_mm": 3.87
+   },
+   {
+    "area_mm2": 3.66,
+    "z": [
+     76.98,
+     77.78
+    ],
+    "bbox": [
+     [
+      25.6,
+      -36.9,
+      77.1
+     ],
+     [
+      25.6,
+      -36.5,
+      77.4
+     ]
+    ],
+    "horizontal": false,
+    "supported_edge_ratio": 0.0,
+    "span_mm": 0.36
+   },
+   {
+    "area_mm2": 2.98,
+    "z": [
+     65.86,
+     71.43
+    ],
+    "bbox": [
+     [
+      -25.7,
+      -33.4,
+      69.5
+     ],
+     [
+      -25.7,
+      -33.4,
+      69.5
+     ]
+    ],
+    "horizontal": false,
+    "supported_edge_ratio": 0.67,
+    "span_mm": 0.0
+   },
+   {
+    "area_mm2": 2.98,
+    "z": [
+     71.18,
+     71.43
+    ],
+    "bbox": [
+     [
+      25.7,
+      -31.5,
+      71.3
+     ],
+     [
+      25.7,
+      -31.5,
+      71.3
+     ]
+    ],
+    "horizontal": false,
+    "supported_edge_ratio": 0.0,
+    "span_mm": 0.0
+   }
+  ],
+  "lid": [
+   {
+    "area_mm2": 144.98,
+    "z": [
+     0.0,
+     1.46
+    ],
+    "bbox": [
+     [
+      -11.7,
+      -38.2,
+      0.5
+     ],
+     [
+      11.7,
+      -37.8,
+      1.0
+     ]
+    ],
+    "horizontal": false,
+    "supported_edge_ratio": 0.0,
+    "span_mm": 23.33
+   },
+   {
+    "area_mm2": 52.27,
+    "z": [
+     8.13,
+     8.2
+    ],
+    "bbox": [
+     [
+      -6.5,
+      34.2,
+      8.2
+     ],
+     [
+      6.5,
+      35.5,
+      8.2
+     ]
+    ],
+    "horizontal": false,
+    "supported_edge_ratio": 0.11,
+    "span_mm": 13.07
+   },
+   {
+    "area_mm2": 25.17,
+    "z": [
+     0.0,
+     1.46
+    ],
+    "bbox": [
+     [
+      37.6,
+      9.0,
+      0.5
+     ],
+     [
+      38.2,
+      9.9,
+      1.2
+     ]
+    ],
+    "horizontal": false,
+    "supported_edge_ratio": 0.0,
+    "span_mm": 0.96
+   },
+   {
+    "area_mm2": 24.62,
+    "z": [
+     0.2,
+     0.65
+    ],
+    "bbox": [
+     [
+      -6.5,
+      37.1,
+      0.3
+     ],
+     [
+      6.5,
+      37.4,
+      0.6
+     ]
+    ],
+    "horizontal": false,
+    "supported_edge_ratio": 0.17,
+    "span_mm": 13.07
+   },
+   {
+    "area_mm2": 15.69,
+    "z": [
+     7.34,
+     7.63
+    ],
+    "bbox": [
+     [
+      -6.5,
+      33.4,
+      7.4
+     ],
+     [
+      6.5,
+      33.5,
+      7.5
+     ]
+    ],
+    "horizontal": false,
+    "supported_edge_ratio": 0.25,
+    "span_mm": 13.07
+   },
+   {
+    "area_mm2": 11.61,
+    "z": [
+     0.0,
+     1.15
+    ],
+    "bbox": [
+     [
+      -37.8,
+      9.0,
+      0.7
+     ],
+     [
+      -37.8,
+      9.0,
+      0.7
+     ]
+    ],
+    "horizontal": false,
+    "supported_edge_ratio": 0.0,
+    "span_mm": 0.0
+   },
+   {
+    "area_mm2": 10.98,
+    "z": [
+     7.04,
+     7.24
+    ],
+    "bbox": [
+     [
+      -6.5,
+      36.4,
+      7.1
+     ],
+     [
+      6.5,
+      36.6,
+      7.2
+     ]
+    ],
+    "horizontal": false,
+    "supported_edge_ratio": 0.17,
+    "span_mm": 13.07
+   },
+   {
+    "area_mm2": 10.21,
+    "z": [
+     7.43,
+     7.61
+    ],
+    "bbox": [
+     [
+      -6.5,
+      36.1,
+      7.4
+     ],
+     [
+      6.5,
+      36.2,
+      7.6
+     ]
+    ],
+    "horizontal": false,
+    "supported_edge_ratio": 0.17,
+    "span_mm": 13.07
+   },
+   {
+    "area_mm2": 8.66,
+    "z": [
+     7.96,
+     8.12
+    ],
+    "bbox": [
+     [
+      -6.5,
+      35.5,
+      8.0
+     ],
+     [
+      6.5,
+      35.6,
+      8.1
+     ]
+    ],
+    "horizontal": false,
+    "supported_edge_ratio": 0.25,
+    "span_mm": 13.07
+   },
+   {
+    "area_mm2": 8.35,
+    "z": [
+     7.64,
+     7.79
+    ],
+    "bbox": [
+     [
+      -6.5,
+      35.9,
+      7.7
+     ],
+     [
+      6.5,
+      35.9,
+      7.7
+     ]
+    ],
+    "horizontal": false,
+    "supported_edge_ratio": 0.25,
+    "span_mm": 13.07
+   },
+   {
+    "area_mm2": 7.1,
+    "z": [
+     19.62,
+     20.45
+    ],
+    "bbox": [
+     [
+      3.6,
+      18.8,
+      19.8
+     ],
+     [
+      4.6,
+      20.6,
+      20.5
+     ]
+    ],
+    "horizontal": false,
+    "supported_edge_ratio": 0.17,
+    "span_mm": 1.78
+   },
+   {
+    "area_mm2": 6.64,
+    "z": [
+     1.34,
+     1.46
+    ],
+    "bbox": [
+     [
+      -6.5,
+      38.3,
+      1.4
+     ],
+     [
+      6.5,
+      38.3,
+      1.4
+     ]
+    ],
+    "horizontal": false,
+    "supported_edge_ratio": 0.25,
+    "span_mm": 13.07
+   },
+   {
+    "area_mm2": 6.22,
+    "z": [
+     6.91,
+     7.02
+    ],
+    "bbox": [
+     [
+      -6.5,
+      32.9,
+      6.9
+     ],
+     [
+      6.5,
+      33.0,
+      7.0
+     ]
+    ],
+    "horizontal": false,
+    "supported_edge_ratio": 0.17,
+    "span_mm": 13.07
+   },
+   {
+    "area_mm2": 0.91,
+    "z": [
+     6.91,
+     6.93
+    ],
+    "bbox": [
+     [
+      -6.5,
+      36.7,
+      6.9
+     ],
+     [
+      6.5,
+      36.7,
+      6.9
+     ]
+    ],
+    "horizontal": false,
+    "supported_edge_ratio": 0.25,
+    "span_mm": 13.07
+   }
+  ],
+  "crank": [
+   {
+    "area_mm2": 237.79,
+    "z": [
+     1.6,
+     1.6
+    ],
+    "bbox": [
+     [
+      -14.3,
+      -6.4,
+      1.6
+     ],
+     [
+      7.4,
+      15.7,
+      1.6
+     ]
+    ],
+    "horizontal": true,
+    "supported_edge_ratio": 0.91,
+    "span_mm": 22.04
+   },
+   {
+    "area_mm2": 18.0,
+    "z": [
+     0.3,
+     0.3
+    ],
+    "bbox": [
+     [
+      -14.8,
+      -10.7,
+      0.3
+     ],
+     [
+      10.0,
+      15.9,
+      0.3
+     ]
+    ],
+    "horizontal": true,
+    "supported_edge_ratio": 0.79,
+    "span_mm": 26.58
+   },
+   {
+    "area_mm2": 4.57,
+    "z": [
+     8.7,
+     10.4
+    ],
+    "bbox": [
+     [
+      11.7,
+      -18.4,
+      9.3
+     ],
+     [
+      12.7,
+      -17.4,
+      9.8
+     ]
+    ],
+    "horizontal": false,
+    "supported_edge_ratio": 0.55,
+    "span_mm": 1.07
+   }
+  ],
+  "link": [
+   {
+    "area_mm2": 0.0,
+    "z": [
+     4.0,
+     4.0
+    ],
+    "bbox": [
+     [
+      -20.4,
+      -5.6,
+      4.0
+     ],
+     [
+      -20.2,
+      -5.5,
+      4.0
+     ]
+    ],
+    "horizontal": true,
+    "supported_edge_ratio": 1.0,
+    "span_mm": 0.23
+   },
+   {
+    "area_mm2": 0.0,
+    "z": [
+     4.0,
+     4.0
+    ],
+    "bbox": [
+     [
+      -18.1,
+      -1.4,
+      4.0
+     ],
+     [
+      -18.1,
+      -1.4,
+      4.0
+     ]
+    ],
+    "horizontal": true,
+    "supported_edge_ratio": 1.0,
+    "span_mm": 0.0
+   },
+   {
+    "area_mm2": 0.0,
+    "z": [
+     4.0,
+     4.0
+    ],
+    "bbox": [
+     [
+      -17.8,
+      -1.7,
+      4.0
+     ],
+     [
+      -17.8,
+      -1.7,
+      4.0
+     ]
+    ],
+    "horizontal": true,
+    "supported_edge_ratio": 1.0,
+    "span_mm": 0.0
+   },
+   {
+    "area_mm2": 0.0,
+    "z": [
+     4.0,
+     4.0
+    ],
+    "bbox": [
+     [
+      -20.8,
+      -0.8,
+      4.0
+     ],
+     [
+      -20.8,
+      -0.8,
+      4.0
+     ]
+    ],
+    "horizontal": true,
+    "supported_edge_ratio": 1.0,
+    "span_mm": 0.0
+   },
+   {
+    "area_mm2": 0.0,
+    "z": [
+     4.0,
+     4.0
+    ],
+    "bbox": [
+     [
+      -21.3,
+      -1.1,
+      4.0
+     ],
+     [
+      -21.3,
+      -1.1,
+      4.0
+     ]
+    ],
+    "horizontal": true,
+    "supported_edge_ratio": 1.0,
+    "span_mm": 0.0
+   },
+   {
+    "area_mm2": 0.0,
+    "z": [
+     4.0,
+     4.0
+    ],
+    "bbox": [
+     [
+      -22.0,
+      -1.7,
+      4.0
+     ],
+     [
+      -22.0,
+      -1.7,
+      4.0
+     ]
+    ],
+    "horizontal": true,
+    "supported_edge_ratio": 1.0,
+    "span_mm": 0.0
+   },
+   {
+    "area_mm2": 0.0,
+    "z": [
+     4.0,
+     4.0
+    ],
+    "bbox": [
+     [
+      -21.3,
+      -5.1,
+      4.0
+     ],
+     [
+      -21.3,
+      -5.1,
+      4.0
+     ]
+    ],
+    "horizontal": true,
+    "supported_edge_ratio": 1.0,
+    "span_mm": 0.0
+   },
+   {
+    "area_mm2": 0.0,
+    "z": [
+     4.0,
+     4.0
+    ],
+    "bbox": [
+     [
+      -22.1,
+      -4.4,
+      4.0
+     ],
+     [
+      -22.0,
+      -4.2,
+      4.0
+     ]
+    ],
+    "horizontal": true,
+    "supported_edge_ratio": 1.0,
+    "span_mm": 0.22
+   },
+   {
+    "area_mm2": 0.0,
+    "z": [
+     4.0,
+     4.0
+    ],
+    "bbox": [
+     [
+      -18.0,
+      -4.8,
+      4.0
+     ],
+     [
+      -18.0,
+      -4.8,
+      4.0
+     ]
+    ],
+    "horizontal": true,
+    "supported_edge_ratio": 1.0,
+    "span_mm": 0.0
+   }
+  ],
+  "pin": [],
+  "clip": []
+ },
+ "elapsed_s": 11.7
+}

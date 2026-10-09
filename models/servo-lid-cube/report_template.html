@@ -1,0 +1,602 @@
+<title>SG92R 開閉キューブ</title>
+<style>
+:root {
+  /* layout: 46rem の本文列。3D と図だけ列幅いっぱい。地はハウスの紙色 */
+  --paper:#f5efe2; --card:#ece4d4; --ink:#2b2723; --mute:#6a6257; --line:#d8cdb8;
+  --accent:#b85042; --accent-strong:#a8493c; --accent-2:#5f7d70; --accent-2-strong:#526c61;
+  --s1:#0072B2; --s2:#D55E00;
+  --serif:"Shippori Mincho","Yu Mincho","YuMincho","Hiragino Mincho ProN","MS PMincho",serif;
+  --gothic:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic UI","Yu Gothic",Meiryo,system-ui,sans-serif;
+  --mono:ui-monospace,"Cascadia Code",Consolas,"Courier New",monospace;
+  --fs-xs:.75rem; --fs-sm:.875rem; --fs-base:1rem; --fs-md:1.125rem; --fs-lg:1.375rem; --fs-xl:1.875rem;
+  --sp-1:.25rem; --sp-2:.5rem; --sp-3:.75rem; --sp-4:1rem; --sp-6:1.5rem; --sp-8:2rem; --sp-12:3rem; --sp-16:4rem;
+  --measure:46rem;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper:#191512; --card:#221d18; --ink:#ede6d6; --mute:#a99e90; --line:#3a332b;
+    --accent:#e0663a; --accent-strong:#e87d55; --accent-2:#8fae9f; --accent-2-strong:#a3bfb1;
+    --s1:#3B8FC4; --s2:#D2692B; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper:#191512; --card:#221d18; --ink:#ede6d6; --mute:#a99e90; --line:#3a332b;
+  --accent:#e0663a; --accent-strong:#e87d55; --accent-2:#8fae9f; --accent-2-strong:#a3bfb1;
+  --s1:#3B8FC4; --s2:#D2692B; color-scheme:dark;
+}
+* { box-sizing:border-box; }
+[hidden] { display:none !important; }
+html { background:var(--paper); -webkit-text-size-adjust:100%; }
+body { margin:0; color:var(--ink); background:var(--paper); font-family:var(--gothic); font-size:var(--fs-base);
+  line-height:1.8; font-feature-settings:"palt" 1; }
+.wrap { max-width:var(--measure); margin:0 auto; padding-block:var(--sp-12) var(--sp-16); padding-inline:var(--sp-4); }
+h1,h2,h3 { font-family:var(--serif); font-weight:600; line-height:1.35; text-wrap:balance; }
+h1 { font-size:var(--fs-xl); margin:0 0 var(--sp-2); }
+h2 { font-size:var(--fs-lg); margin:var(--sp-12) 0 var(--sp-4); padding-top:var(--sp-3); border-top:2px solid var(--ink); }
+h3 { font-size:var(--fs-md); margin:var(--sp-8) 0 var(--sp-2); font-family:var(--gothic); font-weight:700; }
+p { margin:var(--sp-2) 0; }
+ul,ol { margin:var(--sp-2) 0 var(--sp-4); padding-left:1.4em; }
+li { margin:var(--sp-1) 0; }
+a { color:var(--accent-strong); text-underline-offset:.18em; }
+strong { font-weight:700; }
+em { font-style:normal; font-weight:700; color:var(--accent-strong); }
+.eyebrow { font-size:var(--fs-xs); letter-spacing:.12em; color:var(--accent-strong); margin:0 0 var(--sp-2); }
+.sub { color:var(--mute); font-size:var(--fs-sm); margin:0 0 var(--sp-8); }
+.lead { background:var(--card); border-left:4px solid var(--accent); padding:var(--sp-4); margin:var(--sp-6) 0; }
+.lead > :first-child { margin-top:0; } .lead > :last-child { margin-bottom:0; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:1px; background:var(--line);
+  border:1px solid var(--line); margin:var(--sp-6) 0; }
+.card { background:var(--card); padding:var(--sp-3) var(--sp-4); min-width:0; }
+.card b { display:block; font-family:var(--mono); font-size:var(--fs-lg); font-variant-numeric:tabular-nums; }
+.card span { font-size:var(--fs-sm); color:var(--mute); display:block; line-height:1.5; }
+.chip { display:inline-block; font-size:var(--fs-xs); line-height:1.5; padding:.05em .55em; background:var(--card);
+  color:var(--ink); border:1px solid var(--line); white-space:nowrap; }
+.chip.ok { border-color:var(--accent-2); color:var(--accent-2-strong); }
+.tblwrap { overflow-x:auto; margin:var(--sp-4) 0 var(--sp-6); }
+table { border-collapse:collapse; width:100%; font-size:var(--fs-sm); line-height:1.5; }
+th,td { border:1px solid var(--line); padding:.45em .7em; text-align:left; vertical-align:top; }
+th { background:var(--card); font-weight:700; white-space:nowrap; }
+td.num { font-family:var(--mono); font-variant-numeric:tabular-nums; white-space:nowrap; }
+figure { margin:var(--sp-6) 0; }
+figure img, figure svg { max-width:100%; height:auto; display:block; }
+figcaption { font-size:var(--fs-sm); color:var(--mute); margin-top:var(--sp-2); }
+code { font-family:var(--mono); font-size:.92em; background:var(--card); padding:.1em .35em; }
+.muted { color:var(--mute); }
+.note { font-size:var(--fs-sm); color:var(--mute); border-top:1px solid var(--line); margin-top:var(--sp-12); padding-top:var(--sp-4); }
+.note code { white-space:nowrap; }
+
+/* --- 3D --- */
+.viewer { border:1px solid var(--line); background:var(--card); margin:var(--sp-6) 0; }
+.tabs { display:flex; border-bottom:1px solid var(--line); }
+.tabs button { flex:1; font:inherit; font-size:var(--fs-sm); padding:var(--sp-2) var(--sp-3); background:transparent;
+  color:var(--mute); border:0; border-bottom:3px solid transparent; cursor:pointer; }
+.tabs button[aria-selected="true"] { color:var(--ink); border-bottom-color:var(--accent); font-weight:700; }
+.tabs button:focus-visible, .ctl button:focus-visible, .ctl input:focus-visible { outline:2px solid var(--accent-strong); outline-offset:2px; }
+.stage { position:relative; aspect-ratio:4/3; max-height:34rem; width:100%; touch-action:none; }
+.stage canvas { width:100%; height:100%; display:block; cursor:grab; }
+.stage .fallback { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; padding:var(--sp-4);
+  color:var(--mute); font-size:var(--fs-sm); text-align:center; }
+.legend { display:flex; flex-wrap:wrap; gap:var(--sp-1) var(--sp-3); padding:var(--sp-2) var(--sp-3); border-top:1px solid var(--line);
+  font-size:var(--fs-xs); color:var(--mute); }
+.legend label { display:inline-flex; align-items:center; gap:.35em; cursor:pointer; }
+.legend i { width:.8em; height:.8em; display:inline-block; }
+.ctl { padding:var(--sp-3); border-top:1px solid var(--line); display:grid; gap:var(--sp-2); font-size:var(--fs-sm); }
+.row { display:flex; flex-wrap:wrap; align-items:center; gap:var(--sp-2) var(--sp-3); }
+.ctl button { font:inherit; font-size:var(--fs-sm); padding:.2em .8em; background:var(--paper); color:var(--ink);
+  border:1px solid var(--ink); cursor:pointer; }
+.ctl button:disabled { color:var(--mute); border-color:var(--line); cursor:default; }
+.ctl input[type=range] { flex:1; min-width:10rem; accent-color:var(--accent); }
+.read { display:grid; grid-template-columns:repeat(auto-fit,minmax(8.5rem,1fr)); gap:var(--sp-1) var(--sp-3);
+  font-size:var(--fs-xs); color:var(--mute); }
+.read b { display:block; color:var(--ink); font-family:var(--mono); font-size:var(--fs-sm); font-weight:700; font-variant-numeric:tabular-nums; }
+.steps { list-style:none; padding:0; margin:0; display:grid; gap:1px; background:var(--line); border:1px solid var(--line); }
+.steps li { margin:0; background:var(--paper); padding:.3em .6em; font-size:var(--fs-xs); line-height:1.5; cursor:pointer;
+  display:flex; gap:.6em; }
+.steps li .n { font-family:var(--mono); color:var(--mute); }
+.steps li[aria-current="step"] { background:var(--card); font-weight:700; }
+.steps li[aria-current="step"] .n { color:var(--accent-strong); }
+.stepbox { background:var(--paper); border:1px solid var(--line); padding:var(--sp-2) var(--sp-3); }
+.stepbox p { margin:0; }
+.stepbox .res { color:var(--mute); font-size:var(--fs-xs); margin-top:var(--sp-1); }
+
+/* --- charts --- */
+.chart { position:relative; }
+.chart svg text { fill:var(--mute); font-size:11px; font-family:var(--gothic); }
+.chart svg .lab { fill:var(--ink); font-size:12px; }
+.chart .tip { position:absolute; pointer-events:none; background:var(--paper); border:1px solid var(--line); padding:.2em .5em;
+  font-size:var(--fs-xs); line-height:1.5; white-space:nowrap; font-variant-numeric:tabular-nums; }
+@media (max-width:30rem) {
+  .wrap { padding-block:var(--sp-8) var(--sp-12); }
+  h1 { font-size:var(--fs-lg); } h2 { font-size:var(--fs-md); margin-top:var(--sp-8); }
+}
+@media (prefers-reduced-motion: reduce) { * { animation-duration:.01ms !important; transition-duration:.01ms !important; } }
+</style>
+
+<div class="wrap">
+  <p class="eyebrow">MODEL-LAB · SERVO-LID-CUBE</p>
+  <h1>SG92R で天面が開く 80mm 立方体</h1>
+  <p class="sub">設計と検証の記録 ／ 2026-10-09 ／ 印刷部品 6 点・サポートなし</p>
+
+  <div class="lead">
+    <p>一辺 80mm の立方体の天面を、SG92R 1 個で 0〜95° 開閉します。サーボの腕から 4 節リンクで蓋を押し上げます。印刷部品は 6 点で、ねじ・結束バンド・接着剤は使いません。</p>
+    <p>動き・組み立て・印刷の 3 つを数で検証しました。動作範囲の全角度で部品は当たりません。組み立ての 9 工程で当たるのは、設計した圧入とスナップだけです。サポートを使わずにスライスでき、外から見える面に浮いた壁はありません。実物の印刷と駆動はまだ行っていません。</p>
+  </div>
+
+  <div class="grid" id="kpis"></div>
+
+  <div class="viewer" id="viewer">
+    <div class="tabs" role="tablist">
+      <button role="tab" id="tab-motion" aria-selected="true" aria-controls="ctl-motion">動き</button>
+      <button role="tab" id="tab-asm" aria-selected="false" aria-controls="ctl-asm">組み立て</button>
+    </div>
+    <div class="stage" id="stage"><canvas id="gl" aria-label="立方体の 3D 表示。ドラッグで回転、ホイールかピンチで拡大"></canvas>
+      <div class="fallback" id="nogl" hidden>この環境では 3D を表示できません（WebGL2 が使えません）。下の表と図に同じ結果があります。</div></div>
+    <div class="legend" id="legend"></div>
+    <div class="ctl" id="ctl-motion" role="tabpanel" aria-labelledby="tab-motion">
+      <div class="row">
+        <label for="theta">蓋の角度</label>
+        <input type="range" id="theta" min="0" max="95" step="0.5" value="47.5">
+        <button id="play">開閉を再生</button>
+      </div>
+      <div class="row">
+        <label><input type="checkbox" id="cut" checked> 箱の右半分を隠す</label>
+      </div>
+      <div class="read" id="readout"></div>
+    </div>
+    <div class="ctl" id="ctl-asm" role="tabpanel" aria-labelledby="tab-asm" hidden>
+      <div class="row">
+        <button id="prev">前へ</button><button id="aplay">この工程を再生</button><button id="next">次へ</button>
+        <label><input type="checkbox" id="cut2" checked> 箱の右半分を隠す</label>
+      </div>
+      <div class="stepbox" id="stepbox"></div>
+      <ol class="steps" id="steps"></ol>
+    </div>
+  </div>
+  <p class="muted" style="font-size:var(--fs-sm)">ドラッグで回転、ホイールかピンチで拡大します。色は部品の区別です。サーボと付属ホーンは買う部品で、印刷しません。</p>
+
+  <h2>要件と結果</h2>
+  <div class="tblwrap"><table>
+    <thead><tr><th>要件</th><th>形で満たしたこと</th><th>確かめ方と結果</th></tr></thead>
+    <tbody>
+      <tr><td>一辺 10cm 以下の立方体に見える</td><td>80 × 80 × 80mm。全部の稜を丸み 5mm でそろえた。後ろ上の稜が蝶番の筒を兼ねる。蝶番ピンの端は角の球面と同じ形で面一</td><td>外形 80.0 × 80.0 × 80.0mm（閉じた状態の外接箱）</td></tr>
+      <tr><td>① きれいに刷れる</td><td>全部品をサポートなしで刷れる向きにした。蓋は天面を下、箱は口を上。刷る面に触れる稜は 45° に逃がした。横穴は天井を平らに切った涙形</td><td>メッシュの下向き面判定と、Bambu Studio のスライス（PLA・PETG）。<span class="chip ok">サポート使用なし</span> 浮いた壁は内側の 4 か所の短い橋渡しだけ</td></tr>
+      <tr><td>② SG92R の正確な寸法</td><td><code>models/sg92r-photo</code>（確定版）の寸法をそのまま読み込む。本体・ホーン・配線の STL を置いて当たりを判定した</td><td>本体と台の隙間 片側 0.35mm。ホーンとクランクの隙間 片側 0.15mm</td></tr>
+      <tr><td>③ 印刷部品だけで組む</td><td>サーボはクリップで押さえる。ホーンはクランクのポケットで受け、クランクは箱の受けで抜けを止める。ピンは割りの圧入・バヨネット・スナップで止める</td><td>組み立て 9 工程の干渉判定。工具とねじは要らない</td></tr>
+      <tr><td>④ 実物の印刷で揺れない</td><td>壁・底・蓋は 3mm。背の高い細い形を作らない。ピンとクリップは寝かせて刷る</td><td>最も細い板は蓋の縁の 1.6 × 3mm と柵の 1.6 × 6mm で、どちらも背が低い</td></tr>
+      <tr><td>⑤ 開閉と組み立てが成り立つ</td><td>停動トルクの 5.5% で開く 4 節リンク。伝達角は最小 42.4°</td><td>運動方程式のシミュレーションと、0〜95° の 39 姿勢の干渉判定。下の 2 節</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>物理の検証</h2>
+  <p>蓋・リンク・クランク・ホーンの質量と慣性を STL から求め、サーボ角を一般化座標とする 1 自由度の運動方程式を解きました。サーボはトルク上限つきの位置制御として扱います。出せるトルクは回る速さに比例して減ります。蓋が縁に当たるところは硬いばねと減衰です。質量は中実 PLA で見積もったので、必要トルクは上限側の値です。</p>
+  <h3>蓋を支えるのに要るトルク</h3>
+  <figure class="chart" id="chart-torque"></figure>
+  <p id="torque-text"></p>
+  <h3>開閉の時間</h3>
+  <figure class="chart" id="chart-sim"></figure>
+  <p id="sim-text"></p>
+  <div class="tblwrap"><table id="sim-table"></table></div>
+  <p class="muted" style="font-size:var(--fs-sm)" id="calib-text"></p>
+
+  <h2>組み立ての検証と手順</h2>
+  <p>部品を工程どおりの経路で動かし、各位置で面の交差と食い込みの深さを測りました。判定の前に、0.3mm の隙間を 1mm 詰めると当たること、離れた部品では当たらないこと、0.3mm の隙間が 0.30mm と測れることを確かめています。上の 3D の「組み立て」タブで同じ工程を再生できます。</p>
+  <div class="tblwrap"><table id="asm-table"></table></div>
+  <h3>サーボの角度を決める</h3>
+  <ol>
+    <li>工程 3 でホーンを付けるときは、サーボを 90° にしておきます。長い腕を配線の出る側へ向け、本体に沿わせて押し込みます。歯の刻みで ±9° ずれますが、下の手順で吸収します。</li>
+    <li>組み終わったら、90° から閉じる側へ 1° ずつ動かします。蓋が縁に載った角度を「閉」とします。</li>
+    <li>「閉」から開く側へ 70° 動かした角度が「開」（95°）です。</li>
+    <li>動かすときは 0.8 秒かけ、始めと終わりをゆっくりにします。全速で閉じると蓋が縁に強く当たります。</li>
+    <li>「閉」より先へ押し込まないでください。蓋が止まったままサーボが力を出し続けます。</li>
+  </ol>
+
+  <h2>印刷</h2>
+  <p>Bambu Studio 同梱の標準設定（X1C 0.4mm ノズル・0.20mm Standard・壁 2 周・充填 20%）で、サポートは OFF のままスライスしました。6 部品は 1 枚のプレートに載ります。</p>
+  <div class="tblwrap"><table id="print-table"></table></div>
+  <p id="print-text"></p>
+  <figure id="plate-fig"></figure>
+  <p>最初にクランク（約 15 分）を刷り、付属ホーンがポケットに入るかを確かめてください。ホーンの腕の幅と先の形は写真から読んだ値です。入らなければ <code>params.py</code> の <code>HORN_CLR</code> を 0.05mm ずつ広げて刷り直します。</p>
+
+  <h2>設計の判断</h2>
+  <h3>サーボを蝶番に直結しなかった理由</h3>
+  <p>サーボの軸を蝶番の軸に重ねると、軸のまわりに本体の角が半径 8.9mm、取付耳の角が半径 12.5mm で張り出します。蓋がこの範囲を掃かないようにするには、後ろ上の稜の丸みを 13〜16mm まで大きくする必要があります。そうすると立方体に見えなくなるので、サーボを箱の中ほどに寝かせ、4 節リンクで蓋を押し上げる形にしました。</p>
+  <h3>リンクの寸法</h3>
+  <div class="tblwrap"><table id="link-table"></table></div>
+  <p>リンクと蓋とクランクは X 方向に別の層を動くので、互いの掃く範囲は重なりません。クランクはホーンの上に載り、その上にリンク、さらに上に蓋の耳とクランク軸の受けが並びます。</p>
+  <figure class="chart" id="chart-linkage"></figure>
+
+  <h2>まだ確かめていないこと</h2>
+  <ul>
+    <li>実物の印刷と駆動。すべて形状と計算での検証です。</li>
+    <li>ホーンの腕の幅と先の形は写真から読んだ推定値です。クランクを先に刷って確かめます。</li>
+    <li>ピン A・B（直径 5.0mm）と穴（直径 5.3mm）、蝶番ピンの先（直径 5.3mm）と止まり穴（直径 5.2mm）の嵌まり具合は、印刷機の癖で変わります。</li>
+    <li>指令を増やしたときにサーボがどちらへ回るかは確かめていません。角度は上の手順で決めます。</li>
+    <li>配線は長さ 8mm の固い棒として当たりを見ました。実物の線は曲がるものとして扱っています。</li>
+    <li>サーボのギアの摩擦（0.004 N·m）とモーターの慣性は推定値です。</li>
+  </ul>
+
+  <p class="note">ソース: <code>models/servo-lid-cube/</code>（<code>params.py</code> <code>linkage.py</code> <code>model.py</code> <code>verify.py</code> <code>simulate.py</code> <code>slice_check.py</code>）。刷る STL: <code>exports/servo-lid-cube-{box,lid,crank,link,pin,clip}.stl</code>。プレート: <code>exports/servo-lid-cube-plate.3mf</code>。検証の生データ: <code>models/servo-lid-cube/build/*_report.json</code>。ビューワー: <code>http://localhost:3000/?model=servo-lid-cube</code></p>
+</div>
+
+<script>/*CUBE_DATA*/</script>
+<script>
+(function () {
+"use strict";
+const D = window.CUBE;
+const K = D.kin;
+const $ = (id) => document.getElementById(id);
+const css = (n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const R = Math.PI / 180;
+const fmt = (v, d) => Number(v).toFixed(d);
+
+/* ---------- 運動学 ---------- */
+function alphaOf(th) {
+  const t = K.table;
+  if (th <= t[0][0]) return t[0][1];
+  for (let i = 1; i < t.length; i++) {
+    if (th <= t[i][0]) { const f = (th - t[i - 1][0]) / (t[i][0] - t[i - 1][0]); return t[i - 1][1] + f * (t[i][1] - t[i - 1][1]); }
+  }
+  return t[t.length - 1][1];
+}
+const pinA = (al) => [K.O[0] + K.a * Math.cos(al * R), K.O[1] + K.a * Math.sin(al * R)];
+function pinB(th) {
+  const dy = K.B0[0] - K.H[0], dz = K.B0[1] - K.H[1], c = Math.cos(th * R), s = Math.sin(th * R);
+  return [K.H[0] + dy * c - dz * s, K.H[1] + dy * s + dz * c];
+}
+const linkAng = (al, th) => { const a = pinA(al), b = pinB(th); return Math.atan2(b[1] - a[1], b[0] - a[0]) / R; };
+const LAM0 = linkAng(K.alpha0, 0);
+
+/* ---------- 行列（列優先） ---------- */
+const I4 = () => new Float32Array([1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1]);
+function mul(a, b) {
+  const o = new Float32Array(16);
+  for (let c = 0; c < 4; c++) for (let r = 0; r < 4; r++) {
+    let s = 0; for (let k = 0; k < 4; k++) s += a[k * 4 + r] * b[c * 4 + k]; o[c * 4 + r] = s;
+  }
+  return o;
+}
+const T = (x, y, z) => { const m = I4(); m[12] = x; m[13] = y; m[14] = z; return m; };
+function RX(deg, cy, cz) {
+  const c = Math.cos(deg * R), s = Math.sin(deg * R);
+  const r = new Float32Array([1,0,0,0, 0,c,s,0, 0,-s,c,0, 0,0,0,1]);
+  return mul(T(0, cy, cz), mul(r, T(0, -cy, -cz)));
+}
+function RA(ax, deg, p) {          // 任意軸（単位ベクトル）まわり、点 p を通る
+  const c = Math.cos(deg * R), s = Math.sin(deg * R), t = 1 - c, [x, y, z] = ax;
+  const r = new Float32Array([t*x*x+c, t*x*y+s*z, t*x*z-s*y, 0,  t*x*y-s*z, t*y*y+c, t*y*z+s*x, 0,
+                              t*x*z+s*y, t*y*z-s*x, t*z*z+c, 0,  0,0,0,1]);
+  return mul(T(p[0], p[1], p[2]), mul(r, T(-p[0], -p[1], -p[2])));
+}
+function persp(fov, asp, n, f) {
+  const q = 1 / Math.tan(fov / 2), m = new Float32Array(16);
+  m[0] = q / asp; m[5] = q; m[10] = (f + n) / (n - f); m[11] = -1; m[14] = 2 * f * n / (n - f); return m;
+}
+function look(e, c, u) {
+  const sub = (a, b) => [a[0]-b[0], a[1]-b[1], a[2]-b[2]];
+  const nrm = (a) => { const l = Math.hypot(...a); return a.map((v) => v / l); };
+  const cr = (a, b) => [a[1]*b[2]-a[2]*b[1], a[2]*b[0]-a[0]*b[2], a[0]*b[1]-a[1]*b[0]];
+  const dt = (a, b) => a[0]*b[0]+a[1]*b[1]+a[2]*b[2];
+  const z = nrm(sub(e, c)), x = nrm(cr(u, z)), y = cr(z, x);
+  return new Float32Array([x[0],y[0],z[0],0, x[1],y[1],z[1],0, x[2],y[2],z[2],0, -dt(x,e),-dt(y,e),-dt(z,e),1]);
+}
+
+/* ---------- 姿勢 ---------- */
+const poseLid = (th) => RX(th, K.H[0], K.H[1]);
+const poseCrank = (al) => RX(al - K.alpha0, K.O[0], K.O[1]);
+function poseLinkAt(al, lam) { const a = pinA(al); return mul(T(0, a[0] - K.A0[0], a[1] - K.A0[1]), RX(lam - LAM0, K.A0[0], K.A0[1])); }
+const poseLink = (al, th) => poseLinkAt(al, linkAng(al, th));
+function bendMatrix(al, th, f) {
+  const a = pinA(al), b = pinB(th), d = [b[0] - a[0], b[1] - a[1]], n = Math.hypot(d[0], d[1]);
+  const ax = [0, -d[1] / n, d[0] / n];
+  let deg = K.bend_deg * f;
+  const test = mul(RA(ax, deg, [0.3, a[0], a[1]]), new Float32Array([1,0,0,0, 0,1,0,0, 0,0,1,0, 0,b[0],b[1],1]));
+  if (test[12] > 0.3) deg = -deg;
+  return RA(ax, deg, [0.3, a[0], a[1]]);
+}
+
+/* ---------- 部品 ---------- */
+const PARTS = [
+  ["box", "箱", "#bdb4a6"], ["lid", "蓋", "#56B4E9"], ["crank", "クランク", "#E69F00"], ["link", "リンク", "#009E73"],
+  ["pin", "蝶番ピン", "#4d4d4d"], ["clip", "押さえクリップ", "#CC79A7"], ["ref_body", "SG92R（買う部品）", "#0072B2"],
+  ["ref_horn", "付属ホーン（買う部品）", "#2a2a2a"], ["ref_wire", "配線", "#D55E00"],
+];
+const hidden = new Set();
+const legend = $("legend");
+for (const [k, name, col] of PARTS) {
+  const lb = document.createElement("label");
+  lb.innerHTML = `<input type="checkbox" checked data-k="${k}"><i style="background:${col}"></i>${name}`;
+  legend.appendChild(lb);
+}
+legend.addEventListener("change", (e) => { const k = e.target.dataset.k; if (!k) return; e.target.checked ? hidden.delete(k) : hidden.add(k); draw(); });
+
+/* ---------- WebGL2 ---------- */
+const canvas = $("gl");
+const gl = canvas.getContext("webgl2", { antialias: true });
+let prog, U = {}, bufs = {};
+function b64(s) { const bin = atob(s), u = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i); return u.buffer; }
+function setup() {
+  const vs = `#version 300 es
+in vec3 aPos; uniform mat4 uVP; uniform mat4 uM; out vec3 vW;
+void main(){ vec4 w = uM * vec4(aPos, 1.0); vW = w.xyz; gl_Position = uVP * w; }`;
+  const fs = `#version 300 es
+precision highp float; in vec3 vW; uniform vec3 uCol; uniform vec3 uEye; uniform float uCutX; uniform float uCut; out vec4 o;
+void main(){
+  if (uCut > 0.5 && vW.x > uCutX) discard;
+  vec3 n = normalize(cross(dFdx(vW), dFdy(vW)));
+  vec3 v = normalize(uEye - vW);
+  if (dot(n, v) < 0.0) n = -n;
+  float d = 0.48 + 0.45 * max(dot(n, normalize(vec3(0.45, 0.75, 1.0))), 0.0) + 0.20 * max(dot(n, normalize(vec3(-0.8, -0.3, 0.35))), 0.0);
+  o = vec4(min(uCol * d, vec3(1.0)), 1.0);
+}`;
+  const sh = (t, s) => { const x = gl.createShader(t); gl.shaderSource(x, s); gl.compileShader(x);
+    if (!gl.getShaderParameter(x, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(x)); return x; };
+  prog = gl.createProgram();
+  gl.attachShader(prog, sh(gl.VERTEX_SHADER, vs)); gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, fs)); gl.linkProgram(prog);
+  for (const n of ["uVP", "uM", "uCol", "uEye", "uCutX", "uCut"]) U[n] = gl.getUniformLocation(prog, n);
+  for (const [k] of PARTS) {
+    const m = D.meshes[k];
+    const p16 = new Int16Array(b64(m.pos)), pos = new Float32Array(p16.length);
+    for (let i = 0; i < p16.length; i++) pos[i] = p16[i] * D.q;
+    const vao = gl.createVertexArray(); gl.bindVertexArray(vao);
+    const vb = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, vb); gl.bufferData(gl.ARRAY_BUFFER, pos, gl.STATIC_DRAW);
+    gl.enableVertexAttribArray(0); gl.vertexAttribPointer(0, 3, gl.FLOAT, false, 0, 0);
+    const ib = gl.createBuffer(); gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, ib); gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(b64(m.ind)), gl.STATIC_DRAW);
+    bufs[k] = { vao, n: m.nt * 3 };
+  }
+  gl.bindAttribLocation(prog, 0, "aPos");
+}
+const hex = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16) / 255);
+
+/* カメラ */
+const cam = { az: -35, el: 24, dist: 250, tgt: [0, 0, 40] };
+function draw() {
+  if (!gl) return;
+  const w = canvas.clientWidth, h = canvas.clientHeight, dpr = Math.min(2, window.devicePixelRatio || 1);
+  if (canvas.width !== Math.round(w * dpr) || canvas.height !== Math.round(h * dpr)) { canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr); }
+  gl.viewport(0, 0, canvas.width, canvas.height);
+  const bg = hex(rgbHex(css("--card")));
+  gl.clearColor(bg[0], bg[1], bg[2], 1); gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT); gl.enable(gl.DEPTH_TEST);
+  const ce = Math.cos(cam.el * R), eye = [cam.tgt[0] + cam.dist * ce * Math.cos(cam.az * R), cam.tgt[1] + cam.dist * ce * Math.sin(cam.az * R), cam.tgt[2] + cam.dist * Math.sin(cam.el * R)];
+  const vp = mul(persp(32 * R, canvas.width / canvas.height, 5, 2000), look(eye, cam.tgt, [0, 0, 1]));
+  gl.useProgram(prog); gl.uniformMatrix4fv(U.uVP, false, vp); gl.uniform3fv(U.uEye, eye);
+  const st = state();
+  for (const [k, , col] of PARTS) {
+    if (hidden.has(k) || !st.vis.has(k)) continue;
+    gl.uniformMatrix4fv(U.uM, false, st.M[k] || I4());
+    gl.uniform3fv(U.uCol, hex(col));
+    gl.uniform1f(U.uCut, st.cut && (k === "box" || k === "lid" || k === "pin") ? 1 : 0); gl.uniform1f(U.uCutX, 6.0);
+    gl.bindVertexArray(bufs[k].vao); gl.drawElements(gl.TRIANGLES, bufs[k].n, gl.UNSIGNED_SHORT, 0);
+  }
+}
+function rgbHex(c) {
+  if (c.startsWith("#")) return c.length === 4 ? "#" + [...c.slice(1)].map((x) => x + x).join("") : c;
+  const m = c.match(/\d+/g); return "#" + m.slice(0, 3).map((v) => (+v).toString(16).padStart(2, "0")).join("");
+}
+
+/* 操作 */
+const ptrs = new Map(); let pinch = 0;
+canvas.addEventListener("pointerdown", (e) => { canvas.setPointerCapture(e.pointerId); ptrs.set(e.pointerId, [e.clientX, e.clientY]); });
+canvas.addEventListener("pointerup", (e) => { ptrs.delete(e.pointerId); pinch = 0; });
+canvas.addEventListener("pointercancel", (e) => { ptrs.delete(e.pointerId); pinch = 0; });
+canvas.addEventListener("pointermove", (e) => {
+  if (!ptrs.has(e.pointerId)) return;
+  const p = ptrs.get(e.pointerId), dx = e.clientX - p[0], dy = e.clientY - p[1];
+  ptrs.set(e.pointerId, [e.clientX, e.clientY]);
+  if (ptrs.size === 1) { cam.az -= dx * 0.4; cam.el = Math.max(-80, Math.min(85, cam.el + dy * 0.4)); }
+  else if (ptrs.size === 2) {
+    const [a, b] = [...ptrs.values()], d = Math.hypot(a[0] - b[0], a[1] - b[1]);
+    if (pinch) cam.dist = Math.max(90, Math.min(600, cam.dist * pinch / d)); pinch = d;
+  }
+  draw();
+});
+canvas.addEventListener("wheel", (e) => { e.preventDefault(); cam.dist = Math.max(90, Math.min(600, cam.dist * Math.exp(e.deltaY * 0.001))); draw(); }, { passive: false });
+
+/* ---------- 状態: 動き / 組み立て ---------- */
+let mode = "motion", theta = 47.5, stepIdx = 0, stepP = 1;
+const ALL = new Set(PARTS.map((p) => p[0]));
+function motionState(th) {
+  const al = alphaOf(th);
+  return { vis: ALL, cut: $("cut").checked, M: { lid: poseLid(th), crank: poseCrank(al), ref_horn: poseCrank(al), link: poseLink(al, th) } };
+}
+const ease = (p) => p * p * (3 - 2 * p);
+const AM = alphaOf(K.mid_theta), TM = K.mid_theta;
+const V = (...k) => new Set(k);
+const A = D.verify.assembly;
+const STEPS = [
+  { t: "蓋を箱に載せ、節をそろえる", r: "蓋の節（中央）が箱の節（両端）の間に 0.4mm ずつの隙間で入る",
+    f: (p) => ({ vis: V("box", "lid"), M: { lid: T(0, 0, 30 * (1 - p)) } }) },
+  { t: "蝶番ピンを右側面から差し込む。奥に当たると端が角の丸みと面一になる", r: `当たるのは先端の割りと左の止まり穴だけ（食い込み ${A.A_hinge_pin_insert.worst["pin-box"].depth}mm＝設計した圧入）`,
+    f: (p) => ({ vis: V("box", "lid", "pin"), M: { pin: T(85 * (1 - p), 0, 0) } }) },
+  { t: "箱の外で、90° にしたサーボへホーンを押し込み、クランクをかぶせる", r: "クランクを 8mm 手前から押し込む経路で当たりなし",
+    f: (p) => { const u = T(0, 0, 95); return { vis: V("box", "lid", "pin", "ref_body", "ref_wire", "ref_horn", "crank"),
+      M: { ref_body: u, ref_wire: u, ref_horn: mul(u, poseCrank(AM)), crank: mul(u, mul(T(14 * (1 - p), 0, 0), poseCrank(AM))) } }; } },
+  { t: "リンクの穴の切り欠きをピン A の爪に合わせて差し、回して戻す", r: "差す・回すとも当たりなし。動作範囲では 1mm 引くと爪に当たる（抜けない）",
+    f: (p) => { const u = T(0, 0, 95), relOp = ((linkAng(AM, TM) - AM + 540) % 360) - 180;
+      let rel, dx = 0; if (p < 0.5) { rel = K.key_rel; dx = 12 * (1 - p / 0.5); } else { rel = K.key_rel + (relOp - K.key_rel) * ((p - 0.5) / 0.5); }
+      const lam = AM + rel;
+      return { vis: V("box", "lid", "pin", "ref_body", "ref_wire", "ref_horn", "crank", "link"),
+        M: { ref_body: u, ref_wire: u, ref_horn: mul(u, poseCrank(AM)), crank: mul(u, poseCrank(AM)), link: mul(u, mul(T(dx, 0, 0), poseLinkAt(AM, lam))) } }; } },
+  { t: "蓋を後ろへ倒しておく（135° までは箱に当たらない）", r: `蓋だけなら ${D.verify.free_open}° まで当たらずに開く`,
+    f: (p) => { const u = T(0, 0, 95); return { vis: V("box", "lid", "pin", "ref_body", "ref_wire", "ref_horn", "crank", "link"),
+      M: { lid: poseLid(125 * p), ref_body: u, ref_wire: u, ref_horn: mul(u, poseCrank(AM)), crank: mul(u, poseCrank(AM)), link: mul(u, poseLink(AM, TM)) } }; } },
+  { t: "サーボ一式を上から台へ下ろす。クランクの軸が受けの U 溝に入る。配線は台の端の切り欠きへ", r: "70mm 上から下ろす経路で当たりなし（蓋は 125° に倒した状態）",
+    f: (p) => { const u = T(0, 0, 95 * (1 - p)); return { vis: V("box", "lid", "pin", "ref_body", "ref_wire", "ref_horn", "crank", "link"),
+      M: { lid: poseLid(125), ref_body: u, ref_wire: u, ref_horn: mul(u, poseCrank(AM)), crank: mul(u, poseCrank(AM)), link: mul(u, poseLink(AM, TM)) } }; } },
+  { t: "押さえクリップを上から押し込み、爪を台の溝に掛ける", r: `爪が台の角を乗り越えるときの食い込み ${A.E_clip_press.worst["clip-box"].depth}mm（脚のたわみ。ひずみ約 1.1%）。ほかの当たりなし`,
+    f: (p) => ({ vis: ALL, M: { clip: T(0, 0, 28 * (1 - p)), lid: poseLid(125), ref_horn: poseCrank(AM), crank: poseCrank(AM), link: poseLink(AM, TM) } }) },
+  { t: "リンクの先をサーボ側へ 3.4mm 曲げたまま蓋を下ろし、穴が合ったら離す", r: `蓋を下ろす間の当たりなし。曲げのひずみ ${A.F_link_bend_strain_pct}%。離すとピン B が耳の穴に入る`,
+    f: (p) => { let th, b; if (p < 0.7) { th = 125 + (TM - 125) * (p / 0.7); b = 1; } else { th = TM; b = 1 - (p - 0.7) / 0.3; }
+      return { vis: ALL, M: { lid: poseLid(th), ref_horn: poseCrank(AM), crank: poseCrank(AM), link: mul(bendMatrix(AM, TM, b), poseLink(AM, TM)) } }; } },
+  { t: "サーボを動かして閉じる（角度は下の手順で決める）", r: "0〜95° の 39 姿勢で部品どうしの当たりなし",
+    f: (p) => { const th = TM * (1 - p), al = alphaOf(th); return { vis: ALL, M: { lid: poseLid(th), crank: poseCrank(al), ref_horn: poseCrank(al), link: poseLink(al, th) } }; } },
+];
+function state() {
+  if (mode === "motion") return motionState(theta);
+  const s = STEPS[stepIdx].f(ease(stepP));
+  s.cut = $("cut2").checked; return s;
+}
+const stepsEl = $("steps");
+STEPS.forEach((s, i) => { const li = document.createElement("li"); li.innerHTML = `<span class="n">${i + 1}</span><span>${s.t}</span>`;
+  li.addEventListener("click", () => { stepIdx = i; stepP = 1; showStep(); draw(); }); stepsEl.appendChild(li); });
+function showStep() {
+  [...stepsEl.children].forEach((li, i) => { if (i === stepIdx) li.setAttribute("aria-current", "step"); else li.removeAttribute("aria-current"); });
+  $("stepbox").innerHTML = `<p><b>工程 ${stepIdx + 1}</b>　${STEPS[stepIdx].t}</p><p class="res">検証: ${STEPS[stepIdx].r}</p>`;
+  $("prev").disabled = stepIdx === 0; $("next").disabled = stepIdx === STEPS.length - 1;
+}
+let anim = 0;
+function run(dur, fn, done) {
+  cancelAnimationFrame(anim); const t0 = performance.now();
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const tick = (now) => { const p = reduce ? 1 : Math.min(1, (now - t0) / dur); fn(p); draw(); if (p < 1) anim = requestAnimationFrame(tick); else if (done) done(); };
+  anim = requestAnimationFrame(tick);
+}
+$("prev").addEventListener("click", () => { stepIdx--; stepP = 0; showStep(); run(1600, (p) => (stepP = p)); });
+$("next").addEventListener("click", () => { stepIdx++; stepP = 0; showStep(); run(1600, (p) => (stepP = p)); });
+$("aplay").addEventListener("click", () => { stepP = 0; run(1800, (p) => (stepP = p)); });
+$("cut2").addEventListener("change", draw);
+$("cut").addEventListener("change", draw);
+
+function setTab(m) {
+  mode = m; $("tab-motion").setAttribute("aria-selected", m === "motion"); $("tab-asm").setAttribute("aria-selected", m === "asm");
+  $("ctl-motion").hidden = m !== "motion"; $("ctl-asm").hidden = m !== "asm"; cancelAnimationFrame(anim); draw();
+}
+$("tab-motion").addEventListener("click", () => setTab("motion"));
+$("tab-asm").addEventListener("click", () => { stepP = 1; showStep(); setTab("asm"); });
+
+/* 動きの読み取り */
+const curve = D.sim.static.curve;
+function torqueAt(th) { for (let i = 1; i < curve.length; i++) if (th <= curve[i][0]) { const f = (th - curve[i - 1][0]) / (curve[i][0] - curve[i - 1][0]); return curve[i - 1][1] + f * (curve[i][1] - curve[i - 1][1]); } return curve[curve.length - 1][1]; }
+function readout() {
+  const al = alphaOf(theta);
+  $("readout").innerHTML = [
+    ["蓋の角度", fmt(theta, 1) + "°"], ["クランクが回った量", fmt(K.alpha0 - al, 1) + "°"],
+    ["蓋を支えるトルク", fmt(Math.abs(torqueAt(theta)), 1) + " mN·m"], ["停動トルク比", fmt(Math.abs(torqueAt(theta)) / 245 * 100, 1) + "%"],
+  ].map(([k, v]) => `<div>${k}<b>${v}</b></div>`).join("");
+}
+$("theta").addEventListener("input", (e) => { theta = +e.target.value; readout(); draw(); });
+$("play").addEventListener("click", () => {
+  const start = theta; const target = theta > 47.5 ? 0 : 95;
+  run(1400, (p) => { theta = start + (target - start) * ease(p); $("theta").value = theta; readout(); });
+});
+
+if (!gl) { $("nogl").hidden = false; canvas.hidden = true; }
+else { try { setup(); } catch (err) { $("nogl").hidden = false; $("nogl").textContent = "3D の初期化に失敗しました: " + err.message; } }
+readout(); showStep(); draw();
+new ResizeObserver(draw).observe(canvas);
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change", draw);
+new MutationObserver(draw).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+
+/* ---------- 数字 ---------- */
+const S = D.sim, V2 = D.verify;
+$("kpis").innerHTML = [
+  [fmt(S.static.ratio_to_stall * 100, 1) + "%", "蓋を支えるのに要るトルク（停動トルク比、最大）"],
+  [fmt(S.full_speed.t_open_90pct, 2) + " s", "全速で 0→86° までの時間"],
+  ["0", "0〜95° の 39 姿勢で当たった組"],
+  ["0", "サポートが要った部品"],
+].map(([b, s]) => `<div class="card"><b>${b}</b><span>${s}</span></div>`).join("");
+$("torque-text").textContent = `必要トルクは閉じた位置で最大 ${fmt(S.static.max_torque_Nm * 1000, 1)} mN·m です。SG92R の停動トルク 245 mN·m（4.8V）の ${fmt(S.static.ratio_to_stall * 100, 1)}% にあたります。蓋は中実 PLA で ${fmt(S.mass.lid_g, 1)}g と見積もりました。95° では重心が蝶番の真上を越え、要るトルクは小さくなります。`;
+$("sim-text").textContent = `全速で指令を切り替えると ${fmt(S.full_speed.t_open_90pct, 2)} 秒で 86° に達し、閉じるときは蓋が ${fmt(S.full_speed.lid_impact_rad_s, 1)} rad/s で縁に当たります。0.8 秒かけて始めと終わりをゆっくりにすると、縁に当たる速さは ${fmt(S.eased.lid_impact_rad_s, 2)} rad/s に下がります。電圧低下などで出せるトルクが 30% に落ちても 95° まで開きます。`;
+$("sim-table").innerHTML = `<thead><tr><th>条件</th><th>開いた角度</th><th>最大トルク</th><th>閉じるときの速さ</th></tr></thead><tbody>
+<tr><td>全速で切り替え</td><td class="num">${fmt(S.full_speed.theta_at_1s, 1)}°</td><td class="num">${fmt(S.full_speed.peak_torque_Nm * 1000, 0)} mN·m</td><td class="num">${fmt(S.full_speed.lid_impact_rad_s, 2)} rad/s</td></tr>
+<tr><td>0.8 秒で一定速</td><td class="num">${fmt(S.ramped.theta_at_1_5s, 1)}°</td><td class="num">${fmt(S.ramped.peak_torque_Nm * 1000, 0)} mN·m</td><td class="num">${fmt(S.ramped.lid_impact_rad_s, 2)} rad/s</td></tr>
+<tr><td>0.8 秒で始めと終わりをゆっくり</td><td class="num">${fmt(S.eased.theta_at_1_5s, 1)}°</td><td class="num">${fmt(S.eased.peak_torque_Nm * 1000, 0)} mN·m</td><td class="num">${fmt(S.eased.lid_impact_rad_s, 2)} rad/s</td></tr>
+<tr><td>トルク 30%</td><td class="num">${fmt(S.weak_30pct.final_theta, 1)}°</td><td class="num">—</td><td class="num">—</td></tr></tbody>`;
+$("calib-text").textContent = `計算の校正: 負荷なしで 70° 回す時間は ${S.calib_noload_speed.t_to_within_1deg} 秒（公称 ${S.calib_noload_speed.nominal} 秒）。出せるトルクを必要量の半分にすると蓋は開かない（${S.calib_half_torque_fails.opened ? "開いた" : "0° のまま"}）。`;
+
+const as = V2.assembly;
+const rows = [
+  ["1 蓋を載せる", "—", "節の隙間 0.4mm"],
+  ["2 蝶番ピンを差す", "右側面から 78mm", `先端の圧入 ${as.A_hinge_pin_insert.worst["pin-box"].depth}mm のみ`],
+  ["3 クランクをホーンへ", "8mm 手前から", Object.keys(as.B_crank_onto_horn.worst).length ? "当たりあり" : "当たりなし"],
+  ["4 リンクをピン A へ", "鍵溝の角度で 8mm 差し、200° 回す", (Object.keys(as.C1_link_push_at_key.worst).length || Object.keys(as.C2_link_turn_to_operating.worst).length) ? "当たりあり" : "当たりなし"],
+  ["　抜け止めの確認", "動作範囲の 3 姿勢で 1mm 引く", as.C3_bayonet_lock.operating.every((r) => r.pulled_1mm_hits > 0) ? "3 姿勢とも爪に当たる（抜けない）" : "抜ける姿勢あり"],
+  ["6 サーボ一式を下ろす", "70mm 上から", Object.keys(as.D_servo_unit_lower.worst).length ? "当たりあり" : "当たりなし"],
+  ["7 クリップを押し込む", "25mm 上から", `爪の食い込み ${as.E_clip_press.worst["clip-box"].depth}mm（スナップ）のみ`],
+  ["8 蓋を下ろしてピン B を入れる", "125° → 47.5°、リンク先を 3.4mm 曲げる", Object.keys(as.F_lid_down_with_link_bent.hits).length ? "当たりあり" : `当たりなし（ひずみ ${as.F_link_bend_strain_pct}%）`],
+  ["9 開閉", "0〜95°、2.5° 刻み", V2.motion.poses_with_hits.length ? "当たりあり" : "当たりなし（閉じた位置で蓋が縁に載る接触だけ）"],
+];
+$("asm-table").innerHTML = "<thead><tr><th>工程</th><th>動かした範囲</th><th>結果</th></tr></thead><tbody>" + rows.map((r) => `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join("") + "</tbody>";
+
+const PRN = [["box", "箱", "口を上"], ["lid", "蓋", "天面を下"], ["crank", "クランク", "ポケットを下"], ["link", "リンク", "ピン B を上"],
+  ["pin", "蝶番ピン", "寝かせて平面を下"], ["clip", "押さえクリップ", "寝かせる"]];
+$("print-table").innerHTML = "<thead><tr><th>部品</th><th>刷る向き</th><th>大きさ (mm)</th><th>時間 PLA</th><th>浮いた壁</th></tr></thead><tbody>" +
+  PRN.map(([k, n, o]) => { const s = D.slice["PLA/" + k], bb = D.parts[k].print_bbox;
+    const size = [0, 1, 2].map((i) => fmt(bb[1][i] - bb[0][i], 1)).join(" × ");
+    const t = (s.stats.time || "").replace(/.*model printing time: ([^;]+);.*/, "$1");
+    const ov = s.by_feature && s.by_feature["Overhang wall"] ? fmt(s.by_feature["Overhang wall"], 1) + "mm" : "なし";
+    return `<tr><td>${n}</td><td>${o}</td><td class="num">${size}</td><td class="num">${t}</td><td class="num">${ov}</td></tr>`; }).join("") + "</tbody>";
+$("print-text").textContent = "浮いた壁（Overhang wall）は、配線口の天井（箱の後ろの下、幅 8mm）、クリップの爪が掛かる溝の天井（サーボの台の内側）、蝶番の穴の天井、ピン B の穴の天井の 4 か所です。どれも中に隠れる面です。1 枚のプレートで PLA 約 3 時間 17 分、PETG 約 3 時間 28 分、フィラメントは約 100g です。スライスの判定は、10mm 張り出した板を必ず検出し、45° の斜面を検出しないことを先に確かめてから使いました。";
+if (D.plate_png) $("plate-fig").innerHTML = `<img alt="Bambu Studio のプレート表示。6 部品が 1 枚に並ぶ" src="data:image/png;base64,${D.plate_png}"><figcaption>Bambu Studio が出したプレートの絵（PLA、サポート OFF）</figcaption>`;
+
+$("link-table").innerHTML = `<thead><tr><th>項目</th><th>値</th></tr></thead><tbody>
+<tr><td>蝶番軸 H（y, z）</td><td class="num">(${K.H[0]}, ${K.H[1]}) mm</td></tr>
+<tr><td>サーボ軸 O（y, z）</td><td class="num">(${fmt(K.O[0], 1)}, ${fmt(K.O[1], 1)}) mm</td></tr>
+<tr><td>クランク OA</td><td class="num">${fmt(K.a, 1)} mm</td></tr>
+<tr><td>リンク AB</td><td class="num">${fmt(K.l, 2)} mm</td></tr>
+<tr><td>蓋の耳のピン B（閉じたとき、H から）</td><td class="num">(${fmt(K.B0[0] - K.H[0], 1)}, ${fmt(K.B0[1] - K.H[1], 1)}) mm</td></tr>
+<tr><td>蓋 0→95° でのクランクの回転</td><td class="num">${fmt(K.alpha0 - K.table[K.table.length - 1][1], 1)}°</td></tr>
+<tr><td>伝達角の最小</td><td class="num">42.4°</td></tr>
+<tr><td>動作中の最小隙間（クランクと受け／リンクと蓋）</td><td class="num">${V2.clearance["crank-box"].min} / ${V2.clearance["link-lid"].min} mm</td></tr></tbody>`;
+
+/* ---------- グラフ ---------- */
+function chart(el, o) {
+  const W = 640, Hh = 260, m = { l: 52, r: 96, t: 14, b: 36 }, pw = W - m.l - m.r, ph = Hh - m.t - m.b;
+  const sx = (x) => m.l + (x - o.x[0]) / (o.x[1] - o.x[0]) * pw, sy = (y) => m.t + ph - (y - o.y[0]) / (o.y[1] - o.y[0]) * ph;
+  let s = `<svg viewBox="0 0 ${W} ${Hh}" role="img" aria-label="${o.label}">`;
+  for (const v of o.yt) s += `<line x1="${m.l}" x2="${m.l + pw}" y1="${sy(v)}" y2="${sy(v)}" stroke="var(--line)" stroke-width="1"/><text x="${m.l - 6}" y="${sy(v) + 4}" text-anchor="end">${v}</text>`;
+  for (const v of o.xt) s += `<text x="${sx(v)}" y="${m.t + ph + 16}" text-anchor="middle">${v}</text>`;
+  s += `<line x1="${m.l}" x2="${m.l + pw}" y1="${m.t + ph}" y2="${m.t + ph}" stroke="var(--mute)" stroke-width="1"/>`;
+  s += `<text x="${m.l + pw / 2}" y="${Hh - 4}" text-anchor="middle">${o.xl}</text><text x="12" y="${m.t + ph / 2}" text-anchor="middle" transform="rotate(-90 12 ${m.t + ph / 2})">${o.yl}</text>`;
+  o.series.forEach((se) => {
+    const d = se.pts.map((p, i) => (i ? "L" : "M") + sx(p[0]).toFixed(1) + " " + sy(p[1]).toFixed(1)).join("");
+    s += `<path d="${d}" fill="none" stroke="var(${se.c})" stroke-width="2" stroke-linejoin="round"/>`;
+    const at = se.at || se.pts[se.pts.length - 1];
+    s += `<text class="lab" x="${sx(at[0]) + 6}" y="${sy(at[1]) + (se.dy || 4)}">${se.name}</text>`;
+  });
+  s += `<line class="cross" x1="0" x2="0" y1="${m.t}" y2="${m.t + ph}" stroke="var(--mute)" stroke-width="1" visibility="hidden"/>`;
+  s += `<rect x="${m.l}" y="${m.t}" width="${pw}" height="${ph}" fill="transparent"/></svg><div class="tip" hidden></div>`;
+  el.innerHTML = s + (o.caption ? `<figcaption>${o.caption}</figcaption>` : "");
+  const svg = el.querySelector("svg"), tip = el.querySelector(".tip"), cr = el.querySelector(".cross");
+  svg.addEventListener("pointermove", (e) => {
+    const r = svg.getBoundingClientRect(), x = (e.clientX - r.left) / r.width * W;
+    if (x < m.l || x > m.l + pw) { tip.hidden = true; cr.setAttribute("visibility", "hidden"); return; }
+    const xv = o.x[0] + (x - m.l) / pw * (o.x[1] - o.x[0]);
+    cr.setAttribute("x1", x); cr.setAttribute("x2", x); cr.setAttribute("visibility", "visible");
+    tip.innerHTML = `${o.xf(xv)}<br>` + o.series.map((se) => { let best = se.pts[0]; for (const p of se.pts) if (Math.abs(p[0] - xv) < Math.abs(best[0] - xv)) best = p; return `${se.name}: ${o.yf(best[1])}`; }).join("<br>");
+    tip.hidden = false; tip.style.left = Math.min(r.width - 150, (x / W) * r.width + 10) + "px"; tip.style.top = "8px";
+  });
+  svg.addEventListener("pointerleave", () => { tip.hidden = true; cr.setAttribute("visibility", "hidden"); });
+}
+chart($("chart-torque"), { label: "蓋の角度ごとの必要トルク", x: [0, 95], y: [0, 15], xt: [0, 15, 30, 45, 60, 75, 90], yt: [0, 5, 10, 15],
+  xl: "蓋の角度 (°)", yl: "mN·m", xf: (v) => `${v.toFixed(1)}°`, yf: (v) => `${Math.abs(v).toFixed(2)} mN·m`,
+  series: [{ name: "必要トルク", c: "--s1", pts: curve.map((p) => [p[0], Math.abs(p[1])]), at: [8, Math.abs(curve[1][1])], dy: -8 }],
+  caption: "重力だけを支えるのに要るサーボ側のトルク（中実 PLA）。停動トルクの 245 mN·m はこの図の目盛りの 16 倍上" });
+const tr = (k) => S[k].trace.map((r) => [r[0], r[1]]);
+chart($("chart-sim"), { label: "蓋の角度の時間変化", x: [0, 3], y: [0, 100], xt: [0, 0.5, 1, 1.5, 2, 2.5, 3], yt: [0, 25, 50, 75, 100],
+  xl: "時間 (s)", yl: "蓋の角度 (°)", xf: (v) => `${v.toFixed(2)} s`, yf: (v) => `${v.toFixed(1)}°`,
+  series: [{ name: "全速", c: "--s2", pts: tr("full_speed").filter((p) => p[0] <= 3), at: [0.12, 95], dy: -2 },
+           { name: "ゆっくり", c: "--s1", pts: tr("eased"), at: [0.62, 70], dy: 14 }],
+  caption: "全速: 0 秒で開、1 秒で閉の指令。ゆっくり: 0〜0.8 秒で開き、1.5〜2.3 秒で閉じる（始めと終わりを緩める）" });
+
+/* リンクの図（YZ 断面、3 姿勢） */
+(function () {
+  const el = $("chart-linkage"), W = 640, Hh = 400, sc = 2.3, ox = 250, oz = 380;
+  const X = (y) => ox + y * sc, Y = (z) => oz - z * sc;
+  let s = `<svg viewBox="0 0 ${W} ${Hh}" role="img" aria-label="リンクの動き（横から見た図）">`;
+  s += `<rect x="${X(-40)}" y="${Y(80)}" width="${80 * sc}" height="${80 * sc}" fill="none" stroke="var(--line)" stroke-width="1"/>`;
+  const poses = [[0, "閉 0°", "--mute"], [47.5, "47.5°", "--s1"], [95, "開 95°", "--s2"]];
+  for (const [th, name, c] of poses) {
+    const al = alphaOf(th), a = pinA(al), b = pinB(th);
+    const lid0 = [[-35, 80], [40, 80]].map(([y, z]) => { const dy = y - K.H[0], dz = z - K.H[1], cc = Math.cos(th * R), ss = Math.sin(th * R); return [K.H[0] + dy * cc - dz * ss, K.H[1] + dy * ss + dz * cc]; });
+    s += `<line x1="${X(lid0[0][0])}" y1="${Y(lid0[0][1])}" x2="${X(lid0[1][0])}" y2="${Y(lid0[1][1])}" stroke="var(${c})" stroke-width="3"/>`;
+    s += `<polyline points="${X(K.H[0])},${Y(K.H[1])} ${X(b[0])},${Y(b[1])}" fill="none" stroke="var(${c})" stroke-width="2"/>`;
+    s += `<polyline points="${X(K.O[0])},${Y(K.O[1])} ${X(a[0])},${Y(a[1])} ${X(b[0])},${Y(b[1])}" fill="none" stroke="var(${c})" stroke-width="2" stroke-dasharray="${th === 47.5 ? "0" : "5 3"}"/>`;
+    s += `<circle cx="${X(a[0])}" cy="${Y(a[1])}" r="3.5" fill="var(--paper)" stroke="var(${c})" stroke-width="2"/><circle cx="${X(b[0])}" cy="${Y(b[1])}" r="3.5" fill="var(--paper)" stroke="var(${c})" stroke-width="2"/>`;
+    s += `<text class="lab" x="${X(lid0[1][0]) + 6}" y="${Y(lid0[1][1]) + 4}">${name}</text>`;
+  }
+  for (const [p, n] of [[K.H, "H 蝶番"], [K.O, "O サーボ軸"]]) s += `<circle cx="${X(p[0])}" cy="${Y(p[1])}" r="4" fill="var(--ink)"/><text class="lab" x="${X(p[0]) + 8}" y="${Y(p[1]) + 16}">${n}</text>`;
+  s += `</svg>`;
+  el.innerHTML = s + `<figcaption>右から見た断面。蓋（太線）は蝶番 H のまわりに回る。サーボ軸 O からクランク OA、リンク AB で蓋の耳の B を押す。破線は閉と開</figcaption>`;
+})();
+})();
+</script>
