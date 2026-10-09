@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>SG92R 開閉キューブの物理検証 · model-lab</title>
+  <link rel="stylesheet" href="../shared/workspace.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">物理検証へ移動</a>
+  <header class="workspace-header" id="workspaceHeader">
+    <a class="workspace-brand" href="/?model=servo-lid-cube" aria-label="model-lab Studio へ">model-lab</a>
+    <div class="workspace-model"><strong>SG92R 開閉キューブ</strong><small>80 × 80 × 80 mm · SG92R · 印刷 6 点</small></div>
+    <span id="loading" role="status">読み込み中…</span>
+  </header>
+  <main id="main" class="lc-layout">
+    <section class="lc-stage" aria-label="物理計算の 3D 表示">
+      <div class="lc-bar">
+        <label class="check"><input type="checkbox" id="cut" checked>箱の右半分を隠す</label>
+        <button class="lc-btn" id="home" type="button">視点を戻す</button>
+      </div>
+      <div class="lc-canvas"><canvas id="gl" aria-label="立方体の 3D 表示。ドラッグで回転、ホイールかピンチで拡大"></canvas>
+        <div class="viewnote">ドラッグで回転 / ホイールで拡大</div></div>
+      <div class="lc-legend" id="legend" aria-label="部品の表示"></div>
+      <div class="lc-bar bottom" aria-label="計算結果の再生">
+        <button class="lc-btn" id="pause" type="button">一時停止</button>
+        <label>再生速度 <select class="lc-select" id="rate"><option value="0.1">0.1×</option><option value="0.25" selected>0.25×</option><option value="0.5">0.5×</option><option value="1">1×</option></select></label>
+        <span class="workspace-number" id="clock">0.000 s</span>
+      </div>
+    </section>
+    <aside class="lc-aside" aria-label="検証の操作と結果">
+      <div>
+        <span class="eyebrow">1 自由度の運動方程式</span>
+        <h1>サーボで蓋を開閉する</h1>
+        <p>形状から求めた質量と慣性に、サーボのトルク上限と速度の限界を入れて解きます。実機では未検証です。</p>
+      </div>
+      <div class="actions" aria-label="蓋の操作">
+        <button class="lc-btn primary" id="open" type="button">開く</button>
+        <button class="lc-btn" id="close" type="button">閉じる</button>
+      </div>
+      <div>
+        <h2>条件</h2>
+        <div class="field"><label for="profile">動かし方</label>
+          <select class="lc-select" id="profile"><option value="ease" selected>0.8 秒でゆっくり</option><option value="step">全速で切り替え</option></select><span></span></div>
+        <div class="field"><label for="torque">トルクの上限</label><input type="range" id="torque" min="5" max="100" step="5" value="100"><output id="torqueOut" for="torque">100%</output></div>
+        <div class="field"><label for="mass">蓋の重さ</label><input type="range" id="mass" min="0.5" max="4" step="0.25" value="1"><output id="massOut" for="mass">1.00×</output></div>
+        <p class="small">トルク 100% は SG92R の停動トルク 245 mN·m（4.8V）。蓋の重さ 1× は中実 PLA の <span id="lidg">—</span> g。</p>
+      </div>
+      <div class="metrics" aria-label="いまの値">
+        <div><span>指令（閉から）</span><b id="mCmd">—</b></div>
+        <div><span>サーボ角（閉から）</span><b id="mServo">—</b></div>
+        <div><span>蓋の角度</span><b id="mLid">—</b></div>
+        <div><span>トルク / 上限</span><b id="mTau">—</b></div>
+        <div><span>縁に当たる速さ</span><b id="mImpact">—</b></div>
+        <div><span>この動作の最大トルク</span><b id="mPeak">—</b></div>
+      </div>
+      <div id="status" role="status" aria-live="polite" class="small"></div>
+      <div>
+        <h2>直前の動作</h2>
+        <div class="chart" id="chartTheta"></div>
+        <div class="chart" id="chartTau"></div>
+        <div class="chart-legend"><span class="s1">蓋の角度（°）</span><span class="s2">サーボのトルク（mN·m）</span></div>
+      </div>
+      <div>
+        <h2>重力を支えるのに要るトルク</h2>
+        <div class="chart" id="chartHold"></div>
+        <p id="holdText"></p>
+      </div>
+      <div>
+        <h2>この計算の確かめ</h2>
+        <ul class="checklist" id="checks"></ul>
+      </div>
+      <div class="limits">
+        <strong>近似の範囲</strong>
+        <p>部品は剛体です。蝶番とピンの摩擦は μ=0.3、ギアの摩擦は 0.004 N·m、モーターの慣性は推定値です。質量は中実 PLA で見積もったので、実物より重い側です。部品のたわみ、壊れ、熱は扱いません。</p>
+        <p>同じ式の Python 版: <code>models/servo-lid-cube/simulate.py</code>。ブラウザ版と同じ値になることを <code>viewer/lid-cube/sim.test.mjs</code> で確かめています。</p>
+      </div>
+    </aside>
+  </main>
+  <div id="fatal" class="fatal" role="alert" hidden><strong>物理検証を表示できませんでした</strong><p id="fatalMessage"></p></div>
+  <script type="module" src="physics.mjs"></script>
+</body>
+</html>

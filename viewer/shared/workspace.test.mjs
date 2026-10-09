@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { B3_MODEL, WORKSPACES, workspaceHref, readSession, writeSession, resolveTheme } from './workspace.mjs';
+import { B3_MODEL, WORKSPACES, WORKSPACE_PAGES, hasWorkspace, workspaceHref, readSession, writeSession, resolveTheme } from './workspace.mjs';
 
 assert.equal(resolveTheme('dark', 'light'), 'dark');
 assert.equal(resolveTheme(null, 'light'), 'light');
@@ -15,6 +15,16 @@ for (const mode of ['physics', 'assembly']) {
   assert.equal(url.pathname, `/viewer/${mode}-box/index.html`);
 }
 assert.throws(() => workspaceHref('unknown'), RangeError);
+// 画面を登録したモデルは自分の画面へ。登録していないモデルは押せない
+for (const mode of ['physics', 'assembly']) {
+  const url = new URL(workspaceHref(mode, 'servo-lid-cube'), 'http://localhost:3000');
+  assert.equal(url.pathname, WORKSPACE_PAGES['servo-lid-cube'][mode]);
+  assert.equal(url.searchParams.get('model'), 'servo-lid-cube');
+  assert.equal(hasWorkspace(mode, 'servo-lid-cube'), true);
+  assert.equal(hasWorkspace(mode, B3_MODEL), true);
+  assert.equal(hasWorkspace(mode, 'another-model'), false);
+}
+assert.equal(hasWorkspace('studio', 'another-model'), true);
 const memory = new Map();
 globalThis.sessionStorage = { getItem: key => memory.get(key) ?? null, setItem: (key, value) => memory.set(key, value) };
 assert.equal(readSession('missing', 'fallback'), 'fallback');

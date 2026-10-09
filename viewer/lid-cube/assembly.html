@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>SG92R 開閉キューブの組み立て · model-lab</title>
+  <link rel="stylesheet" href="../shared/workspace.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">組み立てへ移動</a>
+  <header class="workspace-header" id="workspaceHeader">
+    <a class="workspace-brand" href="/?model=servo-lid-cube" aria-label="model-lab Studio へ">model-lab</a>
+    <div class="workspace-model"><strong>SG92R 開閉キューブ</strong><small>80 × 80 × 80 mm · SG92R · 印刷 6 点</small></div>
+    <span id="loading" role="status">読み込み中…</span>
+  </header>
+  <main id="main" class="lc-layout">
+    <section class="lc-stage" aria-label="組み立ての 3D 表示">
+      <div class="lc-bar">
+        <label class="check"><input type="checkbox" id="cut" checked>箱の右半分を隠す</label>
+        <button class="lc-btn" id="home" type="button">視点を戻す</button>
+      </div>
+      <div class="lc-canvas"><canvas id="gl" aria-label="組み立て工程の 3D 表示。ドラッグで回転、ホイールかピンチで拡大"></canvas>
+        <div class="viewnote">ドラッグで回転 / ホイールで拡大</div></div>
+      <div class="lc-legend" id="legend" aria-label="部品の表示"></div>
+      <div class="lc-bar bottom" aria-label="工程の操作">
+        <button class="lc-btn" id="prev" type="button">前へ</button>
+        <button class="lc-btn primary" id="play" type="button">この工程を再生</button>
+        <button class="lc-btn" id="next" type="button">次へ</button>
+        <button class="lc-btn" id="all" type="button">全部を順に再生</button>
+        <label>速さ <select class="lc-select" id="speed"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label>
+      </div>
+    </section>
+    <aside class="lc-aside" aria-label="工程と検証の結果">
+      <div>
+        <span class="eyebrow">印刷部品 6 点 · 工具とねじなし</span>
+        <h1>組み立ての手順と検証</h1>
+        <p>工程どおりの経路で部品を動かし、各位置で面の交差と食い込みの深さを測りました（<code>verify.py</code>）。実物では未検証です。</p>
+      </div>
+      <div class="stepnow" id="stepnow" aria-live="polite"></div>
+      <ol class="steps" id="steps"></ol>
+      <div>
+        <h2>判定のまとめ</h2>
+        <table class="lc-table" id="summary"></table>
+        <p class="small">判定の前に、0.3mm の隙間を 1mm 詰めると当たること、離れた部品では当たらないこと、0.3mm の隙間が 0.30mm と測れることを確かめています。</p>
+      </div>
+      <div>
+        <h2>サーボの角度を決める</h2>
+        <ol class="howto">
+          <li>工程 3 でホーンを付けるときは、サーボを 90° にしておく。長い腕を配線の出る側へ向け、本体に沿わせる</li>
+          <li>組み終わったら 90° から閉じる側へ 1° ずつ動かし、蓋が縁に載った角度を「閉」とする</li>
+          <li>「閉」から開く側へ 70° 動かした角度が「開」（95°）</li>
+          <li>0.8 秒かけて始めと終わりをゆっくり動かす。「閉」より先へ押し込まない</li>
+        </ol>
+      </div>
+      <div class="limits">
+        <strong>確かめていないこと</strong>
+        <p>実物の印刷と組み立て。ホーンの腕の幅と先の形は写真からの推定値なので、クランクを先に刷って入るかを見る。配線は長さ 8mm の固い棒として判定した。</p>
+      </div>
+    </aside>
+  </main>
+  <div id="fatal" class="fatal" role="alert" hidden><strong>組み立てを表示できませんでした</strong><p id="fatalMessage"></p></div>
+  <script type="module" src="assembly.mjs"></script>
+</body>
+</html>

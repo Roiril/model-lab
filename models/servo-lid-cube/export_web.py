@@ -82,6 +82,14 @@ def main():
     with open(out, "w", encoding="utf-8", newline="\n") as fh:
         fh.write(js)
     print(out, round(len(js) / 1024), "KB", {k: v["nt"] for k, v in meshes.items()})
+    # Studio の物理検証・組み立て画面（viewer/lid-cube）が読むデータ
+    asset = {k: v for k, v in data.items() if k != "plate_png"}
+    asset["simTables"] = json.load(open(os.path.join(BUILD, "sim_tables.json"), encoding="utf-8"))
+    vdir = os.path.join(os.path.dirname(os.path.dirname(HERE)), "viewer", "lid-cube", "assets")
+    os.makedirs(vdir, exist_ok=True)
+    with open(os.path.join(vdir, "data.json"), "w", encoding="utf-8", newline="\n") as fh:
+        json.dump(asset, fh, ensure_ascii=False, separators=(",", ":"))
+    print(os.path.join(vdir, "data.json"))
     # 報告ページ: テンプレートにデータを差し込む
     tpl = open(os.path.join(HERE, "report_template.html"), encoding="utf-8").read()
     assert tpl.count("/*CUBE_DATA*/") == 1

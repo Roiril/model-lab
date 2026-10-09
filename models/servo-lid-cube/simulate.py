@@ -203,6 +203,41 @@ def simulate(cmd, t_end, stall=STALL, gravity=True, load=True, friction=True, dt
     return out, peak
 
 
+def lid_terms(alpha, h=0.02):
+    """蓋だけの M と G（質量を変える試験用に分けて出す）。"""
+    c0 = config(alpha - h)
+    c1 = config(alpha + h)
+    da = math.radians(2 * h)
+    dth = math.radians(c1[0] - c0[0]) / da
+    return LID_I_H * dth ** 2, G * LID_M * (c1[1][1] - c0[1][1]) / da
+
+
+def export_tables(a_closed, a_open, step=0.1):
+    """Studio の物理検証画面（viewer/lid-cube）が同じ式をブラウザで解くための表。
+
+    α は TABLE の範囲（θ = -2〜110°）。M・G は蓋とそれ以外に分ける（蓋の質量の倍率を掛けるため）。"""
+    lo, hi = TABLE[0][0] + 0.2, TABLE[-1][0] - 0.2
+    rows = []
+    n = int((hi - lo) / step)
+    for i in range(n + 1):
+        a = lo + i * step
+        m, g, dth = energy_terms(a)
+        ml, gl = lid_terms(a)
+        theta = theta_of(a)
+        pa, pb = K.pin_a(a), K.pin_b(theta)
+        d = ((pb[0] - pa[0]) / 1000, (pb[1] - pa[1]) / 1000)
+        nn = math.hypot(*d)
+        r = ((pa[0] - K.O[0]) / 1000, (pa[1] - K.O[1]) / 1000)
+        arm = abs(r[0] * d[1] / nn - r[1] * d[0] / nn)
+        rows.append([round(a, 3), round(theta, 4), m - ml, ml, g - gl, gl, round(dth, 5), arm])
+    out = dict(columns=["alpha_deg", "theta_deg", "M_rest", "M_lid", "G_rest", "G_lid", "dtheta_dalpha", "arm_m"],
+               rows=rows, alpha_closed=a_closed, alpha_open=a_open,
+               const=dict(stall=STALL, omega0=OMEGA0, band=BAND, mu=MU, pin_r=PIN_R, servo_fric=SERVO_FRIC,
+                          k_rim=400.0, c_rim=0.4, dt=2e-5))
+    with open(os.path.join(HERE, "build", "sim_tables.json"), "w", encoding="utf-8", newline="\n") as fh:
+        json.dump(out, fh, separators=(",", ":"))
+
+
 def first_time(rows, pred):
     for r in rows:
         if pred(r):
@@ -282,6 +317,7 @@ def main():
     res["closed_hold_unpowered"] = dict(gravity_torque_at_servo_Nm=round(abs(g0), 5), servo_friction_Nm=SERVO_FRIC)
     with open(os.path.join(HERE, "build", "simulate_report.json"), "w", encoding="utf-8", newline="\n") as fh:
         json.dump(res, fh, ensure_ascii=False, indent=1)
+    export_tables(a_closed, a_open)
     show = {k: v for k, v in res.items() if k not in ()}
     for k, v in show.items():
         if isinstance(v, dict):

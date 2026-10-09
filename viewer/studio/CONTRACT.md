@@ -182,6 +182,7 @@ export function sampleShape(shape, step = 0.5) -> [[u, v], ...]   // 図形を s
 
 - `index.html` は `../shared/workspace.css` を Studio の CSS より先に読む。
 - `../shared/workspace.mjs` の `createWorkspaceNav({active:"studio", model})` を使う。モデル変更時は返り値の `setModel(model)` を呼ぶ。
+- 物理検証・組み立ての画面はモデルごとに `WORKSPACE_PAGES`（`workspace.mjs`）へ登録する。登録が無いモデルではタブを「未対応」として押せなくする。登録済み: `mystery-box-sg92r-b3-candidate`（`/viewer/physics-box`・`/viewer/assembly-box`）、`servo-lid-cube`（`/viewer/lid-cube/physics.html`・`assembly.html`）。
 - 上部は `.workspace-header` と、その下の `.studio-toolbar` に分ける。共通ヘッダーには `.workspace-brand`、`.workspace-model`、`.workspace-nav` を置く。
 - 送信操作は右の「指示」パネル下部に一つだけ置く。スクロール中も送信ボタンを表示する。在席と処理状態も同じパネルに置く。
 - 視点は3D右上の「視点」から開く。選んだら閉じる。数字キーでも切り替えられる。

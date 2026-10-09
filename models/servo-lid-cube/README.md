@@ -5,6 +5,8 @@ SG92R 1 個と 4 節リンクで天面を 0〜95° 開閉する。印刷部品 6
 SG92R の寸法は `models/sg92r-photo/params.py`（確定版）を読み込む。ここには書き写さない。
 
 検証の記録と 3D の再生: `reports/2026-10-09_servo-lid-cube.html`
+Studio（http://localhost:3000/?model=servo-lid-cube）の上部タブ「物理検証」「組み立て」からも開ける
+（`viewer/lid-cube/`。物理検証は同じ運動方程式をブラウザで解く。`node viewer/lid-cube/sim.test.mjs` で Python と一致を確かめる）。
 
 ## 流し方
 

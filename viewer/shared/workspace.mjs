@@ -17,10 +17,21 @@ export const WORKSPACES = Object.freeze([
   { id: 'assembly', label: '組み立て' },
 ]);
 
+// 物理検証・組み立ての画面を持つモデル。ここに無いモデルではタブを押せない表示にする。
+export const WORKSPACE_PAGES = Object.freeze({
+  [B3_MODEL]: Object.freeze({ physics: '/viewer/physics-box/index.html', assembly: '/viewer/assembly-box/index.html' }),
+  'servo-lid-cube': Object.freeze({ physics: '/viewer/lid-cube/physics.html', assembly: '/viewer/lid-cube/assembly.html' }),
+});
+
+export function hasWorkspace(mode, model) {
+  return mode === 'studio' || Boolean(WORKSPACE_PAGES[model]?.[mode]);
+}
+
 export function workspaceHref(mode, model = B3_MODEL) {
   if (!WORKSPACES.some(item => item.id === mode)) throw new RangeError('Unknown workspace');
   if (mode === 'studio') return `/?model=${encodeURIComponent(model || B3_MODEL)}`;
-  return `/viewer/${mode}-box/index.html?model=${encodeURIComponent(B3_MODEL)}`;
+  const target = WORKSPACE_PAGES[model]?.[mode] ? model : B3_MODEL;
+  return `${WORKSPACE_PAGES[target][mode]}?model=${encodeURIComponent(target)}`;
 }
 
 export function createWorkspaceNav({ active, model = B3_MODEL, onNavigate } = {}) {
@@ -60,7 +71,7 @@ export function createWorkspaceNav({ active, model = B3_MODEL, onNavigate } = {}
     renderedModel = next;
     model = next;
     element.replaceChildren(...WORKSPACES.map(item => {
-      const available = item.id === 'studio' || model === B3_MODEL;
+      const available = hasWorkspace(item.id, model);
       const link = document.createElement(available ? 'a' : 'span');
       link.className = 'workspace-link';
       link.dataset.workspace = item.id;
@@ -78,9 +89,10 @@ export function createWorkspaceNav({ active, model = B3_MODEL, onNavigate } = {}
         });
       } else {
         link.setAttribute('aria-disabled', 'true');
-        link.setAttribute('aria-label', `${item.label}。B3の箱で使えます`);
+        link.setAttribute('aria-label', `${item.label}。このモデルにはまだありません`);
+        link.title = 'このモデルにはまだありません';
         const note = document.createElement('small');
-        note.textContent = 'B3用';
+        note.textContent = '未対応';
         link.append(note);
       }
       return link;
