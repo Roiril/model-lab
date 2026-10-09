@@ -362,6 +362,12 @@ def build_box():
         union(b, prism(knuckle_inner_poly(), "x", x0, x1, "knuckle_in"))
     # 蓋の節が回る範囲を逃がす（45° の余分込み）
     cut(b, cyl_x((HY, HZ), mm(P.HINGE_SWEEP_R), -BKX, BKX, 96, "sweep"))
+    # 後ろの壁の上端が刃物にならないよう、外側 BACK_LIP の幅は平らに落とす（外から見える縁）
+    lip = mm(P.BACK_LIP)
+    rs = mm(P.HINGE_SWEEP_R)
+    dy = (HALF - lip) + HY            # 平らにする所の、軸からの水平距離
+    z_flat = HZ - math.sqrt(rs * rs - dy * dy)
+    cut(b, box(-BKX, BKX, -HALF - 1, -HALF + lip, z_flat, L + 10, "back_lip"))
 
     # --- サーボの台 ---
     sz0 = OZ - mm(SG.BODY_W) / 2           # 本体の下側面 34.6
@@ -419,6 +425,15 @@ def build_box():
     # 右の節: 奥は涙形、角の球面に出る最後の 3mm は丸穴（外から見える口を丸く）
     cut(b, prism(teardrop((HY, HZ), hr_thru, up=1), "x", BKX - 0.5, HALF - 3.0, "hole_r"))
     cut(b, cyl_x((HY, HZ), hr_thru, HALF - 3.2, HALF + 1, 64, "hole_r_out"))
+    # 穴が角の球面に出る口は縁が刃物になる。45° の面取りで落とす
+    cs_x = mm(P.HINGE_CSK_X)
+    ring = []
+    for k in range(64):
+        t = 2 * math.pi * k / 64
+        # 円錐は穴の内側（0.4mm 手前）から始め、穴の円筒と x=cs_x で 45° に交わらせる（接すると細い切れ端が残る）
+        for rr, xx in ((hr_thru - 0.4, cs_x - 0.4), (hr_thru + (HALF + 1 - cs_x), HALF + 1)):
+            ring.append((xx, HY + rr * math.cos(t), HZ + rr * math.sin(t)))
+    cut(b, hull3d(ring, "csk"))
     cut(b, prism(teardrop((HY, HZ), hr_box, up=1), "x", mm(P.HINGE_BLIND_END_X), -BKX + 0.5, "hole_l"))
 
     # --- 配線の出口（後ろの壁の下端）---
@@ -459,6 +474,11 @@ def build_lid():
     # 箱の節の位置では蓋を逃がす
     for x0, x1 in ((-HALF - 1, -LKX), (LKX, HALF + 1)):
         cut(lid, cyl_x((HY, HZ), R + mm(P.KNUCKLE_GAP) + 0.05, x0, x1, 96, "bk_clear"))
+        # 円弧のまま天面に出ると刃物の縁（23°）になる。天面から LID_EDGE_V は垂直に立てる
+        rr = R + mm(P.KNUCKLE_GAP) + 0.05
+        zv = L - mm(P.LID_EDGE_V)
+        yv = HY + math.sqrt(rr * rr - (zv - HZ) ** 2)
+        cut(lid, box(x0, x1, -HALF - 1, yv, zv, L + 1, "bk_clear_v"))
     # 裏の縁（前と左右。後ろは蝶番があるので開けておく）
     so = IN - mm(P.LID_SKIRT_CLR)
     si = so - mm(P.LID_SKIRT_T)

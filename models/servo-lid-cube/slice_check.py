@@ -25,12 +25,13 @@ sys.stdout.reconfigure(encoding="utf-8")
 
 EXE = r"C:\Program Files\Bambu Studio\bambu-studio.exe"
 PROF = r"C:\Program Files\Bambu Studio\resources\profiles\BBL"
-MACHINE = os.path.join(PROF, "machine", "Bambu Lab X1 Carbon 0.4 nozzle.json")
-PROCESS = os.path.join(PROF, "process", "0.20mm Standard @BBL X1C.json")
-FILAMENTS = {
-    "PLA": os.path.join(PROF, "filament", "Bambu PLA Basic @BBL X1C.json"),
-    "PETG": os.path.join(PROF, "filament", "Bambu PETG Basic @BBL X1C.json"),
-}
+sys.path.insert(0, HERE)
+import print_profile  # noqa: E402
+
+# 標準プロファイルは継承を解いてから渡す（CLI は inherits をたどらない）。上書きは print_profile.py
+FILAMENTS = {}
+for _m in ("PLA", "PETG"):
+    MACHINE, PROCESS, FILAMENTS[_m] = print_profile.settings(_m)
 PARTS = ["box", "lid", "crank", "link", "pin", "clip"]
 R_SUP = 0.6      # 下の層の押し出しがこの水平距離にあれば支えあり（mm）。45° なら 1 層 0.2mm のずれ
 CELL = 0.2
@@ -59,6 +60,7 @@ def parse_gcode(path):
     feature = ""
     stats = {}
     rel_e = True
+    obj = None
     for line in open(path, encoding="utf-8", errors="replace"):
         if line.startswith(";"):
             if line.startswith("; CHANGE_LAYER"):
@@ -68,6 +70,10 @@ def parse_gcode(path):
                 cur["z"] = float(line.split(":")[1])
             elif line.startswith("; FEATURE:"):
                 feature = line.split(":", 1)[1].strip()
+            elif line.startswith("; start printing object, unique label id:"):
+                obj = int(line.rsplit(":", 1)[1])
+            elif line.startswith("; stop printing object"):
+                obj = None
             elif "model printing time" in line or "total estimated time" in line:
                 stats["time"] = line.strip("; \n")
             elif line.startswith("; total filament length"):
@@ -81,22 +87,40 @@ def parse_gcode(path):
             rel_e = False
         if not (line.startswith("G1 ") or line.startswith("G0 ") or line.startswith("G2 ") or line.startswith("G3 ")):
             continue
-        m = dict(re.findall(r"([XYZE])(-?[\d.]+)", line.split(";")[0]))
+        m = dict(re.findall(r"([XYZEIJ])(-?[\d.]+)", line.split(";")[0]))
         nx = float(m.get("X", x))
         ny = float(m.get("Y", y))
         if "Z" in m:
             z = float(m["Z"])
         e = float(m.get("E", 0.0))
         if cur is not None and e > 0 and (line.startswith("G1") or line.startswith("G2") or line.startswith("G3")) \
-                and (nx != x or ny != y):
-            cur["segs"].append((x, y, nx, ny, feature))
+                and (nx != x or ny != y or "I" in m or "J" in m):
+            if (line.startswith("G2") or line.startswith("G3")) and ("I" in m or "J" in m):
+                # 円弧近似（G2 時計回り / G3 反時計回り）。弦のまま扱うと円弧の膨らみが「支え無し」に見える
+                ccx, ccy = x + float(m.get("I", 0.0)), y + float(m.get("J", 0.0))
+                r = math.hypot(x - ccx, y - ccy)
+                a0 = math.atan2(y - ccy, x - ccx)
+                a1 = math.atan2(ny - ccy, nx - ccx)
+                if line.startswith("G3"):
+                    sweep = (a1 - a0) % (2 * math.pi) or 2 * math.pi
+                else:
+                    sweep = -((a0 - a1) % (2 * math.pi) or 2 * math.pi)
+                k = max(2, int(abs(sweep) * r / 0.2))
+                px, py = x, y
+                for i in range(1, k + 1):
+                    a = a0 + sweep * i / k
+                    qx, qy = (ccx + r * math.cos(a), ccy + r * math.sin(a)) if i < k else (nx, ny)
+                    cur["segs"].append((px, py, qx, qy, feature, obj, z))
+                    px, py = qx, qy
+            else:
+                cur["segs"].append((x, y, nx, ny, feature, obj, z))
         x, y = nx, ny
     return layers, stats
 
 
 def coverage(segs):
     cells = set()
-    for x0, y0, x1, y1, _ in segs:
+    for x0, y0, x1, y1, *_ in segs:
         n = max(1, int(math.hypot(x1 - x0, y1 - y0) / (CELL * 0.7)))
         for i in range(n + 1):
             px = x0 + (x1 - x0) * i / n
@@ -137,7 +161,7 @@ def floating_report(layers):
             prev = coverage(L["segs"])
             continue
         found = {}
-        for x0, y0, x1, y1, feat in L["segs"]:
+        for x0, y0, x1, y1, feat, *_ in L["segs"]:
             length = math.hypot(x1 - x0, y1 - y0)
             n = max(1, int(length / 0.2))
             bad = []
@@ -249,4 +273,5 @@ def main():
         json.dump(report, fh, ensure_ascii=False, indent=1)
 
 
-main()
+if __name__ == "__main__":
+    main()

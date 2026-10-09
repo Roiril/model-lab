@@ -191,11 +191,31 @@ code { font-family:var(--mono); font-size:.92em; background:var(--card); padding
   </ol>
 
   <h2>印刷</h2>
-  <p>Bambu Studio 同梱の標準設定（X1C 0.4mm ノズル・0.20mm Standard・壁 2 周・充填 20%）で、サポートは OFF のままスライスしました。6 部品は 1 枚のプレートに載ります。</p>
-  <div class="tblwrap"><table id="print-table"></table></div>
-  <p id="print-text"></p>
+  <p>そのまま印刷に送れる 3mf を作りました。Bambu Studio で開き、プリンタへ送るだけです。</p>
+  <div class="tblwrap"><table id="plate-table"></table></div>
+  <p>設定は Bambu Studio 同梱の標準プロファイル（X1C 0.4mm ノズル・0.20mm Standard）が土台です。CLI は標準プロファイルの継承を読まないので、継承を解いた完全な設定を渡しています。土台の値はユーザーの既存プロジェクトと同じで、Textured PEI Plate・第 1 層のはみ出し補正 0.15mm・充填 15% です。変えたのは次の 4 つです。</p>
+  <ul>
+    <li>壁を 3 周にした。蝶番の節・ピン・クランクの肉が増え、外観は変わりません</li>
+    <li>継ぎ目を後ろに寄せた。箱は 180° 回して蝶番側を奥に向けています。箱の外面の継ぎ目は全部が後ろ面に来ました（前と左右は 0 か所）</li>
+    <li>箱の 74〜80mm（節の上面）と蓋の 5〜10.3mm（蝶番の筒）だけ層を 0.08mm にした。浅い丸みに出る段の幅が約 2.5 分の 1 になります</li>
+    <li>物体ごとに印刷を止められるようにした。小物が 1 つ失敗しても、それだけ外して続けられます</li>
+  </ul>
   <figure id="plate-fig"></figure>
-  <p>最初にクランク（約 15 分）を刷り、付属ホーンがポケットに入るかを確かめてください。ホーンの腕の幅と先の形は写真から読んだ値です。入らなければ <code>params.py</code> の <code>HORN_CLR</code> を 0.05mm ずつ広げて刷り直します。</p>
+  <h3>精査で直したところ</h3>
+  <p>刷る向きのまま肉厚と段差と宙に浮く面を測り、見つかった所を形で直しました。測り方は、答えの分かっている形で先に確かめています。0.6mm の板は薄いと判定し、2mm の板は判定しません。20° の楔は刃物の縁と判定し、70° の楔は判定しません。10° の斜面は段が出ると判定し、45° の斜面は判定しません。</p>
+  <div class="tblwrap"><table>
+    <thead><tr><th>見つかったこと</th><th>直し方</th></tr></thead>
+    <tbody>
+      <tr><td>右後ろ上の角で、蝶番の穴の縁が刃物（0.07mm）。穴の軸が角の丸みの中心を通るため</td><td>穴の口に 45° の面取りを付けた</td></tr>
+      <tr><td>蓋の蝶番の下で、後ろの壁の上端が 31° の刃物</td><td>外側 1mm を平らに落とした</td></tr>
+      <tr><td>箱の節の横で、蓋の天面の縁が 23° の刃物。ここは刷るときベッドに付く第 1 層</td><td>天面から 1mm は垂直に立てた</td></tr>
+      <tr><td>ピン A の爪の先が 0.7mm と薄い</td><td>爪を 2.4mm から 3mm に厚くした（先の厚み 1.3mm）</td></tr>
+      <tr><td>箱の節の上面と蓋の筒に、浅い丸みの段（外から見える面 約 230mm²）</td><td>その高さだけ層を 0.08mm にした</td></tr>
+    </tbody>
+  </table></div>
+  <p id="print-text"></p>
+  <div class="tblwrap"><table id="print-table"></table></div>
+  <p>最初にクランクだけのプレート（約 15 分）を刷り、付属ホーンがポケットに入るかを確かめてください。ホーンの腕の幅と先の形は写真から読んだ値です。入らなければ <code>params.py</code> の <code>HORN_CLR</code> を 0.05mm ずつ広げて刷り直します。</p>
 
   <h2>設計の判断</h2>
   <h3>サーボを蝶番に直結しなかった理由</h3>
@@ -525,8 +545,14 @@ $("print-table").innerHTML = "<thead><tr><th>部品</th><th>刷る向き</th><th
     const t = (s.stats.time || "").replace(/.*model printing time: ([^;]+);.*/, "$1");
     const ov = s.by_feature && s.by_feature["Overhang wall"] ? fmt(s.by_feature["Overhang wall"], 1) + "mm" : "なし";
     return `<tr><td>${n}</td><td>${o}</td><td class="num">${size}</td><td class="num">${t}</td><td class="num">${ov}</td></tr>`; }).join("") + "</tbody>";
-$("print-text").textContent = "浮いた壁（Overhang wall）は、配線口の天井（箱の後ろの下、幅 8mm）、クリップの爪が掛かる溝の天井（サーボの台の内側）、蝶番の穴の天井、ピン B の穴の天井の 4 か所です。どれも中に隠れる面です。1 枚のプレートで PLA 約 3 時間 17 分、PETG 約 3 時間 28 分、フィラメントは約 100g です。スライスの判定は、10mm 張り出した板を必ず検出し、45° の斜面を検出しないことを先に確かめてから使いました。";
-if (D.plate_png) $("plate-fig").innerHTML = `<img alt="Bambu Studio のプレート表示。6 部品が 1 枚に並ぶ" src="data:image/png;base64,${D.plate_png}"><figcaption>Bambu Studio が出したプレートの絵（PLA、サポート OFF）</figcaption>`;
+$("print-text").textContent = "切ったあとの G-code で、下の層に支えの無い外壁を部品ごとに数えました。出たのは配線口の天井（箱の後ろの下、幅 8mm）、クリップの爪が掛かる溝の天井（サーボの台の内側）、蝶番の穴とピン B の穴の天井だけで、どれも中に隠れる短い橋渡しです。この判定も、10mm 張り出した板を必ず検出し、45° の斜面を検出しないことを先に確かめてから使いました。下の表は部品だけで切ったときの時間です。";
+if (D.plate_png) $("plate-fig").innerHTML = `<img alt="Bambu Studio のプレート表示。6 部品が 1 枚に並ぶ" src="data:image/png;base64,${D.plate_png}"><figcaption>Bambu Studio が出したプレートの絵（PLA。箱は口を上、蓋は天面を下、蝶番はどちらも奥）</figcaption>`;
+if (D.plate) {
+  const P = D.plate, row = (label, r, file) => `<tr><td>${label}</td><td><code>${file}</code></td><td class="num">${fmt(r.prediction_s / 3600, 1)} 時間</td><td class="num">${r.filament[0] ? fmt(+r.filament[0][1], 0) + " g" : "—"}</td><td>${r.support_used === "false" ? "なし" : "あり"}</td></tr>`;
+  $("plate-table").innerHTML = "<thead><tr><th>プレート</th><th>ファイル（exports/）</th><th>時間</th><th>材料</th><th>サポート</th></tr></thead><tbody>" +
+    row("6 部品・PLA", P.PLA, "servo-lid-cube-PLA.gcode.3mf") + row("6 部品・PETG", P.PETG, "servo-lid-cube-PETG.gcode.3mf") +
+    `<tr><td>クランクだけ（嵌まりの確認）</td><td><code>servo-lid-cube-crank-test-PLA.gcode.3mf</code></td><td class="num">${fmt(P.crank_test.prediction_s / 60, 0)} 分</td><td class="num">—</td><td>${P.crank_test.support_used === "false" ? "なし" : "あり"}</td></tr></tbody>`;
+}
 
 $("link-table").innerHTML = `<thead><tr><th>項目</th><th>値</th></tr></thead><tbody>
 <tr><td>蝶番軸 H（y, z）</td><td class="num">(${K.H[0]}, ${K.H[1]}) mm</td></tr>

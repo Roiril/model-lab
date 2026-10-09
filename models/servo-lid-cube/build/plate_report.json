@@ -1,0 +1,615 @@
+{
+ "settings": {
+  "machine": "Bambu Lab X1 Carbon 0.4 nozzle",
+  "process": "0.20mm Standard @BBL X1C",
+  "overrides": {
+   "curr_bed_type": "Textured PEI Plate",
+   "seam_position": "back",
+   "wall_loops": "3",
+   "exclude_object": "1",
+   "enable_support": "0"
+  },
+  "ranges": {
+   "box": [
+    [
+     74.0,
+     80.0,
+     0.08
+    ]
+   ],
+   "lid": [
+    [
+     5.0,
+     10.4,
+     0.08
+    ]
+   ]
+  }
+ },
+ "PLA": {
+  "support_used": "false",
+  "prediction_s": 10452,
+  "weight_g": "133.06",
+  "filament": [
+   [
+    "43.91",
+    "133.06"
+   ]
+  ],
+  "stats": {
+   "time": "model printing time: 2h 46m 56s; total estimated time: 2h 54m 12s",
+   "filament_mm": 43905.21,
+   "filament_g_header": "133.06"
+  },
+  "objects": {
+   "servo-lid-cube-lid.stl": {
+    "layers": 154,
+    "z_top": 22.76,
+    "layer_steps": {
+     "0.08": [
+      5.0,
+      10.28,
+      67
+     ],
+     "0.2": [
+      0.2,
+      22.56,
+      86
+     ]
+    },
+    "floating": {
+     "external_unsupported_mm": 5.14,
+     "bridge_mm": 12630.75,
+     "bridge_unsupported_mm": 6415.1,
+     "internal_unsupported_mm": 2.5
+    },
+    "overhang_walls": [
+     {
+      "layer": 65,
+      "z": 8.28,
+      "feature": "Overhang wall",
+      "points": 12,
+      "x": [
+       -19.4,
+       19.4
+      ],
+      "y": [
+       34.8,
+       35.0
+      ]
+     },
+     {
+      "layer": 142,
+      "z": 20.56,
+      "feature": "Overhang wall",
+      "points": 12,
+      "x": [
+       2.8,
+       5.4
+      ],
+      "y": [
+       20.0,
+       20.2
+      ]
+     },
+     {
+      "layer": 142,
+      "z": 20.56,
+      "feature": "Gap infill",
+      "points": 3,
+      "x": [
+       4.1,
+       4.1
+      ],
+      "y": [
+       19.9,
+       20.3
+      ]
+     }
+    ]
+   },
+   "servo-lid-cube-box.stl": {
+    "layers": 445,
+    "z_top": 80.0,
+    "layer_steps": {
+     "0.08": [
+      74.0,
+      79.92,
+      75
+     ],
+     "0.2": [
+      0.2,
+      73.8,
+      369
+     ]
+    },
+    "floating": {
+     "external_unsupported_mm": 80.68,
+     "bridge_mm": 14791.23,
+     "bridge_unsupported_mm": 7284.96,
+     "internal_unsupported_mm": 10.67
+    },
+    "overhang_walls": [
+     {
+      "layer": 20,
+      "z": 4.2,
+      "feature": "Overhang wall",
+      "points": 205,
+      "x": [
+       27.6,
+       34.6
+      ],
+      "y": [
+       37.2,
+       39.7
+      ]
+     },
+     {
+      "layer": 20,
+      "z": 4.2,
+      "feature": "Gap infill",
+      "points": 35,
+      "x": [
+       27.5,
+       34.3
+      ],
+      "y": [
+       38.5,
+       38.5
+      ]
+     },
+     {
+      "layer": 151,
+      "z": 30.4,
+      "feature": "Overhang wall",
+      "points": 150,
+      "x": [
+       21.8,
+       27.7
+      ],
+      "y": [
+       -26.5,
+       10.5
+      ]
+     },
+     {
+      "layer": 417,
+      "z": 77.84,
+      "feature": "Overhang wall",
+      "points": 6,
+      "x": [
+       -38.1,
+       -37.2
+      ],
+      "y": [
+       35.0,
+       35.2
+      ]
+     },
+     {
+      "layer": 417,
+      "z": 77.84,
+      "feature": "Gap infill",
+      "points": 4,
+      "x": [
+       -37.7,
+       -37.7
+      ],
+      "y": [
+       34.9,
+       35.1
+      ]
+     },
+     {
+      "layer": 421,
+      "z": 78.16,
+      "feature": "Overhang wall",
+      "points": 3,
+      "x": [
+       20.2,
+       21.1
+      ],
+      "y": [
+       35.0,
+       35.0
+      ]
+     }
+    ]
+   },
+   "servo-lid-cube-crank.stl": {
+    "layers": 59,
+    "z_top": 11.8,
+    "layer_steps": {
+     "0.2": [
+      0.2,
+      11.6,
+      58
+     ]
+    },
+    "floating": {
+     "external_unsupported_mm": 0.0,
+     "bridge_mm": 1909.9,
+     "bridge_unsupported_mm": 904.82,
+     "internal_unsupported_mm": 15.82
+    },
+    "overhang_walls": []
+   },
+   "servo-lid-cube-clip.stl": {
+    "layers": 33,
+    "z_top": 6.6,
+    "layer_steps": {
+     "0.2": [
+      0.2,
+      6.4,
+      32
+     ]
+    },
+    "floating": {
+     "external_unsupported_mm": 0.0,
+     "bridge_mm": 0.0,
+     "bridge_unsupported_mm": 0.0,
+     "internal_unsupported_mm": 0.0
+    },
+    "overhang_walls": []
+   },
+   "servo-lid-cube-link.stl": {
+    "layers": 37,
+    "z_top": 7.4,
+    "layer_steps": {
+     "0.2": [
+      0.2,
+      7.2,
+      36
+     ]
+    },
+    "floating": {
+     "external_unsupported_mm": 0.0,
+     "bridge_mm": 513.46,
+     "bridge_unsupported_mm": 170.37,
+     "internal_unsupported_mm": 0.36
+    },
+    "overhang_walls": []
+   },
+   "servo-lid-cube-pin.stl": {
+    "layers": 22,
+    "z_top": 4.4,
+    "layer_steps": {
+     "0.2": [
+      0.2,
+      4.2,
+      21
+     ]
+    },
+    "floating": {
+     "external_unsupported_mm": 0.0,
+     "bridge_mm": 0.0,
+     "bridge_unsupported_mm": 0.0,
+     "internal_unsupported_mm": 5.13
+    },
+    "overhang_walls": []
+   }
+  },
+  "file": "C:\\Users\\kouga\\Projects\\Web\\model-lab\\exports\\servo-lid-cube-PLA.gcode.3mf",
+  "object_order": [
+   "servo-lid-cube-box.stl",
+   "servo-lid-cube-lid.stl",
+   "servo-lid-cube-clip.stl",
+   "servo-lid-cube-crank.stl",
+   "servo-lid-cube-link.stl",
+   "servo-lid-cube-pin.stl"
+  ]
+ },
+ "PETG": {
+  "support_used": "false",
+  "prediction_s": 12637,
+  "weight_g": "127.97",
+  "filament": [
+   [
+    "42.56",
+    "127.97"
+   ]
+  ],
+  "stats": {
+   "time": "model printing time: 3h 23m 21s; total estimated time: 3h 30m 37s",
+   "filament_mm": 42564.58,
+   "filament_g_header": "127.97"
+  },
+  "objects": {
+   "servo-lid-cube-lid.stl": {
+    "layers": 154,
+    "z_top": 22.76,
+    "layer_steps": {
+     "0.08": [
+      5.0,
+      10.28,
+      67
+     ],
+     "0.2": [
+      0.2,
+      22.56,
+      86
+     ]
+    },
+    "floating": {
+     "external_unsupported_mm": 5.14,
+     "bridge_mm": 12630.75,
+     "bridge_unsupported_mm": 6415.1,
+     "internal_unsupported_mm": 2.5
+    },
+    "overhang_walls": [
+     {
+      "layer": 65,
+      "z": 8.28,
+      "feature": "Overhang wall",
+      "points": 12,
+      "x": [
+       -19.4,
+       19.4
+      ],
+      "y": [
+       34.8,
+       35.0
+      ]
+     },
+     {
+      "layer": 142,
+      "z": 20.56,
+      "feature": "Overhang wall",
+      "points": 12,
+      "x": [
+       2.8,
+       5.4
+      ],
+      "y": [
+       20.0,
+       20.2
+      ]
+     },
+     {
+      "layer": 142,
+      "z": 20.56,
+      "feature": "Gap infill",
+      "points": 3,
+      "x": [
+       4.1,
+       4.1
+      ],
+      "y": [
+       19.9,
+       20.3
+      ]
+     }
+    ]
+   },
+   "servo-lid-cube-box.stl": {
+    "layers": 445,
+    "z_top": 80.0,
+    "layer_steps": {
+     "0.08": [
+      74.0,
+      79.92,
+      75
+     ],
+     "0.2": [
+      0.2,
+      73.8,
+      369
+     ]
+    },
+    "floating": {
+     "external_unsupported_mm": 80.68,
+     "bridge_mm": 14791.23,
+     "bridge_unsupported_mm": 7284.96,
+     "internal_unsupported_mm": 10.67
+    },
+    "overhang_walls": [
+     {
+      "layer": 20,
+      "z": 4.2,
+      "feature": "Overhang wall",
+      "points": 205,
+      "x": [
+       27.6,
+       34.6
+      ],
+      "y": [
+       37.2,
+       39.7
+      ]
+     },
+     {
+      "layer": 20,
+      "z": 4.2,
+      "feature": "Gap infill",
+      "points": 35,
+      "x": [
+       27.5,
+       34.3
+      ],
+      "y": [
+       38.5,
+       38.5
+      ]
+     },
+     {
+      "layer": 151,
+      "z": 30.4,
+      "feature": "Overhang wall",
+      "points": 150,
+      "x": [
+       21.8,
+       27.7
+      ],
+      "y": [
+       -26.5,
+       10.5
+      ]
+     },
+     {
+      "layer": 417,
+      "z": 77.84,
+      "feature": "Overhang wall",
+      "points": 6,
+      "x": [
+       -38.1,
+       -37.2
+      ],
+      "y": [
+       35.0,
+       35.2
+      ]
+     },
+     {
+      "layer": 417,
+      "z": 77.84,
+      "feature": "Gap infill",
+      "points": 4,
+      "x": [
+       -37.7,
+       -37.7
+      ],
+      "y": [
+       34.9,
+       35.1
+      ]
+     },
+     {
+      "layer": 421,
+      "z": 78.16,
+      "feature": "Overhang wall",
+      "points": 3,
+      "x": [
+       20.2,
+       21.1
+      ],
+      "y": [
+       35.0,
+       35.0
+      ]
+     }
+    ]
+   },
+   "servo-lid-cube-crank.stl": {
+    "layers": 59,
+    "z_top": 11.8,
+    "layer_steps": {
+     "0.2": [
+      0.2,
+      11.6,
+      58
+     ]
+    },
+    "floating": {
+     "external_unsupported_mm": 0.0,
+     "bridge_mm": 1909.9,
+     "bridge_unsupported_mm": 904.82,
+     "internal_unsupported_mm": 15.82
+    },
+    "overhang_walls": []
+   },
+   "servo-lid-cube-clip.stl": {
+    "layers": 33,
+    "z_top": 6.6,
+    "layer_steps": {
+     "0.2": [
+      0.2,
+      6.4,
+      32
+     ]
+    },
+    "floating": {
+     "external_unsupported_mm": 0.0,
+     "bridge_mm": 0.0,
+     "bridge_unsupported_mm": 0.0,
+     "internal_unsupported_mm": 0.0
+    },
+    "overhang_walls": []
+   },
+   "servo-lid-cube-link.stl": {
+    "layers": 37,
+    "z_top": 7.4,
+    "layer_steps": {
+     "0.2": [
+      0.2,
+      7.2,
+      36
+     ]
+    },
+    "floating": {
+     "external_unsupported_mm": 0.0,
+     "bridge_mm": 513.46,
+     "bridge_unsupported_mm": 170.37,
+     "internal_unsupported_mm": 0.36
+    },
+    "overhang_walls": []
+   },
+   "servo-lid-cube-pin.stl": {
+    "layers": 22,
+    "z_top": 4.4,
+    "layer_steps": {
+     "0.2": [
+      0.2,
+      4.2,
+      21
+     ]
+    },
+    "floating": {
+     "external_unsupported_mm": 0.0,
+     "bridge_mm": 0.0,
+     "bridge_unsupported_mm": 0.0,
+     "internal_unsupported_mm": 5.13
+    },
+    "overhang_walls": []
+   }
+  },
+  "file": "C:\\Users\\kouga\\Projects\\Web\\model-lab\\exports\\servo-lid-cube-PETG.gcode.3mf",
+  "object_order": [
+   "servo-lid-cube-box.stl",
+   "servo-lid-cube-lid.stl",
+   "servo-lid-cube-clip.stl",
+   "servo-lid-cube-crank.stl",
+   "servo-lid-cube-link.stl",
+   "servo-lid-cube-pin.stl"
+  ]
+ },
+ "crank_test": {
+  "support_used": "false",
+  "prediction_s": 917,
+  "weight_g": "2.96",
+  "filament": [
+   [
+    "0.98",
+    "2.96"
+   ]
+  ],
+  "stats": {
+   "time": "model printing time: 8m 1s; total estimated time: 15m 17s",
+   "filament_mm": 975.56,
+   "filament_g_header": "2.96"
+  },
+  "objects": {
+   "None": {
+    "layers": 59,
+    "z_top": 11.8,
+    "layer_steps": {
+     "0.2": [
+      0.2,
+      11.6,
+      58
+     ]
+    },
+    "floating": {
+     "external_unsupported_mm": 0.0,
+     "bridge_mm": 1909.88,
+     "bridge_unsupported_mm": 903.41,
+     "internal_unsupported_mm": 6.61
+    },
+    "overhang_walls": []
+   }
+  },
+  "file": "C:\\Users\\kouga\\Projects\\Web\\model-lab\\exports\\servo-lid-cube-crank-test-PLA.gcode.3mf",
+  "object_order": [
+   "servo-lid-cube-crank.stl"
+  ]
+ }
+}

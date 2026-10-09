@@ -72,11 +72,16 @@ def main():
                                for k, v in sl["parts"].items()},
                 slice_calibration=sl["calibration"].get("ok"),
                 parts=mr["parts"])
-    # スライサーのプレート画像（Bambu Studio が書いたもの）
-    plate = os.path.join(os.environ.get("LID_CUBE_PLATE_DIR", ""), "plate.3mf")
+    # 刷る 3mf（plate.py が作る）のプレート画像と、時間・材料
+    plate = os.path.join(os.path.dirname(os.path.dirname(HERE)), "exports", "servo-lid-cube-PLA.gcode.3mf")
     if os.path.exists(plate):
         with zipfile.ZipFile(plate) as z:
             data["plate_png"] = base64.b64encode(z.read("Metadata/plate_1.png")).decode()
+    pr = os.path.join(BUILD, "plate_report.json")
+    if os.path.exists(pr):
+        rep = json.load(open(pr, encoding="utf-8"))
+        data["plate"] = {k: dict(prediction_s=v["prediction_s"], filament=v["filament"], support_used=v["support_used"])
+                         for k, v in rep.items() if k in ("PLA", "PETG", "crank_test")}
     js = "window.CUBE=" + json.dumps(data, ensure_ascii=False, separators=(",", ":")) + ";"
     out = os.path.join(BUILD, "web_data.js")
     with open(out, "w", encoding="utf-8", newline="\n") as fh:

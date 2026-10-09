@@ -84,6 +84,13 @@ py -3.11 tools/plate_3mf.py hug-arm-pla exports/hug-arm-upper-l.stl <...>
 部品ごとの名前とフィラメント番号が入るので、スライサー側で見分けられる。
 重なり・はみ出し・除外域を突き合わせて報告するので、その行を読んでから渡すこと。
 
+そのまま印刷に送れる `.gcode.3mf` まで作るときは Bambu Studio の CLI を使う（実例: `models/servo-lid-cube/plate.py`）。
+- ⚠⚠ **CLI は標準プロファイルの `inherits` をたどらない。** そのまま `--load-settings` に渡すと、第 1 層の補正 0・
+  Cool Plate・充填 20% など CLI の内蔵既定値で切られる。`lib/bambu_profiles.py` の `resolve()` で平らにしてから渡す
+- ユーザーの既定（既存プロジェクトから読んだ値）: X1C 0.4 / Textured PEI Plate / 0.20mm Standard / 補正 0.15 / 壁 2 / 充填 15%
+- G-code を自分で読むときは **G2/G3（円弧近似）を円弧として展開する**。弦のまま読むと角や円周が「下に支えが無い」に見える
+- 高さごとの層の厚みは `Metadata/layer_config_ranges.xml`。`<object id>` は `3D/3dmodel.model` の物体 id の小さい順の番号
+
 ### 読み取りの限界
 
 `read_3mf.py` の円筒検出は面の法線から軸を求める。フィレットや球は落ちるが、

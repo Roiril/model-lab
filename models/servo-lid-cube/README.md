@@ -45,5 +45,24 @@ py -3.11 models/servo-lid-cube/export_web.py  # 報告ページを組み直す�
 
 ## 刷る
 
-全部品サポートなし。箱は口を上、蓋は天面を下、クランクはポケットを下、リンクはピン B を上、ピンとクリップは寝かせる。
-最初にクランク（約 15 分）を刷り、付属ホーンが入るかを確かめる。入らなければ `HORN_CLR` を 0.05mm ずつ広げる。
+そのまま印刷に送れる 3mf（Bambu Studio の CLI で切ったもの）:
+
+| ファイル（exports/、prints/servo-lid-cube/ にも複製） | 中身 |
+|---|---|
+| `servo-lid-cube-PLA.gcode.3mf` | 6 部品、PLA、約 2.9 時間・133g |
+| `servo-lid-cube-PETG.gcode.3mf` | 6 部品、PETG、約 3.5 時間・128g |
+| `servo-lid-cube-crank-test-PLA.gcode.3mf` | クランクだけ（約 15 分）。付属ホーンが入るかを先に確かめる |
+
+```bash
+"C:/Program Files/Blender Foundation/Blender 5.1/blender.exe" --background --python models/servo-lid-cube/print_review.py  # 肉厚・段差・浮いた面
+py -3.11 models/servo-lid-cube/plate.py   # 刷る 3mf を作り、G-code を部品ごとに確かめる
+```
+
+- 設定は Bambu Studio 同梱の標準（X1C 0.4 / 0.20mm Standard）を `lib/bambu_profiles.py` で継承まで解いて使う。
+  **CLI は inherits をたどらない**ので、そのまま渡すと第 1 層の補正 0 / Cool Plate などで切られる
+- 上書きは `print_profile.py`: Textured PEI Plate、継ぎ目は後ろ、壁 3 周、物体ごとの中止を有効
+- 箱は 180° 回して蝶番側を奥へ（継ぎ目が後ろ面に集まる）。箱の 74〜80mm と蓋の 5〜10.3mm は層 0.08mm
+  （`Metadata/layer_config_ranges.xml`。object id は 3dmodel.model の物体 id の小さい順で数える）
+- G-code の確かめでは G2/G3（円弧）を円弧として展開する。弦のまま読むと角や円周が「支え無し」に見える
+- 全部品サポートなし。箱は口を上、蓋は天面を下、クランクはポケットを下、リンクはピン B を上、ピンとクリップは寝かせる
+- 入らなければ `HORN_CLR` を 0.05mm ずつ広げる
