@@ -1,0 +1,11 @@
+{
+  "pass": true,
+  "checks": [
+    "adjacent faces retain different normals at shared CAD vertices",
+    "all 51 rendered meshes reproduce the same triangle coordinates",
+    "every triangle has one equal normal for its three vertices"
+  ],
+  "meshes": 51,
+  "source_sha256": "1ababb93dba4ef81368ba7767d3b13f180b4e43a407c336acef9d6a9150ac4c6",
+  "cad_changed": false
+}

@@ -1,6 +1,7 @@
 import * as THREE from './vendor/three.module.js';
 import {OrbitControls} from './vendor/OrbitControls.js';
 import {createAssembly,Playback,routeMesh} from './core.mjs';
+import {meshGeometry} from './render_geometry.mjs';
 import {STEPS,NAMES,STOCK,LIMITS,AUTO_HOLDS} from './steps.mjs';
 const $=id=>document.getElementById(id), reduced=matchMedia('(prefers-reduced-motion: reduce)');
 const player=new Playback(STEPS.length,reduced.matches,Object.keys(AUTO_HOLDS).map(Number));
@@ -50,7 +51,6 @@ $('camera').onclick=()=>recommendCamera(true);$('overview').onclick=()=>overview
 document.addEventListener('keydown',e=>{if(e.target.matches('input,select,textarea,button,a,summary')||e.altKey||e.ctrlKey||e.metaKey)return;if(e.key==='ArrowRight'){e.preventDefault();setStep(player.index+1);}if(e.key==='ArrowLeft'){e.preventDefault();setStep(player.index-1);}if(e.key==='Home'){e.preventDefault();setStep(0);}if(e.key==='End'){e.preventDefault();setStep(STEPS.length-1);}if(e.code==='Space'){e.preventDefault();$('play').click();}});
 reduced.addEventListener('change',e=>{player.reduced=e.matches;if(e.matches){player.pause();player.fraction=1;}renderInstructions();});
 document.addEventListener('visibilitychange',()=>{lastTime=0;if(document.hidden&&player.running)player.pause('背景へ移動したため停止。戻っても自動再開しません。');renderInstructions();});
-function meshGeometry(part,center){const g=new THREE.BufferGeometry();const verts=part.vertices.map((n,i)=>n-center[i%3]);g.setAttribute('position',new THREE.Float32BufferAttribute(verts,3));g.setIndex(part.indices);g.computeVertexNormals();return g;}
 function setupScene(){
   scene=new THREE.Scene();scene.background=new THREE.Color(0xeaf1f6);
   camera=new THREE.PerspectiveCamera(38,1,.001,10);camera.up.set(0,0,1);
@@ -66,7 +66,7 @@ function setupScene(){
   groups={};labels={};$('labels').replaceChildren();
   for(const item of assembly.items){
     const group=new THREE.Group();group.userData.id=item.id;
-    for(const name of item.meshes){const part=assembly.cad.parts.find(p=>p.name===name),isRoute=routeMesh(name);const geometry=meshGeometry(part,item.center);const material=new THREE.MeshStandardMaterial({color:item.id==='S1'?0x3f6893:item.id==='S2'?0xe6e3d6:item.id==='S3'?0x627c82:0xd3e0e8,roughness:.7,metalness:.04,transparent:false});const mesh=new THREE.Mesh(geometry,material);mesh.userData={id:item.id,route:isRoute};group.add(mesh);
+    for(const name of item.meshes){const part=assembly.cad.parts.find(p=>p.name===name),isRoute=routeMesh(name);const geometry=meshGeometry(part,item.center);const material=new THREE.MeshStandardMaterial({color:item.id==='S1'?0x3f6893:item.id==='S2'?0xe6e3d6:item.id==='S3'?0x627c82:0xd3e0e8,roughness:.7,metalness:.04,transparent:false,flatShading:true});const mesh=new THREE.Mesh(geometry,material);mesh.userData={id:item.id,route:isRoute};group.add(mesh);
       if(!isRoute){const edge=new THREE.LineSegments(new THREE.EdgesGeometry(geometry,27),edgesMaterial);edge.computeLineDistances();edge.userData={id:item.id,edge:true};group.add(edge);}
     }
     scene.add(group);groups[item.id]=group;
@@ -125,5 +125,11 @@ function loop(time){requestAnimationFrame(loop);const dt=lastTime?Math.min(.1,(t
   orbit.update();renderer.render(scene,camera);positionLabels();
 }
 requestAnimationFrame(loop);load();
+function shadingEvidence(){
+  const meshes=Object.values(groups).flatMap(g=>g.children.filter(x=>x.isMesh));let unequalTriangles=0;
+  for(const mesh of meshes){const normal=mesh.geometry.getAttribute('normal').array;for(let i=0;i<normal.length;i+=9)for(let k=0;k<3;k++)if(normal[i+k]!==normal[i+3+k]||normal[i+k]!==normal[i+6+k])unequalTriangles++;}
+  return {meshes:meshes.length,allFlat:meshes.every(m=>m.material.flatShading),allNonIndexed:meshes.every(m=>m.geometry.index===null),unequalTriangles,transparentMeshes:meshes.filter(m=>m.material.opacity<1).length,ghostsWireframeOnly:ghosts.every(g=>g.children.every(x=>x.isLineSegments))};
+}
 // ローカル検査用の読取り専用スナップショット。UIの操作は実際のボタンで確認する。
 window.__assemblyTest={get state(){return {ready,index:player.index,fraction:player.fraction,running:player.running,speed:player.speed,mode:player.mode,phase:player.phase,dwell:player.dwell,dwellElapsed:player.dwellElapsed,pauseReason:player.pauseReason,selected,groups:Object.keys(groups),poses:assembly?.sample(player.index,player.fraction).poses,renderedPoses:Object.fromEntries(Object.entries(groups).map(([id,g])=>[id,{position:g.position.toArray(),quaternion:g.quaternion.toArray()}]))};},get labelRects(){return Object.values(labels).filter(x=>!x.hidden).map(x=>({id:x.dataset.id,x:x.offsetLeft,y:x.offsetTop,w:x.offsetWidth,h:x.offsetHeight}));},get screenPoints(){const r=renderer.domElement.getBoundingClientRect();return Object.entries(groups).map(([id,g])=>{const p=g.position.clone().project(camera);return {id,x:r.x+(p.x*.5+.5)*r.width,y:r.y+(-p.y*.5+.5)*r.height};});}};
+Object.defineProperty(window.__assemblyTest,'shading',{get:shadingEvidence});
