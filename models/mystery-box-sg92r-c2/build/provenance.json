@@ -1,0 +1,123 @@
+{
+ "model": "mystery-box-sg92r-c2",
+ "source_sha256": {
+  "models/mystery-box-sg92r-c2/.gitignore": "a23746724809c8cd9bb21b893a964da25646963a53bf3165ed88590c75eaf2b0",
+  "models/mystery-box-sg92r-c2/catalog.json": "9e8e93784a96c2e73c5738646c1e812bd20d1a1f1bb326f9dd7379552460f879",
+  "models/mystery-box-sg92r-c2/deliver.py": "bd00492bf77c27dee7322a1f7360bf106395db51f18bbc81e215a678ff081b98",
+  "models/mystery-box-sg92r-c2/export_web.py": "d9855db6512cabcb6404ca3167542b60b5cdddeab921914234ee9049a70cede2",
+  "models/mystery-box-sg92r-c2/linkage.py": "9a8a247249013b20f419b50fd6881295d73b8c04c2dc2c549d0d056b5979ea79",
+  "models/mystery-box-sg92r-c2/model.py": "62cb43e0c5c395bd4b0d258fe9d952d7f505c105a402d76fd084edc60b18eced",
+  "models/mystery-box-sg92r-c2/params.py": "18d4cbf449e27137bff220c84aa3b7d5170be6852ecd13949c9a7e1a0d7da3e4",
+  "models/mystery-box-sg92r-c2/plate.py": "47e23a11da55d7ae04474af651edfd53659ee2eff883e370d4601ff0e950806d",
+  "models/mystery-box-sg92r-c2/print_profile.py": "3f46c1ffc4372f59294ae667a2b6d339864db7ce27ce63bc89c3d99fc0ec2901",
+  "models/mystery-box-sg92r-c2/print_review.py": "7e2554c0bd609a7d311fa989ce22af75543cef0467f53f724dcddaa10da74c38",
+  "models/mystery-box-sg92r-c2/README.md": "d6ae65e03d002e679abf83f88773352eda3ce885cf3f38f0f73b61227ac1d192",
+  "models/mystery-box-sg92r-c2/render_preview.py": "754e2d3d461db180355b255120bfa14e4976936432a16b53187bf4cdc3cddb4d",
+  "models/mystery-box-sg92r-c2/report_template.html": "27dec1f4999bf26f55198a56526e9d2ea80c9b3c50e8982ced836ffc096fdfe7",
+  "models/mystery-box-sg92r-c2/simulate.py": "526586f833962a580144192d8b1fe5cbc4a0adb7d35a0d6b1b53d8e309af3577",
+  "models/mystery-box-sg92r-c2/slice_check.py": "833a73b8c010c3190d7de188d5f4efb7a3bfc0609fadc223c58e6634dfd4586a",
+  "models/mystery-box-sg92r-c2/verify.py": "0ef60c16e9b8b5bb4ca3d1b810db464e858359ce8c08f9a7349ae863da551147",
+  "models/mystery-box-sg92r-c2/verify_boolean.py": "ec2ae96a081d3a96a6c4409d5110cb3ba196102ff2e085dfb5201ab27e050544",
+  "models/mystery-box-sg92r-c2/verify_stl.py": "6a662661af2cb741ec96b979697778c84cce25bfceeac9327930eebbe1627647",
+  "models/mystery-box-sg92r-c2/slow_open/slow_open.ino": "763a2d3f85dcf7f7ef26731d14b4ce6e16039d7f9de0a4b9b2c928a0f92e6ca2",
+  "models/sg92r-photo/params.py": "99535f8e4df8362e3f5511bb891495ad41f70d069b0108dfedfe1cab615fd835"
+ },
+ "delivery_files": [
+  {
+   "name": "box.stl",
+   "bytes": 228284,
+   "sha256": "44b0f6092b39de9362ba28cf7f5bcb0154dec36b0809f19a093d3139a4d4b189"
+  },
+  {
+   "name": "lid.stl",
+   "bytes": 392684,
+   "sha256": "fffa889a6aec1d7d7e307fa68ebcac7e25d8c801cefc21dc62b5f998a6db1b0d"
+  },
+  {
+   "name": "crank.stl",
+   "bytes": 323284,
+   "sha256": "1db5fb7bd16e2fbbac5d3b3231ac8bfc53be6b55d5736d6703b3057c0bd5d418"
+  },
+  {
+   "name": "link.stl",
+   "bytes": 226984,
+   "sha256": "3dc050d9ab809cb2e0ac65e74a167ca9bc251419c112b1d5ff064e857c4e4fb5"
+  },
+  {
+   "name": "pin.stl",
+   "bytes": 68284,
+   "sha256": "d92c9f418d48f4ad7acb072de3b628d95b6496efb6140bac0b52aa0d14cfc303"
+  },
+  {
+   "name": "clip.stl",
+   "bytes": 2684,
+   "sha256": "bd99c691dee3f57b34f3ef5f9746390e745a2ccbd3aa57bb1a46661228449fa7"
+  },
+  {
+   "name": "speaker_clip.stl",
+   "bytes": 5484,
+   "sha256": "46ef5b6f542750ce1561727fd54a6d7dd39e6d21608584f8a993f7c4a94df81f"
+  },
+  {
+   "name": "roof.stl",
+   "bytes": 20184,
+   "sha256": "3becd937421712379a9b6079b9bdb582309213ae7822561c518ce89567dba790"
+  },
+  {
+   "name": "speaker_test.stl",
+   "bytes": 27184,
+   "sha256": "354aada78756be11b5a84e9d2fd08dcaf32770b59aedc4adae91d58221d863f8"
+  },
+  {
+   "name": "roof_test_body.stl",
+   "bytes": 8684,
+   "sha256": "7ee8f82e293a293daa53d47fd1331d60dd6f3429f8472f56c749c5d562b74305"
+  },
+  {
+   "name": "roof_test.stl",
+   "bytes": 8384,
+   "sha256": "df9211e14c888ab305f8f8d7a67166efd9f34a04fdb452525552970c86065d1d"
+  },
+  {
+   "name": "mystery-box-sg92r-c2-PLA.gcode.3mf",
+   "bytes": 1247306,
+   "sha256": "43e673e57a060f4d2f345d17b847c6354130ca3d413a0e3ab806217f5b87f506"
+  },
+  {
+   "name": "mystery-box-sg92r-c2-PETG.gcode.3mf",
+   "bytes": 1248456,
+   "sha256": "df965084cca2fd1b3c233902ee134cebb6f7ec3b1fcab1bd6d8a67491d392b5c"
+  },
+  {
+   "name": "mystery-box-sg92r-c2-crank-test-PLA.gcode.3mf",
+   "bytes": 206820,
+   "sha256": "78e6f2bce522ca8e781dd392c21dbcc995e0709fd772001c31524ffb0709a398"
+  },
+  {
+   "name": "mystery-box-sg92r-c2-speaker-test-PLA.gcode.3mf",
+   "bytes": 124415,
+   "sha256": "5db4062975387424167db6113bd0cf9a4a2511589f47fd00a44bfad848373af5"
+  },
+  {
+   "name": "mystery-box-sg92r-c2-joints-test-PLA.gcode.3mf",
+   "bytes": 164851,
+   "sha256": "663af5053bbed2597294dfcd32f46c255fa23b6ab8716d462375f7edf308113e"
+  },
+  {
+   "name": "mystery-box-sg92r-c2-roof-test-PLA.gcode.3mf",
+   "bytes": 99177,
+   "sha256": "946a536cb3a7204ec15969e25d2470e9556b75dd5eb7df50030cc0e714d79bed"
+  },
+  {
+   "name": "mystery-box-sg92r-c2-roof-test-PETG.gcode.3mf",
+   "bytes": 100420,
+   "sha256": "3b90b37e34931bd5e9cacc123f2c859c2006f3132492e1be3c00012c4f10317f"
+  },
+  {
+   "name": "mystery-box-sg92r-c2-plate.3mf",
+   "bytes": 246039,
+   "sha256": "cee893b94ea765a224899564e9accc3d4696edb92c78d14c9d16638e6413d284"
+  }
+ ],
+ "preserved_files": 344
+}

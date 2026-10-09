@@ -16,7 +16,7 @@ for (const mode of ['physics', 'assembly']) {
 }
 assert.throws(() => workspaceHref('unknown'), RangeError);
 // 画面を登録したモデルは自分の画面へ。登録していないモデルは押せない
-for (const model of ['servo-lid-cube', 'mystery-box-sg92r-c1']) {
+for (const model of ['servo-lid-cube', 'mystery-box-sg92r-c1', 'mystery-box-sg92r-c2']) {
   for (const mode of ['physics', 'assembly']) {
     const url = new URL(workspaceHref(mode, model), 'http://localhost:3000');
     assert.equal(url.pathname, WORKSPACE_PAGES[model][mode]);

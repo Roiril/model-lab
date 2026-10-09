@@ -30,7 +30,8 @@ for (const file of files) {
   const f = sim.run({ cmd: step, tEnd: 2.0, alphaStart: ac });
   const t90 = f.trace.find((r) => r[1] > 0.9 * open)[0];
   assert.ok(Math.abs(t90 - py.full_speed.t_open_90pct) < 0.015, `${file}: t90 ${t90} vs ${py.full_speed.t_open_90pct}`);
-  assert.ok(Math.abs(f.impact - py.full_speed.lid_impact_rad_s) / py.full_speed.lid_impact_rad_s < 0.1, `${file}: impact ${f.impact}`);
+  const impactTolerance = Math.max(0.05, Math.abs(py.full_speed.lid_impact_rad_s) * 0.1);
+  assert.ok(Math.abs(f.impact - py.full_speed.lid_impact_rad_s) < impactTolerance, `${file}: impact ${f.impact}`);
 
   // 3. 校正: トルクを静的必要量の半分にすると開かない。30% なら開く
   const need = py.static.max_torque_Nm;

@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="ja">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>住人の箱 C2 — 設計と検証</title>
+<style>
+:root {
+  --paper:#f5efe2; --card:#ece4d4; --ink:#2b2723; --mute:#6a6257; --line:#d8cdb8;
+  --accent:#b85042; --accent-strong:#a8493c; --accent-2:#5f7d70; --accent-2-strong:#526c61;
+  --serif:"Shippori Mincho","Yu Mincho","YuMincho","Hiragino Mincho ProN","MS PMincho",serif;
+  --gothic:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic UI","Yu Gothic",Meiryo,system-ui,sans-serif;
+  --mono:ui-monospace,"Cascadia Code",Consolas,"Courier New",monospace;
+  --fs-xs:.75rem; --fs-sm:.875rem; --fs-base:1rem; --fs-md:1.125rem; --fs-lg:1.375rem; --fs-xl:1.875rem;
+  --sp-1:.25rem; --sp-2:.5rem; --sp-3:.75rem; --sp-4:1rem; --sp-6:1.5rem; --sp-8:2rem; --sp-12:3rem; --sp-16:4rem;
+  --measure:46rem;
+}
+@media (prefers-color-scheme:dark) {
+  :root:not([data-theme="light"]) {
+    --paper:#191512; --card:#221d18; --ink:#ede6d6; --mute:#a99e90; --line:#3a332b;
+    --accent:#e0663a; --accent-strong:#e87d55; --accent-2:#8fae9f; --accent-2-strong:#a3bfb1; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper:#191512; --card:#221d18; --ink:#ede6d6; --mute:#a99e90; --line:#3a332b;
+  --accent:#e0663a; --accent-strong:#e87d55; --accent-2:#8fae9f; --accent-2-strong:#a3bfb1; color-scheme:dark;
+}
+* { box-sizing:border-box; }
+html { background:var(--paper); -webkit-text-size-adjust:100%; }
+body { margin:0; color:var(--ink); background:var(--paper); font-family:var(--gothic); font-size:var(--fs-base); line-height:1.8; }
+.wrap { max-width:var(--measure); margin:0 auto; padding:var(--sp-12) var(--sp-4) var(--sp-16); }
+h1,h2,h3 { font-family:var(--serif); font-weight:600; line-height:1.35; text-wrap:balance; }
+h1 { font-size:var(--fs-xl); margin:0 0 var(--sp-2); }
+h2 { font-size:var(--fs-lg); margin:var(--sp-12) 0 var(--sp-4); padding-top:var(--sp-3); border-top:2px solid var(--ink); }
+h3 { font-family:var(--gothic); font-size:var(--fs-md); margin:var(--sp-8) 0 var(--sp-2); }
+p { margin:var(--sp-2) 0; }
+ul,ol { margin:var(--sp-2) 0 var(--sp-4); padding-left:1.4em; }
+li { margin:var(--sp-1) 0; }
+a { color:var(--accent-strong); text-underline-offset:.18em; }
+code { font-family:var(--mono); font-size:.92em; background:var(--card); padding:.1em .35em; }
+.eyebrow { font-size:var(--fs-xs); letter-spacing:.12em; color:var(--accent-strong); margin:0 0 var(--sp-2); }
+.sub { color:var(--mute); font-size:var(--fs-sm); margin:0 0 var(--sp-8); }
+.lead { background:var(--card); border-left:4px solid var(--accent); padding:var(--sp-4); margin:var(--sp-6) 0; }
+.lead > :first-child { margin-top:0; } .lead > :last-child { margin-bottom:0; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:1px; background:var(--line); border:1px solid var(--line); margin:var(--sp-6) 0; }
+.card { background:var(--card); padding:var(--sp-3) var(--sp-4); min-width:0; }
+.card b { display:block; font-family:var(--mono); font-size:var(--fs-lg); font-variant-numeric:tabular-nums; }
+.card span { display:block; color:var(--mute); font-size:var(--fs-sm); line-height:1.5; }
+.tblwrap { overflow-x:auto; margin:var(--sp-4) 0 var(--sp-6); }
+table { border-collapse:collapse; width:100%; font-size:var(--fs-sm); line-height:1.5; }
+th,td { border:1px solid var(--line); padding:.45em .7em; text-align:left; vertical-align:top; }
+th { background:var(--card); white-space:nowrap; }
+.num { font-family:var(--mono); font-variant-numeric:tabular-nums; white-space:nowrap; }
+.chip { display:inline-block; font-size:var(--fs-xs); line-height:1.5; padding:.05em .55em; border:1px solid var(--line); background:var(--card); }
+.chip.ok { color:var(--accent-2-strong); border-color:var(--accent-2); }
+figure { margin:var(--sp-6) 0; }
+figure img { display:block; width:100%; height:auto; border:1px solid var(--line); }
+figcaption { color:var(--mute); font-size:var(--fs-sm); margin-top:var(--sp-2); }
+.previews { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:var(--sp-4); }
+.muted { color:var(--mute); }
+.note { font-size:var(--fs-sm); color:var(--mute); border-top:1px solid var(--line); margin-top:var(--sp-12); padding-top:var(--sp-4); }
+@media (max-width:30rem) { .wrap { padding:var(--sp-8) var(--sp-4) var(--sp-12); } h1 { font-size:var(--fs-lg); } h2 { font-size:var(--fs-md); margin-top:var(--sp-8); } }
+@media print {
+  :root { --paper:#fff; --card:#f2f2f2; --ink:#000; --mute:#555; --line:#bbb; --accent:#000; --accent-strong:#000; }
+  .wrap { max-width:none; padding:0; } h2 { break-after:avoid; } .lead,.grid,.tblwrap,figure { break-inside:avoid; }
+}
+</style>
+<main class="wrap">
+  <p class="eyebrow">3Dプリント用機構 · 2026-10-10</p>
+  <h1>住人の箱 C2</h1>
+  <p class="sub">B3を現行の検証手順で見直した、前側可動天面と後ろ固定天面の別モデル</p>
+
+  <div class="lead">
+    <p>70mm角と0〜65°を保ち、印刷部品をB3の22点から8点へ減らしました。工具、ねじ、接着剤を使わずに組んで外す構成です。</p>
+    <p>後ろの固定天面は点検口です。左右の解除つまみを外側から箱の中央へ押して上へ外します。蝶番の荷重は箱本体が受けます。手操作、長い脚の造形安定性、保持力、電圧、摩擦、音は未確認です。</p>
+  </div>
+
+  <div class="grid">
+    <div class="card"><b>70 × 70 × 70 mm</b><span>閉じたときの外形</span></div>
+    <div class="card"><b>0〜65°</b><span>前側可動天面の範囲</span></div>
+    <div class="card"><b>8 点</b><span>印刷する部品</span></div>
+    <div class="card"><b id="stroke">—</b><span>サーボの使用角</span></div>
+  </div>
+
+  <div class="previews" id="previews"></div>
+
+  <h2>要件ごとの結果</h2>
+  <div class="tblwrap"><table>
+    <thead><tr><th>要件</th><th>実装</th><th>検証</th></tr></thead>
+    <tbody id="requirements"></tbody>
+  </table></div>
+
+  <h2>部品</h2>
+  <div class="tblwrap"><table>
+    <thead><tr><th>種類</th><th>部品</th><th>扱い</th></tr></thead>
+    <tbody>
+      <tr><td>印刷</td><td>箱、可動天面、固定天面、クランク、リンク、蝶番ピン、サーボ押さえ、エキサイター押さえ</td><td>PLAとPETGを各1枚へ配置する</td></tr>
+      <tr><td>既製</td><td>SG92R、付属ホーン、配線</td><td><code>models/sg92r-photo/</code> の正本を読み込む</td></tr>
+      <tr><td>既製</td><td>直径25mm、高さ10mmのエキサイター</td><td>仮の包絡寸法。接触面、保持力、音は未確認</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>組み立て</h2>
+  <p>サーボ一式を先に箱へ入れます。可動天面はその後に95°で載せます。固定天面は最後に付けます。</p>
+  <ol>
+    <li>エキサイターを上から右壁の案内へ入れます。押さえを上から差します。</li>
+    <li>箱の外でサーボを90°にします。中央姿勢に合う向きで付属ホーンを付け、クランクをかぶせます。</li>
+    <li>リンクの鍵溝をピンAの爪に合わせて差します。リンクを動作位置まで回します。</li>
+    <li>サーボ一式を上から箱へ下ろします。配線を後ろの出口へ通します。</li>
+    <li>サーボ押さえを上から押し込みます。</li>
+    <li>可動天面を95°にします。箱の40mm上から下ろして蝶番を合わせます。</li>
+    <li>蝶番ピンを右から入れます。</li>
+    <li>リンクの先を3.4mm逃がします。可動天面を中央姿勢へ下ろし、ピンBを耳の穴へ入れます。</li>
+    <li>固定天面を上から下ろします。左右の爪が壁内側の溝へ掛かるまで押します。</li>
+    <li>サーボを閉じる側へ1°ずつ動かします。可動天面が縁に載った位置を閉位置とします。</li>
+  </ol>
+  <p>点検口を外すときは、可動天面を32.5°に開きます。正面の開口から左右のつまみへ指を入れます。左右のつまみを箱の中央へ押したまま固定天面を上へ引きます。指の経路は中心X=±24.5mm、Z=45mmで確かめました。蝶番ピンは左端を押し、右へ出た端をつまみます。</p>
+  <p>電源を切っても、可動天面には閉じる向きの自重が掛かります。ギアと継ぎ手の抵抗で止まるかは実物で確かめます。</p>
+  <p id="servoGuide"></p>
+
+  <h2>機構と物理検証</h2>
+  <div class="tblwrap"><table>
+    <thead><tr><th>項目</th><th>値</th><th>判定</th></tr></thead>
+    <tbody id="physics"></tbody>
+  </table></div>
+  <p>Studio の <a href="http://localhost:3000/viewer/lid-cube/physics.html?model=mystery-box-sg92r-c2">物理検証</a>では、条件を変えて開閉を再計算できます。<a href="http://localhost:3000/viewer/lid-cube/assembly.html?model=mystery-box-sg92r-c2">組み立て</a>では上の工程を3Dで再生できます。</p>
+
+  <h2>B3の独立レビュー</h2>
+  <div class="tblwrap"><table>
+    <thead><tr><th>重要度</th><th>B3で確認した問題</th><th>C2での扱い</th></tr></thead>
+    <tbody>
+      <tr><td>高</td><td>分解に工具3本と直径3mmの押し棒が要る。箱の下に85mmの作業空間も要る</td><td>底面の工具留め具をなくした。固定天面、蝶番、サーボ押さえを手で外す</td></tr>
+      <tr><td>高</td><td>負荷計算が蓋の質量だけを扱い、クランクとリンクの質量と慣性を含まない</td><td>蓋、クランク、リンクを別メッシュから積算する</td></tr>
+      <tr><td>中</td><td>サーボ上のストップが0.2mm。蝶番肩が0.35mm</td><td>サーボ台を箱へ一体化した。壁と底を3mmにした</td></tr>
+      <tr><td>中</td><td>形状3mfだけで、プリンタと材料の設定を持つ完成ファイルがない</td><td>X1C用のPLA/PETG完成 <code>gcode.3mf</code> を作る</td></tr>
+    </tbody>
+  </table></div>
+  <p>共有の薄肉計器は、止まる形と通る形で校正しました。その計器でB3の本体に0.03mm、蓋に0.98mmの例を検出しました。これはB3の再監査結果です。C2の合格を示す値ではありません。</p>
+
+  <h2>印刷</h2>
+  <p>箱は口を上にします。可動天面と固定天面は外から見える面を下にします。細い部品は寝かせます。エキサイター押さえも平らに置きます。</p>
+  <div class="tblwrap"><table>
+    <thead><tr><th>部品</th><th>印刷時の外形</th><th>閉じていない辺</th><th>下の層に支えがない壁の経路長</th></tr></thead>
+    <tbody id="printing"></tbody>
+  </table></div>
+  <p id="unsupportedNote">外部未支持経路を読込中です。</p>
+  <p>外部未支持経路は0ではありません。クリップ溝、爪の受け、蝶番穴、リンクB穴など狭い内側形状に残ります。目立つ外装の張り出しは修正しました。橋渡しは別に記録しています。これらの値は実物の印刷成功を示しません。</p>
+  <p>X1Cの0.4mmノズル用です。部品間は6mm。蝶番付近は0.08mm積層です。他は0.2mm。PLA用とPETG用のサポート使用は0です。</p>
+  <div class="tblwrap"><table>
+    <thead><tr><th>ファイル</th><th>推定時間</th><th>フィラメント</th><th>配置</th></tr></thead>
+    <tbody id="deliveries"></tbody>
+  </table></div>
+  <p>付属ホーン、継ぎ手、エキサイター保持、固定天面を試片で先に確かめます。固定天面だけはPLAとPETGの両方を刷ります。<a id="manifestLink" href="../prints/mystery-box-sg92r-c2/manifest.json" download="mystery-box-sg92r-c2-manifest.json">ファイル一覧とSHA256</a>に最終ファイルの検査値を収めました。Arduino例の端角は計算上の目安です。実物では歯の位置に合わせて1°ずつ調整します。</p>
+  <figure id="plate" hidden></figure>
+
+  <h2>決めたこと</h2>
+  <ul>
+    <li>前側だけが動く天面と、手で外せる後ろ固定天面に分けました。</li>
+    <li>固定天面の前後幅をB3の約26.8mmから約16.2mmへ縮めました。サーボ軸はB3より6mm前です。</li>
+    <li>固定天面は外側の解除つまみを箱の中央へ押して上へ外します。箱本体が蝶番を支えます。</li>
+    <li>解除つまみの下端はX=±18〜20mm、Z=39〜41mmです。45°の一体腕で16mmの脚へつなぎました。爪は高さ4.8mmで、先端に2mmの厚みを残しました。</li>
+    <li>壁、底、天面は3mmです。外形の角はR5です。</li>
+    <li>SG92Rと付属ホーンは <code>models/sg92r-photo/</code> の正本を読み込みます。</li>
+    <li>可動天面32.5°を中央姿勢にしました。この姿勢でサーボを90°にします。</li>
+    <li>動作は1.2秒の始めと終わりをゆっくりした指令を推奨します。時間は実物の結果で調整します。</li>
+  </ul>
+
+  <h2>譲ったこと</h2>
+  <p>天面の分割線と蝶番付近の溝は外から見えます。内部へ手を入れられることと、工具なしで分解できることを優先しました。</p>
+  <p>エキサイターは25 × 10mmの仮包絡です。リンクと固定天面のひずみは梁としての近似です。材料試験や有限要素解析による強度確認ではありません。</p>
+
+  <h2>実物で確かめること</h2>
+  <ol>
+    <li>付属ホーン試片を刷ります。固い場合は <code>HORN_CLR</code> を0.05mmずつ広げます。</li>
+    <li>PLAとPETGの固定天面試片を刷ります。外側の解除つまみを中央へ押せるか、16mmの脚が安定して造形できるか、爪が保持できるか、白化せず外せるかを比べます。</li>
+    <li>蝶番ピン、リンク、サーボ押さえを試します。割れ、抜け、手で外せるかを見ます。</li>
+    <li>エキサイターの接触面、保持力、音量、びびりを確かめます。</li>
+    <li>全体を組みます。電圧、摩擦、保持、手での分解、0〜65°の実動作を確かめます。</li>
+    <li>1.2秒の開閉で端の衝撃を見ます。強ければ時間を延ばします。</li>
+  </ol>
+
+  <p class="note">ソース: <code>models/mystery-box-sg92r-c2/</code>。検証の生データ: <code>models/mystery-box-sg92r-c2/build/*_report.json</code>。Studio: <code>http://localhost:3000/?model=mystery-box-sg92r-c2</code></p>
+</main>
+<script>/*CUBE_DATA*/</script>
+<script>
+(() => {
+  const D = window.CUBE;
+  const printHref = (file) => location.protocol === "file:"
+    ? `../prints/mystery-box-sg92r-c2/${file}`
+    : `http://localhost:3000/exports/${file}`;
+  document.getElementById("manifestLink").href = `data:application/json;charset=utf-8,${encodeURIComponent(JSON.stringify(D.delivery, null, 1))}`;
+  const fmt = (value, digits = 1) => Number(value).toFixed(digits).replace(/\.0$/, "");
+  const esc = (value) => String(value).replace(/[&<>"']/g, (char) => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" })[char]);
+  const row = (values) => `<tr>${values.map((value, index) => `<td${index === 1 ? ' class="num"' : ""}>${value}</td>`).join("")}</tr>`;
+  const setup = D.servo_setup;
+  document.getElementById("stroke").textContent = `${fmt(setup.stroke_deg)}°`;
+  document.getElementById("servoGuide").textContent = `サーボ90°を中央姿勢に合わせます。閉は +${fmt(setup.closed_offset_deg)}°相当、開は ${fmt(setup.open_offset_deg)}°相当です。全体を ${fmt(setup.motion_time_s)} 秒かけて動かします。`;
+
+  const V = D.verify;
+  const printPartKeys = ["box", "lid", "roof", "crank", "link", "pin", "clip", "speaker_clip"];
+  const meshOk = printPartKeys.every((key) => D.parts[key].nonmanifold === 0);
+  const thinOk = printPartKeys.every((key) => (D.print_review.parts[key].thin_under_1_2mm || []).length === 0);
+  document.getElementById("requirements").innerHTML = [
+    ["70mm角の箱", "閉じた外形を70 × 70 × 70mmにした", "model_report.json の外接箱"],
+    ["前側天面0〜65°", "SG92Rと4節リンクで前側だけを動かす", `${V.motion.steps}姿勢で意図しない当たり ${V.motion.poses_with_hits.length}件`],
+    ["後ろ固定天面", "外側の解除つまみを箱の中央へ押して上へ外す点検口", `解除変位 ${fmt(V.assembly.J_roof_release.delta_mm, 2)}mm。手操作は未確認`],
+    ["印刷部品だけで固定", "圧入、バヨネット、スナップ、落とし込みを使用", "組み立て経路を工程ごとに判定"],
+    ["接着剤を使わない", "エキサイターも専用押さえで留める", "保持力と音は実物確認"],
+    ["サポートなし", "見える面を下または上にして8部品を配置", D.slice_calibration ? "スライス計器を校正済み" : "スライス計器は要確認"],
+    ["印刷メッシュ", "8部品の非多様体辺と1.2mm未満の薄肉を調べる", meshOk && thinOk ? "非多様体辺0。薄肉リスト空" : "要確認"],
+    ["分解できる", "蝶番、固定天面、サーボ押さえを手で外す", "手での操作は実物確認"],
+  ].map(row).join("");
+
+  const A = V.assembly;
+  const empty = (value) => !value || Object.keys(value).length === 0;
+  const sim = D.sim;
+  const clearance = V.clearance;
+  const fingerObstacles = Object.values(A.J_finger_approach.obstacles).reduce((sum, values) => sum + values.length, 0);
+  const pressObstacles = Object.values(A.J_finger_press.obstacles).reduce((sum, values) => sum + values.length, 0);
+  document.getElementById("physics").innerHTML = [
+    ["4節リンク", `H(${D.kin.H.map((v) => fmt(v)).join(", ")}) / O(${D.kin.O.map((v) => fmt(v)).join(", ")}) / a ${fmt(D.kin.a)}mm / l ${fmt(D.kin.l, 4)}mm`, '<span class="chip ok">寸法化</span>'],
+    ["動作範囲", `0〜${fmt(D.kin.open_theta)}°、${V.motion.steps}姿勢`, V.motion.poses_with_hits.length ? "当たりあり" : '<span class="chip ok">当たりなし</span>'],
+    ["サーボ一式を下ろす", `中央姿勢、上から${fmt(D.assembly.lower_from_mm)}mm`, empty(A.D_servo_unit_lower?.worst) ? '<span class="chip ok">意図しない当たりなし</span>' : "当たりあり"],
+    ["可動天面を組む", `${fmt(D.assembly.lid_back_deg)}°、${fmt(D.assembly.lid_place_from_mm)}mm上から載せて蝶番ピンを挿入`, "左の割り先端だけ片側0.05mm圧入"],
+    ["リンクを逃がす", `${fmt(A.F_lid_down_with_link_bent.b_end_shift_mm)}mm、自由長 ${fmt(A.F_link_free_span_mm, 2)}mm、推定ひずみ ${fmt(A.F_link_bend_strain_pct, 2)}%`, "梁の近似。強度は実物試験"],
+    ["固定天面の着脱", `脚の自由長 ${fmt(A.J_roof_free_span_mm)}mm、解除変位 ${fmt(A.J_roof_release.delta_mm, 2)}mm、推定ひずみ ${fmt(A.J_roof_press_strain_pct, 2)}%`, Object.keys(A.J_roof_release?.blocking || {}).length ? "経路に当たりあり" : '<span class="chip ok">解除経路に妨げなし</span>'],
+    ["指を入れる経路", `直径 ${fmt(A.J_finger_approach.diameter_mm)}mm、中心 X=±${fmt(Math.abs(A.J_finger_approach.centers_xz_mm[0][0]), 1)}mm / Z=${fmt(A.J_finger_approach.centers_xz_mm[0][1])}mm`, fingerObstacles ? `障害 ${fingerObstacles}件` : '<span class="chip ok">計算上の障害0</span>'],
+    ["つまみを押す経路", `箱の中央へ ${fmt(A.J_finger_press.delta_mm, 2)}mm`, pressObstacles ? `障害 ${pressObstacles}件` : '<span class="chip ok">計算上の障害0。手操作は未確認</span>'],
+    ["解除した爪", `外端 X=±${fmt(A.J_roof_release.released_hook_max_abs_x_mm, 2)}mm、壁との隙間 ${fmt(A.J_roof_release.wall_clearance_mm, 2)}mm`, '<span class="chip ok">上へ抜ける隙間あり</span>'],
+    ["曲げたリンクの交差体積", `${D.boolean.bent_link_crank_mm3.toExponential(3)}mm³`, `別のBooleanで検証。許容値 ${D.boolean.volume_tolerance_mm3}mm³`],
+    ["最大保持トルク", `${fmt(sim.static.max_torque_Nm * 1000)}mN·m`, `停動トルクの ${fmt(sim.static.ratio_to_stall * 100)}%`],
+    ["動的負荷", `最大 ${fmt(sim.eased.peak_torque_Nm * 1000)}mN·m`, "可動天面、クランク、リンクの質量と慣性を含む"],
+    ["ゆっくり閉じたとき", `縁に当たる速さ ${fmt(sim.eased.lid_impact_rad_s, 2)}rad/s`, `${fmt(setup.motion_time_s)}秒の計算`],
+    ["動作中の隙間", `クランク−箱 ${fmt(clearance["crank-box"].min, 3)}mm / 可動天面−固定天面 ${fmt(clearance["lid-roof"].min, 3)}mm`, "ピン接触など意図した箇所を除く"],
+  ].map(row).join("");
+
+  const names = { box:"箱", lid:"可動天面", roof:"固定天面", crank:"クランク", link:"リンク", pin:"蝶番ピン", clip:"サーボ押さえ", speaker_clip:"エキサイター押さえ" };
+  document.getElementById("printing").innerHTML = Object.entries(names).map(([key, label]) => {
+    const part = D.parts[key];
+    const size = part.print_bbox[1].map((value, i) => value - part.print_bbox[0][i]);
+    const sliced = D.slice[`PLA/${key}`] || D.slice[key];
+    const total = sliced?.floating?.external_unsupported_mm;
+    const result = total === 0 ? "0mm" : Number.isFinite(total) ? `${fmt(total)}mm。穴の天井と溝を含む` : "結果なし";
+    return row([label, `${size.map((value) => fmt(value)).join(" × ")}mm`, `${part.nonmanifold}`, result]);
+  }).join("");
+  const boxUnsupported = (D.slice["PLA/box"] || D.slice.box)?.floating?.external_unsupported_mm;
+  const lidUnsupported = (D.slice["PLA/lid"] || D.slice.lid)?.floating?.external_unsupported_mm;
+  document.getElementById("unsupportedNote").textContent = `G-code上の外部未支持経路は箱 ${fmt(boxUnsupported, 2)}mm、可動天面 ${fmt(lidUnsupported, 2)}mmです。`;
+
+  const files = { PLA:"PLA", PETG:"PETG", crank_test:"crank-test-PLA", joints_test:"joints-test-PLA", speaker_test:"speaker-test-PLA", roof_test_PLA:"roof-test-PLA", roof_test_PETG:"roof-test-PETG" };
+  document.getElementById("deliveries").innerHTML = Object.entries(files).map(([key, suffix]) => {
+    const item = D.plate[key];
+    const file = `mystery-box-sg92r-c2-${suffix}.gcode.3mf`;
+    const weight = item.filament.reduce((sum, value) => sum + Number(value[1]), 0);
+    return row([`<a href="${printHref(file)}">${esc(suffix)}</a>`, `${fmt(item.prediction_s / 60)}分`, `${fmt(weight)}g`, D.delivery.placements[suffix]?.ok ? "重なりとはみ出しなし" : "要確認"]);
+  }).join("");
+
+  if (D.preview_png) {
+    const captions = { closed:"閉じた姿勢", open:"65°開いた姿勢", parts:"印刷する8部品" };
+    document.getElementById("previews").innerHTML = Object.entries(D.preview_png).map(([key, data]) =>
+      `<figure><img alt="${captions[key]}" src="data:image/png;base64,${data}"><figcaption>${captions[key]}</figcaption></figure>`).join("");
+  }
+  if (D.plate_png) {
+    const plate = document.getElementById("plate");
+    plate.hidden = false;
+    plate.innerHTML = `<img alt="Bambu Studioで8部品を1枚に並べたプレート" src="data:image/png;base64,${D.plate_png}"><figcaption>8部品を1枚に配置した印刷プレート</figcaption>`;
+  }
+})();
+</script>
+</html>

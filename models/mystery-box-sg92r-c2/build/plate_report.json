@@ -1,0 +1,948 @@
+{
+ "settings": {
+  "machine": "Bambu Lab X1 Carbon 0.4 nozzle",
+  "process": "0.20mm Standard @BBL X1C",
+  "overrides": {
+   "curr_bed_type": "Textured PEI Plate",
+   "seam_position": "back",
+   "wall_loops": "3",
+   "exclude_object": "1",
+   "enable_support": "0"
+  },
+  "ranges": {
+   "box": [
+    [
+     64.0,
+     70.0,
+     0.08
+    ]
+   ],
+   "lid": [
+    [
+     5.0,
+     10.4,
+     0.08
+    ]
+   ]
+  }
+ },
+ "PLA": {
+  "support_used": "false",
+  "prediction_s": 9742,
+  "weight_g": "107.73",
+  "filament": [
+   [
+    "35.55",
+    "107.73"
+   ]
+  ],
+  "stats": {
+   "time": "model printing time: 2h 35m 6s; total estimated time: 2h 42m 22s",
+   "filament_mm": 35545.41,
+   "filament_g_header": "107.73"
+  },
+  "objects": {
+   "mystery-box-sg92r-c2-pin": {
+    "layers": 22,
+    "z_top": 4.4,
+    "layer_steps": {
+     "0.2": [
+      0.2,
+      4.2,
+      21
+     ]
+    },
+    "floating": {
+     "external_unsupported_mm": 0.0,
+     "bridge_mm": 0.0,
+     "bridge_unsupported_mm": 0.0,
+     "internal_unsupported_mm": 0.0
+    },
+    "overhang_walls": []
+   },
+   "mystery-box-sg92r-c2-crank": {
+    "layers": 58,
+    "z_top": 11.6,
+    "layer_steps": {
+     "0.2": [
+      0.2,
+      11.4,
+      57
+     ]
+    },
+    "floating": {
+     "external_unsupported_mm": 0.0,
+     "bridge_mm": 1775.13,
+     "bridge_unsupported_mm": 846.21,
+     "internal_unsupported_mm": 6.07
+    },
+    "overhang_walls": []
+   },
+   "mystery-box-sg92r-c2-clip": {
+    "layers": 32,
+    "z_top": 6.4,
+    "layer_steps": {
+     "0.2": [
+      0.2,
+      6.2,
+      31
+     ]
+    },
+    "floating": {
+     "external_unsupported_mm": 0.0,
+     "bridge_mm": 0.0,
+     "bridge_unsupported_mm": 0.0,
+     "internal_unsupported_mm": 0.0
+    },
+    "overhang_walls": []
+   },
+   "mystery-box-sg92r-c2-lid": {
+    "layers": 154,
+    "z_top": 22.76,
+    "layer_steps": {
+     "0.08": [
+      5.0,
+      10.28,
+      67
+     ],
+     "0.2": [
+      0.2,
+      22.56,
+      86
+     ]
+    },
+    "floating": {
+     "external_unsupported_mm": 2.4,
+     "bridge_mm": 6991.53,
+     "bridge_unsupported_mm": 3413.1,
+     "internal_unsupported_mm": 6.27
+    },
+    "overhang_walls": [
+     {
+      "layer": 65,
+      "z": 8.28,
+      "feature": "Overhang wall",
+      "points": 6,
+      "x": [
+       -16.4,
+       16.4
+      ],
+      "y": [
+       21.3,
+       21.3
+      ]
+     },
+     {
+      "layer": 143,
+      "z": 20.76,
+      "feature": "Overhang wall",
+      "points": 6,
+      "x": [
+       6.8,
+       9.4
+      ],
+      "y": [
+       6.6,
+       6.6
+      ]
+     }
+    ]
+   },
+   "mystery-box-sg92r-c2-roof": {
+    "layers": 155,
+    "z_top": 31.0,
+    "layer_steps": {
+     "0.2": [
+      0.2,
+      30.8,
+      154
+     ]
+    },
+    "floating": {
+     "external_unsupported_mm": 0.0,
+     "bridge_mm": 1877.41,
+     "bridge_unsupported_mm": 862.36,
+     "internal_unsupported_mm": 0.31
+    },
+    "overhang_walls": []
+   },
+   "mystery-box-sg92r-c2-speaker_clip": {
+    "layers": 15,
+    "z_top": 3.0,
+    "layer_steps": {
+     "0.2": [
+      0.2,
+      2.8,
+      14
+     ]
+    },
+    "floating": {
+     "external_unsupported_mm": 0.0,
+     "bridge_mm": 0.0,
+     "bridge_unsupported_mm": 0.0,
+     "internal_unsupported_mm": 0.0
+    },
+    "overhang_walls": []
+   },
+   "mystery-box-sg92r-c2-link": {
+    "layers": 32,
+    "z_top": 6.4,
+    "layer_steps": {
+     "0.2": [
+      0.2,
+      6.2,
+      31
+     ]
+    },
+    "floating": {
+     "external_unsupported_mm": 0.0,
+     "bridge_mm": 524.75,
+     "bridge_unsupported_mm": 182.04,
+     "internal_unsupported_mm": 1.3
+    },
+    "overhang_walls": []
+   },
+   "mystery-box-sg92r-c2-box": {
+    "layers": 395,
+    "z_top": 70.0,
+    "layer_steps": {
+     "0.08": [
+      64.0,
+      69.92,
+      75
+     ],
+     "0.2": [
+      0.2,
+      63.8,
+      319
+     ]
+    },
+    "floating": {
+     "external_unsupported_mm": 64.16,
+     "bridge_mm": 12018.55,
+     "bridge_unsupported_mm": 5769.96,
+     "internal_unsupported_mm": 27.32
+    },
+    "overhang_walls": [
+     {
+      "layer": 38,
+      "z": 7.8,
+      "feature": "Overhang wall",
+      "points": 6,
+      "x": [
+       26.1,
+       26.1
+      ],
+      "y": [
+       32.2,
+       34.8
+      ]
+     },
+     {
+      "layer": 101,
+      "z": 20.4,
+      "feature": "Overhang wall",
+      "points": 155,
+      "x": [
+       16.8,
+       22.9
+      ],
+      "y": [
+       -28.8,
+       4.5
+      ]
+     },
+     {
+      "layer": 120,
+      "z": 24.2,
+      "feature": "Overhang wall",
+      "points": 16,
+      "x": [
+       11.9,
+       17.1
+      ],
+      "y": [
+       -29.5,
+       -29.5
+      ]
+     },
+     {
+      "layer": 241,
+      "z": 48.4,
+      "feature": "Overhang wall",
+      "points": 76,
+      "x": [
+       -32.6,
+       32.6
+      ],
+      "y": [
+       20.2,
+       23.8
+      ]
+     },
+     {
+      "layer": 364,
+      "z": 67.6,
+      "feature": "Overhang wall",
+      "points": 67,
+      "x": [
+       -30.8,
+       30.8
+      ],
+      "y": [
+       8.9,
+       17.1
+      ]
+     },
+     {
+      "layer": 371,
+      "z": 68.16,
+      "feature": "Overhang wall",
+      "points": 6,
+      "x": [
+       17.2,
+       30.8
+      ],
+      "y": [
+       13.0,
+       13.0
+      ]
+     }
+    ]
+   }
+  },
+  "file": "C:\\Users\\kouga\\Projects\\Web\\model-lab\\exports\\mystery-box-sg92r-c2-PLA.gcode.3mf",
+  "object_order": [
+   "mystery-box-sg92r-c2-box",
+   "mystery-box-sg92r-c2-lid",
+   "mystery-box-sg92r-c2-clip",
+   "mystery-box-sg92r-c2-crank",
+   "mystery-box-sg92r-c2-speaker_clip",
+   "mystery-box-sg92r-c2-link",
+   "mystery-box-sg92r-c2-roof",
+   "mystery-box-sg92r-c2-pin"
+  ]
+ },
+ "PETG": {
+  "support_used": "false",
+  "prediction_s": 11656,
+  "weight_g": "103.61",
+  "filament": [
+   [
+    "34.46",
+    "103.61"
+   ]
+  ],
+  "stats": {
+   "time": "model printing time: 3h 7m 0s; total estimated time: 3h 14m 16s",
+   "filament_mm": 34460.7,
+   "filament_g_header": "103.61"
+  },
+  "objects": {
+   "mystery-box-sg92r-c2-pin": {
+    "layers": 22,
+    "z_top": 4.4,
+    "layer_steps": {
+     "0.2": [
+      0.2,
+      4.2,
+      21
+     ]
+    },
+    "floating": {
+     "external_unsupported_mm": 0.0,
+     "bridge_mm": 0.0,
+     "bridge_unsupported_mm": 0.0,
+     "internal_unsupported_mm": 0.0
+    },
+    "overhang_walls": []
+   },
+   "mystery-box-sg92r-c2-crank": {
+    "layers": 58,
+    "z_top": 11.6,
+    "layer_steps": {
+     "0.2": [
+      0.2,
+      11.4,
+      57
+     ]
+    },
+    "floating": {
+     "external_unsupported_mm": 0.0,
+     "bridge_mm": 1775.13,
+     "bridge_unsupported_mm": 846.21,
+     "internal_unsupported_mm": 6.07
+    },
+    "overhang_walls": []
+   },
+   "mystery-box-sg92r-c2-clip": {
+    "layers": 32,
+    "z_top": 6.4,
+    "layer_steps": {
+     "0.2": [
+      0.2,
+      6.2,
+      31
+     ]
+    },
+    "floating": {
+     "external_unsupported_mm": 0.0,
+     "bridge_mm": 0.0,
+     "bridge_unsupported_mm": 0.0,
+     "internal_unsupported_mm": 0.0
+    },
+    "overhang_walls": []
+   },
+   "mystery-box-sg92r-c2-lid": {
+    "layers": 154,
+    "z_top": 22.76,
+    "layer_steps": {
+     "0.08": [
+      5.0,
+      10.28,
+      67
+     ],
+     "0.2": [
+      0.2,
+      22.56,
+      86
+     ]
+    },
+    "floating": {
+     "external_unsupported_mm": 2.4,
+     "bridge_mm": 6991.53,
+     "bridge_unsupported_mm": 3413.1,
+     "internal_unsupported_mm": 6.27
+    },
+    "overhang_walls": [
+     {
+      "layer": 65,
+      "z": 8.28,
+      "feature": "Overhang wall",
+      "points": 6,
+      "x": [
+       -16.4,
+       16.4
+      ],
+      "y": [
+       21.3,
+       21.3
+      ]
+     },
+     {
+      "layer": 143,
+      "z": 20.76,
+      "feature": "Overhang wall",
+      "points": 6,
+      "x": [
+       6.8,
+       9.4
+      ],
+      "y": [
+       6.6,
+       6.6
+      ]
+     }
+    ]
+   },
+   "mystery-box-sg92r-c2-roof": {
+    "layers": 155,
+    "z_top": 31.0,
+    "layer_steps": {
+     "0.2": [
+      0.2,
+      30.8,
+      154
+     ]
+    },
+    "floating": {
+     "external_unsupported_mm": 0.0,
+     "bridge_mm": 1877.41,
+     "bridge_unsupported_mm": 862.36,
+     "internal_unsupported_mm": 0.31
+    },
+    "overhang_walls": []
+   },
+   "mystery-box-sg92r-c2-speaker_clip": {
+    "layers": 15,
+    "z_top": 3.0,
+    "layer_steps": {
+     "0.2": [
+      0.2,
+      2.8,
+      14
+     ]
+    },
+    "floating": {
+     "external_unsupported_mm": 0.0,
+     "bridge_mm": 0.0,
+     "bridge_unsupported_mm": 0.0,
+     "internal_unsupported_mm": 0.0
+    },
+    "overhang_walls": []
+   },
+   "mystery-box-sg92r-c2-link": {
+    "layers": 32,
+    "z_top": 6.4,
+    "layer_steps": {
+     "0.2": [
+      0.2,
+      6.2,
+      31
+     ]
+    },
+    "floating": {
+     "external_unsupported_mm": 0.0,
+     "bridge_mm": 524.75,
+     "bridge_unsupported_mm": 182.04,
+     "internal_unsupported_mm": 1.3
+    },
+    "overhang_walls": []
+   },
+   "mystery-box-sg92r-c2-box": {
+    "layers": 395,
+    "z_top": 70.0,
+    "layer_steps": {
+     "0.08": [
+      64.0,
+      69.92,
+      75
+     ],
+     "0.2": [
+      0.2,
+      63.8,
+      319
+     ]
+    },
+    "floating": {
+     "external_unsupported_mm": 64.16,
+     "bridge_mm": 12018.55,
+     "bridge_unsupported_mm": 5769.96,
+     "internal_unsupported_mm": 27.32
+    },
+    "overhang_walls": [
+     {
+      "layer": 38,
+      "z": 7.8,
+      "feature": "Overhang wall",
+      "points": 6,
+      "x": [
+       26.1,
+       26.1
+      ],
+      "y": [
+       32.2,
+       34.8
+      ]
+     },
+     {
+      "layer": 101,
+      "z": 20.4,
+      "feature": "Overhang wall",
+      "points": 155,
+      "x": [
+       16.8,
+       22.9
+      ],
+      "y": [
+       -28.8,
+       4.5
+      ]
+     },
+     {
+      "layer": 120,
+      "z": 24.2,
+      "feature": "Overhang wall",
+      "points": 16,
+      "x": [
+       11.9,
+       17.1
+      ],
+      "y": [
+       -29.5,
+       -29.5
+      ]
+     },
+     {
+      "layer": 241,
+      "z": 48.4,
+      "feature": "Overhang wall",
+      "points": 76,
+      "x": [
+       -32.6,
+       32.6
+      ],
+      "y": [
+       20.2,
+       23.8
+      ]
+     },
+     {
+      "layer": 364,
+      "z": 67.6,
+      "feature": "Overhang wall",
+      "points": 67,
+      "x": [
+       -30.8,
+       30.8
+      ],
+      "y": [
+       8.9,
+       17.1
+      ]
+     },
+     {
+      "layer": 371,
+      "z": 68.16,
+      "feature": "Overhang wall",
+      "points": 6,
+      "x": [
+       17.2,
+       30.8
+      ],
+      "y": [
+       13.0,
+       13.0
+      ]
+     }
+    ]
+   }
+  },
+  "file": "C:\\Users\\kouga\\Projects\\Web\\model-lab\\exports\\mystery-box-sg92r-c2-PETG.gcode.3mf",
+  "object_order": [
+   "mystery-box-sg92r-c2-box",
+   "mystery-box-sg92r-c2-lid",
+   "mystery-box-sg92r-c2-clip",
+   "mystery-box-sg92r-c2-crank",
+   "mystery-box-sg92r-c2-speaker_clip",
+   "mystery-box-sg92r-c2-link",
+   "mystery-box-sg92r-c2-roof",
+   "mystery-box-sg92r-c2-pin"
+  ]
+ },
+ "crank_test": {
+  "support_used": "false",
+  "prediction_s": 883,
+  "weight_g": "2.66",
+  "filament": [
+   [
+    "0.88",
+    "2.66"
+   ]
+  ],
+  "stats": {
+   "time": "model printing time: 7m 27s; total estimated time: 14m 43s",
+   "filament_mm": 876.83,
+   "filament_g_header": "2.66"
+  },
+  "objects": {
+   "None": {
+    "layers": 58,
+    "z_top": 11.6,
+    "layer_steps": {
+     "0.2": [
+      0.2,
+      11.4,
+      57
+     ]
+    },
+    "floating": {
+     "external_unsupported_mm": 0.0,
+     "bridge_mm": 1775.12,
+     "bridge_unsupported_mm": 854.53,
+     "internal_unsupported_mm": 6.88
+    },
+    "overhang_walls": []
+   }
+  },
+  "file": "C:\\Users\\kouga\\Projects\\Web\\model-lab\\exports\\mystery-box-sg92r-c2-crank-test-PLA.gcode.3mf",
+  "object_order": [
+   "mystery-box-sg92r-c2-crank"
+  ]
+ },
+ "speaker_test": {
+  "support_used": "false",
+  "prediction_s": 1925,
+  "weight_g": "14.34",
+  "filament": [
+   [
+    "4.73",
+    "14.34"
+   ]
+  ],
+  "stats": {
+   "time": "model printing time: 24m 49s; total estimated time: 32m 5s",
+   "filament_mm": 4730.16,
+   "filament_g_header": "14.34"
+  },
+  "objects": {
+   "12": {
+    "layers": 15,
+    "z_top": 3.0,
+    "layer_steps": {
+     "0.2": [
+      0.2,
+      2.8,
+      14
+     ]
+    },
+    "floating": {
+     "external_unsupported_mm": 0.0,
+     "bridge_mm": 0.0,
+     "bridge_unsupported_mm": 0.0,
+     "internal_unsupported_mm": 0.0
+    },
+    "overhang_walls": []
+   },
+   "8": {
+    "layers": 200,
+    "z_top": 40.0,
+    "layer_steps": {
+     "0.2": [
+      0.2,
+      39.8,
+      199
+     ]
+    },
+    "floating": {
+     "external_unsupported_mm": 0.0,
+     "bridge_mm": 1568.7,
+     "bridge_unsupported_mm": 668.21,
+     "internal_unsupported_mm": 23.86
+    },
+    "overhang_walls": []
+   }
+  },
+  "file": "C:\\Users\\kouga\\Projects\\Web\\model-lab\\exports\\mystery-box-sg92r-c2-speaker-test-PLA.gcode.3mf",
+  "object_order": [
+   "mystery-box-sg92r-c2-speaker_test",
+   "mystery-box-sg92r-c2-speaker_clip"
+  ]
+ },
+ "joints_test": {
+  "support_used": "false",
+  "prediction_s": 908,
+  "weight_g": "4.55",
+  "filament": [
+   [
+    "1.50",
+    "4.55"
+   ]
+  ],
+  "stats": {
+   "time": "model printing time: 7m 52s; total estimated time: 15m 8s",
+   "filament_mm": 1502.41,
+   "filament_g_header": "4.55"
+  },
+  "objects": {
+   "16": {
+    "layers": 22,
+    "z_top": 4.4,
+    "layer_steps": {
+     "0.2": [
+      0.2,
+      4.2,
+      21
+     ]
+    },
+    "floating": {
+     "external_unsupported_mm": 0.0,
+     "bridge_mm": 0.0,
+     "bridge_unsupported_mm": 0.0,
+     "internal_unsupported_mm": 0.0
+    },
+    "overhang_walls": []
+   },
+   "12": {
+    "layers": 32,
+    "z_top": 6.4,
+    "layer_steps": {
+     "0.2": [
+      0.2,
+      6.2,
+      31
+     ]
+    },
+    "floating": {
+     "external_unsupported_mm": 0.0,
+     "bridge_mm": 524.75,
+     "bridge_unsupported_mm": 181.26,
+     "internal_unsupported_mm": 1.29
+    },
+    "overhang_walls": []
+   },
+   "8": {
+    "layers": 32,
+    "z_top": 6.4,
+    "layer_steps": {
+     "0.2": [
+      0.2,
+      6.2,
+      31
+     ]
+    },
+    "floating": {
+     "external_unsupported_mm": 0.0,
+     "bridge_mm": 0.0,
+     "bridge_unsupported_mm": 0.0,
+     "internal_unsupported_mm": 0.0
+    },
+    "overhang_walls": []
+   }
+  },
+  "file": "C:\\Users\\kouga\\Projects\\Web\\model-lab\\exports\\mystery-box-sg92r-c2-joints-test-PLA.gcode.3mf",
+  "object_order": [
+   "mystery-box-sg92r-c2-clip",
+   "mystery-box-sg92r-c2-link",
+   "mystery-box-sg92r-c2-pin"
+  ]
+ },
+ "roof_test_PLA": {
+  "support_used": "false",
+  "prediction_s": 1453,
+  "weight_g": "5.42",
+  "filament": [
+   [
+    "1.79",
+    "5.42"
+   ]
+  ],
+  "stats": {
+   "time": "model printing time: 16m 57s; total estimated time: 24m 13s",
+   "filament_mm": 1789.94,
+   "filament_g_header": "5.42"
+  },
+  "objects": {
+   "12": {
+    "layers": 155,
+    "z_top": 31.0,
+    "layer_steps": {
+     "0.2": [
+      0.2,
+      30.8,
+      154
+     ]
+    },
+    "floating": {
+     "external_unsupported_mm": 0.0,
+     "bridge_mm": 565.86,
+     "bridge_unsupported_mm": 142.14,
+     "internal_unsupported_mm": 0.0
+    },
+    "overhang_walls": []
+   },
+   "8": {
+    "layers": 160,
+    "z_top": 32.0,
+    "layer_steps": {
+     "0.2": [
+      0.2,
+      31.8,
+      159
+     ]
+    },
+    "floating": {
+     "external_unsupported_mm": 11.48,
+     "bridge_mm": 790.86,
+     "bridge_unsupported_mm": 234.81,
+     "internal_unsupported_mm": 0.0
+    },
+    "overhang_walls": [
+     {
+      "layer": 66,
+      "z": 13.4,
+      "feature": "Overhang wall",
+      "points": 60,
+      "x": [
+       -32.6,
+       32.2
+      ],
+      "y": [
+       -1.8,
+       2.0
+      ]
+     }
+    ]
+   }
+  },
+  "file": "C:\\Users\\kouga\\Projects\\Web\\model-lab\\exports\\mystery-box-sg92r-c2-roof-test-PLA.gcode.3mf",
+  "object_order": [
+   "mystery-box-sg92r-c2-roof_test_body",
+   "mystery-box-sg92r-c2-roof_test"
+  ]
+ },
+ "roof_test_PETG": {
+  "support_used": "false",
+  "prediction_s": 2588,
+  "weight_g": "5.23",
+  "filament": [
+   [
+    "1.74",
+    "5.23"
+   ]
+  ],
+  "stats": {
+   "time": "model printing time: 35m 52s; total estimated time: 43m 8s",
+   "filament_mm": 1738.52,
+   "filament_g_header": "5.23"
+  },
+  "objects": {
+   "12": {
+    "layers": 155,
+    "z_top": 31.0,
+    "layer_steps": {
+     "0.2": [
+      0.2,
+      30.8,
+      154
+     ]
+    },
+    "floating": {
+     "external_unsupported_mm": 0.0,
+     "bridge_mm": 565.86,
+     "bridge_unsupported_mm": 142.14,
+     "internal_unsupported_mm": 0.0
+    },
+    "overhang_walls": []
+   },
+   "8": {
+    "layers": 160,
+    "z_top": 32.0,
+    "layer_steps": {
+     "0.2": [
+      0.2,
+      31.8,
+      159
+     ]
+    },
+    "floating": {
+     "external_unsupported_mm": 11.48,
+     "bridge_mm": 790.86,
+     "bridge_unsupported_mm": 234.81,
+     "internal_unsupported_mm": 0.0
+    },
+    "overhang_walls": [
+     {
+      "layer": 66,
+      "z": 13.4,
+      "feature": "Overhang wall",
+      "points": 60,
+      "x": [
+       -32.6,
+       32.2
+      ],
+      "y": [
+       -1.8,
+       2.0
+      ]
+     }
+    ]
+   }
+  },
+  "file": "C:\\Users\\kouga\\Projects\\Web\\model-lab\\exports\\mystery-box-sg92r-c2-roof-test-PETG.gcode.3mf",
+  "object_order": [
+   "mystery-box-sg92r-c2-roof_test_body",
+   "mystery-box-sg92r-c2-roof_test"
+  ]
+ }
+}

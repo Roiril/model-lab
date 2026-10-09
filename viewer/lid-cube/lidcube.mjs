@@ -33,6 +33,7 @@ function applyMeta(meta) {
 export const PARTS = [
   ["box", "箱", "#bdb4a6"], ["lid", "蓋", "#56b4e9"], ["crank", "クランク", "#e69f00"], ["link", "リンク", "#009e73"],
   ["pin", "蝶番ピン", "#4d4d4d"], ["clip", "押さえクリップ", "#cc79a7"], ["speaker_clip", "スピーカー押さえ", "#9467bd"],
+  ["roof", "固定天面", "#8c7853"],
   ["ref_body", "SG92R", "#0072b2"],
   ["ref_horn", "付属ホーン", "#2a2a2a"], ["ref_wire", "配線", "#d55e00"], ["ref_speaker", "スピーカー（参考）", "#f0e442"],
 ];
@@ -182,7 +183,7 @@ void main(){
       if (hidden.has(k) || !st.vis.has(k)) continue;
       gl.uniformMatrix4fv(U.uM, false, (st.M && st.M[k]) || I4());
       gl.uniform3fv(U.uCol, hex(col));
-      gl.uniform1f(U.uCut, st.cut && (k === "box" || k === "lid" || k === "pin") ? 1 : 0);
+      gl.uniform1f(U.uCut, st.cut && (k === "box" || k === "lid" || k === "pin" || k === "roof") ? 1 : 0);
       gl.uniform1f(U.uCutX, view.cutX);
       const mesh = bufs[st.mesh?.[k] ?? k];
       gl.bindVertexArray(mesh.vao); gl.drawElements(gl.TRIANGLES, mesh.n, gl.UNSIGNED_SHORT, 0);
