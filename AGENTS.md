@@ -206,16 +206,18 @@ http://localhost:3000 が Studio。ユーザーは面を選んで「ここを厚
 
 ---
 
-## Codex ハーネス (.Codex/)
+## ハーネス（.agents/ と .claude/）
 
-- **[memory/](.Codex/memory/)** — 自動メモリ（`MEMORY.md` がインデックス、topic ごとに分割）
-- **[skills/](.Codex/skills/)** — `servo-robot-design`：1サーボ・ロボット（round/square-bot 等）とサーボ/ホーン嵌合部品・アクセサリの設計原則・落とし穴・ワークフロー集（サーボ機構/ホーン結合/配線/目耳/単位/boolean/検証/印刷分割を扱う。サーボ系を触る前に必読）
-- **[hooks/](.Codex/hooks/)** — プロジェクト固有 PreToolUse ガード
-- **[settings.json](.Codex/settings.json)** — `bypassPermissions`（書き込み前承認なし）
-- **[settings.local.json](.Codex/settings.local.json)** — ローカル個別 allow リスト
-- **[commands/](.Codex/commands/)** — `/new-model` `/build` `/print-check` の本体
+- **[.agents/skills/](.agents/skills/)** — Codex が読むプロジェクトのスキル。`servo-robot-design` は入口だけで、
+  本文の正本は [.claude/skills/servo-robot-design/SKILL.md](.claude/skills/servo-robot-design/SKILL.md)
+  （1サーボ・ロボットとサーボ/ホーン嵌合部品・アクセサリの設計原則・落とし穴。サーボ系を触る前に必読）
+- **共通スキル `printable-mechanism-design`**（`~/.agents/skills/`）— 刷れる機構を設計・検証して、そのまま刷れる 3mf まで作る手順。
+  ユーザーの依頼文の好み・形の規則・印刷部品だけの継ぎ手・検証の型・Bambu Studio CLI の罠。動く部品・組み立てがある依頼で読む
+- **[memory/](.claude/memory/)** — 自動メモリ（`MEMORY.md` がインデックス、topic ごとに分割）
+- **[hooks/](.claude/hooks/)** — プロジェクト固有 PreToolUse ガード
+- **[commands/](.claude/commands/)** — `/new-model` `/build` `/print-check` の本体（Claude Code 用。手順は Codex も読んでよい）
 
-汎用 hook（SessionStart 状態注入 / 不可逆操作ガード / Windows エンコーディング修正）とスラッシュコマンド（`/commit`, `/plan`）は `~/.Codex/` にグローバル配置済み。
+汎用の規約とスキルは `~/.codex/AGENTS.md` と `~/.agents/skills/` にグローバル配置済み。
 
 ## 共有ハーネス (.agent/)
 
@@ -229,8 +231,8 @@ http://localhost:3000 が Studio。ユーザーは面を選んで「ここを厚
 
 ### その他
 
-- **ワークフロー**: `.agent/workflows/` — 他エージェント用（Codex は `.Codex/commands/` を使う）
+- **ワークフロー**: `.agent/workflows/` — 他エージェント用
 - **計画**: `.agent/plans/` — 実装計画（`YYYY-MM-DD_<slug>.md`）。`/plan <slug>` で作成
 - **タスク**: `.agent/tasks/` — チェックリスト
 
-動作モードはグローバル `~/.Codex/AGENTS.md` 参照（書き込み前承認なし、git コミット規約 等）。
+動作モードはグローバル `~/.codex/AGENTS.md` 参照（書き込み前承認なし、git コミット規約 等）。

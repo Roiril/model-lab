@@ -272,6 +272,7 @@ http://localhost:3000 が Studio。ユーザーは面を選んで「ここを厚
 
 - **[memory/](.claude/memory/)** — 自動メモリ（`MEMORY.md` がインデックス、topic ごとに分割）
 - **[skills/](.claude/skills/)** — `servo-robot-design`：1サーボ・ロボット（round/square-bot 等）とサーボ/ホーン嵌合部品・アクセサリの設計原則・落とし穴・ワークフロー集（サーボ機構/ホーン結合/配線/目耳/単位/boolean/検証/印刷分割を扱う。サーボ系を触る前に必読）
+- **共通スキル `printable-mechanism-design`**（`~/.claude/skills/`。Codex も `~/.agents/skills/` から同じ物を読む）— 刷れる機構を設計・検証して、そのまま刷れる 3mf まで作る手順。ユーザーの依頼文の好み・形の規則・印刷部品だけの継ぎ手・検証の型・Bambu Studio CLI の罠。動く部品・組み立てがある依頼で読む。Codex 用の `.agents/skills/servo-robot-design` は入口だけで、本文は `.claude/skills/servo-robot-design`
 - **[hooks/](.claude/hooks/)** — プロジェクト固有 PreToolUse ガード、`studio-inbox.js`（Studio の未対応依頼を SessionStart / UserPromptSubmit で差し込む）
 - **[skills/studio-inbox](.claude/skills/studio-inbox/SKILL.md)** — Studio の依頼の受け方・読み方・返し方
 - **[settings.json](.claude/settings.json)** — `bypassPermissions`（書き込み前承認なし）
