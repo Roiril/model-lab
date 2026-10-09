@@ -178,7 +178,14 @@ export function sampleShape(shape, step = 0.5) -> [[u, v], ...]   // 図形を s
 - slice.js の輪郭は材料が左（外周は反時計回り、穴は時計回り）。sampleShape は閉じた図形の最後に始点を繰り返す
 - app.js は `window.__studio = { store, viewport, picking, sections, sketch }` を出す（動作確認用）
 
-## 5. デザイントークン（styles.css が正本。JS で色が要る時は store.js の定数）
+## 5. 共通 workspace と見た目
+
+- `index.html` は `../shared/workspace.css` を Studio の CSS より先に読む。
+- `../shared/workspace.mjs` の `createWorkspaceNav({active:"studio", model})` を使う。モデル変更時は返り値の `setModel(model)` を呼ぶ。
+- 上部は `.workspace-header` と、その下の `.studio-toolbar` に分ける。共通ヘッダーには `.workspace-brand`、`.workspace-model`、`.workspace-nav` を置く。
+- 送信操作は右の「指示」パネル下部に一つだけ置く。スクロール中も送信ボタンを表示する。在席と処理状態も同じパネルに置く。
+- 視点は3D右上の「視点」から開く。選んだら閉じる。数字キーでも切り替えられる。
+- OS の配色変更は共通 CSS と `watchTheme(callback)` に追従する。Canvas / WebGL で色が要る場合は `themePalette()` の `paper / card / ink / mute / line / accent / accentStrong` を使う。
 
 ### モデル一覧と保存（2026-10-07 更新）
 
@@ -190,16 +197,15 @@ export function sampleShape(shape, step = 0.5) -> [[u, v], ...]   // 図形を s
 - 送信中は入力とモデル切替を止める。送信した後の下書きが送信開始時と一致する場合だけ空にする。
 - 狭幅では `#app[data-inspector="open"]` で指示・設定を開く。道具は下部へ移す。断面は3Dの下に表示する。
 
-以下の色は既存 Studio の正本。小さい補助文字は読みやすさのため `--text-2` と同じ明るさに揃えた。
+Studio 内の既存名は共通トークンへの別名として残す。
 
 ```css
---bg:#0e1013;  --panel:#15181c; --raised:#1c2026; --hover:#232830;
---line:#2a3038; --line-strong:#3a424d;
---text:#e6e8ea; --text-2:#aab2bc; --mute:var(--text-2);
---accent:#7c9cff; --accent-ink:#0b1020;
---ok:#2fd08f; --warn:#ffb020; --err:#ff6b6b;
---radius:6px; --radius-sm:4px;
-font: 13px/1.5 "Inter", "Noto Sans JP", "Yu Gothic UI", system-ui, sans-serif;  数値は ui-monospace
+--bg:var(--paper); --panel:var(--paper); --raised:var(--card);
+--text:var(--ink); --text-2:var(--mute);
+--accent:var(--accent-strong); --accent-ink:var(--paper);
+--radius:0; --radius-sm:0; --shadow:none;
+font: var(--fs-sm)/1.5 var(--font-ui); 数値は var(--font-mono)
 ```
-- 影は浮いているもの（ポップオーバー・パレット・トースト）だけ。`0 8px 24px rgba(0,0,0,.45)`
-- 3D の背景は `--bg`。2D キャンバスの地は `--panel`、材料の塗りは `rgba(230,232,234,.10)`、輪郭線は `--text`、ゴーストは `--mute` 点線
+- 罫線は 1px。基本余白は 16px / 24px。見出しは `var(--font-heading)`。
+- 3D と 2D の背景は `paper`。グリッドは `line`。材料の陰影は維持する。輪郭線は `ink`。ゴーストは `mute` の点線。
+- 375px 幅では操作対象を 44px 以上にする。入力は 16px 以上。共通ヘッダー、3D、編集欄、下部の道具が重ならないようにする。

@@ -5,6 +5,7 @@
 import { ACTIONS, SELECTION_COLOR } from "./store.js";
 import { REQUEST_STATUS, requestStatus, requestBefore } from "./api.js";
 import { createCatalog } from "./catalog.js";
+import { createWorkspaceNav } from "../shared/workspace.mjs";
 
 // --- 小さな DOM 道具 ----------------------------------------------------------
 
@@ -204,8 +205,11 @@ export function createPanels({ store, ctx }) {
   // 上部バー
   // ===========================================================================
   const topbar = $("#topbar");
+  // base href はモジュール用。ページ内リンクは現在のモデルURLを保つ。
+  const skipLink = document.querySelector('.workspace-skip');
+  if (skipLink) skipLink.href = `${location.pathname}${location.search}#stage`;
   const modelNameEl = h("span", { class: "sel-name" }, "モデルを選ぶ");
-  const modelBtn = h("button", { type: "button", class: "sel-btn model-select", "aria-haspopup": "dialog", onclick: () => openPalette() },
+  const modelBtn = h("button", { type: "button", class: "sel-btn model-select workspace-model", "aria-haspopup": "dialog", onclick: () => openPalette() },
     modelNameEl, icon("chevron", "sm"), kbd("Ctrl K"));
   tip(modelBtn, "モデルを選ぶ", "Ctrl+K");
   const partsLabel = h("span", {}, "パーツ");
@@ -219,9 +223,6 @@ export function createPanels({ store, ctx }) {
   const statusDot = h("span", { class: "dot-live" });
   const statusText = h("span", { class: "stat-text" }, "準備中…");
   const statusEl = h("div", { class: "stat", "data-kind": "busy", role: "status" }, statusDot, statusText);
-  const sendCount = h("span", { class: "count" }, "0");
-  const sendBtn = h("button", { type: "button", class: "btn primary send-btn", onclick: () => ctx.send() }, icon("send", "sm"), h("span", { class: "lbl" }, "シュビーに送る"), sendCount);
-  tip(sendBtn, "下書きの指示をシュビーに送る", "Ctrl+Enter");
   const undoBtn = h("button", { type: "button", class: "icon-btn", onclick: () => store.undo() }, icon("undo"));
   const redoBtn = h("button", { type: "button", class: "icon-btn", onclick: () => store.redo() }, icon("redo"));
   const outlinesBtn = h("button", {
@@ -241,19 +242,19 @@ export function createPanels({ store, ctx }) {
   tip(undoBtn, "元に戻す", "Ctrl+Z");
   tip(redoBtn, "やり直す", "Ctrl+Shift+Z");
 
-  const physicsLink = h("a", { class: "sel-btn", href: "/viewer/physics-box/index.html", hidden: true }, "物理検証");
-  tip(physicsLink, "B3の蓋を物理計算で動かす");
-  const assemblyLink = h("a", { class: "sel-btn", href: "/viewer/assembly-box/index.html", hidden: true }, "組立ガイド");
-  tip(assemblyLink, "B3の部品を順に組む");
-  topbar.append(
-    h("div", { class: "logo" }, icon("logo", "logo-mark"), h("span", {}, "model-lab")),
-    modelBtn, partsBtn, outlinesBtn, physicsLink, assemblyLink,
+  const workspace = createWorkspaceNav({ active: "studio", model: store.state.model });
+  const workspaceHeader = h("div", { class: "workspace-header" },
+    h("div", { class: "workspace-brand" }, icon("logo", "logo-mark"), h("span", {}, "model-lab")),
+    modelBtn,
+    workspace.element,
+  );
+  const toolbar = h("div", { class: "studio-toolbar", role: "toolbar", "aria-label": "Studio の道具" },
+    partsBtn, outlinesBtn,
     h("div", { class: "sp" }),
-    listenerPill, statusEl,
     h("div", { class: "tb-group" }, undoBtn, redoBtn),
     inspectorToggle,
-    sendBtn,
   );
+  topbar.append(workspaceHeader, toolbar);
   if (!$("#app").dataset.inspector) $("#app").dataset.inspector = "open";
   inspectorToggle.setAttribute("aria-expanded", String($("#app").dataset.inspector !== "closed"));
 
@@ -263,17 +264,15 @@ export function createPanels({ store, ctx }) {
   }
 
   function syncTopbar() {
-    physicsLink.hidden = store.state.model !== "mystery-box-sg92r-b3-candidate";
-    assemblyLink.hidden = store.state.model !== "mystery-box-sg92r-b3-candidate";
     const model = models.find((m) => m.name === store.state.model);
     modelNameEl.textContent = model ? (model.title || model.name) : (store.state.model || "モデルを選ぶ");
+    workspace.setModel(store.state.model || "");
+    const skip = $(".workspace-skip");
+    if (skip) skip.href = `${workspace.element.querySelector('[data-workspace="studio"]').href}#stage`;
     const n = store.state.draft.items.length;
-    sendCount.textContent = String(n);
-    sendCount.hidden = n === 0;
     const empty = n === 0 && !store.state.draft.message.trim();
-    sendBtn.disabled = sending || empty;
-    sendBtn.classList.toggle("busy", sending);
-    sendBtn2.disabled = sendBtn.disabled;
+    sendBtn2.disabled = sending || empty;
+    sendBtn2.classList.toggle("busy", sending);
     modelBtn.disabled = sending;
     messageBox.disabled = sending;
     for (const note of itemList.querySelectorAll("textarea.note")) note.disabled = sending;
@@ -455,7 +454,7 @@ export function createPanels({ store, ctx }) {
   // 指示タブ
   const itemList = h("div", { class: "cards" });
   const draftCount = h("span", { class: "sec-count" }, "");
-  const messageBox = h("textarea", { class: "field msg", rows: "3", placeholder: "全体へのメッセージ（例: 付け根をもう少し太くして）", "aria-label": "全体のメッセージ" });
+  const messageBox = h("textarea", { class: "field msg", rows: "3", placeholder: "全体へのメッセージはここに。場所を示すなら左の道具で印を付けます。", "aria-label": "全体のメッセージ" });
   messageBox.addEventListener("input", () => { store.setMessage(messageBox.value); syncTopbar(); });
   const sendNote = h("p", { class: "send-note", "data-state": "unknown" }, "");
   const sendBtn2 = h("button", { type: "button", class: "btn primary block", onclick: () => ctx.send() }, icon("send", "sm"), "シュビーに送る", kbd("Ctrl Enter"));
@@ -465,9 +464,10 @@ export function createPanels({ store, ctx }) {
     h("div", { class: "scroll" },
       h("div", { class: "sec-head" }, h("h2", {}, "下書き"), draftCount),
       itemList,
-      h("div", { class: "msg-box" }, messageBox, sendBtn2, sendNote),
+      h("div", { class: "msg-box" }, messageBox, h("div", { class: "studio-state" }, listenerPill, statusEl), sendNote),
       h("div", { class: "sec-head" }, h("h2", {}, "これまでの依頼"), reqCount),
-      reqList));
+      reqList),
+    h("div", { class: "send-actions" }, sendBtn2));
 
   function setTab(t) {
     tab = t;
@@ -549,7 +549,7 @@ export function createPanels({ store, ctx }) {
     const items = store.state.draft.items;
     itemList.replaceChildren();
     if (!items.length) {
-      itemList.append(h("p", { class: "empty" }, "左の道具で面・ピン・断面を選ぶと、ここに指示が並びます。"));
+      itemList.append(h("p", { class: "empty" }, "場所を示す指示はありません。左の道具で印を付けます。"));
     }
     let pinNo = 0;
     for (const it of items) {
@@ -591,7 +591,7 @@ export function createPanels({ store, ctx }) {
       sendNote.dataset.state = "unknown"; sendNote.textContent = "";
     } else if (on) {
       sendNote.dataset.state = "on";
-      sendNote.textContent = "シュビーが待ち受けています。送るとすぐ対応が始まります。";
+      sendNote.textContent = "";
     } else {
       sendNote.dataset.state = "off";
       sendNote.textContent = "シュビーが待ち受けていません。チャットで「スタジオの依頼を見て」と伝えてください。";

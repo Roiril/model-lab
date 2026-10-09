@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <base href="/viewer/studio/">
 <title>model-lab</title>
+<link rel="stylesheet" href="../shared/workspace.css">
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="catalog.css">
 <script type="importmap">
@@ -18,10 +19,11 @@
 </script>
 </head>
 <body>
+<a class="workspace-skip" href="#stage">作業画面へ</a>
 <div id="app">
   <header id="topbar"></header>
   <nav id="rail" aria-label="道具"></nav>
-  <main id="stage">
+  <main id="stage" tabindex="-1">
     <section id="viewwrap" aria-label="3D 表示">
       <div id="viewport"></div>
       <div id="viewtools"></div>

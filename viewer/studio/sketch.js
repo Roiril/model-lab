@@ -3,6 +3,7 @@
 // トップレベルでは DOM を触らない（sampleShape を node から import して試せるように）。
 
 import { INTENTS, uid } from "./store.js";
+import { watchTheme } from "../shared/workspace.mjs";
 
 // ===========================================================================
 // 純粋な幾何
@@ -329,10 +330,9 @@ function contentBounds(c, shapes) {
 // 見た目
 // ===========================================================================
 
-const FONT = '"Inter","Noto Sans JP","Yu Gothic UI",system-ui,sans-serif';
-const MONO = 'ui-monospace,"Cascadia Mono",Consolas,monospace';
-const DEFAULT_THEME = { panel: "#15181c", raised: "#1c2026", line: "#2a3038", text: "#e6e8ea", text2: "#aab2bc", mute: "#78818c", accent: "#7c9cff", accentInk: "#0b1020" };
-const MATERIAL_FILL = "rgba(230,232,234,.10)";
+const FONT = '"Noto Sans JP","Yu Gothic UI",Meiryo,sans-serif';
+const MONO = 'ui-monospace,"Cascadia Code",Consolas,monospace';
+const DEFAULT_THEME = { panel: "#f5efe2", raised: "#ece4d4", line: "#d8cdb8", text: "#2b2723", text2: "#6a6257", mute: "#6a6257", accent: "#a8493c", accentInk: "#f5efe2" };
 const STEPS = [0.1, 0.5, 1, 5, 10, 50, 100, 500, 1000, 5000];
 const PX_PER_MM_100 = 96 / 25.4; // 倍率 100% = 実寸（96dpi）
 const AXIS_NAMES = { x: "X 断面（側面）", y: "Y 断面（正面）", z: "Z 断面（上面）", view: "視線断面" };
@@ -510,7 +510,7 @@ function sectionSVG(view, c, T, ui) {
   const m = `matrix(${s} 0 0 ${-s} ${tx} ${ty})`;
   let out = `<g transform="${m}">`;
   if (c.ghostD) out += `<path d="${c.ghostD}" fill="none" stroke="${T.mute}" stroke-width="${1.2 * ui}" stroke-dasharray="${5 * ui} ${4 * ui}" vector-effect="non-scaling-stroke" stroke-linejoin="round"/>`;
-  if (c.fillD) out += `<path d="${c.fillD}" fill="${MATERIAL_FILL}" fill-rule="evenodd" stroke="none"/>`;
+  if (c.fillD) out += `<path d="${c.fillD}" fill="${T.text}" fill-opacity=".08" fill-rule="evenodd" stroke="none"/>`;
   if (c.strokeD) out += `<path d="${c.strokeD}" fill="none" stroke="${T.text}" stroke-width="${1.5 * ui}" vector-effect="non-scaling-stroke" stroke-linejoin="round" stroke-linecap="round"/>`;
   return out + "</g>";
 }
@@ -578,14 +578,14 @@ const KEY_TOOL = Object.fromEntries(TOOL_DEFS.map((t) => [t.key.toLowerCase(), t
 
 const STYLE_ID = "sk-style";
 const CSS = `
-.sk-root{position:relative;display:flex;flex-direction:column;width:100%;height:100%;min-width:0;min-height:0;background:var(--panel,#15181c);color:var(--text,#e6e8ea);font:13px/1.5 "Inter","Noto Sans JP","Yu Gothic UI",system-ui,sans-serif;user-select:none;-webkit-user-select:none;overflow:hidden;outline:none}
-.sk-bar{display:flex;flex-direction:column;gap:6px;padding:6px 8px;border-bottom:1px solid var(--line,#2a3038);background:var(--raised,#1c2026);flex:none}
+.sk-root{position:relative;display:flex;flex-direction:column;width:100%;height:100%;min-width:0;min-height:0;background:var(--panel,#f5efe2);color:var(--text,#2b2723);font:14px/1.5 var(--font-ui,"Noto Sans JP","Yu Gothic UI",sans-serif);user-select:none;-webkit-user-select:none;overflow:hidden;outline:none}
+.sk-bar{display:flex;flex-direction:column;gap:6px;padding:6px 8px;border-bottom:1px solid var(--line,#d8cdb8);background:var(--raised,#ece4d4);flex:none}
 .sk-row{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;min-width:0}
 .sk-sep{width:1px;height:20px;background:var(--line-strong,#3a424d);flex:none}
 .sk-tool{display:inline-flex;align-items:center;justify-content:center;width:30px;height:28px;padding:0;border:1px solid transparent;border-radius:var(--radius-sm,4px);background:transparent;color:var(--text-2,#aab2bc);cursor:pointer}
 .sk-tool:hover{background:var(--hover,#232830);color:var(--text,#e6e8ea)}
 .sk-tool[aria-pressed=true]{background:var(--accent,#7c9cff);color:var(--accent-ink,#0b1020)}
-.sk-chip{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 10px 0 8px;border:1px solid var(--line,#2a3038);border-radius:13px;background:transparent;color:var(--text-2,#aab2bc);font:inherit;font-size:12px;cursor:pointer;white-space:nowrap}
+.sk-chip{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 10px 0 8px;border:1px solid var(--line,#d8cdb8);border-radius:0;background:transparent;color:var(--text-2,#6a6257);font:inherit;font-size:12px;cursor:pointer;white-space:nowrap}
 .sk-chip:hover{background:var(--hover,#232830);color:var(--text,#e6e8ea)}
 .sk-chip[aria-pressed=true]{border-color:var(--accent,#7c9cff);color:var(--text,#e6e8ea);background:var(--hover,#232830)}
 .sk-dot{width:10px;height:10px;border-radius:50%;flex:none}
@@ -606,13 +606,13 @@ const CSS = `
 .sk-stat{display:flex;flex-wrap:wrap;align-items:center;gap:2px 14px;color:var(--mute,#78818c)}
 .sk-stat b{font-weight:400;color:var(--text-2,#aab2bc);font-family:ui-monospace,"Cascadia Mono",Consolas,monospace}
 .sk-stat .sk-btn{height:20px;padding:0 8px;font-size:11px}
-.sk-pop{position:absolute;z-index:3;display:flex;align-items:center;gap:6px;padding:6px;background:var(--raised,#1c2026);border:1px solid var(--line-strong,#3a424d);border-radius:var(--radius,6px);box-shadow:0 8px 24px rgba(0,0,0,.45)}
+.sk-pop{position:absolute;z-index:3;display:flex;align-items:center;gap:6px;padding:6px;background:var(--raised,#ece4d4);border:1px solid var(--line-strong,#a99e90);border-radius:var(--radius,0);box-shadow:none}
 .sk-pop[hidden]{display:none}
 .sk-pdot{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;padding:0;border:1px solid transparent;border-radius:50%;background:transparent;cursor:pointer}
 .sk-pdot:hover{background:var(--hover,#232830)}
 .sk-pdot[aria-pressed=true]{border-color:var(--accent,#7c9cff)}
 .sk-note{width:150px;height:26px;padding:0 8px;border:1px solid var(--line,#2a3038);border-radius:var(--radius-sm,4px);background:var(--panel,#15181c);color:var(--text,#e6e8ea);font:inherit;font-size:12px;user-select:text;-webkit-user-select:text}
-.sk-textin{position:absolute;z-index:4;min-width:120px;height:26px;padding:0 8px;border:1px solid var(--accent,#7c9cff);border-radius:var(--radius-sm,4px);background:var(--raised,#1c2026);color:var(--text,#e6e8ea);font:13px "Inter","Noto Sans JP","Yu Gothic UI",system-ui,sans-serif;user-select:text;-webkit-user-select:text}
+.sk-textin{position:absolute;z-index:4;min-width:120px;height:26px;padding:0 8px;border:1px solid var(--accent,#a8493c);border-radius:var(--radius-sm,0);background:var(--raised,#ece4d4);color:var(--text,#2b2723);font:14px var(--font-ui,"Noto Sans JP","Yu Gothic UI",sans-serif);user-select:text;-webkit-user-select:text}
 `;
 
 function injectStyle() {
@@ -1542,6 +1542,7 @@ export function createSketch(container, store, opts = {}) {
 
   // ---- 配線 -------------------------------------------------------------------------
   const disposers = [];
+  disposers.push(watchTheme(() => { theme = readTheme(root); requestRender(); }));
   const on = (target, type, fn, o) => { target.addEventListener(type, fn, o); disposers.push(() => target.removeEventListener(type, fn, o)); };
 
   on(svg, "pointerdown", onPointerDown);

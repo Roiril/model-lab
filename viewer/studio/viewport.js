@@ -14,6 +14,7 @@ import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { CSS2DRenderer, CSS2DObject } from "three/addons/renderers/CSS2DRenderer.js";
 import { computeBoundsTree, disposeBoundsTree, acceleratedRaycast } from "three-mesh-bvh";
+import { themePalette, watchTheme } from "../shared/workspace.mjs";
 
 THREE.BufferGeometry.prototype.computeBoundsTree = computeBoundsTree;
 THREE.BufferGeometry.prototype.disposeBoundsTree = disposeBoundsTree;
@@ -79,22 +80,22 @@ const nextFrame = () => new Promise((r) => {
 });
 const clamp = (x, a, b) => Math.min(b, Math.max(a, x));
 
-function cssVar(el, name, fallback) {
-  try {
-    const v = getComputedStyle(el).getPropertyValue(name).trim();
-    return v || fallback;
-  } catch { return fallback; }
-}
-
 // 視点ボタンの見た目（styles.css とは独立に動くよう、ここで入れる）
 const STYLE = `
-.vp-views{position:absolute;top:10px;right:10px;display:grid;grid-template-columns:repeat(4,auto);gap:3px;padding:4px;
-  background:var(--panel,#15181c);border:1px solid var(--line,#2a3038);border-radius:var(--radius,6px);z-index:5;user-select:none}
+.vp-views{position:absolute;top:8px;right:8px;
+  background:var(--panel,#f5efe2);border:1px solid var(--line,#d8cdb8);border-radius:var(--radius,0);z-index:5;user-select:none}
+.vp-views summary{min-height:36px;display:flex;align-items:center;padding:8px 12px;color:var(--text-2);font-size:14px;cursor:pointer;list-style:none}
+.vp-views summary::after{content:'+';margin-left:12px}
+.vp-views[open] summary::after{content:'−'}
+.vp-views summary::-webkit-details-marker{display:none}
+.vp-view-list{display:grid;grid-template-columns:repeat(4,auto);gap:4px;padding:8px;border-top:1px solid var(--line)}
+.vp-views:not([open]) .vp-view-list{display:none}
 .vp-views button{font:inherit;font-size:12px;line-height:1;padding:6px 8px;min-width:34px;color:var(--text-2,#aab2bc);
-  background:var(--raised,#1c2026);border:1px solid transparent;border-radius:var(--radius-sm,4px);cursor:pointer}
-.vp-views button:hover{background:var(--hover,#232830);color:var(--text,#e6e8ea)}
-.vp-views button:active{background:var(--accent,#7c9cff);color:var(--accent-ink,#0b1020)}
+  background:var(--raised,#fff);border:1px solid transparent;border-radius:var(--radius-sm,0);cursor:pointer}
+.vp-views button:hover{background:var(--hover,#ece7dc);color:var(--text,#272520)}
+.vp-views button:active{background:var(--accent,#24574a);color:var(--accent-ink,#f7f4ed)}
 .vp-views button.wide{grid-column:span 2}
+@media(max-width:760px){.vp-views summary,.vp-views button{min-height:44px}.vp-views button{min-width:44px}}
 `;
 function ensureStyle() {
   if (document.getElementById("vp-style")) return;
@@ -119,9 +120,11 @@ export function createViewport(container, store) {
   if (getComputedStyle(container).position === "static") container.style.position = "relative";
   container.style.overflow = "hidden";
 
-  const bgColor = cssVar(container, "--bg", "#0e1013");
-  const lineColor = cssVar(container, "--line", "#2a3038");
-  const lineStrong = cssVar(container, "--line-strong", "#3a424d");
+  const initialTheme = themePalette();
+  let bgColor = initialTheme.paper;
+  let inkColor = initialTheme.ink;
+  let lineColor = initialTheme.line;
+  let lineStrong = initialTheme.mute;
 
   // --- renderer / scene / camera ---
   const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
@@ -274,8 +277,8 @@ export function createViewport(container, store) {
       g.position.y = -dim * MM * 0.0005;
       return g;
     };
-    gridGroup.add(make(sizeMm / step, lineColor, 0.9));
-    gridGroup.add(make(sizeMm / major, lineStrong, 1));
+    gridGroup.add(make(sizeMm / step, lineColor, 0.55));
+    gridGroup.add(make(sizeMm / major, lineStrong, 0.32));
     gridGroup.userData = { step, major, sizeMm };
   }
 
@@ -302,6 +305,16 @@ export function createViewport(container, store) {
     rebuildGrid(Math.max(dx, dy, dz) / MM);
     applyClip();
   }
+
+  const stopThemeWatch = watchTheme((palette) => {
+    bgColor = palette.paper;
+    inkColor = palette.ink;
+    lineColor = palette.line;
+    lineStrong = palette.mute;
+    scene.background.set(bgColor);
+    if (meshes.length || previewGroup) updateScale();
+    invalidate();
+  });
 
   function worldCenter() {
     const b = modelBox();
@@ -893,9 +906,9 @@ export function createViewport(container, store) {
       if (p.z > 1) return;
       const x = (p.x * 0.5 + 0.5) * W - ox, y = (1 - (p.y * 0.5 + 0.5)) * H - oy;
       const tw = g.measureText(text).width, pad = fs * 0.4;
-      g.fillStyle = "rgba(14,16,19,0.85)";
+      g.fillStyle = bgColor;
       g.fillRect(x + fs * 0.6, y - fs * 0.75, tw + pad * 2, fs * 1.5);
-      g.fillStyle = "#e6e8ea";
+      g.fillStyle = inkColor;
       g.fillText(text, x + fs * 0.6 + pad, y);
     });
   }
@@ -939,16 +952,22 @@ export function createViewport(container, store) {
   }
 
   // --- 視点ボタン ---
-  const views = document.createElement("div");
+  const views = document.createElement("details");
   views.className = "vp-views";
+  const viewsSummary = document.createElement("summary");
+  viewsSummary.textContent = "視点";
+  viewsSummary.setAttribute("aria-label", "視点を選ぶ");
+  const viewList = document.createElement("div");
+  viewList.className = "vp-view-list";
+  views.append(viewsSummary, viewList);
   for (const [id, label] of VIEWS) {
     const b = document.createElement("button");
     b.type = "button";
     b.textContent = label;
     b.title = `${label}から見る`;
     if (id === "iso") b.classList.add("wide");
-    b.addEventListener("click", () => viewPreset(id));
-    views.appendChild(b);
+    b.addEventListener("click", () => { viewPreset(id); views.open = false; viewsSummary.focus({ preventScroll: true }); });
+    viewList.appendChild(b);
   }
   container.appendChild(views);
 
@@ -978,6 +997,7 @@ export function createViewport(container, store) {
     ro.disconnect();
     offMesh();
     offFaceOutlines();
+    stopThemeWatch();
     canvas.removeEventListener("pointermove", onMove);
     canvas.removeEventListener("pointerleave", onLeave);
     clearMeshes();

@@ -2,15 +2,40 @@ import * as THREE from './vendor/three.module.js';
 import {OrbitControls} from './vendor/OrbitControls.js';
 import {createAssembly,Playback,routeMesh} from './core.mjs';
 import {meshGeometry} from './render_geometry.mjs';
-import {STEPS,NAMES,STOCK,LIMITS,AUTO_HOLDS} from './steps.mjs';
+import {STEPS,NAMES,STOCK,LIMITS,AUTO_HOLDS,SHA} from './steps.mjs';
+import {B3_MODEL,createWorkspaceNav,themePalette,watchTheme,readSession,writeSession} from '../shared/workspace.mjs';
+import {createSession,parseStepParam,restoreSession} from './session.mjs';
 const $=id=>document.getElementById(id), reduced=matchMedia('(prefers-reduced-motion: reduce)');
 const player=new Playback(STEPS.length,reduced.matches,Object.keys(AUTO_HOLDS).map(Number));
-let assembly,verified,renderer,scene,camera,orbit,groups={},labels={},rows={},ghosts=[],pathGroup,ready=false,selected=null,lastTime=0,lastPhase='',cameraGoal=null,lastStep=-1;
+const SESSION_KEY=`assembly.${B3_MODEL}`, initialUrlStep=parseStepParam(new URL(location.href).searchParams.get('step'),STEPS.length);
+const workspaceNav=createWorkspaceNav({active:'assembly',model:B3_MODEL,onNavigate:()=>{player.pause();saveSession();}});
+$('workspace-nav').replaceWith(workspaceNav.element);workspaceNav.setModel(B3_MODEL);
+let assembly,verified,renderer,scene,camera,orbit,grid,groups={},labels={},rows={},ghosts=[],pathGroup,ready=false,selected=null,lastTime=0,lastPhase='',cameraGoal=null,lastStep=-1,sessionApplied=false;
+let palette=themePalette();
 const idNames=Object.fromEntries([...NAMES.map((name,i)=>[String(i+1).padStart(2,'0'),name]),...STOCK.map(p=>[p.id,p.name])]);
 const shellIds=new Set(['01','02','03']);
 const edgesMaterial=new THREE.LineBasicMaterial({color:0x376173,transparent:true,opacity:.48});
 const activeMaterial=new THREE.LineBasicMaterial({color:0xb77e13});
 const laterMaterial=new THREE.LineDashedMaterial({color:0x8a9ea9,dashSize:.003,gapSize:.002,transparent:true,opacity:.6});
+const disposeTheme=watchTheme(next=>{palette=next;applySceneTheme();});
+function applySceneTheme(){
+  if(!scene)return;scene.background=new THREE.Color(palette.paper);
+  if(grid){const color=new THREE.Color(palette.line),attribute=grid.geometry.getAttribute('color');for(let i=0;i<attribute.count;i++)attribute.setXYZ(i,color.r,color.g,color.b);attribute.needsUpdate=true;}
+}
+function updateUrl(index,mode='replace'){
+  if(!mode)return;const url=new URL(location.href);url.searchParams.set('step',String(index));history[`${mode}State`]({step:index},'',url);
+}
+function saveSession(){
+  writeSession(SESSION_KEY,createSession({cadSha:SHA,stepTitle:STEPS[player.index].title,fraction:player.fraction,selected,speed:player.speed,dwell:player.dwell,shell:$('shell').value,wires:$('wires').checked,autoCamera:$('auto-camera').checked,mode:player.mode,phase:player.phase}));
+}
+function applyInitialSession(){
+  if(sessionApplied)return;sessionApplied=true;
+  const restored=restoreSession(readSession(SESSION_KEY),{cadSha:SHA,steps:STEPS,partIds:Object.keys(idNames),gateTitles:Object.keys(AUTO_HOLDS).map(index=>STEPS[Number(index)].title)});
+  if(restored){player.seek(restored.index);player.fraction=restored.fraction;player.setSpeed(restored.speed);player.setDwell(restored.dwell);player.mode=restored.mode;player.phase=restored.phase;selected=restored.selected;$('speed').value=String(restored.speed);$('dwell').value=String(restored.dwell);$('shell').value=restored.shell;$('wires').checked=restored.wires;$('auto-camera').checked=restored.autoCamera;}
+  // 同じ手順のURLなら保存した途中位置と確認待ちを保つ。
+  if(initialUrlStep!==null&&(!restored||initialUrlStep!==restored.index)){player.seek(initialUrlStep);}updateUrl(player.index);
+  if(selected)$('selection').textContent=`${selected} · ${idNames[selected]}`;
+}
 function state(id){return STEPS[player.index].ids.includes(id)?'current':assembly?.firstStep[id]<=player.index?'assembled':'later';}
 function scopeText(s){
   if(player.index===0)return '初期配置は25個の一次外形の包囲箱が重ならないことを検査しています。参考配線は初期配置では非表示です。';
@@ -19,48 +44,51 @@ function scopeText(s){
 function renderInstructions(){
   const s=STEPS[player.index];$('step-number').textContent=String(player.index).padStart(2,'0');$('title').textContent=s.title;
   $('ids').textContent=s.ids.map(id=>`${id} ${idNames[id]}`).join(' / ');$('action').textContent=s.action;$('done').textContent=s.done;$('pending').textContent=s.pending;$('scope').textContent=scopeText(s);
+  const total=STEPS.length-1,counter=player.index===0?`準備 · 全${total}工程`:`${player.index} / ${total}工程`;$('step-counter').textContent=counter;$('step-progress').value=player.index;$('step-progress').max=total;$('step-progress').setAttribute('aria-label',player.index===0?`準備、全${total}工程中`:`${total}工程中${player.index}工程目`);
   $('step-select').value=String(player.index);$('previous').disabled=player.index===0;$('next').disabled=player.index===STEPS.length-1;
   $('play').disabled=!ready;$('play').textContent=player.mode==='single'&&player.running?'この手順を一時停止':player.mode==='single'&&player.fraction<1?'この手順を再開':'この手順を再生';
   $('auto-play').disabled=!ready||player.phase==='gate'||(player.mode==='auto'&&player.phase==='complete');
   $('auto-play').textContent=player.mode==='auto'&&player.running?'自動進行を一時停止':player.mode==='auto'&&player.phase!=='complete'?'自動進行を再開':'全手順を自動再生';
   $('auto-hold').hidden=!(ready&&player.mode==='auto'&&player.phase==='gate');$('auto-hold-reason').textContent=AUTO_HOLDS[player.index]||'';
-  const status=!ready?'3D停止中 · 読み込み・再試行後に再生できます':player.phase==='gate'?'確認待ち · 未解決の保留点で自動進行を停止':player.phase==='complete'?'全手順の表示が完了 · 停止しました（実物は未確認）':player.running?player.phase==='dwell'?`説明を見るため停止 · あと${Math.max(0,player.dwell-player.dwellElapsed).toFixed(1)}秒`:'再生中 · '+(player.mode==='auto'?'手順を自動で進めます':'この手順の終わりで停止'):player.mode==='auto'?'自動進行を一時停止 · 同じ位置から再開':player.fraction<1?'この手順を一時停止 · 同じ位置から再開':'停止中 · 初めから見るには「最初へ」→「全手順を自動再生」';
+  const status=!ready?'3D停止中 · 読み込み後に再生できます':player.phase==='gate'?'確認待ち · 未解決の保留点で停止':player.phase==='complete'?'表示が完了 · 実物は未確認':player.running?player.phase==='dwell'?`説明を見るため停止 · あと${Math.max(0,player.dwell-player.dwellElapsed).toFixed(1)}秒`:'再生中 · '+(player.mode==='auto'?'手順を自動で進めます':'この手順の終わりで停止'):player.mode==='auto'?'自動進行を一時停止 · 同じ位置から再開':player.fraction<1?'一時停止 · 同じ位置から再開':'停止中';
   $('play-status').textContent=status+(player.pauseReason?' · '+player.pauseReason:'')+(reduced.matches?' · 動きを減らす設定':'');
   for(const [id,row] of Object.entries(rows)){const st=state(id);row.className=`bom-row ${st}${selected===id?' selected':''}`;row.querySelector('.state').textContent=st==='current'?'◎ この手順':st==='assembled'?'✓ 組立済み':'○ これから';row.setAttribute('aria-pressed',String(selected===id));}
 }
 function makeBOM(){
   $('bom').replaceChildren();rows={};
   for(const [id,name] of Object.entries(idNames).sort((a,b)=>a[0].localeCompare(b[0]))){const button=document.createElement('button');button.className='bom-row';button.innerHTML='<b></b><span class="name"></span><span class="state"></span>';button.children[0].textContent=id;button.children[1].textContent=name;
-    if(assembly){const small=document.createElement('small');small.textContent=assembly.byId[id].kind+' · '+assembly.byId[id].source;button.children[1].append(small);}
+    if(assembly)button.title=`${assembly.byId[id].kind} · ${assembly.byId[id].source}`;
     button.onclick=()=>selectPart(id,true);$('bom').append(button);rows[id]=button;
   }
 }
-function selectPart(id,focus=false){selected=id;$('selection').textContent=`${id} · ${idNames[id]} · ${assembly?.byId[id]?.kind||''}`;renderInstructions();if(ready){paint();if(focus)focusPart(id);} }
-function setStep(index){player.seek(index);lastPhase='';if(!selected)$('selection').textContent='部品を選ぶとIDと名前を表示';renderInstructions();if(ready){paint();makeGhosts();if($('auto-camera').checked)recommendCamera();} }
-STEPS.forEach((s,i)=>{const o=document.createElement('option');o.value=String(i);o.textContent=`${String(i).padStart(2,'0')} · ${s.title}`;$('step-select').append(o);});
+function selectPart(id,focus=false){selected=id;$('selection').textContent=`${id} · ${idNames[id]} · ${assembly?.byId[id]?.kind||''}`;renderInstructions();if(ready){paint();if(focus)focusPart(id);}saveSession();}
+function setStep(index,{historyMode='push',persist=true}={}){player.seek(index);lastPhase='';if(!selected)$('selection').textContent='部品を選ぶとIDと名前を表示';updateUrl(player.index,historyMode);renderInstructions();if(ready){paint();makeGhosts();if($('auto-camera').checked)recommendCamera();}if(persist)saveSession();}
+STEPS.forEach((s,i)=>{const o=document.createElement('option');o.value=String(i);o.textContent=i===0?`準備 · ${s.title}`:`${String(i).padStart(2,'0')} · ${s.title}`;$('step-select').append(o);});
 makeBOM();renderInstructions();
 $('next').onclick=()=>setStep(player.index+1);$('previous').onclick=()=>setStep(player.index-1);$('reset').onclick=()=>{selected=null;setStep(0);if(ready)overview(true);};
 $('step-select').onchange=e=>setStep(Number(e.target.value));
-$('play').onclick=()=>{if(!ready)return;player.reduced=reduced.matches;if(player.running&&player.mode==='single')player.pause();else {player.pause();player.play();}renderInstructions();makeGhosts();if($('auto-camera').checked)recommendCamera();};
-$('auto-play').onclick=()=>{if(!ready)return;player.reduced=reduced.matches;if(player.running&&player.mode==='auto')player.pause();else {player.pause();player.startAuto();}renderInstructions();};
-$('continue-auto').onclick=()=>{if(!ready)return;player.continuePreview();renderInstructions();};
-$('dwell').onchange=e=>{player.setDwell(Number(e.target.value));renderInstructions();};
-$('speed').onchange=e=>player.setSpeed(Number(e.target.value));
-$('shell').onchange=()=>{if(ready)paint();};$('wires').onchange=()=>{if(ready)paint();};
+$('play').onclick=()=>{if(!ready)return;player.reduced=reduced.matches;if(player.running&&player.mode==='single')player.pause();else {player.pause();player.play();}renderInstructions();makeGhosts();if($('auto-camera').checked)recommendCamera();saveSession();};
+$('auto-play').onclick=()=>{if(!ready)return;player.reduced=reduced.matches;if(player.running&&player.mode==='auto')player.pause();else {player.pause();player.startAuto();}renderInstructions();saveSession();};
+$('continue-auto').onclick=()=>{if(!ready)return;player.continuePreview();renderInstructions();saveSession();};
+$('dwell').onchange=e=>{player.setDwell(Number(e.target.value));renderInstructions();saveSession();};
+$('speed').onchange=e=>{player.setSpeed(Number(e.target.value));saveSession();};
+$('shell').onchange=()=>{if(ready)paint();saveSession();};$('wires').onchange=()=>{if(ready)paint();saveSession();};$('auto-camera').onchange=saveSession;
 $('camera').onclick=()=>recommendCamera(true);$('overview').onclick=()=>overview(true);$('joint').onclick=()=>focusPart(selected||STEPS[player.index].ids[0]||'01',true);
 document.addEventListener('keydown',e=>{if(e.target.matches('input,select,textarea,button,a,summary')||e.altKey||e.ctrlKey||e.metaKey)return;if(e.key==='ArrowRight'){e.preventDefault();setStep(player.index+1);}if(e.key==='ArrowLeft'){e.preventDefault();setStep(player.index-1);}if(e.key==='Home'){e.preventDefault();setStep(0);}if(e.key==='End'){e.preventDefault();setStep(STEPS.length-1);}if(e.code==='Space'){e.preventDefault();$('play').click();}});
-reduced.addEventListener('change',e=>{player.reduced=e.matches;if(e.matches){player.pause();player.fraction=1;}renderInstructions();});
-document.addEventListener('visibilitychange',()=>{lastTime=0;if(document.hidden&&player.running)player.pause('背景へ移動したため停止。戻っても自動再開しません。');renderInstructions();});
+reduced.addEventListener('change',e=>{player.reduced=e.matches;if(e.matches){player.pause();player.fraction=1;}renderInstructions();saveSession();});
+document.addEventListener('visibilitychange',()=>{lastTime=0;if(document.hidden&&player.running)player.pause('背景へ移動したため停止。戻っても自動再開しません。');if(document.hidden)saveSession();renderInstructions();});
+addEventListener('popstate',()=>{const index=parseStepParam(new URL(location.href).searchParams.get('step'),STEPS.length);if(index!==null)setStep(index,{historyMode:null});});
+addEventListener('pagehide',event=>{player.pause();saveSession();if(!event.persisted)disposeTheme();});
 function setupScene(){
-  scene=new THREE.Scene();scene.background=new THREE.Color(0xeaf1f6);
+  scene=new THREE.Scene();scene.background=new THREE.Color(palette.paper);
   camera=new THREE.PerspectiveCamera(38,1,.001,10);camera.up.set(0,0,1);
   renderer=new THREE.WebGLRenderer({antialias:true,alpha:false});renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.outputColorSpace=THREE.SRGBColorSpace;
   $('viewport').prepend(renderer.domElement);
   renderer.domElement.addEventListener('webglcontextlost',e=>{e.preventDefault();ready=false;player.pause();showError('WebGLの描画コンテキストが失われました。再試行してください。');});
   scene.add(new THREE.HemisphereLight(0xffffff,0x809bb0,2.2));const sun=new THREE.DirectionalLight(0xffffff,2.5);sun.position.set(.2,-.4,.8);scene.add(sun);
-  const grid=new THREE.GridHelper(1.2,24,0xb0c3ce,0xcfdee7);grid.rotation.x=Math.PI/2;grid.position.set(-.1,.16,-.12);scene.add(grid);
+  grid=new THREE.GridHelper(1.2,24,palette.line,palette.line);grid.rotation.x=Math.PI/2;grid.position.set(-.1,.16,-.12);scene.add(grid);
   orbit=new OrbitControls(camera,renderer.domElement);orbit.enableDamping=true;orbit.dampingFactor=.12;orbit.minDistance=.025;orbit.maxDistance=2.7;
-  orbit.addEventListener('start',()=>{cameraGoal=null;$('auto-camera').checked=false;});
+  orbit.addEventListener('start',()=>{cameraGoal=null;$('auto-camera').checked=false;saveSession();});
   let down=null;renderer.domElement.addEventListener('pointerdown',e=>{down=[e.clientX,e.clientY];});
   renderer.domElement.addEventListener('pointerup',e=>{if(!down||Math.hypot(e.clientX-down[0],e.clientY-down[1])>5)return;const r=renderer.domElement.getBoundingClientRect();const ray=new THREE.Raycaster();ray.setFromCamera(new THREE.Vector2((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1),camera);const hits=ray.intersectObjects(Object.values(groups),true).filter(h=>h.object.isMesh&&!h.object.userData.route&&h.object.visible&&h.object.parent.visible);if(hits[0])selectPart(hits[0].object.userData.id);down=null;});
   groups={};labels={};$('labels').replaceChildren();
@@ -103,7 +131,7 @@ function focusPart(id,close=false){if(!ready||!groups[id])return;const p=assembl
 function positionLabels(){if(!ready)return;const w=$('viewport').clientWidth,h=$('viewport').clientHeight,rects=[];const step=STEPS[player.index],current=step.ids.length>4?['02','04','05']:step.ids;
   const ids=player.index===0?assembly.items.map(p=>p.id):[...new Set([selected,...current].filter(Boolean))];
   for(const label of Object.values(labels))label.hidden=true;
-  for(const id of ids){const group=groups[id];if(!group.visible)continue;const item=assembly.byId[id],p=group.position.clone().project(camera);if(p.z<-1||p.z>1||p.x<-1||p.x>1||p.y<-1||p.y>1)continue;const label=labels[id],st=state(id);label.hidden=false;label.className=`label ${st}${id===selected?' selected':''}`;label.textContent=player.index===0?(w<500?id:`${id} ${item.name}`):`${id} ${st==='current'?'◎':st==='assembled'?'✓':'○'} ${w<500?'':item.name}`;
+  for(const id of ids){const group=groups[id];if(!group.visible)continue;const item=assembly.byId[id],p=group.position.clone().project(camera);if(p.z<-1||p.z>1||p.x<-1||p.x>1||p.y<-1||p.y>1)continue;const label=labels[id],st=state(id);label.hidden=false;label.className=`label ${st}${id===selected?' selected':''}`;label.textContent=id===selected?`${id} ${item.name}`:player.index===0?id:`${st==='current'?'◎':st==='assembled'?'✓':'○'} ${id}`;
     const lw=label.offsetWidth,lh=label.offsetHeight,x=Math.max(4,Math.min(w-lw-4,(p.x*.5+.5)*w-lw/2));let y=Math.max(4,Math.min(h-lh-4,(-p.y*.5+.5)*h+12));
     for(let tries=0;tries<35&&rects.some(r=>x<r.x+r.w+3&&x+lw+3>r.x&&y<r.y+r.h+3&&y+lh+3>r.y);tries++)y=Math.min(h-lh-4,y+lh+4);
     if(rects.some(r=>x<r.x+r.w+2&&x+lw+2>r.x&&y<r.y+r.h+2&&y+lh+2>r.y)){label.hidden=true;continue;}
@@ -113,14 +141,14 @@ function positionLabels(){if(!ready)return;const w=$('viewport').clientWidth,h=$
 function showError(message){$('loading').hidden=true;$('failure').hidden=false;$('failure-reason').textContent=message;renderInstructions();}
 async function load(){
   $('failure').hidden=true;$('loading').hidden=false;ready=false;player.pause();renderInstructions();
-  try{const [cad,manifest,audit]=await Promise.all(['assets/cad.json','assets/cad_parts.json','assets/path-audit-summary.json'].map(async path=>{const res=await fetch(path);if(!res.ok)throw Error(`${path}: HTTP ${res.status}`);return res.json();}));assembly=createAssembly(cad,manifest);if(audit.source_sha256!==cad.source_sha256)throw Error('経路検査の版がCADと一致しません。');verified=audit;makeBOM();
+  try{const [cad,manifest,audit]=await Promise.all(['assets/cad.json','assets/cad_parts.json','assets/path-audit-summary.json'].map(async path=>{const res=await fetch(path);if(!res.ok)throw Error(`${path}: HTTP ${res.status}`);return res.json();}));assembly=createAssembly(cad,manifest);if(audit.source_sha256!==cad.source_sha256)throw Error('経路検査の版がCADと一致しません。');verified=audit;makeBOM();applyInitialSession();
     if(renderer){renderer.dispose();renderer.domElement.remove();orbit.dispose();}
     setupScene();ready=true;paint();makeGhosts();overview(true);$('loading').hidden=true;renderInstructions();
   }catch(error){showError(error.message||String(error));}
 }
 $('retry').onclick=load;
 function loop(time){requestAnimationFrame(loop);const dt=lastTime?Math.min(.1,(time-lastTime)/1000):0;lastTime=time;
-  if(!ready)return;const previousIndex=player.index,previousPhase=player.phase,wasRunning=player.running;if(!document.hidden)player.tick(dt);if(player.index!==lastStep){lastStep=player.index;renderInstructions();makeGhosts();if($('auto-camera').checked)recommendCamera();}if(previousPhase!==player.phase||wasRunning&&!player.running||player.phase==='dwell')renderInstructions();paint();
+  if(!ready)return;const previousIndex=player.index,previousPhase=player.phase,wasRunning=player.running;if(!document.hidden)player.tick(dt);if(player.index!==lastStep){const hadStep=lastStep>=0;lastStep=player.index;updateUrl(player.index);renderInstructions();makeGhosts();if($('auto-camera').checked)recommendCamera();if(hadStep)saveSession();}if(previousPhase!==player.phase||wasRunning&&!player.running||player.phase==='dwell')renderInstructions();if(previousPhase!==player.phase||wasRunning&&!player.running)saveSession();paint();
   if(cameraGoal){const amount=1-Math.exp(-dt*4);camera.position.lerp(cameraGoal.position,amount);orbit.target.lerp(cameraGoal.target,amount);if(camera.position.distanceTo(cameraGoal.position)<.0005)cameraGoal=null;}
   orbit.update();renderer.render(scene,camera);positionLabels();
 }

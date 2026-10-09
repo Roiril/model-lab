@@ -271,7 +271,9 @@ async function openModel(name, { fromHistory = false } = {}) {
     store.set({ model: name, files: [], selection: [], activeItemId: null, activeSectionId: null });
     store.loadDraft();
     if (!fromHistory) {
-      const url = `${location.pathname}?model=${encodeURIComponent(name)}`;
+      const url = new URL(location.href);
+      url.searchParams.set("model", name);
+      url.hash = "";
       if (booted) history.pushState(null, "", url);
       else history.replaceState(null, "", url);
     }
