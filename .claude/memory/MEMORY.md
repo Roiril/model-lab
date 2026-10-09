@@ -5,4 +5,4 @@
 (Claude Code が自動で積み上げる。手動で中身を書く必要はない)
 
 - [起動中の Blender にはブースが入っている](blender-live-booth-scene.md) — MCP 経由で clear_scene すると全部消える。Cube.005 は姿勢の指定
-- [住人の箱を参考にしない](feedback-no-mystery-box-reference.md) — SG92R の開閉箱は sg92r-photo と servo-lid-cube から始める
+- [住人の箱を参考にしない](feedback-no-mystery-box-reference.md) — 形と機構だけが対象。Studio の物理検証・組み立てタブは使い、新モデルの検証もそこで見せる
