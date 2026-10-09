@@ -32,7 +32,8 @@ function applyMeta(meta) {
 // 部品の色は Okabe-Ito（部品の区別。テーマに依らず同じ色）。データに無い部品は表示しない
 export const PARTS = [
   ["box", "箱", "#bdb4a6"], ["lid", "蓋", "#56b4e9"], ["crank", "クランク", "#e69f00"], ["link", "リンク", "#009e73"],
-  ["pin", "蝶番ピン", "#4d4d4d"], ["clip", "押さえクリップ", "#cc79a7"], ["ref_body", "SG92R", "#0072b2"],
+  ["pin", "蝶番ピン", "#4d4d4d"], ["clip", "押さえクリップ", "#cc79a7"], ["speaker_clip", "スピーカー押さえ", "#9467bd"],
+  ["ref_body", "SG92R", "#0072b2"],
   ["ref_horn", "付属ホーン", "#2a2a2a"], ["ref_wire", "配線", "#d55e00"], ["ref_speaker", "スピーカー（参考）", "#f0e442"],
 ];
 export const ALL = new Set(PARTS.map((p) => p[0]));
@@ -141,7 +142,7 @@ void main(){
   for (const n of ["uVP", "uM", "uCol", "uEye", "uCutX", "uCut"]) U[n] = gl.getUniformLocation(prog, n);
   const bufs = {};
   const shown = partsIn(D);
-  for (const [k] of shown) {
+  for (const k of Object.keys(D.meshes)) {
     const m = D.meshes[k];
     const p16 = new Int16Array(b64(m.pos)), pos = new Float32Array(p16.length);
     for (let i = 0; i < p16.length; i++) pos[i] = p16[i] * D.q;
@@ -183,7 +184,8 @@ void main(){
       gl.uniform3fv(U.uCol, hex(col));
       gl.uniform1f(U.uCut, st.cut && (k === "box" || k === "lid" || k === "pin") ? 1 : 0);
       gl.uniform1f(U.uCutX, view.cutX);
-      gl.bindVertexArray(bufs[k].vao); gl.drawElements(gl.TRIANGLES, bufs[k].n, gl.UNSIGNED_SHORT, 0);
+      const mesh = bufs[st.mesh?.[k] ?? k];
+      gl.bindVertexArray(mesh.vao); gl.drawElements(gl.TRIANGLES, mesh.n, gl.UNSIGNED_SHORT, 0);
     }
   }
   // ドラッグで回転、ホイールかピンチで拡大

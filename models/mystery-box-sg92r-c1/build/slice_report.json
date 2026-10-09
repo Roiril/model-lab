@@ -1,0 +1,824 @@
+{
+ "settings": {
+  "machine": "machine.json",
+  "process": "process.json",
+  "support": "off（標準プロファイルのまま enable_support=0）",
+  "R_support_mm": 0.6
+ },
+ "calibration": {
+  "overhang_10mm": {
+   "total": {
+    "external_unsupported_mm": 80.32,
+    "bridge_mm": 496.97,
+    "bridge_unsupported_mm": 272.53,
+    "internal_unsupported_mm": 0.0
+   },
+   "features": {
+    "Overhang wall": 80.32,
+    "Bridge": 272.53
+   }
+  },
+  "slope_45": {
+   "total": {
+    "external_unsupported_mm": 0.0,
+    "bridge_mm": 129.59,
+    "bridge_unsupported_mm": 36.19,
+    "internal_unsupported_mm": 0.0
+   },
+   "features": {
+    "Bridge": 36.19
+   }
+  },
+  "ok": true
+ },
+ "parts": {
+  "PLA/box": {
+   "layers": 350,
+   "stats": {
+    "time": "model printing time: 1h 40m 10s; total estimated time: 1h 47m 26s",
+    "filament_mm": 27584.07,
+    "filament_g_header": "83.60"
+   },
+   "floating": {
+    "external_unsupported_mm": 88.14,
+    "bridge_mm": 11896.53,
+    "bridge_unsupported_mm": 5706.23,
+    "internal_unsupported_mm": 28.42
+   },
+   "floating_by_feature": {
+    "Bridge": 5706.23,
+    "Gap infill": 7.19,
+    "Overhang wall": 80.96
+   },
+   "worst_layers": [
+    {
+     "layer": 10,
+     "z": 2.2,
+     "feature": "Bridge",
+     "points": 20709,
+     "x": [
+      -31.7,
+      31.7
+     ],
+     "y": [
+      -31.7,
+      31.7
+     ]
+    },
+    {
+     "layer": 20,
+     "z": 4.2,
+     "feature": "Overhang wall",
+     "points": 216,
+     "x": [
+      -29.6,
+      -22.4
+     ],
+     "y": [
+      -34.7,
+      -32.2
+     ]
+    },
+    {
+     "layer": 20,
+     "z": 4.2,
+     "feature": "Gap infill",
+     "points": 36,
+     "x": [
+      -29.5,
+      -22.5
+     ],
+     "y": [
+      -33.5,
+      -33.5
+     ]
+    },
+    {
+     "layer": 31,
+     "z": 6.4,
+     "feature": "Bridge",
+     "points": 2133,
+     "x": [
+      13.4,
+      33.2
+     ],
+     "y": [
+      -0.1,
+      29.1
+     ]
+    },
+    {
+     "layer": 83,
+     "z": 16.8,
+     "feature": "Bridge",
+     "points": 520,
+     "x": [
+      -28.3,
+      -12.5
+     ],
+     "y": [
+      -8.8,
+      24.6
+     ]
+    },
+    {
+     "layer": 101,
+     "z": 20.4,
+     "feature": "Overhang wall",
+     "points": 186,
+     "x": [
+      -22.7,
+      -16.6
+     ],
+     "y": [
+      -10.5,
+      26.5
+     ]
+    }
+   ],
+   "log_warnings": [
+    "[2026-10-10 06:05:45.842909] [0x0000ab74] [info]    Slic3r::Print::apply 1847: finished,  this 000001FF39B27FE0, m_modified_count 1, apply_status 1, m_support_used 0",
+    "[2026-10-10 06:05:46.100172] [0x0000ab74] [warning] tree support default to organic support",
+    "[2026-10-10 06:05:46.143348] [0x0000ab74] [info]    max_cantilever_dist=0",
+    "[2026-10-10 06:05:46.144839] [0x0000ab74] [info]    is_support_necessary takes 0 secs.",
+    "[2026-10-10 06:05:46.871204] [0x0000ab74] [info]    framebuffer_type: Supported",
+    "[2026-10-10 06:05:46.884972] [0x0000ab74] [info]    framebuffer_type: Supported",
+    "[2026-10-10 06:05:46.889045] [0x0000ab74] [info]    framebuffer_type: Supported",
+    "[2026-10-10 06:05:46.889045] [0x0000ab74] [info]    framebuffer_type: Supported"
+   ]
+  },
+  "PLA/lid": {
+   "layers": 114,
+   "stats": {
+    "time": "model printing time: 22m 21s; total estimated time: 29m 37s",
+    "filament_mm": 4735.07,
+    "filament_g_header": "14.35"
+   },
+   "floating": {
+    "external_unsupported_mm": 3.28,
+    "bridge_mm": 9504.93,
+    "bridge_unsupported_mm": 4729.18,
+    "internal_unsupported_mm": 0.75
+   },
+   "floating_by_feature": {
+    "Bridge": 4729.18,
+    "Gap infill": 0.2,
+    "Overhang wall": 3.08
+   },
+   "worst_layers": [
+    {
+     "layer": 7,
+     "z": 1.6,
+     "feature": "Bridge",
+     "points": 1088,
+     "x": [
+      -14.8,
+      14.8
+     ],
+     "y": [
+      24.2,
+      31.0
+     ]
+    },
+    {
+     "layer": 10,
+     "z": 2.2,
+     "feature": "Bridge",
+     "points": 22456,
+     "x": [
+      -31.8,
+      31.7
+     ],
+     "y": [
+      -32.0,
+      26.4
+     ]
+    },
+    {
+     "layer": 41,
+     "z": 8.4,
+     "feature": "Overhang wall",
+     "points": 12,
+     "x": [
+      -16.4,
+      16.4
+     ],
+     "y": [
+      29.7,
+      29.9
+     ]
+    },
+    {
+     "layer": 41,
+     "z": 8.4,
+     "feature": "Bridge",
+     "points": 162,
+     "x": [
+      -15.3,
+      15.3
+     ],
+     "y": [
+      29.7,
+      29.9
+     ]
+    },
+    {
+     "layer": 103,
+     "z": 20.8,
+     "feature": "Overhang wall",
+     "points": 6,
+     "x": [
+      6.8,
+      9.4
+     ],
+     "y": [
+      15.1,
+      15.1
+     ]
+    }
+   ],
+   "log_warnings": [
+    "[2026-10-10 06:05:59.450487] [0x00010acc] [info]    Slic3r::Print::apply 1847: finished,  this 000002822D6DF810, m_modified_count 1, apply_status 1, m_support_used 0",
+    "[2026-10-10 06:05:59.501498] [0x00010acc] [warning] tree support default to organic support",
+    "[2026-10-10 06:05:59.508106] [0x00010acc] [info]    max_cantilever_dist=0",
+    "[2026-10-10 06:05:59.508106] [0x00010acc] [info]    is_support_necessary takes 0 secs.",
+    "[2026-10-10 06:05:59.773170] [0x00010acc] [info]    framebuffer_type: Supported",
+    "[2026-10-10 06:05:59.799580] [0x00010acc] [info]    framebuffer_type: Supported",
+    "[2026-10-10 06:05:59.803652] [0x00010acc] [info]    framebuffer_type: Supported",
+    "[2026-10-10 06:05:59.804156] [0x00010acc] [info]    framebuffer_type: Supported"
+   ]
+  },
+  "PLA/crank": {
+   "layers": 59,
+   "stats": {
+    "time": "model printing time: 7m 54s; total estimated time: 15m 10s",
+    "filament_mm": 972.57,
+    "filament_g_header": "2.95"
+   },
+   "floating": {
+    "external_unsupported_mm": 0.0,
+    "bridge_mm": 1892.99,
+    "bridge_unsupported_mm": 922.69,
+    "internal_unsupported_mm": 7.55
+   },
+   "floating_by_feature": {
+    "Bridge": 922.69
+   },
+   "worst_layers": [
+    {
+     "layer": 8,
+     "z": 1.8,
+     "feature": "Bridge",
+     "points": 2569,
+     "x": [
+      -13.7,
+      9.8
+     ],
+     "y": [
+      -10.3,
+      14.8
+     ]
+    },
+    {
+     "layer": 16,
+     "z": 3.4,
+     "feature": "Bridge",
+     "points": 2083,
+     "x": [
+      -17.8,
+      17.8
+     ],
+     "y": [
+      -19.5,
+      19.6
+     ]
+    }
+   ],
+   "log_warnings": [
+    "[2026-10-10 06:06:02.879264] [0x000072a4] [info]    Slic3r::Print::apply 1847: finished,  this 000002A3F0BEC270, m_modified_count 1, apply_status 1, m_support_used 0",
+    "[2026-10-10 06:06:02.990564] [0x000072a4] [warning] tree support default to organic support",
+    "[2026-10-10 06:06:02.998714] [0x000072a4] [info]    max_cantilever_dist=0",
+    "[2026-10-10 06:06:02.998714] [0x000072a4] [info]    is_support_necessary takes 0 secs.",
+    "[2026-10-10 06:06:03.304311] [0x000072a4] [info]    framebuffer_type: Supported",
+    "[2026-10-10 06:06:03.315949] [0x000072a4] [info]    framebuffer_type: Supported",
+    "[2026-10-10 06:06:03.318516] [0x000072a4] [info]    framebuffer_type: Supported",
+    "[2026-10-10 06:06:03.318516] [0x000072a4] [info]    framebuffer_type: Supported"
+   ]
+  },
+  "PLA/link": {
+   "layers": 32,
+   "stats": {
+    "time": "model printing time: 3m 36s; total estimated time: 10m 52s",
+    "filament_mm": 517.91,
+    "filament_g_header": "1.57"
+   },
+   "floating": {
+    "external_unsupported_mm": 0.0,
+    "bridge_mm": 507.74,
+    "bridge_unsupported_mm": 165.4,
+    "internal_unsupported_mm": 0.0
+   },
+   "floating_by_feature": {
+    "Bridge": 165.4
+   },
+   "worst_layers": [
+    {
+     "layer": 10,
+     "z": 2.2,
+     "feature": "Bridge",
+     "points": 832,
+     "x": [
+      -21.9,
+      14.0
+     ],
+     "y": [
+      -2.6,
+      2.3
+     ]
+    }
+   ],
+   "log_warnings": [
+    "[2026-10-10 06:06:04.497784] [0x00015cb4] [info]    Slic3r::Print::apply 1847: finished,  this 00000133EB767010, m_modified_count 1, apply_status 1, m_support_used 0",
+    "[2026-10-10 06:06:04.551250] [0x00015cb4] [warning] tree support default to organic support",
+    "[2026-10-10 06:06:04.556884] [0x00015cb4] [info]    max_cantilever_dist=0",
+    "[2026-10-10 06:06:04.556884] [0x00015cb4] [info]    is_support_necessary takes 0 secs.",
+    "[2026-10-10 06:06:05.043583] [0x00015cb4] [info]    framebuffer_type: Supported",
+    "[2026-10-10 06:06:05.062682] [0x00015cb4] [info]    framebuffer_type: Supported",
+    "[2026-10-10 06:06:05.067958] [0x00015cb4] [info]    framebuffer_type: Supported",
+    "[2026-10-10 06:06:05.067958] [0x00015cb4] [info]    framebuffer_type: Supported"
+   ]
+  },
+  "PLA/pin": {
+   "layers": 22,
+   "stats": {
+    "time": "model printing time: 2m 40s; total estimated time: 9m 56s",
+    "filament_mm": 528.21,
+    "filament_g_header": "1.60"
+   },
+   "floating": {
+    "external_unsupported_mm": 0.0,
+    "bridge_mm": 0.0,
+    "bridge_unsupported_mm": 0.0,
+    "internal_unsupported_mm": 17.58
+   },
+   "floating_by_feature": {},
+   "worst_layers": [],
+   "log_warnings": [
+    "[2026-10-10 06:06:05.862160] [0x0000c730] [info]    Slic3r::Print::apply 1847: finished,  this 0000028E38625DB0, m_modified_count 1, apply_status 1, m_support_used 0",
+    "[2026-10-10 06:06:05.882067] [0x0000c730] [warning] tree support default to organic support",
+    "[2026-10-10 06:06:05.884598] [0x0000c730] [info]    max_cantilever_dist=0",
+    "[2026-10-10 06:06:05.884598] [0x0000c730] [info]    is_support_necessary takes 0 secs.",
+    "[2026-10-10 06:06:06.178362] [0x0000c730] [info]    framebuffer_type: Supported",
+    "[2026-10-10 06:06:06.199503] [0x0000c730] [info]    framebuffer_type: Supported",
+    "[2026-10-10 06:06:06.201784] [0x0000c730] [info]    framebuffer_type: Supported",
+    "[2026-10-10 06:06:06.202878] [0x0000c730] [info]    framebuffer_type: Supported"
+   ]
+  },
+  "PLA/clip": {
+   "layers": 33,
+   "stats": {
+    "time": "model printing time: 3m 19s; total estimated time: 10m 35s",
+    "filament_mm": 705.56,
+    "filament_g_header": "2.14"
+   },
+   "floating": {
+    "external_unsupported_mm": 0.0,
+    "bridge_mm": 0.0,
+    "bridge_unsupported_mm": 0.0,
+    "internal_unsupported_mm": 0.0
+   },
+   "floating_by_feature": {},
+   "worst_layers": [],
+   "log_warnings": [
+    "[2026-10-10 06:06:07.067831] [0x0000e144] [info]    Slic3r::Print::apply 1847: finished,  this 0000018BA5E23750, m_modified_count 1, apply_status 1, m_support_used 0",
+    "[2026-10-10 06:06:07.087674] [0x0000e144] [warning] tree support default to organic support",
+    "[2026-10-10 06:06:07.090213] [0x0000e144] [info]    max_cantilever_dist=0",
+    "[2026-10-10 06:06:07.090213] [0x0000e144] [info]    is_support_necessary takes 0 secs.",
+    "[2026-10-10 06:06:07.296118] [0x0000e144] [info]    framebuffer_type: Supported",
+    "[2026-10-10 06:06:07.321757] [0x0000e144] [info]    framebuffer_type: Supported",
+    "[2026-10-10 06:06:07.324453] [0x0000e144] [info]    framebuffer_type: Supported",
+    "[2026-10-10 06:06:07.324962] [0x0000e144] [info]    framebuffer_type: Supported"
+   ]
+  },
+  "PLA/speaker_clip": {
+   "layers": 15,
+   "stats": {
+    "time": "model printing time: 1m 59s; total estimated time: 9m 15s",
+    "filament_mm": 413.51,
+    "filament_g_header": "1.25"
+   },
+   "floating": {
+    "external_unsupported_mm": 0.0,
+    "bridge_mm": 0.0,
+    "bridge_unsupported_mm": 0.0,
+    "internal_unsupported_mm": 0.0
+   },
+   "floating_by_feature": {},
+   "worst_layers": [],
+   "log_warnings": [
+    "[2026-10-10 06:06:07.869385] [0x00001b38] [info]    Slic3r::Print::apply 1847: finished,  this 000001EBA8220760, m_modified_count 1, apply_status 1, m_support_used 0",
+    "[2026-10-10 06:06:07.888161] [0x00001b38] [warning] tree support default to organic support",
+    "[2026-10-10 06:06:07.889190] [0x00001b38] [info]    max_cantilever_dist=0",
+    "[2026-10-10 06:06:07.889190] [0x00001b38] [info]    is_support_necessary takes 0 secs.",
+    "[2026-10-10 06:06:08.083256] [0x00001b38] [info]    framebuffer_type: Supported",
+    "[2026-10-10 06:06:08.111986] [0x00001b38] [info]    framebuffer_type: Supported",
+    "[2026-10-10 06:06:08.115065] [0x00001b38] [info]    framebuffer_type: Supported",
+    "[2026-10-10 06:06:08.115577] [0x00001b38] [info]    framebuffer_type: Supported"
+   ]
+  },
+  "PETG/box": {
+   "layers": 350,
+   "stats": {
+    "time": "model printing time: 1h 56m 2s; total estimated time: 2h 3m 18s",
+    "filament_mm": 26743.04,
+    "filament_g_header": "80.41"
+   },
+   "floating": {
+    "external_unsupported_mm": 88.14,
+    "bridge_mm": 11896.53,
+    "bridge_unsupported_mm": 5706.23,
+    "internal_unsupported_mm": 28.42
+   },
+   "floating_by_feature": {
+    "Bridge": 5706.23,
+    "Gap infill": 7.19,
+    "Overhang wall": 80.96
+   },
+   "worst_layers": [
+    {
+     "layer": 10,
+     "z": 2.2,
+     "feature": "Bridge",
+     "points": 20709,
+     "x": [
+      -31.7,
+      31.7
+     ],
+     "y": [
+      -31.7,
+      31.7
+     ]
+    },
+    {
+     "layer": 20,
+     "z": 4.2,
+     "feature": "Overhang wall",
+     "points": 216,
+     "x": [
+      -29.6,
+      -22.4
+     ],
+     "y": [
+      -34.7,
+      -32.2
+     ]
+    },
+    {
+     "layer": 20,
+     "z": 4.2,
+     "feature": "Gap infill",
+     "points": 36,
+     "x": [
+      -29.5,
+      -22.5
+     ],
+     "y": [
+      -33.5,
+      -33.5
+     ]
+    },
+    {
+     "layer": 31,
+     "z": 6.4,
+     "feature": "Bridge",
+     "points": 2133,
+     "x": [
+      13.4,
+      33.2
+     ],
+     "y": [
+      -0.1,
+      29.1
+     ]
+    },
+    {
+     "layer": 83,
+     "z": 16.8,
+     "feature": "Bridge",
+     "points": 520,
+     "x": [
+      -28.3,
+      -12.5
+     ],
+     "y": [
+      -8.8,
+      24.6
+     ]
+    },
+    {
+     "layer": 101,
+     "z": 20.4,
+     "feature": "Overhang wall",
+     "points": 186,
+     "x": [
+      -22.7,
+      -16.6
+     ],
+     "y": [
+      -10.5,
+      26.5
+     ]
+    }
+   ],
+   "log_warnings": [
+    "[2026-10-10 06:06:08.665539] [0x00017d60] [info]    Slic3r::Print::apply 1847: finished,  this 00000217E7F00D70, m_modified_count 1, apply_status 1, m_support_used 0",
+    "[2026-10-10 06:06:08.840579] [0x00017d60] [warning] tree support default to organic support",
+    "[2026-10-10 06:06:08.884528] [0x00017d60] [info]    max_cantilever_dist=0",
+    "[2026-10-10 06:06:08.885059] [0x00017d60] [info]    is_support_necessary takes 0 secs.",
+    "[2026-10-10 06:06:09.621369] [0x00017d60] [info]    framebuffer_type: Supported",
+    "[2026-10-10 06:06:09.642463] [0x00017d60] [info]    framebuffer_type: Supported",
+    "[2026-10-10 06:06:09.645599] [0x00017d60] [info]    framebuffer_type: Supported",
+    "[2026-10-10 06:06:09.647111] [0x00017d60] [info]    framebuffer_type: Supported"
+   ]
+  },
+  "PETG/lid": {
+   "layers": 114,
+   "stats": {
+    "time": "model printing time: 32m 17s; total estimated time: 39m 33s",
+    "filament_mm": 4593.47,
+    "filament_g_header": "13.81"
+   },
+   "floating": {
+    "external_unsupported_mm": 3.28,
+    "bridge_mm": 9504.93,
+    "bridge_unsupported_mm": 4729.18,
+    "internal_unsupported_mm": 0.75
+   },
+   "floating_by_feature": {
+    "Bridge": 4729.18,
+    "Gap infill": 0.2,
+    "Overhang wall": 3.08
+   },
+   "worst_layers": [
+    {
+     "layer": 7,
+     "z": 1.6,
+     "feature": "Bridge",
+     "points": 1088,
+     "x": [
+      -14.8,
+      14.8
+     ],
+     "y": [
+      24.2,
+      31.0
+     ]
+    },
+    {
+     "layer": 10,
+     "z": 2.2,
+     "feature": "Bridge",
+     "points": 22456,
+     "x": [
+      -31.8,
+      31.7
+     ],
+     "y": [
+      -32.0,
+      26.4
+     ]
+    },
+    {
+     "layer": 41,
+     "z": 8.4,
+     "feature": "Overhang wall",
+     "points": 12,
+     "x": [
+      -16.4,
+      16.4
+     ],
+     "y": [
+      29.7,
+      29.9
+     ]
+    },
+    {
+     "layer": 41,
+     "z": 8.4,
+     "feature": "Bridge",
+     "points": 162,
+     "x": [
+      -15.3,
+      15.3
+     ],
+     "y": [
+      29.7,
+      29.9
+     ]
+    },
+    {
+     "layer": 103,
+     "z": 20.8,
+     "feature": "Overhang wall",
+     "points": 6,
+     "x": [
+      6.8,
+      9.4
+     ],
+     "y": [
+      15.1,
+      15.1
+     ]
+    }
+   ],
+   "log_warnings": [
+    "[2026-10-10 06:06:22.553486] [0x00017b64] [info]    Slic3r::Print::apply 1847: finished,  this 000001837C2CAF20, m_modified_count 1, apply_status 1, m_support_used 0",
+    "[2026-10-10 06:06:22.603136] [0x00017b64] [warning] tree support default to organic support",
+    "[2026-10-10 06:06:22.611414] [0x00017b64] [info]    max_cantilever_dist=0",
+    "[2026-10-10 06:06:22.611414] [0x00017b64] [info]    is_support_necessary takes 0 secs.",
+    "[2026-10-10 06:06:22.870248] [0x00017b64] [info]    framebuffer_type: Supported",
+    "[2026-10-10 06:06:22.896552] [0x00017b64] [info]    framebuffer_type: Supported",
+    "[2026-10-10 06:06:22.899611] [0x00017b64] [info]    framebuffer_type: Supported",
+    "[2026-10-10 06:06:22.900120] [0x00017b64] [info]    framebuffer_type: Supported"
+   ]
+  },
+  "PETG/crank": {
+   "layers": 59,
+   "stats": {
+    "time": "model printing time: 13m 34s; total estimated time: 20m 49s",
+    "filament_mm": 946.16,
+    "filament_g_header": "2.84"
+   },
+   "floating": {
+    "external_unsupported_mm": 0.0,
+    "bridge_mm": 1892.99,
+    "bridge_unsupported_mm": 922.69,
+    "internal_unsupported_mm": 7.55
+   },
+   "floating_by_feature": {
+    "Bridge": 922.69
+   },
+   "worst_layers": [
+    {
+     "layer": 8,
+     "z": 1.8,
+     "feature": "Bridge",
+     "points": 2569,
+     "x": [
+      -13.7,
+      9.8
+     ],
+     "y": [
+      -10.3,
+      14.8
+     ]
+    },
+    {
+     "layer": 16,
+     "z": 3.4,
+     "feature": "Bridge",
+     "points": 2083,
+     "x": [
+      -17.8,
+      17.8
+     ],
+     "y": [
+      -19.5,
+      19.6
+     ]
+    }
+   ],
+   "log_warnings": [
+    "[2026-10-10 06:06:24.737135] [0x00016b00] [info]    Slic3r::Print::apply 1847: finished,  this 00000268EA659690, m_modified_count 1, apply_status 1, m_support_used 0",
+    "[2026-10-10 06:06:24.791911] [0x00016b00] [warning] tree support default to organic support",
+    "[2026-10-10 06:06:24.797855] [0x00016b00] [info]    max_cantilever_dist=0",
+    "[2026-10-10 06:06:24.798873] [0x00016b00] [info]    is_support_necessary takes 0 secs.",
+    "[2026-10-10 06:06:25.026606] [0x00016b00] [info]    framebuffer_type: Supported",
+    "[2026-10-10 06:06:25.052045] [0x00016b00] [info]    framebuffer_type: Supported",
+    "[2026-10-10 06:06:25.055073] [0x00016b00] [info]    framebuffer_type: Supported",
+    "[2026-10-10 06:06:25.055073] [0x00016b00] [info]    framebuffer_type: Supported"
+   ]
+  },
+  "PETG/link": {
+   "layers": 32,
+   "stats": {
+    "time": "model printing time: 5m 33s; total estimated time: 12m 49s",
+    "filament_mm": 505.41,
+    "filament_g_header": "1.52"
+   },
+   "floating": {
+    "external_unsupported_mm": 0.0,
+    "bridge_mm": 507.74,
+    "bridge_unsupported_mm": 165.4,
+    "internal_unsupported_mm": 0.0
+   },
+   "floating_by_feature": {
+    "Bridge": 165.4
+   },
+   "worst_layers": [
+    {
+     "layer": 10,
+     "z": 2.2,
+     "feature": "Bridge",
+     "points": 832,
+     "x": [
+      -21.9,
+      14.0
+     ],
+     "y": [
+      -2.6,
+      2.3
+     ]
+    }
+   ],
+   "log_warnings": [
+    "[2026-10-10 06:06:25.827312] [0x00016ad0] [info]    Slic3r::Print::apply 1847: finished,  this 000001D11B54B330, m_modified_count 1, apply_status 1, m_support_used 0",
+    "[2026-10-10 06:06:25.870763] [0x00016ad0] [warning] tree support default to organic support",
+    "[2026-10-10 06:06:25.875777] [0x00016ad0] [info]    max_cantilever_dist=0",
+    "[2026-10-10 06:06:25.875777] [0x00016ad0] [info]    is_support_necessary takes 0 secs.",
+    "[2026-10-10 06:06:26.049877] [0x00016ad0] [info]    framebuffer_type: Supported",
+    "[2026-10-10 06:06:26.065368] [0x00016ad0] [info]    framebuffer_type: Supported",
+    "[2026-10-10 06:06:26.067387] [0x00016ad0] [info]    framebuffer_type: Supported",
+    "[2026-10-10 06:06:26.068393] [0x00016ad0] [info]    framebuffer_type: Supported"
+   ]
+  },
+  "PETG/pin": {
+   "layers": 22,
+   "stats": {
+    "time": "model printing time: 5m 1s; total estimated time: 12m 17s",
+    "filament_mm": 515.4,
+    "filament_g_header": "1.55"
+   },
+   "floating": {
+    "external_unsupported_mm": 0.0,
+    "bridge_mm": 0.0,
+    "bridge_unsupported_mm": 0.0,
+    "internal_unsupported_mm": 17.58
+   },
+   "floating_by_feature": {},
+   "worst_layers": [],
+   "log_warnings": [
+    "[2026-10-10 06:06:26.590452] [0x00017a18] [info]    Slic3r::Print::apply 1847: finished,  this 000001C88B1FD160, m_modified_count 1, apply_status 1, m_support_used 0",
+    "[2026-10-10 06:06:26.607097] [0x00017a18] [warning] tree support default to organic support",
+    "[2026-10-10 06:06:26.609601] [0x00017a18] [info]    max_cantilever_dist=0",
+    "[2026-10-10 06:06:26.609601] [0x00017a18] [info]    is_support_necessary takes 0 secs.",
+    "[2026-10-10 06:06:26.801011] [0x00017a18] [info]    framebuffer_type: Supported",
+    "[2026-10-10 06:06:26.822452] [0x00017a18] [info]    framebuffer_type: Supported",
+    "[2026-10-10 06:06:26.825252] [0x00017a18] [info]    framebuffer_type: Supported",
+    "[2026-10-10 06:06:26.825252] [0x00017a18] [info]    framebuffer_type: Supported"
+   ]
+  },
+  "PETG/clip": {
+   "layers": 33,
+   "stats": {
+    "time": "model printing time: 7m 15s; total estimated time: 14m 31s",
+    "filament_mm": 687.32,
+    "filament_g_header": "2.07"
+   },
+   "floating": {
+    "external_unsupported_mm": 0.0,
+    "bridge_mm": 0.0,
+    "bridge_unsupported_mm": 0.0,
+    "internal_unsupported_mm": 0.0
+   },
+   "floating_by_feature": {},
+   "worst_layers": [],
+   "log_warnings": [
+    "[2026-10-10 06:06:27.286864] [0x00016fe0] [info]    Slic3r::Print::apply 1847: finished,  this 00000237F99DCA50, m_modified_count 1, apply_status 1, m_support_used 0",
+    "[2026-10-10 06:06:27.301953] [0x00016fe0] [warning] tree support default to organic support",
+    "[2026-10-10 06:06:27.305326] [0x00016fe0] [info]    max_cantilever_dist=0",
+    "[2026-10-10 06:06:27.305326] [0x00016fe0] [info]    is_support_necessary takes 0 secs.",
+    "[2026-10-10 06:06:27.523298] [0x00016fe0] [info]    framebuffer_type: Supported",
+    "[2026-10-10 06:06:27.544428] [0x00016fe0] [info]    framebuffer_type: Supported",
+    "[2026-10-10 06:06:27.545963] [0x00016fe0] [info]    framebuffer_type: Supported",
+    "[2026-10-10 06:06:27.546970] [0x00016fe0] [info]    framebuffer_type: Supported"
+   ]
+  },
+  "PETG/speaker_clip": {
+   "layers": 15,
+   "stats": {
+    "time": "model printing time: 3m 35s; total estimated time: 10m 51s",
+    "filament_mm": 404.21,
+    "filament_g_header": "1.22"
+   },
+   "floating": {
+    "external_unsupported_mm": 0.0,
+    "bridge_mm": 0.0,
+    "bridge_unsupported_mm": 0.0,
+    "internal_unsupported_mm": 0.0
+   },
+   "floating_by_feature": {},
+   "worst_layers": [],
+   "log_warnings": [
+    "[2026-10-10 06:06:28.107357] [0x0001841c] [info]    Slic3r::Print::apply 1847: finished,  this 0000018C4D800230, m_modified_count 1, apply_status 1, m_support_used 0",
+    "[2026-10-10 06:06:28.120383] [0x0001841c] [warning] tree support default to organic support",
+    "[2026-10-10 06:06:28.121889] [0x0001841c] [info]    max_cantilever_dist=0",
+    "[2026-10-10 06:06:28.121889] [0x0001841c] [info]    is_support_necessary takes 0 secs.",
+    "[2026-10-10 06:06:28.302051] [0x0001841c] [info]    framebuffer_type: Supported",
+    "[2026-10-10 06:06:28.324705] [0x0001841c] [info]    framebuffer_type: Supported",
+    "[2026-10-10 06:06:28.326755] [0x0001841c] [info]    framebuffer_type: Supported",
+    "[2026-10-10 06:06:28.327764] [0x0001841c] [info]    framebuffer_type: Supported"
+   ]
+  }
+ }
+}

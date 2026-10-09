@@ -21,6 +21,7 @@ export const WORKSPACES = Object.freeze([
 export const WORKSPACE_PAGES = Object.freeze({
   [B3_MODEL]: Object.freeze({ physics: '/viewer/physics-box/index.html', assembly: '/viewer/assembly-box/index.html' }),
   'servo-lid-cube': Object.freeze({ physics: '/viewer/lid-cube/physics.html', assembly: '/viewer/lid-cube/assembly.html' }),
+  'mystery-box-sg92r-c1': Object.freeze({ physics: '/viewer/lid-cube/physics.html', assembly: '/viewer/lid-cube/assembly.html' }),
 });
 
 export function hasWorkspace(mode, model) {

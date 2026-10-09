@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="ja">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>住人の箱 C1 — 設計と検証</title>
+<style>
+:root {
+  --paper:#f5efe2; --card:#ece4d4; --ink:#2b2723; --mute:#6a6257; --line:#d8cdb8;
+  --accent:#b85042; --accent-strong:#a8493c; --accent-2:#5f7d70; --accent-2-strong:#526c61;
+  --serif:"Shippori Mincho","Yu Mincho","YuMincho","Hiragino Mincho ProN","MS PMincho",serif;
+  --gothic:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic UI","Yu Gothic",Meiryo,system-ui,sans-serif;
+  --mono:ui-monospace,"Cascadia Code",Consolas,"Courier New",monospace;
+  --fs-xs:.75rem; --fs-sm:.875rem; --fs-base:1rem; --fs-md:1.125rem; --fs-lg:1.375rem; --fs-xl:1.875rem;
+  --sp-1:.25rem; --sp-2:.5rem; --sp-3:.75rem; --sp-4:1rem; --sp-6:1.5rem; --sp-8:2rem; --sp-12:3rem; --sp-16:4rem;
+  --measure:46rem;
+}
+@media (prefers-color-scheme:dark) {
+  :root:not([data-theme="light"]) {
+    --paper:#191512; --card:#221d18; --ink:#ede6d6; --mute:#a99e90; --line:#3a332b;
+    --accent:#e0663a; --accent-strong:#e87d55; --accent-2:#8fae9f; --accent-2-strong:#a3bfb1; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper:#191512; --card:#221d18; --ink:#ede6d6; --mute:#a99e90; --line:#3a332b;
+  --accent:#e0663a; --accent-strong:#e87d55; --accent-2:#8fae9f; --accent-2-strong:#a3bfb1; color-scheme:dark;
+}
+* { box-sizing:border-box; }
+html { background:var(--paper); -webkit-text-size-adjust:100%; }
+body { margin:0; color:var(--ink); background:var(--paper); font-family:var(--gothic); font-size:var(--fs-base); line-height:1.8; }
+.wrap { max-width:var(--measure); margin:0 auto; padding:var(--sp-12) var(--sp-4) var(--sp-16); }
+h1,h2,h3 { font-family:var(--serif); font-weight:600; line-height:1.35; text-wrap:balance; }
+h1 { font-size:var(--fs-xl); margin:0 0 var(--sp-2); }
+h2 { font-size:var(--fs-lg); margin:var(--sp-12) 0 var(--sp-4); padding-top:var(--sp-3); border-top:2px solid var(--ink); }
+h3 { font-family:var(--gothic); font-size:var(--fs-md); margin:var(--sp-8) 0 var(--sp-2); }
+p { margin:var(--sp-2) 0; }
+ul,ol { margin:var(--sp-2) 0 var(--sp-4); padding-left:1.4em; }
+li { margin:var(--sp-1) 0; }
+a { color:var(--accent-strong); text-underline-offset:.18em; }
+code { font-family:var(--mono); font-size:.92em; background:var(--card); padding:.1em .35em; }
+.eyebrow { font-size:var(--fs-xs); letter-spacing:.12em; color:var(--accent-strong); margin:0 0 var(--sp-2); }
+.sub { color:var(--mute); font-size:var(--fs-sm); margin:0 0 var(--sp-8); }
+.lead { background:var(--card); border-left:4px solid var(--accent); padding:var(--sp-4); margin:var(--sp-6) 0; }
+.lead > :first-child { margin-top:0; } .lead > :last-child { margin-bottom:0; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:1px; background:var(--line); border:1px solid var(--line); margin:var(--sp-6) 0; }
+.card { background:var(--card); padding:var(--sp-3) var(--sp-4); min-width:0; }
+.card b { display:block; font-family:var(--mono); font-size:var(--fs-lg); font-variant-numeric:tabular-nums; }
+.card span { display:block; color:var(--mute); font-size:var(--fs-sm); line-height:1.5; }
+.tblwrap { overflow-x:auto; margin:var(--sp-4) 0 var(--sp-6); }
+table { border-collapse:collapse; width:100%; font-size:var(--fs-sm); line-height:1.5; }
+th,td { border:1px solid var(--line); padding:.45em .7em; text-align:left; vertical-align:top; }
+th { background:var(--card); white-space:nowrap; }
+.num { font-family:var(--mono); font-variant-numeric:tabular-nums; white-space:nowrap; }
+.chip { display:inline-block; font-size:var(--fs-xs); line-height:1.5; padding:.05em .55em; border:1px solid var(--line); background:var(--card); }
+.chip.ok { color:var(--accent-2-strong); border-color:var(--accent-2); }
+figure { margin:var(--sp-6) 0; }
+figure img { display:block; width:100%; height:auto; border:1px solid var(--line); }
+figcaption { color:var(--mute); font-size:var(--fs-sm); margin-top:var(--sp-2); }
+.previews { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:var(--sp-4); }
+.muted { color:var(--mute); }
+.note { font-size:var(--fs-sm); color:var(--mute); border-top:1px solid var(--line); margin-top:var(--sp-12); padding-top:var(--sp-4); }
+@media (max-width:30rem) { .wrap { padding:var(--sp-8) var(--sp-4) var(--sp-12); } h1 { font-size:var(--fs-lg); } h2 { font-size:var(--fs-md); margin-top:var(--sp-8); } }
+@media print {
+  :root { --paper:#fff; --card:#f2f2f2; --ink:#000; --mute:#555; --line:#bbb; --accent:#000; --accent-strong:#000; }
+  .wrap { max-width:none; padding:0; } h2 { break-after:avoid; } .lead,.grid,.tblwrap,figure { break-inside:avoid; }
+}
+</style>
+<main class="wrap">
+  <p class="eyebrow">3Dプリント用機構 · 2026-10-10</p>
+  <h1>住人の箱 C1</h1>
+  <p class="sub">70mm角の全面蓋を SG92R と4節リンクで開閉する改善版</p>
+
+  <div class="lead">
+    <p>印刷部品は7点です。工具なしで組んで外す構成です。ねじと接着剤は使いません。</p>
+    <p>蓋は0〜65°動きます。C1はサーボ一式を先に箱へ入れます。蓋は125°開いた姿勢で後から載せます。実物の印刷と駆動は未検証です。エキサイターの音量も未確認です。</p>
+  </div>
+
+  <div class="grid">
+    <div class="card"><b>70 × 70 × 70 mm</b><span>閉じたときの外形</span></div>
+    <div class="card"><b>0〜65°</b><span>全面蓋の範囲</span></div>
+    <div class="card"><b>7 点</b><span>印刷する部品</span></div>
+    <div class="card"><b id="stroke">—</b><span>サーボの使用角</span></div>
+  </div>
+
+  <div class="previews" id="previews"></div>
+
+  <h2>要件ごとの結果</h2>
+  <div class="tblwrap"><table>
+    <thead><tr><th>要件</th><th>実装</th><th>検証</th></tr></thead>
+    <tbody id="requirements"></tbody>
+  </table></div>
+
+  <h2>部品</h2>
+  <div class="tblwrap"><table>
+    <thead><tr><th>種類</th><th>部品</th><th>扱い</th></tr></thead>
+    <tbody>
+      <tr><td>印刷</td><td>箱、蓋、クランク、リンク、蝶番ピン、サーボ押さえ、スピーカー押さえ</td><td>同じプレートへ配置する</td></tr>
+      <tr><td>既製</td><td>SG92R、付属ホーン、配線</td><td><code>models/sg92r-photo/</code> の確定寸法を使用</td></tr>
+      <tr><td>既製</td><td>直径25mm、高さ10mmのエキサイター</td><td>包絡寸法だけ確認済み。接触面と音量は未検証</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>組み立て</h2>
+  <p>旧80mm版と順番が違います。蓋を先に付けるとサーボ一式が途中で当たるため、C1は次の順で組みます。</p>
+  <ol>
+    <li>エキサイターを上からレールへ入れます。スピーカー押さえを上から差して留めます。</li>
+    <li>箱の外でサーボを90°にします。蓋32.5°の姿勢に合う向きでホーンを付け、クランクをかぶせます。</li>
+    <li>リンクの切り欠きをピンAの爪に合わせて差します。リンクを動作位置まで回します。</li>
+    <li>蓋のない箱へサーボ一式を上から下ろします。クランクの軸を受けへ入れ、配線を切り欠きへ通します。</li>
+    <li>サーボ押さえを上から押し込みます。</li>
+    <li>蓋を125°開いた姿勢にします。箱の40mm上から下ろし、節をそろえます。</li>
+    <li>蝶番ピンを右から入れます。抜くときは左端を押し、右へ出た端をつまみます。</li>
+    <li>リンクの先を3.4mm曲げます。蓋を125°から32.5°へ下ろし、ピンBを蓋の耳の穴へ入れて離します。</li>
+    <li>サーボをゆっくり閉じる側へ動かします。蓋が縁に載った位置を「閉」とします。</li>
+  </ol>
+  <p id="servoGuide"></p>
+
+  <h2>機構と物理検証</h2>
+  <div class="tblwrap"><table>
+    <thead><tr><th>項目</th><th>値</th><th>判定</th></tr></thead>
+    <tbody id="physics"></tbody>
+  </table></div>
+  <p>Studio の <a href="http://localhost:3000/viewer/lid-cube/physics.html?model=mystery-box-sg92r-c1">物理検証</a>では、条件を変えて開閉を再計算できます。<a href="http://localhost:3000/viewer/lid-cube/assembly.html?model=mystery-box-sg92r-c1">組み立て</a>では上の工程を3Dで再生できます。</p>
+
+  <h2>印刷</h2>
+  <p>箱は口を上にします。蓋は外から見える天面を下にします。細い部品は寝かせます。スピーカー押さえも平らに置きます。</p>
+  <div class="tblwrap"><table>
+    <thead><tr><th>部品</th><th>印刷時の外形</th><th>閉じていない辺</th><th>下の層に支えがない壁の経路長</th></tr></thead>
+    <tbody id="printing"></tbody>
+  </table></div>
+  <p>経路長はG-codeの合計です。穴の天井と内部の溝を含みます。橋渡しの経路は別に記録しています。実物の印刷成功を示す値ではありません。</p>
+  <p>X1Cの0.4mmノズル用です。部品間は6mm。蝶番付近は0.08mm積層です。他は0.2mm。PLA用とPETG用のサポート使用は0です。</p>
+  <div class="tblwrap"><table>
+    <thead><tr><th>ファイル</th><th>推定時間</th><th>フィラメント</th><th>配置</th></tr></thead>
+    <tbody id="deliveries"></tbody>
+  </table></div>
+  <p>先にクランクと継ぎ手のプレートを刷ります。<a href="../prints/mystery-box-sg92r-c1/manifest.json">ファイル一覧とSHA256</a>を付属しています。Arduino例は <code>models/mystery-box-sg92r-c1/slow_open/slow_open.ino</code> にあります。D9から信号を送りサーボ用5V電源とGNDを共通にします。閉119°と開66°は計算上の目安です。実物では歯の位置に合わせて端の角度を調整します。</p>
+  <figure id="plate" hidden></figure>
+
+  <h2>決めたこと</h2>
+  <ul>
+    <li>全面蓋を採用しました。70mm角と0〜65°の動きは維持しています。</li>
+    <li>リンク長は38.7516mmです。蝶番軸Hは(-30, 65)mm、サーボ軸Oは(3, 30.6)mm、クランク長は24.6mmです。</li>
+    <li>中央姿勢は蓋32.5°です。この姿勢でサーボを90°にしてホーンを取り付けます。</li>
+    <li>動作は1.2秒の始めと終わりをゆっくりした指令を推奨します。時間は実物の結果で調整します。</li>
+  </ul>
+
+  <h2>譲ったこと</h2>
+  <p>旧版の分割天面と隠れた蝶番は残していません。部品数を減らし、工具なしで組めることと、サポートなしで刷れることを優先しました。全面蓋のため、開いたときはサーボとリンクが見えます。</p>
+  <p>蝶番の両端を押すため後ろの角にくぼみがあります。外装は3mmです。蝶番穴の天井は最小1.7mmです。レールの爪受けは最小1.3mmです。リンクは3mmです。両端の太い部分を除く27.75mmの長さで曲げを計算しました。推定ひずみ1.99%は2%の目安に近いため実物試験が必要です。この計算は材料の強度を証明しません。</p>
+
+  <h2>実物で確かめること</h2>
+  <ol>
+    <li>クランクだけを先に刷ります。ホーンが固い場合は <code>HORN_CLR</code> を0.05mmずつ広げます。</li>
+    <li>蝶番ピン、リンクのバヨネット、二つの押さえを試します。割れ、抜け、手で外せるかを見ます。</li>
+    <li>エキサイターの接触面と保持力を見ます。音量とびびりを実際に鳴らして確かめます。</li>
+    <li>全体を組み、65°まで当たらず動くかを見ます。電源を切ったときの蓋の動きも見ます。</li>
+    <li>1.2秒の開閉で端の衝撃を見ます。強ければ時間を延ばします。</li>
+  </ol>
+
+  <p class="note">ソース: <code>models/mystery-box-sg92r-c1/</code>。検証の生データ: <code>models/mystery-box-sg92r-c1/build/*_report.json</code>。Studio: <code>http://localhost:3000/?model=mystery-box-sg92r-c1</code></p>
+</main>
+<script>/*CUBE_DATA*/</script>
+<script>
+(() => {
+  const D = window.CUBE;
+  const fmt = (value, digits = 1) => Number(value).toFixed(digits).replace(/\.0$/, "");
+  const esc = (value) => String(value).replace(/[&<>"']/g, (char) => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" })[char]);
+  const row = (values) => `<tr>${values.map((value, index) => `<td${index === 1 ? ' class="num"' : ""}>${value}</td>`).join("")}</tr>`;
+  const setup = D.servo_setup;
+  document.getElementById("stroke").textContent = `${fmt(setup.stroke_deg)}°`;
+  document.getElementById("servoGuide").textContent = `サーボ90°を中央姿勢に合わせます。閉は +${fmt(setup.closed_offset_deg)}°相当、開は ${fmt(setup.open_offset_deg)}°相当です。全体を ${fmt(setup.motion_time_s)} 秒かけて動かします。`;
+
+  const V = D.verify;
+  document.getElementById("requirements").innerHTML = [
+    ["70mm角の箱", "閉じた外形を70 × 70 × 70mmにした", "model_report.json の外接箱"],
+    ["蓋0〜65°", "SG92Rと4節リンクで全面蓋を動かす", `${V.motion.steps}姿勢で当たり ${V.motion.poses_with_hits.length}件`],
+    ["印刷部品だけで固定", "圧入、バヨネット、スナップ、落とし込みを使用", "組み立て経路を工程ごとに判定"],
+    ["接着剤を使わない", "エキサイターも専用押さえで留める", "保持力と音量は実物確認"],
+    ["サポートなし", "見える面を下または上にして7部品を配置", D.slice_calibration ? "スライス計器の校正済み" : "スライス計器は要確認"],
+    ["分解できる", "蝶番ピンは両端を貫通。左から押して右端をつまむ", "実物の抜き差しは未確認"],
+  ].map(row).join("");
+
+  const A = V.assembly;
+  const empty = (value) => !value || Object.keys(value).length === 0;
+  const sim = D.sim;
+  const clearance = V.clearance;
+  document.getElementById("physics").innerHTML = [
+    ["4節リンク", `H(${D.kin.H.map((v) => fmt(v)).join(", ")}) / O(${D.kin.O.map((v) => fmt(v)).join(", ")}) / a ${fmt(D.kin.a)}mm / l ${fmt(D.kin.l, 4)}mm`, '<span class="chip ok">寸法化</span>'],
+    ["動作範囲", `0〜${fmt(D.kin.open_theta)}°、${V.motion.steps}姿勢`, V.motion.poses_with_hits.length ? "当たりあり" : '<span class="chip ok">当たりなし</span>'],
+    ["蓋を後から載せる", `125°、40mm上から`, empty(A.G_lid_place_after_servo?.worst) ? '<span class="chip ok">当たりなし</span>' : "当たりあり"],
+    ["リンクを曲げる", `${fmt(A.F_lid_down_with_link_bent.b_end_shift_mm)}mm、推定ひずみ ${fmt(A.F_link_bend_strain_pct, 2)}%`, "端を固定した変形形状で確認。強度は実物試験"],
+    ["曲げたリンクの交差体積", `${D.boolean.bent_link_crank_mm3.toExponential(3)}mm³`, `別のBooleanで検証。許容値 ${D.boolean.volume_tolerance_mm3}mm³`],
+    ["最大保持トルク", `${fmt(sim.static.max_torque_Nm * 1000)}mN·m`, `停動トルクの ${fmt(sim.static.ratio_to_stall * 100)}%`],
+    ["ゆっくり閉じたとき", `縁に当たる速さ ${fmt(sim.eased.lid_impact_rad_s, 2)}rad/s`, `${fmt(setup.motion_time_s)}秒の指令`],
+    ["動作中の隙間", `クランク−箱 ${fmt(clearance["crank-box"].min, 2)}mm`, "ピン接触など意図した箇所を除く"],
+  ].map(row).join("");
+
+  const names = { box:"箱", lid:"蓋", crank:"クランク", link:"リンク", pin:"蝶番ピン", clip:"サーボ押さえ", speaker_clip:"スピーカー押さえ" };
+  document.getElementById("printing").innerHTML = Object.entries(names).map(([key, label]) => {
+    const part = D.parts[key];
+    const size = part.print_bbox[1].map((value, i) => value - part.print_bbox[0][i]);
+    const sliced = D.slice[`PLA/${key}`] || D.slice[key];
+    const total = sliced?.floating?.external_unsupported_mm;
+    const result = total === 0 ? "0mm" : Number.isFinite(total) ? `${fmt(total)}mm。穴の天井と溝を含む` : "結果なし";
+    return row([label, `${size.map((value) => fmt(value)).join(" × ")}mm`, `${part.nonmanifold}`, result]);
+  }).join("");
+
+  const files = { PLA:"PLA", PETG:"PETG", crank_test:"crank-test-PLA", joints_test:"joints-test-PLA", speaker_test:"speaker-test-PLA" };
+  document.getElementById("deliveries").innerHTML = Object.entries(files).map(([key, suffix]) => {
+    const item = D.plate[key];
+    const file = `mystery-box-sg92r-c1-${suffix}.gcode.3mf`;
+    const weight = item.filament.reduce((sum, value) => sum + Number(value[1]), 0);
+    return row([`<a href="../prints/mystery-box-sg92r-c1/${file}">${esc(suffix)}</a>`, `${fmt(item.prediction_s / 60)}分`, `${fmt(weight)}g`, D.delivery.placements[suffix]?.ok ? "重なりとはみ出しなし" : "要確認"]);
+  }).join("");
+
+  if (D.preview_png) {
+    const captions = { closed:"閉じた姿勢", open:"65°開いた姿勢", parts:"印刷する7部品" };
+    document.getElementById("previews").innerHTML = Object.entries(D.preview_png).map(([key, data]) =>
+      `<figure><img alt="${captions[key]}" src="data:image/png;base64,${data}"><figcaption>${captions[key]}</figcaption></figure>`).join("");
+  }
+  if (D.plate_png) {
+    const plate = document.getElementById("plate");
+    plate.hidden = false;
+    plate.innerHTML = `<img alt="Bambu Studioで7部品を1枚に並べたプレート" src="data:image/png;base64,${D.plate_png}"><figcaption>7部品を1枚に配置した印刷プレート</figcaption>`;
+  }
+})();
+</script>
+</html>

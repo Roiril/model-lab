@@ -17,7 +17,8 @@ for (const file of files) {
   const ac = sim.alphaClosed, ao = sim.alphaOpen;
 
   // 1. ゆっくり開いて閉じる（simulate.py の "eased" と同じ指令）
-  const ease = (t) => (t < 1.5 ? profile("ease", ac, ao, 0)(t) : profile("ease", ao, ac, 1.5)(t));
+  const duration = py.motion_time_s ?? 0.8;
+  const ease = (t) => (t < 1.5 ? profile("ease", ac, ao, 0, duration)(t) : profile("ease", ao, ac, 1.5, duration)(t));
   const e = sim.run({ cmd: ease, tEnd: 3.0, alphaStart: ac });
   const at15 = e.trace.find((r) => r[0] >= 1.499)[1];
   assert.ok(Math.abs(at15 - py.eased.theta_at_1_5s) < 0.5, `${file}: eased θ@1.5s ${at15} vs ${py.eased.theta_at_1_5s}`);

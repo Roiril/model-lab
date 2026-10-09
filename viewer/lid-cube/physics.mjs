@@ -32,6 +32,7 @@ try {
   $("home").addEventListener("click", viewer.home);
   $("lidg").textContent = fmt(D.sim.mass.lid_g, 1);
 
+  $("profile").querySelector('option[value="ease"]').textContent = `${D.sim.motion_time_s ?? 0.8} 秒でゆっくり`;
   const opts = () => ({ stallScale: +$("torque").value / 100, massScale: +$("mass").value, kind: $("profile").value });
   function metrics() {
     const o = opts();
@@ -70,7 +71,7 @@ try {
   function start(target) {
     const o = opts();
     const from = state.alpha;
-    const cmd = o.kind === "step" ? () => target : profile("ease", from, target, 0, 0.8);
+    const cmd = o.kind === "step" ? () => target : profile("ease", from, target, 0, D.sim.motion_time_s ?? 0.8);
     const tEnd = o.kind === "step" ? 1.0 : 1.3;
     const run = sim.run({ cmd, tEnd, alphaStart: from, stallScale: o.stallScale, massScale: o.massScale, record: 0.002 });
     run.tEnd = tEnd; run.stallScale = o.stallScale; run.cmd = cmd; run.closing = target === ac;
@@ -124,7 +125,7 @@ try {
   const checks = [
     ["ok", `負荷なしで ${fmt(Math.abs(ao - ac), 0)}° 回す時間 ${S.calib_noload_speed.t_to_within_1deg} 秒（SG92R の公称 ${S.calib_noload_speed.nominal} 秒）`],
     ["ok", `出せるトルクを必要量の半分にすると開かない（${S.calib_half_torque_fails.opened ? "開いた" : "0° のまま"}）`],
-    ["ok", `ブラウザの計算と Python の計算は同じ値（0.8 秒で開閉: 縁に当たる速さ ${fmt(S.eased.lid_impact_rad_s, 2)} rad/s、全速: ${fmt(0.9 * OPEN, 0)}° まで ${fmt(S.full_speed.t_open_90pct, 2)} 秒）`],
+    ["ok", `ブラウザの計算と Python の計算は同じ値（${fmt(S.motion_time_s ?? 0.8, 1)} 秒で開閉: 縁に当たる速さ ${fmt(S.eased.lid_impact_rad_s, 2)} rad/s、全速: ${fmt(0.9 * OPEN, 0)}° まで ${fmt(S.full_speed.t_open_90pct, 2)} 秒）`],
     [V.motion.poses_with_hits.length ? "warn" : "ok", `0〜${OPEN}° の ${V.motion.steps} 姿勢で部品どうしの当たり ${V.motion.poses_with_hits.length} 件`],
     ["ok", `動作中の最小隙間 クランクと受け ${V.clearance["crank-box"].min}mm、リンクと蓋 ${V.clearance["link-lid"].min}mm（ピンの隙間）`],
     ["ok", `電圧が下がってトルクが 30% でも ${fmt(S.weak_30pct.final_theta, 1)}° まで開く`],

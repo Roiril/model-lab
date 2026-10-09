@@ -1,0 +1,1950 @@
+{
+ "calibration": {
+  "must_hit_link_plus1mm_vs_lid": {
+   "hits": 649,
+   "depth": 0.7
+  },
+  "must_not_hit_clip_vs_lid": {
+   "hits": 0,
+   "depth": 0.0
+  },
+  "clearance_crank_vs_box_design_0.3": 0.296,
+  "ok": true
+ },
+ "motion": [
+  {
+   "theta": 0.0,
+   "alpha": 222.6,
+   "hits": [],
+   "contacts": [
+    "lid-box 面で接触（深さ 0.0）"
+   ]
+  },
+  {
+   "theta": 2.5,
+   "alpha": 220.53,
+   "hits": []
+  },
+  {
+   "theta": 5.0,
+   "alpha": 218.38,
+   "hits": []
+  },
+  {
+   "theta": 7.5,
+   "alpha": 216.14,
+   "hits": []
+  },
+  {
+   "theta": 10.0,
+   "alpha": 213.84,
+   "hits": []
+  },
+  {
+   "theta": 12.5,
+   "alpha": 211.51,
+   "hits": []
+  },
+  {
+   "theta": 15.0,
+   "alpha": 209.15,
+   "hits": []
+  },
+  {
+   "theta": 17.5,
+   "alpha": 206.77,
+   "hits": []
+  },
+  {
+   "theta": 20.0,
+   "alpha": 204.41,
+   "hits": []
+  },
+  {
+   "theta": 22.5,
+   "alpha": 202.05,
+   "hits": []
+  },
+  {
+   "theta": 25.0,
+   "alpha": 199.73,
+   "hits": []
+  },
+  {
+   "theta": 27.5,
+   "alpha": 197.43,
+   "hits": []
+  },
+  {
+   "theta": 30.0,
+   "alpha": 195.18,
+   "hits": []
+  },
+  {
+   "theta": 32.5,
+   "alpha": 192.97,
+   "hits": []
+  },
+  {
+   "theta": 35.0,
+   "alpha": 190.81,
+   "hits": []
+  },
+  {
+   "theta": 37.5,
+   "alpha": 188.7,
+   "hits": []
+  },
+  {
+   "theta": 40.0,
+   "alpha": 186.64,
+   "hits": []
+  },
+  {
+   "theta": 42.5,
+   "alpha": 184.64,
+   "hits": []
+  },
+  {
+   "theta": 45.0,
+   "alpha": 182.7,
+   "hits": []
+  },
+  {
+   "theta": 47.5,
+   "alpha": 180.81,
+   "hits": []
+  },
+  {
+   "theta": 50.0,
+   "alpha": 178.97,
+   "hits": []
+  },
+  {
+   "theta": 52.5,
+   "alpha": 177.18,
+   "hits": []
+  },
+  {
+   "theta": 55.0,
+   "alpha": 175.44,
+   "hits": []
+  },
+  {
+   "theta": 57.5,
+   "alpha": 173.75,
+   "hits": []
+  },
+  {
+   "theta": 60.0,
+   "alpha": 172.11,
+   "hits": []
+  },
+  {
+   "theta": 62.5,
+   "alpha": 170.5,
+   "hits": []
+  },
+  {
+   "theta": 65.0,
+   "alpha": 168.94,
+   "hits": []
+  }
+ ],
+ "motion_summary": {
+  "steps": 27,
+  "theta_max": 65.0,
+  "poses_with_hits": [],
+  "contacts": [
+   "lid-box 面で接触（深さ 0.0）"
+  ]
+ },
+ "motion_clearance_mm": {
+  "lid-box": {
+   "min": 0.0,
+   "at_theta": 0.0
+  },
+  "crank-box": {
+   "min": 0.296,
+   "at_theta": 0.0
+  },
+  "crank-ref_body": {
+   "min": 1.5,
+   "at_theta": 0.0
+  },
+  "link-box": {
+   "min": 4.403,
+   "at_theta": 47.5
+  },
+  "link-lid": {
+   "min": 0.197,
+   "at_theta": 0.0
+  },
+  "link-crank": {
+   "min": 0.194,
+   "at_theta": 12.5
+  },
+  "crank-lid": {
+   "min": 10.186,
+   "at_theta": 0.0
+  },
+  "horn-box": {
+   "min": 2.8,
+   "at_theta": 0.0
+  },
+  "link-ref_body": {
+   "min": 11.31,
+   "at_theta": 0.0
+  },
+  "lid-clip": {
+   "min": 24.205,
+   "at_theta": 0.0
+  }
+ },
+ "lid_free_open_limit_deg": 155,
+ "static_closed": {
+  "box-lid": {
+   "hits": 71,
+   "depth": 0.0
+  },
+  "box-pin": {
+   "hits": 479,
+   "depth": 0.05
+  },
+  "box-ref_speaker": {
+   "hits": 192,
+   "depth": 0.0
+  },
+  "speaker_clip-ref_speaker": {
+   "hits": 200,
+   "depth": 0.1
+  }
+ },
+ "assembly": {
+  "A_hinge_pin_insert": {
+   "worst": {
+    "pin-box": {
+     "depth": 0.05,
+     "hits": 562,
+     "at": 17.0
+    }
+   },
+   "note": "蓋は125°。先端5.3mmと左の貫通穴5.2mmの片側0.05mmだけを圧入する"
+  },
+  "B_crank_onto_horn": {
+   "worst": {}
+  },
+  "C1_link_push_at_key": {
+   "worst": {}
+  },
+  "C2_link_turn_to_operating": {
+   "worst": {},
+   "from_deg": 75.0,
+   "to_deg": -132.3
+  },
+  "C3_bayonet_lock": {
+   "operating": [
+    {
+     "theta": 0.0,
+     "rel": -132.3,
+     "pulled_2mm_hits": 69,
+     "depth": 0.573,
+     "first_contact_mm": 1.25,
+     "path": [
+      {
+       "pull_mm": 0.0,
+       "hits": 0,
+       "depth": 0.0
+      },
+      {
+       "pull_mm": 0.25,
+       "hits": 0,
+       "depth": 0.0
+      },
+      {
+       "pull_mm": 0.5,
+       "hits": 0,
+       "depth": 0.0
+      },
+      {
+       "pull_mm": 0.75,
+       "hits": 0,
+       "depth": 0.0
+      },
+      {
+       "pull_mm": 1.0,
+       "hits": 0,
+       "depth": 0.0
+      },
+      {
+       "pull_mm": 1.25,
+       "hits": 68,
+       "depth": 0.123
+      },
+      {
+       "pull_mm": 1.5,
+       "hits": 67,
+       "depth": 0.273
+      },
+      {
+       "pull_mm": 1.75,
+       "hits": 65,
+       "depth": 0.429
+      },
+      {
+       "pull_mm": 2.0,
+       "hits": 69,
+       "depth": 0.573
+      },
+      {
+       "pull_mm": 2.25,
+       "hits": 70,
+       "depth": 0.75
+      },
+      {
+       "pull_mm": 2.5,
+       "hits": 70,
+       "depth": 0.923
+      },
+      {
+       "pull_mm": 2.75,
+       "hits": 69,
+       "depth": 0.983
+      },
+      {
+       "pull_mm": 3.0,
+       "hits": 71,
+       "depth": 0.983
+      },
+      {
+       "pull_mm": 3.25,
+       "hits": 71,
+       "depth": 0.983
+      },
+      {
+       "pull_mm": 3.5,
+       "hits": 71,
+       "depth": 0.9
+      },
+      {
+       "pull_mm": 3.75,
+       "hits": 71,
+       "depth": 1.15
+      },
+      {
+       "pull_mm": 4.0,
+       "hits": 71,
+       "depth": 1.4
+      },
+      {
+       "pull_mm": 4.25,
+       "hits": 66,
+       "depth": 1.35
+      },
+      {
+       "pull_mm": 4.5,
+       "hits": 69,
+       "depth": 1.1
+      },
+      {
+       "pull_mm": 4.75,
+       "hits": 73,
+       "depth": 0.85
+      },
+      {
+       "pull_mm": 5.0,
+       "hits": 76,
+       "depth": 0.7
+      },
+      {
+       "pull_mm": 5.25,
+       "hits": 76,
+       "depth": 0.95
+      },
+      {
+       "pull_mm": 5.5,
+       "hits": 76,
+       "depth": 1.2
+      },
+      {
+       "pull_mm": 5.75,
+       "hits": 75,
+       "depth": 1.45
+      },
+      {
+       "pull_mm": 6.0,
+       "hits": 75,
+       "depth": 1.3
+      },
+      {
+       "pull_mm": 6.25,
+       "hits": 75,
+       "depth": 1.05
+      },
+      {
+       "pull_mm": 6.5,
+       "hits": 75,
+       "depth": 0.8
+      },
+      {
+       "pull_mm": 6.75,
+       "hits": 75,
+       "depth": 0.55
+      },
+      {
+       "pull_mm": 7.0,
+       "hits": 71,
+       "depth": 0.3
+      },
+      {
+       "pull_mm": 7.25,
+       "hits": 67,
+       "depth": 0.05
+      },
+      {
+       "pull_mm": 7.5,
+       "hits": 0,
+       "depth": 0.0
+      }
+     ]
+    },
+    {
+     "theta": 32.5,
+     "rel": -117.9,
+     "pulled_2mm_hits": 67,
+     "depth": 0.575,
+     "first_contact_mm": 1.25,
+     "path": [
+      {
+       "pull_mm": 0.0,
+       "hits": 0,
+       "depth": 0.0
+      },
+      {
+       "pull_mm": 0.25,
+       "hits": 0,
+       "depth": 0.0
+      },
+      {
+       "pull_mm": 0.5,
+       "hits": 0,
+       "depth": 0.0
+      },
+      {
+       "pull_mm": 0.75,
+       "hits": 0,
+       "depth": 0.0
+      },
+      {
+       "pull_mm": 1.0,
+       "hits": 0,
+       "depth": 0.0
+      },
+      {
+       "pull_mm": 1.25,
+       "hits": 65,
+       "depth": 0.117
+      },
+      {
+       "pull_mm": 1.5,
+       "hits": 65,
+       "depth": 0.279
+      },
+      {
+       "pull_mm": 1.75,
+       "hits": 63,
+       "depth": 0.42
+      },
+      {
+       "pull_mm": 2.0,
+       "hits": 67,
+       "depth": 0.575
+      },
+      {
+       "pull_mm": 2.25,
+       "hits": 72,
+       "depth": 0.747
+      },
+      {
+       "pull_mm": 2.5,
+       "hits": 72,
+       "depth": 0.922
+      },
+      {
+       "pull_mm": 2.75,
+       "hits": 71,
+       "depth": 0.988
+      },
+      {
+       "pull_mm": 3.0,
+       "hits": 71,
+       "depth": 0.988
+      },
+      {
+       "pull_mm": 3.25,
+       "hits": 71,
+       "depth": 0.988
+      },
+      {
+       "pull_mm": 3.5,
+       "hits": 73,
+       "depth": 0.9
+      },
+      {
+       "pull_mm": 3.75,
+       "hits": 73,
+       "depth": 1.15
+      },
+      {
+       "pull_mm": 4.0,
+       "hits": 73,
+       "depth": 1.4
+      },
+      {
+       "pull_mm": 4.25,
+       "hits": 69,
+       "depth": 1.35
+      },
+      {
+       "pull_mm": 4.5,
+       "hits": 75,
+       "depth": 1.1
+      },
+      {
+       "pull_mm": 4.75,
+       "hits": 74,
+       "depth": 0.85
+      },
+      {
+       "pull_mm": 5.0,
+       "hits": 70,
+       "depth": 0.7
+      },
+      {
+       "pull_mm": 5.25,
+       "hits": 72,
+       "depth": 0.95
+      },
+      {
+       "pull_mm": 5.5,
+       "hits": 74,
+       "depth": 1.2
+      },
+      {
+       "pull_mm": 5.75,
+       "hits": 71,
+       "depth": 1.45
+      },
+      {
+       "pull_mm": 6.0,
+       "hits": 71,
+       "depth": 1.3
+      },
+      {
+       "pull_mm": 6.25,
+       "hits": 71,
+       "depth": 1.05
+      },
+      {
+       "pull_mm": 6.5,
+       "hits": 71,
+       "depth": 0.8
+      },
+      {
+       "pull_mm": 6.75,
+       "hits": 71,
+       "depth": 0.55
+      },
+      {
+       "pull_mm": 7.0,
+       "hits": 67,
+       "depth": 0.3
+      },
+      {
+       "pull_mm": 7.25,
+       "hits": 63,
+       "depth": 0.05
+      },
+      {
+       "pull_mm": 7.5,
+       "hits": 0,
+       "depth": 0.0
+      }
+     ]
+    },
+    {
+     "theta": 65.0,
+     "rel": -91.6,
+     "pulled_2mm_hits": 70,
+     "depth": 0.575,
+     "first_contact_mm": 1.25,
+     "path": [
+      {
+       "pull_mm": 0.0,
+       "hits": 0,
+       "depth": 0.0
+      },
+      {
+       "pull_mm": 0.25,
+       "hits": 0,
+       "depth": 0.0
+      },
+      {
+       "pull_mm": 0.5,
+       "hits": 0,
+       "depth": 0.0
+      },
+      {
+       "pull_mm": 0.75,
+       "hits": 0,
+       "depth": 0.0
+      },
+      {
+       "pull_mm": 1.0,
+       "hits": 0,
+       "depth": 0.0
+      },
+      {
+       "pull_mm": 1.25,
+       "hits": 60,
+       "depth": 0.129
+      },
+      {
+       "pull_mm": 1.5,
+       "hits": 64,
+       "depth": 0.262
+      },
+      {
+       "pull_mm": 1.75,
+       "hits": 67,
+       "depth": 0.422
+      },
+      {
+       "pull_mm": 2.0,
+       "hits": 70,
+       "depth": 0.575
+      },
+      {
+       "pull_mm": 2.25,
+       "hits": 78,
+       "depth": 0.746
+      },
+      {
+       "pull_mm": 2.5,
+       "hits": 82,
+       "depth": 0.922
+      },
+      {
+       "pull_mm": 2.75,
+       "hits": 79,
+       "depth": 0.998
+      },
+      {
+       "pull_mm": 3.0,
+       "hits": 79,
+       "depth": 0.998
+      },
+      {
+       "pull_mm": 3.25,
+       "hits": 79,
+       "depth": 0.998
+      },
+      {
+       "pull_mm": 3.5,
+       "hits": 79,
+       "depth": 0.9
+      },
+      {
+       "pull_mm": 3.75,
+       "hits": 79,
+       "depth": 1.15
+      },
+      {
+       "pull_mm": 4.0,
+       "hits": 79,
+       "depth": 1.4
+      },
+      {
+       "pull_mm": 4.25,
+       "hits": 82,
+       "depth": 1.35
+      },
+      {
+       "pull_mm": 4.5,
+       "hits": 72,
+       "depth": 1.1
+      },
+      {
+       "pull_mm": 4.75,
+       "hits": 72,
+       "depth": 0.85
+      },
+      {
+       "pull_mm": 5.0,
+       "hits": 69,
+       "depth": 0.7
+      },
+      {
+       "pull_mm": 5.25,
+       "hits": 73,
+       "depth": 0.95
+      },
+      {
+       "pull_mm": 5.5,
+       "hits": 77,
+       "depth": 1.2
+      },
+      {
+       "pull_mm": 5.75,
+       "hits": 74,
+       "depth": 1.45
+      },
+      {
+       "pull_mm": 6.0,
+       "hits": 74,
+       "depth": 1.3
+      },
+      {
+       "pull_mm": 6.25,
+       "hits": 74,
+       "depth": 1.05
+      },
+      {
+       "pull_mm": 6.5,
+       "hits": 74,
+       "depth": 0.8
+      },
+      {
+       "pull_mm": 6.75,
+       "hits": 74,
+       "depth": 0.55
+      },
+      {
+       "pull_mm": 7.0,
+       "hits": 70,
+       "depth": 0.3
+      },
+      {
+       "pull_mm": 7.25,
+       "hits": 66,
+       "depth": 0.05
+      },
+      {
+       "pull_mm": 7.5,
+       "hits": 0,
+       "depth": 0.0
+      }
+     ]
+    }
+   ],
+   "pull_check_mm": 2.0,
+   "at_key_path": [
+    {
+     "pull_mm": 0.0,
+     "hits": 0,
+     "depth": 0.0
+    },
+    {
+     "pull_mm": 0.25,
+     "hits": 0,
+     "depth": 0.0
+    },
+    {
+     "pull_mm": 0.5,
+     "hits": 0,
+     "depth": 0.0
+    },
+    {
+     "pull_mm": 0.75,
+     "hits": 0,
+     "depth": 0.0
+    },
+    {
+     "pull_mm": 1.0,
+     "hits": 0,
+     "depth": 0.0
+    },
+    {
+     "pull_mm": 1.25,
+     "hits": 0,
+     "depth": 0.0
+    },
+    {
+     "pull_mm": 1.5,
+     "hits": 0,
+     "depth": 0.0
+    },
+    {
+     "pull_mm": 1.75,
+     "hits": 0,
+     "depth": 0.0
+    },
+    {
+     "pull_mm": 2.0,
+     "hits": 0,
+     "depth": 0.0
+    },
+    {
+     "pull_mm": 2.25,
+     "hits": 0,
+     "depth": 0.0
+    },
+    {
+     "pull_mm": 2.5,
+     "hits": 0,
+     "depth": 0.0
+    },
+    {
+     "pull_mm": 2.75,
+     "hits": 0,
+     "depth": 0.0
+    },
+    {
+     "pull_mm": 3.0,
+     "hits": 0,
+     "depth": 0.0
+    },
+    {
+     "pull_mm": 3.25,
+     "hits": 0,
+     "depth": 0.0
+    },
+    {
+     "pull_mm": 3.5,
+     "hits": 0,
+     "depth": 0.0
+    },
+    {
+     "pull_mm": 3.75,
+     "hits": 0,
+     "depth": 0.0
+    },
+    {
+     "pull_mm": 4.0,
+     "hits": 0,
+     "depth": 0.0
+    },
+    {
+     "pull_mm": 4.25,
+     "hits": 0,
+     "depth": 0.0
+    },
+    {
+     "pull_mm": 4.5,
+     "hits": 0,
+     "depth": 0.0
+    },
+    {
+     "pull_mm": 4.75,
+     "hits": 0,
+     "depth": 0.0
+    },
+    {
+     "pull_mm": 5.0,
+     "hits": 0,
+     "depth": 0.0
+    },
+    {
+     "pull_mm": 5.25,
+     "hits": 0,
+     "depth": 0.0
+    },
+    {
+     "pull_mm": 5.5,
+     "hits": 0,
+     "depth": 0.0
+    },
+    {
+     "pull_mm": 5.75,
+     "hits": 0,
+     "depth": 0.0
+    },
+    {
+     "pull_mm": 6.0,
+     "hits": 0,
+     "depth": 0.0
+    },
+    {
+     "pull_mm": 6.25,
+     "hits": 0,
+     "depth": 0.0
+    },
+    {
+     "pull_mm": 6.5,
+     "hits": 0,
+     "depth": 0.0
+    },
+    {
+     "pull_mm": 6.75,
+     "hits": 0,
+     "depth": 0.0
+    },
+    {
+     "pull_mm": 7.0,
+     "hits": 0,
+     "depth": 0.0
+    },
+    {
+     "pull_mm": 7.25,
+     "hits": 0,
+     "depth": 0.0
+    },
+    {
+     "pull_mm": 7.5,
+     "hits": 0,
+     "depth": 0.0
+    }
+   ],
+   "ok": true
+  },
+  "D_servo_unit_lower": {
+   "worst": {},
+   "crank_alpha": 193.0,
+   "note": "サーボを 90° にしてホーンを付けた状態（クランクは動作範囲の中央）。配線は 8mm の固い棒で近似"
+  },
+  "E_clip_press": {
+   "worst": {
+    "clip-box": {
+     "depth": 0.9,
+     "hits": 18,
+     "at": 4.0
+    }
+   },
+   "note": "爪が台の角を乗り越えるときの食い込み＝脚のたわみ量"
+  },
+  "G_lid_place_after_servo": {
+   "worst": {}
+  },
+  "F_lid_down_with_link_bent": {
+   "hits": {},
+   "bend_deg": 5.01,
+   "b_end_shift_mm": 3.4
+  },
+  "F_bent_link_fixed_parts": {
+   "crank": {
+    "hits": 8,
+    "depth": 0.0
+   }
+  },
+  "F_release_into_fin": {
+   "hits": {
+    "0.3": {
+     "hits": 151,
+     "depth": 0.078
+    },
+    "0.4": {
+     "hits": 181,
+     "depth": 0.175
+    },
+    "0.5": {
+     "hits": 156,
+     "depth": 0.113
+    },
+    "0.6": {
+     "hits": 120,
+     "depth": 0.052
+    }
+   },
+   "note": "途中で当たるのはピン B の面取りが耳の穴の縁に乗る区間。最後（1.0）が 0 なら入る"
+  },
+  "F_link_bend_strain_pct": 1.99,
+  "F_link_free_span_mm": 27.752,
+  "F_link_bend_method": "A端を拘束。両端の丸を除く27.75mmを曲げられる長さとした保守的な近似。材料試験や有限要素解析は未実施",
+  "clip_snap_strain_pct": 1.2,
+  "hinge_tip_strain_pct": 0.25,
+  "H_speaker_lower": {
+   "worst": {
+    "speaker-box": {
+     "depth": 0.0,
+     "hits": 106,
+     "at": 45.0
+    }
+   }
+  },
+  "H_speaker_clip_press": {
+   "worst": {
+    "speaker_clip-box": {
+     "depth": 0.3,
+     "hits": 35,
+     "at": 27.0
+    },
+    "speaker_clip-speaker": {
+     "depth": 0.1,
+     "hits": 23,
+     "at": 19.5
+    }
+   }
+  },
+  "H_speaker_clip_final": {
+   "hits": 0,
+   "depth": 0.0
+  },
+  "H_speaker_clip_strain_pct": 0.35,
+  "H_speaker_clip_preload_mm": 0.1,
+  "H_speaker_clip_pull_lock": {
+   "hits": 25,
+   "depth": 0.3
+  },
+  "I_pin_push_out": {
+   "worst": {
+    "pin-box": {
+     "depth": 0.05,
+     "hits": 479,
+     "at": 0
+    }
+   },
+   "right_tip_protrusion_mm": 2.95
+  }
+ },
+ "mass": {
+  "lid": {
+   "volume_mm3": 15450.0,
+   "mass_g": 19.16,
+   "com_mm": [
+    0.45,
+    -0.99,
+    67.39
+   ],
+   "ixx_com_mm5": 6167790.851081103
+  },
+  "crank": {
+   "volume_mm3": 2589.2,
+   "mass_g": 3.21,
+   "com_mm": [
+    1.86,
+    0.58,
+    28.39
+   ],
+   "ixx_com_mm5": 619036.2977637546
+  },
+  "link": {
+   "volume_mm3": 1247.6,
+   "mass_g": 1.55,
+   "com_mm": [
+    4.96,
+    -15.21,
+    34.31
+   ],
+   "ixx_com_mm5": 266531.7121804005
+  },
+  "box": {
+   "volume_mm3": 90170.5,
+   "mass_g": 111.81,
+   "com_mm": [
+    -2.45,
+    2.43,
+    24.24
+   ],
+   "ixx_com_mm5": 80171146.25778064
+  },
+  "clip": {
+   "volume_mm3": 1471.3,
+   "mass_g": 1.82,
+   "com_mm": [
+    -19.75,
+    8.0,
+    33.49
+   ],
+   "ixx_com_mm5": 452645.32083550724
+  },
+  "pin": {
+   "volume_mm3": 1263.4,
+   "mass_g": 1.57,
+   "com_mm": [
+    0.58,
+    -30.0,
+    65.12
+   ],
+   "ixx_com_mm5": 3841.643311231689
+  },
+  "speaker_clip": {
+   "volume_mm3": 817.8,
+   "mass_g": 1.01,
+   "com_mm": [
+    20.6,
+    16.0,
+    24.18
+   ],
+   "ixx_com_mm5": 155236.23942109337
+  }
+ },
+ "overhang_calibration": {
+  "floating_plate": [
+   {
+    "area_mm2": 400.0,
+    "z": [
+     10.0,
+     10.0
+    ],
+    "bbox": [
+     [
+      6.7,
+      6.7,
+      10.0
+     ],
+     [
+      13.3,
+      13.3,
+      10.0
+     ]
+    ],
+    "horizontal": true,
+    "supported_edge_ratio": 0.0,
+    "span_mm": 6.67
+   }
+  ],
+  "bridge": [
+   {
+    "area_mm2": 120.0,
+    "z": [
+     10.0,
+     10.0
+    ],
+    "bbox": [
+     [
+      8.0,
+      3.3,
+      10.0
+     ],
+     [
+      12.0,
+      6.7,
+      10.0
+     ]
+    ],
+    "horizontal": true,
+    "supported_edge_ratio": 0.5,
+    "span_mm": 4.0
+   }
+  ],
+  "ok": true
+ },
+ "overhang": {
+  "box": [
+   {
+    "area_mm2": 75.23,
+    "z": [
+     55.86,
+     61.18
+    ],
+    "bbox": [
+     [
+      -26.7,
+      -30.8,
+      57.0
+     ],
+     [
+      -21.7,
+      -27.7,
+      60.2
+     ]
+    ],
+    "horizontal": false,
+    "supported_edge_ratio": 0.43,
+    "span_mm": 5.0
+   },
+   {
+    "area_mm2": 75.23,
+    "z": [
+     55.86,
+     61.18
+    ],
+    "bbox": [
+     [
+      21.7,
+      -30.8,
+      57.0
+     ],
+     [
+      26.7,
+      -27.7,
+      60.2
+     ]
+    ],
+    "horizontal": false,
+    "supported_edge_ratio": 0.43,
+    "span_mm": 5.0
+   },
+   {
+    "area_mm2": 60.67,
+    "z": [
+     20.6,
+     23.9
+    ],
+    "bbox": [
+     [
+      4.4,
+      0.8,
+      21.7
+     ],
+     [
+      5.5,
+      5.2,
+      22.8
+     ]
+    ],
+    "horizontal": false,
+    "supported_edge_ratio": 0.25,
+    "span_mm": 4.33
+   },
+   {
+    "area_mm2": 57.11,
+    "z": [
+     66.84,
+     68.1
+    ],
+    "bbox": [
+     [
+      -26.3,
+      -31.8,
+      66.9
+     ],
+     [
+      -21.7,
+      -28.2,
+      68.1
+     ]
+    ],
+    "horizontal": false,
+    "supported_edge_ratio": 0.53,
+    "span_mm": 4.67
+   },
+   {
+    "area_mm2": 32.47,
+    "z": [
+     67.0,
+     68.3
+    ],
+    "bbox": [
+     [
+      21.7,
+      -31.4,
+      67.5
+     ],
+     [
+      26.3,
+      -28.5,
+      68.3
+     ]
+    ],
+    "horizontal": false,
+    "supported_edge_ratio": 0.53,
+    "span_mm": 4.67
+   },
+   {
+    "area_mm2": 23.18,
+    "z": [
+     4.0,
+     4.0
+    ],
+    "bbox": [
+     [
+      -28.1,
+      -33.9,
+      4.0
+     ],
+     [
+      -24.6,
+      -33.0,
+      4.0
+     ]
+    ],
+    "horizontal": true,
+    "supported_edge_ratio": 0.33,
+    "span_mm": 3.45
+   },
+   {
+    "area_mm2": 10.65,
+    "z": [
+     20.1,
+     20.1
+    ],
+    "bbox": [
+     [
+      -21.9,
+      -10.2,
+      20.1
+     ],
+     [
+      -18.6,
+      -9.7,
+      20.1
+     ]
+    ],
+    "horizontal": true,
+    "supported_edge_ratio": 0.6,
+    "span_mm": 3.31
+   },
+   {
+    "area_mm2": 10.65,
+    "z": [
+     20.1,
+     20.1
+    ],
+    "bbox": [
+     [
+      -20.9,
+      25.7,
+      20.1
+     ],
+     [
+      -17.6,
+      26.2,
+      20.1
+     ]
+    ],
+    "horizontal": true,
+    "supported_edge_ratio": 0.6,
+    "span_mm": 3.31
+   },
+   {
+    "area_mm2": 1.94,
+    "z": [
+     10.6,
+     10.6
+    ],
+    "bbox": [
+     [
+      18.9,
+      29.0,
+      10.6
+     ],
+     [
+      22.5,
+      29.8,
+      10.6
+     ]
+    ],
+    "horizontal": true,
+    "supported_edge_ratio": 0.62,
+    "span_mm": 3.53
+   },
+   {
+    "area_mm2": 1.82,
+    "z": [
+     10.6,
+     10.6
+    ],
+    "bbox": [
+     [
+      20.2,
+      2.2,
+      10.6
+     ],
+     [
+      22.5,
+      3.0,
+      10.6
+     ]
+    ],
+    "horizontal": true,
+    "supported_edge_ratio": 0.67,
+    "span_mm": 2.3
+   }
+  ],
+  "lid": [
+   {
+    "area_mm2": 124.27,
+    "z": [
+     0.0,
+     1.46
+    ],
+    "bbox": [
+     [
+      -10.0,
+      -33.2,
+      0.5
+     ],
+     [
+      10.0,
+      -32.8,
+      1.0
+     ]
+    ],
+    "horizontal": false,
+    "supported_edge_ratio": 0.0,
+    "span_mm": 20.0
+   },
+   {
+    "area_mm2": 41.06,
+    "z": [
+     8.2,
+     8.2
+    ],
+    "bbox": [
+     [
+      -5.5,
+      29.2,
+      8.2
+     ],
+     [
+      5.5,
+      30.3,
+      8.2
+     ]
+    ],
+    "horizontal": true,
+    "supported_edge_ratio": 0.12,
+    "span_mm": 11.07
+   },
+   {
+    "area_mm2": 39.88,
+    "z": [
+     0.0,
+     1.0
+    ],
+    "bbox": [
+     [
+      -32.4,
+      7.3,
+      0.3
+     ],
+     [
+      -22.1,
+      26.1,
+      1.0
+     ]
+    ],
+    "horizontal": false,
+    "supported_edge_ratio": 0.14,
+    "span_mm": 18.77
+   },
+   {
+    "area_mm2": 20.85,
+    "z": [
+     0.2,
+     0.65
+    ],
+    "bbox": [
+     [
+      -5.5,
+      32.1,
+      0.3
+     ],
+     [
+      5.5,
+      32.4,
+      0.6
+     ]
+    ],
+    "horizontal": false,
+    "supported_edge_ratio": 0.17,
+    "span_mm": 11.07
+   },
+   {
+    "area_mm2": 19.3,
+    "z": [
+     7.34,
+     7.75
+    ],
+    "bbox": [
+     [
+      -5.5,
+      28.4,
+      7.4
+     ],
+     [
+      5.5,
+      28.7,
+      7.7
+     ]
+    ],
+    "horizontal": false,
+    "supported_edge_ratio": 0.17,
+    "span_mm": 11.07
+   },
+   {
+    "area_mm2": 14.74,
+    "z": [
+     7.11,
+     7.43
+    ],
+    "bbox": [
+     [
+      -5.5,
+      31.2,
+      7.2
+     ],
+     [
+      5.5,
+      31.5,
+      7.4
+     ]
+    ],
+    "horizontal": false,
+    "supported_edge_ratio": 0.12,
+    "span_mm": 11.07
+   },
+   {
+    "area_mm2": 8.37,
+    "z": [
+     7.61,
+     7.79
+    ],
+    "bbox": [
+     [
+      -5.5,
+      30.9,
+      7.6
+     ],
+     [
+      5.5,
+      31.0,
+      7.7
+     ]
+    ],
+    "horizontal": false,
+    "supported_edge_ratio": 0.17,
+    "span_mm": 11.07
+   },
+   {
+    "area_mm2": 5.62,
+    "z": [
+     1.34,
+     1.46
+    ],
+    "bbox": [
+     [
+      -5.5,
+      33.3,
+      1.4
+     ],
+     [
+      5.5,
+      33.3,
+      1.4
+     ]
+    ],
+    "horizontal": false,
+    "supported_edge_ratio": 0.25,
+    "span_mm": 11.07
+   },
+   {
+    "area_mm2": 5.35,
+    "z": [
+     20.11,
+     20.5
+    ],
+    "bbox": [
+     [
+      7.6,
+      14.2,
+      20.2
+     ],
+     [
+      8.6,
+      15.6,
+      20.5
+     ]
+    ],
+    "horizontal": false,
+    "supported_edge_ratio": 0.2,
+    "span_mm": 1.39
+   },
+   {
+    "area_mm2": 5.03,
+    "z": [
+     1.0,
+     1.11
+    ],
+    "bbox": [
+     [
+      -5.5,
+      32.9,
+      1.0
+     ],
+     [
+      5.5,
+      32.9,
+      1.1
+     ]
+    ],
+    "horizontal": false,
+    "supported_edge_ratio": 0.25,
+    "span_mm": 11.07
+   },
+   {
+    "area_mm2": 3.97,
+    "z": [
+     6.91,
+     6.99
+    ],
+    "bbox": [
+     [
+      -5.5,
+      27.9,
+      6.9
+     ],
+     [
+      5.5,
+      27.9,
+      7.0
+     ]
+    ],
+    "horizontal": false,
+    "supported_edge_ratio": 0.25,
+    "span_mm": 11.07
+   },
+   {
+    "area_mm2": 0.77,
+    "z": [
+     6.91,
+     6.93
+    ],
+    "bbox": [
+     [
+      -5.5,
+      31.7,
+      6.9
+     ],
+     [
+      5.5,
+      31.7,
+      6.9
+     ]
+    ],
+    "horizontal": false,
+    "supported_edge_ratio": 0.25,
+    "span_mm": 11.07
+   },
+   {
+    "area_mm2": 0.53,
+    "z": [
+     8.12,
+     8.13
+    ],
+    "bbox": [
+     [
+      -5.5,
+      30.5,
+      8.1
+     ],
+     [
+      5.5,
+      30.5,
+      8.1
+     ]
+    ],
+    "horizontal": false,
+    "supported_edge_ratio": 0.25,
+    "span_mm": 11.07
+   },
+   {
+    "area_mm2": 0.07,
+    "z": [
+     1.0,
+     1.0
+    ],
+    "bbox": [
+     [
+      16.6,
+      26.1,
+      1.0
+     ],
+     [
+      27.6,
+      26.1,
+      1.0
+     ]
+    ],
+    "horizontal": true,
+    "supported_edge_ratio": 0.6,
+    "span_mm": 10.98
+   },
+   {
+    "area_mm2": 0.05,
+    "z": [
+     7.96,
+     7.96
+    ],
+    "bbox": [
+     [
+      -5.5,
+      30.7,
+      8.0
+     ],
+     [
+      5.5,
+      30.7,
+      8.0
+     ]
+    ],
+    "horizontal": false,
+    "supported_edge_ratio": 0.25,
+    "span_mm": 11.07
+   }
+  ],
+  "crank": [
+   {
+    "area_mm2": 237.79,
+    "z": [
+     1.6,
+     1.6
+    ],
+    "bbox": [
+     [
+      -13.9,
+      -6.7,
+      1.6
+     ],
+     [
+      7.7,
+      15.3,
+      1.6
+     ]
+    ],
+    "horizontal": true,
+    "supported_edge_ratio": 1.0,
+    "span_mm": 22.04
+   },
+   {
+    "area_mm2": 18.0,
+    "z": [
+     0.3,
+     0.3
+    ],
+    "bbox": [
+     [
+      -14.4,
+      -11.1,
+      0.3
+     ],
+     [
+      10.4,
+      15.5,
+      0.3
+     ]
+    ],
+    "horizontal": true,
+    "supported_edge_ratio": 0.81,
+    "span_mm": 26.58
+   },
+   {
+    "area_mm2": 3.75,
+    "z": [
+     8.19,
+     10.0
+    ],
+    "bbox": [
+     [
+      12.0,
+      -18.8,
+      8.8
+     ],
+     [
+      13.1,
+      -17.9,
+      9.4
+     ]
+    ],
+    "horizontal": false,
+    "supported_edge_ratio": 0.27,
+    "span_mm": 1.08
+   }
+  ],
+  "link": [
+   {
+    "area_mm2": 0.0,
+    "z": [
+     3.0,
+     3.0
+    ],
+    "bbox": [
+     [
+      -20.4,
+      -2.7,
+      3.0
+     ],
+     [
+      -20.2,
+      -2.6,
+      3.0
+     ]
+    ],
+    "horizontal": true,
+    "supported_edge_ratio": 1.0,
+    "span_mm": 0.23
+   },
+   {
+    "area_mm2": 0.0,
+    "z": [
+     3.0,
+     3.0
+    ],
+    "bbox": [
+     [
+      -17.5,
+      -1.0,
+      3.0
+     ],
+     [
+      -17.5,
+      -1.0,
+      3.0
+     ]
+    ],
+    "horizontal": true,
+    "supported_edge_ratio": 1.0,
+    "span_mm": 0.0
+   },
+   {
+    "area_mm2": 0.0,
+    "z": [
+     3.0,
+     3.0
+    ],
+    "bbox": [
+     [
+      -18.5,
+      -2.2,
+      3.0
+     ],
+     [
+      -18.5,
+      -2.2,
+      3.0
+     ]
+    ],
+    "horizontal": true,
+    "supported_edge_ratio": 1.0,
+    "span_mm": 0.0
+   },
+   {
+    "area_mm2": 0.0,
+    "z": [
+     3.0,
+     3.0
+    ],
+    "bbox": [
+     [
+      -17.4,
+      -0.3,
+      3.0
+     ],
+     [
+      -17.4,
+      -0.3,
+      3.0
+     ]
+    ],
+    "horizontal": true,
+    "supported_edge_ratio": 1.0,
+    "span_mm": 0.0
+   },
+   {
+    "area_mm2": 0.0,
+    "z": [
+     3.0,
+     3.0
+    ],
+    "bbox": [
+     [
+      -20.9,
+      2.1,
+      3.0
+     ],
+     [
+      -20.9,
+      2.1,
+      3.0
+     ]
+    ],
+    "horizontal": true,
+    "supported_edge_ratio": 1.0,
+    "span_mm": 0.0
+   },
+   {
+    "area_mm2": 0.0,
+    "z": [
+     3.0,
+     3.0
+    ],
+    "bbox": [
+     [
+      -22.3,
+      0.3,
+      3.0
+     ],
+     [
+      -22.3,
+      0.3,
+      3.0
+     ]
+    ],
+    "horizontal": true,
+    "supported_edge_ratio": 1.0,
+    "span_mm": 0.0
+   },
+   {
+    "area_mm2": 0.0,
+    "z": [
+     3.0,
+     3.0
+    ],
+    "bbox": [
+     [
+      -21.3,
+      -2.2,
+      3.0
+     ],
+     [
+      -21.3,
+      -2.2,
+      3.0
+     ]
+    ],
+    "horizontal": true,
+    "supported_edge_ratio": 1.0,
+    "span_mm": 0.0
+   },
+   {
+    "area_mm2": 0.0,
+    "z": [
+     3.0,
+     3.0
+    ],
+    "bbox": [
+     [
+      -22.4,
+      -0.3,
+      3.0
+     ],
+     [
+      -22.4,
+      -0.3,
+      3.0
+     ]
+    ],
+    "horizontal": true,
+    "supported_edge_ratio": 1.0,
+    "span_mm": 0.0
+   },
+   {
+    "area_mm2": 0.0,
+    "z": [
+     3.0,
+     3.0
+    ],
+    "bbox": [
+     [
+      -22.0,
+      -1.5,
+      3.0
+     ],
+     [
+      -22.0,
+      -1.5,
+      3.0
+     ]
+    ],
+    "horizontal": true,
+    "supported_edge_ratio": 1.0,
+    "span_mm": 0.0
+   }
+  ],
+  "pin": [],
+  "clip": [],
+  "speaker_clip": []
+ },
+ "elapsed_s": 8.9
+}
