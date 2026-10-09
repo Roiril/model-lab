@@ -11,23 +11,26 @@
       build/plate_report.json
 """
 import json
-import math
 import os
-import re
 import shutil
-import struct
 import subprocess
 import sys
-import tempfile
 import zipfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE))
 sys.path.insert(0, HERE)
+sys.path.insert(0, os.path.join(ROOT, "lib"))
 sys.stdout.reconfigure(encoding="utf-8")
 
 import print_profile  # noqa: E402
-from slice_check import EXE, parse_gcode, floating_report  # noqa: E402
+from printmech.stl import (  # noqa: E402
+    read_binary_stl as read_stl, rotate_z as rotated, write_binary_stl as write_stl,
+)
+from printmech.three_mf import (  # noqa: E402
+    add_layer_ranges, inspect_sliced_3mf, object_names,
+)
+from slice_check import EXE  # noqa: E402
 
 EXPORTS = os.path.join(ROOT, "exports")
 WORK = os.path.join(HERE, "build", "print")
@@ -35,31 +38,6 @@ PARTS = ["box", "lid", "crank", "link", "pin", "clip"]
 ROTATE_Z = {"box": 180.0}          # 箱の後ろ面（蝶番側）を奥へ。継ぎ目が後ろに寄る
 # 高さごとの層の厚み（刷る姿勢の z、mm）。上向きの浅い丸みが外から見える所だけ細かくする
 RANGES = {"box": [(74.0, 80.0, 0.08)], "lid": [(5.0, 10.4, 0.08)]}
-
-
-def read_stl(path):
-    raw = open(path, "rb").read()
-    n = struct.unpack("<I", raw[80:84])[0]
-    return [struct.unpack("<9f", raw[84 + 50 * i + 12:84 + 50 * i + 48]) for i in range(n)]
-
-
-def write_stl(path, tris):
-    with open(path, "wb") as fh:
-        fh.write(b"\0" * 80 + struct.pack("<I", len(tris)))
-        for t in tris:
-            fh.write(struct.pack("<12fH", 0, 0, 0, *t, 0))
-
-
-def rotated(tris, deg):
-    c, s = math.cos(math.radians(deg)), math.sin(math.radians(deg))
-    out = []
-    for t in tris:
-        v = []
-        for k in range(3):
-            x, y, z = t[3 * k:3 * k + 3]
-            v += [x * c - y * s, x * s + y * c, z]
-        out.append(tuple(v))
-    return out
 
 
 def slice_cli(inputs, out_dir, out_name, material=None, arrange=True):
@@ -78,77 +56,14 @@ def slice_cli(inputs, out_dir, out_name, material=None, arrange=True):
     return path
 
 
-def object_names(z):
-    """物体の並び（layer_config_ranges.xml の object id は、この並びの 1 始まりの番号）と名前。
-
-    model_settings.config に書かれる順は切るたびに変わる（並べ替えの結果）。スライサーが数えるのは
-    3D/3dmodel.model の物体 id の小さい順なので、id で並べ直す（2026-10-10、順を取り違えて
-    PLA では蓋、PETG では箱にしか層の厚みが効かなかった）。"""
-    cfg = z.read("Metadata/model_settings.config").decode("utf-8")
-    objs = re.findall(r'<object id="(\d+)">\s*<metadata key="name" value="([^"]+)"', cfg)
-    return sorted(((int(i), n) for i, n in objs), key=lambda t: t[0])
-
-
 def add_ranges(src, dst, names):
     """Metadata/layer_config_ranges.xml（Bambu の高さ範囲の設定）を足した 3mf を作る。"""
-    xml = ['<?xml version="1.0" encoding="utf-8"?>\n<objects>\n']
-    for idx, name in enumerate(names, start=1):
-        key = next((k for k in RANGES if name.endswith(f"-{k}") or name.endswith(f"-{k}.stl")), None)
-        if not key:
-            continue
-        xml.append(f' <object id="{idx}">\n')
-        for z0, z1, lh in RANGES[key]:
-            xml.append(f'  <range min_z="{z0}" max_z="{z1}">\n   <option opt_key="extruder">0</option>\n'
-                       f'   <option opt_key="layer_height">{lh}</option>\n  </range>\n')
-        xml.append(' </object>\n')
-    xml.append('</objects>\n')
-    with zipfile.ZipFile(src) as zin, zipfile.ZipFile(dst, "w", zipfile.ZIP_DEFLATED) as zout:
-        for item in zin.infolist():
-            if item.filename.endswith(".gcode") or item.filename.endswith(".gcode.md5") or \
-                    item.filename == "Metadata/layer_config_ranges.xml":
-                continue
-            zout.writestr(item, zin.read(item.filename))
-        zout.writestr("Metadata/layer_config_ranges.xml", "".join(xml))
+    add_layer_ranges(src, dst, names, RANGES)
 
 
 def check(path3mf, names):
     """切った結果を物体ごとに確かめる。"""
-    z = zipfile.ZipFile(path3mf)
-    si = z.read("Metadata/slice_info.config").decode("utf-8")
-    gname = [n for n in z.namelist() if n.endswith(".gcode")][0]
-    tmp = os.path.join(tempfile.mkdtemp(prefix="plate_"), "plate.gcode")
-    with open(tmp, "wb") as fh:
-        fh.write(z.read(gname))
-    layers, stats = parse_gcode(tmp)
-    # 物体 id（ラベル）→ 名前。slice_info の object 行の並びと model_settings の並びは同じ
-    labels = re.findall(r'<object identify_id="(\d+)" name="([^"]+)"', si)
-    label_name = {int(i): n for i, n in labels}
-    per = {}
-    for L in layers:
-        for s in L["segs"]:
-            per.setdefault(s[5], []).append(s)
-    out = dict(support_used=re.search(r'key="support_used" value="(\w+)"', si).group(1),
-               prediction_s=int(re.search(r'key="prediction" value="(\d+)"', si).group(1)),
-               weight_g=re.search(r'key="weight" value="([\d.]*)"', si).group(1),
-               filament=re.findall(r'<filament [^>]*used_m="([\d.]+)" used_g="([\d.]+)"', si),
-               stats=stats, objects={})
-    for oid, segs in per.items():
-        name = label_name.get(oid, str(oid))
-        zs = sorted({round(s[6], 3) for s in segs})
-        steps = {}
-        for a, b in zip(zs[:-1], zs[1:]):
-            steps.setdefault(round(b - a, 2), []).append(a)
-        # 物体だけの層に組み直して支えの判定
-        by_z = {}
-        for s in segs:
-            by_z.setdefault(round(s[6], 3), []).append(s)
-        obj_layers = [dict(z=zz, segs=by_z[zz]) for zz in sorted(by_z)]
-        tot, rows, feats = floating_report(obj_layers)
-        out["objects"][name] = dict(
-            layers=len(zs), z_top=zs[-1] if zs else None,
-            layer_steps={str(k): [round(min(v), 2), round(max(v), 2), len(v)] for k, v in sorted(steps.items())},
-            floating=tot, overhang_walls=[r for r in rows if r["feature"] != "Bridge"][:6])
-    return out
+    return inspect_sliced_3mf(path3mf)
 
 
 def build(material, parts, out_name, ranges=True):

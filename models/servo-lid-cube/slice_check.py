@@ -9,10 +9,8 @@
 計器の校正: 浮いた板（必ず検出）と 45° の斜面（検出されない）を同じ手順で通す。
 """
 import json
-import math
 import os
 import re
-import struct
 import subprocess
 import sys
 import tempfile
@@ -22,19 +20,20 @@ ROOT = os.path.dirname(os.path.dirname(HERE))
 EXPORTS = os.path.join(ROOT, "exports")
 OUT = os.path.join(HERE, "build", "slices")
 sys.stdout.reconfigure(encoding="utf-8")
+sys.path.insert(0, os.path.join(ROOT, "lib"))
 
 EXE = r"C:\Program Files\Bambu Studio\bambu-studio.exe"
 PROF = r"C:\Program Files\Bambu Studio\resources\profiles\BBL"
 sys.path.insert(0, HERE)
 import print_profile  # noqa: E402
+from printmech.gcode import CELL, R_SUP, floating_report, parse_gcode  # noqa: E402
+from printmech.stl import box_triangles as box_tris, write_binary_stl as write_stl  # noqa: E402
 
 # 標準プロファイルは継承を解いてから渡す（CLI は inherits をたどらない）。上書きは print_profile.py
 FILAMENTS = {}
 for _m in ("PLA", "PETG"):
     MACHINE, PROCESS, FILAMENTS[_m] = print_profile.settings(_m)
 PARTS = ["box", "lid", "crank", "link", "pin", "clip"]
-R_SUP = 0.6      # 下の層の押し出しがこの水平距離にあれば支えあり（mm）。45° なら 1 層 0.2mm のずれ
-CELL = 0.2
 
 
 def slice_one(stl, material, tag):
@@ -50,161 +49,6 @@ def slice_one(stl, material, tag):
     dst = os.path.join(OUT, f"{tag}.gcode")
     os.replace(gpath, dst)
     return dst, log
-
-
-def parse_gcode(path):
-    """層ごとの押し出し線分 [(x0,y0,x1,y1,feature)] と統計。"""
-    layers = []
-    cur = None
-    x = y = z = 0.0
-    feature = ""
-    stats = {}
-    rel_e = True
-    obj = None
-    for line in open(path, encoding="utf-8", errors="replace"):
-        if line.startswith(";"):
-            if line.startswith("; CHANGE_LAYER"):
-                cur = dict(z=None, segs=[])
-                layers.append(cur)
-            elif line.startswith("; Z_HEIGHT:") and cur is not None:
-                cur["z"] = float(line.split(":")[1])
-            elif line.startswith("; FEATURE:"):
-                feature = line.split(":", 1)[1].strip()
-            elif line.startswith("; start printing object, unique label id:"):
-                obj = int(line.rsplit(":", 1)[1])
-            elif line.startswith("; stop printing object"):
-                obj = None
-            elif "model printing time" in line or "total estimated time" in line:
-                stats["time"] = line.strip("; \n")
-            elif line.startswith("; total filament length"):
-                stats["filament_mm"] = float(line.split(":")[1])
-            elif line.startswith("; total filament weight"):
-                stats["filament_g_header"] = line.split(":")[1].strip()
-            continue
-        if line.startswith("M83"):
-            rel_e = True
-        if line.startswith("M82"):
-            rel_e = False
-        if not (line.startswith("G1 ") or line.startswith("G0 ") or line.startswith("G2 ") or line.startswith("G3 ")):
-            continue
-        m = dict(re.findall(r"([XYZEIJ])(-?[\d.]+)", line.split(";")[0]))
-        nx = float(m.get("X", x))
-        ny = float(m.get("Y", y))
-        if "Z" in m:
-            z = float(m["Z"])
-        e = float(m.get("E", 0.0))
-        if cur is not None and e > 0 and (line.startswith("G1") or line.startswith("G2") or line.startswith("G3")) \
-                and (nx != x or ny != y or "I" in m or "J" in m):
-            if (line.startswith("G2") or line.startswith("G3")) and ("I" in m or "J" in m):
-                # 円弧近似（G2 時計回り / G3 反時計回り）。弦のまま扱うと円弧の膨らみが「支え無し」に見える
-                ccx, ccy = x + float(m.get("I", 0.0)), y + float(m.get("J", 0.0))
-                r = math.hypot(x - ccx, y - ccy)
-                a0 = math.atan2(y - ccy, x - ccx)
-                a1 = math.atan2(ny - ccy, nx - ccx)
-                if line.startswith("G3"):
-                    sweep = (a1 - a0) % (2 * math.pi) or 2 * math.pi
-                else:
-                    sweep = -((a0 - a1) % (2 * math.pi) or 2 * math.pi)
-                k = max(2, int(abs(sweep) * r / 0.2))
-                px, py = x, y
-                for i in range(1, k + 1):
-                    a = a0 + sweep * i / k
-                    qx, qy = (ccx + r * math.cos(a), ccy + r * math.sin(a)) if i < k else (nx, ny)
-                    cur["segs"].append((px, py, qx, qy, feature, obj, z))
-                    px, py = qx, qy
-            else:
-                cur["segs"].append((x, y, nx, ny, feature, obj, z))
-        x, y = nx, ny
-    return layers, stats
-
-
-def coverage(segs):
-    cells = set()
-    for x0, y0, x1, y1, *_ in segs:
-        n = max(1, int(math.hypot(x1 - x0, y1 - y0) / (CELL * 0.7)))
-        for i in range(n + 1):
-            px = x0 + (x1 - x0) * i / n
-            py = y0 + (y1 - y0) * i / n
-            cells.add((int(math.floor(px / CELL)), int(math.floor(py / CELL))))
-    return cells
-
-
-def supported(cells, px, py):
-    k = int(math.ceil(R_SUP / CELL))
-    cx, cy = int(math.floor(px / CELL)), int(math.floor(py / CELL))
-    for dx in range(-k, k + 1):
-        for dy in range(-k, k + 1):
-            if dx * dx + dy * dy <= k * k and (cx + dx, cy + dy) in cells:
-                return True
-    return False
-
-
-INTERNAL = ("Sparse infill", "Internal solid infill", "Floating vertical shell", "Internal Bridge")
-
-
-def floating_report(layers):
-    """支えの無い押し出しを、外に見える機能（壁・ブリッジ）と中の詰め物に分けて数え、場所を返す。
-
-    座標は押し出し全体の外接箱の中心からの相対（部品の XY にほぼ一致）。"""
-    xs = [v for L in layers for s in L["segs"] for v in (s[0], s[2])]
-    ys = [v for L in layers for s in L["segs"] for v in (s[1], s[3])]
-    cx = (min(xs) + max(xs)) / 2 if xs else 0.0
-    cy = (min(ys) + max(ys)) / 2 if ys else 0.0
-    rows = []
-    prev = None
-    total = dict(external_unsupported_mm=0.0, bridge_mm=0.0, bridge_unsupported_mm=0.0, internal_unsupported_mm=0.0)
-    by_feature = {}
-    for li, L in enumerate(layers):
-        if not L["segs"]:
-            continue
-        if prev is None:
-            prev = coverage(L["segs"])
-            continue
-        found = {}
-        for x0, y0, x1, y1, feat, *_ in L["segs"]:
-            length = math.hypot(x1 - x0, y1 - y0)
-            n = max(1, int(length / 0.2))
-            bad = []
-            for i in range(n + 1):
-                px = x0 + (x1 - x0) * i / n
-                py = y0 + (y1 - y0) * i / n
-                if not supported(prev, px, py):
-                    bad.append((px - cx, py - cy))
-            seg_un = length * len(bad) / (n + 1)
-            if any(k in feat for k in INTERNAL):
-                total["internal_unsupported_mm"] += seg_un
-                continue
-            if "Bridge" in feat:
-                total["bridge_mm"] += length
-                total["bridge_unsupported_mm"] += seg_un
-            else:
-                total["external_unsupported_mm"] += seg_un
-            by_feature[feat] = by_feature.get(feat, 0.0) + seg_un
-            if bad:
-                found.setdefault(feat, []).extend(bad)
-        for feat, pts in found.items():
-            if len(pts) < 3:
-                continue
-            rows.append(dict(layer=li, z=L["z"], feature=feat, points=len(pts),
-                             x=[round(min(p[0] for p in pts), 1), round(max(p[0] for p in pts), 1)],
-                             y=[round(min(p[1] for p in pts), 1), round(max(p[1] for p in pts), 1)]))
-        prev = coverage(L["segs"])
-    total = {k: round(v, 2) for k, v in total.items()}
-    return total, rows, {k: round(v, 2) for k, v in by_feature.items() if v > 0.05}
-
-
-def write_stl(path, tris):
-    with open(path, "wb") as fh:
-        fh.write(b"\0" * 80 + struct.pack("<I", len(tris)))
-        for t in tris:
-            fh.write(struct.pack("<12fH", 0, 0, 0, *t[0], *t[1], *t[2], 0))
-
-
-def box_tris(x0, x1, y0, y1, z0, z1):
-    v = [(x, y, z) for z in (z0, z1) for y in (y0, y1) for x in (x0, x1)]
-    f = [(0, 2, 3), (0, 3, 1), (4, 5, 7), (4, 7, 6), (0, 1, 5), (0, 5, 4), (2, 6, 7), (2, 7, 3),
-         (0, 4, 6), (0, 6, 2), (1, 3, 7), (1, 7, 5)]
-    return [(v[a], v[b], v[c]) for a, b, c in f]
 
 
 def calibration():
