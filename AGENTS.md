@@ -41,6 +41,8 @@ SG92Rサーボと付属ホーンの正本は `models/sg92r-photo/`。2026-10-07�
 
 新しいモデルを作るとき、必ずこの順番で進める。
 
+0. **依頼の共通条件を読む** — [.agent/rules/model-request.md](.agent/rules/model-request.md)。
+   依頼文に無い項目はその既定で進め、報告は同ファイル §8 の欄（要件ごとの結果・決めたこと・譲ったこと・実物で確かめること）で出す
 1. **寸法調査** — 実物がある場合は公式スペックを確認する
 2. **`params.py` を先に書く** — 寸法・クリアランス・肉厚を定数化する
 3. **`model.py` を書く** — `params.py` をインポートして使う
@@ -222,6 +224,7 @@ http://localhost:3000 が Studio。ユーザーは面を選んで「ここを厚
 ### 領域別ルール（該当領域の作業前に読む）
 
 - [model-lab](.agent/rules/model-lab.md) — bpy / Blender 周りの全規約（このファイルの主要部と同期）
+- [model-request](.agent/rules/model-request.md) — 印刷して使うモデルの依頼に毎回かかる条件（印刷・組み立て・検証の基準・渡すもの）と依頼文のひな形
 - [global](.agent/rules/global.md) — 他エージェント向け汎用規約（参考）
 
 ### その他
