@@ -1,9 +1,9 @@
 import * as THREE from './vendor/three.module.js';
 import {OrbitControls} from './vendor/OrbitControls.js';
 import {createAssembly,Playback,routeMesh} from './core.mjs';
-import {STEPS,NAMES,STOCK,LIMITS} from './steps.mjs';
+import {STEPS,NAMES,STOCK,LIMITS,AUTO_HOLDS} from './steps.mjs';
 const $=id=>document.getElementById(id), reduced=matchMedia('(prefers-reduced-motion: reduce)');
-const player=new Playback(STEPS.length,reduced.matches);
+const player=new Playback(STEPS.length,reduced.matches,Object.keys(AUTO_HOLDS).map(Number));
 let assembly,verified,renderer,scene,camera,orbit,groups={},labels={},rows={},ghosts=[],pathGroup,ready=false,selected=null,lastTime=0,lastPhase='',cameraGoal=null,lastStep=-1;
 const idNames=Object.fromEntries([...NAMES.map((name,i)=>[String(i+1).padStart(2,'0'),name]),...STOCK.map(p=>[p.id,p.name])]);
 const shellIds=new Set(['01','02','03']);
@@ -19,8 +19,12 @@ function renderInstructions(){
   const s=STEPS[player.index];$('step-number').textContent=String(player.index).padStart(2,'0');$('title').textContent=s.title;
   $('ids').textContent=s.ids.map(id=>`${id} ${idNames[id]}`).join(' / ');$('action').textContent=s.action;$('done').textContent=s.done;$('pending').textContent=s.pending;$('scope').textContent=scopeText(s);
   $('step-select').value=String(player.index);$('previous').disabled=player.index===0;$('next').disabled=player.index===STEPS.length-1;
-  $('play').disabled=!ready;$('play').textContent=player.running?'一時停止':player.fraction<1?'再開':'動きを再生';
-  $('play-status').textContent=reduced.matches?'動きを減らす設定 · 再生は完了位置へ移動':player.running?'再生中 · この手順の終わりで停止':player.fraction<1?'一時停止 · 同じ位置から再開':'停止中 · 1手順ずつ止まります';
+  $('play').disabled=!ready;$('play').textContent=player.mode==='single'&&player.running?'この手順を一時停止':player.mode==='single'&&player.fraction<1?'この手順を再開':'この手順を再生';
+  $('auto-play').disabled=!ready||player.phase==='gate'||(player.mode==='auto'&&player.phase==='complete');
+  $('auto-play').textContent=player.mode==='auto'&&player.running?'自動進行を一時停止':player.mode==='auto'&&player.phase!=='complete'?'自動進行を再開':'全手順を自動再生';
+  $('auto-hold').hidden=!(ready&&player.mode==='auto'&&player.phase==='gate');$('auto-hold-reason').textContent=AUTO_HOLDS[player.index]||'';
+  const status=!ready?'3D停止中 · 読み込み・再試行後に再生できます':player.phase==='gate'?'確認待ち · 未解決の保留点で自動進行を停止':player.phase==='complete'?'全手順の表示が完了 · 停止しました（実物は未確認）':player.running?player.phase==='dwell'?`説明を見るため停止 · あと${Math.max(0,player.dwell-player.dwellElapsed).toFixed(1)}秒`:'再生中 · '+(player.mode==='auto'?'手順を自動で進めます':'この手順の終わりで停止'):player.mode==='auto'?'自動進行を一時停止 · 同じ位置から再開':player.fraction<1?'この手順を一時停止 · 同じ位置から再開':'停止中 · 初めから見るには「最初へ」→「全手順を自動再生」';
+  $('play-status').textContent=status+(player.pauseReason?' · '+player.pauseReason:'')+(reduced.matches?' · 動きを減らす設定':'');
   for(const [id,row] of Object.entries(rows)){const st=state(id);row.className=`bom-row ${st}${selected===id?' selected':''}`;row.querySelector('.state').textContent=st==='current'?'◎ この手順':st==='assembled'?'✓ 組立済み':'○ これから';row.setAttribute('aria-pressed',String(selected===id));}
 }
 function makeBOM(){
@@ -34,14 +38,18 @@ function selectPart(id,focus=false){selected=id;$('selection').textContent=`${id
 function setStep(index){player.seek(index);lastPhase='';if(!selected)$('selection').textContent='部品を選ぶとIDと名前を表示';renderInstructions();if(ready){paint();makeGhosts();if($('auto-camera').checked)recommendCamera();} }
 STEPS.forEach((s,i)=>{const o=document.createElement('option');o.value=String(i);o.textContent=`${String(i).padStart(2,'0')} · ${s.title}`;$('step-select').append(o);});
 makeBOM();renderInstructions();
-$('next').onclick=()=>setStep(player.index+1);$('previous').onclick=()=>setStep(player.index-1);$('reset').onclick=()=>{selected=null;setStep(0);};
+$('next').onclick=()=>setStep(player.index+1);$('previous').onclick=()=>setStep(player.index-1);$('reset').onclick=()=>{selected=null;setStep(0);if(ready)overview(true);};
 $('step-select').onchange=e=>setStep(Number(e.target.value));
-$('play').onclick=()=>{player.reduced=reduced.matches;if(player.running)player.pause();else player.play();renderInstructions();makeGhosts();if(ready&&$('auto-camera').checked)recommendCamera();};
+$('play').onclick=()=>{if(!ready)return;player.reduced=reduced.matches;if(player.running&&player.mode==='single')player.pause();else {player.pause();player.play();}renderInstructions();makeGhosts();if($('auto-camera').checked)recommendCamera();};
+$('auto-play').onclick=()=>{if(!ready)return;player.reduced=reduced.matches;if(player.running&&player.mode==='auto')player.pause();else {player.pause();player.startAuto();}renderInstructions();};
+$('continue-auto').onclick=()=>{if(!ready)return;player.continuePreview();renderInstructions();};
+$('dwell').onchange=e=>{player.setDwell(Number(e.target.value));renderInstructions();};
 $('speed').onchange=e=>player.setSpeed(Number(e.target.value));
 $('shell').onchange=()=>{if(ready)paint();};$('wires').onchange=()=>{if(ready)paint();};
-$('camera').onclick=()=>recommendCamera(true);$('overview').onclick=()=>overview();$('joint').onclick=()=>focusPart(selected||STEPS[player.index].ids[0]||'01',true);
+$('camera').onclick=()=>recommendCamera(true);$('overview').onclick=()=>overview(true);$('joint').onclick=()=>focusPart(selected||STEPS[player.index].ids[0]||'01',true);
 document.addEventListener('keydown',e=>{if(e.target.matches('input,select,textarea,button,a,summary')||e.altKey||e.ctrlKey||e.metaKey)return;if(e.key==='ArrowRight'){e.preventDefault();setStep(player.index+1);}if(e.key==='ArrowLeft'){e.preventDefault();setStep(player.index-1);}if(e.key==='Home'){e.preventDefault();setStep(0);}if(e.key==='End'){e.preventDefault();setStep(STEPS.length-1);}if(e.code==='Space'){e.preventDefault();$('play').click();}});
 reduced.addEventListener('change',e=>{player.reduced=e.matches;if(e.matches){player.pause();player.fraction=1;}renderInstructions();});
+document.addEventListener('visibilitychange',()=>{lastTime=0;if(document.hidden&&player.running)player.pause('背景へ移動したため停止。戻っても自動再開しません。');renderInstructions();});
 function meshGeometry(part,center){const g=new THREE.BufferGeometry();const verts=part.vertices.map((n,i)=>n-center[i%3]);g.setAttribute('position',new THREE.Float32BufferAttribute(verts,3));g.setIndex(part.indices);g.computeVertexNormals();return g;}
 function setupScene(){
   scene=new THREE.Scene();scene.background=new THREE.Color(0xeaf1f6);
@@ -112,10 +120,10 @@ async function load(){
 }
 $('retry').onclick=load;
 function loop(time){requestAnimationFrame(loop);const dt=lastTime?Math.min(.1,(time-lastTime)/1000):0;lastTime=time;
-  if(!ready)return;const previousIndex=player.index,wasRunning=player.running;player.tick(dt);if(previousIndex!==lastStep){lastStep=previousIndex;renderInstructions();}if(wasRunning&&!player.running)renderInstructions();paint();
+  if(!ready)return;const previousIndex=player.index,previousPhase=player.phase,wasRunning=player.running;if(!document.hidden)player.tick(dt);if(player.index!==lastStep){lastStep=player.index;renderInstructions();makeGhosts();if($('auto-camera').checked)recommendCamera();}if(previousPhase!==player.phase||wasRunning&&!player.running||player.phase==='dwell')renderInstructions();paint();
   if(cameraGoal){const amount=1-Math.exp(-dt*4);camera.position.lerp(cameraGoal.position,amount);orbit.target.lerp(cameraGoal.target,amount);if(camera.position.distanceTo(cameraGoal.position)<.0005)cameraGoal=null;}
   orbit.update();renderer.render(scene,camera);positionLabels();
 }
 requestAnimationFrame(loop);load();
 // ローカル検査用の読取り専用スナップショット。UIの操作は実際のボタンで確認する。
-window.__assemblyTest={get state(){return {ready,index:player.index,fraction:player.fraction,running:player.running,speed:player.speed,selected,groups:Object.keys(groups),poses:assembly?.sample(player.index,player.fraction).poses,renderedPoses:Object.fromEntries(Object.entries(groups).map(([id,g])=>[id,{position:g.position.toArray(),quaternion:g.quaternion.toArray()}]))};},get labelRects(){return Object.values(labels).filter(x=>!x.hidden).map(x=>({id:x.dataset.id,x:x.offsetLeft,y:x.offsetTop,w:x.offsetWidth,h:x.offsetHeight}));},get screenPoints(){const r=renderer.domElement.getBoundingClientRect();return Object.entries(groups).map(([id,g])=>{const p=g.position.clone().project(camera);return {id,x:r.x+(p.x*.5+.5)*r.width,y:r.y+(-p.y*.5+.5)*r.height};});}};
+window.__assemblyTest={get state(){return {ready,index:player.index,fraction:player.fraction,running:player.running,speed:player.speed,mode:player.mode,phase:player.phase,dwell:player.dwell,dwellElapsed:player.dwellElapsed,pauseReason:player.pauseReason,selected,groups:Object.keys(groups),poses:assembly?.sample(player.index,player.fraction).poses,renderedPoses:Object.fromEntries(Object.entries(groups).map(([id,g])=>[id,{position:g.position.toArray(),quaternion:g.quaternion.toArray()}]))};},get labelRects(){return Object.values(labels).filter(x=>!x.hidden).map(x=>({id:x.dataset.id,x:x.offsetLeft,y:x.offsetTop,w:x.offsetWidth,h:x.offsetHeight}));},get screenPoints(){const r=renderer.domElement.getBoundingClientRect();return Object.entries(groups).map(([id,g])=>{const p=g.position.clone().project(camera);return {id,x:r.x+(p.x*.5+.5)*r.width,y:r.y+(-p.y*.5+.5)*r.height};});}};

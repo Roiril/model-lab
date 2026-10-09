@@ -124,10 +124,37 @@ export function createAssembly(cad,manifest){
   return {cad,items,byId,owners,snapshots,transitions,firstStep,sample};
 }
 export class Playback {
-  constructor(count,reduced=false){this.count=count;this.reduced=reduced;this.index=0;this.fraction=1;this.running=false;this.speed=1;}
-  seek(index){this.index=Math.max(0,Math.min(this.count-1,Math.trunc(index)));this.fraction=1;this.running=false;}
-  play(){if(this.running)return;if(this.fraction===1){if(this.index===0)this.index=1;this.fraction=0;}if(this.reduced){this.fraction=1;this.running=false;}else this.running=true;}
-  pause(){this.running=false;}
-  tick(seconds){if(!this.running)return;this.fraction=Math.min(1,this.fraction+Math.max(0,seconds)*this.speed/9);if(this.fraction===1)this.running=false;}
+  constructor(count,reduced=false,gates=[]){this.count=count;this.reduced=reduced;this.gates=new Set(gates);this.index=0;this.fraction=1;this.running=false;this.speed=1;this.mode='single';this.phase='settled';this.dwell=2;this.dwellElapsed=0;this.pauseReason='';}
+  seek(index){this.index=Math.max(0,Math.min(this.count-1,Math.trunc(index)));this.fraction=1;this.running=false;this.mode='single';this.phase='settled';this.dwellElapsed=0;this.pauseReason='';}
+  play(){if(this.running)return;this.mode='single';this.pauseReason='';this.phase='motion';if(this.fraction===1){if(this.index===0)this.index=1;this.fraction=0;}if(this.reduced){this.fraction=1;this.running=false;this.phase='settled';}else this.running=true;}
+  startAuto(){
+    if(this.running&&this.mode==='auto')return;
+    const resuming=this.mode==='auto';this.mode='auto';this.pauseReason='';
+    if(resuming&&this.phase==='gate')return;
+    if(resuming&&this.phase==='complete')return;
+    if(!resuming){this.dwellElapsed=0;this.phase=this.fraction<1?'motion':'dwell';if(this.fraction===1&&this.gates.has(this.index)){this.phase='gate';this.running=false;return;}}
+    this.running=true;
+  }
+  continuePreview(){if(this.mode!=='auto'||this.phase!=='gate')return;this.phase='dwell';this.dwellElapsed=0;this.pauseReason='';this.running=true;}
+  pause(reason=''){this.running=false;this.pauseReason=reason;}
+  setDwell(value){if(Number.isFinite(value))this.dwell=Math.max(.5,Math.min(15,value));}
+  finishMotion(){
+    this.fraction=1;
+    if(this.mode==='single'){this.running=false;this.phase='settled';return;}
+    if(this.gates.has(this.index)){this.running=false;this.phase='gate';return;}
+    if(this.index===this.count-1){this.running=false;this.phase='complete';return;}
+    this.phase='dwell';this.dwellElapsed=0;
+  }
+  tick(seconds){
+    if(!this.running||!Number.isFinite(seconds)||seconds<0)return;
+    // 1回の更新で境界を1つだけ進める。残り時間を次工程へ持ち越さない。
+    if(this.phase==='motion'){this.fraction=this.reduced?1:Math.min(1,this.fraction+seconds*this.speed/9);if(this.fraction===1)this.finishMotion();return;}
+    if(this.mode==='auto'&&this.phase==='dwell'){
+      this.dwellElapsed=Math.min(this.dwell,this.dwellElapsed+seconds);
+      if(this.dwellElapsed<this.dwell)return;
+      if(this.index===this.count-1){this.running=false;this.phase='complete';return;}
+      this.index++;this.fraction=0;this.phase='motion';this.dwellElapsed=0;
+    }
+  }
   setSpeed(value){if(Number.isFinite(value)&&value>0)this.speed=Math.max(.25,Math.min(4,value));}
 }

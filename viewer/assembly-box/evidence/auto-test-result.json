@@ -1,0 +1,19 @@
+{
+  "pass": true,
+  "checks": [
+    "initial stopped, first inventory dwell, one boundary per tick",
+    "motion pause and resume retain position, dwell pause retains explanation time",
+    "unresolved gates cannot automatically pass; continue is preview only",
+    "manual seek cancels auto and clears timers at any phase",
+    "repeated commands and speed/dwell changes do not duplicate progression",
+    "complete run visits every step in order, holds 9/23/24, stops without loop",
+    "reduced motion keeps explanation dwell and hold gates",
+    "auto pause/seek/play spam keeps all mesh poses deterministic"
+  ],
+  "auto_holds": [
+    9,
+    23,
+    24
+  ],
+  "physical_tested": false
+}
