@@ -1,8 +1,15 @@
 export const B3_MODEL = 'mystery-box-sg92r-b3-candidate';
-// テーマを指定した共有URLにも対応する。通常はOSの配色に従う。
+const THEME_KEY = 'model-lab.theme';
+export function resolveTheme(urlTheme, savedTheme) {
+  return [urlTheme, savedTheme].find(value => value === 'light' || value === 'dark') ?? null;
+}
+function savedTheme() {
+  try { return localStorage.getItem(THEME_KEY); } catch { return null; }
+}
+// URLの指定、保存した選択、OSの配色の順で使う。
 if (typeof document !== 'undefined' && typeof location !== 'undefined') {
-  const theme = new URLSearchParams(location.search).get('theme');
-  if (theme === 'light' || theme === 'dark') document.documentElement.dataset.theme = theme;
+  const theme = resolveTheme(new URLSearchParams(location.search).get('theme'), savedTheme());
+  if (theme) document.documentElement.dataset.theme = theme;
 }
 export const WORKSPACES = Object.freeze([
   { id: 'studio', label: '伝える' },
@@ -20,6 +27,33 @@ export function createWorkspaceNav({ active, model = B3_MODEL, onNavigate } = {}
   const element = document.createElement('nav');
   element.className = 'workspace-nav';
   element.setAttribute('aria-label', '作業画面');
+  const themeButton = document.createElement('button');
+  themeButton.type = 'button';
+  themeButton.className = 'workspace-theme';
+  const updateThemeButton = palette => {
+    themeButton.textContent = palette.dark ? '明るく' : '暗く';
+    themeButton.setAttribute('aria-label', palette.dark ? '明るい配色に切り替える' : '暗い配色に切り替える');
+  };
+  const disposeTheme = watchTheme(updateThemeButton);
+  addEventListener('pagehide', event => { if (!event.persisted) disposeTheme(); });
+  function updateLinks() {
+    const theme = resolveTheme(document.documentElement.dataset.theme, null);
+    for (const link of element.querySelectorAll('a[data-workspace]')) {
+      link.href = workspaceHref(link.dataset.workspace, model) + (theme ? `&theme=${theme}` : '');
+    }
+    const skip = document.querySelector('.workspace-skip');
+    if (skip) skip.href = `${location.pathname}${location.search}#stage`;
+  }
+  themeButton.addEventListener('click', () => {
+    const theme = themePalette().dark ? 'light' : 'dark';
+    document.documentElement.dataset.theme = theme;
+    try { localStorage.setItem(THEME_KEY, theme); } catch { /* 保存できなくても切り替える。 */ }
+    const url = new URL(location.href);
+    url.searchParams.set('theme', theme);
+    history.replaceState(history.state, '', url);
+    updateLinks();
+    updateThemeButton(themePalette());
+  });
   let renderedModel;
   function setModel(next) {
     if (next === renderedModel && element.childElementCount) return;
@@ -34,7 +68,7 @@ export function createWorkspaceNav({ active, model = B3_MODEL, onNavigate } = {}
       if (item.id === active) link.setAttribute('aria-current', 'page');
       if (available) {
         link.href = workspaceHref(item.id, model);
-        const theme = new URLSearchParams(location.search).get('theme');
+        const theme = resolveTheme(document.documentElement.dataset.theme, null);
         if (theme === 'light' || theme === 'dark') link.href += `&theme=${theme}`;
         link.addEventListener('click', event => {
           if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
@@ -50,7 +84,7 @@ export function createWorkspaceNav({ active, model = B3_MODEL, onNavigate } = {}
         link.append(note);
       }
       return link;
-    }));
+    }), themeButton);
   }
   setModel(model);
   return { element, setModel };

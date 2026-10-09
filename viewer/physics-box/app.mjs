@@ -62,7 +62,6 @@ addEventListener('pagehide',()=>{pauseWork();disposeTheme();},{once:true});
 addEventListener('pageshow',event=>{if(event.persisted)location.reload();});
 document.addEventListener('visibilitychange',()=>{if(document.hidden){pauseWork();uiUpdate();}});
 addEventListener('workspace:navigate',pauseWork);
-globalThis.navigation?.addEventListener('navigate',pauseWork);
 for(const id of ['open','close','repeat','stop','reset','apply','step','pause'])$(id).disabled=false;$('loading').textContent='ローカル計算 / 実機未検証';
 window.__physics={get sim(){return sim;},cad,shapes,renderer,reset,sceneUpdate,uiUpdate,async advance(seconds){live();sim.paused=true;for(let i=0;i<Math.round(seconds/sim.parameters.dt);i++){sim.step();if(i%300===0)await new Promise(r=>setTimeout(r,0));}sceneUpdate();uiUpdate();renderer.render(scene,camera);return sim.export();}};
 sceneUpdate();uiUpdate();

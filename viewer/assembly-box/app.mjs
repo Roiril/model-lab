@@ -26,12 +26,12 @@ function updateUrl(index,mode='replace'){
   if(!mode)return;const url=new URL(location.href);url.searchParams.set('step',String(index));history[`${mode}State`]({step:index},'',url);
 }
 function saveSession(){
-  writeSession(SESSION_KEY,createSession({cadSha:SHA,stepTitle:STEPS[player.index].title,fraction:player.fraction,selected,speed:player.speed,dwell:player.dwell,shell:$('shell').value,wires:$('wires').checked,autoCamera:$('auto-camera').checked,mode:player.mode,phase:player.phase}));
+  writeSession(SESSION_KEY,createSession({cadSha:SHA,stepTitle:STEPS[player.index].title,fraction:player.fraction,selected,speed:player.speed,dwell:player.dwell,shell:$('shell').value,wires:$('wires').checked,autoCamera:$('auto-camera').checked,bypass:player.bypass,mode:player.mode,phase:player.phase}));
 }
 function applyInitialSession(){
   if(sessionApplied)return;sessionApplied=true;
   const restored=restoreSession(readSession(SESSION_KEY),{cadSha:SHA,steps:STEPS,partIds:Object.keys(idNames),gateTitles:Object.keys(AUTO_HOLDS).map(index=>STEPS[Number(index)].title)});
-  if(restored){player.seek(restored.index);player.fraction=restored.fraction;player.setSpeed(restored.speed);player.setDwell(restored.dwell);player.mode=restored.mode;player.phase=restored.phase;selected=restored.selected;$('speed').value=String(restored.speed);$('dwell').value=String(restored.dwell);$('shell').value=restored.shell;$('wires').checked=restored.wires;$('auto-camera').checked=restored.autoCamera;}
+  if(restored){player.seek(restored.index);player.fraction=restored.fraction;player.setSpeed(restored.speed);player.setDwell(restored.dwell);player.setBypass(restored.bypass);player.mode=restored.mode;player.phase=restored.phase;selected=restored.selected;$('speed').value=String(restored.speed);$('dwell').value=String(restored.dwell);$('shell').value=restored.shell;$('wires').checked=restored.wires;$('auto-camera').checked=restored.autoCamera;$('bypass').checked=restored.bypass;}
   // 同じ手順のURLなら保存した途中位置と確認待ちを保つ。
   if(initialUrlStep!==null&&(!restored||initialUrlStep!==restored.index)){player.seek(initialUrlStep);}updateUrl(player.index);
   if(selected)$('selection').textContent=`${selected} · ${idNames[selected]}`;
@@ -47,11 +47,11 @@ function renderInstructions(){
   const total=STEPS.length-1,counter=player.index===0?`準備 · 全${total}工程`:`${player.index} / ${total}工程`;$('step-counter').textContent=counter;$('step-progress').value=player.index;$('step-progress').max=total;$('step-progress').setAttribute('aria-label',player.index===0?`準備、全${total}工程中`:`${total}工程中${player.index}工程目`);
   $('step-select').value=String(player.index);$('previous').disabled=player.index===0;$('next').disabled=player.index===STEPS.length-1;
   $('play').disabled=!ready;$('play').textContent=player.mode==='single'&&player.running?'この手順を一時停止':player.mode==='single'&&player.fraction<1?'この手順を再開':'この手順を再生';
-  $('auto-play').disabled=!ready||player.phase==='gate'||(player.mode==='auto'&&player.phase==='complete');
+  $('auto-play').disabled=!ready||(player.phase==='gate'&&!player.bypass)||(player.mode==='auto'&&player.phase==='complete');
   $('auto-play').textContent=player.mode==='auto'&&player.running?'自動進行を一時停止':player.mode==='auto'&&player.phase!=='complete'?'自動進行を再開':'全手順を自動再生';
   $('auto-hold').hidden=!(ready&&player.mode==='auto'&&player.phase==='gate');$('auto-hold-reason').textContent=AUTO_HOLDS[player.index]||'';
-  const status=!ready?'3D停止中 · 読み込み後に再生できます':player.phase==='gate'?'確認待ち · 未解決の保留点で停止':player.phase==='complete'?'表示が完了 · 実物は未確認':player.running?player.phase==='dwell'?`説明を見るため停止 · あと${Math.max(0,player.dwell-player.dwellElapsed).toFixed(1)}秒`:'再生中 · '+(player.mode==='auto'?'手順を自動で進めます':'この手順の終わりで停止'):player.mode==='auto'?'自動進行を一時停止 · 同じ位置から再開':player.fraction<1?'一時停止 · 同じ位置から再開':'停止中';
-  $('play-status').textContent=status+(player.pauseReason?' · '+player.pauseReason:'')+(reduced.matches?' · 動きを減らす設定':'');
+  const status=!ready?'3D停止中 · 読み込み後に再生できます':player.phase==='gate'?'確認待ち · 未解決の保留点で停止':player.phase==='complete'?'表示が完了 · 実物は未確認':player.running?player.phase==='dwell'?`説明を見るため停止 · あと${(Math.max(0,player.dwell-player.dwellElapsed)/player.speed).toFixed(1)}秒`:'再生中 · '+(player.mode==='auto'?'手順を自動で進めます':'この手順の終わりで停止'):player.mode==='auto'?'自動進行を一時停止 · 同じ位置から再開':player.fraction<1?'一時停止 · 同じ位置から再開':'停止中';
+  $('play-status').textContent=(player.bypass?'バイパスON · ':'')+status+(player.pauseReason?' · '+player.pauseReason:'')+(reduced.matches?' · 動きを減らす設定':'');
   for(const [id,row] of Object.entries(rows)){const st=state(id);row.className=`bom-row ${st}${selected===id?' selected':''}`;row.querySelector('.state').textContent=st==='current'?'◎ この手順':st==='assembled'?'✓ 組立済み':'○ これから';row.setAttribute('aria-pressed',String(selected===id));}
 }
 function makeBOM(){
@@ -71,12 +71,13 @@ $('play').onclick=()=>{if(!ready)return;player.reduced=reduced.matches;if(player
 $('auto-play').onclick=()=>{if(!ready)return;player.reduced=reduced.matches;if(player.running&&player.mode==='auto')player.pause();else {player.pause();player.startAuto();}renderInstructions();saveSession();};
 $('continue-auto').onclick=()=>{if(!ready)return;player.continuePreview();renderInstructions();saveSession();};
 $('dwell').onchange=e=>{player.setDwell(Number(e.target.value));renderInstructions();saveSession();};
-$('speed').onchange=e=>{player.setSpeed(Number(e.target.value));saveSession();};
+$('speed').onchange=e=>{player.setSpeed(Number(e.target.value));renderInstructions();saveSession();};
+$('bypass').onchange=e=>{player.setBypass(e.target.checked);renderInstructions();saveSession();};
 $('shell').onchange=()=>{if(ready)paint();saveSession();};$('wires').onchange=()=>{if(ready)paint();saveSession();};$('auto-camera').onchange=saveSession;
 $('camera').onclick=()=>recommendCamera(true);$('overview').onclick=()=>overview(true);$('joint').onclick=()=>focusPart(selected||STEPS[player.index].ids[0]||'01',true);
 document.addEventListener('keydown',e=>{if(e.target.matches('input,select,textarea,button,a,summary')||e.altKey||e.ctrlKey||e.metaKey)return;if(e.key==='ArrowRight'){e.preventDefault();setStep(player.index+1);}if(e.key==='ArrowLeft'){e.preventDefault();setStep(player.index-1);}if(e.key==='Home'){e.preventDefault();setStep(0);}if(e.key==='End'){e.preventDefault();setStep(STEPS.length-1);}if(e.code==='Space'){e.preventDefault();$('play').click();}});
 reduced.addEventListener('change',e=>{player.reduced=e.matches;if(e.matches){player.pause();player.fraction=1;}renderInstructions();saveSession();});
-document.addEventListener('visibilitychange',()=>{lastTime=0;if(document.hidden&&player.running)player.pause('背景へ移動したため停止。戻っても自動再開しません。');if(document.hidden)saveSession();renderInstructions();});
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&player.running&&!(player.mode==='auto'&&player.bypass)){lastTime=0;player.pause('背景へ移動したため停止。戻っても自動再開しません。');}if(document.hidden)saveSession();renderInstructions();});
 addEventListener('popstate',()=>{const index=parseStepParam(new URL(location.href).searchParams.get('step'),STEPS.length);if(index!==null)setStep(index,{historyMode:null});});
 addEventListener('pagehide',event=>{player.pause();saveSession();if(!event.persisted)disposeTheme();});
 function setupScene(){
@@ -148,7 +149,7 @@ async function load(){
 }
 $('retry').onclick=load;
 function loop(time){requestAnimationFrame(loop);const dt=lastTime?Math.min(.1,(time-lastTime)/1000):0;lastTime=time;
-  if(!ready)return;const previousIndex=player.index,previousPhase=player.phase,wasRunning=player.running;if(!document.hidden)player.tick(dt);if(player.index!==lastStep){const hadStep=lastStep>=0;lastStep=player.index;updateUrl(player.index);renderInstructions();makeGhosts();if($('auto-camera').checked)recommendCamera();if(hadStep)saveSession();}if(previousPhase!==player.phase||wasRunning&&!player.running||player.phase==='dwell')renderInstructions();if(previousPhase!==player.phase||wasRunning&&!player.running)saveSession();paint();
+  if(!ready)return;const previousIndex=player.index,previousPhase=player.phase,wasRunning=player.running;if(!document.hidden||player.running&&player.mode==='auto'&&player.bypass)player.tick(dt);if(player.index!==lastStep){const hadStep=lastStep>=0;lastStep=player.index;updateUrl(player.index);renderInstructions();makeGhosts();if($('auto-camera').checked)recommendCamera();if(hadStep)saveSession();}if(previousPhase!==player.phase||wasRunning&&!player.running||player.phase==='dwell')renderInstructions();if(previousPhase!==player.phase||wasRunning&&!player.running)saveSession();paint();
   if(cameraGoal){const amount=1-Math.exp(-dt*4);camera.position.lerp(cameraGoal.position,amount);orbit.target.lerp(cameraGoal.target,amount);if(camera.position.distanceTo(cameraGoal.position)<.0005)cameraGoal=null;}
   orbit.update();renderer.render(scene,camera);positionLabels();
 }
@@ -159,5 +160,5 @@ function shadingEvidence(){
   return {meshes:meshes.length,allFlat:meshes.every(m=>m.material.flatShading),allNonIndexed:meshes.every(m=>m.geometry.index===null),unequalTriangles,transparentMeshes:meshes.filter(m=>m.material.opacity<1).length,ghostsWireframeOnly:ghosts.every(g=>g.children.every(x=>x.isLineSegments))};
 }
 // ローカル検査用の読取り専用スナップショット。UIの操作は実際のボタンで確認する。
-window.__assemblyTest={get state(){return {ready,index:player.index,fraction:player.fraction,running:player.running,speed:player.speed,mode:player.mode,phase:player.phase,dwell:player.dwell,dwellElapsed:player.dwellElapsed,pauseReason:player.pauseReason,selected,groups:Object.keys(groups),poses:assembly?.sample(player.index,player.fraction).poses,renderedPoses:Object.fromEntries(Object.entries(groups).map(([id,g])=>[id,{position:g.position.toArray(),quaternion:g.quaternion.toArray()}]))};},get labelRects(){return Object.values(labels).filter(x=>!x.hidden).map(x=>({id:x.dataset.id,x:x.offsetLeft,y:x.offsetTop,w:x.offsetWidth,h:x.offsetHeight}));},get screenPoints(){const r=renderer.domElement.getBoundingClientRect();return Object.entries(groups).map(([id,g])=>{const p=g.position.clone().project(camera);return {id,x:r.x+(p.x*.5+.5)*r.width,y:r.y+(-p.y*.5+.5)*r.height};});}};
+window.__assemblyTest={get state(){return {ready,index:player.index,fraction:player.fraction,running:player.running,speed:player.speed,bypass:player.bypass,mode:player.mode,phase:player.phase,dwell:player.dwell,dwellElapsed:player.dwellElapsed,pauseReason:player.pauseReason,selected,groups:Object.keys(groups),poses:assembly?.sample(player.index,player.fraction).poses,renderedPoses:Object.fromEntries(Object.entries(groups).map(([id,g])=>[id,{position:g.position.toArray(),quaternion:g.quaternion.toArray()}]))};},get labelRects(){return Object.values(labels).filter(x=>!x.hidden).map(x=>({id:x.dataset.id,x:x.offsetLeft,y:x.offsetTop,w:x.offsetWidth,h:x.offsetHeight}));},get screenPoints(){const r=renderer.domElement.getBoundingClientRect();return Object.entries(groups).map(([id,g])=>{const p=g.position.clone().project(camera);return {id,x:r.x+(p.x*.5+.5)*r.width,y:r.y+(-p.y*.5+.5)*r.height};});}};
 Object.defineProperty(window.__assemblyTest,'shading',{get:shadingEvidence});

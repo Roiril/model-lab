@@ -342,13 +342,13 @@ aside {
   gap:8px
 }
 
-#play {
+#auto-play {
   border-color:var(--accent-strong);
   background:var(--accent-strong);
   color:var(--paper)
 }
 
-#play:disabled {
+#auto-play:disabled {
   border-color:var(--line);
   background:var(--card);
   color:var(--mute)
@@ -361,8 +361,40 @@ aside {
   font-size:12px
 }
 
-.secondary-action {
+.primary-auto {
   width:100%
+}
+
+.playback-options {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:8px
+}
+
+.playback-options label {
+  display:flex;
+  align-items:center;
+  min-height:44px;
+  gap:8px;
+  color:var(--mute);
+  font-size:12px
+}
+
+.playback-options select {
+  min-width:0;
+  flex:1
+}
+
+.bypass-option {
+  cursor:pointer;
+  touch-action:manipulation
+}
+
+.setting-help {
+  margin:4px 0 0;
+  color:var(--mute);
+  font-size:11px
 }
 
 .playback-settings {
@@ -389,10 +421,6 @@ aside {
   gap:4px;
   color:var(--mute);
   font-size:12px
-}
-
-.playback-settings #reset {
-  grid-column:1/-1
 }
 
 #auto-hold {

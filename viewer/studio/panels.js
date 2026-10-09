@@ -268,7 +268,7 @@ export function createPanels({ store, ctx }) {
     modelNameEl.textContent = model ? (model.title || model.name) : (store.state.model || "モデルを選ぶ");
     workspace.setModel(store.state.model || "");
     const skip = $(".workspace-skip");
-    if (skip) skip.href = `${workspace.element.querySelector('[data-workspace="studio"]').href}#stage`;
+    if (skip) skip.href = `${location.pathname}${location.search}#stage`;
     const n = store.state.draft.items.length;
     const empty = n === 0 && !store.state.draft.message.trim();
     sendBtn2.disabled = sending || empty;

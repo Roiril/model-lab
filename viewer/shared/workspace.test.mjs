@@ -1,5 +1,11 @@
 import assert from 'node:assert/strict';
-import { B3_MODEL, WORKSPACES, workspaceHref, readSession, writeSession } from './workspace.mjs';
+import { B3_MODEL, WORKSPACES, workspaceHref, readSession, writeSession, resolveTheme } from './workspace.mjs';
+
+assert.equal(resolveTheme('dark', 'light'), 'dark');
+assert.equal(resolveTheme(null, 'light'), 'light');
+assert.equal(resolveTheme('invalid', 'dark'), 'dark');
+assert.equal(resolveTheme(null, null), null);
+assert.equal(resolveTheme('system', 'invalid'), null);
 
 assert.equal(new Set(WORKSPACES.map(item => item.id)).size, 3);
 assert.equal(workspaceHref('studio', 'box with space/&'), '/?model=box%20with%20space%2F%26');

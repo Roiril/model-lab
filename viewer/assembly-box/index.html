@@ -36,8 +36,10 @@
       <div class="primary-actions"><button id="previous" type="button" disabled>前へ</button><button id="next" type="button">次へ</button><button id="play" type="button" disabled>この手順を再生</button></div>
       <p id="play-status" aria-live="polite">停止中</p>
       <div id="auto-hold" hidden role="status"><strong>未解決の保留点で自動進行を停止</strong><p id="auto-hold-reason"></p><p>続きは説明プレビューです。実物の確認済みとして扱いません。</p><button id="continue-auto" type="button">保留のまま表示を続ける</button></div>
-      <button id="auto-play" class="secondary-action" type="button" disabled>全手順を自動再生</button>
-      <details class="playback-settings"><summary>再生設定</summary><div><label>速度 <select id="speed"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><label>説明の停止 <select id="dwell"><option value="0.5">0.5秒</option><option value="2" selected>2秒</option><option value="4">4秒</option><option value="8">8秒</option></select></label><button id="reset" type="button">最初へ戻す</button></div></details>
+      <button id="auto-play" class="primary-auto" type="button" disabled>全手順を自動再生</button>
+      <div class="playback-options"><label>再生速度 <select id="speed"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option><option value="4">4×</option><option value="8">8×</option></select></label><label class="bypass-option" title="背景タブでは表示更新が遅くなる場合があります"><input id="bypass" type="checkbox" aria-describedby="bypass-help"> バイパス</label></div>
+      <p id="bypass-help" class="setting-help">保留点でも表示を続ける。実物の確認は省略できません。</p>
+      <details class="playback-settings"><summary>再生設定</summary><div><label>説明の停止 <select id="dwell"><option value="0.5">0.5秒</option><option value="2" selected>2秒</option><option value="4">4秒</option><option value="8">8秒</option></select></label><button id="reset" type="button">最初へ戻す</button></div></details>
     </section>
     <div class="aside-scroll">
       <section class="instructions">

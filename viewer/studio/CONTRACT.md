@@ -186,6 +186,7 @@ export function sampleShape(shape, step = 0.5) -> [[u, v], ...]   // 図形を s
 - 送信操作は右の「指示」パネル下部に一つだけ置く。スクロール中も送信ボタンを表示する。在席と処理状態も同じパネルに置く。
 - 視点は3D右上の「視点」から開く。選んだら閉じる。数字キーでも切り替えられる。
 - OS の配色変更は共通 CSS と `watchTheme(callback)` に追従する。Canvas / WebGL で色が要る場合は `themePalette()` の `paper / card / ink / mute / line / accent / accentStrong` を使う。
+- 共通ナビの「暗く／明るく」で配色を切り替える。選択は `model-lab.theme` に保存する。URLの `theme` 指定を優先する。画面を切り替えても選択を保つ。
 
 ### モデル一覧と保存（2026-10-07 更新）
 

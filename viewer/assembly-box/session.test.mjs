@@ -4,7 +4,7 @@ import { SESSION_VERSION, createSession, parseStepParam, restoreSession } from '
 import { SHA, STEPS } from './steps.mjs';
 
 const partIds = [...Array.from({ length: 22 }, (_, index) => String(index + 1).padStart(2, '0')), 'S1', 'S2', 'S3'];
-const valid = createSession({ cadSha: SHA, stepTitle: STEPS[4].title, fraction: 0.35, selected: '22', speed: 2, dwell: 4, shell: 'transparent', wires: true, autoCamera: false, mode: 'single', phase: 'motion' });
+const valid = createSession({ cadSha: SHA, stepTitle: STEPS[4].title, fraction: 0.35, selected: '22', speed: 8, dwell: 4, shell: 'transparent', wires: true, autoCamera: false, bypass: true, mode: 'single', phase: 'motion' });
 const gateTitles = [STEPS[9].title, STEPS[23].title, STEPS[24].title];
 const restore = value => restoreSession(value, { cadSha: SHA, steps: STEPS, partIds, gateTitles });
 
@@ -13,7 +13,7 @@ test('手順タイトルは復元用の安定キーとして一意', () => {
 });
 
 test('有効なセッションを停止状態へ復元する', () => {
-  assert.deepEqual(restore(valid), { index: 4, fraction: 0.35, selected: '22', speed: 2, dwell: 4, shell: 'transparent', wires: true, autoCamera: false, mode: 'single', phase: 'motion' });
+  assert.deepEqual(restore(valid), { index: 4, fraction: 0.35, selected: '22', speed: 8, dwell: 4, shell: 'transparent', wires: true, autoCamera: false, bypass: true, mode: 'single', phase: 'motion' });
 });
 
 test('不正な値、破損値、版違いを無効にする', () => {
@@ -30,10 +30,23 @@ test('未知の手順と部品を無効にする', () => {
 });
 
 test('自動再生の確認待ちは解除せず復元する', () => {
-  const state = restore({ ...valid, stepTitle: STEPS[9].title, mode: 'auto', phase: 'gate' });
+  const state = restore({ ...valid, bypass: false, stepTitle: STEPS[9].title, mode: 'auto', phase: 'gate' });
   assert.equal(state.mode, 'auto');
   assert.equal(state.phase, 'gate');
   assert.equal(restore({ ...valid, mode: 'auto', phase: 'gate' }), null);
+});
+
+test('version 1の途中位置と設定をbypass OFFで移行する', () => {
+  const old = { ...valid, version: 1, speed: 2 };
+  delete old.bypass;
+  assert.deepEqual(restore(old), { index: 4, fraction: 0.35, selected: '22', speed: 2, dwell: 4, shell: 'transparent', wires: true, autoCamera: false, bypass: false, mode: 'single', phase: 'motion' });
+});
+
+test('bypass ONのgate復元は停止したdwellへ正規化する', () => {
+  const state = restore({ ...valid, stepTitle: STEPS[23].title, fraction: 1, mode: 'auto', phase: 'gate' });
+  assert.equal(state.bypass, true);
+  assert.equal(state.mode, 'auto');
+  assert.equal(state.phase, 'dwell');
 });
 
 test('URLのstepは10進整数かつ範囲内だけ受け付ける', () => {
