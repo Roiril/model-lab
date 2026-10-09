@@ -12,7 +12,7 @@ for(const [field,value]of [['penetrationMm',NUMERICAL_LIMITS.maxPenetrationMm+.0
 }
 // Force only the active CAD convergence report above its threshold, leaving the representative report passing.
 // Run the actual verifier's final pass/exit path in an isolated output directory.
-let source=fs.readFileSync('verify.mjs','utf8').replace("'../physics.mjs'","'../../physics.mjs'").replaceAll('test-results','guard-regression/logs').replace('../assets/verification.json','guard-regression/forced_convergence_report.json');
+let source=fs.readFileSync('verify.mjs','utf8').replace("new URL('.',import.meta.url)","new URL('..',import.meta.url)").replace("'../physics.mjs'","'../../physics.mjs'").replaceAll('test-results','guard-regression/logs').replace('../assets/verification.json','guard-regression/forced_convergence_report.json');
 assert(source.includes('const output={'));source=source.replace('const output={','activeConvergence.halfDt.maxHingeDriftMm=.031;const output={');
 const fixture='guard-regression/forced_convergence_fixture.mjs';fs.writeFileSync(fixture,source);
 const proc=spawnSync(process.execPath,[fixture],{cwd:process.cwd(),encoding:'utf8',maxBuffer:2e6});
