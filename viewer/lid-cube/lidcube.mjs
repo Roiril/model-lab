@@ -1,23 +1,42 @@
-// SG92R 開閉キューブの物理検証・組み立て画面で共有する部品。
-// データ: assets/data.json（models/servo-lid-cube/export_web.py が書く）。外部ライブラリは使わず WebGL2 で描く。
+// サーボ 1 個と 4 節リンクで蓋を開くモデル（開閉キューブ・住人の箱）の物理検証・組み立て画面で共有する部品。
+// データ: assets/<モデル名>.json（models/<モデル名>/export_web.py が書く）。外部ライブラリは使わず WebGL2 で描く。
+// どのモデルを開くかは URL の ?model= で決める。
 import { themePalette, watchTheme } from "../shared/workspace.mjs";
 
-export const MODEL = "servo-lid-cube";
+export const MODEL = (typeof location !== "undefined" && new URLSearchParams(location.search).get("model")) || "servo-lid-cube";
 const R = Math.PI / 180;
 
 export async function loadData() {
-  const res = await fetch("assets/data.json");
-  if (!res.ok) throw new Error(`assets/data.json を読めません（${res.status}）`);
-  return res.json();
+  if (!/^[a-z0-9-]+$/.test(MODEL)) throw new Error(`モデル名が不正です（${MODEL}）`);
+  const res = await fetch(`assets/${MODEL}.json`);
+  if (!res.ok) throw new Error(`assets/${MODEL}.json を読めません（${res.status}）`);
+  const D = await res.json();
+  applyMeta(D.meta);
+  return D;
 }
 
-// 部品の色は Okabe-Ito（部品の区別。テーマに依らず同じ色）
+// 見出し・タブの題をモデルのデータから入れる
+function applyMeta(meta) {
+  if (!meta || typeof document === "undefined") return;
+  const page = document.body.dataset.page === "assembly" ? "組み立て" : "物理検証";
+  document.title = `${meta.title}の${page} · model-lab`;
+  const head = document.querySelector(".workspace-model");
+  if (head) {
+    head.querySelector("strong").textContent = meta.title;
+    head.querySelector("small").textContent = meta.summary;
+  }
+  const brand = document.querySelector(".workspace-brand");
+  if (brand) brand.href = `/?model=${encodeURIComponent(MODEL)}`;
+}
+
+// 部品の色は Okabe-Ito（部品の区別。テーマに依らず同じ色）。データに無い部品は表示しない
 export const PARTS = [
   ["box", "箱", "#bdb4a6"], ["lid", "蓋", "#56b4e9"], ["crank", "クランク", "#e69f00"], ["link", "リンク", "#009e73"],
   ["pin", "蝶番ピン", "#4d4d4d"], ["clip", "押さえクリップ", "#cc79a7"], ["ref_body", "SG92R", "#0072b2"],
-  ["ref_horn", "付属ホーン", "#2a2a2a"], ["ref_wire", "配線", "#d55e00"],
+  ["ref_horn", "付属ホーン", "#2a2a2a"], ["ref_wire", "配線", "#d55e00"], ["ref_speaker", "スピーカー（参考）", "#f0e442"],
 ];
 export const ALL = new Set(PARTS.map((p) => p[0]));
+export const partsIn = (D) => PARTS.filter(([k]) => D.meshes[k]);
 
 /* ---------- 行列（列優先） ---------- */
 export const I4 = () => new Float32Array([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]);
@@ -121,7 +140,8 @@ void main(){
   const U = {};
   for (const n of ["uVP", "uM", "uCol", "uEye", "uCutX", "uCut"]) U[n] = gl.getUniformLocation(prog, n);
   const bufs = {};
-  for (const [k] of PARTS) {
+  const shown = partsIn(D);
+  for (const [k] of shown) {
     const m = D.meshes[k];
     const p16 = new Int16Array(b64(m.pos)), pos = new Float32Array(p16.length);
     for (let i = 0; i < p16.length; i++) pos[i] = p16[i] * D.q;
@@ -131,8 +151,10 @@ void main(){
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, gl.createBuffer()); gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(b64(m.ind)), gl.STATIC_DRAW);
     bufs[k] = { vao, n: m.nt * 3 };
   }
-  const HOME = { az: -35, el: 24, dist: 250 };
-  const cam = { ...HOME, tgt: [0, 0, 40] };
+  // 視点と「右半分を隠す」の境はモデルの大きさで決まる（データの view）
+  const view = { target: [0, 0, 40], dist: 250, cutX: 6.0, ...(D.view || {}) };
+  const HOME = { az: -35, el: 24, dist: view.dist };
+  const cam = { ...HOME, tgt: view.target };
   const hidden = new Set();
   let bg = [1, 1, 1];
   let queued = false;
@@ -155,12 +177,12 @@ void main(){
     gl.uniformMatrix4fv(U.uVP, false, mul(persp(32 * R, canvas.width / canvas.height, 5, 2000), look(eye, cam.tgt, [0, 0, 1])));
     gl.uniform3fv(U.uEye, eye);
     const st = getState();
-    for (const [k, , col] of PARTS) {
+    for (const [k, , col] of shown) {
       if (hidden.has(k) || !st.vis.has(k)) continue;
       gl.uniformMatrix4fv(U.uM, false, (st.M && st.M[k]) || I4());
       gl.uniform3fv(U.uCol, hex(col));
       gl.uniform1f(U.uCut, st.cut && (k === "box" || k === "lid" || k === "pin") ? 1 : 0);
-      gl.uniform1f(U.uCutX, 6.0);
+      gl.uniform1f(U.uCutX, view.cutX);
       gl.bindVertexArray(bufs[k].vao); gl.drawElements(gl.TRIANGLES, bufs[k].n, gl.UNSIGNED_SHORT, 0);
     }
   }
@@ -184,14 +206,15 @@ void main(){
   new ResizeObserver(draw).observe(canvas);
   return {
     draw,
-    home() { Object.assign(cam, HOME); draw(); },
+    parts: shown,
+    home() { Object.assign(cam, HOME); cam.tgt = view.target; draw(); },
     setHidden(k, on) { on ? hidden.add(k) : hidden.delete(k); draw(); },
   };
 }
 
 // 凡例（チェックで表示を切り替える）
 export function buildLegend(el, viewer) {
-  el.replaceChildren(...PARTS.map(([k, name, col]) => {
+  el.replaceChildren(...viewer.parts.map(([k, name, col]) => {
     const lb = document.createElement("label");
     const cb = document.createElement("input");
     cb.type = "checkbox"; cb.checked = true; cb.addEventListener("change", () => viewer.setHidden(k, !cb.checked));

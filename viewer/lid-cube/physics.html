@@ -3,15 +3,15 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>SG92R 開閉キューブの物理検証 · model-lab</title>
+  <title>物理検証 · model-lab</title>
   <link rel="stylesheet" href="../shared/workspace.css">
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-page="physics">
   <a class="skip-link" href="#main">物理検証へ移動</a>
   <header class="workspace-header" id="workspaceHeader">
-    <a class="workspace-brand" href="/?model=servo-lid-cube" aria-label="model-lab Studio へ">model-lab</a>
-    <div class="workspace-model"><strong>SG92R 開閉キューブ</strong><small>80 × 80 × 80 mm · SG92R · 印刷 6 点</small></div>
+    <a class="workspace-brand" href="/" aria-label="model-lab Studio へ">model-lab</a>
+    <div class="workspace-model"><strong>読み込み中</strong><small></small></div>
     <span id="loading" role="status">読み込み中…</span>
   </header>
   <main id="main" class="lc-layout">
@@ -74,7 +74,7 @@
       <div class="limits">
         <strong>近似の範囲</strong>
         <p>部品は剛体です。蝶番とピンの摩擦は μ=0.3、ギアの摩擦は 0.004 N·m、モーターの慣性は推定値です。質量は中実 PLA で見積もったので、実物より重い側です。部品のたわみ、壊れ、熱は扱いません。</p>
-        <p>同じ式の Python 版: <code>models/servo-lid-cube/simulate.py</code>。ブラウザ版と同じ値になることを <code>viewer/lid-cube/sim.test.mjs</code> で確かめています。</p>
+        <p>同じ式の Python 版: <code id="pySource">models/&lt;モデル&gt;/simulate.py</code>。ブラウザ版と同じ値になることを <code>viewer/lid-cube/sim.test.mjs</code> で確かめています。</p>
       </div>
     </aside>
   </main>

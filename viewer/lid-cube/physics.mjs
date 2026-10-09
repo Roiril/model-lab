@@ -1,4 +1,4 @@
-// SG92R 開閉キューブの物理検証画面。開く・閉じるを押すたびに、その条件で運動方程式を解いてから再生する。
+// サーボで蓋を開くモデルの物理検証画面（?model= で選ぶ）。開く・閉じるを押すたびに、その条件で運動方程式を解いてから再生する。
 import { createWorkspaceNav } from "../shared/workspace.mjs";
 import { MODEL, ALL, loadData, createKinematics, createViewer, buildLegend, lineChart } from "./lidcube.mjs";
 import { createSim, profile } from "./sim.mjs";
@@ -18,6 +18,8 @@ try {
   const kin = createKinematics(D.kin);
   const sim = createSim(D.simTables);
   const ac = sim.alphaClosed, ao = sim.alphaOpen;
+  const OPEN = D.kin.open_theta;
+  $("pySource").textContent = `models/${MODEL}/simulate.py`;
   const state = { alpha: ac, cmd: ac, tau: 0 };
   let last = null;
 
@@ -53,14 +55,14 @@ try {
     const ms = +$("mass").value;
     const pts = [];
     let maxT = 0, at = 0;
-    for (let i = 0; i <= 95; i++) {
+    for (let i = 0; i <= OPEN; i++) {
       // θ = i のときの α（運動学の表）で、重力を支えるトルク
       const al = kin.alphaOf(i), g = Math.abs(sim.holdTorque(al, ms)) * 1000;
       pts.push([i, g]);
       if (g > maxT) { maxT = g; at = i; }
     }
     const top = Math.max(15, Math.ceil(maxT / 5) * 5);
-    lineChart($("chartHold"), { label: "蓋の角度ごとの必要トルク", x: [0, 95], y: [0, top], xt: [0, 45, 90], yt: [0, top / 2, top],
+    lineChart($("chartHold"), { label: "蓋の角度ごとの必要トルク", x: [0, OPEN], y: [0, top], xt: [0, Math.round(OPEN / 2), OPEN], yt: [0, top / 2, top],
       xl: "蓋の角度 (°)", yl: "mN·m", series: [{ color: "--series-blue", pts }] });
     $("holdText").textContent = `最大 ${fmt(maxT, 1)} mN·m（蓋 ${at}°）。停動トルク 245 mN·m の ${fmt((maxT / 245) * 100, 1)}%。蓋の重さ ${fmt(ms, 2)}× の場合。`;
   }
@@ -74,7 +76,7 @@ try {
     run.tEnd = tEnd; run.stallScale = o.stallScale; run.cmd = cmd; run.closing = target === ac;
     last = run;
     const reached = Math.max(0, run.final.theta);
-    const goal = target === ao ? 95 : 0;
+    const goal = target === ao ? OPEN : 0;
     $("status").textContent = Math.abs(reached - goal) < 2
       ? `${target === ao ? "開いた" : "閉じた"}（${fmt(reached, 1)}°）。トルク上限 ${fmt(o.stallScale * 100, 0)}%、蓋の重さ ${fmt(o.massScale, 2)}×。`
       : `${goal}° に届かない（${fmt(reached, 1)}° で止まる）。トルク上限 ${fmt(o.stallScale * 100, 0)}%、蓋の重さ ${fmt(o.massScale, 2)}×。`;
@@ -120,10 +122,10 @@ try {
 
   const V = D.verify, S = D.sim;
   const checks = [
-    ["ok", `負荷なしで 70° 回す時間 ${S.calib_noload_speed.t_to_within_1deg} 秒（SG92R の公称 ${S.calib_noload_speed.nominal} 秒）`],
+    ["ok", `負荷なしで ${fmt(Math.abs(ao - ac), 0)}° 回す時間 ${S.calib_noload_speed.t_to_within_1deg} 秒（SG92R の公称 ${S.calib_noload_speed.nominal} 秒）`],
     ["ok", `出せるトルクを必要量の半分にすると開かない（${S.calib_half_torque_fails.opened ? "開いた" : "0° のまま"}）`],
-    ["ok", "ブラウザの計算と Python の計算は同じ値（0.8 秒で開閉: 縁に当たる速さ 0.38 rad/s、全速: 86° まで 0.12 秒）"],
-    [V.motion.poses_with_hits.length ? "warn" : "ok", `0〜95° の ${V.motion.steps} 姿勢で部品どうしの当たり ${V.motion.poses_with_hits.length} 件`],
+    ["ok", `ブラウザの計算と Python の計算は同じ値（0.8 秒で開閉: 縁に当たる速さ ${fmt(S.eased.lid_impact_rad_s, 2)} rad/s、全速: ${fmt(0.9 * OPEN, 0)}° まで ${fmt(S.full_speed.t_open_90pct, 2)} 秒）`],
+    [V.motion.poses_with_hits.length ? "warn" : "ok", `0〜${OPEN}° の ${V.motion.steps} 姿勢で部品どうしの当たり ${V.motion.poses_with_hits.length} 件`],
     ["ok", `動作中の最小隙間 クランクと受け ${V.clearance["crank-box"].min}mm、リンクと蓋 ${V.clearance["link-lid"].min}mm（ピンの隙間）`],
     ["ok", `電圧が下がってトルクが 30% でも ${fmt(S.weak_30pct.final_theta, 1)}° まで開く`],
   ];

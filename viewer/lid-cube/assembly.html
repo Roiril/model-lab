@@ -3,15 +3,15 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>SG92R 開閉キューブの組み立て · model-lab</title>
+  <title>組み立て · model-lab</title>
   <link rel="stylesheet" href="../shared/workspace.css">
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-page="assembly">
   <a class="skip-link" href="#main">組み立てへ移動</a>
   <header class="workspace-header" id="workspaceHeader">
-    <a class="workspace-brand" href="/?model=servo-lid-cube" aria-label="model-lab Studio へ">model-lab</a>
-    <div class="workspace-model"><strong>SG92R 開閉キューブ</strong><small>80 × 80 × 80 mm · SG92R · 印刷 6 点</small></div>
+    <a class="workspace-brand" href="/" aria-label="model-lab Studio へ">model-lab</a>
+    <div class="workspace-model"><strong>読み込み中</strong><small></small></div>
     <span id="loading" role="status">読み込み中…</span>
   </header>
   <main id="main" class="lc-layout">
@@ -33,7 +33,7 @@
     </section>
     <aside class="lc-aside" aria-label="工程と検証の結果">
       <div>
-        <span class="eyebrow">印刷部品 6 点 · 工具とねじなし</span>
+        <span class="eyebrow" id="eyebrow"></span>
         <h1>組み立ての手順と検証</h1>
         <p>工程どおりの経路で部品を動かし、各位置で面の交差と食い込みの深さを測りました（<code>verify.py</code>）。実物では未検証です。</p>
       </div>
@@ -46,16 +46,11 @@
       </div>
       <div>
         <h2>サーボの角度を決める</h2>
-        <ol class="howto">
-          <li>工程 3 でホーンを付けるときは、サーボを 90° にしておく。長い腕を配線の出る側へ向け、本体に沿わせる</li>
-          <li>組み終わったら 90° から閉じる側へ 1° ずつ動かし、蓋が縁に載った角度を「閉」とする</li>
-          <li>「閉」から開く側へ 70° 動かした角度が「開」（95°）</li>
-          <li>0.8 秒かけて始めと終わりをゆっくり動かす。「閉」より先へ押し込まない</li>
-        </ol>
+        <ol class="howto" id="howto"></ol>
       </div>
       <div class="limits">
         <strong>確かめていないこと</strong>
-        <p>実物の印刷と組み立て。ホーンの腕の幅と先の形は写真からの推定値なので、クランクを先に刷って入るかを見る。配線は長さ 8mm の固い棒として判定した。</p>
+        <p id="untested"></p>
       </div>
     </aside>
   </main>

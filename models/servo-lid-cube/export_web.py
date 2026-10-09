@@ -72,6 +72,19 @@ def main():
                                for k, v in sl["parts"].items()},
                 slice_calibration=sl["calibration"].get("ok"),
                 parts=mr["parts"])
+    # Studio の物理検証・組み立て画面（viewer/lid-cube）が見出しと手順に使う文言と、視点・工程の動かし方
+    data["meta"] = dict(
+        title="SG92R 開閉キューブ", summary="80 × 80 × 80 mm · SG92R · 印刷 6 点", eyebrow="印刷部品 6 点 · 工具とねじなし",
+        howto=["工程 3 でホーンを付けるときは、サーボを 90° にしておく。長い腕を配線の出る側へ向け、本体に沿わせる",
+               "組み終わったら 90° から閉じる側へ 1° ずつ動かし、蓋が縁に載った角度を「閉」とする",
+               "「閉」から開く側へ 70° 動かした角度が「開」（95°）",
+               "0.8 秒かけて始めと終わりをゆっくり動かす。「閉」より先へ押し込まない"],
+        untested="実物の印刷と組み立て。ホーンの腕の幅と先の形は写真からの推定値なので、クランクを先に刷って入るかを見る。"
+                 "配線は長さ 8mm の固い棒として判定した。")
+    data["view"] = dict(target=[0, 0, 40], dist=250, cutX=6.0)
+    # verify.py の assembly() と同じ経路（アニメーションの移動量は判定の範囲より少し長い）
+    data["assembly"] = dict(pin_travel_mm=85, pin_path_mm=78, crank_push_mm=8, unit_lift_mm=95, lower_from_mm=70,
+                            lid_back_deg=125, clip_from_mm=25, knuckle_gap_mm=round(P.KNUCKLE_GAP * 1000, 2))
     # 刷る 3mf（plate.py が作る）のプレート画像と、時間・材料
     plate = os.path.join(os.path.dirname(os.path.dirname(HERE)), "exports", "servo-lid-cube-PLA.gcode.3mf")
     if os.path.exists(plate):
@@ -92,9 +105,9 @@ def main():
     asset["simTables"] = json.load(open(os.path.join(BUILD, "sim_tables.json"), encoding="utf-8"))
     vdir = os.path.join(os.path.dirname(os.path.dirname(HERE)), "viewer", "lid-cube", "assets")
     os.makedirs(vdir, exist_ok=True)
-    with open(os.path.join(vdir, "data.json"), "w", encoding="utf-8", newline="\n") as fh:
+    with open(os.path.join(vdir, "servo-lid-cube.json"), "w", encoding="utf-8", newline="\n") as fh:
         json.dump(asset, fh, ensure_ascii=False, separators=(",", ":"))
-    print(os.path.join(vdir, "data.json"))
+    print(os.path.join(vdir, "servo-lid-cube.json"))
     # 報告ページ: テンプレートにデータを差し込む
     tpl = open(os.path.join(HERE, "report_template.html"), encoding="utf-8").read()
     assert tpl.count("/*CUBE_DATA*/") == 1
