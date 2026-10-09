@@ -1,0 +1,19 @@
+{
+  "pass": true,
+  "checks": [
+    "22 printed IDs + 3 stock IDs, 1 each, every CAD mesh has exactly 1 owner",
+    "initial 25 primary envelopes have positive gaps",
+    "final pose reproduces every source vertex in original world coordinates",
+    "all endpoints equal committed states, repeated seeks do not mutate snapshots",
+    "cassette assembled 180mm outside box until vertical drop; closure last",
+    "bottom quarter turns retain axis, not interpolated-center shortcuts",
+    "playback initial stop, pause/resume, speed, step stop, direct seek and spam",
+    "reduced motion skips animation and source version mismatches fail"
+  ],
+  "source_sha256": "1ababb93dba4ef81368ba7767d3b13f180b4e43a407c336acef9d6a9150ac4c6",
+  "items": 25,
+  "printed": 22,
+  "steps": 29,
+  "source_meshes": 51,
+  "physical_tested": false
+}

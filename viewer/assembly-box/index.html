@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>B3 組立ガイド — Model Lab</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<header><a href="/">Model Lab</a><div><strong>B3 組立ガイド</strong><small>70 × 70 × 70 mm · SG92R · 印刷22点</small></div><nav><a href="/viewer/physics-box/index.html">物理検証</a><a href="guide.html">検証範囲</a></nav></header>
+<main>
+  <section class="stage-panel" aria-label="部品の3D表示">
+    <div class="stage-tools"><button id="camera">推奨視点</button><button id="overview">全部品を見る</button><button id="joint">接合部へ寄る</button><label><input id="auto-camera" type="checkbox" checked>手順の視点</label><label>外装 <select id="shell"><option value="solid">表示</option><option value="transparent">半透明</option><option value="hidden">隠す</option></select></label><label><input id="wires" type="checkbox">参考配線</label></div>
+    <div id="viewport" tabindex="0" aria-label="ドラッグで回転、ホイールで拡大。部品をクリックして選択。"><div id="labels" aria-hidden="true"></div><div id="loading" role="status">CADを読み込んでいます…</div><div id="failure" hidden role="alert"><strong>3D表示を準備できません</strong><p id="failure-reason"></p><button id="retry">再試行</button><p>右側の手順、または<a href="guide.html">手順一覧</a>をご覧ください。</p></div></div>
+    <div class="stage-caption"><span id="phase">部品一覧</span><span id="selection">部品を選ぶとIDと名前を表示</span></div>
+    <div class="legend"><span class="current">◎ この手順</span><span class="assembled">✓ 組立済み</span><span class="later">○ これから</span><span>破線：移動の参考経路 · 水色：着地点</span></div>
+    <p class="stage-note">底下85mm以上を確保。支持台・手は省略。ドラッグで視点を変えても手順は進みません。</p>
+  </section>
+  <aside>
+    <section class="instructions"><div class="eyebrow">ASSEMBLY / <span id="step-number">00</span></div><h1 id="title">部品を並べて確認</h1><p id="ids" class="part-tags"></p><p id="action">印刷品01〜22を各1個確認します。</p><h2>完了の目印</h2><p id="done"></p><div class="pending"><strong>実物で確認・保留点</strong><p id="pending"></p></div><details><summary>この手順の経路と検証範囲</summary><p id="scope"></p><p>取り回しは説明用です。実物の組立、印刷公差、弾性、押す力、手・工具の持ち方は未検証です。</p></details></section>
+    <section class="parts-panel"><h2>部品表 <span>印刷22 + 実物3</span></h2><p>部品の行と3Dは相互に選択できます。</p><div id="bom"></div><p class="extra">別途必要：制御基板・電源・コネクター（型番未定、3D形状なし）。新しいねじ・架空の固定具は含みません。</p></section>
+  </aside>
+</main>
+<footer class="playback"><div class="buttons"><button id="reset">最初へ</button><button id="previous" disabled>前へ</button><button id="play" disabled>動きを再生</button><button id="next">次へ</button><label>速度 <select id="speed"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label></div><label class="seek">手順 <select id="step-select"></select></label><p id="play-status" aria-live="polite">停止中 · 1手順ずつ止まります</p></footer>
+<noscript><p>JavaScriptが無効です。<a href="guide.html">組立手順と検証範囲</a>をご覧ください。</p></noscript>
+<script type="importmap">{"imports":{"three":"./vendor/three.module.js"}}</script>
+<script>document.getElementById('retry').onclick=()=>location.reload();function moduleError(){document.getElementById('loading').hidden=true;document.getElementById('failure').hidden=false;document.getElementById('failure-reason').textContent='表示プログラムを読み込めません。接続を確認して再試行してください。';}</script>
+<script type="module" src="app.mjs" onerror="moduleError()"></script>
+</body></html>

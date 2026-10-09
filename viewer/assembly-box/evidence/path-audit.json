@@ -1,0 +1,800 @@
+{
+  "source_sha256": "1ababb93dba4ef81368ba7767d3b13f180b4e43a407c336acef9d6a9150ac4c6",
+  "physical_tested": false,
+  "method": "AABB, BVH triangle overlap plus two-ray containment; Blender EXACT volume >0.005mm3 and minimum overlap span >=0.00005mm; source triangle geometry from cad.json. Fixed items are all previously assembled primary meshes. Moving subassembly internal pairs are excluded. Parked later items and flexible wire reference routes are excluded. Samples are not continuous guarantees.",
+  "sampling": {
+    "insertion_mm": 1,
+    "bottom_insertion_mm": 0.1,
+    "rotation_deg": 1,
+    "transport_mm": 5,
+    "transport_rotation_deg": 5
+  },
+  "steps": [
+    {
+      "step": 1,
+      "samples": 218,
+      "collision_count": 0,
+      "transport_collision_count": 0,
+      "insertion_collision_count": 0,
+      "moving_ids": [
+        "01"
+      ],
+      "fixed_ids": []
+    },
+    {
+      "step": 2,
+      "samples": 438,
+      "collision_count": 0,
+      "transport_collision_count": 0,
+      "insertion_collision_count": 0,
+      "moving_ids": [
+        "20"
+      ],
+      "fixed_ids": [
+        "01"
+      ]
+    },
+    {
+      "step": 3,
+      "samples": 342,
+      "collision_count": 0,
+      "transport_collision_count": 0,
+      "insertion_collision_count": 0,
+      "moving_ids": [
+        "21"
+      ],
+      "fixed_ids": [
+        "01",
+        "20"
+      ]
+    },
+    {
+      "step": 4,
+      "samples": 605,
+      "collision_count": 0,
+      "transport_collision_count": 0,
+      "insertion_collision_count": 0,
+      "moving_ids": [
+        "22"
+      ],
+      "fixed_ids": [
+        "01",
+        "20",
+        "21"
+      ]
+    },
+    {
+      "step": 5,
+      "samples": 209,
+      "collision_count": 0,
+      "transport_collision_count": 0,
+      "insertion_collision_count": 0,
+      "moving_ids": [
+        "04"
+      ],
+      "fixed_ids": [
+        "01",
+        "20",
+        "21",
+        "22"
+      ]
+    },
+    {
+      "step": 6,
+      "samples": 274,
+      "collision_count": 0,
+      "transport_collision_count": 0,
+      "insertion_collision_count": 0,
+      "moving_ids": [
+        "15"
+      ],
+      "fixed_ids": [
+        "01",
+        "04",
+        "20",
+        "21",
+        "22"
+      ]
+    },
+    {
+      "step": 7,
+      "samples": 349,
+      "collision_count": 0,
+      "transport_collision_count": 0,
+      "insertion_collision_count": 0,
+      "moving_ids": [
+        "16"
+      ],
+      "fixed_ids": [
+        "01",
+        "04",
+        "15",
+        "20",
+        "21",
+        "22"
+      ]
+    },
+    {
+      "step": 8,
+      "samples": 304,
+      "collision_count": 0,
+      "transport_collision_count": 0,
+      "insertion_collision_count": 0,
+      "moving_ids": [
+        "S1"
+      ],
+      "fixed_ids": [
+        "01",
+        "04",
+        "15",
+        "16",
+        "20",
+        "21",
+        "22"
+      ]
+    },
+    {
+      "step": 9,
+      "samples": 276,
+      "collision_count": 0,
+      "transport_collision_count": 0,
+      "insertion_collision_count": 0,
+      "moving_ids": [
+        "S2"
+      ],
+      "fixed_ids": [
+        "01",
+        "04",
+        "15",
+        "16",
+        "20",
+        "21",
+        "22",
+        "S1"
+      ]
+    },
+    {
+      "step": 10,
+      "samples": 316,
+      "collision_count": 0,
+      "transport_collision_count": 0,
+      "insertion_collision_count": 0,
+      "moving_ids": [
+        "06"
+      ],
+      "fixed_ids": [
+        "01",
+        "04",
+        "15",
+        "16",
+        "20",
+        "21",
+        "22",
+        "S1",
+        "S2"
+      ]
+    },
+    {
+      "step": 11,
+      "samples": 318,
+      "collision_count": 0,
+      "transport_collision_count": 0,
+      "insertion_collision_count": 0,
+      "moving_ids": [
+        "17"
+      ],
+      "fixed_ids": [
+        "01",
+        "04",
+        "06",
+        "15",
+        "16",
+        "20",
+        "21",
+        "22",
+        "S1",
+        "S2"
+      ]
+    },
+    {
+      "step": 12,
+      "samples": 305,
+      "collision_count": 0,
+      "transport_collision_count": 0,
+      "insertion_collision_count": 0,
+      "moving_ids": [
+        "18"
+      ],
+      "fixed_ids": [
+        "01",
+        "04",
+        "06",
+        "15",
+        "16",
+        "17",
+        "20",
+        "21",
+        "22",
+        "S1",
+        "S2"
+      ]
+    },
+    {
+      "step": 13,
+      "samples": 286,
+      "collision_count": 0,
+      "transport_collision_count": 0,
+      "insertion_collision_count": 0,
+      "moving_ids": [
+        "19"
+      ],
+      "fixed_ids": [
+        "01",
+        "04",
+        "06",
+        "15",
+        "16",
+        "17",
+        "18",
+        "20",
+        "21",
+        "22",
+        "S1",
+        "S2"
+      ]
+    },
+    {
+      "step": 14,
+      "samples": 320,
+      "collision_count": 0,
+      "transport_collision_count": 0,
+      "insertion_collision_count": 0,
+      "moving_ids": [
+        "14"
+      ],
+      "fixed_ids": [
+        "01",
+        "04",
+        "06",
+        "15",
+        "16",
+        "17",
+        "18",
+        "19",
+        "20",
+        "21",
+        "22",
+        "S1",
+        "S2"
+      ]
+    },
+    {
+      "step": 15,
+      "samples": 222,
+      "collision_count": 0,
+      "transport_collision_count": 0,
+      "insertion_collision_count": 0,
+      "moving_ids": [
+        "10"
+      ],
+      "fixed_ids": [
+        "01",
+        "04",
+        "06",
+        "14",
+        "15",
+        "16",
+        "17",
+        "18",
+        "19",
+        "20",
+        "21",
+        "22",
+        "S1",
+        "S2"
+      ]
+    },
+    {
+      "step": 16,
+      "samples": 294,
+      "collision_count": 0,
+      "transport_collision_count": 0,
+      "insertion_collision_count": 0,
+      "moving_ids": [
+        "07"
+      ],
+      "fixed_ids": [
+        "01",
+        "04",
+        "06",
+        "10",
+        "14",
+        "15",
+        "16",
+        "17",
+        "18",
+        "19",
+        "20",
+        "21",
+        "22",
+        "S1",
+        "S2"
+      ]
+    },
+    {
+      "step": 17,
+      "samples": 308,
+      "collision_count": 0,
+      "transport_collision_count": 0,
+      "insertion_collision_count": 0,
+      "moving_ids": [
+        "11"
+      ],
+      "fixed_ids": [
+        "01",
+        "04",
+        "06",
+        "07",
+        "10",
+        "14",
+        "15",
+        "16",
+        "17",
+        "18",
+        "19",
+        "20",
+        "21",
+        "22",
+        "S1",
+        "S2"
+      ]
+    },
+    {
+      "step": 18,
+      "samples": 258,
+      "collision_count": 0,
+      "transport_collision_count": 0,
+      "insertion_collision_count": 0,
+      "moving_ids": [
+        "09"
+      ],
+      "fixed_ids": [
+        "01",
+        "04",
+        "06",
+        "07",
+        "10",
+        "11",
+        "14",
+        "15",
+        "16",
+        "17",
+        "18",
+        "19",
+        "20",
+        "21",
+        "22",
+        "S1",
+        "S2"
+      ]
+    },
+    {
+      "step": 19,
+      "samples": 286,
+      "collision_count": 0,
+      "transport_collision_count": 0,
+      "insertion_collision_count": 0,
+      "moving_ids": [
+        "12"
+      ],
+      "fixed_ids": [
+        "01",
+        "04",
+        "06",
+        "07",
+        "09",
+        "10",
+        "11",
+        "14",
+        "15",
+        "16",
+        "17",
+        "18",
+        "19",
+        "20",
+        "21",
+        "22",
+        "S1",
+        "S2"
+      ]
+    },
+    {
+      "step": 20,
+      "samples": 321,
+      "collision_count": 0,
+      "transport_collision_count": 0,
+      "insertion_collision_count": 0,
+      "moving_ids": [
+        "03"
+      ],
+      "fixed_ids": [
+        "01",
+        "04",
+        "06",
+        "07",
+        "09",
+        "10",
+        "11",
+        "12",
+        "14",
+        "15",
+        "16",
+        "17",
+        "18",
+        "19",
+        "20",
+        "21",
+        "22",
+        "S1",
+        "S2"
+      ]
+    },
+    {
+      "step": 21,
+      "samples": 275,
+      "collision_count": 0,
+      "transport_collision_count": 0,
+      "insertion_collision_count": 0,
+      "moving_ids": [
+        "08"
+      ],
+      "fixed_ids": [
+        "01",
+        "03",
+        "04",
+        "06",
+        "07",
+        "09",
+        "10",
+        "11",
+        "12",
+        "14",
+        "15",
+        "16",
+        "17",
+        "18",
+        "19",
+        "20",
+        "21",
+        "22",
+        "S1",
+        "S2"
+      ]
+    },
+    {
+      "step": 22,
+      "samples": 298,
+      "collision_count": 0,
+      "transport_collision_count": 0,
+      "insertion_collision_count": 0,
+      "moving_ids": [
+        "02"
+      ],
+      "fixed_ids": [
+        "01",
+        "03",
+        "04",
+        "06",
+        "07",
+        "08",
+        "09",
+        "10",
+        "11",
+        "12",
+        "14",
+        "15",
+        "16",
+        "17",
+        "18",
+        "19",
+        "20",
+        "21",
+        "22",
+        "S1",
+        "S2"
+      ]
+    },
+    {
+      "step": 23,
+      "samples": 235,
+      "collision_count": 0,
+      "transport_collision_count": 0,
+      "insertion_collision_count": 0,
+      "moving_ids": [
+        "05"
+      ],
+      "fixed_ids": [
+        "01",
+        "02",
+        "03",
+        "04",
+        "06",
+        "07",
+        "08",
+        "09",
+        "10",
+        "11",
+        "12",
+        "14",
+        "15",
+        "16",
+        "17",
+        "18",
+        "19",
+        "20",
+        "21",
+        "22",
+        "S1",
+        "S2"
+      ]
+    },
+    {
+      "step": 24,
+      "samples": 287,
+      "collision_count": 0,
+      "transport_collision_count": 0,
+      "insertion_collision_count": 0,
+      "moving_ids": [
+        "S3"
+      ],
+      "fixed_ids": [
+        "01",
+        "02",
+        "03",
+        "04",
+        "05",
+        "06",
+        "07",
+        "08",
+        "09",
+        "10",
+        "11",
+        "12",
+        "14",
+        "15",
+        "16",
+        "17",
+        "18",
+        "19",
+        "20",
+        "21",
+        "22",
+        "S1",
+        "S2"
+      ]
+    },
+    {
+      "step": 25,
+      "samples": 99,
+      "collision_count": 0,
+      "transport_collision_count": 0,
+      "insertion_collision_count": 0,
+      "moving_ids": [
+        "20"
+      ],
+      "fixed_ids": [
+        "01",
+        "02",
+        "03",
+        "04",
+        "05",
+        "06",
+        "07",
+        "08",
+        "09",
+        "10",
+        "11",
+        "12",
+        "14",
+        "15",
+        "16",
+        "17",
+        "18",
+        "19",
+        "21",
+        "22",
+        "S1",
+        "S2",
+        "S3"
+      ]
+    },
+    {
+      "step": 26,
+      "samples": 187,
+      "collision_count": 0,
+      "transport_collision_count": 0,
+      "insertion_collision_count": 0,
+      "moving_ids": [
+        "02",
+        "03",
+        "04",
+        "05",
+        "06",
+        "07",
+        "08",
+        "09",
+        "10",
+        "11",
+        "12",
+        "14",
+        "15",
+        "16",
+        "17",
+        "18",
+        "19",
+        "S1",
+        "S2"
+      ],
+      "fixed_ids": [
+        "01",
+        "20",
+        "21",
+        "22",
+        "S3"
+      ]
+    },
+    {
+      "step": 27,
+      "samples": 521,
+      "collision_count": 0,
+      "transport_collision_count": 0,
+      "insertion_collision_count": 0,
+      "moving_ids": [
+        "13"
+      ],
+      "fixed_ids": [
+        "01",
+        "02",
+        "03",
+        "04",
+        "05",
+        "06",
+        "07",
+        "08",
+        "09",
+        "10",
+        "11",
+        "12",
+        "14",
+        "15",
+        "16",
+        "17",
+        "18",
+        "19",
+        "20",
+        "21",
+        "22",
+        "S1",
+        "S2",
+        "S3"
+      ]
+    },
+    {
+      "step": 28,
+      "samples": 99,
+      "collision_count": 0,
+      "transport_collision_count": 0,
+      "insertion_collision_count": 0,
+      "moving_ids": [
+        "20"
+      ],
+      "fixed_ids": [
+        "01",
+        "02",
+        "03",
+        "04",
+        "05",
+        "06",
+        "07",
+        "08",
+        "09",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16",
+        "17",
+        "18",
+        "19",
+        "21",
+        "22",
+        "S1",
+        "S2",
+        "S3"
+      ]
+    }
+  ],
+  "collisions": [],
+  "intended_mating": [
+    {
+      "step": 9,
+      "segment": 5,
+      "scope": "insertion",
+      "label": "−X方向へ入れる",
+      "parts": [
+        "REFERENCE SG92R horn",
+        "REFERENCE SG92R body"
+      ],
+      "volume_mm3": 0.006912471359777778,
+      "bad_edges": 0,
+      "bounds_mm": [
+        [
+          218.49998474121094,
+          37.70000457763672,
+          34.69999694824219
+        ],
+        [
+          219.5,
+          42.30000305175781,
+          39.29999923706055
+        ]
+      ],
+      "collision": true
+    },
+    {
+      "step": 9,
+      "segment": 5,
+      "scope": "insertion",
+      "label": "−X方向へ入れる",
+      "parts": [
+        "REFERENCE SG92R horn",
+        "REFERENCE SG92R body"
+      ],
+      "volume_mm3": 0.013825057289021173,
+      "bad_edges": 0,
+      "bounds_mm": [
+        [
+          217.5,
+          37.70000457763672,
+          34.69999694824219
+        ],
+        [
+          219.5,
+          42.30000305175781,
+          39.29999923706055
+        ]
+      ],
+      "collision": true
+    },
+    {
+      "step": 9,
+      "segment": 5,
+      "scope": "insertion",
+      "label": "−X方向へ入れる",
+      "parts": [
+        "REFERENCE SG92R horn",
+        "REFERENCE SG92R body"
+      ],
+      "volume_mm3": 0.020737509931917603,
+      "bad_edges": 0,
+      "bounds_mm": [
+        [
+          216.49998474121094,
+          37.70000457763672,
+          34.69999694824219
+        ],
+        [
+          219.49998474121094,
+          42.30000305175781,
+          39.29999923706055
+        ]
+      ],
+      "collision": true
+    }
+  ],
+  "samples": 8250,
+  "sampled_obstacles_found": 0,
+  "pass": true
+}
