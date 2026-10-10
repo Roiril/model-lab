@@ -1,3 +1,5 @@
+import { plateDraftKey } from "./layout.js";
+
 // Studio の状態と出来事の受け渡し。モジュール同士は直接呼び合わず、ここを通す。
 // 契約の説明は CONTRACT.md。ここを変えるときは CONTRACT.md も直す。
 
@@ -46,19 +48,21 @@ function uid(prefix = "i") { return prefix + Math.random().toString(36).slice(2,
 export const store = {
   state: {
     model: null,            // モデル名
-    frame: "blender-mm",    // 指示座標の系。"blender-mm"（STL 生座標）| "preview-m-yup"
+    layout: { kind: "assembled" }, // 組立状態、または印刷プレートの manifest
+    frame: "blender-mm",    // 指示座標の系。"blender-mm" | "plate-mm" | "preview-m-yup"
     files: [],              // 表示中の STL [{name, mtime}]
     tool: "view",           // TOOLS のどれか
     faceMode: "smart",      // "smart"（塗り広げ）| "brush"
     faceAngle: 20,          // 塗り広げの角度閾値（度）
     brushRadius: 5,         // ブラシ半径（mm）
-    sectionAxis: "auto",    // "auto" | "x" | "y" | "z" | "view"
+    sectionAxis: "view",    // "auto" | "x" | "y" | "z" | "view"
     selection: [],          // 確定前の選択 [faceIndex]
     selectionFile: null,    // 選択中の STL 名
     activeItemId: null,     // インスペクタで開いている指示
     activeSectionId: null,  // 2D エディタで開いている断面
+    sectionTransform: "off", // "translate" | "rotate" | "off"
     sketchTool: "select",   // SKETCH_TOOLS のどれか
-    intent: "target",       // 次に描く図形の意図
+    intent: "note",         // 新しい図形は自由描画。旧図形の intent は各 shape に残す
     compare: null,           // 比較表示中 {label, url} | null
     showFaceOutlines: false, // 全三角形の輪郭を表示
     draft: { message: "", items: [] },
@@ -132,7 +136,7 @@ export const store = {
   clearDraft() {
     this.checkpoint();
     this.state.draft = { message: "", items: [] };
-    this.set({ activeSectionId: null, activeItemId: null, selection: [] });
+    this.set({ activeSectionId: null, activeItemId: null, selection: [], sectionTransform: "off" });
     this._itemsChanged("clear", null);
   },
 
@@ -171,7 +175,8 @@ export const store = {
   },
 
   // --- 下書きの保存（モデル単位、localStorage）---
-  _key() { return `studio.draft.${this.state.model}`; },
+  _key() { return plateDraftKey(this.state.model, this.state.layout); },
+  saveDraft() { this._save(); },
   _save() {
     if (!this.state.model) return;
     try { localStorage.setItem(this._key(), JSON.stringify(this.state.draft)); } catch { /* 無くても動く */ }
@@ -183,7 +188,7 @@ export const store = {
     this.state.draft = d && Array.isArray(d.items)
       ? { message: typeof d.message === "string" ? d.message : "", items: d.items.filter((it) => it && typeof it === "object" && typeof it.id === "string" && typeof it.type === "string") }
       : { message: "", items: [] };
-    this.set({ activeSectionId: null, activeItemId: null, selection: [] });
+    this.set({ activeSectionId: null, activeItemId: null, selection: [], sectionTransform: "off" });
     this.emit("items", { reason: "load", id: null });
   },
 

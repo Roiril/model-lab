@@ -1,7 +1,8 @@
 // node viewer/studio/frames.test.mjs
 import {
   AXES, makePlane, uvToModel, modelToUv, planeAt, planePosition, signedDistance,
-  add, sub, scale, dot, cross, norm, len,
+  add, sub, scale, dot, cross, norm, len, orthonormalPlane, planeFrame, planeHandleFrame,
+  planeFromFrame, makePlaneFromNormal, meshBoundsCenter,
 } from "./frames.js";
 
 let pass = 0, fail = 0;
@@ -115,7 +116,44 @@ for (const axis of ["x", "y", "z", "view", "auto"]) {
   ok(threw, "view: cameraAxes 無しは例外");
 }
 
-// 8. ベクトル小物
+// 8. ギズモ用の平面フレーム
+{
+  const source = { axis: "view", origin: [10, 20, 30], u: [2, 0, 0], v: [1, 3, 0], normal: [9, 9, 9] };
+  const clean = orthonormalPlane(source);
+  ok(near(len(clean.u), 1) && near(len(clean.v), 1) && near(len(clean.normal), 1), "平面基底を単位化");
+  ok(near(dot(clean.u, clean.v), 0) && nearV(clean.normal, cross(clean.u, clean.v)), "平面基底を正規直交化");
+  const frame = planeFrame(source, 7);
+  ok(nearV(frame.origin, [10, 20, 37]), "offset をギズモ中心へ統合", JSON.stringify(frame.origin));
+  const handle = planeHandleFrame(source, 7, [50, 60, 70]);
+  ok(nearV(handle.origin, [50, 60, 37]), "部品中心を切断面へ射影してハンドルを置く", JSON.stringify(handle.origin));
+  ok(near(dot(sub(handle.origin, frame.origin), frame.normal), 0), "射影後も同じ切断面上");
+  const moved = planeFromFrame(frame.origin, frame.u, frame.v, "view");
+  ok(nearV(planeAt(moved, 0).origin, planeAt(clean, 7).origin), "offset 統合後も平面位置を維持");
+  const oblique = planeFromFrame([3, 4, 5], [1, 1, 0], [-1, 1, 2], "view");
+  ok(near(dot(oblique.u, oblique.v), 0) && near(dot(oblique.u, oblique.normal), 0), "自由回転後の基底も直交");
+  ok(nearV(cross(oblique.u, oblique.v), oblique.normal), "自由回転後も normal = u × v");
+}
+
+// 9. 面法線からの基底
+{
+  const pl = makePlaneFromNormal([4, 5, 6], [0, 2, 0], { right: [1, 0, 0] });
+  ok(nearV(pl.origin, [4, 5, 6]) && nearV(pl.normal, [0, 1, 0]), "面の点と法線を維持");
+  ok(near(dot(pl.u, pl.v), 0) && nearV(cross(pl.u, pl.v), pl.normal), "面法線のu/vは正規直交");
+  const parallel = makePlaneFromNormal([0, 0, 0], [1, 0, 0], { right: [1, 0, 0] });
+  ok(nearV(parallel.normal, [1, 0, 0]) && near(len(parallel.u), 1), "画面右と法線が平行でも基底を作る");
+}
+
+// 10. print plate を含めず実メッシュだけで中心を求める
+{
+  const meshes = [
+    { userData: { bbox: { min: [10, 20, 30], max: [20, 40, 60] } } },
+    { userData: { bbox: { min: [-10, 25, 35], max: [5, 45, 70] } } },
+  ];
+  ok(nearV(meshBoundsCenter(meshes), [5, 32.5, 50]), "実メッシュbboxの中心");
+  ok(meshBoundsCenter([]) === null, "メッシュなしの中心はnull");
+}
+
+// 11. ベクトル小物
 ok(nearV(add([1, 2, 3], [4, 5, 6]), [5, 7, 9]), "add");
 ok(nearV(sub([4, 5, 6], [1, 2, 3]), [3, 3, 3]), "sub");
 ok(nearV(scale([1, 2, 3], 2), [2, 4, 6]), "scale");

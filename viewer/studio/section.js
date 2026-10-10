@@ -5,7 +5,11 @@ import * as THREE from "three";
 import { LineSegments2 } from "three/addons/lines/LineSegments2.js";
 import { LineSegmentsGeometry } from "three/addons/lines/LineSegmentsGeometry.js";
 import { LineMaterial } from "three/addons/lines/LineMaterial.js";
-import { makePlane, planeAt, uvToModel, modelToUv, dot } from "./frames.js";
+import { TransformControls } from "three/addons/controls/TransformControls.js";
+import {
+  makePlane, makePlaneFromNormal, meshBoundsCenter, orthonormalPlane, planeAt,
+  planeHandleFrame, planeFromFrame, uvToModel, modelToUv, dot,
+} from "./frames.js";
 import { slicePositions, loopsBounds } from "./slice.js";
 
 const CLICK_PX = 4;
@@ -34,8 +38,26 @@ export function createSections(viewport, store) {
   group.name = "sections";
   overlay.add(group);
 
+  const transform = new TransformControls(viewport.camera, canvas);
+  const transformHelper = transform.getHelper();
+  transformHelper.name = "section-transform";
+  transformHelper.visible = false;
+  // TransformControls は helper を scene 直下に置く前提。overlay 配下のまま
+  // modelRoot の mm→m 変換を二重適用しないよう、親の world 行列を相殺する。
+  transformHelper.matrixAutoUpdate = false;
+  overlay.add(transformHelper);
+  const transformProxy = new THREE.Object3D();
+  transformProxy.name = "section-transform-proxy";
+  overlay.add(transformProxy);
+  const onTransformChange = () => viewport.invalidate();
+  transform.addEventListener("change", onTransformChange);
+
   const secs = new Map();      // id -> { sig, loops, ghostLoops, bounds, vis, timer, last }
   let version = 0;             // メッシュ・ゴーストが入れ替わるたびに増やす（切り直しの合図）
+  let transformMode = "off";
+  let transformingId = null;
+  let dragging = false;
+  let dragStart = null;
 
   const isPreview = () => store.state.frame === "preview-m-yup";
 
@@ -227,6 +249,7 @@ export function createSections(viewport, store) {
     }
     restyle();
     syncClip();
+    syncTransform();
   }
 
   // アクティブな断面が「片側を隠す」なら、その面で隠す
@@ -237,10 +260,195 @@ export function createSections(viewport, store) {
     else viewport.setClipPlane(null);
   }
 
+  // ---- 新規作成・平面の移動 -------------------------------------------------
+  const copyPlane = (plane) => ({
+    axis: plane.axis, origin: plane.origin.slice(), normal: plane.normal.slice(),
+    u: plane.u.slice(), v: plane.v.slice(),
+  });
+  const hasShapes = (item) => Array.isArray(item && item.shapes) && item.shapes.length > 0;
+
+  function sectionPoint(point) {
+    if (Array.isArray(point) && point.length === 3 && point.every(Number.isFinite)) return point.slice();
+    return meshBoundsCenter(viewport.getMeshes());
+  }
+
+  function createPlane(payload, point) {
+    if (payload.normal) return makePlaneFromNormal(point, payload.normal, viewport.cameraAxes());
+    if (payload.plane) return orthonormalPlane(payload.plane);
+    return makePlane(payload.axis || "view", point, viewport.cameraAxes());
+  }
+
+  function createSection(payload = {}) {
+    setTransformMode({ mode: "off" });
+    const current = store.getItem(store.state.activeSectionId);
+    const source = payload.copyFrom ? store.getItem(payload.copyFrom) : null;
+    const point = sectionPoint(payload.point);
+    if (!source && !point && !payload.plane) {
+      store.status("断面を作るモデルがありません", "err");
+      return;
+    }
+    let plane, offset = 0;
+    try {
+      if (source && source.type === "section" && source.plane) {
+        plane = copyPlane(orthonormalPlane(source.plane));
+        offset = Number.isFinite(source.offset) ? source.offset : 0;
+      } else {
+        plane = createPlane(payload, point);
+        offset = Number.isFinite(payload.offset) ? payload.offset : 0;
+      }
+    } catch (err) {
+      console.error("[section] 平面を作れません", err);
+      store.status("断面の平面を作れませんでした", "err");
+      return;
+    }
+
+    const replace = payload.replaceActive && current && current.type === "section" && !hasShapes(current);
+    const file = payload.file || (source && source.file)
+      || (viewport.getMeshes()[0] && viewport.getMeshes()[0].userData.file) || null;
+    let id;
+    if (replace) {
+      id = current.id;
+      store.updateItem(id, { file: file || current.file, plane, offset });
+    } else {
+      id = store.addItem({ type: "section", file, plane, offset, clip: false });
+    }
+    store.set({ activeSectionId: id, activeItemId: id });
+    store.emit("section:created", {
+      id, replaced: !!replace,
+      copyFrom: payload.copyFrom || (payload.replaceActive && current && hasShapes(current) ? current.id : null),
+    });
+  }
+
+  function placeTransform(item) {
+    const center = meshBoundsCenter(viewport.getMeshes());
+    const frame = planeHandleFrame(item.plane, item.offset || 0, center);
+    transformProxy.position.set(...frame.origin);
+    const basis = new THREE.Matrix4().makeBasis(
+      new THREE.Vector3(...frame.u), new THREE.Vector3(...frame.v), new THREE.Vector3(...frame.normal),
+    );
+    transformProxy.quaternion.setFromRotationMatrix(basis);
+    transformProxy.scale.set(1, 1, 1);
+    transformProxy.updateMatrixWorld(true);
+    overlay.updateWorldMatrix(true, false);
+    transformHelper.matrix.copy(overlay.matrixWorld).invert();
+    transformHelper.matrixWorldNeedsUpdate = true;
+  }
+
+  function syncTransform() {
+    if (dragging) return;
+    const item = store.getItem(store.state.activeSectionId);
+    if (transformMode === "off" || !item || item.type !== "section" || !item.plane || hasShapes(item)) {
+      transform.detach();
+      transformHelper.visible = false;
+      transformingId = null;
+      viewport.invalidate();
+      return;
+    }
+    try { placeTransform(item); } catch (err) {
+      console.error("[section] 移動ハンドルを置けません", err);
+      transform.detach(); transformHelper.visible = false; transformingId = null;
+      return;
+    }
+    transformingId = item.id;
+    transform.setMode(transformMode);
+    transform.setSpace("local");
+    transform.showX = transformMode === "rotate";
+    transform.showY = transformMode === "rotate";
+    transform.showZ = true;
+    transform.attach(transformProxy);
+    transformHelper.visible = true;
+    viewport.invalidate();
+  }
+
+  function setTransformMode(payload = {}) {
+    const mode = payload.mode;
+    if (!["translate", "rotate", "off"].includes(mode)) return;
+    if (mode === "off" && dragging) {
+      dragging = false;
+      dragStart = null;
+      transform.dragging = false;
+      transform.axis = null;
+      viewport.setControlsEnabled(true);
+    }
+    const item = store.getItem(store.state.activeSectionId);
+    if (mode !== "off" && item && hasShapes(item)) {
+      transformMode = "off";
+      store.emit("section:copy-required", { id: item.id, mode });
+      updateCursor();
+      syncTransform();
+      return;
+    }
+    transformMode = mode;
+    if (mode === "translate" && item && item.plane) {
+      const axes = viewport.cameraAxes();
+      if (axes && Math.abs(dot(axes.forward, item.plane.normal)) > 0.96) {
+        const { normal: n, u, v } = item.plane;
+        viewport.viewPreset([
+          n[0] - v[0] * 0.6 + u[0] * 0.3,
+          n[1] - v[1] * 0.6 + u[1] * 0.3,
+          n[2] - v[2] * 0.6 + u[2] * 0.3,
+        ]);
+      }
+    }
+    updateCursor();
+    syncTransform();
+  }
+
+  transform.addEventListener("mouseDown", () => {
+    const item = store.getItem(transformingId);
+    if (!item || hasShapes(item)) return;
+    dragging = true;
+    dragStart = { id: item.id, plane: copyPlane(item.plane), offset: item.offset || 0 };
+    store.checkpoint();
+    viewport.setControlsEnabled(false);
+  });
+  transform.addEventListener("objectChange", () => {
+    if (!dragging || !transformingId) return;
+    const item = store.getItem(transformingId);
+    if (!item || hasShapes(item)) return;
+    const q = transformProxy.quaternion;
+    const u = new THREE.Vector3(1, 0, 0).applyQuaternion(q).toArray();
+    const v = new THREE.Vector3(0, 1, 0).applyQuaternion(q).toArray();
+    try {
+      const axis = transformMode === "rotate" ? "view" : item.plane.axis;
+      const plane = planeFromFrame(transformProxy.position.toArray(), u, v, axis);
+      store.updateItem(item.id, { plane, offset: 0 }, { history: false });
+    } catch (err) {
+      console.error("[section] 平面の移動値が不正です", err);
+    }
+    viewport.invalidate();
+  });
+  transform.addEventListener("mouseUp", () => {
+    dragging = false;
+    dragStart = null;
+    viewport.setControlsEnabled(true);
+    syncTransform();
+  });
+  transform.addEventListener("dragging-changed", (event) => viewport.setControlsEnabled(!event.value));
+
+  const onTransformKeyDown = (event) => {
+    if (event.key === "Shift") transform.rotationSnap = Math.PI / 12;
+    if (event.key === "Escape" && dragging && dragStart) {
+      const before = dragStart;
+      transform.reset();
+      dragging = false;
+      dragStart = null;
+      transform.dragging = false;
+      transform.axis = null;
+      store.updateItem(before.id, { plane: before.plane, offset: before.offset }, { history: false });
+      transform.detach();
+      viewport.setControlsEnabled(true);
+      syncTransform();
+    }
+  };
+  const onTransformKeyUp = (event) => { if (event.key === "Shift") transform.rotationSnap = null; };
+  window.addEventListener("keydown", onTransformKeyDown);
+  window.addEventListener("keyup", onTransformKeyUp);
+
   // ---- クリックで断面を作る ---------------------------------------------------
   let down = null;
   const onDown = (e) => {
-    if (e.button !== 0 || store.state.tool !== "section" || isPreview()) { down = null; return; }
+    if (e.button !== 0 || store.state.tool !== "section" || isPreview() || transformMode !== "off") { down = null; return; }
     down = { id: e.pointerId, x: e.clientX, y: e.clientY };
   };
   const onMove = (e) => {
@@ -254,16 +462,9 @@ export function createSections(viewport, store) {
     if (store.state.tool !== "section" || isPreview()) return;
     const hit = viewport.pick(e.clientX, e.clientY);
     if (!hit) return;
-    let plane;
-    try {
-      plane = makePlane(store.state.sectionAxis, hit.point, viewport.cameraAxes());
-    } catch (err) {
-      console.error("[section] 平面を作れません", err);
-      store.status("断面の平面を作れませんでした", "err");
-      return;
-    }
-    const id = store.addItem({ type: "section", file: hit.file, plane, offset: 0, clip: false });
-    store.set({ activeSectionId: id });
+    store.emit("section:create", {
+      axis: store.state.sectionAxis, point: hit.point, file: hit.file, replaceActive: true,
+    });
   };
   canvas.addEventListener("pointerdown", onDown);
   canvas.addEventListener("pointermove", onMove);
@@ -272,14 +473,14 @@ export function createSections(viewport, store) {
 
   let cursorOwned = false;
   function updateCursor() {
-    if (store.state.tool === "section" && !isPreview()) { canvas.style.cursor = "crosshair"; cursorOwned = true; }
+    if (store.state.tool === "section" && !isPreview() && transformMode === "off") { canvas.style.cursor = "crosshair"; cursorOwned = true; }
     else if (cursorOwned) { canvas.style.cursor = ""; cursorOwned = false; }
   }
 
   // ---- 購読 -------------------------------------------------------------------
   const subs = [
     store.on("items", sync),
-    store.on("change:activeSectionId", () => { restyle(); syncClip(); }),
+    store.on("change:activeSectionId", () => { restyle(); syncClip(); syncTransform(); }),
     store.on("change:tool", updateCursor),
     store.on("change:frame", () => { updateCursor(); syncClip(); }),
     store.on("mesh:loaded", () => {
@@ -299,6 +500,8 @@ export function createSections(viewport, store) {
       const n = it.plane.normal, v = it.plane.v;
       viewport.viewPreset([n[0] - v[0] * 0.001, n[1] - v[1] * 0.001, n[2] - v[2] * 0.001]);
     }),
+    store.on("section:create", createSection),
+    store.on("section:transform", setTransformMode),
   ];
   updateCursor();
   sync();
@@ -320,6 +523,13 @@ export function createSections(viewport, store) {
     canvas.removeEventListener("pointerdown", onDown);
     canvas.removeEventListener("pointermove", onMove);
     canvas.removeEventListener("pointerup", onUp);
+    window.removeEventListener("keydown", onTransformKeyDown);
+    window.removeEventListener("keyup", onTransformKeyUp);
+    viewport.setControlsEnabled(true);
+    transform.detach();
+    transform.removeEventListener("change", onTransformChange);
+    transform.dispose();
+    overlay.remove(transformHelper, transformProxy);
     if (cursorOwned) canvas.style.cursor = "";
     overlay.remove(group);
   }

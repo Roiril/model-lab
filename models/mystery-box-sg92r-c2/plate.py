@@ -21,6 +21,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE))
 sys.path.insert(0, HERE)
 sys.path.insert(0, os.path.join(ROOT, "lib"))
+sys.path.insert(0, os.path.join(ROOT, "tools"))
 sys.stdout.reconfigure(encoding="utf-8")
 
 import print_profile  # noqa: E402
@@ -31,6 +32,7 @@ from printmech.three_mf import (  # noqa: E402
     add_layer_ranges, inspect_sliced_3mf, object_names,
 )
 from slice_check import EXE  # noqa: E402
+from studio_plate import export_studio_plate  # noqa: E402
 
 EXPORTS = os.path.join(ROOT, "exports")
 WORK = os.path.join(HERE, "build", "print")
@@ -85,7 +87,9 @@ def build(material, parts, out_name, ranges=True):
     print(arrange.stdout, flush=True)
     layout = os.path.join(EXPORTS, layout_name + '.3mf')
     if parts == PARTS:
-        shutil.copyfile(layout, os.path.join(EXPORTS, 'mystery-box-sg92r-c2-plate.3mf'))
+        canonical = os.path.join(EXPORTS, 'mystery-box-sg92r-c2-plate.3mf')
+        shutil.copyfile(layout, canonical)
+        export_studio_plate('mystery-box-sg92r-c2', canonical)
     first = slice_cli([layout], d1, "first.3mf", material=material, arrange=False)
     names = [n for _, n in object_names(zipfile.ZipFile(first))]
     final_dir = os.path.join(WORK, f"{out_name}_2")

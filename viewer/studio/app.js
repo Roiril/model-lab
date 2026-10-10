@@ -10,6 +10,7 @@ import { createSketch } from "./sketch.js";
 import { createPanels } from "./panels.js";
 import { buildRequest } from "./bundle.js";
 import { filesForModel, selectModelFile } from "./model-files.js";
+import { createLatestGate, plateManifestStale, validPlateManifest } from "./layout.js";
 
 const $ = (sel) => document.querySelector(sel);
 const VIEW_ORDER = ["front", "back", "left", "right", "top", "bottom", "iso"];
@@ -55,6 +56,12 @@ let booted = false;
 let openSeq = 0;
 let loadSeq = 0;
 let fitSketchFor = null;
+let plateManifest = null;
+let plateStale = false;
+let layoutLoading = false;
+let layoutSeq = 0;
+let pendingSectionCopy = null;
+const manifestGate = createLatestGate();
 
 const mtimeOf = (name) => (stlList.find((f) => f.name === name) || {}).mtime ?? 0;
 
@@ -92,14 +99,43 @@ async function refreshStls() {
   }
 }
 
+async function refreshPlateManifest(name = modelName) {
+  const token = manifestGate.next();
+  let manifest = null;
+  try {
+    const res = await fetch(`/viewer/studio/plates/${encodeURIComponent(name)}.json`, { cache: "no-cache" });
+    if (res.status !== 404) {
+      if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
+      const value = await res.json();
+      if (!validPlateManifest(value, name)) throw new Error("manifest の形式が正しくありません");
+      manifest = value;
+    }
+  } catch (e) {
+    console.error("[plate manifest]", e);
+    if (manifestGate.isCurrent(token)) store.status(`印刷プレートを読めませんでした: ${e.message}`, "err");
+  }
+  if (!manifestGate.isCurrent(token) || name !== modelName) return null;
+  plateManifest = manifest;
+  plateStale = manifest ? plateManifestStale(manifest, stlList) : store.state.layout?.kind === "plate";
+  syncPanels();
+  return manifest;
+}
+
 // --- 画面とのやり取り（panels に渡す）------------------------------------------
 
 function syncPanels() {
   const heads = modelName ? headsFor(modelName, stlNames) : [];
   const auto = autoNames();
-  const candidates = [...new Set([...heads, ...auto, ...shownFiles])];
+  const plate = store.state.layout?.kind === "plate";
+  const candidates = plate ? (store.state.layout.parts || []).map((part) => part.file) : [...new Set([...heads, ...auto, ...shownFiles])];
   panels.setParts({ candidates, shown: shownFiles, custom: partsCustom });
   panels.setMode({ mode, hasStl: heads.length > 0 || auto.length > 0, hasPreview: !!previewBuild });
+  panels.setLayout({
+    kind: plate ? "plate" : "assembled",
+    available: !!plateManifest,
+    stale: plateStale,
+    loading: layoutLoading || opening,
+  });
 }
 
 function placedFiles() {
@@ -114,13 +150,23 @@ function modeStlAction() {
 }
 
 function setTool(t) {
-  if (sending) return;
+  if (sending || layoutLoading || opening) return;
   if (!TOOLS.includes(t)) return;
+  if (store.state.layout?.kind === "plate" && plateStale && t !== "view") {
+    store.toast("印刷プレートを更新してください");
+    return;
+  }
   if (store.state.frame === "preview-m-yup" && t !== "view") {
     store.toast("プレビュー表示中は指示を付けられません。STL を表示してください", { action: modeStlAction() || undefined });
     return;
   }
+  if (t !== "section" && store.state.sectionTransform !== "off") {
+    store.set({ sectionTransform: "off" });
+    store.emit("section:transform", { mode: "off" });
+  }
+  const needsSection = t === "section" && !store.getItem(store.state.activeSectionId);
   store.set({ tool: t });
+  if (needsSection) store.emit("section:create", { axis: store.state.sectionAxis || "view" });
 }
 
 const ctx = {
@@ -128,6 +174,7 @@ const ctx = {
   viewPreset: (name) => viewport.viewPreset(name),
   openModel: (name) => openModel(name),
   setParts,
+  setLayout,
   showStl: () => showStl(),
   showPreview: () => showPreview({ fit: false }),
   paramsChanged,
@@ -144,7 +191,7 @@ const panels = createPanels({ store, ctx });
 
 // --- STL / プレビューの表示 ------------------------------------------------------
 
-async function showStl(names, { fit = false } = {}) {
+async function showStl(names, { fit = false, layout = store.state.layout } = {}) {
   const list = names && names.length ? names : (partsCustom && shownFiles.length ? shownFiles : autoNames());
   if (!list.length) {
     store.status("表示できる STL がありません。パラメータの「STL 生成」で作れます", "err");
@@ -156,26 +203,97 @@ async function showStl(names, { fit = false } = {}) {
   store.status(`${label} を読み込み中…`, "busy");
   try {
     const items = list.map((n) => ({ name: n, url: `/exports/${encodeURIComponent(n)}?v=${mtimeOf(n)}` }));
-    await viewport.loadSTLs(items, { fit });
-    if (seq !== loadSeq) return;
+    const frame = layout?.kind === "plate" ? "plate-mm" : "blender-mm";
+    const loaded = await viewport.loadSTLs(items, { fit, frame });
+    if (seq !== loadSeq || !loaded) return false;
     shownFiles = list.slice();
     loadedMtimes = new Map(list.map((n) => [n, mtimeOf(n)]));
     mode = "stl";
-    store.set({ frame: "blender-mm", files: list.map((n) => ({ name: n, mtime: mtimeOf(n) })) });
+    store.set({ frame, files: list.map((n) => ({ name: n, mtime: mtimeOf(n) })) });
     syncPanels();
     store.status(`${label} · ${((performance.now() - t0) / 1000).toFixed(1)} 秒`, "ok");
+    return true;
   } catch (e) {
-    if (seq !== loadSeq) return;
+    if (seq !== loadSeq) return false;
     console.error(e);
     store.status(`STL を読み込めませんでした: ${e.message}`, "err");
+    return false;
   }
 }
 
-function showPreview({ fit = false } = {}) {
+function clearLayoutInteraction() {
+  pendingSectionCopy = null;
+  store.emit("section:transform", { mode: "off" });
+  store.emit("popover:close");
+  if (store.state.compare) clearCompare();
+  store.set({ selection: [], selectionFile: null, activeItemId: null, activeSectionId: null, compare: null, tool: "view", sectionTransform: "off" });
+}
+
+function setLayoutUrl(kind, { replace = false } = {}) {
+  const url = new URL(location.href);
+  if (kind === "plate") url.searchParams.set("layout", "plate");
+  else url.searchParams.delete("layout");
+  history[replace ? "replaceState" : "pushState"](null, "", url);
+}
+
+function activateLayoutDraft(layout) {
+  store.saveDraft();
+  clearLayoutInteraction();
+  store.set({ layout, frame: layout.kind === "plate" ? "plate-mm" : "blender-mm" });
+  store.loadDraft();
+}
+
+async function setLayout(kind, { manifest = plateManifest, updateUrl = true, allowOpening = false } = {}) {
+  if (sending || layoutLoading || (!allowOpening && opening) || !modelName) return false;
+  const current = store.state.layout || { kind: "assembled" };
+  const target = kind === "plate" ? manifest : { kind: "assembled" };
+  const modelAtStart = modelName;
+  const openAtStart = openSeq;
+  if (kind === "plate" && (!target || plateStale)) {
+    if (plateStale) store.status("印刷プレートを更新してください", "err");
+    return false;
+  }
+  if (current.kind === target.kind && (target.kind !== "plate" || current.id === target.id)) return true;
+
+  store.saveDraft();
+  clearLayoutInteraction();
+  const layoutAtStart = ++layoutSeq;
+  layoutLoading = true;
+  syncPanels();
+  try {
+    partsCustom = false;
+    const names = target.kind === "plate" ? target.parts.map((part) => part.file) : autoNames();
+    if (!names.length) throw new Error("表示できる STL がありません");
+    const ok = await showStl(names, { fit: false, layout: target });
+    if (!ok || layoutAtStart !== layoutSeq || modelAtStart !== modelName || openAtStart !== openSeq) return false;
+    activateLayoutDraft(target);
+    viewport.setPrintPlate(target.kind === "plate" ? target.bed : null);
+    viewport.viewPreset(target.kind === "plate" ? "top" : "iso");
+    if (updateUrl) setLayoutUrl(target.kind);
+    syncPanels();
+    store.status(target.kind === "plate" ? "配置済みパーツを全表示しています" : "組み立てた状態を表示しています", "ok");
+    return true;
+  } catch (e) {
+    console.error(e);
+    store.status(`表示を切り替えられませんでした: ${e.message}`, "err");
+    return false;
+  } finally {
+    if (layoutAtStart === layoutSeq) {
+      layoutLoading = false;
+      syncPanels();
+    }
+  }
+}
+
+async function showPreview({ fit = false } = {}) {
   if (!previewBuild) return;
   try {
     const group = previewBuild(panels.getParams(), viewport.THREE);
+    if (store.state.layout?.kind === "plate") {
+      activateLayoutDraft({ kind: "assembled" });
+    }
     viewport.setPreviewGroup(group, { fit });
+    if (new URLSearchParams(location.search).get("layout") === "plate") setLayoutUrl("assembled");
     const wasPreview = mode === "preview";
     mode = "preview";
     shownFiles = [];
@@ -195,15 +313,17 @@ function showPreview({ fit = false } = {}) {
 }
 
 async function setParts(names) {
-  if (!modelName) return;
+  if (!modelName || sending || layoutLoading || opening) return;
+  const plate = store.state.layout?.kind === "plate";
   if (!names) {
     partsCustom = false;
-    const auto = autoNames();
+    const auto = plate ? (store.state.layout.parts || []).map((part) => part.file) : autoNames();
     if (!auto.length) return;
-    await showStl(auto, { fit: false });
+    await showStl(auto, { fit: plate, layout: store.state.layout });
+    if (plate) viewport.viewPreset("top");
   } else {
     partsCustom = true;
-    await showStl(names, { fit: false });
+    await showStl(names, { fit: false, layout: store.state.layout });
   }
 }
 
@@ -249,14 +369,23 @@ async function exportStl() {
 
 // --- モデルを開く ------------------------------------------------------------------
 
-async function openModel(name, { fromHistory = false } = {}) {
+async function openModel(name, { fromHistory = false, layoutKind = null } = {}) {
   if (sending) return false;
   const info = models.find((m) => m.name === name);
   if (!info) { store.status(`モデル「${name}」が見つかりません`, "err"); return false; }
   if (info.available === false) { store.toast(info.unavailableReason || "このモデルは別の形式で作成されています"); return false; }
   const seq = ++openSeq;
+  const urlLayout = new URLSearchParams(location.search).get("layout") === "plate" ? "plate" : "assembled";
+  const wantedLayout = layoutKind || ((fromHistory || !booted) ? urlLayout : "assembled");
+  layoutSeq += 1;
+  layoutLoading = false;
   opening = true;
+  pendingSectionCopy = null;
+  store.set({ sectionTransform: "off" });
+  store.emit("section:transform", { mode: "off" });
+  syncPanels();
   try {
+    store.saveDraft();
     clearTimeout(rebuildTimer);
     store.emit("popover:close");
     if (store.state.compare) { store.set({ compare: null }); }
@@ -264,15 +393,20 @@ async function openModel(name, { fromHistory = false } = {}) {
     partsCustom = false;
     shownFiles = [];
     loadedMtimes = new Map();
+    plateManifest = null;
+    plateStale = false;
+    viewport.setPrintPlate(null);
     requests = [];
     prevStatus.clear();
     panels.setRequests([]);
     modelName = name;
-    store.set({ model: name, files: [], selection: [], activeItemId: null, activeSectionId: null });
+    store.set({ model: name, layout: { kind: "assembled" }, frame: "blender-mm", files: [], tool: "view", selection: [], selectionFile: null, activeItemId: null, activeSectionId: null, sectionTransform: "off" });
     store.loadDraft();
     if (!fromHistory) {
       const url = new URL(location.href);
       url.searchParams.set("model", name);
+      if (wantedLayout === "plate") url.searchParams.set("layout", "plate");
+      else url.searchParams.delete("layout");
       url.hash = "";
       if (booted) history.pushState(null, "", url);
       else history.replaceState(null, "", url);
@@ -305,26 +439,37 @@ async function openModel(name, { fromHistory = false } = {}) {
 
     await refreshStls();
     if (seq !== openSeq) return false;
+    await refreshPlateManifest(name);
+    if (seq !== openSeq) return false;
 
-    const names = autoNames();
-    if (names.length) {
+    if (wantedLayout === "plate" && plateManifest && !plateStale) {
+      const shown = await setLayout("plate", { manifest: plateManifest, updateUrl: false, allowOpening: true });
+      if (!shown && seq === openSeq) return false;
+    } else {
+      const names = autoNames();
+      if (names.length) {
       const matched = headsFor(name, stlNames).length > 0;
       if (!matched) store.toast(`${name} の STL が見つからないので、いちばん新しい STL（${names[0]}）を表示しています`);
       await showStl(names, { fit: true });
-    } else if (previewBuild) {
-      showPreview({ fit: true });
-    } else {
-      mode = "none";
-      try { await viewport.loadSTLs([], { fit: false }); } catch (e) { console.error(e); }
-      store.set({ frame: "blender-mm" });
-      syncPanels();
-      store.status("STL がまだありません。パラメータの「STL 生成」で作れます", "");
+      } else if (previewBuild) {
+        await showPreview({ fit: true });
+      } else {
+        mode = "none";
+        try { await viewport.loadSTLs([], { fit: false }); } catch (e) { console.error(e); }
+        store.set({ frame: "blender-mm" });
+        syncPanels();
+        store.status("STL がまだありません。パラメータの「STL 生成」で作れます", "");
+      }
+      if (wantedLayout === "plate" && plateStale) store.status("印刷プレートを更新してください", "err");
     }
     if (seq !== openSeq) return false;
     panels.noteOpened(name);
     return true;
   } finally {
-    if (seq === openSeq) opening = false;
+    if (seq === openSeq) {
+      opening = false;
+      syncPanels();
+    }
   }
 }
 
@@ -338,9 +483,29 @@ function scheduleStlUpdate() {
 
 async function handleStlUpdate() {
   if (!modelName || opening) return;
+  const oldManifest = plateManifest;
   await refreshStls();
+  await refreshPlateManifest(modelName);
+  const plate = store.state.layout?.kind === "plate";
+  if (plate && plateStale) {
+    store.set({ tool: "view", selection: [], selectionFile: null, activeSectionId: null });
+    store.emit("popover:close");
+    store.status("印刷プレートを更新してください", "err");
+    return;
+  }
+  if (plate && plateManifest && oldManifest?.id !== plateManifest.id) {
+    await setLayout("plate", { manifest: plateManifest, updateUrl: false });
+    return;
+  }
+  if (!plate && plateManifest && !plateStale && new URLSearchParams(location.search).get("layout") === "plate") {
+    await setLayout("plate", { manifest: plateManifest, updateUrl: false });
+    return;
+  }
   if (mode === "stl") {
-    const names = partsCustom ? shownFiles.filter((n) => stlNames.includes(n)) : autoNames();
+    const available = plate ? new Set((plateManifest?.parts || []).map((part) => part.file)) : new Set(stlNames);
+    const names = partsCustom
+      ? shownFiles.filter((n) => available.has(n))
+      : plate ? (plateManifest?.parts || []).map((part) => part.file) : autoNames();
     if (!names.length) return syncPanels();
     const changed = names.length !== shownFiles.length
       || names.some((n, i) => n !== shownFiles[i])
@@ -440,9 +605,15 @@ async function setRequestStatus(id, status) {
 }
 
 async function sendRequest() {
-  if (sending || !store.state.model) return;
+  if (sending || layoutLoading || opening || !store.state.model) return;
+  if (store.state.layout?.kind === "plate" && plateStale) {
+    store.status("印刷プレートを更新してください", "err");
+    return;
+  }
   const model = store.state.model;
   const sentDraft = JSON.stringify(store.state.draft);
+  store.set({ sectionTransform: "off" });
+  store.emit("section:transform", { mode: "off" });
   sending = true;
   panels.setSending(true);
   try {
@@ -510,6 +681,7 @@ function syncSketch() {
   if (show) {
     applySketchWidth();
     fitSketchFor = id;
+    if (wasHidden) requestAnimationFrame(() => viewport.frameModelBox(viewport.modelBox()));
     // 輪郭が先に届いていて section:loops を待っても来ない場合の保険
     setTimeout(() => {
       if (fitSketchFor === id && store.state.activeSectionId === id) {
@@ -525,6 +697,7 @@ function syncSketch() {
 }
 
 store.on("change:activeSectionId", syncSketch);
+store.on("section:created", syncSketch);
 store.on("section:loops", ({ id }) => {
   if (id && id === fitSketchFor) {
     fitSketchFor = null;
@@ -578,6 +751,32 @@ if (typeof ResizeObserver === "function") {
 store.on("change:tool", () => {
   store.emit("popover:close");
   if (store.state.selection.length) store.set({ selection: [] });
+  if (store.state.tool !== "section" && store.state.sectionTransform !== "off") {
+    store.set({ sectionTransform: "off" });
+    store.emit("section:transform", { mode: "off" });
+  }
+});
+
+store.on("section:copy-required", ({ id, mode } = {}) => {
+  if (!id || (mode !== "translate" && mode !== "rotate")) return;
+  store.set({ sectionTransform: "off" });
+  store.toast("図形を残して、別の断面を調整できます", {
+    action: {
+      label: "平面を複製して位置を調整",
+      run: () => {
+        pendingSectionCopy = { id, mode };
+        store.emit("section:create", { copyFrom: id });
+      },
+    },
+  });
+});
+
+store.on("section:created", ({ copyFrom } = {}) => {
+  if (!pendingSectionCopy || copyFrom !== pendingSectionCopy.id) return;
+  const { mode } = pendingSectionCopy;
+  pendingSectionCopy = null;
+  store.set({ sectionTransform: mode });
+  store.emit("section:transform", { mode });
 });
 
 // --- キー入力（一括）----------------------------------------------------------------------
@@ -595,6 +794,7 @@ window.addEventListener("keydown", (e) => {
   const lk = k.length === 1 ? k.toLowerCase() : k;
 
   if (e.defaultPrevented || e.isComposing || e.keyCode === 229) return;
+  if (opening || layoutLoading) return;
 
   if (mod && !e.altKey && lk === "k") { e.preventDefault(); panels.openPalette(); return; }
   if (panels.isPaletteOpen()) return; // パレットの中は自分でキーを受ける
@@ -718,6 +918,9 @@ async function boot() {
 boot();
 
 window.addEventListener("popstate", () => {
-  const name = new URLSearchParams(location.search).get("model");
-  if (name && name !== modelName) openModel(name, { fromHistory: true });
+  const params = new URLSearchParams(location.search);
+  const name = params.get("model");
+  const kind = params.get("layout") === "plate" ? "plate" : "assembled";
+  if (name && name !== modelName) openModel(name, { fromHistory: true, layoutKind: kind });
+  else if (name && store.state.layout?.kind !== kind) setLayout(kind, { updateUrl: false });
 });

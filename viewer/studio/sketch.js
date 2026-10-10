@@ -3,6 +3,7 @@
 // トップレベルでは DOM を触らない（sampleShape を node から import して試せるように）。
 
 import { INTENTS, uid } from "./store.js";
+import { planePosition } from "./frames.js";
 import { watchTheme } from "../shared/workspace.mjs";
 
 // ===========================================================================
@@ -116,6 +117,10 @@ export function sampleShape(shape, step = 0.5) {
       return resample(flattenNodes(nodes, !!shape.closed, Math.max(st * 0.25, 0.02)), st);
     }
   }
+}
+
+export function createDrawingShape(kind, nodes, extra = {}) {
+  return { id: uid("s"), kind, nodes, closed: false, text: "", note: "", ...extra, intent: "note" };
 }
 
 function ptSegDist(p, a, b) {
@@ -355,7 +360,8 @@ const fmtOffset = (o) => `${o >= 0 ? "+" : "−"}${Math.abs(o || 0).toFixed(1)} 
 // 軸断面なら切断面のモデル座標（例「Y = 49.9 mm」）。視線断面は通る点からの移動量だけ
 function planeWhere(plane, offset) {
   const k = { x: 0, y: 1, z: 2 }[plane && plane.axis];
-  if (k === undefined || !plane.origin || !plane.normal) return `位置 ${fmtOffset(offset)}`;
+  if (!plane?.origin || !plane?.normal) return `位置 ${fmtOffset(offset)}`;
+  if (k === undefined) return `位置 ${fmtOffset(planePosition(plane, offset))}`;
   const val = plane.origin[k] + plane.normal[k] * (offset || 0);
   return `${plane.axis.toUpperCase()} = ${val.toFixed(1)} mm`;
 }
@@ -597,10 +603,14 @@ const CSS = `
 .sk-num{width:68px;height:26px;padding:0 6px;border:1px solid var(--line,#2a3038);border-radius:var(--radius-sm,4px);background:var(--panel,#15181c);color:var(--text,#e6e8ea);font:12px ui-monospace,"Cascadia Mono",Consolas,monospace;text-align:right;user-select:text;-webkit-user-select:text}
 .sk-num:focus,.sk-note:focus,.sk-textin:focus{outline:none;border-color:var(--accent,#7c9cff)}
 .sk-range{flex:1 1 90px;min-width:70px;max-width:260px;accent-color:var(--accent,#7c9cff)}
+.sk-note-field{display:grid;grid-template-columns:auto minmax(120px,1fr);align-items:start;gap:8px;color:var(--text-2,#6a6257);font-size:12px}
+.sk-section-note{width:100%;min-height:52px;resize:vertical;padding:6px 8px;border:1px solid var(--line,#2a3038);border-radius:var(--radius-sm,4px);background:var(--panel,#15181c);color:var(--text,#e6e8ea);font:inherit;line-height:1.5;user-select:text;-webkit-user-select:text}
+.sk-section-note:focus{outline:none;border-color:var(--accent,#7c9cff)}
 .sk-spacer{flex:1 1 0}
 .sk-body{position:relative;flex:1 1 0;min-height:0;overflow:hidden}
 .sk-svg{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none}
 .sk-empty{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--mute,#78818c);pointer-events:none;text-align:center;padding:24px}
+.sk-no-cross{position:absolute;left:50%;top:18px;transform:translateX(-50%);max-width:calc(100% - 32px);padding:7px 10px;border:1px solid var(--warn,#c97b10);background:var(--panel,#15181c);color:var(--text,#e6e8ea);font-size:12px;text-align:center;pointer-events:none}
 .sk-foot{flex:none;display:flex;flex-direction:column;gap:2px;padding:5px 10px 6px;border-top:1px solid var(--line,#2a3038);background:var(--raised,#1c2026);font-size:12px}
 .sk-hint{color:var(--text-2,#aab2bc);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .sk-stat{display:flex;flex-wrap:wrap;align-items:center;gap:2px 14px;color:var(--mute,#78818c)}
@@ -664,8 +674,10 @@ export function createSketch(container, store, opts = {}) {
   let pointerInside = false;
   let lastInside = false;
   let lastDown = { t: 0, x: 0, y: 0, id: null };
-  let offsetEditing = false;
   let noteEditing = false;
+  let sectionNoteEditing = false;
+  let offsetEditing = false;
+  let offsetCopyRequested = null;
   let nudgeAt = 0;
   let raf = 0;
   let disposed = false;
@@ -685,37 +697,33 @@ export function createSketch(container, store, opts = {}) {
     button.append(h("span", { class: "sk-tool-label" }, t.label));
     return button;
   });
-  const intentBtns = Object.entries(INTENTS).map(([id, def]) =>
-    h("button", { class: "sk-chip", type: "button", "data-intent": id, title: def.hint, "aria-pressed": "false" },
-      h("span", { class: "sk-dot", style: `background:${def.color}` }), def.label));
-
+  const clipBtn = h("button", { class: "sk-btn", type: "button", title: "断面の手前側を 3D で隠す", "aria-pressed": "false", html: `${icon("half")}片側を隠す` });
   const offsetNum = h("input", { class: "sk-num", type: "number", step: "0.1", value: "0", "aria-label": "断面の位置（mm）", title: "断面の位置（法線方向、mm）" });
   const offsetRange = h("input", { class: "sk-range", type: "range", step: "0.1", min: "-100", max: "100", value: "0", "aria-label": "断面の位置" });
-  const clipBtn = h("button", { class: "sk-btn", type: "button", title: "断面の手前側を 3D で隠す", "aria-pressed": "false", html: `${icon("half")}片側を隠す` });
   const fitBtn = h("button", { class: "sk-btn", type: "button", title: "全体表示 (F)", html: `${icon("fit")}全体表示` });
   const closeBtn = h("button", { class: "sk-btn", type: "button", title: "2D を閉じる", html: `${icon("close")}閉じる` });
+  const sectionNote = h("textarea", { class: "sk-section-note", rows: "2", placeholder: "この断面について伝えたいことを書く", "aria-label": "断面のメモ" });
 
   const bar = h("div", { class: "sk-bar" },
-    h("div", { class: "sk-row" }, ...toolBtns, h("span", { class: "sk-sep" }), ...intentBtns),
+    h("div", { class: "sk-row" }, ...toolBtns),
     h("div", { class: "sk-row" },
       h("span", { class: "sk-lbl" }, "位置"), offsetNum, h("span", { class: "sk-lbl" }, "mm"), offsetRange, clipBtn,
-      h("span", { class: "sk-spacer" }), fitBtn, closeBtn));
+      h("span", { class: "sk-spacer" }), fitBtn, closeBtn),
+    h("label", { class: "sk-note-field" }, h("span", { class: "sk-lbl" }, "断面のメモ"), sectionNote));
 
   const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   svg.setAttribute("class", "sk-svg");
   svg.setAttribute("tabindex", "-1");
   svg.style.outline = "none";
   const emptyMsg = h("div", { class: "sk-empty" }, "断面がありません。3D の「断面」で面をクリックすると、ここに断面が出ます");
+  const noCrossMsg = h("div", { class: "sk-no-cross", hidden: true }, "平面がモデルと重なっていません。位置を調整してください");
 
   // 選択中の図形 1 つに出る小パネル
-  const popDots = Object.entries(INTENTS).map(([id, def]) =>
-    h("button", { class: "sk-pdot", type: "button", "data-intent": id, title: def.label, "aria-pressed": "false" },
-      h("span", { class: "sk-dot", style: `background:${def.color}` })));
   const popNote = h("input", { class: "sk-note", type: "text", placeholder: "メモ（シュビーへの説明）", "aria-label": "図形のメモ" });
   const popDel = h("button", { class: "sk-tool", type: "button", title: "削除 (Delete)", "aria-label": "削除", html: icon("trash") });
-  const pop = h("div", { class: "sk-pop", hidden: true }, ...popDots, popNote, popDel);
+  const pop = h("div", { class: "sk-pop", hidden: true }, popNote, popDel);
 
-  const body = h("div", { class: "sk-body" }, svg, emptyMsg, pop);
+  const body = h("div", { class: "sk-body" }, svg, emptyMsg, noCrossMsg, pop);
 
   const hintEl = h("div", { class: "sk-hint" });
   const curEl = h("b", {}, "—");
@@ -728,7 +736,7 @@ export function createSketch(container, store, opts = {}) {
   const root = h("div", { class: "sk-root", tabindex: "-1" }, bar, body, foot);
   container.append(root);
 
-  // ---- 状態の同期（道具バー・位置・小パネル・状態行）-------------------------
+  // ---- 状態の同期（道具バー・メモ・小パネル・状態行）-------------------------
   function offsetBounds(item) {
     let lo = -100, hi = 100;
     try {
@@ -743,27 +751,29 @@ export function createSketch(container, store, opts = {}) {
         if (Number.isFinite(mn) && Number.isFinite(mx) && mx > mn) { lo = Math.floor(mn); hi = Math.ceil(mx); }
       }
     } catch (e) { console.error("[sketch] modelBox", e); }
-    const off = Number(item.offset) || 0;
-    return [Math.min(lo, off), Math.max(hi, off)];
+    const base = planePosition(item.plane, 0);
+    const pos = planePosition(item.plane, Number(item.offset) || 0);
+    return [Math.min(base + lo, pos), Math.max(base + hi, pos)];
   }
 
   function syncUI() {
     const item = activeItem();
     const tool = store.state.sketchTool;
     toolBtns.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.tool === tool)));
-    intentBtns.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.intent === store.state.intent)));
     const def = TOOL_DEFS.find((t) => t.id === tool);
     hintEl.textContent = def ? def.hint : "";
     hintEl.title = def ? def.hint : "";
     snapBtn.textContent = snapOn ? "スナップ ON" : "スナップ OFF";
     snapBtn.setAttribute("aria-pressed", String(snapOn));
     for (const el of [offsetNum, offsetRange, clipBtn]) el.disabled = !item;
-    if (!item) { axisEl.textContent = ""; return; }
-    const off = Number(item.offset) || 0;
+    sectionNote.disabled = !item;
+    if (!item) { axisEl.textContent = ""; if (document.activeElement !== sectionNote) sectionNote.value = ""; return; }
+    const off = planePosition(item.plane, Number(item.offset) || 0);
     const [lo, hi] = offsetBounds(item);
     offsetRange.min = String(lo); offsetRange.max = String(hi);
     if (document.activeElement !== offsetNum) offsetNum.value = String(r2(off));
-    offsetRange.value = String(off);
+    if (document.activeElement !== offsetRange) offsetRange.value = String(off);
+    if (document.activeElement !== sectionNote) sectionNote.value = item.note || "";
     clipBtn.setAttribute("aria-pressed", String(!!item.clip));
     axisEl.textContent = axisName(item.plane);
   }
@@ -815,7 +825,7 @@ export function createSketch(container, store, opts = {}) {
       }
     }
     // 描きかけ
-    const intent = store.state.intent;
+    const intent = "note";
     const ctx = { P, T, prefix, ui: 1, selected: false, hover: false };
     const preview = (sh) => `<g opacity=".85">${shapeSVG(sh, ctx)}</g>`;
     const g = gesture;
@@ -858,10 +868,13 @@ export function createSketch(container, store, opts = {}) {
     if (!item || !size.w || !size.h) {
       svg.innerHTML = "";
       pop.hidden = true;
+      noCrossMsg.hidden = true;
       updateStatus();
       return;
     }
     const shapes = item.shapes || [];
+    const section = cache.get(item.id);
+    noCrossMsg.hidden = !section || section.loops.length > 0;
     const T = theme;
     const ctxBase = { P: toS, T, prefix, ui: 1 };
     let html = hatchDefs(prefix, 1);
@@ -894,7 +907,6 @@ export function createSketch(container, store, opts = {}) {
     const moving = gesture && (gesture.type === "move" || gesture.type === "node") && gesture.moved;
     if (!sel || moving || textEdit) { if (!noteEditing) pop.hidden = true; return; }
     pop.hidden = false;
-    popDots.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.intent === sel.intent)));
     if (document.activeElement !== popNote) popNote.value = sel.note || "";
     // 図形の下に出す。入りきらなければ上
     const b = shapeBounds(sel);
@@ -958,7 +970,7 @@ export function createSketch(container, store, opts = {}) {
     selection = [sh.id];
   }
   function newShape(kind, nodes, extra = {}) {
-    return { id: uid("s"), kind, intent: store.state.intent, nodes, closed: false, text: "", note: "", ...extra };
+    return createDrawingShape(kind, nodes, extra);
   }
   function patchShape(id, patch, history = true) {
     commitShapes(shapesOf().map((s) => (s.id === id ? { ...s, ...patch } : s)), { history });
@@ -1064,7 +1076,7 @@ export function createSketch(container, store, opts = {}) {
   function onPointerDown(e) {
     lastInside = true;
     // preventDefault するので自動では外れない入力欄のフォーカスを手で外す
-    if (document.activeElement === popNote || document.activeElement === offsetNum) document.activeElement.blur();
+    if ([popNote, sectionNote, offsetNum, offsetRange].includes(document.activeElement)) document.activeElement.blur();
     commitText();
     if (!activeItem()) return;
     const px = local(e);
@@ -1561,7 +1573,6 @@ export function createSketch(container, store, opts = {}) {
   on(window, "blur", () => { if (spaceDown) { spaceDown = false; requestRender(); } });
 
   toolBtns.forEach((b) => on(b, "click", () => { setTool(b.dataset.tool); b.blur(); }));
-  intentBtns.forEach((b) => on(b, "click", () => { store.set({ intent: b.dataset.intent }); b.blur(); }));
   on(fitBtn, "click", () => { fit(); fitBtn.blur(); });
   on(closeBtn, "click", () => store.set({ activeSectionId: null }));
   on(snapBtn, "click", () => { snapOn = !snapOn; syncUI(); snapBtn.blur(); });
@@ -1571,25 +1582,30 @@ export function createSketch(container, store, opts = {}) {
     clipBtn.blur();
   });
 
-  // 位置: 操作の始まりで 1 回だけ checkpoint し、途中は履歴に積まない
   function setOffset(v) {
-    const it = activeItem();
-    if (!it || !Number.isFinite(v)) return;
+    const item = activeItem();
+    if (!item || !Number.isFinite(v)) return;
+    if ((item.shapes || []).length) {
+      if (offsetCopyRequested !== item.id) {
+        offsetCopyRequested = item.id;
+        store.emit("section:copy-required", { id: item.id, mode: "translate" });
+      }
+      const current = planePosition(item.plane, Number(item.offset) || 0);
+      offsetNum.value = String(r2(current));
+      offsetRange.value = String(current);
+      return;
+    }
     if (!offsetEditing) { store.checkpoint(); offsetEditing = true; }
-    store.updateItem(it.id, { offset: v }, { history: false });
+    store.updateItem(item.id, { offset: v - planePosition(item.plane, 0) }, { history: false });
   }
-  on(offsetNum, "input", () => { setOffset(parseFloat(offsetNum.value)); });
+  on(offsetNum, "input", () => setOffset(parseFloat(offsetNum.value)));
   on(offsetNum, "change", () => { offsetEditing = false; });
   on(offsetNum, "blur", () => { offsetEditing = false; syncUI(); });
   on(offsetNum, "keydown", (e) => { e.stopPropagation(); if (e.key === "Enter") offsetNum.blur(); });
-  on(offsetRange, "input", () => { setOffset(parseFloat(offsetRange.value)); });
+  on(offsetRange, "input", () => setOffset(parseFloat(offsetRange.value)));
   on(offsetRange, "change", () => { offsetEditing = false; offsetRange.blur(); });
 
   // 小パネル
-  popDots.forEach((b) => on(b, "click", () => {
-    if (selection.length === 1) patchShape(selection[0], { intent: b.dataset.intent });
-    b.blur();
-  }));
   on(popDel, "click", () => { deleteSelection(); popDel.blur(); });
   on(popNote, "input", () => {
     if (selection.length !== 1) return;
@@ -1598,6 +1614,14 @@ export function createSketch(container, store, opts = {}) {
   });
   on(popNote, "blur", () => { noteEditing = false; });
   on(popNote, "keydown", (e) => { e.stopPropagation(); if (e.key === "Enter" || e.key === "Escape") popNote.blur(); });
+  on(sectionNote, "input", () => {
+    const item = activeItem();
+    if (!item) return;
+    if (!sectionNoteEditing) { store.checkpoint(); sectionNoteEditing = true; }
+    store.updateItem(item.id, { note: sectionNote.value }, { history: false });
+  });
+  on(sectionNote, "blur", () => { sectionNoteEditing = false; syncUI(); });
+  on(sectionNote, "keydown", (e) => { e.stopPropagation(); if (e.key === "Escape") sectionNote.blur(); });
 
   function onLoops(p) {
     if (!p || !p.id) return;
@@ -1617,6 +1641,7 @@ export function createSketch(container, store, opts = {}) {
     cursorSnap = null;
     closeTextEl();
     pendingFit = null;
+    offsetCopyRequested = null;
     const id = activeId();
     if (id && activeItem() && !fitted.has(id)) {
       if (cache.has(id)) { fitted.add(id); fit(); } else pendingFit = id; // 輪郭が届いたら onLoops で全体表示
@@ -1635,7 +1660,6 @@ export function createSketch(container, store, opts = {}) {
   }));
   disposers.push(store.on("change:activeSectionId", onActiveChanged));
   disposers.push(store.on("change:sketchTool", () => { syncUI(); requestRender(); }));
-  disposers.push(store.on("change:intent", () => syncUI()));
 
   let ro = null;
   if (typeof ResizeObserver !== "undefined") { ro = new ResizeObserver(() => resize()); ro.observe(body); }

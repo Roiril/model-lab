@@ -122,6 +122,7 @@ export function createViewport(container, store) {
 
   const initialTheme = themePalette();
   let bgColor = initialTheme.paper;
+  let cardColor = initialTheme.card;
   let inkColor = initialTheme.ink;
   let lineColor = initialTheme.line;
   let lineStrong = initialTheme.mute;
@@ -185,6 +186,7 @@ export function createViewport(container, store) {
   let ghost = null;
   let previewGroup = null;
   let previewBox = null;            // three（m）
+  let printPlate = null;
   let viewerCfg = null;
   let clip = null;                  // モデル座標 {origin, normal}
   const clipArr = [];               // 材質が共有する平面の配列（0 または 1 個）
@@ -248,6 +250,7 @@ export function createViewport(container, store) {
     }
     if (!meshes.length) return { min: [0, 0, 0], max: [0, 0, 0] };
     const min = [Infinity, Infinity, Infinity], max = [-Infinity, -Infinity, -Infinity];
+    // 配置を確認して指示を付けるため、床ではなくパーツが収まる大きさで表示する。
     for (const m of meshes) {
       const b = m.userData.bbox;
       for (let k = 0; k < 3; k++) {
@@ -308,10 +311,15 @@ export function createViewport(container, store) {
 
   const stopThemeWatch = watchTheme((palette) => {
     bgColor = palette.paper;
+    cardColor = palette.card;
     inkColor = palette.ink;
     lineColor = palette.line;
     lineStrong = palette.mute;
     scene.background.set(bgColor);
+    if (printPlate) {
+      printPlate.userData.floor.material.color.set(cardColor);
+      printPlate.userData.frame.material.color.set(palette.mute);
+    }
     if (meshes.length || previewGroup) updateScale();
     invalidate();
   });
@@ -629,13 +637,52 @@ export function createViewport(container, store) {
     previewBox = null;
   }
 
+  function clearPrintPlate() {
+    if (!printPlate) return;
+    modelRoot.remove(printPlate);
+    printPlate.traverse((o) => {
+      if (o.geometry) o.geometry.dispose();
+      if (o.material) o.material.dispose();
+    });
+    printPlate = null;
+  }
+
+  function setPrintPlate(bed) {
+    clearPrintPlate();
+    if (bed && Number.isFinite(bed.width) && Number.isFinite(bed.depth)) {
+      const width = bed.width, depth = bed.depth, z = -0.15;
+      const group = new THREE.Group();
+      group.name = "print-plate";
+      group.raycast = () => {};
+      const floor = new THREE.Mesh(
+        new THREE.PlaneGeometry(width, depth),
+        new THREE.MeshBasicMaterial({ color: new THREE.Color(cardColor), transparent: true, opacity: 0.2, side: THREE.DoubleSide, depthWrite: false }),
+      );
+      floor.position.set(width / 2, depth / 2, z);
+      floor.raycast = () => {};
+      const points = [[0, 0, z], [width, 0, z], [width, depth, z], [0, depth, z], [0, 0, z]];
+      const frame = new THREE.Line(
+        new THREE.BufferGeometry().setFromPoints(points.map((p) => new THREE.Vector3(...p))),
+        new THREE.LineBasicMaterial({ color: new THREE.Color(lineStrong), transparent: true, opacity: 0.85 }),
+      );
+      frame.raycast = () => {};
+      group.add(floor, frame);
+      group.userData = { floor, frame, printPlate: true };
+      printPlate = group;
+      modelRoot.add(group);
+    }
+    updatePlacement();
+    updateScale();
+    invalidate();
+  }
+
   async function fetchSTL(url) {
     const res = await fetch(url, { cache: "no-cache" });
     if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
     return res.arrayBuffer();
   }
 
-  async function loadSTLs(files, { fit: doFit = false } = {}) {
+  async function loadSTLs(files, { fit: doFit = false, frame = "blender-mm" } = {}) {
     const gen = ++loadGen;
     if (!files.length) {                               // 空 = 表示を空にする
       clearPreview();
@@ -652,15 +699,16 @@ export function createViewport(container, store) {
     for (const f of files) {
       try {
         const buf = await fetchSTL(f.url);
-        if (gen !== loadGen) return [];
+        if (gen !== loadGen) return null;
         const pos = parseSTL(buf);
         loaded.push({ name: f.name, pos, unitScale: inferUnitScale(pos) });
       } catch (e) {
         console.error(`[viewport] ${f.name}`, e);
         store.status(`${f.name} を読めませんでした: ${e.message}`, "err");
+        throw new Error(`${f.name}: ${e.message}`);
       }
     }
-    if (gen !== loadGen) return [];
+    if (gen !== loadGen) return null;
     if (!loaded.length && files.length) return [];
 
     clearPreview();
@@ -671,7 +719,7 @@ export function createViewport(container, store) {
       modelRoot.add(mesh);
     }
     syncFaceOutlines();
-    store.set({ frame: "blender-mm" });
+    store.set({ frame });
     updatePlacement();
     updateScale();
     if (doFit) fit();
@@ -679,27 +727,28 @@ export function createViewport(container, store) {
 
     // 形を先に 1 フレーム出してから、重い索引（BVH）を作る
     await nextFrame();
-    if (gen !== loadGen) return [];
+    if (gen !== loadGen) return null;
     for (const m of meshes) {
       m.geometry.computeBoundsTree({ indirect: true });
     }
     if (viewerCfg && viewerCfg.smoothNormals) {
       try { await Promise.all(meshes.map((m) => applySmooth(m, true))); } catch (e) { console.error("[viewport] smooth", e); }
     }
-    if (gen !== loadGen) return [];
+    if (gen !== loadGen) return null;
 
     const tris = meshes.reduce((s, m) => s + m.userData.triangles, 0);
     const sec = ((performance.now() - t0) / 1000).toFixed(1);
     const notes = [];
     if (meshes.some((m) => m.userData.unitScale !== 1)) notes.push("m 単位とみなして 1000 倍");
     store.status(`${tris.toLocaleString("ja-JP")} 三角形 · ${sec} 秒${notes.length ? " · " + notes.join(" · ") : ""}`, "ok");
-    store.emit("mesh:loaded", { meshes: meshes.slice(), frame: "blender-mm" });
+    store.emit("mesh:loaded", { meshes: meshes.slice(), frame });
     return meshes.slice();
   }
 
   // preview モジュール（three の m・Y 上）を置く
   function setPreviewGroup(group, { fit: doFit = false } = {}) {
     loadGen++;
+    clearPrintPlate();
     clearMeshes();
     clearPreview();
     if (ghost) setGhost(null);
@@ -1002,6 +1051,7 @@ export function createViewport(container, store) {
     canvas.removeEventListener("pointerleave", onLeave);
     clearMeshes();
     clearPreview();
+    clearPrintPlate();
     controls.dispose();
     renderer.dispose();
     if (worker) worker.terminate();
@@ -1012,7 +1062,7 @@ export function createViewport(container, store) {
 
   return {
     THREE, renderer, scene, camera, controls, canvas, modelRoot, overlay, labels,
-    loadSTLs, setPreviewGroup,
+    loadSTLs, setPreviewGroup, setPrintPlate,
     getMeshes: () => meshes,
     setGhost, getGhostGeometry,
     pick, toModel, toWorld, modelBox,

@@ -3,12 +3,25 @@
 
 import { uvToModel } from "./frames.js";
 import { sampleShape } from "./sketch.js";
+import { plateLayoutSnapshot, platePartForFile } from "./layout.js";
 
 const POLYLINE_STEP = 0.5; // mm
 
 function clone(x) { return JSON.parse(JSON.stringify(x)); }
 
-function meshFileInfo(mesh, fileInfos) {
+function plateProvenance(layout, file) {
+  const part = platePartForFile(layout, file);
+  if (!part) return {};
+  return {
+    sourcePart: part.sourcePart,
+    objectId: part.objectId,
+    buildTransform: clone(part.buildTransform),
+    sourceFile: part.sourceFile,
+    sha256: part.sha256,
+  };
+}
+
+function meshFileInfo(mesh, fileInfos, layout) {
   const file = mesh.userData.file;
   const unitScale = mesh.userData.unitScale ?? 1;
   let bbox = mesh.userData.bbox || null;
@@ -24,7 +37,7 @@ function meshFileInfo(mesh, fileInfos) {
   }
   const placed = mesh.userData.placed ?? /print|plate|split/i.test(file || "");
   const info = fileInfos.find((f) => f.name === file);
-  return { file, unitScale, bbox, placed: !!placed, mtime: info ? info.mtime : null };
+  return { file, unitScale, bbox, placed: !!placed, mtime: info ? info.mtime : null, ...plateProvenance(layout, file) };
 }
 
 // 戻り値: { request, images } | null（指示もメッセージも無いときは送らないので null）
@@ -32,12 +45,13 @@ export async function buildRequest({ store, viewport, sections, sketch }) {
   const draft = clone(store.state.draft);
   const model = store.state.model;
   const frame = store.state.frame;
+  const layout = clone(store.state.layout || { kind: "assembled" });
   const message = (draft.message || "").trim();
   if (!draft.items.length && !message) return null;
 
   const images = {};
   const fileInfos = store.state.files || [];
-  const files = viewport.getMeshes().map((m) => meshFileInfo(m, fileInfos));
+  const files = viewport.getMeshes().map((m) => meshFileInfo(m, fileInfos, layout));
 
   // 3D の見た目（指示の重ね描き込み）
   try {
@@ -53,6 +67,7 @@ export async function buildRequest({ store, viewport, sections, sketch }) {
   for (const src of draft.items) {
     const it = clone(src);
     delete it.faceIds; // ビューワー内だけで使う。要約（summary）だけを送る
+    Object.assign(it, plateProvenance(layout, it.file));
 
     if (it.type === "section") {
       sectionNo += 1;
@@ -93,6 +108,7 @@ export async function buildRequest({ store, viewport, sections, sketch }) {
     model,
     message,
     frame,
+    layout: plateLayoutSnapshot(layout),
     files,
     camera: viewport.cameraInfo(),
     images: Object.keys(images),

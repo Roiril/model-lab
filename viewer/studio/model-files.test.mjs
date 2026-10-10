@@ -7,4 +7,6 @@ assert.equal(selectModelFile("pipe-foot", files, models), "pipe_foot_asm.stl");
 assert.equal(selectModelFile("missing", files, models), null);
 assert.equal(selectModelFile("round-bot", files, models), "round-bot.stl");
 assert.equal(selectModelFile("pipe-foot", ["pipe_foot_corner_a.stl"], models), null);
-console.log("model files: 5 assertions passed");
+assert.deepEqual(filesForModel("pipe-foot", ["pipe_foot-studio-plate-abc-lid-1.stl"], models), []);
+assert.equal(selectModelFile("pipe-foot", ["pipe_foot-studio-plate-abc-lid-1.stl"], models), null);
+console.log("model files: 7 assertions passed");

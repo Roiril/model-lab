@@ -1,0 +1,294 @@
+{
+  "version": 1,
+  "model": "mystery-box-sg92r-c1",
+  "kind": "plate",
+  "id": "6f4beaba95b69735e8f9dbb636404e88be894d59603d2e90fd65b11291801261",
+  "source3mf": "mystery-box-sg92r-c1-plate.3mf",
+  "source3mfSha256": "6f4beaba95b69735e8f9dbb636404e88be894d59603d2e90fd65b11291801261",
+  "bed": {
+    "width": 256,
+    "depth": 256
+  },
+  "parts": [
+    {
+      "file": "mystery-box-sg92r-c1-studio-plate-6f4beaba95b6-box-1.stl",
+      "sourcePart": "mystery-box-sg92r-c1-box",
+      "sourceFile": "mystery-box-sg92r-c1-box.stl",
+      "objectId": "1",
+      "buildTransform": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        53.2286,
+        111.2,
+        0.0
+      ],
+      "sha256": "51b6acabfa166aa1452b29b46d9ccbffd335bf51d9d067cf52e817a1b052e276",
+      "size": 320484,
+      "bbox": {
+        "min": [
+          18.228599548339844,
+          76.19999694824219,
+          0.0
+        ],
+        "max": [
+          88.22859954833984,
+          146.1999969482422,
+          69.99320220947266
+        ]
+      },
+      "source": {
+        "file": "mystery-box-sg92r-c1-box.stl",
+        "sha256": "57911cf2975aa3fcea0254ba6984c0a0d4e5b14386887e0772f4db3add0b60ec",
+        "size": 320484,
+        "mtime": 1791616931625.3457
+      }
+    },
+    {
+      "file": "mystery-box-sg92r-c1-studio-plate-6f4beaba95b6-lid-2.stl",
+      "sourcePart": "mystery-box-sg92r-c1-lid",
+      "sourceFile": "mystery-box-sg92r-c1-lid.stl",
+      "objectId": "2",
+      "buildTransform": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        128.807,
+        110.9792,
+        0.0
+      ],
+      "sha256": "f6a5ffa274e6c5cb3f4a59cef4f54b23a17074b72f69d1addbf3d89796cc1a9a",
+      "size": 516884,
+      "bbox": {
+        "min": [
+          94.22859954833984,
+          76.19999694824219,
+          0.0
+        ],
+        "max": [
+          163.38540649414062,
+          145.75840759277344,
+          23.299999237060547
+        ]
+      },
+      "source": {
+        "file": "mystery-box-sg92r-c1-lid.stl",
+        "sha256": "5ba77574a39d4016a24152db856c6b9aa99a0fbe3a2b1a7c163f088d27500c7e",
+        "size": 516884,
+        "mtime": 1791616931642.9016
+      }
+    },
+    {
+      "file": "mystery-box-sg92r-c1-studio-plate-6f4beaba95b6-crank-3.stl",
+      "sourcePart": "mystery-box-sg92r-c1-crank",
+      "sourceFile": "mystery-box-sg92r-c1-crank.stl",
+      "objectId": "3",
+      "buildTransform": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        189.6784,
+        97.8314,
+        0.0
+      ],
+      "sha256": "ec7d5eef649af48c10fcae9498b59f0997dfffd628fd03b0f2b6f19b211e9e69",
+      "size": 234484,
+      "bbox": {
+        "min": [
+          169.38540649414062,
+          76.19999694824219,
+          0.0
+        ],
+        "max": [
+          209.97140502929688,
+          119.46279907226562,
+          11.699999809265137
+        ]
+      },
+      "source": {
+        "file": "mystery-box-sg92r-c1-crank.stl",
+        "sha256": "c95d139f7983ae7e5c1aa4d2f16c702ef7308e677a9d5d92c05533360e5d7e33",
+        "size": 234484,
+        "mtime": 1791616931659.894
+      }
+    },
+    {
+      "file": "mystery-box-sg92r-c1-studio-plate-6f4beaba95b6-clip-4.stl",
+      "sourcePart": "mystery-box-sg92r-c1-clip",
+      "sourceFile": "mystery-box-sg92r-c1-clip.stl",
+      "objectId": "4",
+      "buildTransform": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        226.8714,
+        97.7,
+        0.0
+      ],
+      "sha256": "5363bc312f1765f6c906f383a3c9ce5c74328484f6634d2460b170c55b42391a",
+      "size": 2684,
+      "bbox": {
+        "min": [
+          215.97140502929688,
+          76.19999694824219,
+          0.0
+        ],
+        "max": [
+          237.77139282226562,
+          119.19999694824219,
+          6.5
+        ]
+      },
+      "source": {
+        "file": "mystery-box-sg92r-c1-clip.stl",
+        "sha256": "62560c952469d647298e8fd0ff6aaaafc1968b4e8cd1f7d96229d6e9d4e0d296",
+        "size": 2684,
+        "mtime": 1791616931693.6926
+      }
+    },
+    {
+      "file": "mystery-box-sg92r-c1-studio-plate-6f4beaba95b6-speaker_clip-5.stl",
+      "sourcePart": "mystery-box-sg92r-c1-speaker_clip",
+      "sourceFile": "mystery-box-sg92r-c1-speaker_clip.stl",
+      "objectId": "5",
+      "buildTransform": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        32.3286,
+        166.0,
+        0.0
+      ],
+      "sha256": "8754f1ecf7e89321f8922a45916f876060347a1d937b4d40412c61d39b033f75",
+      "size": 5484,
+      "bbox": {
+        "min": [
+          18.228599548339844,
+          152.1999969482422,
+          0.0
+        ],
+        "max": [
+          46.4286003112793,
+          179.8000030517578,
+          3.0
+        ]
+      },
+      "source": {
+        "file": "mystery-box-sg92r-c1-speaker_clip.stl",
+        "sha256": "46ef5b6f542750ce1561727fd54a6d7dd39e6d21608584f8a993f7c4a94df81f",
+        "size": 5484,
+        "mtime": 1791616931709.8896
+      }
+    },
+    {
+      "file": "mystery-box-sg92r-c1-studio-plate-6f4beaba95b6-link-6.stl",
+      "sourcePart": "mystery-box-sg92r-c1-link",
+      "sourceFile": "mystery-box-sg92r-c1-link.stl",
+      "objectId": "6",
+      "buildTransform": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        77.3042,
+        158.2,
+        0.0
+      ],
+      "sha256": "cfa3ca2e327f25f173afa64be60f5d1588abc750c09c5a5754fbf2f4e77acd48",
+      "size": 217384,
+      "bbox": {
+        "min": [
+          52.4286003112793,
+          152.1999969482422,
+          0.0
+        ],
+        "max": [
+          102.17980194091797,
+          164.1999969482422,
+          10.600000381469727
+        ]
+      },
+      "source": {
+        "file": "mystery-box-sg92r-c1-link.stl",
+        "sha256": "9086c7be1a79a4922ee30efa74a6812be1735ab2965de93e5f36e0a69e8021b7",
+        "size": 217384,
+        "mtime": 1791616931676.5107
+      }
+    },
+    {
+      "file": "mystery-box-sg92r-c1-studio-plate-6f4beaba95b6-pin-7.stl",
+      "sourcePart": "mystery-box-sg92r-c1-pin",
+      "sourceFile": "mystery-box-sg92r-c1-pin.stl",
+      "objectId": "7",
+      "buildTransform": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        143.1158,
+        154.85,
+        0.0
+      ],
+      "sha256": "9f5a661bf1454a2a9031e24272674e5eef677eb5a59f0c0911c45ce5d470affd",
+      "size": 82884,
+      "bbox": {
+        "min": [
+          108.17980194091797,
+          152.1999969482422,
+          0.0
+        ],
+        "max": [
+          178.0518035888672,
+          157.5,
+          4.601600170135498
+        ]
+      },
+      "source": {
+        "file": "mystery-box-sg92r-c1-pin.stl",
+        "sha256": "b6fac3cb1964dfed6fdff4168220a2c024f701dba91157c8572ba38e289d8d4d",
+        "size": 82884,
+        "mtime": 1791616931723.8035
+      }
+    }
+  ]
+}

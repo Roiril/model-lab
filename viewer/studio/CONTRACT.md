@@ -13,6 +13,8 @@
 - **座標**: 指示の座標はすべて「モデル座標」= STL の生の値（通常 Blender ワールド mm、Z 上）。`[x,y,z]` の配列で持つ（THREE.Vector3 を store に入れない）。**変換はすべて `frames.js` に置き、他のファイルで行列や基底を書かない**
 - STL の単位は 1 ファイルずつ推定する（bbox の最大寸法が 2 未満なら m 単位とみなし表示倍率 1000 倍）。推定結果は mesh.userData.unitScale（mm/STL単位）に持ち、依頼に残す。モデル座標は常に「STL の生の値 × unitScale」= mm
 - **preview モジュール表示中（frame === "preview-m-yup"）は指示の道具を使えない**。ヒント行に「指示を付けるには STL を表示」と出し、STL 表示へ切り替えるボタンを出す
+- `state.layout` は組立表示で `{kind:"assembled"}`、印刷プレート表示で §6 の manifest。座標系は組立が `frame:"blender-mm"`、印刷プレートが `frame:"plate-mm"`
+- 組立の下書きキーは従来どおり `studio.draft.<model>`。印刷プレートは `studio.draft.<model>.plate.<manifest.id>`。切替時に undo / redo も空にし、互いの指示を混ぜない
 - **faceId = STL ファイル内の三角形の順番**（0 始まり）。BVH は `indirect: true` で作り index を並べ替えさせない
 - **キー入力は app.js が一括で受ける**。2D エディタ上にポインタがある（または最後に触った）ときは `sketch.handleKey(e)` に先に渡し、true が返れば終わり。そうでなければ 3D の道具キー
 - 画面の文字は日本語。短く、実装の呼び名（faceId, bvh, loop 等）を出さない
@@ -28,6 +30,10 @@
 | `mesh:loaded` | `{meshes, frame}` | viewport | 表示メッシュが入れ替わった |
 | `ghost:loaded` | `{geometry \| null}` | viewport | 比較用ゴーストが入れ替わった（geometry はモデル座標） |
 | `section:loops` | `{id, loops, ghostLoops, bounds}` | section | 断面を切り直した。loops = `[{points:[[u,v],...], closed}]`、bounds = `{min:[u,v], max:[u,v]}` |
+| `section:create` | `{axis?,point?,normal?,file?,copyFrom?,replaceActive?}` | app / panels | 中央、選んだ面、または複製元から断面を作る。`replaceActive` は空の断面だけ同じ ID で更新する |
+| `section:created` | `{id,replaced,copyFrom}` | section | 作成または向き変更が終わった |
+| `section:transform` | `{mode:"translate"|"rotate"|"off"}` | panels / app | 3D 上の断面調整を始める、または終える |
+| `section:copy-required` | `{id,mode}` | section | 図形付き断面を残して複製してから調整する必要がある |
 | `popover` | 下記 | picking | 確定待ちの入力を UI に出してほしい |
 | `popover:close` | — | picking / panels | サイドの編集欄を閉じ、仮置きのピンを消す |
 | `status` | `{text, kind}` | 誰でも | 右下の状態表示 |
@@ -35,7 +41,7 @@
 | `viewport:pointer` | `{point \| null}` | viewport | 3D でカーソル下のモデル座標（ヒント行の座標表示用、間引いて出す） |
 
 `popover` payload:
-- 面: `{kind:"faces", x, y, file, faceIds, summary}`（x,y は画面座標 px）。UI が確定したら `store.addItem({type:"faces", file, faceIds, summary, action, amount, note})` → `store.set({selection: []})`
+- 面: `{kind:"faces", x, y, file, faceIds, summary}`（x,y は画面座標 px）。UI は自由メモだけを受け、`store.addItem({type:"faces", file, faceIds, summary, note})` → `store.set({selection: []})`。従来の `action / amount / side` は読み取り互換を保つ
 - ピン: `{kind:"pin", x, y, file, point, normal}`。UI が確定したら `store.addItem({type:"pin", file, point, normal, note})`
 
 面とピンの編集欄は `#inspector` 内へ表示する。3D画面を覆わず、操作を無効にしない。小画面ではモデルと編集欄を上下に分ける。面の再選択では件数と範囲だけ更新し、入力中の内容を保つ。通常クリックでモデルに当たらなければ既存の面選択処理で解除する。Shift/Alt と視点ドラッグの動作は変えない。
@@ -96,6 +102,7 @@ export function createViewport(container, store) -> {
   overlay,       // Group（modelRoot の子）。指示の可視化をモデル座標で置く
   labels,        // { add(el, [x,y,z]) -> {setPos([x,y,z]), remove()} }  画面上の HTML ラベル（CSS2DRenderer）
   async loadSTLs([{name, url}], {fit}) -> meshes,  // 各 mesh: userData.file、geometry は index 付き＋boundsTree 済み
+  setPrintPlate({width, depth} | null),             // 256×256 mm の床と枠。getMeshes / pick / section の対象外
   setPreviewGroup(group, {fit}),                    // preview モード。frame を "preview-m-yup" に
   getMeshes() -> [Mesh],
   async setGhost(url | null),                       // 比較用 STL を半透明で。ghost:loaded を出す
@@ -144,6 +151,9 @@ export function sliceGeometry(geometry, plane, offset, bvh?) -> loops  // geomet
 - plane / offset が変わったら切り直す（ドラッグ中は 60ms 程度で間引く）。メッシュ・ゴーストの差し替えでも切り直す。結果を `section:loops` で出す
 - 1M 三角形で 1 回の切断が 150ms 以内を目安（BVH の shapecast で平面と交わる三角形だけ見る）
 - `item:focus` が section なら平面を正面から見るカメラにする
+- 断面を選んだ最初の時は、モデル中央に `view` 断面を 1 枚作る。アクティブな断面があれば再利用する
+- 向き変更は `section:create {axis,replaceActive:true}`。図形のない断面は更新する。図形があれば元を残して空の断面を作る
+- 移動は平面の法線方向。回転は平面の局所 XYZ。Shift 中は 15° 刻みにする。道具、モデル、表示方法を替える時は `off` に戻す
 
 ### sketch.js（担当 C）
 ```js
@@ -156,10 +166,13 @@ export function sampleShape(shape, step = 0.5) -> [[u, v], ...]   // 図形を s
 // 返り値のオブジェクトには handleKey(e) -> bool と isFocused() -> bool も含める
 ```
 - v1 の道具: select / pen / line / curve / rect / ellipse / arrow / text（dim は作らない。寸法は 3D の「測る」）
-- container の中にエディタ一式（上の道具バー・意図の切替・断面の位置 mm 入力とスライダー・片側を隠す切替・閉じる、下の座標表示）を自分で作る
+- container の中にエディタ一式（上の道具バー・断面の自由メモ・位置入力・片側を隠す切替・閉じる、下の座標表示）を自分で作る
 - 表示するのは `state.activeSectionId` の断面。`section:loops` を受けて描き直す
 - 図形の編集は `store.updateItem(id, {shapes})`。ドラッグ開始で `store.checkpoint()`、ドラッグ中は `{history:false}`
-- 位置スライダーは `store.updateItem(id, {offset}, {history:false})`（開始時 checkpoint）
+- 新しい図形は `intent:"note"`。既存の図形に保存された従来の intent は描画と送信で維持する
+- 位置入力は空の断面だけを直接動かす。図形がある場合は `section:copy-required` を出し、元の断面を残す
+- 位置入力は `planePosition(plane, offset)` の原点から法線方向への絶対位置を表示する。入力値から `dot(plane.origin, plane.normal)` を引いた値を offset にする
+- モデルと交差する輪郭が 0 本なら位置調整の案内を表示する。描画操作は止めない
 - キー: `handleKey(e)` で V P L B R O A T、Delete/Backspace、Enter、Esc、Space（パン）、F（全体表示）を処理して true を返す。Ctrl+Z は返さない（app.js が store.undo）。テキスト入力中は app.js が呼ばない
 - 断面が無いとき container は空でよい（app.js が表示を切り替える）
 
@@ -168,6 +181,7 @@ export function sampleShape(shape, step = 0.5) -> [[u, v], ...]   // 図形を s
 - 上部に「シュビー」の在席表示: `GET /api/listener` → `{listening, agent, at}`（WS の `listener` でも届く）。待ち受け中 / 不在
 - bundle.js: `async buildRequest({store, viewport, sections, sketch}) -> {request, images}`（faceIds を落とす、section に loops / 画像名、shape に polyline / polyline3d を足す、view.png）
 - panels.js: topbar、左レール、ヒント行（道具ごとの説明と、角度・半径・軸の切替）、インスペクタ（指示 / パラメータ / 履歴）、コマンドパレット、ポップオーバー、トースト
+- 履歴の見出しはメッセージ、最初の自由メモ、種類別件数の順で選ぶ。展開時は自由メモと断面画像を先に表示し、`request.json` から図形の `kind / name / text / note` だけを遅延読込する
 - app.js: 起動・モデル読み込み（旧 viewer/index.html の STL 選びの規則をそのまま移植）・キーボード・配線
 
 ## 4.1 実装後に足されたもの（2026-10-07 結合時）
@@ -211,3 +225,13 @@ font: var(--fs-sm)/1.5 var(--font-ui); 数値は var(--font-mono)
 - 罫線は 1px。基本余白は 16px / 24px。見出しは `var(--font-heading)`。
 - 3D と 2D の背景は `paper`。グリッドは `line`。材料の陰影は維持する。輪郭線は `ink`。ゴーストは `mute` の点線。
 - 375px 幅では操作対象を 44px 以上にする。入力は 16px 以上。共通ヘッダー、3D、編集欄、下部の道具が重ならないようにする。
+
+## 6. 印刷プレート
+
+- manifest は `GET /viewer/studio/plates/<model>.json` を `cache:"no-cache"` で読む。404 はプレート未作成として扱う
+- 形は `{version:1, model, kind:"plate", id, source3mf, source3mfSha256, bed:{width,depth}, parts:[...]}`
+- 各 part は `{file, sourcePart, sourceFile, objectId, buildTransform, sha256, size, bbox, source:{file,sha256,size,mtime}}`。`buildTransform` は 12 数値
+- `source.file / size / mtime` を `/api/stls` の一覧と照合する。時刻差は 1.1 ms まで許容する。古ければ切替と指示送信を止め、「印刷プレートを更新してください」と表示する
+- 組立表示の STL 候補から `-studio-plate-` を含む派生 STL を除く。印刷プレート表示の候補は manifest の parts だけ
+- `request.layout` は組立なら `{kind:"assembled"}`。印刷プレートなら `{kind:"plate",id,source3mf,source3mfSha256,manifestVersion:1}`
+- 印刷プレートの `request.files` と各 item には、該当 part の `sourcePart / objectId / buildTransform / sourceFile` を写す。files には `sha256` も写す

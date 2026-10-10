@@ -25,6 +25,76 @@ export const norm = (a) => {
   const l = len(a);
   return l > 0 ? [a[0] / l, a[1] / l, a[2] / l] : [0, 0, 0];
 };
+const finite3 = (a) => Array.isArray(a) && a.length === 3 && a.every(Number.isFinite);
+
+// u を優先して v を直交化する。normal は必ず u × v から作り直す。
+export function orthonormalPlane(plane) {
+  if (!plane || !finite3(plane.origin) || !finite3(plane.u) || !finite3(plane.v)) {
+    throw new Error("orthonormalPlane: 平面の座標が不正です");
+  }
+  const u = norm(plane.u);
+  if (len(u) < 0.5) throw new Error("orthonormalPlane: u の長さがありません");
+  const v0 = sub(plane.v, scale(u, dot(plane.v, u)));
+  const v = norm(v0);
+  if (len(v) < 0.5) throw new Error("orthonormalPlane: u と v が平行です");
+  const normal = norm(cross(u, v));
+  return { axis: plane.axis || "view", origin: plane.origin.slice(), normal, u, v };
+}
+
+// offset を統合した実際の平面位置と正規直交基底。回転ギズモの中心に使う。
+export function planeFrame(plane, offset = 0) {
+  if (!Number.isFinite(offset)) throw new Error("planeFrame: offset が不正です");
+  const p = orthonormalPlane(plane);
+  return { origin: add(p.origin, scale(p.normal, offset)), normal: p.normal, u: p.u, v: p.v };
+}
+
+// 軸断面でもハンドルを部品上へ置けるよう、中心を同じ平面へ射影する。
+export function planeHandleFrame(plane, offset = 0, center = null) {
+  const frame = planeFrame(plane, offset);
+  if (center === null) return frame;
+  if (!finite3(center)) throw new Error("planeHandleFrame: 中心が不正です");
+  const distance = dot(sub(center, frame.origin), frame.normal);
+  return { ...frame, origin: sub(center, scale(frame.normal, distance)) };
+}
+
+// ギズモの位置・ローカル X/Y から、offset を 0 に統合した平面を作る。
+export function planeFromFrame(origin, u, v, axis = "view") {
+  return orthonormalPlane({ axis, origin, u, v });
+}
+
+// 面法線から安定した u/v を作る。画面右を面へ射影し、平行なら最も離れたモデル軸を使う。
+export function makePlaneFromNormal(point, normal, cameraAxes) {
+  if (!finite3(point) || !finite3(normal)) throw new Error("makePlaneFromNormal: 点または法線が不正です");
+  const n = norm(normal);
+  if (len(n) < 0.5) throw new Error("makePlaneFromNormal: 法線の長さがありません");
+  const candidates = [];
+  if (cameraAxes && finite3(cameraAxes.right)) candidates.push(cameraAxes.right);
+  candidates.push([1, 0, 0], [0, 1, 0], [0, 0, 1]);
+  let u = null;
+  for (const candidate of candidates) {
+    const projected = sub(candidate, scale(n, dot(candidate, n)));
+    if (len(projected) > 1e-8) { u = norm(projected); break; }
+  }
+  if (!u) throw new Error("makePlaneFromNormal: u を作れません");
+  const v = norm(cross(n, u));
+  return { axis: "view", origin: point.slice(), normal: n, u, v };
+}
+
+// 表示用 modelBox に依存せず、実メッシュの bbox だけから中心を求める。
+export function meshBoundsCenter(meshes) {
+  const min = [Infinity, Infinity, Infinity], max = [-Infinity, -Infinity, -Infinity];
+  let found = false;
+  for (const mesh of meshes || []) {
+    const b = mesh && mesh.userData && mesh.userData.bbox;
+    if (!b || !finite3(b.min) || !finite3(b.max)) continue;
+    found = true;
+    for (let axis = 0; axis < 3; axis++) {
+      min[axis] = Math.min(min[axis], b.min[axis]);
+      max[axis] = Math.max(max[axis], b.max[axis]);
+    }
+  }
+  return found ? min.map((value, axis) => (value + max[axis]) / 2) : null;
+}
 
 // 視線に最も近い軸（x / y / z）。cameraAxes 無しなら z
 function pickAxis(cameraAxes) {
