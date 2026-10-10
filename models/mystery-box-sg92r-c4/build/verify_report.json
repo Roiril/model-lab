@@ -1,0 +1,6996 @@
+{
+  "pass": true,
+  "calibration": {
+    "topology": {
+      "closed_bad_edges": 0,
+      "open_bad_edges": 3,
+      "one_component_fixture": 1,
+      "two_component_fixture": 2,
+      "pass": true
+    },
+    "collision": {
+      "overlap": {
+        "hits": 10,
+        "depth": 1.0
+      },
+      "clear": {
+        "hits": 0,
+        "depth": 0.0
+      },
+      "pass": true
+    },
+    "exact_volume": {
+      "positive_expected_mm3": 0.5,
+      "positive_common_volume_mm3": 0.5,
+      "negative_expected_mm3": 0.0,
+      "negative_common_volume_mm3": 0.0,
+      "pass": true
+    }
+  },
+  "source_stl_integrity": {
+    "start": {
+      "aggregate_sha256": "a306eb6b5d27e387374a4dc5a1518c1cfdaaae80888b145d2112c974d7a72d8c",
+      "per_file_sha256": {
+        "housing": "dc62b38a0bc8b8f8d1317974a73b499c75e3d86900755678a9dda1fe6078696d",
+        "faceplate": "e7adf56c7dd9f593a2ca5a744eb037d541cae5eb060fbb4ed9a50b52ae7e2eb5",
+        "guide_frame": "b86ef928d268a88f4c72498a86b65483b8771beec0576ff802a69ef93bf45d77",
+        "bottom": "4b3e531e67d26c2e5adc570c6c63589d094fb205a009d1f3639e6eeab2f6fad4",
+        "carrier_center": "4a32bb9e1c62ee342bdb8770579d573b69c32742aca8f09f180bc8a871a2be5d",
+        "carrier_inner": "77fad60da7459269d6d7262df492787723b4e67149e61650c6409be1ae16a7ee",
+        "carrier_outer": "59a4a4e621b836b2a21fc87d40ce21236e58014970a93d45cb1173d070d13d91",
+        "camshaft": "03c5f2759cd2adc41e8eecb0dd341b07a71c1be6150f196d79931b91506b8a54",
+        "horn_coupler": "15714fadb54f1fd8ec6311a2cd32f520bb159b44915c027de7e0fb4e613b9098",
+        "cam_center": "b0c48a7e8c10af68ddfd76e8deaf73bd07de8cb0e109d8043b0e7ff969f2ffdb",
+        "cam_inner": "68253d51657e34016347cf1ac80de5aec28f49a4b85241a21b6232f4e3b5011c",
+        "cam_outer": "253f6882012b1a249e980755d6fdab48ac696a224a6bf05da2801cce1449789c",
+        "bearing_keeper": "d9313bc753158604f1a3a1fa1475ddedeadcb45691a0f3a61e6207180630b150",
+        "servo_clip": "f5897b68e65625f44dee89e915a6825951284c27c5df30048fbb6f7999c89299",
+        "servo_body": "672f101648914f7dc0045c2cde3bb77e1868c657e178132d87d06bdff9d3c9a8",
+        "servo_horn": "d6e7581121fece2f9c80a9bb54882d23ebe1da32e995674e8a70c5c2ab011cda",
+        "servo_wire": "52a0af6a6ee4a0eb8fb437a83b9c9e41ea8c3d45c4048f9588c950d92a66429c"
+      }
+    },
+    "end": {
+      "aggregate_sha256": "a306eb6b5d27e387374a4dc5a1518c1cfdaaae80888b145d2112c974d7a72d8c",
+      "per_file_sha256": {
+        "housing": "dc62b38a0bc8b8f8d1317974a73b499c75e3d86900755678a9dda1fe6078696d",
+        "faceplate": "e7adf56c7dd9f593a2ca5a744eb037d541cae5eb060fbb4ed9a50b52ae7e2eb5",
+        "guide_frame": "b86ef928d268a88f4c72498a86b65483b8771beec0576ff802a69ef93bf45d77",
+        "bottom": "4b3e531e67d26c2e5adc570c6c63589d094fb205a009d1f3639e6eeab2f6fad4",
+        "carrier_center": "4a32bb9e1c62ee342bdb8770579d573b69c32742aca8f09f180bc8a871a2be5d",
+        "carrier_inner": "77fad60da7459269d6d7262df492787723b4e67149e61650c6409be1ae16a7ee",
+        "carrier_outer": "59a4a4e621b836b2a21fc87d40ce21236e58014970a93d45cb1173d070d13d91",
+        "camshaft": "03c5f2759cd2adc41e8eecb0dd341b07a71c1be6150f196d79931b91506b8a54",
+        "horn_coupler": "15714fadb54f1fd8ec6311a2cd32f520bb159b44915c027de7e0fb4e613b9098",
+        "cam_center": "b0c48a7e8c10af68ddfd76e8deaf73bd07de8cb0e109d8043b0e7ff969f2ffdb",
+        "cam_inner": "68253d51657e34016347cf1ac80de5aec28f49a4b85241a21b6232f4e3b5011c",
+        "cam_outer": "253f6882012b1a249e980755d6fdab48ac696a224a6bf05da2801cce1449789c",
+        "bearing_keeper": "d9313bc753158604f1a3a1fa1475ddedeadcb45691a0f3a61e6207180630b150",
+        "servo_clip": "f5897b68e65625f44dee89e915a6825951284c27c5df30048fbb6f7999c89299",
+        "servo_body": "672f101648914f7dc0045c2cde3bb77e1868c657e178132d87d06bdff9d3c9a8",
+        "servo_horn": "d6e7581121fece2f9c80a9bb54882d23ebe1da32e995674e8a70c5c2ab011cda",
+        "servo_wire": "52a0af6a6ee4a0eb8fb437a83b9c9e41ea8c3d45c4048f9588c950d92a66429c"
+      }
+    },
+    "pass": true
+  },
+  "dimensions": {
+    "closed_mm": [
+      76.0,
+      76.0,
+      76.0
+    ],
+    "raised_height_mm": 81.909,
+    "raised_height_source": "STL実頂点へservo=170度のmotion変換を適用した最大Z",
+    "face_count": 19,
+    "ring_counts": [
+      1,
+      6,
+      12
+    ],
+    "hex_open_flat_mm": 11.2,
+    "pitch_mm": 12.4
+  },
+  "stl_direct_parse": {
+    "housing": {
+      "triangles": 2722,
+      "bad_edges": 0,
+      "degenerate_triangles": 0,
+      "connected_components": 1,
+      "signed_volume_mm3": 64475.119,
+      "bounds_mm": [
+        [
+          -38.0,
+          -38.0,
+          0.0
+        ],
+        [
+          38.0,
+          38.0,
+          74.0
+        ]
+      ],
+      "pass": true,
+      "expected_connected_components": 1
+    },
+    "faceplate": {
+      "triangles": 826,
+      "bad_edges": 0,
+      "degenerate_triangles": 0,
+      "connected_components": 1,
+      "signed_volume_mm3": 8275.098,
+      "bounds_mm": [
+        [
+          -38.0,
+          -38.0,
+          60.0
+        ],
+        [
+          38.0,
+          38.0,
+          76.0
+        ]
+      ],
+      "pass": true,
+      "expected_connected_components": 1
+    },
+    "guide_frame": {
+      "triangles": 832,
+      "bad_edges": 0,
+      "degenerate_triangles": 0,
+      "connected_components": 1,
+      "signed_volume_mm3": 4220.462,
+      "bounds_mm": [
+        [
+          -35.35,
+          -35.35,
+          60.5
+        ],
+        [
+          35.35,
+          35.35,
+          64.45
+        ]
+      ],
+      "pass": true,
+      "expected_connected_components": 1
+    },
+    "bottom": {
+      "triangles": 390,
+      "bad_edges": 0,
+      "degenerate_triangles": 0,
+      "connected_components": 1,
+      "signed_volume_mm3": 12062.587,
+      "bounds_mm": [
+        [
+          -36.0,
+          -35.3,
+          0.0
+        ],
+        [
+          36.0,
+          35.3,
+          16.4
+        ]
+      ],
+      "pass": true,
+      "expected_connected_components": 1
+    },
+    "carrier_center": {
+      "triangles": 4874,
+      "bad_edges": 0,
+      "degenerate_triangles": 0,
+      "connected_components": 1,
+      "signed_volume_mm3": 1404.82,
+      "bounds_mm": [
+        [
+          -5.25,
+          -6.9,
+          47.046
+        ],
+        [
+          6.2,
+          6.9,
+          76.0
+        ]
+      ],
+      "pass": true,
+      "expected_connected_components": 1
+    },
+    "carrier_inner": {
+      "triangles": 9040,
+      "bad_edges": 0,
+      "degenerate_triangles": 0,
+      "connected_components": 1,
+      "signed_volume_mm3": 3806.713,
+      "bounds_mm": [
+        [
+          -17.65,
+          -16.801,
+          48.03
+        ],
+        [
+          18.5,
+          16.801,
+          76.0
+        ]
+      ],
+      "pass": true,
+      "expected_connected_components": 1
+    },
+    "carrier_outer": {
+      "triangles": 17174,
+      "bad_edges": 0,
+      "degenerate_triangles": 0,
+      "connected_components": 1,
+      "signed_volume_mm3": 6536.227,
+      "bounds_mm": [
+        [
+          -30.05,
+          -32.0,
+          49.015
+        ],
+        [
+          30.9,
+          32.0,
+          76.0
+        ]
+      ],
+      "pass": true,
+      "expected_connected_components": 1
+    },
+    "camshaft": {
+      "triangles": 52,
+      "bad_edges": 0,
+      "degenerate_triangles": 0,
+      "connected_components": 1,
+      "signed_volume_mm3": 1143.149,
+      "bounds_mm": [
+        [
+          -2.4,
+          -3.637,
+          36.85
+        ],
+        [
+          34.0,
+          3.637,
+          43.15
+        ]
+      ],
+      "pass": true,
+      "expected_connected_components": 1
+    },
+    "horn_coupler": {
+      "triangles": 3506,
+      "bad_edges": 0,
+      "degenerate_triangles": 0,
+      "connected_components": 1,
+      "signed_volume_mm3": 727.512,
+      "bounds_mm": [
+        [
+          -4.7,
+          -10.934,
+          21.68
+        ],
+        [
+          5.6,
+          10.934,
+          60.29
+        ]
+      ],
+      "pass": true,
+      "expected_connected_components": 1
+    },
+    "cam_center": {
+      "triangles": 988,
+      "bad_edges": 0,
+      "degenerate_triangles": 0,
+      "connected_components": 1,
+      "signed_volume_mm3": 1499.619,
+      "bounds_mm": [
+        [
+          -2.1,
+          -9.479,
+          27.046
+        ],
+        [
+          10.0,
+          10.521,
+          47.046
+        ]
+      ],
+      "pass": true,
+      "expected_connected_components": 1
+    },
+    "cam_inner": {
+      "triangles": 996,
+      "bad_edges": 0,
+      "degenerate_triangles": 0,
+      "connected_components": 1,
+      "signed_volume_mm3": 1499.619,
+      "bounds_mm": [
+        [
+          10.3,
+          -9.653,
+          28.03
+        ],
+        [
+          22.4,
+          10.347,
+          48.03
+        ]
+      ],
+      "pass": true,
+      "expected_connected_components": 1
+    },
+    "cam_outer": {
+      "triangles": 1008,
+      "bad_edges": 0,
+      "degenerate_triangles": 0,
+      "connected_components": 1,
+      "signed_volume_mm3": 1322.152,
+      "bounds_mm": [
+        [
+          22.7,
+          -9.826,
+          29.015
+        ],
+        [
+          30.7,
+          10.174,
+          49.015
+        ]
+      ],
+      "pass": true,
+      "expected_connected_components": 1
+    },
+    "bearing_keeper": {
+      "triangles": 368,
+      "bad_edges": 0,
+      "degenerate_triangles": 0,
+      "connected_components": 1,
+      "signed_volume_mm3": 249.319,
+      "bounds_mm": [
+        [
+          34.1,
+          -5.5,
+          33.3
+        ],
+        [
+          37.7,
+          5.5,
+          46.7
+        ]
+      ],
+      "pass": true,
+      "expected_connected_components": 1
+    },
+    "servo_clip": {
+      "triangles": 68,
+      "bad_edges": 0,
+      "degenerate_triangles": 0,
+      "connected_components": 1,
+      "signed_volume_mm3": 723.124,
+      "bounds_mm": [
+        [
+          -30.0,
+          -21.85,
+          31.15
+        ],
+        [
+          -23.5,
+          11.85,
+          38.5
+        ]
+      ],
+      "pass": true,
+      "expected_connected_components": 1
+    },
+    "print_test": {
+      "triangles": 3286,
+      "bad_edges": 0,
+      "degenerate_triangles": 0,
+      "connected_components": 3,
+      "signed_volume_mm3": 3564.893,
+      "bounds_mm": [
+        [
+          -20.55,
+          -14.0,
+          0.0
+        ],
+        [
+          49.15,
+          11.05,
+          12.6
+        ]
+      ],
+      "pass": true,
+      "expected_connected_components": 3
+    }
+  },
+  "canonical_reference_stl": {
+    "servo_wire": {
+      "triangles": 846,
+      "bad_edges": 0,
+      "degenerate_triangles": 0,
+      "connected_components": 1,
+      "signed_volume_mm3": 43.51,
+      "bounds_mm": [
+        [
+          -30.8,
+          6.5,
+          38.0
+        ],
+        [
+          -29.2,
+          14.5,
+          42.0
+        ]
+      ],
+      "pass": true
+    },
+    "servo_body": {
+      "triangles": 1150,
+      "bad_edges": 0,
+      "degenerate_triangles": 1,
+      "connected_components": 1,
+      "signed_volume_mm3": 6929.305,
+      "bounds_mm": [
+        [
+          -35.0,
+          -21.0,
+          34.0
+        ],
+        [
+          -4.5,
+          11.0,
+          46.0
+        ]
+      ],
+      "pass": false
+    },
+    "servo_horn": {
+      "triangles": 4226,
+      "bad_edges": 2,
+      "degenerate_triangles": 10,
+      "connected_components": 1,
+      "signed_volume_mm3": 369.583,
+      "bounds_mm": [
+        [
+          -7.5,
+          -8.401,
+          24.213
+        ],
+        [
+          -3.0,
+          8.401,
+          57.756
+        ]
+      ],
+      "pass": false
+    }
+  },
+  "print_stl_direct_parse": {
+    "housing": {
+      "triangles": 2722,
+      "bad_edges": 0,
+      "degenerate_triangles": 0,
+      "connected_components": 1,
+      "signed_volume_mm3": 64475.119,
+      "bounds_mm": [
+        [
+          -38.0,
+          -38.0,
+          0.0
+        ],
+        [
+          38.0,
+          38.0,
+          74.0
+        ]
+      ],
+      "pass": true,
+      "on_bed": true,
+      "expected_connected_components": 1
+    },
+    "faceplate": {
+      "triangles": 826,
+      "bad_edges": 0,
+      "degenerate_triangles": 0,
+      "connected_components": 1,
+      "signed_volume_mm3": 8275.097,
+      "bounds_mm": [
+        [
+          -38.0,
+          -38.0,
+          0.0
+        ],
+        [
+          38.0,
+          38.0,
+          16.0
+        ]
+      ],
+      "pass": true,
+      "on_bed": true,
+      "expected_connected_components": 1
+    },
+    "guide_frame": {
+      "triangles": 832,
+      "bad_edges": 0,
+      "degenerate_triangles": 0,
+      "connected_components": 1,
+      "signed_volume_mm3": 4220.44,
+      "bounds_mm": [
+        [
+          -35.35,
+          -35.35,
+          0.0
+        ],
+        [
+          35.35,
+          35.35,
+          3.95
+        ]
+      ],
+      "pass": true,
+      "on_bed": true,
+      "expected_connected_components": 1
+    },
+    "bottom": {
+      "triangles": 390,
+      "bad_edges": 0,
+      "degenerate_triangles": 0,
+      "connected_components": 1,
+      "signed_volume_mm3": 12062.587,
+      "bounds_mm": [
+        [
+          -36.0,
+          -35.3,
+          0.0
+        ],
+        [
+          36.0,
+          35.3,
+          16.4
+        ]
+      ],
+      "pass": true,
+      "on_bed": true,
+      "expected_connected_components": 1
+    },
+    "carrier_center": {
+      "triangles": 4874,
+      "bad_edges": 0,
+      "degenerate_triangles": 0,
+      "connected_components": 1,
+      "signed_volume_mm3": 1404.821,
+      "bounds_mm": [
+        [
+          -5.25,
+          -6.9,
+          0.0
+        ],
+        [
+          6.2,
+          6.9,
+          28.954
+        ]
+      ],
+      "pass": true,
+      "on_bed": true,
+      "expected_connected_components": 1
+    },
+    "carrier_inner": {
+      "triangles": 9040,
+      "bad_edges": 0,
+      "degenerate_triangles": 0,
+      "connected_components": 1,
+      "signed_volume_mm3": 3806.722,
+      "bounds_mm": [
+        [
+          -17.65,
+          -16.801,
+          0.0
+        ],
+        [
+          18.5,
+          16.801,
+          27.97
+        ]
+      ],
+      "pass": true,
+      "on_bed": true,
+      "expected_connected_components": 1
+    },
+    "carrier_outer": {
+      "triangles": 17174,
+      "bad_edges": 0,
+      "degenerate_triangles": 0,
+      "connected_components": 1,
+      "signed_volume_mm3": 6536.238,
+      "bounds_mm": [
+        [
+          -30.05,
+          -32.0,
+          0.0
+        ],
+        [
+          30.9,
+          32.0,
+          26.985
+        ]
+      ],
+      "pass": true,
+      "on_bed": true,
+      "expected_connected_components": 1
+    },
+    "camshaft": {
+      "triangles": 52,
+      "bad_edges": 0,
+      "degenerate_triangles": 0,
+      "connected_components": 1,
+      "signed_volume_mm3": 1143.148,
+      "bounds_mm": [
+        [
+          -2.4,
+          -3.637,
+          0.0
+        ],
+        [
+          34.0,
+          3.637,
+          6.3
+        ]
+      ],
+      "pass": true,
+      "on_bed": true,
+      "expected_connected_components": 1
+    },
+    "horn_coupler": {
+      "triangles": 3506,
+      "bad_edges": 0,
+      "degenerate_triangles": 0,
+      "connected_components": 1,
+      "signed_volume_mm3": 727.512,
+      "bounds_mm": [
+        [
+          -60.29,
+          -10.934,
+          0.0
+        ],
+        [
+          -21.68,
+          10.934,
+          10.3
+        ]
+      ],
+      "pass": true,
+      "on_bed": true,
+      "expected_connected_components": 1
+    },
+    "cam_center": {
+      "triangles": 988,
+      "bad_edges": 0,
+      "degenerate_triangles": 0,
+      "connected_components": 1,
+      "signed_volume_mm3": 1499.619,
+      "bounds_mm": [
+        [
+          -47.046,
+          -9.479,
+          0.0
+        ],
+        [
+          -27.046,
+          10.521,
+          12.1
+        ]
+      ],
+      "pass": true,
+      "on_bed": true,
+      "expected_connected_components": 1
+    },
+    "cam_inner": {
+      "triangles": 996,
+      "bad_edges": 0,
+      "degenerate_triangles": 0,
+      "connected_components": 1,
+      "signed_volume_mm3": 1499.618,
+      "bounds_mm": [
+        [
+          -48.03,
+          -9.653,
+          0.0
+        ],
+        [
+          -28.03,
+          10.347,
+          12.1
+        ]
+      ],
+      "pass": true,
+      "on_bed": true,
+      "expected_connected_components": 1
+    },
+    "cam_outer": {
+      "triangles": 1008,
+      "bad_edges": 0,
+      "degenerate_triangles": 0,
+      "connected_components": 1,
+      "signed_volume_mm3": 1322.154,
+      "bounds_mm": [
+        [
+          -49.015,
+          -9.826,
+          0.0
+        ],
+        [
+          -29.015,
+          10.174,
+          8.0
+        ]
+      ],
+      "pass": true,
+      "on_bed": true,
+      "expected_connected_components": 1
+    },
+    "bearing_keeper": {
+      "triangles": 368,
+      "bad_edges": 0,
+      "degenerate_triangles": 0,
+      "connected_components": 1,
+      "signed_volume_mm3": 249.32,
+      "bounds_mm": [
+        [
+          33.3,
+          -5.5,
+          0.0
+        ],
+        [
+          46.7,
+          5.5,
+          3.6
+        ]
+      ],
+      "pass": true,
+      "on_bed": true,
+      "expected_connected_components": 1
+    },
+    "servo_clip": {
+      "triangles": 68,
+      "bad_edges": 0,
+      "degenerate_triangles": 0,
+      "connected_components": 1,
+      "signed_volume_mm3": 723.125,
+      "bounds_mm": [
+        [
+          31.15,
+          -21.85,
+          0.0
+        ],
+        [
+          38.5,
+          11.85,
+          6.5
+        ]
+      ],
+      "pass": true,
+      "on_bed": true,
+      "expected_connected_components": 1
+    }
+  },
+  "static_geometry": {
+    "parts": 8,
+    "checked_pairs": 28,
+    "expected_pairs": 28,
+    "common_volume_limit_mm3": 0.001,
+    "pairs": [
+      {
+        "parts": [
+          "bearing_keeper",
+          "bottom"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 1,
+        "aabb_zero_samples": 1,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "bearing_keeper",
+          "faceplate"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 1,
+        "aabb_zero_samples": 1,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "bearing_keeper",
+          "guide_frame"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 1,
+        "aabb_zero_samples": 1,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "bearing_keeper",
+          "housing"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 1,
+        "aabb_zero_samples": 0,
+        "exact_samples": 1,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "bearing_keeper",
+          "servo_body"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 1,
+        "aabb_zero_samples": 1,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "bearing_keeper",
+          "servo_clip"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 1,
+        "aabb_zero_samples": 1,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "bearing_keeper",
+          "servo_wire"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 1,
+        "aabb_zero_samples": 1,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "bottom",
+          "faceplate"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 1,
+        "aabb_zero_samples": 1,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "bottom",
+          "guide_frame"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 1,
+        "aabb_zero_samples": 1,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "bottom",
+          "housing"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 1,
+        "aabb_zero_samples": 0,
+        "exact_samples": 1,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "bottom",
+          "servo_body"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 1,
+        "aabb_zero_samples": 1,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "bottom",
+          "servo_clip"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 1,
+        "aabb_zero_samples": 1,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "bottom",
+          "servo_wire"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 1,
+        "aabb_zero_samples": 1,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "faceplate",
+          "guide_frame"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 1,
+        "aabb_zero_samples": 0,
+        "exact_samples": 1,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "faceplate",
+          "housing"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 1,
+        "aabb_zero_samples": 0,
+        "exact_samples": 1,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "faceplate",
+          "servo_body"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 1,
+        "aabb_zero_samples": 1,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "faceplate",
+          "servo_clip"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 1,
+        "aabb_zero_samples": 1,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "faceplate",
+          "servo_wire"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 1,
+        "aabb_zero_samples": 1,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "guide_frame",
+          "housing"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 1,
+        "aabb_zero_samples": 0,
+        "exact_samples": 1,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "guide_frame",
+          "servo_body"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 1,
+        "aabb_zero_samples": 1,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "guide_frame",
+          "servo_clip"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 1,
+        "aabb_zero_samples": 1,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "guide_frame",
+          "servo_wire"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 1,
+        "aabb_zero_samples": 1,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "housing",
+          "servo_body"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 1,
+        "aabb_zero_samples": 0,
+        "exact_samples": 1,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "housing",
+          "servo_clip"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 1,
+        "aabb_zero_samples": 0,
+        "exact_samples": 1,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "housing",
+          "servo_wire"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 1,
+        "aabb_zero_samples": 0,
+        "exact_samples": 1,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "servo_body",
+          "servo_clip"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 1,
+        "aabb_zero_samples": 0,
+        "exact_samples": 1,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "servo_body",
+          "servo_wire"
+        ],
+        "classification": "sg_reference_internal",
+        "pose_samples": 1,
+        "aabb_zero_samples": 0,
+        "exact_samples": 1,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": null,
+        "pass": true
+      },
+      {
+        "parts": [
+          "servo_clip",
+          "servo_wire"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 1,
+        "aabb_zero_samples": 0,
+        "exact_samples": 1,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      }
+    ],
+    "violations": [],
+    "pass": true
+  },
+  "motion": {
+    "step_deg": 2.5,
+    "frames": 65,
+    "pair_coverage": {
+      "moving_candidate_pairs": 108,
+      "all_scene_unique_pairs": 136
+    },
+    "violations": [],
+    "follower_min_edge_margin_mm": 1.0,
+    "carrier_guides": {
+      "cell_clearance_per_side_mm": 0.35,
+      "guide_clearance_per_side_mm": 0.35,
+      "minimum_guide_engagement_mm": 2.941,
+      "pass": true
+    },
+    "pass": true
+  },
+  "exact_interfaces": {
+    "method": "Blender Boolean EXACT。体積校正後、主要界面の代表姿勢を再測定。",
+    "interfaces": {
+      "carrier_center_guide_frame": {
+        "parts": [
+          "carrier_center",
+          "guide_frame"
+        ],
+        "servo_deg": 10.0,
+        "common_volume_mm3": 0.0,
+        "intersection_bounds_mm": null,
+        "intersection_component_bounds_mm": [],
+        "vertices_in_allowed_zone": null,
+        "maximum_common_volume_mm3": 0.001,
+        "physical_basis": "角柱案内は片側0.35mmの設計空隙。",
+        "pass": true
+      },
+      "carrier_inner_guide_frame": {
+        "parts": [
+          "carrier_inner",
+          "guide_frame"
+        ],
+        "servo_deg": 15.0,
+        "common_volume_mm3": 0.0,
+        "intersection_bounds_mm": null,
+        "intersection_component_bounds_mm": [],
+        "vertices_in_allowed_zone": null,
+        "maximum_common_volume_mm3": 0.001,
+        "physical_basis": "角柱案内は片側0.35mmの設計空隙。",
+        "pass": true
+      },
+      "carrier_outer_guide_frame": {
+        "parts": [
+          "carrier_outer",
+          "guide_frame"
+        ],
+        "servo_deg": 10.0,
+        "common_volume_mm3": 0.0,
+        "intersection_bounds_mm": null,
+        "intersection_component_bounds_mm": [],
+        "vertices_in_allowed_zone": null,
+        "maximum_common_volume_mm3": 0.001,
+        "physical_basis": "角柱案内は片側0.35mmの設計空隙。",
+        "pass": true
+      },
+      "camshaft_housing": {
+        "parts": [
+          "camshaft",
+          "housing"
+        ],
+        "servo_deg": 35.0,
+        "common_volume_mm3": 0.0,
+        "intersection_bounds_mm": null,
+        "intersection_component_bounds_mm": [],
+        "vertices_in_allowed_zone": null,
+        "maximum_common_volume_mm3": 0.001,
+        "physical_basis": "右軸受けは半径方向0.30mmの設計空隙。",
+        "pass": true
+      },
+      "bearing_keeper_housing": {
+        "parts": [
+          "bearing_keeper",
+          "housing"
+        ],
+        "servo_deg": null,
+        "common_volume_mm3": 0.0,
+        "intersection_bounds_mm": null,
+        "intersection_component_bounds_mm": [],
+        "vertices_in_allowed_zone": null,
+        "maximum_common_volume_mm3": 0.001,
+        "physical_basis": "保持爪だけが支持板の横穴へ掛かる。最終位置の本体面には貫通を設けない。",
+        "pass": true
+      },
+      "guide_frame_servo_horn": {
+        "parts": [
+          "servo_horn",
+          "guide_frame"
+        ],
+        "servo_deg": 15.0,
+        "common_volume_mm3": 0.0,
+        "intersection_bounds_mm": null,
+        "intersection_component_bounds_mm": [],
+        "vertices_in_allowed_zone": null,
+        "maximum_common_volume_mm3": 0.001,
+        "physical_basis": "案内枠はホーン掃引包絡の外へ置く。",
+        "pass": true
+      },
+      "carrier_inner_outer": {
+        "parts": [
+          "carrier_inner",
+          "carrier_outer"
+        ],
+        "servo_deg": 120.0,
+        "common_volume_mm3": 0.0,
+        "intersection_bounds_mm": null,
+        "intersection_component_bounds_mm": [],
+        "vertices_in_allowed_zone": null,
+        "maximum_common_volume_mm3": 0.001,
+        "physical_basis": "3群の格子と連結腕は互いに交差しない。",
+        "pass": true
+      },
+      "carrier_center_inner": {
+        "parts": [
+          "carrier_center",
+          "carrier_inner"
+        ],
+        "servo_deg": 122.5,
+        "common_volume_mm3": 0.0,
+        "intersection_bounds_mm": null,
+        "intersection_component_bounds_mm": [],
+        "vertices_in_allowed_zone": null,
+        "maximum_common_volume_mm3": 0.001,
+        "physical_basis": "3群の格子と連結腕は互いに交差しない。",
+        "pass": true
+      },
+      "camshaft_guide_frame": {
+        "parts": [
+          "camshaft",
+          "guide_frame"
+        ],
+        "servo_deg": 17.5,
+        "common_volume_mm3": 0.0,
+        "intersection_bounds_mm": null,
+        "intersection_component_bounds_mm": [],
+        "vertices_in_allowed_zone": null,
+        "maximum_common_volume_mm3": 0.001,
+        "physical_basis": "案内枠はカム軸とホーン受けの掃引包絡より上へ置く。",
+        "pass": true
+      },
+      "bottom_housing": {
+        "parts": [
+          "bottom",
+          "housing"
+        ],
+        "servo_deg": null,
+        "common_volume_mm3": 0.0,
+        "intersection_bounds_mm": null,
+        "intersection_component_bounds_mm": [],
+        "vertices_in_allowed_zone": null,
+        "maximum_common_volume_mm3": 0.001,
+        "physical_basis": "底板本体は片側0.3mmの空隙。保持爪は凹み内に収まる。",
+        "pass": true
+      },
+      "servo_clip_housing": {
+        "parts": [
+          "servo_clip",
+          "housing"
+        ],
+        "servo_deg": null,
+        "common_volume_mm3": 0.0,
+        "intersection_bounds_mm": null,
+        "intersection_component_bounds_mm": [],
+        "vertices_in_allowed_zone": null,
+        "maximum_common_volume_mm3": 0.001,
+        "physical_basis": "サーボ保持具は保持台の開口内に収まり、爪はSG92R本体だけへ掛かる。",
+        "pass": true
+      },
+      "faceplate_guide_frame": {
+        "parts": [
+          "faceplate",
+          "guide_frame"
+        ],
+        "servo_deg": null,
+        "common_volume_mm3": 0.0,
+        "intersection_bounds_mm": null,
+        "intersection_component_bounds_mm": [],
+        "vertices_in_allowed_zone": null,
+        "maximum_common_volume_mm3": 0.001,
+        "physical_basis": "天板保持爪には片側0.3mmの通過空隙を設ける。",
+        "pass": true
+      },
+      "bearing_keeper_cam_outer": {
+        "parts": [
+          "bearing_keeper",
+          "cam_outer"
+        ],
+        "servo_deg": 12.5,
+        "common_volume_mm3": 0.0,
+        "intersection_bounds_mm": null,
+        "intersection_component_bounds_mm": [],
+        "vertices_in_allowed_zone": null,
+        "maximum_common_volume_mm3": 0.001,
+        "physical_basis": "外環カムのハブ端と保持具本体の間に0.3mmの軸方向空隙を置く。",
+        "pass": true
+      },
+      "faceplate_housing": {
+        "parts": [
+          "faceplate",
+          "housing"
+        ],
+        "servo_deg": null,
+        "common_volume_mm3": 0.0,
+        "intersection_bounds_mm": null,
+        "intersection_component_bounds_mm": [],
+        "vertices_in_allowed_zone": null,
+        "maximum_common_volume_mm3": 0.001,
+        "physical_basis": "天板保持爪は外装の凹みに収まり、最終位置では共通体積を持たない。",
+        "pass": true
+      }
+    },
+    "pass": true
+  },
+  "exact_scene": {
+    "method": "全17部品候補。固定組は1姿勢、可動部品を含む組は10〜170度を2.5度刻み。AABB共通範囲が0なら数学的に共通体積0、それ以外はBlender Boolean EXACT。",
+    "parts": [
+      "housing",
+      "faceplate",
+      "guide_frame",
+      "bottom",
+      "bearing_keeper",
+      "servo_clip",
+      "servo_body",
+      "servo_wire",
+      "camshaft",
+      "horn_coupler",
+      "cam_center",
+      "cam_inner",
+      "cam_outer",
+      "servo_horn",
+      "carrier_center",
+      "carrier_inner",
+      "carrier_outer"
+    ],
+    "unique_pairs": 136,
+    "expected_unique_pairs": 136,
+    "common_volume_limit_mm3": 0.001,
+    "pairs": [
+      {
+        "parts": [
+          "bearing_keeper",
+          "bottom"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 1,
+        "aabb_zero_samples": 1,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "bearing_keeper",
+          "cam_center"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "bearing_keeper",
+          "cam_inner"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "bearing_keeper",
+          "cam_outer"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "bearing_keeper",
+          "camshaft"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "bearing_keeper",
+          "carrier_center"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "bearing_keeper",
+          "carrier_inner"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "bearing_keeper",
+          "carrier_outer"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "bearing_keeper",
+          "faceplate"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 1,
+        "aabb_zero_samples": 1,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "bearing_keeper",
+          "guide_frame"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 1,
+        "aabb_zero_samples": 1,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "bearing_keeper",
+          "horn_coupler"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "bearing_keeper",
+          "housing"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 1,
+        "aabb_zero_samples": 0,
+        "exact_samples": 1,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "bearing_keeper",
+          "servo_body"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 1,
+        "aabb_zero_samples": 1,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "bearing_keeper",
+          "servo_clip"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 1,
+        "aabb_zero_samples": 1,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "bearing_keeper",
+          "servo_horn"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "bearing_keeper",
+          "servo_wire"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 1,
+        "aabb_zero_samples": 1,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "bottom",
+          "cam_center"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "bottom",
+          "cam_inner"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "bottom",
+          "cam_outer"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "bottom",
+          "camshaft"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "bottom",
+          "carrier_center"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "bottom",
+          "carrier_inner"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "bottom",
+          "carrier_outer"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "bottom",
+          "faceplate"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 1,
+        "aabb_zero_samples": 1,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "bottom",
+          "guide_frame"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 1,
+        "aabb_zero_samples": 1,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "bottom",
+          "horn_coupler"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "bottom",
+          "housing"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 1,
+        "aabb_zero_samples": 0,
+        "exact_samples": 1,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "bottom",
+          "servo_body"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 1,
+        "aabb_zero_samples": 1,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "bottom",
+          "servo_clip"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 1,
+        "aabb_zero_samples": 1,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "bottom",
+          "servo_horn"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "bottom",
+          "servo_wire"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 1,
+        "aabb_zero_samples": 1,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "cam_center",
+          "cam_inner"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "cam_center",
+          "cam_outer"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "cam_center",
+          "camshaft"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 0,
+        "exact_samples": 65,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "cam_center",
+          "carrier_center"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 63,
+        "exact_samples": 2,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "cam_center",
+          "carrier_inner"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 33,
+        "exact_samples": 32,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "cam_center",
+          "carrier_outer"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 33,
+        "exact_samples": 32,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "cam_center",
+          "faceplate"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "cam_center",
+          "guide_frame"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "cam_center",
+          "horn_coupler"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 0,
+        "exact_samples": 65,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "cam_center",
+          "housing"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 0,
+        "exact_samples": 65,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "cam_center",
+          "servo_body"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "cam_center",
+          "servo_clip"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "cam_center",
+          "servo_horn"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "cam_center",
+          "servo_wire"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "cam_inner",
+          "cam_outer"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "cam_inner",
+          "camshaft"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 0,
+        "exact_samples": 65,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "cam_inner",
+          "carrier_center"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "cam_inner",
+          "carrier_inner"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 57,
+        "exact_samples": 8,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "cam_inner",
+          "carrier_outer"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 33,
+        "exact_samples": 32,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "cam_inner",
+          "faceplate"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "cam_inner",
+          "guide_frame"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "cam_inner",
+          "horn_coupler"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "cam_inner",
+          "housing"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 0,
+        "exact_samples": 65,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "cam_inner",
+          "servo_body"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "cam_inner",
+          "servo_clip"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "cam_inner",
+          "servo_horn"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "cam_inner",
+          "servo_wire"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "cam_outer",
+          "camshaft"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 0,
+        "exact_samples": 65,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "cam_outer",
+          "carrier_center"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "cam_outer",
+          "carrier_inner"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "cam_outer",
+          "carrier_outer"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 63,
+        "exact_samples": 2,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "cam_outer",
+          "faceplate"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "cam_outer",
+          "guide_frame"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "cam_outer",
+          "horn_coupler"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "cam_outer",
+          "housing"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 0,
+        "exact_samples": 65,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "cam_outer",
+          "servo_body"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "cam_outer",
+          "servo_clip"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "cam_outer",
+          "servo_horn"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "cam_outer",
+          "servo_wire"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "camshaft",
+          "carrier_center"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "camshaft",
+          "carrier_inner"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "camshaft",
+          "carrier_outer"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "camshaft",
+          "faceplate"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "camshaft",
+          "guide_frame"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "camshaft",
+          "horn_coupler"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 0,
+        "exact_samples": 65,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "camshaft",
+          "housing"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 0,
+        "exact_samples": 65,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "camshaft",
+          "servo_body"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "camshaft",
+          "servo_clip"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "camshaft",
+          "servo_horn"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "camshaft",
+          "servo_wire"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "carrier_center",
+          "carrier_inner"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 0,
+        "exact_samples": 65,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "carrier_center",
+          "carrier_outer"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 0,
+        "exact_samples": 65,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "carrier_center",
+          "faceplate"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 0,
+        "exact_samples": 65,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "carrier_center",
+          "guide_frame"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 0,
+        "exact_samples": 65,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "carrier_center",
+          "horn_coupler"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 5,
+        "exact_samples": 60,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "carrier_center",
+          "housing"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 0,
+        "exact_samples": 65,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "carrier_center",
+          "servo_body"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "carrier_center",
+          "servo_clip"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "carrier_center",
+          "servo_horn"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 28,
+        "exact_samples": 37,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "carrier_center",
+          "servo_wire"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "carrier_inner",
+          "carrier_outer"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 0,
+        "exact_samples": 65,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "carrier_inner",
+          "faceplate"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 0,
+        "exact_samples": 65,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "carrier_inner",
+          "guide_frame"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 0,
+        "exact_samples": 65,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "carrier_inner",
+          "horn_coupler"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 3,
+        "exact_samples": 62,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "carrier_inner",
+          "housing"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 0,
+        "exact_samples": 65,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "carrier_inner",
+          "servo_body"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "carrier_inner",
+          "servo_clip"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "carrier_inner",
+          "servo_horn"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 27,
+        "exact_samples": 38,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "carrier_inner",
+          "servo_wire"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "carrier_outer",
+          "faceplate"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 0,
+        "exact_samples": 65,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "carrier_outer",
+          "guide_frame"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 0,
+        "exact_samples": 65,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "carrier_outer",
+          "horn_coupler"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 0,
+        "exact_samples": 65,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "carrier_outer",
+          "housing"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 0,
+        "exact_samples": 65,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "carrier_outer",
+          "servo_body"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "carrier_outer",
+          "servo_clip"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "carrier_outer",
+          "servo_horn"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 27,
+        "exact_samples": 38,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "carrier_outer",
+          "servo_wire"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "faceplate",
+          "guide_frame"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 1,
+        "aabb_zero_samples": 0,
+        "exact_samples": 1,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "faceplate",
+          "horn_coupler"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 62,
+        "exact_samples": 3,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "faceplate",
+          "housing"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 1,
+        "aabb_zero_samples": 0,
+        "exact_samples": 1,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "faceplate",
+          "servo_body"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 1,
+        "aabb_zero_samples": 1,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "faceplate",
+          "servo_clip"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 1,
+        "aabb_zero_samples": 1,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "faceplate",
+          "servo_horn"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "faceplate",
+          "servo_wire"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 1,
+        "aabb_zero_samples": 1,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "guide_frame",
+          "horn_coupler"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "guide_frame",
+          "housing"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 1,
+        "aabb_zero_samples": 0,
+        "exact_samples": 1,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "guide_frame",
+          "servo_body"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 1,
+        "aabb_zero_samples": 1,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "guide_frame",
+          "servo_clip"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 1,
+        "aabb_zero_samples": 1,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "guide_frame",
+          "servo_horn"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "guide_frame",
+          "servo_wire"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 1,
+        "aabb_zero_samples": 1,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "horn_coupler",
+          "housing"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 0,
+        "exact_samples": 65,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "horn_coupler",
+          "servo_body"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 0,
+        "exact_samples": 65,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "horn_coupler",
+          "servo_clip"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "horn_coupler",
+          "servo_horn"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 0,
+        "exact_samples": 65,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "horn_coupler",
+          "servo_wire"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "housing",
+          "servo_body"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 1,
+        "aabb_zero_samples": 0,
+        "exact_samples": 1,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "housing",
+          "servo_clip"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 1,
+        "aabb_zero_samples": 0,
+        "exact_samples": 1,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "housing",
+          "servo_horn"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 0,
+        "exact_samples": 65,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "housing",
+          "servo_wire"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 1,
+        "aabb_zero_samples": 0,
+        "exact_samples": 1,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "servo_body",
+          "servo_clip"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 1,
+        "aabb_zero_samples": 0,
+        "exact_samples": 1,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "servo_body",
+          "servo_horn"
+        ],
+        "classification": "sg_reference_internal",
+        "pose_samples": 65,
+        "aabb_zero_samples": 0,
+        "exact_samples": 65,
+        "maximum_common_volume_mm3": 0.029345,
+        "maximum_at_servo_deg": 42.5,
+        "intersection_bounds_mm": [
+          [
+            -7.5,
+            -2.3,
+            37.7
+          ],
+          [
+            -4.5,
+            2.3,
+            42.3
+          ]
+        ],
+        "limit_mm3": null,
+        "pass": true
+      },
+      {
+        "parts": [
+          "servo_body",
+          "servo_wire"
+        ],
+        "classification": "sg_reference_internal",
+        "pose_samples": 1,
+        "aabb_zero_samples": 0,
+        "exact_samples": 1,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": null,
+        "pass": true
+      },
+      {
+        "parts": [
+          "servo_clip",
+          "servo_horn"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "servo_clip",
+          "servo_wire"
+        ],
+        "classification": "printed_or_mixed",
+        "pose_samples": 1,
+        "aabb_zero_samples": 0,
+        "exact_samples": 1,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": 0.001,
+        "pass": true
+      },
+      {
+        "parts": [
+          "servo_horn",
+          "servo_wire"
+        ],
+        "classification": "sg_reference_internal",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": null,
+        "pass": true
+      }
+    ],
+    "sg_reference_internal_raw": [
+      {
+        "parts": [
+          "servo_body",
+          "servo_horn"
+        ],
+        "classification": "sg_reference_internal",
+        "pose_samples": 65,
+        "aabb_zero_samples": 0,
+        "exact_samples": 65,
+        "maximum_common_volume_mm3": 0.029345,
+        "maximum_at_servo_deg": 42.5,
+        "intersection_bounds_mm": [
+          [
+            -7.5,
+            -2.3,
+            37.7
+          ],
+          [
+            -4.5,
+            2.3,
+            42.3
+          ]
+        ],
+        "limit_mm3": null,
+        "pass": true
+      },
+      {
+        "parts": [
+          "servo_body",
+          "servo_wire"
+        ],
+        "classification": "sg_reference_internal",
+        "pose_samples": 1,
+        "aabb_zero_samples": 0,
+        "exact_samples": 1,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": null,
+        "pass": true
+      },
+      {
+        "parts": [
+          "servo_horn",
+          "servo_wire"
+        ],
+        "classification": "sg_reference_internal",
+        "pose_samples": 65,
+        "aabb_zero_samples": 65,
+        "exact_samples": 0,
+        "maximum_common_volume_mm3": 0.0,
+        "maximum_at_servo_deg": null,
+        "intersection_bounds_mm": null,
+        "limit_mm3": null,
+        "pass": true
+      }
+    ],
+    "violations": [],
+    "pass": true
+  },
+  "assembly": {
+    "method": "組立STLを1mm刻みで並進し、keeper回転は5度刻みで検査。AABB共通範囲が0なら数学的に体積0、それ以外はBlender Boolean EXACT。最終位置はスナップも体積0。",
+    "paths": [
+      {
+        "name": "servo_from_bottom",
+        "moving": "servo_body",
+        "fixed": [
+          "housing"
+        ],
+        "route": "piecewise rigid transform",
+        "translation_step_mm": 1.0,
+        "rotation_step_deg": 5.0,
+        "sample_count": 37,
+        "pairs": [
+          {
+            "parts": [
+              "housing",
+              "servo_body"
+            ],
+            "pose_samples": 37,
+            "aabb_zero_samples": 0,
+            "exact_samples": 37,
+            "maximum_common_volume_mm3": 0.0,
+            "maximum_at_position_mm": null,
+            "final_common_volume_mm3": 0.0
+          }
+        ],
+        "snap": null,
+        "allowed_snap_contacts": [],
+        "violations": [],
+        "pass": true
+      },
+      {
+        "name": "servo_clip_from_bottom",
+        "moving": "servo_clip",
+        "fixed": [
+          "housing",
+          "servo_body"
+        ],
+        "route": "piecewise rigid transform",
+        "translation_step_mm": 1.0,
+        "rotation_step_deg": 5.0,
+        "sample_count": 25,
+        "pairs": [
+          {
+            "parts": [
+              "housing",
+              "servo_clip"
+            ],
+            "pose_samples": 25,
+            "aabb_zero_samples": 0,
+            "exact_samples": 25,
+            "maximum_common_volume_mm3": 0.0,
+            "maximum_at_position_mm": null,
+            "final_common_volume_mm3": 0.0
+          },
+          {
+            "parts": [
+              "servo_body",
+              "servo_clip"
+            ],
+            "pose_samples": 25,
+            "aabb_zero_samples": 20,
+            "exact_samples": 5,
+            "maximum_common_volume_mm3": 0.0,
+            "maximum_at_position_mm": null,
+            "final_common_volume_mm3": 0.0
+          }
+        ],
+        "snap": {
+          "kind": "servo_clip",
+          "parts": [
+            "servo_clip",
+            "servo_body"
+          ],
+          "deflection_mm": 1.0,
+          "strain_percent": 1.157,
+          "maximum_strain_percent": 2.0,
+          "zone_limited_contacts": 0,
+          "pass": true
+        },
+        "allowed_snap_contacts": [],
+        "violations": [],
+        "pass": true
+      },
+      {
+        "name": "horn_coupler_from_positive_x",
+        "moving": "horn_coupler",
+        "fixed": [
+          "housing",
+          "servo_horn"
+        ],
+        "route": "piecewise rigid transform",
+        "translation_step_mm": 1.0,
+        "rotation_step_deg": 5.0,
+        "sample_count": 13,
+        "pairs": [
+          {
+            "parts": [
+              "horn_coupler",
+              "housing"
+            ],
+            "pose_samples": 13,
+            "aabb_zero_samples": 0,
+            "exact_samples": 13,
+            "maximum_common_volume_mm3": 0.0,
+            "maximum_at_position_mm": null,
+            "final_common_volume_mm3": 0.0
+          },
+          {
+            "parts": [
+              "horn_coupler",
+              "servo_horn"
+            ],
+            "pose_samples": 13,
+            "aabb_zero_samples": 11,
+            "exact_samples": 2,
+            "maximum_common_volume_mm3": 0.0,
+            "maximum_at_position_mm": null,
+            "final_common_volume_mm3": 0.0
+          }
+        ],
+        "snap": null,
+        "allowed_snap_contacts": [],
+        "violations": [],
+        "pass": true
+      },
+      {
+        "name": "cam_center_from_bottom",
+        "moving": "cam_center",
+        "fixed": [
+          "housing"
+        ],
+        "route": "piecewise rigid transform",
+        "translation_step_mm": 1.0,
+        "rotation_step_deg": 5.0,
+        "sample_count": 33,
+        "pairs": [
+          {
+            "parts": [
+              "cam_center",
+              "housing"
+            ],
+            "pose_samples": 33,
+            "aabb_zero_samples": 0,
+            "exact_samples": 33,
+            "maximum_common_volume_mm3": 0.0,
+            "maximum_at_position_mm": null,
+            "final_common_volume_mm3": 0.0
+          }
+        ],
+        "snap": null,
+        "allowed_snap_contacts": [],
+        "violations": [],
+        "pass": true
+      },
+      {
+        "name": "cam_inner_from_bottom",
+        "moving": "cam_inner",
+        "fixed": [
+          "housing"
+        ],
+        "route": "piecewise rigid transform",
+        "translation_step_mm": 1.0,
+        "rotation_step_deg": 5.0,
+        "sample_count": 33,
+        "pairs": [
+          {
+            "parts": [
+              "cam_inner",
+              "housing"
+            ],
+            "pose_samples": 33,
+            "aabb_zero_samples": 0,
+            "exact_samples": 33,
+            "maximum_common_volume_mm3": 0.0,
+            "maximum_at_position_mm": null,
+            "final_common_volume_mm3": 0.0
+          }
+        ],
+        "snap": null,
+        "allowed_snap_contacts": [],
+        "violations": [],
+        "pass": true
+      },
+      {
+        "name": "cam_outer_from_bottom",
+        "moving": "cam_outer",
+        "fixed": [
+          "housing"
+        ],
+        "route": "piecewise rigid transform",
+        "translation_step_mm": 1.0,
+        "rotation_step_deg": 5.0,
+        "sample_count": 33,
+        "pairs": [
+          {
+            "parts": [
+              "cam_outer",
+              "housing"
+            ],
+            "pose_samples": 33,
+            "aabb_zero_samples": 0,
+            "exact_samples": 33,
+            "maximum_common_volume_mm3": 0.0,
+            "maximum_at_position_mm": null,
+            "final_common_volume_mm3": 0.0
+          }
+        ],
+        "snap": null,
+        "allowed_snap_contacts": [],
+        "violations": [],
+        "pass": true
+      },
+      {
+        "name": "camshaft_from_positive_x",
+        "moving": "camshaft",
+        "fixed": [
+          "housing",
+          "horn_coupler",
+          "cam_center",
+          "cam_inner",
+          "cam_outer"
+        ],
+        "route": "piecewise rigid transform",
+        "translation_step_mm": 1.0,
+        "rotation_step_deg": 5.0,
+        "sample_count": 43,
+        "pairs": [
+          {
+            "parts": [
+              "cam_center",
+              "camshaft"
+            ],
+            "pose_samples": 43,
+            "aabb_zero_samples": 30,
+            "exact_samples": 13,
+            "maximum_common_volume_mm3": 0.0,
+            "maximum_at_position_mm": null,
+            "final_common_volume_mm3": 0.0
+          },
+          {
+            "parts": [
+              "cam_inner",
+              "camshaft"
+            ],
+            "pose_samples": 43,
+            "aabb_zero_samples": 18,
+            "exact_samples": 25,
+            "maximum_common_volume_mm3": 0.0,
+            "maximum_at_position_mm": null,
+            "final_common_volume_mm3": 0.0
+          },
+          {
+            "parts": [
+              "cam_outer",
+              "camshaft"
+            ],
+            "pose_samples": 43,
+            "aabb_zero_samples": 9,
+            "exact_samples": 34,
+            "maximum_common_volume_mm3": 0.0,
+            "maximum_at_position_mm": null,
+            "final_common_volume_mm3": 0.0
+          },
+          {
+            "parts": [
+              "camshaft",
+              "horn_coupler"
+            ],
+            "pose_samples": 43,
+            "aabb_zero_samples": 35,
+            "exact_samples": 8,
+            "maximum_common_volume_mm3": 0.0,
+            "maximum_at_position_mm": null,
+            "final_common_volume_mm3": 0.0
+          },
+          {
+            "parts": [
+              "camshaft",
+              "housing"
+            ],
+            "pose_samples": 43,
+            "aabb_zero_samples": 2,
+            "exact_samples": 41,
+            "maximum_common_volume_mm3": 0.0,
+            "maximum_at_position_mm": null,
+            "final_common_volume_mm3": 0.0
+          }
+        ],
+        "snap": null,
+        "allowed_snap_contacts": [],
+        "violations": [],
+        "pass": true
+      },
+      {
+        "name": "bearing_keeper_bayonet",
+        "moving": "bearing_keeper",
+        "fixed": [
+          "housing",
+          "camshaft"
+        ],
+        "route": "piecewise rigid transform",
+        "translation_step_mm": 1.0,
+        "rotation_step_deg": 5.0,
+        "sample_count": 31,
+        "pairs": [
+          {
+            "parts": [
+              "bearing_keeper",
+              "camshaft"
+            ],
+            "pose_samples": 31,
+            "aabb_zero_samples": 31,
+            "exact_samples": 0,
+            "maximum_common_volume_mm3": 0.0,
+            "maximum_at_position_mm": null,
+            "final_common_volume_mm3": 0.0
+          },
+          {
+            "parts": [
+              "bearing_keeper",
+              "housing"
+            ],
+            "pose_samples": 31,
+            "aabb_zero_samples": 9,
+            "exact_samples": 22,
+            "maximum_common_volume_mm3": 0.389128,
+            "maximum_at_position_mm": [
+              1.0,
+              0.0,
+              0.0
+            ],
+            "final_common_volume_mm3": 0.0
+          }
+        ],
+        "snap": {
+          "kind": "keeper_detent",
+          "parts": [
+            "bearing_keeper",
+            "housing"
+          ],
+          "deflection_mm": 0.15,
+          "strain_percent": 0.422,
+          "spring_free_length_mm": 8.0,
+          "spring_thickness_mm": 1.2,
+          "allowed_zone_mm": [
+            [
+              35.6,
+              3.6,
+              38.2
+            ],
+            [
+              38.0,
+              10.3,
+              44.8
+            ]
+          ],
+          "maximum_strain_percent": 2.0,
+          "zone_limited_contacts": 21,
+          "pass": true
+        },
+        "allowed_snap_contacts": [
+          {
+            "position_mm": [
+              3.0,
+              0.0,
+              0.0
+            ],
+            "parts": [
+              "bearing_keeper",
+              "housing"
+            ],
+            "common_volume_mm3": 0.180854,
+            "intersection_component_bounds_mm": [
+              [
+                [
+                  37.1,
+                  6.066,
+                  40.8661
+                ],
+                [
+                  38.0,
+                  6.7,
+                  41.5
+                ]
+              ]
+            ]
+          },
+          {
+            "position_mm": [
+              2.0,
+              0.0,
+              0.0
+            ],
+            "parts": [
+              "bearing_keeper",
+              "housing"
+            ],
+            "common_volume_mm3": 0.367088,
+            "intersection_component_bounds_mm": [
+              [
+                [
+                  37.3,
+                  3.783,
+                  42.8991
+                ],
+                [
+                  38.0,
+                  4.6669,
+                  43.8891
+                ]
+              ],
+              [
+                [
+                  36.1,
+                  6.066,
+                  40.8661
+                ],
+                [
+                  37.5,
+                  6.7,
+                  41.5
+                ]
+              ]
+            ]
+          },
+          {
+            "position_mm": [
+              1.0,
+              0.0,
+              0.0
+            ],
+            "parts": [
+              "bearing_keeper",
+              "housing"
+            ],
+            "common_volume_mm3": 0.389128,
+            "intersection_component_bounds_mm": [
+              [
+                [
+                  36.3,
+                  3.783,
+                  42.8991
+                ],
+                [
+                  38.0,
+                  4.6669,
+                  43.8891
+                ]
+              ],
+              [
+                [
+                  35.6,
+                  6.066,
+                  40.8661
+                ],
+                [
+                  36.5,
+                  6.7,
+                  41.5
+                ]
+              ]
+            ]
+          },
+          {
+            "position_mm": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "parts": [
+              "bearing_keeper",
+              "housing"
+            ],
+            "common_volume_mm3": 0.257278,
+            "intersection_component_bounds_mm": [
+              [
+                [
+                  35.6,
+                  3.783,
+                  42.8991
+                ],
+                [
+                  37.7,
+                  4.6669,
+                  43.8891
+                ]
+              ]
+            ]
+          },
+          {
+            "position_mm": [
+              0.0,
+              0.0,
+              85.0
+            ],
+            "parts": [
+              "bearing_keeper",
+              "housing"
+            ],
+            "common_volume_mm3": 0.256688,
+            "intersection_component_bounds_mm": [
+              [
+                [
+                  35.6,
+                  3.783,
+                  42.9009
+                ],
+                [
+                  37.7,
+                  4.6651,
+                  43.8873
+                ]
+              ]
+            ]
+          },
+          {
+            "position_mm": [
+              0.0,
+              0.0,
+              80.0
+            ],
+            "parts": [
+              "bearing_keeper",
+              "housing"
+            ],
+            "common_volume_mm3": 0.256306,
+            "intersection_component_bounds_mm": [
+              [
+                [
+                  35.6,
+                  3.783,
+                  42.9009
+                ],
+                [
+                  37.7,
+                  4.6651,
+                  43.8859
+                ]
+              ]
+            ]
+          },
+          {
+            "position_mm": [
+              0.0,
+              0.0,
+              75.0
+            ],
+            "parts": [
+              "bearing_keeper",
+              "housing"
+            ],
+            "common_volume_mm3": 0.256161,
+            "intersection_component_bounds_mm": [
+              [
+                [
+                  35.6,
+                  3.783,
+                  42.8988
+                ],
+                [
+                  37.7,
+                  4.6673,
+                  43.8849
+                ]
+              ]
+            ]
+          },
+          {
+            "position_mm": [
+              0.0,
+              0.0,
+              70.0
+            ],
+            "parts": [
+              "bearing_keeper",
+              "housing"
+            ],
+            "common_volume_mm3": 0.256284,
+            "intersection_component_bounds_mm": [
+              [
+                [
+                  35.6,
+                  3.783,
+                  42.894
+                ],
+                [
+                  37.7,
+                  4.672,
+                  43.8845
+                ]
+              ]
+            ]
+          },
+          {
+            "position_mm": [
+              0.0,
+              0.0,
+              65.0
+            ],
+            "parts": [
+              "bearing_keeper",
+              "housing"
+            ],
+            "common_volume_mm3": 0.256697,
+            "intersection_component_bounds_mm": [
+              [
+                [
+                  35.6,
+                  3.783,
+                  42.8864
+                ],
+                [
+                  37.7,
+                  4.6796,
+                  43.8845
+                ]
+              ]
+            ]
+          },
+          {
+            "position_mm": [
+              0.0,
+              0.0,
+              60.0
+            ],
+            "parts": [
+              "bearing_keeper",
+              "housing"
+            ],
+            "common_volume_mm3": 0.257398,
+            "intersection_component_bounds_mm": [
+              [
+                [
+                  35.6,
+                  3.783,
+                  42.8841
+                ],
+                [
+                  37.7,
+                  4.6819,
+                  43.8849
+                ]
+              ]
+            ]
+          },
+          {
+            "position_mm": [
+              0.0,
+              0.0,
+              55.0
+            ],
+            "parts": [
+              "bearing_keeper",
+              "housing"
+            ],
+            "common_volume_mm3": 0.257773,
+            "intersection_component_bounds_mm": [
+              [
+                [
+                  35.6,
+                  3.783,
+                  42.8905
+                ],
+                [
+                  37.7,
+                  4.6755,
+                  43.8858
+                ]
+              ]
+            ]
+          },
+          {
+            "position_mm": [
+              0.0,
+              0.0,
+              50.0
+            ],
+            "parts": [
+              "bearing_keeper",
+              "housing"
+            ],
+            "common_volume_mm3": 0.257715,
+            "intersection_component_bounds_mm": [
+              [
+                [
+                  35.6,
+                  3.783,
+                  42.8955
+                ],
+                [
+                  37.7,
+                  4.6705,
+                  43.8872
+                ]
+              ]
+            ]
+          },
+          {
+            "position_mm": [
+              0.0,
+              0.0,
+              45.0
+            ],
+            "parts": [
+              "bearing_keeper",
+              "housing"
+            ],
+            "common_volume_mm3": 0.257177,
+            "intersection_component_bounds_mm": [
+              [
+                [
+                  35.6,
+                  3.783,
+                  42.8991
+                ],
+                [
+                  37.7,
+                  4.6669,
+                  43.8891
+                ]
+              ]
+            ]
+          },
+          {
+            "position_mm": [
+              0.0,
+              0.0,
+              40.0
+            ],
+            "parts": [
+              "bearing_keeper",
+              "housing"
+            ],
+            "common_volume_mm3": 0.256563,
+            "intersection_component_bounds_mm": [
+              [
+                [
+                  35.6,
+                  3.783,
+                  42.9011
+                ],
+                [
+                  37.7,
+                  4.6649,
+                  43.8872
+                ]
+              ]
+            ]
+          },
+          {
+            "position_mm": [
+              0.0,
+              0.0,
+              35.0
+            ],
+            "parts": [
+              "bearing_keeper",
+              "housing"
+            ],
+            "common_volume_mm3": 0.256188,
+            "intersection_component_bounds_mm": [
+              [
+                [
+                  35.6,
+                  3.783,
+                  42.9011
+                ],
+                [
+                  37.7,
+                  4.665,
+                  43.8858
+                ]
+              ]
+            ]
+          },
+          {
+            "position_mm": [
+              0.0,
+              0.0,
+              30.0
+            ],
+            "parts": [
+              "bearing_keeper",
+              "housing"
+            ],
+            "common_volume_mm3": 0.256065,
+            "intersection_component_bounds_mm": [
+              [
+                [
+                  35.6,
+                  3.783,
+                  42.8989
+                ],
+                [
+                  37.7,
+                  4.6671,
+                  43.8849
+                ]
+              ]
+            ]
+          },
+          {
+            "position_mm": [
+              0.0,
+              0.0,
+              25.0
+            ],
+            "parts": [
+              "bearing_keeper",
+              "housing"
+            ],
+            "common_volume_mm3": 0.256245,
+            "intersection_component_bounds_mm": [
+              [
+                [
+                  35.6,
+                  3.783,
+                  42.8942
+                ],
+                [
+                  37.7,
+                  4.6718,
+                  43.8845
+                ]
+              ]
+            ]
+          },
+          {
+            "position_mm": [
+              0.0,
+              0.0,
+              20.0
+            ],
+            "parts": [
+              "bearing_keeper",
+              "housing"
+            ],
+            "common_volume_mm3": 0.25669,
+            "intersection_component_bounds_mm": [
+              [
+                [
+                  35.6,
+                  3.783,
+                  42.8865
+                ],
+                [
+                  37.7,
+                  4.6795,
+                  43.8845
+                ]
+              ]
+            ]
+          },
+          {
+            "position_mm": [
+              0.0,
+              0.0,
+              15.0
+            ],
+            "parts": [
+              "bearing_keeper",
+              "housing"
+            ],
+            "common_volume_mm3": 0.257397,
+            "intersection_component_bounds_mm": [
+              [
+                [
+                  35.6,
+                  3.783,
+                  42.8841
+                ],
+                [
+                  37.7,
+                  4.6819,
+                  43.8849
+                ]
+              ]
+            ]
+          },
+          {
+            "position_mm": [
+              0.0,
+              0.0,
+              10.0
+            ],
+            "parts": [
+              "bearing_keeper",
+              "housing"
+            ],
+            "common_volume_mm3": 0.148644,
+            "intersection_component_bounds_mm": [
+              [
+                [
+                  35.6,
+                  4.0494,
+                  42.8906
+                ],
+                [
+                  37.7,
+                  4.6755,
+                  43.6265
+                ]
+              ]
+            ]
+          },
+          {
+            "position_mm": [
+              0.0,
+              0.0,
+              5.0
+            ],
+            "parts": [
+              "bearing_keeper",
+              "housing"
+            ],
+            "common_volume_mm3": 0.039358,
+            "intersection_component_bounds_mm": [
+              [
+                [
+                  35.6,
+                  4.3748,
+                  42.8955
+                ],
+                [
+                  37.7,
+                  4.6705,
+                  43.2531
+                ]
+              ]
+            ]
+          }
+        ],
+        "violations": [],
+        "pass": true
+      },
+      {
+        "name": "carrier_outer_into_guide_frame",
+        "moving": "carrier_outer",
+        "fixed": [
+          "guide_frame"
+        ],
+        "route": "piecewise rigid transform",
+        "translation_step_mm": 1.0,
+        "rotation_step_deg": 5.0,
+        "sample_count": 21,
+        "pairs": [
+          {
+            "parts": [
+              "carrier_outer",
+              "guide_frame"
+            ],
+            "pose_samples": 21,
+            "aabb_zero_samples": 5,
+            "exact_samples": 16,
+            "maximum_common_volume_mm3": 0.0,
+            "maximum_at_position_mm": null,
+            "final_common_volume_mm3": 0.0
+          }
+        ],
+        "snap": null,
+        "allowed_snap_contacts": [],
+        "violations": [],
+        "pass": true
+      },
+      {
+        "name": "carrier_inner_into_guide_frame",
+        "moving": "carrier_inner",
+        "fixed": [
+          "guide_frame"
+        ],
+        "route": "piecewise rigid transform",
+        "translation_step_mm": 1.0,
+        "rotation_step_deg": 5.0,
+        "sample_count": 21,
+        "pairs": [
+          {
+            "parts": [
+              "carrier_inner",
+              "guide_frame"
+            ],
+            "pose_samples": 21,
+            "aabb_zero_samples": 4,
+            "exact_samples": 17,
+            "maximum_common_volume_mm3": 0.0,
+            "maximum_at_position_mm": null,
+            "final_common_volume_mm3": 0.0
+          }
+        ],
+        "snap": null,
+        "allowed_snap_contacts": [],
+        "violations": [],
+        "pass": true
+      },
+      {
+        "name": "carrier_center_into_guide_frame",
+        "moving": "carrier_center",
+        "fixed": [
+          "guide_frame"
+        ],
+        "route": "piecewise rigid transform",
+        "translation_step_mm": 1.0,
+        "rotation_step_deg": 5.0,
+        "sample_count": 13,
+        "pairs": [
+          {
+            "parts": [
+              "carrier_center",
+              "guide_frame"
+            ],
+            "pose_samples": 13,
+            "aabb_zero_samples": 0,
+            "exact_samples": 13,
+            "maximum_common_volume_mm3": 0.0,
+            "maximum_at_position_mm": null,
+            "final_common_volume_mm3": 0.0
+          }
+        ],
+        "snap": null,
+        "allowed_snap_contacts": [],
+        "violations": [],
+        "pass": true
+      },
+      {
+        "name": "guide_frame_group_into_housing",
+        "moving": "guide_frame",
+        "fixed": [
+          "housing"
+        ],
+        "route": "piecewise rigid transform",
+        "translation_step_mm": 1.0,
+        "rotation_step_deg": 5.0,
+        "sample_count": 21,
+        "pairs": [
+          {
+            "parts": [
+              "guide_frame",
+              "housing"
+            ],
+            "pose_samples": 21,
+            "aabb_zero_samples": 7,
+            "exact_samples": 14,
+            "maximum_common_volume_mm3": 0.0,
+            "maximum_at_position_mm": null,
+            "final_common_volume_mm3": 0.0
+          }
+        ],
+        "snap": null,
+        "allowed_snap_contacts": [],
+        "violations": [],
+        "pass": true
+      },
+      {
+        "name": "carrier_outer_with_guide_group",
+        "moving": "carrier_outer",
+        "fixed": [
+          "housing",
+          "camshaft",
+          "horn_coupler",
+          "cam_center",
+          "cam_inner",
+          "cam_outer"
+        ],
+        "route": "piecewise rigid transform",
+        "translation_step_mm": 1.0,
+        "rotation_step_deg": 5.0,
+        "sample_count": 21,
+        "pairs": [
+          {
+            "parts": [
+              "cam_center",
+              "carrier_outer"
+            ],
+            "pose_samples": 21,
+            "aabb_zero_samples": 21,
+            "exact_samples": 0,
+            "maximum_common_volume_mm3": 0.0,
+            "maximum_at_position_mm": null,
+            "final_common_volume_mm3": 0.0
+          },
+          {
+            "parts": [
+              "cam_inner",
+              "carrier_outer"
+            ],
+            "pose_samples": 21,
+            "aabb_zero_samples": 21,
+            "exact_samples": 0,
+            "maximum_common_volume_mm3": 0.0,
+            "maximum_at_position_mm": null,
+            "final_common_volume_mm3": 0.0
+          },
+          {
+            "parts": [
+              "cam_outer",
+              "carrier_outer"
+            ],
+            "pose_samples": 21,
+            "aabb_zero_samples": 21,
+            "exact_samples": 0,
+            "maximum_common_volume_mm3": 0.0,
+            "maximum_at_position_mm": null,
+            "final_common_volume_mm3": 0.0
+          },
+          {
+            "parts": [
+              "camshaft",
+              "carrier_outer"
+            ],
+            "pose_samples": 21,
+            "aabb_zero_samples": 21,
+            "exact_samples": 0,
+            "maximum_common_volume_mm3": 0.0,
+            "maximum_at_position_mm": null,
+            "final_common_volume_mm3": 0.0
+          },
+          {
+            "parts": [
+              "carrier_outer",
+              "horn_coupler"
+            ],
+            "pose_samples": 21,
+            "aabb_zero_samples": 9,
+            "exact_samples": 12,
+            "maximum_common_volume_mm3": 0.0,
+            "maximum_at_position_mm": null,
+            "final_common_volume_mm3": 0.0
+          },
+          {
+            "parts": [
+              "carrier_outer",
+              "housing"
+            ],
+            "pose_samples": 21,
+            "aabb_zero_samples": 0,
+            "exact_samples": 21,
+            "maximum_common_volume_mm3": 0.0,
+            "maximum_at_position_mm": null,
+            "final_common_volume_mm3": 0.0
+          }
+        ],
+        "snap": null,
+        "allowed_snap_contacts": [],
+        "violations": [],
+        "pass": true
+      },
+      {
+        "name": "carrier_inner_with_guide_group",
+        "moving": "carrier_inner",
+        "fixed": [
+          "housing",
+          "camshaft",
+          "horn_coupler",
+          "cam_center",
+          "cam_inner",
+          "cam_outer"
+        ],
+        "route": "piecewise rigid transform",
+        "translation_step_mm": 1.0,
+        "rotation_step_deg": 5.0,
+        "sample_count": 21,
+        "pairs": [
+          {
+            "parts": [
+              "cam_center",
+              "carrier_inner"
+            ],
+            "pose_samples": 21,
+            "aabb_zero_samples": 21,
+            "exact_samples": 0,
+            "maximum_common_volume_mm3": 0.0,
+            "maximum_at_position_mm": null,
+            "final_common_volume_mm3": 0.0
+          },
+          {
+            "parts": [
+              "cam_inner",
+              "carrier_inner"
+            ],
+            "pose_samples": 21,
+            "aabb_zero_samples": 21,
+            "exact_samples": 0,
+            "maximum_common_volume_mm3": 0.0,
+            "maximum_at_position_mm": null,
+            "final_common_volume_mm3": 0.0
+          },
+          {
+            "parts": [
+              "cam_outer",
+              "carrier_inner"
+            ],
+            "pose_samples": 21,
+            "aabb_zero_samples": 21,
+            "exact_samples": 0,
+            "maximum_common_volume_mm3": 0.0,
+            "maximum_at_position_mm": null,
+            "final_common_volume_mm3": 0.0
+          },
+          {
+            "parts": [
+              "camshaft",
+              "carrier_inner"
+            ],
+            "pose_samples": 21,
+            "aabb_zero_samples": 21,
+            "exact_samples": 0,
+            "maximum_common_volume_mm3": 0.0,
+            "maximum_at_position_mm": null,
+            "final_common_volume_mm3": 0.0
+          },
+          {
+            "parts": [
+              "carrier_inner",
+              "horn_coupler"
+            ],
+            "pose_samples": 21,
+            "aabb_zero_samples": 8,
+            "exact_samples": 13,
+            "maximum_common_volume_mm3": 0.0,
+            "maximum_at_position_mm": null,
+            "final_common_volume_mm3": 0.0
+          },
+          {
+            "parts": [
+              "carrier_inner",
+              "housing"
+            ],
+            "pose_samples": 21,
+            "aabb_zero_samples": 0,
+            "exact_samples": 21,
+            "maximum_common_volume_mm3": 0.0,
+            "maximum_at_position_mm": null,
+            "final_common_volume_mm3": 0.0
+          }
+        ],
+        "snap": null,
+        "allowed_snap_contacts": [],
+        "violations": [],
+        "pass": true
+      },
+      {
+        "name": "carrier_center_with_guide_group",
+        "moving": "carrier_center",
+        "fixed": [
+          "housing",
+          "camshaft",
+          "horn_coupler",
+          "cam_center",
+          "cam_inner",
+          "cam_outer"
+        ],
+        "route": "piecewise rigid transform",
+        "translation_step_mm": 1.0,
+        "rotation_step_deg": 5.0,
+        "sample_count": 21,
+        "pairs": [
+          {
+            "parts": [
+              "cam_center",
+              "carrier_center"
+            ],
+            "pose_samples": 21,
+            "aabb_zero_samples": 21,
+            "exact_samples": 0,
+            "maximum_common_volume_mm3": 0.0,
+            "maximum_at_position_mm": null,
+            "final_common_volume_mm3": 0.0
+          },
+          {
+            "parts": [
+              "cam_inner",
+              "carrier_center"
+            ],
+            "pose_samples": 21,
+            "aabb_zero_samples": 21,
+            "exact_samples": 0,
+            "maximum_common_volume_mm3": 0.0,
+            "maximum_at_position_mm": null,
+            "final_common_volume_mm3": 0.0
+          },
+          {
+            "parts": [
+              "cam_outer",
+              "carrier_center"
+            ],
+            "pose_samples": 21,
+            "aabb_zero_samples": 21,
+            "exact_samples": 0,
+            "maximum_common_volume_mm3": 0.0,
+            "maximum_at_position_mm": null,
+            "final_common_volume_mm3": 0.0
+          },
+          {
+            "parts": [
+              "camshaft",
+              "carrier_center"
+            ],
+            "pose_samples": 21,
+            "aabb_zero_samples": 21,
+            "exact_samples": 0,
+            "maximum_common_volume_mm3": 0.0,
+            "maximum_at_position_mm": null,
+            "final_common_volume_mm3": 0.0
+          },
+          {
+            "parts": [
+              "carrier_center",
+              "horn_coupler"
+            ],
+            "pose_samples": 21,
+            "aabb_zero_samples": 7,
+            "exact_samples": 14,
+            "maximum_common_volume_mm3": 0.0,
+            "maximum_at_position_mm": null,
+            "final_common_volume_mm3": 0.0
+          },
+          {
+            "parts": [
+              "carrier_center",
+              "housing"
+            ],
+            "pose_samples": 21,
+            "aabb_zero_samples": 0,
+            "exact_samples": 21,
+            "maximum_common_volume_mm3": 0.0,
+            "maximum_at_position_mm": null,
+            "final_common_volume_mm3": 0.0
+          }
+        ],
+        "snap": null,
+        "allowed_snap_contacts": [],
+        "violations": [],
+        "pass": true
+      },
+      {
+        "name": "faceplate_from_top",
+        "moving": "faceplate",
+        "fixed": [
+          "housing",
+          "guide_frame",
+          "carrier_center",
+          "carrier_inner",
+          "carrier_outer"
+        ],
+        "route": "piecewise rigid transform",
+        "translation_step_mm": 1.0,
+        "rotation_step_deg": 5.0,
+        "sample_count": 21,
+        "pairs": [
+          {
+            "parts": [
+              "carrier_center",
+              "faceplate"
+            ],
+            "pose_samples": 21,
+            "aabb_zero_samples": 5,
+            "exact_samples": 16,
+            "maximum_common_volume_mm3": 0.0,
+            "maximum_at_position_mm": null,
+            "final_common_volume_mm3": 0.0
+          },
+          {
+            "parts": [
+              "carrier_inner",
+              "faceplate"
+            ],
+            "pose_samples": 21,
+            "aabb_zero_samples": 5,
+            "exact_samples": 16,
+            "maximum_common_volume_mm3": 0.0,
+            "maximum_at_position_mm": null,
+            "final_common_volume_mm3": 0.0
+          },
+          {
+            "parts": [
+              "carrier_outer",
+              "faceplate"
+            ],
+            "pose_samples": 21,
+            "aabb_zero_samples": 5,
+            "exact_samples": 16,
+            "maximum_common_volume_mm3": 0.0,
+            "maximum_at_position_mm": null,
+            "final_common_volume_mm3": 0.0
+          },
+          {
+            "parts": [
+              "faceplate",
+              "guide_frame"
+            ],
+            "pose_samples": 21,
+            "aabb_zero_samples": 16,
+            "exact_samples": 5,
+            "maximum_common_volume_mm3": 0.0,
+            "maximum_at_position_mm": null,
+            "final_common_volume_mm3": 0.0
+          },
+          {
+            "parts": [
+              "faceplate",
+              "housing"
+            ],
+            "pose_samples": 21,
+            "aabb_zero_samples": 7,
+            "exact_samples": 14,
+            "maximum_common_volume_mm3": 25.600098,
+            "maximum_at_position_mm": [
+              0.0,
+              0.0,
+              11.0
+            ],
+            "final_common_volume_mm3": 0.0
+          }
+        ],
+        "snap": {
+          "kind": "faceplate",
+          "parts": [
+            "faceplate",
+            "housing"
+          ],
+          "deflection_mm": 0.4,
+          "strain_percent": 0.551,
+          "maximum_strain_percent": 2.0,
+          "zone_limited_contacts": 12,
+          "pass": true
+        },
+        "allowed_snap_contacts": [
+          {
+            "position_mm": [
+              0.0,
+              0.0,
+              12.0
+            ],
+            "parts": [
+              "faceplate",
+              "housing"
+            ],
+            "common_volume_mm3": 12.800049,
+            "intersection_component_bounds_mm": [
+              [
+                [
+                  -36.0,
+                  8.0,
+                  73.0
+                ],
+                [
+                  -35.6,
+                  16.0,
+                  74.0
+                ]
+              ],
+              [
+                [
+                  35.6,
+                  -16.0,
+                  73.0
+                ],
+                [
+                  36.0,
+                  -8.0,
+                  74.0
+                ]
+              ],
+              [
+                [
+                  -36.0,
+                  -16.0,
+                  73.0
+                ],
+                [
+                  -35.6,
+                  -8.0,
+                  74.0
+                ]
+              ],
+              [
+                [
+                  35.6,
+                  8.0,
+                  73.0
+                ],
+                [
+                  36.0,
+                  16.0,
+                  74.0
+                ]
+              ]
+            ]
+          },
+          {
+            "position_mm": [
+              0.0,
+              0.0,
+              11.0
+            ],
+            "parts": [
+              "faceplate",
+              "housing"
+            ],
+            "common_volume_mm3": 25.600098,
+            "intersection_component_bounds_mm": [
+              [
+                [
+                  35.6,
+                  8.0,
+                  72.0
+                ],
+                [
+                  36.0,
+                  16.0,
+                  74.0
+                ]
+              ],
+              [
+                [
+                  -36.0,
+                  -16.0,
+                  72.0
+                ],
+                [
+                  -35.6,
+                  -8.0,
+                  74.0
+                ]
+              ],
+              [
+                [
+                  -36.0,
+                  8.0,
+                  72.0
+                ],
+                [
+                  -35.6,
+                  16.0,
+                  74.0
+                ]
+              ],
+              [
+                [
+                  35.6,
+                  -16.0,
+                  72.0
+                ],
+                [
+                  36.0,
+                  -8.0,
+                  74.0
+                ]
+              ]
+            ]
+          },
+          {
+            "position_mm": [
+              0.0,
+              0.0,
+              10.0
+            ],
+            "parts": [
+              "faceplate",
+              "housing"
+            ],
+            "common_volume_mm3": 25.600098,
+            "intersection_component_bounds_mm": [
+              [
+                [
+                  35.6,
+                  -16.0,
+                  71.0
+                ],
+                [
+                  36.0,
+                  -8.0,
+                  73.0
+                ]
+              ],
+              [
+                [
+                  35.6,
+                  8.0,
+                  71.0
+                ],
+                [
+                  36.0,
+                  16.0,
+                  73.0
+                ]
+              ],
+              [
+                [
+                  -36.0,
+                  -16.0,
+                  71.0
+                ],
+                [
+                  -35.6,
+                  -8.0,
+                  73.0
+                ]
+              ],
+              [
+                [
+                  -36.0,
+                  8.0,
+                  71.0
+                ],
+                [
+                  -35.6,
+                  16.0,
+                  73.0
+                ]
+              ]
+            ]
+          },
+          {
+            "position_mm": [
+              0.0,
+              0.0,
+              9.0
+            ],
+            "parts": [
+              "faceplate",
+              "housing"
+            ],
+            "common_volume_mm3": 25.600098,
+            "intersection_component_bounds_mm": [
+              [
+                [
+                  35.6,
+                  -16.0,
+                  70.0
+                ],
+                [
+                  36.0,
+                  -8.0,
+                  72.0
+                ]
+              ],
+              [
+                [
+                  -36.0,
+                  8.0,
+                  70.0
+                ],
+                [
+                  -35.6,
+                  16.0,
+                  72.0
+                ]
+              ],
+              [
+                [
+                  35.6,
+                  8.0,
+                  70.0
+                ],
+                [
+                  36.0,
+                  16.0,
+                  72.0
+                ]
+              ],
+              [
+                [
+                  -36.0,
+                  -16.0,
+                  70.0
+                ],
+                [
+                  -35.6,
+                  -8.0,
+                  72.0
+                ]
+              ]
+            ]
+          },
+          {
+            "position_mm": [
+              0.0,
+              0.0,
+              8.0
+            ],
+            "parts": [
+              "faceplate",
+              "housing"
+            ],
+            "common_volume_mm3": 25.600098,
+            "intersection_component_bounds_mm": [
+              [
+                [
+                  -36.0,
+                  8.0,
+                  69.0
+                ],
+                [
+                  -35.6,
+                  16.0,
+                  71.0
+                ]
+              ],
+              [
+                [
+                  -36.0,
+                  -16.0,
+                  69.0
+                ],
+                [
+                  -35.6,
+                  -8.0,
+                  71.0
+                ]
+              ],
+              [
+                [
+                  35.6,
+                  -16.0,
+                  69.0
+                ],
+                [
+                  36.0,
+                  -8.0,
+                  71.0
+                ]
+              ],
+              [
+                [
+                  35.6,
+                  8.0,
+                  69.0
+                ],
+                [
+                  36.0,
+                  16.0,
+                  71.0
+                ]
+              ]
+            ]
+          },
+          {
+            "position_mm": [
+              0.0,
+              0.0,
+              7.0
+            ],
+            "parts": [
+              "faceplate",
+              "housing"
+            ],
+            "common_volume_mm3": 25.600098,
+            "intersection_component_bounds_mm": [
+              [
+                [
+                  -36.0,
+                  -16.0,
+                  68.0
+                ],
+                [
+                  -35.6,
+                  -8.0,
+                  70.0
+                ]
+              ],
+              [
+                [
+                  35.6,
+                  8.0,
+                  68.0
+                ],
+                [
+                  36.0,
+                  16.0,
+                  70.0
+                ]
+              ],
+              [
+                [
+                  -36.0,
+                  8.0,
+                  68.0
+                ],
+                [
+                  -35.6,
+                  16.0,
+                  70.0
+                ]
+              ],
+              [
+                [
+                  35.6,
+                  -16.0,
+                  68.0
+                ],
+                [
+                  36.0,
+                  -8.0,
+                  70.0
+                ]
+              ]
+            ]
+          },
+          {
+            "position_mm": [
+              0.0,
+              0.0,
+              6.0
+            ],
+            "parts": [
+              "faceplate",
+              "housing"
+            ],
+            "common_volume_mm3": 25.600098,
+            "intersection_component_bounds_mm": [
+              [
+                [
+                  -36.0,
+                  8.0,
+                  67.0
+                ],
+                [
+                  -35.6,
+                  16.0,
+                  69.0
+                ]
+              ],
+              [
+                [
+                  -36.0,
+                  -16.0,
+                  67.0
+                ],
+                [
+                  -35.6,
+                  -8.0,
+                  69.0
+                ]
+              ],
+              [
+                [
+                  35.6,
+                  -16.0,
+                  67.0
+                ],
+                [
+                  36.0,
+                  -8.0,
+                  69.0
+                ]
+              ],
+              [
+                [
+                  35.6,
+                  8.0,
+                  67.0
+                ],
+                [
+                  36.0,
+                  16.0,
+                  69.0
+                ]
+              ]
+            ]
+          },
+          {
+            "position_mm": [
+              0.0,
+              0.0,
+              5.0
+            ],
+            "parts": [
+              "faceplate",
+              "housing"
+            ],
+            "common_volume_mm3": 25.600098,
+            "intersection_component_bounds_mm": [
+              [
+                [
+                  35.6,
+                  8.0,
+                  66.0
+                ],
+                [
+                  36.0,
+                  16.0,
+                  68.0
+                ]
+              ],
+              [
+                [
+                  -36.0,
+                  -16.0,
+                  66.0
+                ],
+                [
+                  -35.6,
+                  -8.0,
+                  68.0
+                ]
+              ],
+              [
+                [
+                  -36.0,
+                  8.0,
+                  66.0
+                ],
+                [
+                  -35.6,
+                  16.0,
+                  68.0
+                ]
+              ],
+              [
+                [
+                  35.6,
+                  -16.0,
+                  66.0
+                ],
+                [
+                  36.0,
+                  -8.0,
+                  68.0
+                ]
+              ]
+            ]
+          },
+          {
+            "position_mm": [
+              0.0,
+              0.0,
+              4.0
+            ],
+            "parts": [
+              "faceplate",
+              "housing"
+            ],
+            "common_volume_mm3": 25.600098,
+            "intersection_component_bounds_mm": [
+              [
+                [
+                  35.6,
+                  8.0,
+                  65.0
+                ],
+                [
+                  36.0,
+                  16.0,
+                  67.0
+                ]
+              ],
+              [
+                [
+                  -36.0,
+                  -16.0,
+                  65.0
+                ],
+                [
+                  -35.6,
+                  -8.0,
+                  67.0
+                ]
+              ],
+              [
+                [
+                  -36.0,
+                  8.0,
+                  65.0
+                ],
+                [
+                  -35.6,
+                  16.0,
+                  67.0
+                ]
+              ],
+              [
+                [
+                  35.6,
+                  -16.0,
+                  65.0
+                ],
+                [
+                  36.0,
+                  -8.0,
+                  67.0
+                ]
+              ]
+            ]
+          },
+          {
+            "position_mm": [
+              0.0,
+              0.0,
+              3.0
+            ],
+            "parts": [
+              "faceplate",
+              "housing"
+            ],
+            "common_volume_mm3": 25.600098,
+            "intersection_component_bounds_mm": [
+              [
+                [
+                  35.6,
+                  -16.0,
+                  64.0
+                ],
+                [
+                  36.0,
+                  -8.0,
+                  66.0
+                ]
+              ],
+              [
+                [
+                  -36.0,
+                  8.0,
+                  64.0
+                ],
+                [
+                  -35.6,
+                  16.0,
+                  66.0
+                ]
+              ],
+              [
+                [
+                  35.6,
+                  8.0,
+                  64.0
+                ],
+                [
+                  36.0,
+                  16.0,
+                  66.0
+                ]
+              ],
+              [
+                [
+                  -36.0,
+                  -16.0,
+                  64.0
+                ],
+                [
+                  -35.6,
+                  -8.0,
+                  66.0
+                ]
+              ]
+            ]
+          },
+          {
+            "position_mm": [
+              0.0,
+              0.0,
+              2.0
+            ],
+            "parts": [
+              "faceplate",
+              "housing"
+            ],
+            "common_volume_mm3": 21.760093,
+            "intersection_component_bounds_mm": [
+              [
+                [
+                  35.6,
+                  8.0,
+                  63.3
+                ],
+                [
+                  36.0,
+                  16.0,
+                  65.0
+                ]
+              ],
+              [
+                [
+                  -36.0,
+                  -16.0,
+                  63.3
+                ],
+                [
+                  -35.6,
+                  -8.0,
+                  65.0
+                ]
+              ],
+              [
+                [
+                  -36.0,
+                  8.0,
+                  63.3
+                ],
+                [
+                  -35.6,
+                  16.0,
+                  65.0
+                ]
+              ],
+              [
+                [
+                  35.6,
+                  -16.0,
+                  63.3
+                ],
+                [
+                  36.0,
+                  -8.0,
+                  65.0
+                ]
+              ]
+            ]
+          },
+          {
+            "position_mm": [
+              0.0,
+              0.0,
+              1.0
+            ],
+            "parts": [
+              "faceplate",
+              "housing"
+            ],
+            "common_volume_mm3": 8.960044,
+            "intersection_component_bounds_mm": [
+              [
+                [
+                  -36.0,
+                  8.0,
+                  63.3
+                ],
+                [
+                  -35.6,
+                  16.0,
+                  64.0
+                ]
+              ],
+              [
+                [
+                  35.6,
+                  -16.0,
+                  63.3
+                ],
+                [
+                  36.0,
+                  -8.0,
+                  64.0
+                ]
+              ],
+              [
+                [
+                  35.6,
+                  8.0,
+                  63.3
+                ],
+                [
+                  36.0,
+                  16.0,
+                  64.0
+                ]
+              ],
+              [
+                [
+                  -36.0,
+                  -16.0,
+                  63.3
+                ],
+                [
+                  -35.6,
+                  -8.0,
+                  64.0
+                ]
+              ]
+            ]
+          }
+        ],
+        "violations": [],
+        "pass": true
+      },
+      {
+        "name": "bottom_from_below",
+        "moving": "bottom",
+        "fixed": [
+          "housing",
+          "servo_body",
+          "servo_clip",
+          "bearing_keeper"
+        ],
+        "route": "piecewise rigid transform",
+        "translation_step_mm": 1.0,
+        "rotation_step_deg": 5.0,
+        "sample_count": 21,
+        "pairs": [
+          {
+            "parts": [
+              "bearing_keeper",
+              "bottom"
+            ],
+            "pose_samples": 21,
+            "aabb_zero_samples": 21,
+            "exact_samples": 0,
+            "maximum_common_volume_mm3": 0.0,
+            "maximum_at_position_mm": null,
+            "final_common_volume_mm3": 0.0
+          },
+          {
+            "parts": [
+              "bottom",
+              "housing"
+            ],
+            "pose_samples": 21,
+            "aabb_zero_samples": 4,
+            "exact_samples": 17,
+            "maximum_common_volume_mm3": 31.750093,
+            "maximum_at_position_mm": [
+              0.0,
+              0.0,
+              -14.0
+            ],
+            "final_common_volume_mm3": 0.0
+          },
+          {
+            "parts": [
+              "bottom",
+              "servo_body"
+            ],
+            "pose_samples": 21,
+            "aabb_zero_samples": 21,
+            "exact_samples": 0,
+            "maximum_common_volume_mm3": 0.0,
+            "maximum_at_position_mm": null,
+            "final_common_volume_mm3": 0.0
+          },
+          {
+            "parts": [
+              "bottom",
+              "servo_clip"
+            ],
+            "pose_samples": 21,
+            "aabb_zero_samples": 21,
+            "exact_samples": 0,
+            "maximum_common_volume_mm3": 0.0,
+            "maximum_at_position_mm": null,
+            "final_common_volume_mm3": 0.0
+          }
+        ],
+        "snap": {
+          "kind": "bottom",
+          "parts": [
+            "bottom",
+            "housing"
+          ],
+          "deflection_mm": 0.4,
+          "strain_percent": 0.551,
+          "maximum_strain_percent": 2.0,
+          "zone_limited_contacts": 16,
+          "pass": true
+        },
+        "allowed_snap_contacts": [
+          {
+            "position_mm": [
+              0.0,
+              0.0,
+              -16.0
+            ],
+            "parts": [
+              "bottom",
+              "housing"
+            ],
+            "common_volume_mm3": 6.170013,
+            "intersection_component_bounds_mm": [
+              [
+                [
+                  -36.0,
+                  8.0,
+                  0.0
+                ],
+                [
+                  -33.5,
+                  16.0,
+                  0.4
+                ]
+              ],
+              [
+                [
+                  35.6,
+                  -16.0,
+                  0.0
+                ],
+                [
+                  36.0,
+                  -8.0,
+                  0.4
+                ]
+              ],
+              [
+                [
+                  35.6,
+                  8.0,
+                  0.0
+                ],
+                [
+                  36.0,
+                  16.0,
+                  0.4
+                ]
+              ],
+              [
+                [
+                  -36.0,
+                  -16.0,
+                  0.0
+                ],
+                [
+                  -35.6,
+                  -8.0,
+                  0.4
+                ]
+              ]
+            ]
+          },
+          {
+            "position_mm": [
+              0.0,
+              0.0,
+              -15.0
+            ],
+            "parts": [
+              "bottom",
+              "housing"
+            ],
+            "common_volume_mm3": 21.59506,
+            "intersection_component_bounds_mm": [
+              [
+                [
+                  -36.0,
+                  8.0,
+                  0.0
+                ],
+                [
+                  -33.5,
+                  16.0,
+                  1.4
+                ]
+              ],
+              [
+                [
+                  35.6,
+                  -16.0,
+                  0.0
+                ],
+                [
+                  36.0,
+                  -8.0,
+                  1.4
+                ]
+              ],
+              [
+                [
+                  35.6,
+                  8.0,
+                  0.0
+                ],
+                [
+                  36.0,
+                  16.0,
+                  1.4
+                ]
+              ],
+              [
+                [
+                  -36.0,
+                  -16.0,
+                  0.0
+                ],
+                [
+                  -35.6,
+                  -8.0,
+                  1.4
+                ]
+              ]
+            ]
+          },
+          {
+            "position_mm": [
+              0.0,
+              0.0,
+              -14.0
+            ],
+            "parts": [
+              "bottom",
+              "housing"
+            ],
+            "common_volume_mm3": 31.750093,
+            "intersection_component_bounds_mm": [
+              [
+                [
+                  -36.0,
+                  -16.0,
+                  0.4
+                ],
+                [
+                  -35.6,
+                  -8.0,
+                  2.4
+                ]
+              ],
+              [
+                [
+                  -36.0,
+                  8.0,
+                  0.0
+                ],
+                [
+                  -33.5,
+                  16.0,
+                  2.4
+                ]
+              ],
+              [
+                [
+                  35.6,
+                  -16.0,
+                  0.4
+                ],
+                [
+                  36.0,
+                  -8.0,
+                  2.4
+                ]
+              ],
+              [
+                [
+                  35.6,
+                  8.0,
+                  0.4
+                ],
+                [
+                  36.0,
+                  16.0,
+                  2.4
+                ]
+              ]
+            ]
+          },
+          {
+            "position_mm": [
+              0.0,
+              0.0,
+              -13.0
+            ],
+            "parts": [
+              "bottom",
+              "housing"
+            ],
+            "common_volume_mm3": 31.375095,
+            "intersection_component_bounds_mm": [
+              [
+                [
+                  35.6,
+                  -16.0,
+                  1.4
+                ],
+                [
+                  36.0,
+                  -8.0,
+                  3.4
+                ]
+              ],
+              [
+                [
+                  35.6,
+                  8.0,
+                  1.4
+                ],
+                [
+                  36.0,
+                  16.0,
+                  3.4
+                ]
+              ],
+              [
+                [
+                  -36.0,
+                  -16.0,
+                  1.4
+                ],
+                [
+                  -35.6,
+                  -8.0,
+                  3.4
+                ]
+              ],
+              [
+                [
+                  -36.0,
+                  8.0,
+                  0.0
+                ],
+                [
+                  -33.5,
+                  16.0,
+                  3.4
+                ]
+              ]
+            ]
+          },
+          {
+            "position_mm": [
+              0.0,
+              0.0,
+              -12.0
+            ],
+            "parts": [
+              "bottom",
+              "housing"
+            ],
+            "common_volume_mm3": 31.000096,
+            "intersection_component_bounds_mm": [
+              [
+                [
+                  -36.0,
+                  8.0,
+                  0.0
+                ],
+                [
+                  -33.5,
+                  16.0,
+                  4.4
+                ]
+              ],
+              [
+                [
+                  35.6,
+                  -16.0,
+                  2.4
+                ],
+                [
+                  36.0,
+                  -8.0,
+                  4.4
+                ]
+              ],
+              [
+                [
+                  35.6,
+                  8.0,
+                  2.4
+                ],
+                [
+                  36.0,
+                  16.0,
+                  4.4
+                ]
+              ],
+              [
+                [
+                  -36.0,
+                  -16.0,
+                  2.4
+                ],
+                [
+                  -35.6,
+                  -8.0,
+                  4.4
+                ]
+              ]
+            ]
+          },
+          {
+            "position_mm": [
+              0.0,
+              0.0,
+              -11.0
+            ],
+            "parts": [
+              "bottom",
+              "housing"
+            ],
+            "common_volume_mm3": 31.000096,
+            "intersection_component_bounds_mm": [
+              [
+                [
+                  -36.0,
+                  8.0,
+                  3.4
+                ],
+                [
+                  -35.6,
+                  16.0,
+                  5.4
+                ]
+              ],
+              [
+                [
+                  35.6,
+                  -16.0,
+                  3.4
+                ],
+                [
+                  36.0,
+                  -8.0,
+                  5.4
+                ]
+              ],
+              [
+                [
+                  -36.0,
+                  -16.0,
+                  3.4
+                ],
+                [
+                  -35.6,
+                  -8.0,
+                  5.4
+                ]
+              ],
+              [
+                [
+                  35.6,
+                  8.0,
+                  3.4
+                ],
+                [
+                  36.0,
+                  16.0,
+                  5.4
+                ]
+              ],
+              [
+                [
+                  -35.3,
+                  8.0,
+                  0.0
+                ],
+                [
+                  -33.5,
+                  9.25,
+                  2.4
+                ]
+              ]
+            ]
+          },
+          {
+            "position_mm": [
+              0.0,
+              0.0,
+              -10.0
+            ],
+            "parts": [
+              "bottom",
+              "housing"
+            ],
+            "common_volume_mm3": 31.000096,
+            "intersection_component_bounds_mm": [
+              [
+                [
+                  35.6,
+                  8.0,
+                  4.4
+                ],
+                [
+                  36.0,
+                  16.0,
+                  6.4
+                ]
+              ],
+              [
+                [
+                  -36.0,
+                  -16.0,
+                  4.4
+                ],
+                [
+                  -35.6,
+                  -8.0,
+                  6.4
+                ]
+              ],
+              [
+                [
+                  -35.3,
+                  8.0,
+                  0.0
+                ],
+                [
+                  -33.5,
+                  9.25,
+                  2.4
+                ]
+              ],
+              [
+                [
+                  -36.0,
+                  8.0,
+                  4.4
+                ],
+                [
+                  -35.6,
+                  16.0,
+                  6.4
+                ]
+              ],
+              [
+                [
+                  35.6,
+                  -16.0,
+                  4.4
+                ],
+                [
+                  36.0,
+                  -8.0,
+                  6.4
+                ]
+              ]
+            ]
+          },
+          {
+            "position_mm": [
+              0.0,
+              0.0,
+              -9.0
+            ],
+            "parts": [
+              "bottom",
+              "housing"
+            ],
+            "common_volume_mm3": 31.000096,
+            "intersection_component_bounds_mm": [
+              [
+                [
+                  35.6,
+                  -16.0,
+                  5.4
+                ],
+                [
+                  36.0,
+                  -8.0,
+                  7.4
+                ]
+              ],
+              [
+                [
+                  35.6,
+                  8.0,
+                  5.4
+                ],
+                [
+                  36.0,
+                  16.0,
+                  7.4
+                ]
+              ],
+              [
+                [
+                  -36.0,
+                  -16.0,
+                  5.4
+                ],
+                [
+                  -35.6,
+                  -8.0,
+                  7.4
+                ]
+              ],
+              [
+                [
+                  -35.3,
+                  8.0,
+                  0.0
+                ],
+                [
+                  -33.5,
+                  9.25,
+                  2.4
+                ]
+              ],
+              [
+                [
+                  -36.0,
+                  8.0,
+                  5.4
+                ],
+                [
+                  -35.6,
+                  16.0,
+                  7.4
+                ]
+              ]
+            ]
+          },
+          {
+            "position_mm": [
+              0.0,
+              0.0,
+              -8.0
+            ],
+            "parts": [
+              "bottom",
+              "housing"
+            ],
+            "common_volume_mm3": 31.000096,
+            "intersection_component_bounds_mm": [
+              [
+                [
+                  -36.0,
+                  8.0,
+                  6.4
+                ],
+                [
+                  -35.6,
+                  16.0,
+                  8.4
+                ]
+              ],
+              [
+                [
+                  35.6,
+                  -16.0,
+                  6.4
+                ],
+                [
+                  36.0,
+                  -8.0,
+                  8.4
+                ]
+              ],
+              [
+                [
+                  35.6,
+                  8.0,
+                  6.4
+                ],
+                [
+                  36.0,
+                  16.0,
+                  8.4
+                ]
+              ],
+              [
+                [
+                  -36.0,
+                  -16.0,
+                  6.4
+                ],
+                [
+                  -35.6,
+                  -8.0,
+                  8.4
+                ]
+              ],
+              [
+                [
+                  -35.3,
+                  8.0,
+                  0.0
+                ],
+                [
+                  -33.5,
+                  9.25,
+                  2.4
+                ]
+              ]
+            ]
+          },
+          {
+            "position_mm": [
+              0.0,
+              0.0,
+              -7.0
+            ],
+            "parts": [
+              "bottom",
+              "housing"
+            ],
+            "common_volume_mm3": 31.000096,
+            "intersection_component_bounds_mm": [
+              [
+                [
+                  35.6,
+                  8.0,
+                  7.4
+                ],
+                [
+                  36.0,
+                  16.0,
+                  9.4
+                ]
+              ],
+              [
+                [
+                  -36.0,
+                  -16.0,
+                  7.4
+                ],
+                [
+                  -35.6,
+                  -8.0,
+                  9.4
+                ]
+              ],
+              [
+                [
+                  -35.3,
+                  8.0,
+                  0.0
+                ],
+                [
+                  -33.5,
+                  9.25,
+                  2.4
+                ]
+              ],
+              [
+                [
+                  -36.0,
+                  8.0,
+                  7.4
+                ],
+                [
+                  -35.6,
+                  16.0,
+                  9.4
+                ]
+              ],
+              [
+                [
+                  35.6,
+                  -16.0,
+                  7.4
+                ],
+                [
+                  36.0,
+                  -8.0,
+                  9.4
+                ]
+              ]
+            ]
+          },
+          {
+            "position_mm": [
+              0.0,
+              0.0,
+              -6.0
+            ],
+            "parts": [
+              "bottom",
+              "housing"
+            ],
+            "common_volume_mm3": 31.000096,
+            "intersection_component_bounds_mm": [
+              [
+                [
+                  35.6,
+                  8.0,
+                  8.4
+                ],
+                [
+                  36.0,
+                  16.0,
+                  10.4
+                ]
+              ],
+              [
+                [
+                  -36.0,
+                  -16.0,
+                  8.4
+                ],
+                [
+                  -35.6,
+                  -8.0,
+                  10.4
+                ]
+              ],
+              [
+                [
+                  -35.3,
+                  8.0,
+                  0.0
+                ],
+                [
+                  -33.5,
+                  9.25,
+                  2.4
+                ]
+              ],
+              [
+                [
+                  -36.0,
+                  8.0,
+                  8.4
+                ],
+                [
+                  -35.6,
+                  16.0,
+                  10.4
+                ]
+              ],
+              [
+                [
+                  35.6,
+                  -16.0,
+                  8.4
+                ],
+                [
+                  36.0,
+                  -8.0,
+                  10.4
+                ]
+              ]
+            ]
+          },
+          {
+            "position_mm": [
+              0.0,
+              0.0,
+              -5.0
+            ],
+            "parts": [
+              "bottom",
+              "housing"
+            ],
+            "common_volume_mm3": 31.000096,
+            "intersection_component_bounds_mm": [
+              [
+                [
+                  35.6,
+                  8.0,
+                  9.4
+                ],
+                [
+                  36.0,
+                  16.0,
+                  11.4
+                ]
+              ],
+              [
+                [
+                  -36.0,
+                  -16.0,
+                  9.4
+                ],
+                [
+                  -35.6,
+                  -8.0,
+                  11.4
+                ]
+              ],
+              [
+                [
+                  -36.0,
+                  8.0,
+                  9.4
+                ],
+                [
+                  -35.6,
+                  16.0,
+                  11.4
+                ]
+              ],
+              [
+                [
+                  35.6,
+                  -16.0,
+                  9.4
+                ],
+                [
+                  36.0,
+                  -8.0,
+                  11.4
+                ]
+              ],
+              [
+                [
+                  -35.3,
+                  8.0,
+                  0.0
+                ],
+                [
+                  -33.5,
+                  9.25,
+                  2.4
+                ]
+              ]
+            ]
+          },
+          {
+            "position_mm": [
+              0.0,
+              0.0,
+              -4.0
+            ],
+            "parts": [
+              "bottom",
+              "housing"
+            ],
+            "common_volume_mm3": 31.000096,
+            "intersection_component_bounds_mm": [
+              [
+                [
+                  35.6,
+                  8.0,
+                  10.4
+                ],
+                [
+                  36.0,
+                  16.0,
+                  12.4
+                ]
+              ],
+              [
+                [
+                  -36.0,
+                  -16.0,
+                  10.4
+                ],
+                [
+                  -35.6,
+                  -8.0,
+                  12.4
+                ]
+              ],
+              [
+                [
+                  -35.3,
+                  8.0,
+                  0.0
+                ],
+                [
+                  -33.5,
+                  9.25,
+                  2.4
+                ]
+              ],
+              [
+                [
+                  -36.0,
+                  8.0,
+                  10.4
+                ],
+                [
+                  -35.6,
+                  16.0,
+                  12.4
+                ]
+              ],
+              [
+                [
+                  35.6,
+                  -16.0,
+                  10.4
+                ],
+                [
+                  36.0,
+                  -8.0,
+                  12.4
+                ]
+              ]
+            ]
+          },
+          {
+            "position_mm": [
+              0.0,
+              0.0,
+              -3.0
+            ],
+            "parts": [
+              "bottom",
+              "housing"
+            ],
+            "common_volume_mm3": 31.000096,
+            "intersection_component_bounds_mm": [
+              [
+                [
+                  35.6,
+                  8.0,
+                  11.4
+                ],
+                [
+                  36.0,
+                  16.0,
+                  13.4
+                ]
+              ],
+              [
+                [
+                  -36.0,
+                  -16.0,
+                  11.4
+                ],
+                [
+                  -35.6,
+                  -8.0,
+                  13.4
+                ]
+              ],
+              [
+                [
+                  -35.3,
+                  8.0,
+                  0.0
+                ],
+                [
+                  -33.5,
+                  9.25,
+                  2.4
+                ]
+              ],
+              [
+                [
+                  -36.0,
+                  8.0,
+                  11.4
+                ],
+                [
+                  -35.6,
+                  16.0,
+                  13.4
+                ]
+              ],
+              [
+                [
+                  35.6,
+                  -16.0,
+                  11.4
+                ],
+                [
+                  36.0,
+                  -8.0,
+                  13.4
+                ]
+              ]
+            ]
+          },
+          {
+            "position_mm": [
+              0.0,
+              0.0,
+              -2.0
+            ],
+            "parts": [
+              "bottom",
+              "housing"
+            ],
+            "common_volume_mm3": 26.865089,
+            "intersection_component_bounds_mm": [
+              [
+                [
+                  35.6,
+                  -16.0,
+                  12.4
+                ],
+                [
+                  36.0,
+                  -8.0,
+                  14.2
+                ]
+              ],
+              [
+                [
+                  35.6,
+                  8.0,
+                  12.4
+                ],
+                [
+                  36.0,
+                  16.0,
+                  14.2
+                ]
+              ],
+              [
+                [
+                  -35.3,
+                  8.0,
+                  0.7
+                ],
+                [
+                  -33.5,
+                  9.25,
+                  2.4
+                ]
+              ],
+              [
+                [
+                  -36.0,
+                  8.0,
+                  12.4
+                ],
+                [
+                  -35.6,
+                  16.0,
+                  14.2
+                ]
+              ],
+              [
+                [
+                  -36.0,
+                  -16.0,
+                  12.4
+                ],
+                [
+                  -35.6,
+                  -8.0,
+                  14.2
+                ]
+              ]
+            ]
+          },
+          {
+            "position_mm": [
+              0.0,
+              0.0,
+              -1.0
+            ],
+            "parts": [
+              "bottom",
+              "housing"
+            ],
+            "common_volume_mm3": 11.815041,
+            "intersection_component_bounds_mm": [
+              [
+                [
+                  35.6,
+                  8.0,
+                  13.4
+                ],
+                [
+                  36.0,
+                  16.0,
+                  14.2
+                ]
+              ],
+              [
+                [
+                  -35.3,
+                  8.0,
+                  1.7
+                ],
+                [
+                  -33.5,
+                  9.25,
+                  2.4
+                ]
+              ],
+              [
+                [
+                  -36.0,
+                  -16.0,
+                  13.4
+                ],
+                [
+                  -35.6,
+                  -8.0,
+                  14.2
+                ]
+              ],
+              [
+                [
+                  -36.0,
+                  8.0,
+                  13.4
+                ],
+                [
+                  -35.6,
+                  16.0,
+                  14.2
+                ]
+              ],
+              [
+                [
+                  35.6,
+                  -16.0,
+                  13.4
+                ],
+                [
+                  36.0,
+                  -8.0,
+                  14.2
+                ]
+              ]
+            ]
+          }
+        ],
+        "violations": [],
+        "pass": true
+      }
+    ],
+    "failure_summary": [],
+    "snap_limit_percent": 2.0,
+    "cam_hex_clearance_per_side_mm": 0.175,
+    "bearing_radial_clearance_mm": 0.3,
+    "pass": true
+  },
+  "physics": {
+    "carrier_mass_g": [
+      1.742,
+      4.72,
+      8.105
+    ],
+    "stroke_mm": [
+      5.909,
+      3.939,
+      1.97
+    ],
+    "gravity_torque_Nm": 0.000223,
+    "friction_upper_Nm": 6.7e-05,
+    "required_Nm": 0.00029,
+    "stall_fraction": 0.0012,
+    "one_third_stall_fraction": 0.0036,
+    "shaft_joint_reference": {
+      "hex_flat_mm": 3.6,
+      "socket_flat_mm": 3.9,
+      "engagement_mm": 8.0,
+      "one_third_stall_torque_Nm": 0.0817,
+      "required_torque_inscribed_circle_shear_MPa": 0.0317,
+      "one_third_stall_inscribed_circle_shear_MPa": 8.9147,
+      "basis": "対辺3.6mm六角に内接する直径3.6mm円柱を下限とし、最大せん断応力を16T/(pi*d^3)で算出"
+    },
+    "power_off": "格子への重力は全域で閉方向だが、無通電SG92Rを逆駆動できるとは限らない。停止角度付近に残り得るため、復電後に低速で10度へ戻す。",
+    "pass": true
+  },
+  "limitations": [
+    "剛体候補136組はAABB非交差を数学的0とし、それ以外をBoolean EXACTで実体積測定した。対応するカムと従動パッドの接触は解析式でも追跡した。",
+    "組立経路は並進1mm刻み、keeper回転5度刻みの離散検査。指定したスナップ爪とkeeper板ばね以外の共通体積は許容していない。",
+    "SG92R正本の参照STLは形状を改変せず別欄に記録した。印刷部品のトポロジー合否には含めない。",
+    "摩擦係数、ホーン嵌め合い、底板スナップ、PLA/PETGの収縮は実物未検証。",
+    "電源断では停止角度付近に残り得る。復電後に低速で10度へ戻し、格子の閉鎖を実物確認する。"
+  ]
+}

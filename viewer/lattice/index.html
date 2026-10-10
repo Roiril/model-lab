@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>格子の住人の箱 · model-lab</title>
+  <link rel="stylesheet" href="../shared/workspace.css">
+  <link rel="stylesheet" href="lattice.css">
+</head>
+<body>
+  <a class="workspace-skip" href="#stage">3D表示へ移動</a>
+  <header class="workspace-header">
+    <a class="workspace-brand" href="/">model-lab</a>
+    <div class="workspace-model"><strong>格子の住人の箱</strong><small>形を読み込み中…</small></div>
+    <div id="workspaceNav"></div>
+  </header>
+
+  <main class="lattice-layout">
+    <section class="lattice-stage" id="stage" tabindex="-1" aria-labelledby="pageTitle">
+      <div class="stage-toolbar" aria-label="3D表示の操作">
+        <div class="physics-only actions">
+          <button id="play" class="control primary" type="button">動かす</button>
+          <button id="stop" class="control" type="button" disabled>止める</button>
+        </div>
+        <label class="range-field physics-only" for="angle">
+          <span>サーボ角度</span>
+          <input id="angle" type="range" min="0" max="180" step="1" value="0">
+          <output id="angleValue" for="angle">0°</output>
+        </label>
+        <label class="range-field assembly-only" for="explode">
+          <span>分解</span>
+          <input id="explode" type="range" min="0" max="100" step="1" value="0">
+          <output id="explodeValue" for="explode">0%</output>
+        </label>
+        <label class="check"><input id="removeExterior" type="checkbox"> 外装を外す</label>
+        <div class="camera" aria-label="カメラ">
+          <span>視点</span>
+          <button class="control" type="button" data-camera="front">正面</button>
+          <button class="control" type="button" data-camera="iso" aria-pressed="true">斜め</button>
+          <button class="control" type="button" data-camera="top">真上</button>
+        </div>
+      </div>
+      <div class="canvas-wrap">
+        <canvas id="gl" data-frame-count="0" data-current-angle="0" data-servo-deg="0" data-visible-parts="" aria-label="実際のSTL形状を使った格子機構の3D表示"></canvas>
+        <p id="loading" class="loading" role="status" aria-live="polite">形を読み込んでいます…</p>
+        <p class="view-help">ドラッグで回転。ホイールで拡大・縮小。</p>
+      </div>
+      <div id="legend" class="legend" aria-label="部品の色分け"></div>
+    </section>
+
+    <aside class="lattice-panel" aria-labelledby="pageTitle">
+      <div>
+        <p id="eyebrow" class="eyebrow">格子の住人の箱</p>
+        <h1 id="pageTitle">格子の動作</h1>
+        <p id="summary" class="lead">形と動きを読み込んでいます。</p>
+      </div>
+      <nav class="model-switch" aria-label="モデル切り替え">
+        <a id="c3Link" href="?model=mystery-box-sg92r-c3&amp;mode=physics">C3 立方格子</a>
+        <a id="c4Link" href="?model=mystery-box-sg92r-c4&amp;mode=physics">C4 六角格子</a>
+      </nav>
+      <dl id="metrics" class="metrics"></dl>
+
+      <section class="physics-only">
+        <h2>動作原理</h2>
+        <p id="principle">サーボの回転が天面の上下運動に変わります。</p>
+      </section>
+
+      <section class="assembly-only">
+        <h2>部品</h2>
+        <div id="partList" class="part-list"></div>
+        <h2>組み立て手順</h2>
+        <ol id="assemblySteps" class="steps"></ol>
+      </section>
+
+      <section>
+        <h2>検証結果</h2>
+        <div class="table-wrap"><table class="result-table"><thead><tr><th>項目</th><th>結果</th></tr></thead><tbody id="verifyRows"></tbody></table></div>
+        <p><a id="verifyDownload" class="download" href="#" download hidden>検証データをダウンロード</a></p>
+      </section>
+
+      <section>
+        <h2>印刷データ</h2>
+        <div class="table-wrap"><table class="result-table"><thead><tr><th>項目</th><th>結果</th></tr></thead><tbody id="deliveryRows"></tbody></table></div>
+        <ul id="printDownloads" class="steps"></ul>
+        <p><a id="dataDownload" class="download" href="#" download>表示データの詳細をダウンロード</a></p>
+      </section>
+
+      <p class="limits"><strong>確認範囲</strong><br>上向き面の卓上デモを想定しています。重力で戻る機構です。姿勢を変えた動作は対象外です。指で押した入力は検出しません。実機での動作と耐久性は未確認です。</p>
+      <div id="fatal" class="fatal" role="alert" hidden><p id="fatalMessage"></p><button id="retry" class="control" type="button">読み直す</button></div>
+    </aside>
+  </main>
+  <script type="module" src="lattice.mjs"></script>
+</body>
+</html>

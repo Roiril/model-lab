@@ -1,0 +1,3853 @@
+{
+  "version": 1,
+  "model": "mystery-box-sg92r-c3",
+  "calibration": {
+    "topology": {
+      "ok": true,
+      "closed_nonmanifold_edges": 0,
+      "open_nonmanifold_edges": 3
+    },
+    "collision": {
+      "ok": true,
+      "positive_triangle_pairs": 6,
+      "negative_triangle_pairs": 0,
+      "positive_common_volume_mm3": 0.5,
+      "negative_common_volume_mm3": 0.0
+    }
+  },
+  "topology": {
+    "shell": {
+      "triangles": 1566,
+      "duplicate_triangles": 0,
+      "degenerate_triangles": 0,
+      "nonmanifold_edges": 0,
+      "nonmanifold_where": [],
+      "volume_mm3": 101524.38789569824,
+      "bbox_mm": [
+        [
+          -40.0,
+          -40.0,
+          0.0
+        ],
+        [
+          40.0,
+          40.0,
+          80.0
+        ]
+      ]
+    },
+    "top_frame": {
+      "triangles": 64,
+      "duplicate_triangles": 0,
+      "degenerate_triangles": 0,
+      "nonmanifold_edges": 0,
+      "nonmanifold_where": [],
+      "volume_mm3": 7767.1736653645785,
+      "bbox_mm": [
+        [
+          -36.7,
+          -36.7,
+          74.5
+        ],
+        [
+          36.7,
+          36.7,
+          80.0
+        ]
+      ]
+    },
+    "carrier_0": {
+      "triangles": 248,
+      "duplicate_triangles": 0,
+      "degenerate_triangles": 0,
+      "nonmanifold_edges": 0,
+      "nonmanifold_where": [],
+      "volume_mm3": 4815.061559677119,
+      "bbox_mm": [
+        [
+          -27.6,
+          -32.5,
+          54.7
+        ],
+        [
+          -17.2,
+          32.5,
+          80.0
+        ]
+      ]
+    },
+    "carrier_1": {
+      "triangles": 248,
+      "duplicate_triangles": 0,
+      "degenerate_triangles": 0,
+      "nonmanifold_edges": 0,
+      "nonmanifold_where": [],
+      "volume_mm3": 4815.054213047018,
+      "bbox_mm": [
+        [
+          -16.4,
+          -32.5,
+          54.7
+        ],
+        [
+          -6.0,
+          32.5,
+          80.0
+        ]
+      ]
+    },
+    "carrier_2": {
+      "triangles": 248,
+      "duplicate_triangles": 0,
+      "degenerate_triangles": 0,
+      "nonmanifold_edges": 0,
+      "nonmanifold_where": [],
+      "volume_mm3": 4815.0551129499845,
+      "bbox_mm": [
+        [
+          -5.2,
+          -32.5,
+          54.7
+        ],
+        [
+          5.2,
+          32.5,
+          80.0
+        ]
+      ]
+    },
+    "carrier_3": {
+      "triangles": 248,
+      "duplicate_triangles": 0,
+      "degenerate_triangles": 0,
+      "nonmanifold_edges": 0,
+      "nonmanifold_where": [],
+      "volume_mm3": 4815.053934160874,
+      "bbox_mm": [
+        [
+          6.0,
+          -32.5,
+          54.7
+        ],
+        [
+          16.4,
+          32.5,
+          80.0
+        ]
+      ]
+    },
+    "carrier_4": {
+      "triangles": 248,
+      "duplicate_triangles": 0,
+      "degenerate_triangles": 0,
+      "nonmanifold_edges": 0,
+      "nonmanifold_where": [],
+      "volume_mm3": 4815.060075759884,
+      "bbox_mm": [
+        [
+          17.2,
+          -32.5,
+          54.7
+        ],
+        [
+          27.6,
+          32.5,
+          80.0
+        ]
+      ]
+    },
+    "camshaft": {
+      "triangles": 572,
+      "duplicate_triangles": 0,
+      "degenerate_triangles": 0,
+      "nonmanifold_edges": 0,
+      "nonmanifold_where": [],
+      "volume_mm3": 1698.848918279634,
+      "bbox_mm": [
+        [
+          -39.7,
+          -2.5,
+          50.8133
+        ],
+        [
+          39.7,
+          2.5,
+          56.5868
+        ]
+      ]
+    },
+    "cam_0": {
+      "triangles": 460,
+      "duplicate_triangles": 0,
+      "degenerate_triangles": 0,
+      "nonmanifold_edges": 0,
+      "nonmanifold_where": [],
+      "volume_mm3": 522.3176491446795,
+      "bbox_mm": [
+        [
+          -23.9,
+          -5.9885,
+          42.37
+        ],
+        [
+          -20.9,
+          9.5,
+          59.7
+        ]
+      ]
+    },
+    "cam_1": {
+      "triangles": 540,
+      "duplicate_triangles": 0,
+      "degenerate_triangles": 0,
+      "nonmanifold_edges": 0,
+      "nonmanifold_where": [],
+      "volume_mm3": 522.6489734215041,
+      "bbox_mm": [
+        [
+          -12.7,
+          -5.9885,
+          44.99
+        ],
+        [
+          -9.7,
+          11.698,
+          59.7
+        ]
+      ]
+    },
+    "cam_2": {
+      "triangles": 520,
+      "duplicate_triangles": 0,
+      "degenerate_triangles": 0,
+      "nonmanifold_edges": 0,
+      "nonmanifold_where": [],
+      "volume_mm3": 522.7170336803728,
+      "bbox_mm": [
+        [
+          -1.5,
+          -5.9885,
+          47.7
+        ],
+        [
+          1.5,
+          11.698,
+          62.41
+        ]
+      ]
+    },
+    "cam_3": {
+      "triangles": 540,
+      "duplicate_triangles": 0,
+      "degenerate_triangles": 0,
+      "nonmanifold_edges": 0,
+      "nonmanifold_where": [],
+      "volume_mm3": 522.6443931696318,
+      "bbox_mm": [
+        [
+          9.7,
+          -5.9885,
+          44.99
+        ],
+        [
+          12.7,
+          11.698,
+          59.7
+        ]
+      ]
+    },
+    "cam_4": {
+      "triangles": 460,
+      "duplicate_triangles": 0,
+      "degenerate_triangles": 0,
+      "nonmanifold_edges": 0,
+      "nonmanifold_where": [],
+      "volume_mm3": 522.306293193251,
+      "bbox_mm": [
+        [
+          20.9,
+          -5.9885,
+          42.37
+        ],
+        [
+          23.9,
+          9.5,
+          59.7
+        ]
+      ]
+    },
+    "cam_gear": {
+      "triangles": 2280,
+      "duplicate_triangles": 0,
+      "degenerate_triangles": 0,
+      "nonmanifold_edges": 0,
+      "nonmanifold_where": [],
+      "volume_mm3": 2632.873727062539,
+      "bbox_mm": [
+        [
+          3.6,
+          -15.9977,
+          37.7615
+        ],
+        [
+          7.6,
+          15.9977,
+          69.6385
+        ]
+      ]
+    },
+    "drive_gear": {
+      "triangles": 244,
+      "duplicate_triangles": 0,
+      "degenerate_triangles": 0,
+      "nonmanifold_edges": 0,
+      "nonmanifold_where": [],
+      "volume_mm3": 653.0372038880981,
+      "bbox_mm": [
+        [
+          0.0,
+          -21.0,
+          12.8
+        ],
+        [
+          3.0,
+          18.2,
+          34.2
+        ]
+      ]
+    },
+    "cap_left": {
+      "triangles": 414,
+      "duplicate_triangles": 0,
+      "degenerate_triangles": 0,
+      "nonmanifold_edges": 0,
+      "nonmanifold_where": [],
+      "volume_mm3": 44.7471648771316,
+      "bbox_mm": [
+        [
+          -40.0,
+          -4.2,
+          49.5
+        ],
+        [
+          -38.95,
+          4.182,
+          57.9
+        ]
+      ]
+    },
+    "cap_right": {
+      "triangles": 414,
+      "duplicate_triangles": 0,
+      "degenerate_triangles": 0,
+      "nonmanifold_edges": 0,
+      "nonmanifold_where": [],
+      "volume_mm3": 44.74849745134507,
+      "bbox_mm": [
+        [
+          38.95,
+          -4.2,
+          49.5
+        ],
+        [
+          40.0,
+          4.182,
+          57.9
+        ]
+      ]
+    },
+    "servo_clip": {
+      "triangles": 64,
+      "duplicate_triangles": 0,
+      "degenerate_triangles": 0,
+      "nonmanifold_edges": 0,
+      "nonmanifold_where": [],
+      "volume_mm3": 968.3992865880332,
+      "bbox_mm": [
+        [
+          -32.5,
+          -19.5,
+          17.5
+        ],
+        [
+          -26.5,
+          9.5,
+          32.5
+        ]
+      ]
+    },
+    "fit_horn": {
+      "triangles": 224,
+      "duplicate_triangles": 0,
+      "degenerate_triangles": 0,
+      "nonmanifold_edges": 0,
+      "nonmanifold_where": [],
+      "volume_mm3": 651.5971697767574,
+      "bbox_mm": [
+        [
+          0.0,
+          -20.2,
+          12.8
+        ],
+        [
+          3.0,
+          18.2,
+          34.2
+        ]
+      ]
+    },
+    "fit_bearing": {
+      "triangles": 236,
+      "duplicate_triangles": 0,
+      "degenerate_triangles": 0,
+      "nonmanifold_edges": 0,
+      "nonmanifold_where": [],
+      "volume_mm3": 1050.5528242886069,
+      "bbox_mm": [
+        [
+          -6.0,
+          -16.0,
+          0.0
+        ],
+        [
+          6.0,
+          10.5,
+          8.0
+        ]
+      ]
+    },
+    "ref_servo": {
+      "triangles": 64,
+      "duplicate_triangles": 0,
+      "degenerate_triangles": 0,
+      "nonmanifold_edges": 0,
+      "nonmanifold_where": [],
+      "volume_mm3": 6287.999735514321,
+      "bbox_mm": [
+        [
+          -30.5,
+          -21.0,
+          17.5
+        ],
+        [
+          -8.5,
+          11.0,
+          29.5
+        ]
+      ]
+    },
+    "ref_horn": {
+      "triangles": 92,
+      "duplicate_triangles": 0,
+      "degenerate_triangles": 0,
+      "nonmanifold_edges": 0,
+      "nonmanifold_where": [],
+      "volume_mm3": 360.74999713897705,
+      "bbox_mm": [
+        [
+          0.0,
+          -18.0,
+          15.0
+        ],
+        [
+          1.5,
+          16.0,
+          32.0
+        ]
+      ]
+    },
+    "ref_wire": {
+      "triangles": 12,
+      "duplicate_triangles": 0,
+      "degenerate_triangles": 0,
+      "nonmanifold_edges": 0,
+      "nonmanifold_where": [],
+      "volume_mm3": 255.99999999999994,
+      "bbox_mm": [
+        [
+          -26.0,
+          6.5,
+          21.5
+        ],
+        [
+          -18.0,
+          14.5,
+          25.5
+        ]
+      ]
+    }
+  },
+  "source_stl_integrity": {
+    "start": {
+      "shell": "230e95570e71da845c57ea0af4a3a73ae1071421f2a2de29965bb4605b7733f5",
+      "top_frame": "21cf70d141d8a5c26d94692b0694600a99df343a7fd5e8059c22b5995e635965",
+      "carrier_0": "d3dc2e0c18e7317823a4c3620873b345c7182c5ecf47fbc0b47e36b479d7f538",
+      "carrier_1": "937d667bd44479df869a6cf3a3a4ef29659b35149aee1fdab2ab4261c7be9e7f",
+      "carrier_2": "9c7ab191b108eb34c1c7f0d28d5ff2d2b0955dbf198210c10d02297dc3e163f5",
+      "carrier_3": "cd10c4d9d76032fd3a04ea00d51bcded341643517850f6209e63ea1e570a79b6",
+      "carrier_4": "1762d2aefe1208814aae67a238e871a9987f303a115391f5446a6a71503003bc",
+      "camshaft": "28856eac092f76ff240f073621099471e4ceb9c39c211965546c4e7afd99e148",
+      "cam_0": "1ae2048ced9b1c84240952ae9bcd3dc3f954e86a6b00d0e2b8e9d1ba5a952df4",
+      "cam_1": "c217d02dbc58b3e96a61f320762f2755d380a437d06f9f4c93b42e2fef3740d3",
+      "cam_2": "efa8437a72b8757721d70f24be810e0480860b49d48d904ad66c5f80acf44b65",
+      "cam_3": "8362d0e65e454f75c1bbe9400c3b808fd2d1a3855402bfecca64ab4278d85221",
+      "cam_4": "8d6691840b4b30e9aa8019268b8f4d2d638f83e7d24070d5308a5b721a3831c9",
+      "cam_gear": "fd340a486fd5bca772ae3c771efccd048fda70f8774a1b07a5e555589675a958",
+      "drive_gear": "c14266abc59aeb618fa9cb20825e66c42271115709437e3b9d44447000a917a5",
+      "cap_left": "fa4d6c41a82a73b822b85e70d2f1bfbc5af041947f900742983b5e15e8060dfc",
+      "cap_right": "54b4047f195978c3e60e9c7dcccf2de9827db05696fd5eaa6d5b5b88b56dd3f1",
+      "servo_clip": "769364c10b75a697faf03c5a876fff15cc33247f5bd2edae517b98b7ceeb7a61",
+      "fit_horn": "79ef682bfaec73b06fd3e9ce3941bd2051d3222eda2b79b0eb707d1bb99fa018",
+      "fit_bearing": "45c0bc3545a5e1bb7f540bc116fe9a6edc1b3a602087edcd665343b50844649f",
+      "ref_servo": "a2023254ebc1fb1725d7dcf56bdf0c162519124cdf4000a34cf22cf23d4ddc37",
+      "ref_horn": "82e9eb138d944078b1932b4f7e2066df4d2ff76647a2926ce9db1f24ea97c69b",
+      "ref_wire": "cf637b63ec9f07c9ddab48a65b7aeb016328d9ef50ab124f22024a32be52d7c0"
+    },
+    "end": {
+      "shell": "230e95570e71da845c57ea0af4a3a73ae1071421f2a2de29965bb4605b7733f5",
+      "top_frame": "21cf70d141d8a5c26d94692b0694600a99df343a7fd5e8059c22b5995e635965",
+      "carrier_0": "d3dc2e0c18e7317823a4c3620873b345c7182c5ecf47fbc0b47e36b479d7f538",
+      "carrier_1": "937d667bd44479df869a6cf3a3a4ef29659b35149aee1fdab2ab4261c7be9e7f",
+      "carrier_2": "9c7ab191b108eb34c1c7f0d28d5ff2d2b0955dbf198210c10d02297dc3e163f5",
+      "carrier_3": "cd10c4d9d76032fd3a04ea00d51bcded341643517850f6209e63ea1e570a79b6",
+      "carrier_4": "1762d2aefe1208814aae67a238e871a9987f303a115391f5446a6a71503003bc",
+      "camshaft": "28856eac092f76ff240f073621099471e4ceb9c39c211965546c4e7afd99e148",
+      "cam_0": "1ae2048ced9b1c84240952ae9bcd3dc3f954e86a6b00d0e2b8e9d1ba5a952df4",
+      "cam_1": "c217d02dbc58b3e96a61f320762f2755d380a437d06f9f4c93b42e2fef3740d3",
+      "cam_2": "efa8437a72b8757721d70f24be810e0480860b49d48d904ad66c5f80acf44b65",
+      "cam_3": "8362d0e65e454f75c1bbe9400c3b808fd2d1a3855402bfecca64ab4278d85221",
+      "cam_4": "8d6691840b4b30e9aa8019268b8f4d2d638f83e7d24070d5308a5b721a3831c9",
+      "cam_gear": "fd340a486fd5bca772ae3c771efccd048fda70f8774a1b07a5e555589675a958",
+      "drive_gear": "c14266abc59aeb618fa9cb20825e66c42271115709437e3b9d44447000a917a5",
+      "cap_left": "fa4d6c41a82a73b822b85e70d2f1bfbc5af041947f900742983b5e15e8060dfc",
+      "cap_right": "54b4047f195978c3e60e9c7dcccf2de9827db05696fd5eaa6d5b5b88b56dd3f1",
+      "servo_clip": "769364c10b75a697faf03c5a876fff15cc33247f5bd2edae517b98b7ceeb7a61",
+      "fit_horn": "79ef682bfaec73b06fd3e9ce3941bd2051d3222eda2b79b0eb707d1bb99fa018",
+      "fit_bearing": "45c0bc3545a5e1bb7f540bc116fe9a6edc1b3a602087edcd665343b50844649f",
+      "ref_servo": "a2023254ebc1fb1725d7dcf56bdf0c162519124cdf4000a34cf22cf23d4ddc37",
+      "ref_horn": "82e9eb138d944078b1932b4f7e2066df4d2ff76647a2926ce9db1f24ea97c69b",
+      "ref_wire": "cf637b63ec9f07c9ddab48a65b7aeb016328d9ef50ab124f22024a32be52d7c0"
+    },
+    "pass": true
+  },
+  "exact_scene": {
+    "method": "all pairs; disjoint AABB or Boolean EXACT; bounded clip flex only",
+    "poses": 61,
+    "step_deg": 2.5,
+    "pair_count": 210,
+    "limit_mm3": 0.001,
+    "pairs": [
+      {
+        "pair": [
+          "shell",
+          "top_frame"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "shell",
+          "carrier_0"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "shell",
+          "carrier_1"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "shell",
+          "carrier_2"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "shell",
+          "carrier_3"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "shell",
+          "carrier_4"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "shell",
+          "camshaft"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "shell",
+          "cam_0"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "shell",
+          "cam_1"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "shell",
+          "cam_2"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "shell",
+          "cam_3"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "shell",
+          "cam_4"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "shell",
+          "cam_gear"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "shell",
+          "drive_gear"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "shell",
+          "cap_left"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "shell",
+          "cap_right"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "shell",
+          "servo_clip"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "shell",
+          "ref_servo"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "shell",
+          "ref_horn"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "shell",
+          "ref_wire"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "top_frame",
+          "carrier_0"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "top_frame",
+          "carrier_1"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "top_frame",
+          "carrier_2"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "top_frame",
+          "carrier_3"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "top_frame",
+          "carrier_4"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "top_frame",
+          "camshaft"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "top_frame",
+          "cam_0"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "top_frame",
+          "cam_1"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "top_frame",
+          "cam_2"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "top_frame",
+          "cam_3"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "top_frame",
+          "cam_4"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "top_frame",
+          "cam_gear"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "top_frame",
+          "drive_gear"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "top_frame",
+          "cap_left"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "top_frame",
+          "cap_right"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "top_frame",
+          "servo_clip"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "top_frame",
+          "ref_servo"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "top_frame",
+          "ref_horn"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "top_frame",
+          "ref_wire"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_0",
+          "carrier_1"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_0",
+          "carrier_2"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_0",
+          "carrier_3"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_0",
+          "carrier_4"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_0",
+          "camshaft"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_0",
+          "cam_0"
+        ],
+        "maximum_mm3": 1.05e-05,
+        "ok": true,
+        "samples": 61,
+        "worst_servo_deg": 115.0,
+        "flex": null
+      },
+      {
+        "pair": [
+          "carrier_0",
+          "cam_1"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_0",
+          "cam_2"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_0",
+          "cam_3"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_0",
+          "cam_4"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_0",
+          "cam_gear"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_0",
+          "drive_gear"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_0",
+          "cap_left"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_0",
+          "cap_right"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_0",
+          "servo_clip"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_0",
+          "ref_servo"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_0",
+          "ref_horn"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_0",
+          "ref_wire"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_1",
+          "carrier_2"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_1",
+          "carrier_3"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_1",
+          "carrier_4"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_1",
+          "camshaft"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_1",
+          "cam_0"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_1",
+          "cam_1"
+        ],
+        "maximum_mm3": 1.24e-05,
+        "ok": true,
+        "samples": 61,
+        "worst_servo_deg": 145.0,
+        "flex": null
+      },
+      {
+        "pair": [
+          "carrier_1",
+          "cam_2"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_1",
+          "cam_3"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_1",
+          "cam_4"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_1",
+          "cam_gear"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_1",
+          "drive_gear"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_1",
+          "cap_left"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_1",
+          "cap_right"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_1",
+          "servo_clip"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_1",
+          "ref_servo"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_1",
+          "ref_horn"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_1",
+          "ref_wire"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_2",
+          "carrier_3"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_2",
+          "carrier_4"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_2",
+          "camshaft"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_2",
+          "cam_0"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_2",
+          "cam_1"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_2",
+          "cam_2"
+        ],
+        "maximum_mm3": 1.24e-05,
+        "ok": true,
+        "samples": 61,
+        "worst_servo_deg": 65.0,
+        "flex": null
+      },
+      {
+        "pair": [
+          "carrier_2",
+          "cam_3"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_2",
+          "cam_4"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_2",
+          "cam_gear"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_2",
+          "drive_gear"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_2",
+          "cap_left"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_2",
+          "cap_right"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_2",
+          "servo_clip"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_2",
+          "ref_servo"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_2",
+          "ref_horn"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_2",
+          "ref_wire"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_3",
+          "carrier_4"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_3",
+          "camshaft"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_3",
+          "cam_0"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_3",
+          "cam_1"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_3",
+          "cam_2"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_3",
+          "cam_3"
+        ],
+        "maximum_mm3": 1.24e-05,
+        "ok": true,
+        "samples": 61,
+        "worst_servo_deg": 145.0,
+        "flex": null
+      },
+      {
+        "pair": [
+          "carrier_3",
+          "cam_4"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_3",
+          "cam_gear"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_3",
+          "drive_gear"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_3",
+          "cap_left"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_3",
+          "cap_right"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_3",
+          "servo_clip"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_3",
+          "ref_servo"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_3",
+          "ref_horn"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_3",
+          "ref_wire"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_4",
+          "camshaft"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_4",
+          "cam_0"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_4",
+          "cam_1"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_4",
+          "cam_2"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_4",
+          "cam_3"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_4",
+          "cam_4"
+        ],
+        "maximum_mm3": 1.05e-05,
+        "ok": true,
+        "samples": 61,
+        "worst_servo_deg": 115.0,
+        "flex": null
+      },
+      {
+        "pair": [
+          "carrier_4",
+          "cam_gear"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_4",
+          "drive_gear"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_4",
+          "cap_left"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_4",
+          "cap_right"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_4",
+          "servo_clip"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_4",
+          "ref_servo"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_4",
+          "ref_horn"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_4",
+          "ref_wire"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "camshaft",
+          "cam_0"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "camshaft",
+          "cam_1"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "camshaft",
+          "cam_2"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "camshaft",
+          "cam_3"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "camshaft",
+          "cam_4"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "camshaft",
+          "cam_gear"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "camshaft",
+          "drive_gear"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "camshaft",
+          "cap_left"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "camshaft",
+          "cap_right"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "camshaft",
+          "servo_clip"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "camshaft",
+          "ref_servo"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "camshaft",
+          "ref_horn"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "camshaft",
+          "ref_wire"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_0",
+          "cam_1"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_0",
+          "cam_2"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_0",
+          "cam_3"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_0",
+          "cam_4"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_0",
+          "cam_gear"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_0",
+          "drive_gear"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_0",
+          "cap_left"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_0",
+          "cap_right"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_0",
+          "servo_clip"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_0",
+          "ref_servo"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_0",
+          "ref_horn"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_0",
+          "ref_wire"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_1",
+          "cam_2"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_1",
+          "cam_3"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_1",
+          "cam_4"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_1",
+          "cam_gear"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_1",
+          "drive_gear"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_1",
+          "cap_left"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_1",
+          "cap_right"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_1",
+          "servo_clip"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_1",
+          "ref_servo"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_1",
+          "ref_horn"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_1",
+          "ref_wire"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_2",
+          "cam_3"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_2",
+          "cam_4"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_2",
+          "cam_gear"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_2",
+          "drive_gear"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_2",
+          "cap_left"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_2",
+          "cap_right"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_2",
+          "servo_clip"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_2",
+          "ref_servo"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_2",
+          "ref_horn"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_2",
+          "ref_wire"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_3",
+          "cam_4"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_3",
+          "cam_gear"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_3",
+          "drive_gear"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_3",
+          "cap_left"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_3",
+          "cap_right"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_3",
+          "servo_clip"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_3",
+          "ref_servo"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_3",
+          "ref_horn"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_3",
+          "ref_wire"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_4",
+          "cam_gear"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_4",
+          "drive_gear"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_4",
+          "cap_left"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_4",
+          "cap_right"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_4",
+          "servo_clip"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_4",
+          "ref_servo"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_4",
+          "ref_horn"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_4",
+          "ref_wire"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_gear",
+          "drive_gear"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_gear",
+          "cap_left"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_gear",
+          "cap_right"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_gear",
+          "servo_clip"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_gear",
+          "ref_servo"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_gear",
+          "ref_horn"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_gear",
+          "ref_wire"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "drive_gear",
+          "cap_left"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "drive_gear",
+          "cap_right"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "drive_gear",
+          "servo_clip"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "drive_gear",
+          "ref_servo"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "drive_gear",
+          "ref_horn"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "drive_gear",
+          "ref_wire"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cap_left",
+          "cap_right"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cap_left",
+          "servo_clip"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cap_left",
+          "ref_servo"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cap_left",
+          "ref_horn"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cap_left",
+          "ref_wire"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cap_right",
+          "servo_clip"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cap_right",
+          "ref_servo"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cap_right",
+          "ref_horn"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cap_right",
+          "ref_wire"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "servo_clip",
+          "ref_servo"
+        ],
+        "maximum_mm3": 9.6000137,
+        "ok": true,
+        "samples": 61,
+        "worst_servo_deg": 15.0,
+        "flex": {
+          "region_bounded": true,
+          "interference_per_side_mm": 0.1,
+          "strain": 0.0031250000000000006,
+          "strain_limit": 0.02
+        }
+      },
+      {
+        "pair": [
+          "servo_clip",
+          "ref_horn"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "servo_clip",
+          "ref_wire"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "ref_servo",
+          "ref_horn"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "ref_servo",
+          "ref_wire"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "ref_horn",
+          "ref_wire"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      }
+    ],
+    "ok": true
+  },
+  "static_geometry": {
+    "method": "assembled static STL; all fixed-part pairs; BVH surface intersection and solid containment",
+    "parts": [
+      "shell",
+      "top_frame",
+      "cap_left",
+      "cap_right",
+      "servo_clip",
+      "ref_servo",
+      "ref_wire"
+    ],
+    "checked_pairs": 21,
+    "checked_noncontact_pairs": 13,
+    "allowed_contact_pairs": [
+      [
+        "cap_left",
+        "shell"
+      ],
+      [
+        "cap_right",
+        "shell"
+      ],
+      [
+        "ref_servo",
+        "ref_wire"
+      ],
+      [
+        "ref_servo",
+        "servo_clip"
+      ],
+      [
+        "ref_servo",
+        "shell"
+      ],
+      [
+        "ref_wire",
+        "shell"
+      ],
+      [
+        "servo_clip",
+        "shell"
+      ],
+      [
+        "shell",
+        "top_frame"
+      ]
+    ],
+    "allowed_contacts_observed": [
+      {
+        "pair": [
+          "shell",
+          "top_frame"
+        ],
+        "triangle_pairs": 14,
+        "contained_vertices": 0
+      },
+      {
+        "pair": [
+          "servo_clip",
+          "shell"
+        ],
+        "triangle_pairs": 9,
+        "contained_vertices": 0
+      },
+      {
+        "pair": [
+          "ref_servo",
+          "shell"
+        ],
+        "triangle_pairs": 10,
+        "contained_vertices": 0
+      },
+      {
+        "pair": [
+          "ref_servo",
+          "servo_clip"
+        ],
+        "triangle_pairs": 35,
+        "contained_vertices": 0,
+        "common_volume_mm3": 9.600014
+      },
+      {
+        "pair": [
+          "ref_servo",
+          "ref_wire"
+        ],
+        "triangle_pairs": 8,
+        "contained_vertices": 0
+      }
+    ],
+    "violations": [],
+    "legacy_clip_regression": {
+      "source": "pre-redesign assembly STL measured with calibrated EXACT Boolean",
+      "clip_shell_common_volume_mm3": 39.371441,
+      "clip_servo_common_volume_mm3": 144.0,
+      "detected": true
+    },
+    "ok": true
+  },
+  "motion": {
+    "step_deg": 2.5,
+    "sample_count": 61,
+    "home_flush": true,
+    "column_max_mm": [
+      3.0,
+      3.0,
+      3.0,
+      3.0,
+      3.0
+    ],
+    "all_columns_reach_3mm": true,
+    "gear_common_volume_mm3_max": 0.0,
+    "gear_triangle_pairs_max": 0,
+    "allowed_contacts": {
+      "pairs": [
+        [
+          "cam_0",
+          "carrier_0"
+        ],
+        [
+          "cam_1",
+          "carrier_1"
+        ],
+        [
+          "cam_2",
+          "carrier_2"
+        ],
+        [
+          "cam_3",
+          "carrier_3"
+        ],
+        [
+          "cam_4",
+          "carrier_4"
+        ],
+        [
+          "carrier_0",
+          "shell"
+        ],
+        [
+          "carrier_1",
+          "shell"
+        ],
+        [
+          "carrier_2",
+          "shell"
+        ],
+        [
+          "carrier_3",
+          "shell"
+        ],
+        [
+          "carrier_4",
+          "shell"
+        ]
+      ],
+      "triangle_pairs_max": 14,
+      "common_volume_mm3_max": 1.24e-05,
+      "carrier_shell_exact": {
+        "sample_count": 305,
+        "poses_per_column": 61,
+        "limit_mm3": 0.001,
+        "column_max_mm3": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true
+      },
+      "cam_follower_rule": "matching cam/column only; analytic height equality",
+      "column_stop_rule": "column/shell only; 0.3mm guide clearance and Z stop contact"
+    },
+    "checked_noncontact_pairs": 179,
+    "violations": [],
+    "carrier_min_gap_mm": 0.8,
+    "guide_radial_clearance_mm": 0.3,
+    "cam_contact_model": "follower underside=max(stop, axis+R+e*cos(theta-phase))",
+    "samples": [
+      {
+        "servo_deg": 15.0,
+        "heights_mm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 17.5,
+        "heights_mm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 20.0,
+        "heights_mm": [
+          0.0,
+          0.0,
+          0.1131,
+          0.0,
+          0.0
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 22.5,
+        "heights_mm": [
+          0.0,
+          0.0,
+          0.3087,
+          0.0,
+          0.0
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 25.0,
+        "heights_mm": [
+          0.0,
+          0.0,
+          0.5,
+          0.0,
+          0.0
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 27.5,
+        "heights_mm": [
+          0.0,
+          0.0,
+          0.6865,
+          0.0,
+          0.0
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 30.0,
+        "heights_mm": [
+          0.0,
+          0.0,
+          0.8679,
+          0.0,
+          0.0
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 32.5,
+        "heights_mm": [
+          0.0,
+          0.0,
+          1.0438,
+          0.0,
+          0.0
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 35.0,
+        "heights_mm": [
+          0.0,
+          0.0,
+          1.2139,
+          0.0,
+          0.0
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 37.5,
+        "heights_mm": [
+          0.0,
+          0.0,
+          1.378,
+          0.0,
+          0.0
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 40.0,
+        "heights_mm": [
+          0.0,
+          0.0,
+          1.5355,
+          0.0,
+          0.0
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 42.5,
+        "heights_mm": [
+          0.0,
+          0.0,
+          1.6864,
+          0.0,
+          0.0
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 45.0,
+        "heights_mm": [
+          0.0,
+          0.0,
+          1.8302,
+          0.0,
+          0.0
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 47.5,
+        "heights_mm": [
+          0.0,
+          0.0,
+          1.9668,
+          0.0,
+          0.0
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 50.0,
+        "heights_mm": [
+          0.0,
+          0.0,
+          2.0958,
+          0.0,
+          0.0
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 52.5,
+        "heights_mm": [
+          0.0,
+          0.0,
+          2.217,
+          0.0,
+          0.0
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 55.0,
+        "heights_mm": [
+          0.0,
+          0.0,
+          2.3301,
+          0.0,
+          0.0
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 57.5,
+        "heights_mm": [
+          0.0,
+          0.0,
+          2.4351,
+          0.0,
+          0.0
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 60.0,
+        "heights_mm": [
+          0.0,
+          0.1131,
+          2.5315,
+          0.1131,
+          0.0
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 62.5,
+        "heights_mm": [
+          0.0,
+          0.3087,
+          2.6194,
+          0.3087,
+          0.0
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 65.0,
+        "heights_mm": [
+          0.0,
+          0.5,
+          2.6985,
+          0.5,
+          0.0
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 67.5,
+        "heights_mm": [
+          0.0,
+          0.6865,
+          2.7686,
+          0.6865,
+          0.0
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 70.0,
+        "heights_mm": [
+          0.0,
+          0.8679,
+          2.8296,
+          0.8679,
+          0.0
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 72.5,
+        "heights_mm": [
+          0.0,
+          1.0438,
+          2.8815,
+          1.0438,
+          0.0
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 75.0,
+        "heights_mm": [
+          0.0,
+          1.2139,
+          2.924,
+          1.2139,
+          0.0
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 77.5,
+        "heights_mm": [
+          0.0,
+          1.378,
+          2.9572,
+          1.378,
+          0.0
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 80.0,
+        "heights_mm": [
+          0.0,
+          1.5355,
+          2.981,
+          1.5355,
+          0.0
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 82.5,
+        "heights_mm": [
+          0.0,
+          1.6864,
+          2.9952,
+          1.6864,
+          0.0
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 85.0,
+        "heights_mm": [
+          0.0,
+          1.8302,
+          3.0,
+          1.8302,
+          0.0
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 87.5,
+        "heights_mm": [
+          0.0,
+          1.9668,
+          2.9952,
+          1.9668,
+          0.0
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 90.0,
+        "heights_mm": [
+          0.0,
+          2.0958,
+          2.981,
+          2.0958,
+          0.0
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 92.5,
+        "heights_mm": [
+          0.0,
+          2.217,
+          2.9572,
+          2.217,
+          0.0
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 95.0,
+        "heights_mm": [
+          0.0,
+          2.3301,
+          2.924,
+          2.3301,
+          0.0
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 97.5,
+        "heights_mm": [
+          0.0,
+          2.4351,
+          2.8815,
+          2.4351,
+          0.0
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 100.0,
+        "heights_mm": [
+          0.1131,
+          2.5315,
+          2.8296,
+          2.5315,
+          0.1131
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 102.5,
+        "heights_mm": [
+          0.3087,
+          2.6194,
+          2.7686,
+          2.6194,
+          0.3087
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 105.0,
+        "heights_mm": [
+          0.5,
+          2.6985,
+          2.6985,
+          2.6985,
+          0.5
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 107.5,
+        "heights_mm": [
+          0.6865,
+          2.7686,
+          2.6194,
+          2.7686,
+          0.6865
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 110.0,
+        "heights_mm": [
+          0.8679,
+          2.8296,
+          2.5315,
+          2.8296,
+          0.8679
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 112.5,
+        "heights_mm": [
+          1.0438,
+          2.8815,
+          2.4351,
+          2.8815,
+          1.0438
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 115.0,
+        "heights_mm": [
+          1.2139,
+          2.924,
+          2.3301,
+          2.924,
+          1.2139
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 117.5,
+        "heights_mm": [
+          1.378,
+          2.9572,
+          2.217,
+          2.9572,
+          1.378
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 120.0,
+        "heights_mm": [
+          1.5355,
+          2.981,
+          2.0958,
+          2.981,
+          1.5355
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 122.5,
+        "heights_mm": [
+          1.6864,
+          2.9952,
+          1.9668,
+          2.9952,
+          1.6864
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 125.0,
+        "heights_mm": [
+          1.8302,
+          3.0,
+          1.8302,
+          3.0,
+          1.8302
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 127.5,
+        "heights_mm": [
+          1.9668,
+          2.9952,
+          1.6864,
+          2.9952,
+          1.9668
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 130.0,
+        "heights_mm": [
+          2.0958,
+          2.981,
+          1.5355,
+          2.981,
+          2.0958
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 132.5,
+        "heights_mm": [
+          2.217,
+          2.9572,
+          1.378,
+          2.9572,
+          2.217
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 135.0,
+        "heights_mm": [
+          2.3301,
+          2.924,
+          1.2139,
+          2.924,
+          2.3301
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 137.5,
+        "heights_mm": [
+          2.4351,
+          2.8815,
+          1.0438,
+          2.8815,
+          2.4351
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 140.0,
+        "heights_mm": [
+          2.5315,
+          2.8296,
+          0.8679,
+          2.8296,
+          2.5315
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 142.5,
+        "heights_mm": [
+          2.6194,
+          2.7686,
+          0.6865,
+          2.7686,
+          2.6194
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 145.0,
+        "heights_mm": [
+          2.6985,
+          2.6985,
+          0.5,
+          2.6985,
+          2.6985
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 147.5,
+        "heights_mm": [
+          2.7686,
+          2.6194,
+          0.3087,
+          2.6194,
+          2.7686
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 150.0,
+        "heights_mm": [
+          2.8296,
+          2.5315,
+          0.1131,
+          2.5315,
+          2.8296
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 152.5,
+        "heights_mm": [
+          2.8815,
+          2.4351,
+          0.0,
+          2.4351,
+          2.8815
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 155.0,
+        "heights_mm": [
+          2.924,
+          2.3301,
+          0.0,
+          2.3301,
+          2.924
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 157.5,
+        "heights_mm": [
+          2.9572,
+          2.217,
+          0.0,
+          2.217,
+          2.9572
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 160.0,
+        "heights_mm": [
+          2.981,
+          2.0958,
+          0.0,
+          2.0958,
+          2.981
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 162.5,
+        "heights_mm": [
+          2.9952,
+          1.9668,
+          0.0,
+          1.9668,
+          2.9952
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      },
+      {
+        "servo_deg": 165.0,
+        "heights_mm": [
+          3.0,
+          1.8302,
+          0.0,
+          1.8302,
+          3.0
+        ],
+        "gear_triangle_pairs": 0,
+        "gear_common_volume_mm3": 0.0
+      }
+    ],
+    "ok": true
+  },
+  "assembly": {
+    "method": "assembly STL; 1mm translation samples; disjoint AABB or Boolean EXACT; bounded clip flex only",
+    "calibration": {
+      "ok": true,
+      "positive_triangle_pairs": 6,
+      "negative_triangle_pairs": 0,
+      "positive_common_volume_mm3": 0.5,
+      "negative_common_volume_mm3": 0.0
+    },
+    "clearances_mm": {
+      "servo_per_side": 0.35,
+      "bearing_at_hex_corner": 0.213,
+      "hex_key_per_side": 0.2,
+      "cap_tip_per_side": 0.2,
+      "shaft_axial_play": 0.3,
+      "guide_per_side": 0.3
+    },
+    "press_fit": {
+      "pair": [
+        "servo_clip",
+        "ref_servo"
+      ],
+      "interference_per_side_mm": 0.1,
+      "estimated_surface_strain": 0.00313,
+      "limit": 0.02
+    },
+    "steps": [
+      {
+        "label": "SG92Rと駆動歯車を90度姿勢で上から入れる",
+        "axis": "Z",
+        "step_mm": 1.0,
+        "sample_count": 66,
+        "moving": [
+          "ref_servo",
+          "ref_horn",
+          "drive_gear"
+        ],
+        "static": [
+          "shell"
+        ],
+        "endpoint_contacts": [],
+        "press_contacts": [],
+        "violations": [],
+        "ok": true
+      },
+      {
+        "label": "サーボ押さえを上から0.1mm圧入する",
+        "axis": "Z",
+        "step_mm": 1.0,
+        "sample_count": 21,
+        "moving": [
+          "servo_clip"
+        ],
+        "static": [
+          "shell",
+          "ref_servo"
+        ],
+        "endpoint_contacts": [],
+        "press_contacts": [
+          {
+            "offset_mm": 11.0,
+            "pair": [
+              "servo_clip",
+              "ref_servo"
+            ],
+            "volume_mm3": 0.8000011,
+            "method": "boolean_exact",
+            "flex": {
+              "region_bounded": true,
+              "interference_per_side_mm": 0.1,
+              "strain": 0.0031250000000000006,
+              "strain_limit": 0.02
+            },
+            "ok": true
+          },
+          {
+            "offset_mm": 10.0,
+            "pair": [
+              "servo_clip",
+              "ref_servo"
+            ],
+            "volume_mm3": 1.6000023,
+            "method": "boolean_exact",
+            "flex": {
+              "region_bounded": true,
+              "interference_per_side_mm": 0.1,
+              "strain": 0.0031250000000000006,
+              "strain_limit": 0.02
+            },
+            "ok": true
+          },
+          {
+            "offset_mm": 9.0,
+            "pair": [
+              "servo_clip",
+              "ref_servo"
+            ],
+            "volume_mm3": 2.4000034,
+            "method": "boolean_exact",
+            "flex": {
+              "region_bounded": true,
+              "interference_per_side_mm": 0.1,
+              "strain": 0.0031250000000000006,
+              "strain_limit": 0.02
+            },
+            "ok": true
+          },
+          {
+            "offset_mm": 8.0,
+            "pair": [
+              "servo_clip",
+              "ref_servo"
+            ],
+            "volume_mm3": 3.2000046,
+            "method": "boolean_exact",
+            "flex": {
+              "region_bounded": true,
+              "interference_per_side_mm": 0.1,
+              "strain": 0.0031250000000000006,
+              "strain_limit": 0.02
+            },
+            "ok": true
+          },
+          {
+            "offset_mm": 7.0,
+            "pair": [
+              "servo_clip",
+              "ref_servo"
+            ],
+            "volume_mm3": 4.0000057,
+            "method": "boolean_exact",
+            "flex": {
+              "region_bounded": true,
+              "interference_per_side_mm": 0.1,
+              "strain": 0.0031250000000000006,
+              "strain_limit": 0.02
+            },
+            "ok": true
+          },
+          {
+            "offset_mm": 6.0,
+            "pair": [
+              "servo_clip",
+              "ref_servo"
+            ],
+            "volume_mm3": 4.8000069,
+            "method": "boolean_exact",
+            "flex": {
+              "region_bounded": true,
+              "interference_per_side_mm": 0.1,
+              "strain": 0.0031250000000000006,
+              "strain_limit": 0.02
+            },
+            "ok": true
+          },
+          {
+            "offset_mm": 5.0,
+            "pair": [
+              "servo_clip",
+              "ref_servo"
+            ],
+            "volume_mm3": 5.600008,
+            "method": "boolean_exact",
+            "flex": {
+              "region_bounded": true,
+              "interference_per_side_mm": 0.1,
+              "strain": 0.0031250000000000006,
+              "strain_limit": 0.02
+            },
+            "ok": true
+          },
+          {
+            "offset_mm": 4.0,
+            "pair": [
+              "servo_clip",
+              "ref_servo"
+            ],
+            "volume_mm3": 6.4000092,
+            "method": "boolean_exact",
+            "flex": {
+              "region_bounded": true,
+              "interference_per_side_mm": 0.1,
+              "strain": 0.0031250000000000006,
+              "strain_limit": 0.02
+            },
+            "ok": true
+          },
+          {
+            "offset_mm": 3.0,
+            "pair": [
+              "servo_clip",
+              "ref_servo"
+            ],
+            "volume_mm3": 7.2000103,
+            "method": "boolean_exact",
+            "flex": {
+              "region_bounded": true,
+              "interference_per_side_mm": 0.1,
+              "strain": 0.0031250000000000006,
+              "strain_limit": 0.02
+            },
+            "ok": true
+          },
+          {
+            "offset_mm": 2.0,
+            "pair": [
+              "servo_clip",
+              "ref_servo"
+            ],
+            "volume_mm3": 8.0000114,
+            "method": "boolean_exact",
+            "flex": {
+              "region_bounded": true,
+              "interference_per_side_mm": 0.1,
+              "strain": 0.0031250000000000006,
+              "strain_limit": 0.02
+            },
+            "ok": true
+          },
+          {
+            "offset_mm": 1.0,
+            "pair": [
+              "servo_clip",
+              "ref_servo"
+            ],
+            "volume_mm3": 8.8000126,
+            "method": "boolean_exact",
+            "flex": {
+              "region_bounded": true,
+              "interference_per_side_mm": 0.1,
+              "strain": 0.0031250000000000006,
+              "strain_limit": 0.02
+            },
+            "ok": true
+          },
+          {
+            "offset_mm": 0.0,
+            "pair": [
+              "servo_clip",
+              "ref_servo"
+            ],
+            "volume_mm3": 9.6000137,
+            "method": "boolean_exact",
+            "flex": {
+              "region_bounded": true,
+              "interference_per_side_mm": 0.1,
+              "strain": 0.0031250000000000006,
+              "strain_limit": 0.02
+            },
+            "ok": true
+          }
+        ],
+        "violations": [],
+        "ok": true
+      },
+      {
+        "label": "カムと従動歯車を90度位相で上から置く",
+        "axis": "Z",
+        "step_mm": 1.0,
+        "sample_count": 36,
+        "moving": [
+          "cam_0",
+          "cam_1",
+          "cam_2",
+          "cam_3",
+          "cam_4",
+          "cam_gear"
+        ],
+        "static": [
+          "shell",
+          "drive_gear"
+        ],
+        "endpoint_contacts": [],
+        "press_contacts": [],
+        "violations": [],
+        "ok": true
+      },
+      {
+        "label": "六角軸を右から軸受けとカムへ通す",
+        "axis": "X",
+        "step_mm": 1.0,
+        "sample_count": 83,
+        "moving": [
+          "camshaft"
+        ],
+        "static": [
+          "shell",
+          "cam_gear",
+          "cam_0",
+          "cam_1",
+          "cam_2",
+          "cam_3",
+          "cam_4"
+        ],
+        "endpoint_contacts": [],
+        "press_contacts": [],
+        "violations": [],
+        "ok": true
+      },
+      {
+        "label": "右キャップを外側から押し込む",
+        "axis": "X",
+        "step_mm": 1.0,
+        "sample_count": 9,
+        "moving": [
+          "cap_right"
+        ],
+        "static": [
+          "shell",
+          "camshaft"
+        ],
+        "endpoint_contacts": [],
+        "press_contacts": [],
+        "violations": [],
+        "ok": true
+      },
+      {
+        "label": "左キャップを外側から押し込む",
+        "axis": "X",
+        "step_mm": 1.0,
+        "sample_count": 9,
+        "moving": [
+          "cap_left"
+        ],
+        "static": [
+          "shell",
+          "camshaft"
+        ],
+        "endpoint_contacts": [],
+        "press_contacts": [],
+        "violations": [],
+        "ok": true
+      },
+      {
+        "label": "格子列1を上からガイドへ入れる",
+        "axis": "Z",
+        "step_mm": 1.0,
+        "sample_count": 13,
+        "moving": [
+          "carrier_0"
+        ],
+        "static": [
+          "shell",
+          "cam_0"
+        ],
+        "endpoint_contacts": [],
+        "press_contacts": [],
+        "violations": [],
+        "ok": true
+      },
+      {
+        "label": "格子列2を上からガイドへ入れる",
+        "axis": "Z",
+        "step_mm": 1.0,
+        "sample_count": 13,
+        "moving": [
+          "carrier_1"
+        ],
+        "static": [
+          "shell",
+          "cam_1",
+          "carrier_0"
+        ],
+        "endpoint_contacts": [],
+        "press_contacts": [],
+        "violations": [],
+        "ok": true
+      },
+      {
+        "label": "格子列3を上からガイドへ入れる",
+        "axis": "Z",
+        "step_mm": 1.0,
+        "sample_count": 13,
+        "moving": [
+          "carrier_2"
+        ],
+        "static": [
+          "shell",
+          "cam_2",
+          "carrier_0",
+          "carrier_1"
+        ],
+        "endpoint_contacts": [],
+        "press_contacts": [],
+        "violations": [],
+        "ok": true
+      },
+      {
+        "label": "格子列4を上からガイドへ入れる",
+        "axis": "Z",
+        "step_mm": 1.0,
+        "sample_count": 13,
+        "moving": [
+          "carrier_3"
+        ],
+        "static": [
+          "shell",
+          "cam_3",
+          "carrier_0",
+          "carrier_1",
+          "carrier_2"
+        ],
+        "endpoint_contacts": [],
+        "press_contacts": [],
+        "violations": [],
+        "ok": true
+      },
+      {
+        "label": "格子列5を上からガイドへ入れる",
+        "axis": "Z",
+        "step_mm": 1.0,
+        "sample_count": 13,
+        "moving": [
+          "carrier_4"
+        ],
+        "static": [
+          "shell",
+          "cam_4",
+          "carrier_0",
+          "carrier_1",
+          "carrier_2",
+          "carrier_3"
+        ],
+        "endpoint_contacts": [],
+        "press_contacts": [],
+        "violations": [],
+        "ok": true
+      },
+      {
+        "label": "天面案内板を格子列の周囲へ下ろして棚へ置く",
+        "axis": "Z",
+        "step_mm": 1.0,
+        "sample_count": 13,
+        "moving": [
+          "top_frame"
+        ],
+        "static": [
+          "shell",
+          "carrier_0",
+          "carrier_1",
+          "carrier_2",
+          "carrier_3",
+          "carrier_4"
+        ],
+        "endpoint_contacts": [],
+        "press_contacts": [],
+        "violations": [],
+        "ok": true
+      }
+    ],
+    "release": "逆順で格子列、案内板、キャップ、六角軸を外せる。同じ経路の逆再生。",
+    "ok": true
+  },
+  "torque": {
+    "carrier_volume_mm3": [
+      4815.06,
+      4815.05,
+      4815.06,
+      4815.05,
+      4815.06
+    ],
+    "carrier_mass_g": [
+      5.971,
+      5.971,
+      5.971,
+      5.971,
+      5.971
+    ],
+    "gravity_torque_Nm": 0.000864,
+    "friction_torque_Nm": 0.000615,
+    "required_torque_Nm": 0.001479,
+    "stall_torque_Nm": 0.245,
+    "stall_ratio": 0.00604,
+    "one_third_stall_ratio": 0.01811,
+    "max_follower_speed_mm_s": 12.272,
+    "command": "2.0s quintic each way; do not step directly across follower engagement",
+    "power_off": "cam may remain near its stopped angle; after power returns, command a slow move to home",
+    "ok": true
+  },
+  "limits": [
+    "BVHは表面交差と閉立体への包含を検出する。共通体積0の断定には使わない。",
+    "全61姿勢の全剛体ペアと1mm刻みの組立経路を校正済みEXACT Booleanで測定した。AABBが交わらない組だけは幾何学的に0と判定した。",
+    "組立経路は1mm刻みの途中姿勢で検査した。層変形と手で部品を傾ける経路は再現しない。",
+    "サーボ押さえの左右0.1mm圧入帯だけは接触位置と推定ひずみを限定して許容した。カム接触も部品全体を検査した。",
+    "Material shrinkage, layer friction and SG92R horn photo-derived dimensions require fit coupons."
+  ],
+  "ok": true
+}

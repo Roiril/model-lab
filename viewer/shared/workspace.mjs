@@ -25,6 +25,8 @@ export const WORKSPACE_PAGES = Object.freeze({
   'mystery-box-sg92r-c2': Object.freeze({ physics: '/viewer/lid-cube/physics.html', assembly: '/viewer/lid-cube/assembly.html' }),
   'mystery-box-sg92r-d1': Object.freeze({ physics: '/viewer/d-cube/physics.html', assembly: '/viewer/d-cube/assembly.html' }),
   'mystery-box-sg92r-d2': Object.freeze({ physics: '/viewer/d-cube/physics.html', assembly: '/viewer/d-cube/assembly.html' }),
+  'mystery-box-sg92r-c3': Object.freeze({ physics: '/viewer/lattice/index.html?mode=physics', assembly: '/viewer/lattice/index.html?mode=assembly' }),
+  'mystery-box-sg92r-c4': Object.freeze({ physics: '/viewer/lattice/index.html?mode=physics', assembly: '/viewer/lattice/index.html?mode=assembly' }),
 });
 
 export function hasWorkspace(mode, model) {
@@ -35,7 +37,8 @@ export function workspaceHref(mode, model = B3_MODEL) {
   if (!WORKSPACES.some(item => item.id === mode)) throw new RangeError('Unknown workspace');
   if (mode === 'studio') return `/?model=${encodeURIComponent(model || B3_MODEL)}`;
   const target = WORKSPACE_PAGES[model]?.[mode] ? model : B3_MODEL;
-  return `${WORKSPACE_PAGES[target][mode]}?model=${encodeURIComponent(target)}`;
+  const page = WORKSPACE_PAGES[target][mode];
+  return `${page}${page.includes('?') ? '&' : '?'}model=${encodeURIComponent(target)}`;
 }
 
 export function createWorkspaceNav({ active, model = B3_MODEL, onNavigate } = {}) {

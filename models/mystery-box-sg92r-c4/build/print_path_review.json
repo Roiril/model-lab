@@ -1,0 +1,141 @@
+{
+  "version": 1,
+  "model": "mystery-box-sg92r-c4",
+  "status": "accepted_with_fit_test",
+  "delivery_status": "review_required",
+  "physical_print_verified": false,
+  "basis": {
+    "manifest_sha256": "0070d81e6f3f1ad22dff83f7da48575a5916448d5f6e127a80a094ba05334d16",
+    "delivery_report_sha256": "c409415cd513278a3fec9be6aa89e0710f229e4ae00b0ed493e030df170e1ca4",
+    "gcode_sha256": {
+      "full_PLA": "d4687e616c4942c3b18cb5fa18b39a70aae2e10032af2e240d6745b1da253f01",
+      "full_PETG": "a1cd9c825e050e1fdbcf5b74aa8f2529679180782ef19aee843e24e37ce6899f",
+      "fit_test_PLA": "61b56dfa1ba8d2c02198aba7b2de5047ea406fbd3785f58bc7fb9e4769217d39",
+      "fit_test_PETG": "8cbb46d7be82d6183eb649bd576fd151bf2471e550cc467552c2b3cc65d6378b"
+    }
+  },
+  "fit_test": {
+    "source_stl_sha256": "f12db481d6d8c749850a6253a77e9df53cb03c65255707a4bed63f981755cfc3",
+    "PLA_visible_unsupported_mm": 0.0,
+    "PETG_visible_unsupported_mm": 0.0,
+    "decision": "slice_pass",
+    "note": "軸継手を含む3連結の試片。全要素はベッドへ接地。実機印刷と嵌合は未検証。"
+  },
+  "orientation_checks": [
+    {
+      "id": "guide_frame",
+      "source_stl_sha256": "76e9208045baba7993333a8d4b9cb2656a62c7a925bd81c6b39cfebe2cb65971",
+      "decision": "accepted",
+      "reason": "1連結、minZ 0mm。Z>0に45°を超える下向き面はなく、最大高さ3.95mm。"
+    },
+    {
+      "id": "horn_coupler",
+      "source_stl_sha256": "db54370456a6e7a763914cd5981d4e71b54ce9f64cbed388ec3306db384df2ef",
+      "decision": "accepted",
+      "reason": "受け面を接地。3.6mm六角差込は高さ8.0mmで、高さ/太さ2.22。"
+    },
+    {
+      "id": "housing_detent",
+      "source_stl_sha256": "dc62b38a0bc8b8f8d1317974a73b499c75e3d86900755678a9dda1fe6078696d",
+      "decision": "accepted",
+      "reason": "板ばねは自由長8.0mm、厚さ1.2mm、幅2.4mm。底側アンカーから45°で連続する自己支持面で、鉛直の細い柱ではない。"
+    }
+  ],
+  "objects": [
+    {
+      "id": "faceplate",
+      "source_stl_sha256": "0876a950877757fd8033a900c963d046eadd58f91b8e012c0d8292614580faaf",
+      "warning_z_mm": [13.2],
+      "raw_external_unsupported_mm": 15.74,
+      "max_actual_span_mm": 0.7,
+      "supported_both_ends": false,
+      "surface": "internal",
+      "decision": "accepted",
+      "reason": "厚さ1.8mmの縦タブから外へ出るスナップ爪の片持ちは0.7mm。組立後は外装内に隠れる。"
+    },
+    {
+      "id": "carrier_center",
+      "source_stl_sha256": "cbdce12748ddb9bf9a1f07ea7773c7214a9dff8f3bbb4fc3405ad45cb46b24a3",
+      "warning_z_mm": [2.2, 8.6, 11.4, 26.2],
+      "raw_external_unsupported_mm": 143.78,
+      "max_actual_span_mm": 4.2,
+      "secondary_span_mm": 4.1,
+      "supported_both_ends": false,
+      "surface": "internal",
+      "decision": "accepted",
+      "reason": "最大は従動padの4.2mm片持ち。中央webの柱間4.1mmは両端支持。リングから柱は0.8mm、従動柱は2.5mmの片持ち。"
+    },
+    {
+      "id": "carrier_inner",
+      "source_stl_sha256": "7b37e374f5f9155a16329c9c87235ee68a93f3647c4c87dccc4420daf66a8c9a",
+      "warning_z_mm": [2.2, 8.6, 11.4, 25.2],
+      "raw_external_unsupported_mm": 553.2,
+      "max_actual_span_mm": 9.2,
+      "max_cantilever_mm": 2.5,
+      "secondary_span_mm": 6.2,
+      "supported_both_ends": true,
+      "surface": "internal",
+      "decision": "accepted",
+      "reason": "環状webの最大空き9.2mmと従動padの柱間6.2mmは両端支持。片持ちは従動柱の2.5mmが最大。"
+    },
+    {
+      "id": "carrier_outer",
+      "source_stl_sha256": "cfb33ab29e6e315c59d7fd4ea58d37d216d77220fc4946dcfbb4bbdf0c08f5d7",
+      "warning_z_mm": [2.2, 8.6, 11.4, 24.2],
+      "raw_external_unsupported_mm": 1069.84,
+      "max_actual_span_mm": 9.2,
+      "max_cantilever_mm": 2.5,
+      "secondary_span_mm": 6.2,
+      "supported_both_ends": true,
+      "surface": "internal",
+      "decision": "accepted",
+      "reason": "環状webの最大空き9.2mmと従動padの柱間6.2mmは両端支持。片持ちは従動柱の2.5mmが最大。"
+    },
+    {
+      "id": "camshaft",
+      "source_stl_sha256": "0e7be62d5d41539969df903cfe8ad31297c468dc61dffce50c1434d795c95afd",
+      "warning_z_mm": [5.4],
+      "raw_external_unsupported_mm": 3.33,
+      "max_actual_span_mm": 4.5,
+      "supported_both_ends": true,
+      "surface": "internal",
+      "decision": "accepted",
+      "reason": "対辺3.9mmの六角穴屋根。頂点間4.5mmを穴両側の軸壁で支持する。主軸は対辺6.3mmの面を接地して横置きする。"
+    },
+    {
+      "id": "bearing_keeper",
+      "source_stl_sha256": "402340113c0da529ab73c3e8ea8e1a034bf8ca1470fa01b6bd803430578a2c90",
+      "warning_z_mm": [2.4],
+      "raw_external_unsupported_mm": 11.97,
+      "max_actual_span_mm": 1.2,
+      "supported_both_ends": false,
+      "surface": "internal",
+      "decision": "accepted",
+      "reason": "円筒本体R5.5mmから保持爪外端R6.7mmまでの片持ちは1.2mm。組立後は右壁内の回転空間に入る。"
+    },
+    {
+      "id": "bottom",
+      "source_stl_sha256": "4b3e531e67d26c2e5adc570c6c63589d094fb205a009d1f3639e6eeab2f6fad4",
+      "warning_z_mm": [2.8, 14.6],
+      "raw_external_unsupported_mm": 21.14,
+      "max_actual_span_mm": 0.7,
+      "supported_both_ends": false,
+      "surface": "internal",
+      "decision": "accepted",
+      "reason": "z2.8mmの縦タブは底板へ全幅1.8mmが重なる。実際の片持ちは内側保持爪の0.7mmだけ。"
+    },
+    {
+      "id": "housing",
+      "source_stl_sha256": "dc62b38a0bc8b8f8d1317974a73b499c75e3d86900755678a9dda1fe6078696d",
+      "warning_z_mm": [16.8, 33.2, 33.8, 38.2, 42.0],
+      "raw_external_unsupported_mm": 821.74,
+      "max_actual_span_mm": 8.4,
+      "max_cantilever_mm": 4.6,
+      "secondary_spans_mm": [8.0, 7.1, 3.5, 2.2],
+      "supported_both_ends": true,
+      "surface": "mixed",
+      "decision": "accepted",
+      "reason": "最大橋は側面外観の底板凹み屋根8.4mm。配線出口8.0mm、クリップ通路7.1mm、keeperキー溝3.5mm、サーボレール2.2mmも両端支持。最大片持ちは内部の右軸受け下面4.6mm。detent板ばねは45°の連続面。10mm超の橋はない。"
+    }
+  ]
+}

@@ -1,0 +1,387 @@
+{
+  "meta": {
+    "title": "住人の箱 C3・直交格子",
+    "description": "5本の格子列が中央から外側へ順に持ち上がるSG92R駆動の80mm箱。",
+    "dimensions_mm": [
+      80.0,
+      80.0,
+      80.0
+    ],
+    "max_dimensions_mm": [
+      80.0,
+      80.0,
+      83.0
+    ],
+    "assembly_steps": [
+      "SG92Rを上から着座レールへ入れ、配線を前面の8×4mm出口へ通す。",
+      "サーボを90°へ動かし、付属ホーンの長腕左側と駆動歯車の三角印を合わせて押し込む。",
+      "サーボ押さえを上から差し込み、左右の脚を着座レールの外側へ掛ける。",
+      "5個のカムと従動歯車を位相順に箱内へ置き、右側から六角軸を通す。",
+      "軸端キャップを両側から押し込み、0.3mmの軸方向遊びを確認する。",
+      "5本の列キャリアを上から前後ガイドへ落とし、低位置ストップへ着座させる。",
+      "天面案内板を格子列の周囲へ下ろし、内側の4辺の棚へ着座させる。",
+      "15°へ低速移動して全列が面一になることを確認し、90°へ低速で戻して待機する。",
+      "シリアルgで15〜165°を片道2秒のquintic補間で往復させる。"
+    ],
+    "decisions": [
+      "ホーン全角度包絡と3mm床を両立するため外形を80mm角にした。",
+      "サーボ軸Z=23.5mm、カム軸Z=53.7mm、中心距離30.2mmとした。",
+      "ホーン受けは歯面よりX負側へ分離し、六角軸と非対称三角印で位相を固定した。",
+      "カム軸の軸受け区間も対辺5mmの六角とし、平面印刷と0.21mmの頂点隙間を両立した。",
+      "天面案内板は見える面を平面印刷する別部品とし、筐体側の棚を45度斜面で支えた。"
+    ],
+    "limitations": [
+      "天面を上にした卓上姿勢専用。復帰は重力に依存する。",
+      "SG92Rホーンの長さ配分と穴位置には写真由来の推定値があるため試片を先に刷る。",
+      "PLAとPETGの実摩擦、歯面の収縮、キャップの保持力は実物確認が必要。",
+      "停電時はサーボ減速機を重力で逆駆動できず、停止角度付近に残る場合がある。復電後は15°へ低速復帰する。"
+    ]
+  },
+  "parts": [
+    {
+      "id": "shell",
+      "label": "箱本体",
+      "assembly": "build/shell.stl",
+      "print": "build/print_shell.stl",
+      "fit_test": false,
+      "fit_only": false,
+      "expected_print_components": 1,
+      "color": "#d8d3c9",
+      "explode": [
+        0,
+        0,
+        -65
+      ]
+    },
+    {
+      "id": "top_frame",
+      "label": "天面案内板",
+      "assembly": "build/top_frame.stl",
+      "print": "build/print_top_frame.stl",
+      "fit_test": false,
+      "fit_only": false,
+      "expected_print_components": 1,
+      "color": "#d8d3c9",
+      "explode": [
+        0,
+        0,
+        55
+      ]
+    },
+    {
+      "id": "carrier_0",
+      "label": "格子列 1",
+      "assembly": "build/carrier_0.stl",
+      "print": "build/print_carrier_0.stl",
+      "fit_test": false,
+      "fit_only": false,
+      "expected_print_components": 1,
+      "color": "#c79a54",
+      "explode": [
+        -14,
+        0,
+        30
+      ]
+    },
+    {
+      "id": "carrier_1",
+      "label": "格子列 2",
+      "assembly": "build/carrier_1.stl",
+      "print": "build/print_carrier_1.stl",
+      "fit_test": false,
+      "fit_only": false,
+      "expected_print_components": 1,
+      "color": "#c79a54",
+      "explode": [
+        -7,
+        0,
+        30
+      ]
+    },
+    {
+      "id": "carrier_2",
+      "label": "格子列 3",
+      "assembly": "build/carrier_2.stl",
+      "print": "build/print_carrier_2.stl",
+      "fit_test": false,
+      "fit_only": false,
+      "expected_print_components": 1,
+      "color": "#c79a54",
+      "explode": [
+        0,
+        0,
+        30
+      ]
+    },
+    {
+      "id": "carrier_3",
+      "label": "格子列 4",
+      "assembly": "build/carrier_3.stl",
+      "print": "build/print_carrier_3.stl",
+      "fit_test": false,
+      "fit_only": false,
+      "expected_print_components": 1,
+      "color": "#c79a54",
+      "explode": [
+        7,
+        0,
+        30
+      ]
+    },
+    {
+      "id": "carrier_4",
+      "label": "格子列 5",
+      "assembly": "build/carrier_4.stl",
+      "print": "build/print_carrier_4.stl",
+      "fit_test": false,
+      "fit_only": false,
+      "expected_print_components": 1,
+      "color": "#c79a54",
+      "explode": [
+        14,
+        0,
+        30
+      ]
+    },
+    {
+      "id": "camshaft",
+      "label": "六角カム軸",
+      "assembly": "build/camshaft.stl",
+      "print": "build/print_camshaft.stl",
+      "fit_test": false,
+      "fit_only": false,
+      "expected_print_components": 1,
+      "color": "#d8d3c9",
+      "explode": [
+        60,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "cam_0",
+      "label": "偏心カム 1",
+      "assembly": "build/cam_0.stl",
+      "print": "build/print_cam_0.stl",
+      "fit_test": false,
+      "fit_only": false,
+      "expected_print_components": 1,
+      "color": "#d8d3c9",
+      "explode": [
+        -12,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "cam_1",
+      "label": "偏心カム 2",
+      "assembly": "build/cam_1.stl",
+      "print": "build/print_cam_1.stl",
+      "fit_test": false,
+      "fit_only": false,
+      "expected_print_components": 1,
+      "color": "#d8d3c9",
+      "explode": [
+        -6,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "cam_2",
+      "label": "偏心カム 3",
+      "assembly": "build/cam_2.stl",
+      "print": "build/print_cam_2.stl",
+      "fit_test": false,
+      "fit_only": false,
+      "expected_print_components": 1,
+      "color": "#d8d3c9",
+      "explode": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "cam_3",
+      "label": "偏心カム 4",
+      "assembly": "build/cam_3.stl",
+      "print": "build/print_cam_3.stl",
+      "fit_test": false,
+      "fit_only": false,
+      "expected_print_components": 1,
+      "color": "#d8d3c9",
+      "explode": [
+        6,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "cam_4",
+      "label": "偏心カム 5",
+      "assembly": "build/cam_4.stl",
+      "print": "build/print_cam_4.stl",
+      "fit_test": false,
+      "fit_only": false,
+      "expected_print_components": 1,
+      "color": "#d8d3c9",
+      "explode": [
+        12,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "cam_gear",
+      "label": "従動歯車",
+      "assembly": "build/cam_gear.stl",
+      "print": "build/print_cam_gear.stl",
+      "fit_test": false,
+      "fit_only": false,
+      "expected_print_components": 1,
+      "color": "#d8d3c9",
+      "explode": [
+        0,
+        -30,
+        0
+      ]
+    },
+    {
+      "id": "drive_gear",
+      "label": "ホーン受け付き駆動歯車",
+      "assembly": "build/drive_gear.stl",
+      "print": "build/print_drive_gear.stl",
+      "fit_test": false,
+      "fit_only": false,
+      "expected_print_components": 1,
+      "color": "#d8d3c9",
+      "explode": [
+        0,
+        -30,
+        0
+      ]
+    },
+    {
+      "id": "cap_left",
+      "label": "左軸端キャップ",
+      "assembly": "build/cap_left.stl",
+      "print": "build/print_cap_left.stl",
+      "fit_test": false,
+      "fit_only": false,
+      "expected_print_components": 1,
+      "color": "#d8d3c9",
+      "explode": [
+        -50,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "cap_right",
+      "label": "右軸端キャップ",
+      "assembly": "build/cap_right.stl",
+      "print": "build/print_cap_right.stl",
+      "fit_test": false,
+      "fit_only": false,
+      "expected_print_components": 1,
+      "color": "#d8d3c9",
+      "explode": [
+        50,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "servo_clip",
+      "label": "サーボ押さえ",
+      "assembly": "build/servo_clip.stl",
+      "print": "build/print_servo_clip.stl",
+      "fit_test": false,
+      "fit_only": false,
+      "expected_print_components": 1,
+      "color": "#d8d3c9",
+      "explode": [
+        0,
+        0,
+        -20
+      ]
+    },
+    {
+      "id": "fit_horn",
+      "label": "ホーン受け試片",
+      "assembly": "build/fit_horn.stl",
+      "print": "build/print_fit_horn.stl",
+      "fit_test": true,
+      "fit_only": true,
+      "expected_print_components": 1,
+      "color": "#d8d3c9",
+      "explode": [
+        0,
+        20,
+        0
+      ]
+    },
+    {
+      "id": "fit_bearing",
+      "label": "軸受け試片",
+      "assembly": "build/fit_bearing.stl",
+      "print": "build/print_fit_bearing.stl",
+      "fit_test": true,
+      "fit_only": true,
+      "expected_print_components": 2,
+      "color": "#d8d3c9",
+      "explode": [
+        0,
+        20,
+        0
+      ]
+    },
+    {
+      "id": "ref_servo",
+      "label": "SG92R本体",
+      "assembly": "build/ref_servo.stl",
+      "print": null,
+      "fit_test": false,
+      "fit_only": false,
+      "expected_print_components": 1,
+      "color": "#607d8b",
+      "explode": [
+        0,
+        0,
+        -30
+      ]
+    },
+    {
+      "id": "ref_horn",
+      "label": "SG92R付属ホーン",
+      "assembly": "build/ref_horn.stl",
+      "print": null,
+      "fit_test": false,
+      "fit_only": false,
+      "expected_print_components": 1,
+      "color": "#607d8b",
+      "explode": [
+        0,
+        0,
+        -30
+      ]
+    },
+    {
+      "id": "ref_wire",
+      "label": "SG92R配線",
+      "assembly": "build/ref_wire.stl",
+      "print": null,
+      "fit_test": false,
+      "fit_only": false,
+      "expected_print_components": 1,
+      "color": "#607d8b",
+      "explode": [
+        0,
+        0,
+        -30
+      ]
+    }
+  ]
+}

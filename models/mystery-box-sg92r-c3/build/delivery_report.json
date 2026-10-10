@@ -1,0 +1,5537 @@
+{
+  "version": 1,
+  "model": "mystery-box-sg92r-c3",
+  "created_at": "2026-10-10T14:51:51.143629+00:00",
+  "manifest": {
+    "file": "models/mystery-box-sg92r-c3/build/manifest.json",
+    "bytes": 9848,
+    "sha256": "262f040cd96d9e7dd558cef81ed969fe37afb979f725a53938f66256be881584"
+  },
+  "materials": [
+    "PLA",
+    "PETG"
+  ],
+  "settings": {
+    "machine": "Bambu Lab X1 Carbon 0.4 nozzle",
+    "process": "0.20mm Standard @BBL X1C",
+    "filament": {
+      "PLA": "Bambu PLA Basic @BBL X1C",
+      "PETG": "Bambu PETG Basic @BBL X1C"
+    },
+    "overrides": {
+      "curr_bed_type": "Textured PEI Plate",
+      "layer_height": "0.2",
+      "wall_loops": "3",
+      "exclude_object": "1",
+      "enable_support": "0"
+    },
+    "resolved_files": {
+      "PLA": {
+        "machine": {
+          "file": "models/mystery-box-sg92r-c3/build/delivery/settings/PLA/machine.json",
+          "bytes": 34767,
+          "sha256": "81c9584ecaf0f8e54beb8a1fccbf1c5ef9fb946822dc0a3d31ce6b9f47be31a2"
+        },
+        "process": {
+          "file": "models/mystery-box-sg92r-c3/build/delivery/settings/PLA/process.json",
+          "bytes": 6455,
+          "sha256": "8c50bbaf2b986287cf90a81c44d520822699e49b0f06aba2d14784be54c560fb"
+        },
+        "filament": {
+          "file": "models/mystery-box-sg92r-c3/build/delivery/settings/PLA/filament.json",
+          "bytes": 5125,
+          "sha256": "0581f61f47b184c126bebce4ea5a43259aed57fd17e33383c936ddf41c66a183"
+        }
+      },
+      "PETG": {
+        "machine": {
+          "file": "models/mystery-box-sg92r-c3/build/delivery/settings/PETG/machine.json",
+          "bytes": 34767,
+          "sha256": "81c9584ecaf0f8e54beb8a1fccbf1c5ef9fb946822dc0a3d31ce6b9f47be31a2"
+        },
+        "process": {
+          "file": "models/mystery-box-sg92r-c3/build/delivery/settings/PETG/process.json",
+          "bytes": 6455,
+          "sha256": "8c50bbaf2b986287cf90a81c44d520822699e49b0f06aba2d14784be54c560fb"
+        },
+        "filament": {
+          "file": "models/mystery-box-sg92r-c3/build/delivery/settings/PETG/filament.json",
+          "bytes": 5313,
+          "sha256": "75191a1206f16f4bf5fe752823485a63ee4b8f4ed4861ab957ecc9cfe1d298be"
+        }
+      }
+    }
+  },
+  "calibration": {
+    "ok": true,
+    "placement": {
+      "ok": true,
+      "objects": [
+        {
+          "id": "1",
+          "name": "calibration-gamma",
+          "min": [
+            100.0,
+            123.0,
+            0.0
+          ],
+          "max": [
+            120.0,
+            133.0,
+            12.0
+          ],
+          "off_bed": false,
+          "excluded": false
+        },
+        {
+          "id": "2",
+          "name": "calibration-slope-45",
+          "min": [
+            126.0,
+            123.0,
+            0.0
+          ],
+          "max": [
+            156.0,
+            133.0,
+            20.0
+          ],
+          "off_bed": false,
+          "excluded": false
+        }
+      ],
+      "bbox_overlaps": [],
+      "missing": [],
+      "extra": [],
+      "issues": []
+    },
+    "materials": {
+      "PLA": {
+        "ok": true,
+        "gamma_external_unsupported_mm": 80.32,
+        "slope_45_external_unsupported_mm": 0.0,
+        "objects": {
+          "calibration-slope-45": {
+            "layers": 100,
+            "z_top": 20.0,
+            "layer_steps": {
+              "0.2": [
+                0.2,
+                19.8,
+                99
+              ]
+            },
+            "floating": {
+              "external_unsupported_mm": 0.0,
+              "bridge_mm": 129.59,
+              "bridge_unsupported_mm": 36.18,
+              "internal_unsupported_mm": 0.0
+            },
+            "overhang_walls": []
+          },
+          "calibration-gamma": {
+            "layers": 60,
+            "z_top": 12.0,
+            "layer_steps": {
+              "0.2": [
+                0.2,
+                11.8,
+                59
+              ]
+            },
+            "floating": {
+              "external_unsupported_mm": 80.32,
+              "bridge_mm": 496.97,
+              "bridge_unsupported_mm": 272.53,
+              "internal_unsupported_mm": 0.0
+            },
+            "overhang_walls": [
+              {
+                "layer": 50,
+                "z": 10.2,
+                "feature": "Overhang wall",
+                "points": 402,
+                "x": [
+                  0.4,
+                  9.8
+                ],
+                "y": [
+                  -4.8,
+                  4.8
+                ]
+              }
+            ]
+          }
+        },
+        "assignment": {
+          "missing": [],
+          "unassigned": [],
+          "bbox_check": {
+            "tolerance_mm": 0.8,
+            "global_offset_mm": [
+              0.05,
+              2.0
+            ],
+            "matches": {
+              "12": {
+                "name": "calibration-slope-45",
+                "candidate_count": 1,
+                "max_endpoint_error_mm": 0.55
+              },
+              "8": {
+                "name": "calibration-gamma",
+                "candidate_count": 1,
+                "max_endpoint_error_mm": 0.26
+              }
+            }
+          }
+        },
+        "slice": {
+          "file": "models/mystery-box-sg92r-c3/build/delivery/calibration/calibration-PLA.gcode.3mf",
+          "bytes": 76219,
+          "sha256": "3788e59ee3c4dc7ed6e1828a012b12645e50a9014e4d58a5106f51ae36694ad6"
+        },
+        "log": {
+          "file": "models/mystery-box-sg92r-c3/build/delivery/logs/calibration-PLA.log",
+          "bytes": 1371,
+          "sha256": "5cf852970a87b978aeda21e57c4d7a34f86a2e54dfbf584e836153453c4d834d"
+        }
+      },
+      "PETG": {
+        "ok": true,
+        "gamma_external_unsupported_mm": 80.32,
+        "slope_45_external_unsupported_mm": 0.0,
+        "objects": {
+          "calibration-slope-45": {
+            "layers": 100,
+            "z_top": 20.0,
+            "layer_steps": {
+              "0.2": [
+                0.2,
+                19.8,
+                99
+              ]
+            },
+            "floating": {
+              "external_unsupported_mm": 0.0,
+              "bridge_mm": 129.59,
+              "bridge_unsupported_mm": 36.18,
+              "internal_unsupported_mm": 0.0
+            },
+            "overhang_walls": []
+          },
+          "calibration-gamma": {
+            "layers": 60,
+            "z_top": 12.0,
+            "layer_steps": {
+              "0.2": [
+                0.2,
+                11.8,
+                59
+              ]
+            },
+            "floating": {
+              "external_unsupported_mm": 80.32,
+              "bridge_mm": 496.97,
+              "bridge_unsupported_mm": 272.53,
+              "internal_unsupported_mm": 0.0
+            },
+            "overhang_walls": [
+              {
+                "layer": 50,
+                "z": 10.2,
+                "feature": "Overhang wall",
+                "points": 402,
+                "x": [
+                  0.4,
+                  9.8
+                ],
+                "y": [
+                  -4.8,
+                  4.8
+                ]
+              }
+            ]
+          }
+        },
+        "assignment": {
+          "missing": [],
+          "unassigned": [],
+          "bbox_check": {
+            "tolerance_mm": 0.8,
+            "global_offset_mm": [
+              0.05,
+              2.0
+            ],
+            "matches": {
+              "12": {
+                "name": "calibration-slope-45",
+                "candidate_count": 1,
+                "max_endpoint_error_mm": 0.55
+              },
+              "8": {
+                "name": "calibration-gamma",
+                "candidate_count": 1,
+                "max_endpoint_error_mm": 0.26
+              }
+            }
+          }
+        },
+        "slice": {
+          "file": "models/mystery-box-sg92r-c3/build/delivery/calibration/calibration-PETG.gcode.3mf",
+          "bytes": 75752,
+          "sha256": "e546afa5567320cde1f144e5fce1c5298caf058c260e530b584e7876d8142041"
+        },
+        "log": {
+          "file": "models/mystery-box-sg92r-c3/build/delivery/logs/calibration-PETG.log",
+          "bytes": 1375,
+          "sha256": "ecc94f8a793e6622035aac5f6b991f5d1a1261ce9623140bf53197750b1cb063"
+        }
+      }
+    }
+  },
+  "parts": [
+    {
+      "id": "shell",
+      "label": "箱本体",
+      "fit_test": false,
+      "fit_only": false,
+      "assembly": {
+        "file": "models/mystery-box-sg92r-c3/build/shell.stl",
+        "bytes": 78384,
+        "sha256": "230e95570e71da845c57ea0af4a3a73ae1071421f2a2de29965bb4605b7733f5"
+      },
+      "status": "printable",
+      "slices": {
+        "PLA": {
+          "layers": 400,
+          "z_top": 80.0,
+          "layer_steps": {
+            "0.2": [
+              0.2,
+              79.8,
+              399
+            ]
+          },
+          "floating": {
+            "external_unsupported_mm": 444.9,
+            "bridge_mm": 13573.29,
+            "bridge_unsupported_mm": 7236.4,
+            "internal_unsupported_mm": 402.13
+          },
+          "overhang_walls": [
+            {
+              "layer": 35,
+              "z": 7.2,
+              "feature": "Overhang wall",
+              "points": 210,
+              "x": [
+                -19.4,
+                -12.6
+              ],
+              "y": [
+                -39.8,
+                -37.1
+              ]
+            },
+            {
+              "layer": 284,
+              "z": 57.0,
+              "feature": "Overhang wall",
+              "points": 24,
+              "x": [
+                -38.5,
+                38.5
+              ],
+              "y": [
+                -0.1,
+                0.1
+              ]
+            },
+            {
+              "layer": 284,
+              "z": 57.0,
+              "feature": "Gap infill",
+              "points": 4,
+              "x": [
+                -37.8,
+                37.8
+              ],
+              "y": [
+                -0.1,
+                0.1
+              ]
+            },
+            {
+              "layer": 290,
+              "z": 58.2,
+              "feature": "Overhang wall",
+              "points": 12,
+              "x": [
+                -39.8,
+                39.8
+              ],
+              "y": [
+                -0.2,
+                0.2
+              ]
+            },
+            {
+              "layer": 294,
+              "z": 59.0,
+              "feature": "Overhang wall",
+              "points": 2008,
+              "x": [
+                -36.3,
+                36.3
+              ],
+              "y": [
+                -32.8,
+                32.8
+              ]
+            }
+          ]
+        },
+        "PETG": {
+          "layers": 400,
+          "z_top": 80.0,
+          "layer_steps": {
+            "0.2": [
+              0.2,
+              79.8,
+              399
+            ]
+          },
+          "floating": {
+            "external_unsupported_mm": 444.9,
+            "bridge_mm": 13573.29,
+            "bridge_unsupported_mm": 7236.4,
+            "internal_unsupported_mm": 402.13
+          },
+          "overhang_walls": [
+            {
+              "layer": 35,
+              "z": 7.2,
+              "feature": "Overhang wall",
+              "points": 210,
+              "x": [
+                -19.4,
+                -12.6
+              ],
+              "y": [
+                -39.8,
+                -37.1
+              ]
+            },
+            {
+              "layer": 284,
+              "z": 57.0,
+              "feature": "Overhang wall",
+              "points": 24,
+              "x": [
+                -38.5,
+                38.5
+              ],
+              "y": [
+                -0.1,
+                0.1
+              ]
+            },
+            {
+              "layer": 284,
+              "z": 57.0,
+              "feature": "Gap infill",
+              "points": 4,
+              "x": [
+                -37.8,
+                37.8
+              ],
+              "y": [
+                -0.1,
+                0.1
+              ]
+            },
+            {
+              "layer": 290,
+              "z": 58.2,
+              "feature": "Overhang wall",
+              "points": 12,
+              "x": [
+                -39.8,
+                39.8
+              ],
+              "y": [
+                -0.2,
+                0.2
+              ]
+            },
+            {
+              "layer": 294,
+              "z": 59.0,
+              "feature": "Overhang wall",
+              "points": 2008,
+              "x": [
+                -36.3,
+                36.3
+              ],
+              "y": [
+                -32.8,
+                32.8
+              ]
+            }
+          ]
+        }
+      },
+      "source_print": {
+        "file": "models/mystery-box-sg92r-c3/build/print_shell.stl",
+        "bytes": 78384,
+        "sha256": "230e95570e71da845c57ea0af4a3a73ae1071421f2a2de29965bb4605b7733f5"
+      },
+      "delivered_print": {
+        "file": "prints/mystery-box-sg92r-c3/mystery-box-sg92r-c3-print-shell.stl",
+        "bytes": 78384,
+        "sha256": "230e95570e71da845c57ea0af4a3a73ae1071421f2a2de29965bb4605b7733f5"
+      },
+      "verification_source": "slices",
+      "delivery_status": "review_required"
+    },
+    {
+      "id": "top_frame",
+      "label": "天面案内板",
+      "fit_test": false,
+      "fit_only": false,
+      "assembly": {
+        "file": "models/mystery-box-sg92r-c3/build/top_frame.stl",
+        "bytes": 3284,
+        "sha256": "21cf70d141d8a5c26d94692b0694600a99df343a7fd5e8059c22b5995e635965"
+      },
+      "status": "printable",
+      "slices": {
+        "PLA": {
+          "layers": 27,
+          "z_top": 5.4,
+          "layer_steps": {
+            "0.2": [
+              0.2,
+              5.2,
+              26
+            ]
+          },
+          "floating": {
+            "external_unsupported_mm": 0.0,
+            "bridge_mm": 3696.66,
+            "bridge_unsupported_mm": 1489.67,
+            "internal_unsupported_mm": 0.72
+          },
+          "overhang_walls": []
+        },
+        "PETG": {
+          "layers": 27,
+          "z_top": 5.4,
+          "layer_steps": {
+            "0.2": [
+              0.2,
+              5.2,
+              26
+            ]
+          },
+          "floating": {
+            "external_unsupported_mm": 0.0,
+            "bridge_mm": 3696.66,
+            "bridge_unsupported_mm": 1489.67,
+            "internal_unsupported_mm": 0.72
+          },
+          "overhang_walls": []
+        }
+      },
+      "source_print": {
+        "file": "models/mystery-box-sg92r-c3/build/print_top_frame.stl",
+        "bytes": 3284,
+        "sha256": "a3b9f0c07b1da1ab17525c2c67a3a76d4b28250dfbba1b3b6eb6faf22f61480a"
+      },
+      "delivered_print": {
+        "file": "prints/mystery-box-sg92r-c3/mystery-box-sg92r-c3-print-top_frame.stl",
+        "bytes": 3284,
+        "sha256": "a3b9f0c07b1da1ab17525c2c67a3a76d4b28250dfbba1b3b6eb6faf22f61480a"
+      },
+      "verification_source": "slices",
+      "delivery_status": "ok"
+    },
+    {
+      "id": "carrier_0",
+      "label": "格子列 1",
+      "fit_test": false,
+      "fit_only": false,
+      "assembly": {
+        "file": "models/mystery-box-sg92r-c3/build/carrier_0.stl",
+        "bytes": 12484,
+        "sha256": "d3dc2e0c18e7317823a4c3620873b345c7182c5ecf47fbc0b47e36b479d7f538"
+      },
+      "status": "printable",
+      "slices": {
+        "PLA": {
+          "layers": 126,
+          "z_top": 25.2,
+          "layer_steps": {
+            "0.2": [
+              0.2,
+              25.0,
+              125
+            ]
+          },
+          "floating": {
+            "external_unsupported_mm": 211.94,
+            "bridge_mm": 1649.87,
+            "bridge_unsupported_mm": 575.54,
+            "internal_unsupported_mm": 21.82
+          },
+          "overhang_walls": [
+            {
+              "layer": 72,
+              "z": 14.6,
+              "feature": "Overhang wall",
+              "points": 1082,
+              "x": [
+                -2.8,
+                2.8
+              ],
+              "y": [
+                -32.3,
+                32.3
+              ]
+            }
+          ]
+        },
+        "PETG": {
+          "layers": 126,
+          "z_top": 25.2,
+          "layer_steps": {
+            "0.2": [
+              0.2,
+              25.0,
+              125
+            ]
+          },
+          "floating": {
+            "external_unsupported_mm": 211.94,
+            "bridge_mm": 1649.87,
+            "bridge_unsupported_mm": 575.54,
+            "internal_unsupported_mm": 21.82
+          },
+          "overhang_walls": [
+            {
+              "layer": 72,
+              "z": 14.6,
+              "feature": "Overhang wall",
+              "points": 1082,
+              "x": [
+                -2.8,
+                2.8
+              ],
+              "y": [
+                -32.3,
+                32.3
+              ]
+            }
+          ]
+        }
+      },
+      "source_print": {
+        "file": "models/mystery-box-sg92r-c3/build/print_carrier_0.stl",
+        "bytes": 12484,
+        "sha256": "cafe5172f310f49a78739bc032ca8ccd4977fe7627a9f6e7e92a10dadc4ea42f"
+      },
+      "delivered_print": {
+        "file": "prints/mystery-box-sg92r-c3/mystery-box-sg92r-c3-print-carrier_0.stl",
+        "bytes": 12484,
+        "sha256": "cafe5172f310f49a78739bc032ca8ccd4977fe7627a9f6e7e92a10dadc4ea42f"
+      },
+      "verification_source": "slices",
+      "delivery_status": "review_required"
+    },
+    {
+      "id": "carrier_1",
+      "label": "格子列 2",
+      "fit_test": false,
+      "fit_only": false,
+      "assembly": {
+        "file": "models/mystery-box-sg92r-c3/build/carrier_1.stl",
+        "bytes": 12484,
+        "sha256": "937d667bd44479df869a6cf3a3a4ef29659b35149aee1fdab2ab4261c7be9e7f"
+      },
+      "status": "printable",
+      "slices": {
+        "PLA": {
+          "layers": 126,
+          "z_top": 25.2,
+          "layer_steps": {
+            "0.2": [
+              0.2,
+              25.0,
+              125
+            ]
+          },
+          "floating": {
+            "external_unsupported_mm": 211.94,
+            "bridge_mm": 1649.87,
+            "bridge_unsupported_mm": 575.54,
+            "internal_unsupported_mm": 21.82
+          },
+          "overhang_walls": [
+            {
+              "layer": 72,
+              "z": 14.6,
+              "feature": "Overhang wall",
+              "points": 1082,
+              "x": [
+                -2.8,
+                2.8
+              ],
+              "y": [
+                -32.3,
+                32.3
+              ]
+            }
+          ]
+        },
+        "PETG": {
+          "layers": 126,
+          "z_top": 25.2,
+          "layer_steps": {
+            "0.2": [
+              0.2,
+              25.0,
+              125
+            ]
+          },
+          "floating": {
+            "external_unsupported_mm": 211.94,
+            "bridge_mm": 1649.87,
+            "bridge_unsupported_mm": 575.54,
+            "internal_unsupported_mm": 21.82
+          },
+          "overhang_walls": [
+            {
+              "layer": 72,
+              "z": 14.6,
+              "feature": "Overhang wall",
+              "points": 1082,
+              "x": [
+                -2.8,
+                2.8
+              ],
+              "y": [
+                -32.3,
+                32.3
+              ]
+            }
+          ]
+        }
+      },
+      "source_print": {
+        "file": "models/mystery-box-sg92r-c3/build/print_carrier_1.stl",
+        "bytes": 12484,
+        "sha256": "531869f2ef06b4b40fd60c594c7df4d0b915573bb3906c349dc54b8c9eb0b700"
+      },
+      "delivered_print": {
+        "file": "prints/mystery-box-sg92r-c3/mystery-box-sg92r-c3-print-carrier_1.stl",
+        "bytes": 12484,
+        "sha256": "531869f2ef06b4b40fd60c594c7df4d0b915573bb3906c349dc54b8c9eb0b700"
+      },
+      "verification_source": "slices",
+      "delivery_status": "review_required"
+    },
+    {
+      "id": "carrier_2",
+      "label": "格子列 3",
+      "fit_test": false,
+      "fit_only": false,
+      "assembly": {
+        "file": "models/mystery-box-sg92r-c3/build/carrier_2.stl",
+        "bytes": 12484,
+        "sha256": "9c7ab191b108eb34c1c7f0d28d5ff2d2b0955dbf198210c10d02297dc3e163f5"
+      },
+      "status": "printable",
+      "slices": {
+        "PLA": {
+          "layers": 126,
+          "z_top": 25.2,
+          "layer_steps": {
+            "0.2": [
+              0.2,
+              25.0,
+              125
+            ]
+          },
+          "floating": {
+            "external_unsupported_mm": 211.94,
+            "bridge_mm": 1649.87,
+            "bridge_unsupported_mm": 575.54,
+            "internal_unsupported_mm": 21.82
+          },
+          "overhang_walls": [
+            {
+              "layer": 72,
+              "z": 14.6,
+              "feature": "Overhang wall",
+              "points": 1082,
+              "x": [
+                -2.8,
+                2.8
+              ],
+              "y": [
+                -32.3,
+                32.3
+              ]
+            }
+          ]
+        },
+        "PETG": {
+          "layers": 126,
+          "z_top": 25.2,
+          "layer_steps": {
+            "0.2": [
+              0.2,
+              25.0,
+              125
+            ]
+          },
+          "floating": {
+            "external_unsupported_mm": 211.94,
+            "bridge_mm": 1649.87,
+            "bridge_unsupported_mm": 575.54,
+            "internal_unsupported_mm": 21.82
+          },
+          "overhang_walls": [
+            {
+              "layer": 72,
+              "z": 14.6,
+              "feature": "Overhang wall",
+              "points": 1082,
+              "x": [
+                -2.8,
+                2.8
+              ],
+              "y": [
+                -32.3,
+                32.3
+              ]
+            }
+          ]
+        }
+      },
+      "source_print": {
+        "file": "models/mystery-box-sg92r-c3/build/print_carrier_2.stl",
+        "bytes": 12484,
+        "sha256": "fd6a44dd8a36161ad80b529bc8138878ed1e64393a90d58acc74bec0cb667da5"
+      },
+      "delivered_print": {
+        "file": "prints/mystery-box-sg92r-c3/mystery-box-sg92r-c3-print-carrier_2.stl",
+        "bytes": 12484,
+        "sha256": "fd6a44dd8a36161ad80b529bc8138878ed1e64393a90d58acc74bec0cb667da5"
+      },
+      "verification_source": "slices",
+      "delivery_status": "review_required"
+    },
+    {
+      "id": "carrier_3",
+      "label": "格子列 4",
+      "fit_test": false,
+      "fit_only": false,
+      "assembly": {
+        "file": "models/mystery-box-sg92r-c3/build/carrier_3.stl",
+        "bytes": 12484,
+        "sha256": "cd10c4d9d76032fd3a04ea00d51bcded341643517850f6209e63ea1e570a79b6"
+      },
+      "status": "printable",
+      "slices": {
+        "PLA": {
+          "layers": 126,
+          "z_top": 25.2,
+          "layer_steps": {
+            "0.2": [
+              0.2,
+              25.0,
+              125
+            ]
+          },
+          "floating": {
+            "external_unsupported_mm": 211.94,
+            "bridge_mm": 1649.87,
+            "bridge_unsupported_mm": 575.54,
+            "internal_unsupported_mm": 21.82
+          },
+          "overhang_walls": [
+            {
+              "layer": 72,
+              "z": 14.6,
+              "feature": "Overhang wall",
+              "points": 1082,
+              "x": [
+                -2.8,
+                2.8
+              ],
+              "y": [
+                -32.3,
+                32.3
+              ]
+            }
+          ]
+        },
+        "PETG": {
+          "layers": 126,
+          "z_top": 25.2,
+          "layer_steps": {
+            "0.2": [
+              0.2,
+              25.0,
+              125
+            ]
+          },
+          "floating": {
+            "external_unsupported_mm": 211.94,
+            "bridge_mm": 1649.87,
+            "bridge_unsupported_mm": 575.54,
+            "internal_unsupported_mm": 21.82
+          },
+          "overhang_walls": [
+            {
+              "layer": 72,
+              "z": 14.6,
+              "feature": "Overhang wall",
+              "points": 1082,
+              "x": [
+                -2.8,
+                2.8
+              ],
+              "y": [
+                -32.3,
+                32.3
+              ]
+            }
+          ]
+        }
+      },
+      "source_print": {
+        "file": "models/mystery-box-sg92r-c3/build/print_carrier_3.stl",
+        "bytes": 12484,
+        "sha256": "3007edd938393635a30ae2931cf21caa2ba62edc64aab533d93f18a6c401b5d8"
+      },
+      "delivered_print": {
+        "file": "prints/mystery-box-sg92r-c3/mystery-box-sg92r-c3-print-carrier_3.stl",
+        "bytes": 12484,
+        "sha256": "3007edd938393635a30ae2931cf21caa2ba62edc64aab533d93f18a6c401b5d8"
+      },
+      "verification_source": "slices",
+      "delivery_status": "review_required"
+    },
+    {
+      "id": "carrier_4",
+      "label": "格子列 5",
+      "fit_test": false,
+      "fit_only": false,
+      "assembly": {
+        "file": "models/mystery-box-sg92r-c3/build/carrier_4.stl",
+        "bytes": 12484,
+        "sha256": "1762d2aefe1208814aae67a238e871a9987f303a115391f5446a6a71503003bc"
+      },
+      "status": "printable",
+      "slices": {
+        "PLA": {
+          "layers": 126,
+          "z_top": 25.2,
+          "layer_steps": {
+            "0.2": [
+              0.2,
+              25.0,
+              125
+            ]
+          },
+          "floating": {
+            "external_unsupported_mm": 211.79,
+            "bridge_mm": 1649.87,
+            "bridge_unsupported_mm": 575.54,
+            "internal_unsupported_mm": 21.82
+          },
+          "overhang_walls": [
+            {
+              "layer": 72,
+              "z": 14.6,
+              "feature": "Overhang wall",
+              "points": 1076,
+              "x": [
+                -2.8,
+                2.8
+              ],
+              "y": [
+                -32.3,
+                32.3
+              ]
+            }
+          ]
+        },
+        "PETG": {
+          "layers": 126,
+          "z_top": 25.2,
+          "layer_steps": {
+            "0.2": [
+              0.2,
+              25.0,
+              125
+            ]
+          },
+          "floating": {
+            "external_unsupported_mm": 211.79,
+            "bridge_mm": 1649.87,
+            "bridge_unsupported_mm": 575.54,
+            "internal_unsupported_mm": 21.82
+          },
+          "overhang_walls": [
+            {
+              "layer": 72,
+              "z": 14.6,
+              "feature": "Overhang wall",
+              "points": 1076,
+              "x": [
+                -2.8,
+                2.8
+              ],
+              "y": [
+                -32.3,
+                32.3
+              ]
+            }
+          ]
+        }
+      },
+      "source_print": {
+        "file": "models/mystery-box-sg92r-c3/build/print_carrier_4.stl",
+        "bytes": 12484,
+        "sha256": "4f3033d23540080e4e14474f4e700e38776dec7c3781e6f41c12bbcc16b34031"
+      },
+      "delivered_print": {
+        "file": "prints/mystery-box-sg92r-c3/mystery-box-sg92r-c3-print-carrier_4.stl",
+        "bytes": 12484,
+        "sha256": "4f3033d23540080e4e14474f4e700e38776dec7c3781e6f41c12bbcc16b34031"
+      },
+      "verification_source": "slices",
+      "delivery_status": "review_required"
+    },
+    {
+      "id": "camshaft",
+      "label": "六角カム軸",
+      "fit_test": false,
+      "fit_only": false,
+      "assembly": {
+        "file": "models/mystery-box-sg92r-c3/build/camshaft.stl",
+        "bytes": 28684,
+        "sha256": "28856eac092f76ff240f073621099471e4ceb9c39c211965546c4e7afd99e148"
+      },
+      "status": "printable",
+      "slices": {
+        "PLA": {
+          "layers": 28,
+          "z_top": 5.6,
+          "layer_steps": {
+            "0.2": [
+              0.2,
+              5.4,
+              27
+            ]
+          },
+          "floating": {
+            "external_unsupported_mm": 3.28,
+            "bridge_mm": 0.0,
+            "bridge_unsupported_mm": 0.0,
+            "internal_unsupported_mm": 18.55
+          },
+          "overhang_walls": [
+            {
+              "layer": 6,
+              "z": 1.4,
+              "feature": "Overhang wall",
+              "points": 13,
+              "x": [
+                -39.5,
+                39.5
+              ],
+              "y": [
+                -0.6,
+                0.6
+              ]
+            },
+            {
+              "layer": 6,
+              "z": 1.4,
+              "feature": "Outer wall",
+              "points": 12,
+              "x": [
+                -39.5,
+                39.5
+              ],
+              "y": [
+                -0.4,
+                0.4
+              ]
+            }
+          ]
+        },
+        "PETG": {
+          "layers": 28,
+          "z_top": 5.6,
+          "layer_steps": {
+            "0.2": [
+              0.2,
+              5.4,
+              27
+            ]
+          },
+          "floating": {
+            "external_unsupported_mm": 3.28,
+            "bridge_mm": 0.0,
+            "bridge_unsupported_mm": 0.0,
+            "internal_unsupported_mm": 18.55
+          },
+          "overhang_walls": [
+            {
+              "layer": 6,
+              "z": 1.4,
+              "feature": "Overhang wall",
+              "points": 13,
+              "x": [
+                -39.5,
+                39.5
+              ],
+              "y": [
+                -0.6,
+                0.6
+              ]
+            },
+            {
+              "layer": 6,
+              "z": 1.4,
+              "feature": "Outer wall",
+              "points": 12,
+              "x": [
+                -39.5,
+                39.5
+              ],
+              "y": [
+                -0.4,
+                0.4
+              ]
+            }
+          ]
+        }
+      },
+      "source_print": {
+        "file": "models/mystery-box-sg92r-c3/build/print_camshaft.stl",
+        "bytes": 28684,
+        "sha256": "92d87da3837e46b82abf04cb167e0a0e9a7d3912cb39ac517dcd57cccd23d16c"
+      },
+      "delivered_print": {
+        "file": "prints/mystery-box-sg92r-c3/mystery-box-sg92r-c3-print-camshaft.stl",
+        "bytes": 28684,
+        "sha256": "92d87da3837e46b82abf04cb167e0a0e9a7d3912cb39ac517dcd57cccd23d16c"
+      },
+      "verification_source": "slices",
+      "delivery_status": "review_required"
+    },
+    {
+      "id": "cam_0",
+      "label": "偏心カム 1",
+      "fit_test": false,
+      "fit_only": false,
+      "assembly": {
+        "file": "models/mystery-box-sg92r-c3/build/cam_0.stl",
+        "bytes": 23084,
+        "sha256": "1ae2048ced9b1c84240952ae9bcd3dc3f954e86a6b00d0e2b8e9d1ba5a952df4"
+      },
+      "status": "printable",
+      "slices": {
+        "PLA": {
+          "layers": 15,
+          "z_top": 3.0,
+          "layer_steps": {
+            "0.2": [
+              0.2,
+              2.8,
+              14
+            ]
+          },
+          "floating": {
+            "external_unsupported_mm": 0.0,
+            "bridge_mm": 187.41,
+            "bridge_unsupported_mm": 52.38,
+            "internal_unsupported_mm": 4.52
+          },
+          "overhang_walls": []
+        },
+        "PETG": {
+          "layers": 15,
+          "z_top": 3.0,
+          "layer_steps": {
+            "0.2": [
+              0.2,
+              2.8,
+              14
+            ]
+          },
+          "floating": {
+            "external_unsupported_mm": 0.0,
+            "bridge_mm": 187.41,
+            "bridge_unsupported_mm": 52.38,
+            "internal_unsupported_mm": 4.52
+          },
+          "overhang_walls": []
+        }
+      },
+      "source_print": {
+        "file": "models/mystery-box-sg92r-c3/build/print_cam_0.stl",
+        "bytes": 23084,
+        "sha256": "9ed08f61b8d56a0a726a53234c709e9f3a7447d4b11fb53e6a927da2a46b2946"
+      },
+      "delivered_print": {
+        "file": "prints/mystery-box-sg92r-c3/mystery-box-sg92r-c3-print-cam_0.stl",
+        "bytes": 23084,
+        "sha256": "9ed08f61b8d56a0a726a53234c709e9f3a7447d4b11fb53e6a927da2a46b2946"
+      },
+      "verification_source": "slices",
+      "delivery_status": "ok"
+    },
+    {
+      "id": "cam_1",
+      "label": "偏心カム 2",
+      "fit_test": false,
+      "fit_only": false,
+      "assembly": {
+        "file": "models/mystery-box-sg92r-c3/build/cam_1.stl",
+        "bytes": 27084,
+        "sha256": "c217d02dbc58b3e96a61f320762f2755d380a437d06f9f4c93b42e2fef3740d3"
+      },
+      "status": "printable",
+      "slices": {
+        "PLA": {
+          "layers": 15,
+          "z_top": 3.0,
+          "layer_steps": {
+            "0.2": [
+              0.2,
+              2.8,
+              14
+            ]
+          },
+          "floating": {
+            "external_unsupported_mm": 0.0,
+            "bridge_mm": 187.69,
+            "bridge_unsupported_mm": 55.85,
+            "internal_unsupported_mm": 2.46
+          },
+          "overhang_walls": []
+        },
+        "PETG": {
+          "layers": 15,
+          "z_top": 3.0,
+          "layer_steps": {
+            "0.2": [
+              0.2,
+              2.8,
+              14
+            ]
+          },
+          "floating": {
+            "external_unsupported_mm": 0.0,
+            "bridge_mm": 187.69,
+            "bridge_unsupported_mm": 55.85,
+            "internal_unsupported_mm": 2.46
+          },
+          "overhang_walls": []
+        }
+      },
+      "source_print": {
+        "file": "models/mystery-box-sg92r-c3/build/print_cam_1.stl",
+        "bytes": 27084,
+        "sha256": "87b285bfebd5373f00311552624313bb818e44cc25f19cb7f3e5a56bee146e03"
+      },
+      "delivered_print": {
+        "file": "prints/mystery-box-sg92r-c3/mystery-box-sg92r-c3-print-cam_1.stl",
+        "bytes": 27084,
+        "sha256": "87b285bfebd5373f00311552624313bb818e44cc25f19cb7f3e5a56bee146e03"
+      },
+      "verification_source": "slices",
+      "delivery_status": "ok"
+    },
+    {
+      "id": "cam_2",
+      "label": "偏心カム 3",
+      "fit_test": false,
+      "fit_only": false,
+      "assembly": {
+        "file": "models/mystery-box-sg92r-c3/build/cam_2.stl",
+        "bytes": 26084,
+        "sha256": "efa8437a72b8757721d70f24be810e0480860b49d48d904ad66c5f80acf44b65"
+      },
+      "status": "printable",
+      "slices": {
+        "PLA": {
+          "layers": 15,
+          "z_top": 3.0,
+          "layer_steps": {
+            "0.2": [
+              0.2,
+              2.8,
+              14
+            ]
+          },
+          "floating": {
+            "external_unsupported_mm": 0.0,
+            "bridge_mm": 187.53,
+            "bridge_unsupported_mm": 56.68,
+            "internal_unsupported_mm": 2.06
+          },
+          "overhang_walls": []
+        },
+        "PETG": {
+          "layers": 15,
+          "z_top": 3.0,
+          "layer_steps": {
+            "0.2": [
+              0.2,
+              2.8,
+              14
+            ]
+          },
+          "floating": {
+            "external_unsupported_mm": 0.0,
+            "bridge_mm": 187.53,
+            "bridge_unsupported_mm": 56.68,
+            "internal_unsupported_mm": 2.06
+          },
+          "overhang_walls": []
+        }
+      },
+      "source_print": {
+        "file": "models/mystery-box-sg92r-c3/build/print_cam_2.stl",
+        "bytes": 26084,
+        "sha256": "43d9f4bd7e5077ba378d1009c810c9e6932b5157ecaacfd88826b9faaa4dbf0e"
+      },
+      "delivered_print": {
+        "file": "prints/mystery-box-sg92r-c3/mystery-box-sg92r-c3-print-cam_2.stl",
+        "bytes": 26084,
+        "sha256": "43d9f4bd7e5077ba378d1009c810c9e6932b5157ecaacfd88826b9faaa4dbf0e"
+      },
+      "verification_source": "slices",
+      "delivery_status": "ok"
+    },
+    {
+      "id": "cam_3",
+      "label": "偏心カム 4",
+      "fit_test": false,
+      "fit_only": false,
+      "assembly": {
+        "file": "models/mystery-box-sg92r-c3/build/cam_3.stl",
+        "bytes": 27084,
+        "sha256": "8362d0e65e454f75c1bbe9400c3b808fd2d1a3855402bfecca64ab4278d85221"
+      },
+      "status": "printable",
+      "slices": {
+        "PLA": {
+          "layers": 15,
+          "z_top": 3.0,
+          "layer_steps": {
+            "0.2": [
+              0.2,
+              2.8,
+              14
+            ]
+          },
+          "floating": {
+            "external_unsupported_mm": 0.0,
+            "bridge_mm": 187.69,
+            "bridge_unsupported_mm": 55.65,
+            "internal_unsupported_mm": 2.06
+          },
+          "overhang_walls": []
+        },
+        "PETG": {
+          "layers": 15,
+          "z_top": 3.0,
+          "layer_steps": {
+            "0.2": [
+              0.2,
+              2.8,
+              14
+            ]
+          },
+          "floating": {
+            "external_unsupported_mm": 0.0,
+            "bridge_mm": 187.69,
+            "bridge_unsupported_mm": 55.65,
+            "internal_unsupported_mm": 2.06
+          },
+          "overhang_walls": []
+        }
+      },
+      "source_print": {
+        "file": "models/mystery-box-sg92r-c3/build/print_cam_3.stl",
+        "bytes": 27084,
+        "sha256": "f0ac4bc42b8d51e5afc664c858db1e5ebb8aa382daa8ac1b002051f5c0104606"
+      },
+      "delivered_print": {
+        "file": "prints/mystery-box-sg92r-c3/mystery-box-sg92r-c3-print-cam_3.stl",
+        "bytes": 27084,
+        "sha256": "f0ac4bc42b8d51e5afc664c858db1e5ebb8aa382daa8ac1b002051f5c0104606"
+      },
+      "verification_source": "slices",
+      "delivery_status": "ok"
+    },
+    {
+      "id": "cam_4",
+      "label": "偏心カム 5",
+      "fit_test": false,
+      "fit_only": false,
+      "assembly": {
+        "file": "models/mystery-box-sg92r-c3/build/cam_4.stl",
+        "bytes": 23084,
+        "sha256": "8d6691840b4b30e9aa8019268b8f4d2d638f83e7d24070d5308a5b721a3831c9"
+      },
+      "status": "printable",
+      "slices": {
+        "PLA": {
+          "layers": 15,
+          "z_top": 3.0,
+          "layer_steps": {
+            "0.2": [
+              0.2,
+              2.8,
+              14
+            ]
+          },
+          "floating": {
+            "external_unsupported_mm": 0.0,
+            "bridge_mm": 187.4,
+            "bridge_unsupported_mm": 54.16,
+            "internal_unsupported_mm": 4.72
+          },
+          "overhang_walls": []
+        },
+        "PETG": {
+          "layers": 15,
+          "z_top": 3.0,
+          "layer_steps": {
+            "0.2": [
+              0.2,
+              2.8,
+              14
+            ]
+          },
+          "floating": {
+            "external_unsupported_mm": 0.0,
+            "bridge_mm": 187.4,
+            "bridge_unsupported_mm": 54.16,
+            "internal_unsupported_mm": 4.72
+          },
+          "overhang_walls": []
+        }
+      },
+      "source_print": {
+        "file": "models/mystery-box-sg92r-c3/build/print_cam_4.stl",
+        "bytes": 23084,
+        "sha256": "4b25e893b96014b7520677b1f05db0cbde8ed0a0347fd667fa39fc830a054288"
+      },
+      "delivered_print": {
+        "file": "prints/mystery-box-sg92r-c3/mystery-box-sg92r-c3-print-cam_4.stl",
+        "bytes": 23084,
+        "sha256": "4b25e893b96014b7520677b1f05db0cbde8ed0a0347fd667fa39fc830a054288"
+      },
+      "verification_source": "slices",
+      "delivery_status": "ok"
+    },
+    {
+      "id": "cam_gear",
+      "label": "従動歯車",
+      "fit_test": false,
+      "fit_only": false,
+      "assembly": {
+        "file": "models/mystery-box-sg92r-c3/build/cam_gear.stl",
+        "bytes": 114084,
+        "sha256": "fd340a486fd5bca772ae3c771efccd048fda70f8774a1b07a5e555589675a958"
+      },
+      "status": "printable",
+      "slices": {
+        "PLA": {
+          "layers": 20,
+          "z_top": 4.0,
+          "layer_steps": {
+            "0.2": [
+              0.2,
+              3.8,
+              19
+            ]
+          },
+          "floating": {
+            "external_unsupported_mm": 0.0,
+            "bridge_mm": 988.39,
+            "bridge_unsupported_mm": 396.37,
+            "internal_unsupported_mm": 3.36
+          },
+          "overhang_walls": []
+        },
+        "PETG": {
+          "layers": 20,
+          "z_top": 4.0,
+          "layer_steps": {
+            "0.2": [
+              0.2,
+              3.8,
+              19
+            ]
+          },
+          "floating": {
+            "external_unsupported_mm": 0.0,
+            "bridge_mm": 988.39,
+            "bridge_unsupported_mm": 396.37,
+            "internal_unsupported_mm": 3.36
+          },
+          "overhang_walls": []
+        }
+      },
+      "source_print": {
+        "file": "models/mystery-box-sg92r-c3/build/print_cam_gear.stl",
+        "bytes": 114084,
+        "sha256": "f4d3a15254e47468f605f408ee8eaa926b95c1e4ac12f134efdfb92e0a4ffb34"
+      },
+      "delivered_print": {
+        "file": "prints/mystery-box-sg92r-c3/mystery-box-sg92r-c3-print-cam_gear.stl",
+        "bytes": 114084,
+        "sha256": "f4d3a15254e47468f605f408ee8eaa926b95c1e4ac12f134efdfb92e0a4ffb34"
+      },
+      "verification_source": "slices",
+      "delivery_status": "ok"
+    },
+    {
+      "id": "drive_gear",
+      "label": "ホーン受け付き駆動歯車",
+      "fit_test": false,
+      "fit_only": false,
+      "assembly": {
+        "file": "models/mystery-box-sg92r-c3/build/drive_gear.stl",
+        "bytes": 12284,
+        "sha256": "c14266abc59aeb618fa9cb20825e66c42271115709437e3b9d44447000a917a5"
+      },
+      "status": "printable",
+      "slices": {
+        "PLA": {
+          "layers": 15,
+          "z_top": 3.0,
+          "layer_steps": {
+            "0.2": [
+              0.2,
+              2.8,
+              14
+            ]
+          },
+          "floating": {
+            "external_unsupported_mm": 0.0,
+            "bridge_mm": 0.0,
+            "bridge_unsupported_mm": 0.0,
+            "internal_unsupported_mm": 0.0
+          },
+          "overhang_walls": []
+        },
+        "PETG": {
+          "layers": 15,
+          "z_top": 3.0,
+          "layer_steps": {
+            "0.2": [
+              0.2,
+              2.8,
+              14
+            ]
+          },
+          "floating": {
+            "external_unsupported_mm": 0.0,
+            "bridge_mm": 0.0,
+            "bridge_unsupported_mm": 0.0,
+            "internal_unsupported_mm": 0.0
+          },
+          "overhang_walls": []
+        }
+      },
+      "source_print": {
+        "file": "models/mystery-box-sg92r-c3/build/print_drive_gear.stl",
+        "bytes": 12284,
+        "sha256": "575362596ae8c0e98c2dcdfbb8b0f0a25db89eb2ed04b4fb87e448d27fbda40f"
+      },
+      "delivered_print": {
+        "file": "prints/mystery-box-sg92r-c3/mystery-box-sg92r-c3-print-drive_gear.stl",
+        "bytes": 12284,
+        "sha256": "575362596ae8c0e98c2dcdfbb8b0f0a25db89eb2ed04b4fb87e448d27fbda40f"
+      },
+      "verification_source": "slices",
+      "delivery_status": "ok"
+    },
+    {
+      "id": "cap_left",
+      "label": "左軸端キャップ",
+      "fit_test": false,
+      "fit_only": false,
+      "assembly": {
+        "file": "models/mystery-box-sg92r-c3/build/cap_left.stl",
+        "bytes": 20784,
+        "sha256": "fa4d6c41a82a73b822b85e70d2f1bfbc5af041947f900742983b5e15e8060dfc"
+      },
+      "status": "printable",
+      "slices": {
+        "PLA": {
+          "layers": 5,
+          "z_top": 1.0,
+          "layer_steps": {
+            "0.2": [
+              0.2,
+              0.8,
+              4
+            ]
+          },
+          "floating": {
+            "external_unsupported_mm": 0.0,
+            "bridge_mm": 0.0,
+            "bridge_unsupported_mm": 0.0,
+            "internal_unsupported_mm": 0.0
+          },
+          "overhang_walls": []
+        },
+        "PETG": {
+          "layers": 5,
+          "z_top": 1.0,
+          "layer_steps": {
+            "0.2": [
+              0.2,
+              0.8,
+              4
+            ]
+          },
+          "floating": {
+            "external_unsupported_mm": 0.0,
+            "bridge_mm": 0.0,
+            "bridge_unsupported_mm": 0.0,
+            "internal_unsupported_mm": 0.0
+          },
+          "overhang_walls": []
+        }
+      },
+      "source_print": {
+        "file": "models/mystery-box-sg92r-c3/build/print_cap_left.stl",
+        "bytes": 20784,
+        "sha256": "519711bc5d4353a76308c4535afaf5bed27cfdb29dd449cda28e1fd976b5aca4"
+      },
+      "delivered_print": {
+        "file": "prints/mystery-box-sg92r-c3/mystery-box-sg92r-c3-print-cap_left.stl",
+        "bytes": 20784,
+        "sha256": "519711bc5d4353a76308c4535afaf5bed27cfdb29dd449cda28e1fd976b5aca4"
+      },
+      "verification_source": "slices",
+      "delivery_status": "ok"
+    },
+    {
+      "id": "cap_right",
+      "label": "右軸端キャップ",
+      "fit_test": false,
+      "fit_only": false,
+      "assembly": {
+        "file": "models/mystery-box-sg92r-c3/build/cap_right.stl",
+        "bytes": 20784,
+        "sha256": "54b4047f195978c3e60e9c7dcccf2de9827db05696fd5eaa6d5b5b88b56dd3f1"
+      },
+      "status": "printable",
+      "slices": {
+        "PLA": {
+          "layers": 5,
+          "z_top": 1.0,
+          "layer_steps": {
+            "0.2": [
+              0.2,
+              0.8,
+              4
+            ]
+          },
+          "floating": {
+            "external_unsupported_mm": 0.0,
+            "bridge_mm": 0.0,
+            "bridge_unsupported_mm": 0.0,
+            "internal_unsupported_mm": 0.0
+          },
+          "overhang_walls": []
+        },
+        "PETG": {
+          "layers": 5,
+          "z_top": 1.0,
+          "layer_steps": {
+            "0.2": [
+              0.2,
+              0.8,
+              4
+            ]
+          },
+          "floating": {
+            "external_unsupported_mm": 0.0,
+            "bridge_mm": 0.0,
+            "bridge_unsupported_mm": 0.0,
+            "internal_unsupported_mm": 0.0
+          },
+          "overhang_walls": []
+        }
+      },
+      "source_print": {
+        "file": "models/mystery-box-sg92r-c3/build/print_cap_right.stl",
+        "bytes": 20784,
+        "sha256": "f337a8e0ada4f89587f16c7358452cc68570441be563f8bd666d9ba4ec8a4ac0"
+      },
+      "delivered_print": {
+        "file": "prints/mystery-box-sg92r-c3/mystery-box-sg92r-c3-print-cap_right.stl",
+        "bytes": 20784,
+        "sha256": "f337a8e0ada4f89587f16c7358452cc68570441be563f8bd666d9ba4ec8a4ac0"
+      },
+      "verification_source": "slices",
+      "delivery_status": "ok"
+    },
+    {
+      "id": "servo_clip",
+      "label": "サーボ押さえ",
+      "fit_test": false,
+      "fit_only": false,
+      "assembly": {
+        "file": "models/mystery-box-sg92r-c3/build/servo_clip.stl",
+        "bytes": 3284,
+        "sha256": "769364c10b75a697faf03c5a876fff15cc33247f5bd2edae517b98b7ceeb7a61"
+      },
+      "status": "printable",
+      "slices": {
+        "PLA": {
+          "layers": 30,
+          "z_top": 6.0,
+          "layer_steps": {
+            "0.2": [
+              0.2,
+              5.8,
+              29
+            ]
+          },
+          "floating": {
+            "external_unsupported_mm": 0.0,
+            "bridge_mm": 0.0,
+            "bridge_unsupported_mm": 0.0,
+            "internal_unsupported_mm": 0.0
+          },
+          "overhang_walls": []
+        },
+        "PETG": {
+          "layers": 30,
+          "z_top": 6.0,
+          "layer_steps": {
+            "0.2": [
+              0.2,
+              5.8,
+              29
+            ]
+          },
+          "floating": {
+            "external_unsupported_mm": 0.0,
+            "bridge_mm": 0.0,
+            "bridge_unsupported_mm": 0.0,
+            "internal_unsupported_mm": 0.0
+          },
+          "overhang_walls": []
+        }
+      },
+      "source_print": {
+        "file": "models/mystery-box-sg92r-c3/build/print_servo_clip.stl",
+        "bytes": 3284,
+        "sha256": "035aa52a68d1262f0f88306a9dd2559963b1b1cf00d6cc881bdcf200c14324ea"
+      },
+      "delivered_print": {
+        "file": "prints/mystery-box-sg92r-c3/mystery-box-sg92r-c3-print-servo_clip.stl",
+        "bytes": 3284,
+        "sha256": "035aa52a68d1262f0f88306a9dd2559963b1b1cf00d6cc881bdcf200c14324ea"
+      },
+      "verification_source": "slices",
+      "delivery_status": "ok"
+    },
+    {
+      "id": "fit_horn",
+      "label": "ホーン受け試片",
+      "fit_test": true,
+      "fit_only": true,
+      "assembly": {
+        "file": "models/mystery-box-sg92r-c3/build/fit_horn.stl",
+        "bytes": 11284,
+        "sha256": "79ef682bfaec73b06fd3e9ce3941bd2051d3222eda2b79b0eb707d1bb99fa018"
+      },
+      "status": "printable",
+      "slices": {},
+      "source_print": {
+        "file": "models/mystery-box-sg92r-c3/build/print_fit_horn.stl",
+        "bytes": 11284,
+        "sha256": "f8a69ef9a72ea00cad6dfad86f167b7c7218c5cc0fd87777c453be29693b9009"
+      },
+      "delivered_print": {
+        "file": "prints/mystery-box-sg92r-c3/mystery-box-sg92r-c3-print-fit_horn.stl",
+        "bytes": 11284,
+        "sha256": "f8a69ef9a72ea00cad6dfad86f167b7c7218c5cc0fd87777c453be29693b9009"
+      },
+      "fit_test_slices": {
+        "PLA": {
+          "layers": 15,
+          "z_top": 3.0,
+          "layer_steps": {
+            "0.2": [
+              0.2,
+              2.8,
+              14
+            ]
+          },
+          "floating": {
+            "external_unsupported_mm": 0.0,
+            "bridge_mm": 0.0,
+            "bridge_unsupported_mm": 0.0,
+            "internal_unsupported_mm": 0.0
+          },
+          "overhang_walls": []
+        },
+        "PETG": {
+          "layers": 15,
+          "z_top": 3.0,
+          "layer_steps": {
+            "0.2": [
+              0.2,
+              2.8,
+              14
+            ]
+          },
+          "floating": {
+            "external_unsupported_mm": 0.0,
+            "bridge_mm": 0.0,
+            "bridge_unsupported_mm": 0.0,
+            "internal_unsupported_mm": 0.0
+          },
+          "overhang_walls": []
+        }
+      },
+      "verification_source": "fit_test_slices",
+      "delivery_status": "ok"
+    },
+    {
+      "id": "fit_bearing",
+      "label": "軸受け試片",
+      "fit_test": true,
+      "fit_only": true,
+      "assembly": {
+        "file": "models/mystery-box-sg92r-c3/build/fit_bearing.stl",
+        "bytes": 11884,
+        "sha256": "45c0bc3545a5e1bb7f540bc116fe9a6edc1b3a602087edcd665343b50844649f"
+      },
+      "status": "printable",
+      "slices": {},
+      "source_print": {
+        "file": "models/mystery-box-sg92r-c3/build/print_fit_bearing.stl",
+        "bytes": 11884,
+        "sha256": "3d92f678b6c02e8804dc8511c26890b7da6251df0127fffe757fc34ac77ba3f4"
+      },
+      "delivered_print": {
+        "file": "prints/mystery-box-sg92r-c3/mystery-box-sg92r-c3-print-fit_bearing.stl",
+        "bytes": 11884,
+        "sha256": "3d92f678b6c02e8804dc8511c26890b7da6251df0127fffe757fc34ac77ba3f4"
+      },
+      "fit_test_slices": {
+        "PLA": {
+          "layers": 60,
+          "z_top": 12.0,
+          "layer_steps": {
+            "0.2": [
+              0.2,
+              11.8,
+              59
+            ]
+          },
+          "floating": {
+            "external_unsupported_mm": 0.0,
+            "bridge_mm": 0.0,
+            "bridge_unsupported_mm": 0.0,
+            "internal_unsupported_mm": 0.0
+          },
+          "overhang_walls": []
+        },
+        "PETG": {
+          "layers": 60,
+          "z_top": 12.0,
+          "layer_steps": {
+            "0.2": [
+              0.2,
+              11.8,
+              59
+            ]
+          },
+          "floating": {
+            "external_unsupported_mm": 0.0,
+            "bridge_mm": 0.0,
+            "bridge_unsupported_mm": 0.0,
+            "internal_unsupported_mm": 0.0
+          },
+          "overhang_walls": []
+        }
+      },
+      "verification_source": "fit_test_slices",
+      "delivery_status": "ok"
+    },
+    {
+      "id": "ref_servo",
+      "label": "SG92R本体",
+      "fit_test": false,
+      "fit_only": false,
+      "assembly": {
+        "file": "models/mystery-box-sg92r-c3/build/ref_servo.stl",
+        "bytes": 3284,
+        "sha256": "a2023254ebc1fb1725d7dcf56bdf0c162519124cdf4000a34cf22cf23d4ddc37"
+      },
+      "status": "reference",
+      "slices": {},
+      "delivery_status": "not_applicable"
+    },
+    {
+      "id": "ref_horn",
+      "label": "SG92R付属ホーン",
+      "fit_test": false,
+      "fit_only": false,
+      "assembly": {
+        "file": "models/mystery-box-sg92r-c3/build/ref_horn.stl",
+        "bytes": 4684,
+        "sha256": "82e9eb138d944078b1932b4f7e2066df4d2ff76647a2926ce9db1f24ea97c69b"
+      },
+      "status": "reference",
+      "slices": {},
+      "delivery_status": "not_applicable"
+    },
+    {
+      "id": "ref_wire",
+      "label": "SG92R配線",
+      "fit_test": false,
+      "fit_only": false,
+      "assembly": {
+        "file": "models/mystery-box-sg92r-c3/build/ref_wire.stl",
+        "bytes": 684,
+        "sha256": "cf637b63ec9f07c9ddab48a65b7aeb016328d9ef50ab124f22024a32be52d7c0"
+      },
+      "status": "reference",
+      "slices": {},
+      "delivery_status": "not_applicable"
+    }
+  ],
+  "plates": {
+    "full": {
+      "layout": {
+        "file": "prints/mystery-box-sg92r-c3/mystery-box-sg92r-c3-layout.3mf",
+        "bytes": 78918,
+        "sha256": "8346d76a4cd9b3bf35e7b2be5977b7d0164ab761b7035e8ad2ef58c4e1ce6061"
+      },
+      "placement": {
+        "ok": true,
+        "objects": [
+          {
+            "id": "1",
+            "name": "mystery-box-sg92r-c3-print-shell",
+            "min": [
+              10.8665,
+              47.0,
+              0.0
+            ],
+            "max": [
+              90.8665,
+              127.0,
+              80.0
+            ],
+            "off_bed": false,
+            "excluded": false
+          },
+          {
+            "id": "2",
+            "name": "mystery-box-sg92r-c3-print-top_frame",
+            "min": [
+              96.8665,
+              47.0,
+              0.0
+            ],
+            "max": [
+              170.2665,
+              120.4,
+              5.5
+            ],
+            "off_bed": false,
+            "excluded": false
+          },
+          {
+            "id": "3",
+            "name": "mystery-box-sg92r-c3-print-carrier_0",
+            "min": [
+              176.2665,
+              47.0,
+              0.0
+            ],
+            "max": [
+              186.6665,
+              112.0,
+              25.3
+            ],
+            "off_bed": false,
+            "excluded": false
+          },
+          {
+            "id": "4",
+            "name": "mystery-box-sg92r-c3-print-carrier_1",
+            "min": [
+              192.6665,
+              47.0,
+              0.0
+            ],
+            "max": [
+              203.0665,
+              112.0,
+              25.3
+            ],
+            "off_bed": false,
+            "excluded": false
+          },
+          {
+            "id": "5",
+            "name": "mystery-box-sg92r-c3-print-carrier_2",
+            "min": [
+              209.0665,
+              47.0,
+              0.0
+            ],
+            "max": [
+              219.4665,
+              112.0,
+              25.3
+            ],
+            "off_bed": false,
+            "excluded": false
+          },
+          {
+            "id": "6",
+            "name": "mystery-box-sg92r-c3-print-carrier_3",
+            "min": [
+              225.4665,
+              47.0,
+              0.0
+            ],
+            "max": [
+              235.8665,
+              112.0,
+              25.3
+            ],
+            "off_bed": false,
+            "excluded": false
+          },
+          {
+            "id": "7",
+            "name": "mystery-box-sg92r-c3-print-carrier_4",
+            "min": [
+              10.8665,
+              133.0,
+              0.0
+            ],
+            "max": [
+              21.2665,
+              198.0,
+              25.3
+            ],
+            "off_bed": false,
+            "excluded": false
+          },
+          {
+            "id": "8",
+            "name": "mystery-box-sg92r-c3-print-drive_gear",
+            "min": [
+              27.2665,
+              133.0,
+              0.0
+            ],
+            "max": [
+              48.6665,
+              172.2,
+              3.0
+            ],
+            "off_bed": false,
+            "excluded": false
+          },
+          {
+            "id": "9",
+            "name": "mystery-box-sg92r-c3-print-cam_gear",
+            "min": [
+              54.6665,
+              133.0,
+              0.0
+            ],
+            "max": [
+              86.5435,
+              164.9954,
+              4.0
+            ],
+            "off_bed": false,
+            "excluded": false
+          },
+          {
+            "id": "10",
+            "name": "mystery-box-sg92r-c3-print-servo_clip",
+            "min": [
+              92.5435,
+              133.0,
+              0.0
+            ],
+            "max": [
+              107.5435,
+              162.0,
+              6.0
+            ],
+            "off_bed": false,
+            "excluded": false
+          },
+          {
+            "id": "11",
+            "name": "mystery-box-sg92r-c3-print-cam_1",
+            "min": [
+              113.5435,
+              133.0,
+              0.0
+            ],
+            "max": [
+              128.2535,
+              150.6865,
+              3.0
+            ],
+            "off_bed": false,
+            "excluded": false
+          },
+          {
+            "id": "12",
+            "name": "mystery-box-sg92r-c3-print-cam_2",
+            "min": [
+              134.2535,
+              133.0,
+              0.0
+            ],
+            "max": [
+              148.9635,
+              150.6865,
+              3.0
+            ],
+            "off_bed": false,
+            "excluded": false
+          },
+          {
+            "id": "13",
+            "name": "mystery-box-sg92r-c3-print-cam_3",
+            "min": [
+              154.9635,
+              133.0,
+              0.0
+            ],
+            "max": [
+              169.6735,
+              150.6865,
+              3.0
+            ],
+            "off_bed": false,
+            "excluded": false
+          },
+          {
+            "id": "14",
+            "name": "mystery-box-sg92r-c3-print-cam_0",
+            "min": [
+              175.6735,
+              133.0,
+              0.0
+            ],
+            "max": [
+              193.0035,
+              148.4885,
+              3.0
+            ],
+            "off_bed": false,
+            "excluded": false
+          },
+          {
+            "id": "15",
+            "name": "mystery-box-sg92r-c3-print-cam_4",
+            "min": [
+              199.0035,
+              133.0,
+              0.0
+            ],
+            "max": [
+              216.3335,
+              148.4885,
+              3.0
+            ],
+            "off_bed": false,
+            "excluded": false
+          },
+          {
+            "id": "16",
+            "name": "mystery-box-sg92r-c3-print-cap_left",
+            "min": [
+              222.3335,
+              133.0,
+              0.0
+            ],
+            "max": [
+              230.7335,
+              141.382,
+              1.05
+            ],
+            "off_bed": false,
+            "excluded": false
+          },
+          {
+            "id": "17",
+            "name": "mystery-box-sg92r-c3-print-cap_right",
+            "min": [
+              236.7335,
+              133.0,
+              0.0
+            ],
+            "max": [
+              245.1335,
+              141.382,
+              1.05
+            ],
+            "off_bed": false,
+            "excluded": false
+          },
+          {
+            "id": "18",
+            "name": "mystery-box-sg92r-c3-print-camshaft",
+            "min": [
+              10.8665,
+              204.0,
+              0.0
+            ],
+            "max": [
+              90.2665,
+              209.0,
+              5.7735
+            ],
+            "off_bed": false,
+            "excluded": false
+          }
+        ],
+        "bbox_overlaps": [],
+        "missing": [],
+        "extra": [],
+        "issues": []
+      },
+      "materials": {
+        "PLA": {
+          "material": "PLA",
+          "file": {
+            "file": "prints/mystery-box-sg92r-c3/mystery-box-sg92r-c3-PLA.gcode.3mf",
+            "bytes": 1494808,
+            "sha256": "b288129263f9abb2014990aca935e5739ed3cadc04f9c8583accd8ffa76205ed"
+          },
+          "prediction_s": 14494,
+          "weight_g": 149.63,
+          "filament": [
+            [
+              "49.37",
+              "149.63"
+            ]
+          ],
+          "support_used": "false",
+          "objects": {
+            "mystery-box-sg92r-c3-print-camshaft": {
+              "layers": 28,
+              "z_top": 5.6,
+              "layer_steps": {
+                "0.2": [
+                  0.2,
+                  5.4,
+                  27
+                ]
+              },
+              "floating": {
+                "external_unsupported_mm": 3.28,
+                "bridge_mm": 0.0,
+                "bridge_unsupported_mm": 0.0,
+                "internal_unsupported_mm": 18.55
+              },
+              "overhang_walls": [
+                {
+                  "layer": 6,
+                  "z": 1.4,
+                  "feature": "Overhang wall",
+                  "points": 13,
+                  "x": [
+                    -39.5,
+                    39.5
+                  ],
+                  "y": [
+                    -0.6,
+                    0.6
+                  ]
+                },
+                {
+                  "layer": 6,
+                  "z": 1.4,
+                  "feature": "Outer wall",
+                  "points": 12,
+                  "x": [
+                    -39.5,
+                    39.5
+                  ],
+                  "y": [
+                    -0.4,
+                    0.4
+                  ]
+                }
+              ]
+            },
+            "mystery-box-sg92r-c3-print-carrier_4": {
+              "layers": 126,
+              "z_top": 25.2,
+              "layer_steps": {
+                "0.2": [
+                  0.2,
+                  25.0,
+                  125
+                ]
+              },
+              "floating": {
+                "external_unsupported_mm": 211.79,
+                "bridge_mm": 1649.87,
+                "bridge_unsupported_mm": 575.54,
+                "internal_unsupported_mm": 21.82
+              },
+              "overhang_walls": [
+                {
+                  "layer": 72,
+                  "z": 14.6,
+                  "feature": "Overhang wall",
+                  "points": 1076,
+                  "x": [
+                    -2.8,
+                    2.8
+                  ],
+                  "y": [
+                    -32.3,
+                    32.3
+                  ]
+                }
+              ]
+            },
+            "mystery-box-sg92r-c3-print-drive_gear": {
+              "layers": 15,
+              "z_top": 3.0,
+              "layer_steps": {
+                "0.2": [
+                  0.2,
+                  2.8,
+                  14
+                ]
+              },
+              "floating": {
+                "external_unsupported_mm": 0.0,
+                "bridge_mm": 0.0,
+                "bridge_unsupported_mm": 0.0,
+                "internal_unsupported_mm": 0.0
+              },
+              "overhang_walls": []
+            },
+            "mystery-box-sg92r-c3-print-cam_gear": {
+              "layers": 20,
+              "z_top": 4.0,
+              "layer_steps": {
+                "0.2": [
+                  0.2,
+                  3.8,
+                  19
+                ]
+              },
+              "floating": {
+                "external_unsupported_mm": 0.0,
+                "bridge_mm": 988.39,
+                "bridge_unsupported_mm": 396.37,
+                "internal_unsupported_mm": 3.36
+              },
+              "overhang_walls": []
+            },
+            "mystery-box-sg92r-c3-print-servo_clip": {
+              "layers": 30,
+              "z_top": 6.0,
+              "layer_steps": {
+                "0.2": [
+                  0.2,
+                  5.8,
+                  29
+                ]
+              },
+              "floating": {
+                "external_unsupported_mm": 0.0,
+                "bridge_mm": 0.0,
+                "bridge_unsupported_mm": 0.0,
+                "internal_unsupported_mm": 0.0
+              },
+              "overhang_walls": []
+            },
+            "mystery-box-sg92r-c3-print-cam_1": {
+              "layers": 15,
+              "z_top": 3.0,
+              "layer_steps": {
+                "0.2": [
+                  0.2,
+                  2.8,
+                  14
+                ]
+              },
+              "floating": {
+                "external_unsupported_mm": 0.0,
+                "bridge_mm": 187.69,
+                "bridge_unsupported_mm": 55.85,
+                "internal_unsupported_mm": 2.46
+              },
+              "overhang_walls": []
+            },
+            "mystery-box-sg92r-c3-print-cam_2": {
+              "layers": 15,
+              "z_top": 3.0,
+              "layer_steps": {
+                "0.2": [
+                  0.2,
+                  2.8,
+                  14
+                ]
+              },
+              "floating": {
+                "external_unsupported_mm": 0.0,
+                "bridge_mm": 187.53,
+                "bridge_unsupported_mm": 56.68,
+                "internal_unsupported_mm": 2.06
+              },
+              "overhang_walls": []
+            },
+            "mystery-box-sg92r-c3-print-cam_3": {
+              "layers": 15,
+              "z_top": 3.0,
+              "layer_steps": {
+                "0.2": [
+                  0.2,
+                  2.8,
+                  14
+                ]
+              },
+              "floating": {
+                "external_unsupported_mm": 0.0,
+                "bridge_mm": 187.69,
+                "bridge_unsupported_mm": 55.65,
+                "internal_unsupported_mm": 2.06
+              },
+              "overhang_walls": []
+            },
+            "mystery-box-sg92r-c3-print-cam_0": {
+              "layers": 15,
+              "z_top": 3.0,
+              "layer_steps": {
+                "0.2": [
+                  0.2,
+                  2.8,
+                  14
+                ]
+              },
+              "floating": {
+                "external_unsupported_mm": 0.0,
+                "bridge_mm": 187.41,
+                "bridge_unsupported_mm": 52.38,
+                "internal_unsupported_mm": 4.52
+              },
+              "overhang_walls": []
+            },
+            "mystery-box-sg92r-c3-print-cam_4": {
+              "layers": 15,
+              "z_top": 3.0,
+              "layer_steps": {
+                "0.2": [
+                  0.2,
+                  2.8,
+                  14
+                ]
+              },
+              "floating": {
+                "external_unsupported_mm": 0.0,
+                "bridge_mm": 187.4,
+                "bridge_unsupported_mm": 54.16,
+                "internal_unsupported_mm": 4.72
+              },
+              "overhang_walls": []
+            },
+            "mystery-box-sg92r-c3-print-cap_left": {
+              "layers": 5,
+              "z_top": 1.0,
+              "layer_steps": {
+                "0.2": [
+                  0.2,
+                  0.8,
+                  4
+                ]
+              },
+              "floating": {
+                "external_unsupported_mm": 0.0,
+                "bridge_mm": 0.0,
+                "bridge_unsupported_mm": 0.0,
+                "internal_unsupported_mm": 0.0
+              },
+              "overhang_walls": []
+            },
+            "mystery-box-sg92r-c3-print-cap_right": {
+              "layers": 5,
+              "z_top": 1.0,
+              "layer_steps": {
+                "0.2": [
+                  0.2,
+                  0.8,
+                  4
+                ]
+              },
+              "floating": {
+                "external_unsupported_mm": 0.0,
+                "bridge_mm": 0.0,
+                "bridge_unsupported_mm": 0.0,
+                "internal_unsupported_mm": 0.0
+              },
+              "overhang_walls": []
+            },
+            "mystery-box-sg92r-c3-print-carrier_3": {
+              "layers": 126,
+              "z_top": 25.2,
+              "layer_steps": {
+                "0.2": [
+                  0.2,
+                  25.0,
+                  125
+                ]
+              },
+              "floating": {
+                "external_unsupported_mm": 211.94,
+                "bridge_mm": 1649.87,
+                "bridge_unsupported_mm": 575.54,
+                "internal_unsupported_mm": 21.82
+              },
+              "overhang_walls": [
+                {
+                  "layer": 72,
+                  "z": 14.6,
+                  "feature": "Overhang wall",
+                  "points": 1082,
+                  "x": [
+                    -2.8,
+                    2.8
+                  ],
+                  "y": [
+                    -32.3,
+                    32.3
+                  ]
+                }
+              ]
+            },
+            "mystery-box-sg92r-c3-print-carrier_2": {
+              "layers": 126,
+              "z_top": 25.2,
+              "layer_steps": {
+                "0.2": [
+                  0.2,
+                  25.0,
+                  125
+                ]
+              },
+              "floating": {
+                "external_unsupported_mm": 211.94,
+                "bridge_mm": 1649.87,
+                "bridge_unsupported_mm": 575.54,
+                "internal_unsupported_mm": 21.82
+              },
+              "overhang_walls": [
+                {
+                  "layer": 72,
+                  "z": 14.6,
+                  "feature": "Overhang wall",
+                  "points": 1082,
+                  "x": [
+                    -2.8,
+                    2.8
+                  ],
+                  "y": [
+                    -32.3,
+                    32.3
+                  ]
+                }
+              ]
+            },
+            "mystery-box-sg92r-c3-print-carrier_1": {
+              "layers": 126,
+              "z_top": 25.2,
+              "layer_steps": {
+                "0.2": [
+                  0.2,
+                  25.0,
+                  125
+                ]
+              },
+              "floating": {
+                "external_unsupported_mm": 211.94,
+                "bridge_mm": 1649.87,
+                "bridge_unsupported_mm": 575.54,
+                "internal_unsupported_mm": 21.82
+              },
+              "overhang_walls": [
+                {
+                  "layer": 72,
+                  "z": 14.6,
+                  "feature": "Overhang wall",
+                  "points": 1082,
+                  "x": [
+                    -2.8,
+                    2.8
+                  ],
+                  "y": [
+                    -32.3,
+                    32.3
+                  ]
+                }
+              ]
+            },
+            "mystery-box-sg92r-c3-print-carrier_0": {
+              "layers": 126,
+              "z_top": 25.2,
+              "layer_steps": {
+                "0.2": [
+                  0.2,
+                  25.0,
+                  125
+                ]
+              },
+              "floating": {
+                "external_unsupported_mm": 211.94,
+                "bridge_mm": 1649.87,
+                "bridge_unsupported_mm": 575.54,
+                "internal_unsupported_mm": 21.82
+              },
+              "overhang_walls": [
+                {
+                  "layer": 72,
+                  "z": 14.6,
+                  "feature": "Overhang wall",
+                  "points": 1082,
+                  "x": [
+                    -2.8,
+                    2.8
+                  ],
+                  "y": [
+                    -32.3,
+                    32.3
+                  ]
+                }
+              ]
+            },
+            "mystery-box-sg92r-c3-print-top_frame": {
+              "layers": 27,
+              "z_top": 5.4,
+              "layer_steps": {
+                "0.2": [
+                  0.2,
+                  5.2,
+                  26
+                ]
+              },
+              "floating": {
+                "external_unsupported_mm": 0.0,
+                "bridge_mm": 3696.66,
+                "bridge_unsupported_mm": 1489.67,
+                "internal_unsupported_mm": 0.72
+              },
+              "overhang_walls": []
+            },
+            "mystery-box-sg92r-c3-print-shell": {
+              "layers": 400,
+              "z_top": 80.0,
+              "layer_steps": {
+                "0.2": [
+                  0.2,
+                  79.8,
+                  399
+                ]
+              },
+              "floating": {
+                "external_unsupported_mm": 444.9,
+                "bridge_mm": 13573.29,
+                "bridge_unsupported_mm": 7236.4,
+                "internal_unsupported_mm": 402.13
+              },
+              "overhang_walls": [
+                {
+                  "layer": 35,
+                  "z": 7.2,
+                  "feature": "Overhang wall",
+                  "points": 210,
+                  "x": [
+                    -19.4,
+                    -12.6
+                  ],
+                  "y": [
+                    -39.8,
+                    -37.1
+                  ]
+                },
+                {
+                  "layer": 284,
+                  "z": 57.0,
+                  "feature": "Overhang wall",
+                  "points": 24,
+                  "x": [
+                    -38.5,
+                    38.5
+                  ],
+                  "y": [
+                    -0.1,
+                    0.1
+                  ]
+                },
+                {
+                  "layer": 284,
+                  "z": 57.0,
+                  "feature": "Gap infill",
+                  "points": 4,
+                  "x": [
+                    -37.8,
+                    37.8
+                  ],
+                  "y": [
+                    -0.1,
+                    0.1
+                  ]
+                },
+                {
+                  "layer": 290,
+                  "z": 58.2,
+                  "feature": "Overhang wall",
+                  "points": 12,
+                  "x": [
+                    -39.8,
+                    39.8
+                  ],
+                  "y": [
+                    -0.2,
+                    0.2
+                  ]
+                },
+                {
+                  "layer": 294,
+                  "z": 59.0,
+                  "feature": "Overhang wall",
+                  "points": 2008,
+                  "x": [
+                    -36.3,
+                    36.3
+                  ],
+                  "y": [
+                    -32.8,
+                    32.8
+                  ]
+                }
+              ]
+            }
+          },
+          "object_assignment": {
+            "missing": [],
+            "unassigned": [],
+            "bbox_check": {
+              "tolerance_mm": 0.8,
+              "global_offset_mm": [
+                0.0013,
+                2.0
+              ],
+              "matches": {
+                "76": {
+                  "name": "mystery-box-sg92r-c3-print-camshaft",
+                  "candidate_count": 1,
+                  "max_endpoint_error_mm": 0.2108
+                },
+                "32": {
+                  "name": "mystery-box-sg92r-c3-print-carrier_4",
+                  "candidate_count": 1,
+                  "max_endpoint_error_mm": 0.2108
+                },
+                "36": {
+                  "name": "mystery-box-sg92r-c3-print-drive_gear",
+                  "candidate_count": 1,
+                  "max_endpoint_error_mm": 0.35
+                },
+                "40": {
+                  "name": "mystery-box-sg92r-c3-print-cam_gear",
+                  "candidate_count": 1,
+                  "max_endpoint_error_mm": 0.2258
+                },
+                "44": {
+                  "name": "mystery-box-sg92r-c3-print-servo_clip",
+                  "candidate_count": 1,
+                  "max_endpoint_error_mm": 0.2108
+                },
+                "48": {
+                  "name": "mystery-box-sg92r-c3-print-cam_1",
+                  "candidate_count": 1,
+                  "max_endpoint_error_mm": 0.2137
+                },
+                "52": {
+                  "name": "mystery-box-sg92r-c3-print-cam_2",
+                  "candidate_count": 1,
+                  "max_endpoint_error_mm": 0.2119
+                },
+                "56": {
+                  "name": "mystery-box-sg92r-c3-print-cam_3",
+                  "candidate_count": 1,
+                  "max_endpoint_error_mm": 0.2137
+                },
+                "60": {
+                  "name": "mystery-box-sg92r-c3-print-cam_0",
+                  "candidate_count": 1,
+                  "max_endpoint_error_mm": 0.2171
+                },
+                "64": {
+                  "name": "mystery-box-sg92r-c3-print-cam_4",
+                  "candidate_count": 1,
+                  "max_endpoint_error_mm": 0.2171
+                },
+                "68": {
+                  "name": "mystery-box-sg92r-c3-print-cap_left",
+                  "candidate_count": 1,
+                  "max_endpoint_error_mm": 0.215
+                },
+                "72": {
+                  "name": "mystery-box-sg92r-c3-print-cap_right",
+                  "candidate_count": 1,
+                  "max_endpoint_error_mm": 0.2191
+                },
+                "28": {
+                  "name": "mystery-box-sg92r-c3-print-carrier_3",
+                  "candidate_count": 1,
+                  "max_endpoint_error_mm": 0.2108
+                },
+                "24": {
+                  "name": "mystery-box-sg92r-c3-print-carrier_2",
+                  "candidate_count": 1,
+                  "max_endpoint_error_mm": 0.2108
+                },
+                "20": {
+                  "name": "mystery-box-sg92r-c3-print-carrier_1",
+                  "candidate_count": 1,
+                  "max_endpoint_error_mm": 0.2108
+                },
+                "16": {
+                  "name": "mystery-box-sg92r-c3-print-carrier_0",
+                  "candidate_count": 1,
+                  "max_endpoint_error_mm": 0.2108
+                },
+                "12": {
+                  "name": "mystery-box-sg92r-c3-print-top_frame",
+                  "candidate_count": 1,
+                  "max_endpoint_error_mm": 0.2108
+                },
+                "8": {
+                  "name": "mystery-box-sg92r-c3-print-shell",
+                  "candidate_count": 1,
+                  "max_endpoint_error_mm": 0.2108
+                }
+              }
+            }
+          },
+          "visible_unsupported": [
+            {
+              "object": "mystery-box-sg92r-c3-print-camshaft",
+              "external_unsupported_mm": 3.28,
+              "worst_layers": [
+                {
+                  "layer": 6,
+                  "z": 1.4,
+                  "feature": "Overhang wall",
+                  "points": 13,
+                  "x": [
+                    -39.5,
+                    39.5
+                  ],
+                  "y": [
+                    -0.6,
+                    0.6
+                  ]
+                },
+                {
+                  "layer": 6,
+                  "z": 1.4,
+                  "feature": "Outer wall",
+                  "points": 12,
+                  "x": [
+                    -39.5,
+                    39.5
+                  ],
+                  "y": [
+                    -0.4,
+                    0.4
+                  ]
+                }
+              ]
+            },
+            {
+              "object": "mystery-box-sg92r-c3-print-carrier_4",
+              "external_unsupported_mm": 211.79,
+              "worst_layers": [
+                {
+                  "layer": 72,
+                  "z": 14.6,
+                  "feature": "Overhang wall",
+                  "points": 1076,
+                  "x": [
+                    -2.8,
+                    2.8
+                  ],
+                  "y": [
+                    -32.3,
+                    32.3
+                  ]
+                }
+              ]
+            },
+            {
+              "object": "mystery-box-sg92r-c3-print-carrier_3",
+              "external_unsupported_mm": 211.94,
+              "worst_layers": [
+                {
+                  "layer": 72,
+                  "z": 14.6,
+                  "feature": "Overhang wall",
+                  "points": 1082,
+                  "x": [
+                    -2.8,
+                    2.8
+                  ],
+                  "y": [
+                    -32.3,
+                    32.3
+                  ]
+                }
+              ]
+            },
+            {
+              "object": "mystery-box-sg92r-c3-print-carrier_2",
+              "external_unsupported_mm": 211.94,
+              "worst_layers": [
+                {
+                  "layer": 72,
+                  "z": 14.6,
+                  "feature": "Overhang wall",
+                  "points": 1082,
+                  "x": [
+                    -2.8,
+                    2.8
+                  ],
+                  "y": [
+                    -32.3,
+                    32.3
+                  ]
+                }
+              ]
+            },
+            {
+              "object": "mystery-box-sg92r-c3-print-carrier_1",
+              "external_unsupported_mm": 211.94,
+              "worst_layers": [
+                {
+                  "layer": 72,
+                  "z": 14.6,
+                  "feature": "Overhang wall",
+                  "points": 1082,
+                  "x": [
+                    -2.8,
+                    2.8
+                  ],
+                  "y": [
+                    -32.3,
+                    32.3
+                  ]
+                }
+              ]
+            },
+            {
+              "object": "mystery-box-sg92r-c3-print-carrier_0",
+              "external_unsupported_mm": 211.94,
+              "worst_layers": [
+                {
+                  "layer": 72,
+                  "z": 14.6,
+                  "feature": "Overhang wall",
+                  "points": 1082,
+                  "x": [
+                    -2.8,
+                    2.8
+                  ],
+                  "y": [
+                    -32.3,
+                    32.3
+                  ]
+                }
+              ]
+            },
+            {
+              "object": "mystery-box-sg92r-c3-print-shell",
+              "external_unsupported_mm": 444.9,
+              "worst_layers": [
+                {
+                  "layer": 35,
+                  "z": 7.2,
+                  "feature": "Overhang wall",
+                  "points": 210,
+                  "x": [
+                    -19.4,
+                    -12.6
+                  ],
+                  "y": [
+                    -39.8,
+                    -37.1
+                  ]
+                },
+                {
+                  "layer": 284,
+                  "z": 57.0,
+                  "feature": "Overhang wall",
+                  "points": 24,
+                  "x": [
+                    -38.5,
+                    38.5
+                  ],
+                  "y": [
+                    -0.1,
+                    0.1
+                  ]
+                },
+                {
+                  "layer": 284,
+                  "z": 57.0,
+                  "feature": "Gap infill",
+                  "points": 4,
+                  "x": [
+                    -37.8,
+                    37.8
+                  ],
+                  "y": [
+                    -0.1,
+                    0.1
+                  ]
+                },
+                {
+                  "layer": 290,
+                  "z": 58.2,
+                  "feature": "Overhang wall",
+                  "points": 12,
+                  "x": [
+                    -39.8,
+                    39.8
+                  ],
+                  "y": [
+                    -0.2,
+                    0.2
+                  ]
+                },
+                {
+                  "layer": 294,
+                  "z": 59.0,
+                  "feature": "Overhang wall",
+                  "points": 2008,
+                  "x": [
+                    -36.3,
+                    36.3
+                  ],
+                  "y": [
+                    -32.8,
+                    32.8
+                  ]
+                }
+              ]
+            }
+          ],
+          "status": "review_required",
+          "placement": {
+            "ok": true,
+            "objects": [
+              {
+                "id": "2",
+                "name": "mystery-box-sg92r-c3-print-shell",
+                "min": [
+                  10.8665,
+                  47.0,
+                  0.0
+                ],
+                "max": [
+                  90.8665,
+                  127.0,
+                  80.0
+                ],
+                "off_bed": false,
+                "excluded": false
+              },
+              {
+                "id": "4",
+                "name": "mystery-box-sg92r-c3-print-top_frame",
+                "min": [
+                  96.8665,
+                  47.0,
+                  0.0
+                ],
+                "max": [
+                  170.2665,
+                  120.4,
+                  5.5
+                ],
+                "off_bed": false,
+                "excluded": false
+              },
+              {
+                "id": "6",
+                "name": "mystery-box-sg92r-c3-print-carrier_0",
+                "min": [
+                  176.2665,
+                  47.0,
+                  0.0
+                ],
+                "max": [
+                  186.6665,
+                  112.0,
+                  25.3
+                ],
+                "off_bed": false,
+                "excluded": false
+              },
+              {
+                "id": "8",
+                "name": "mystery-box-sg92r-c3-print-carrier_1",
+                "min": [
+                  192.6665,
+                  47.0,
+                  0.0
+                ],
+                "max": [
+                  203.0665,
+                  112.0,
+                  25.3
+                ],
+                "off_bed": false,
+                "excluded": false
+              },
+              {
+                "id": "10",
+                "name": "mystery-box-sg92r-c3-print-carrier_2",
+                "min": [
+                  209.0665,
+                  47.0,
+                  0.0
+                ],
+                "max": [
+                  219.4665,
+                  112.0,
+                  25.3
+                ],
+                "off_bed": false,
+                "excluded": false
+              },
+              {
+                "id": "12",
+                "name": "mystery-box-sg92r-c3-print-carrier_3",
+                "min": [
+                  225.4665,
+                  47.0,
+                  0.0
+                ],
+                "max": [
+                  235.8665,
+                  112.0,
+                  25.3
+                ],
+                "off_bed": false,
+                "excluded": false
+              },
+              {
+                "id": "14",
+                "name": "mystery-box-sg92r-c3-print-carrier_4",
+                "min": [
+                  10.8665,
+                  133.0,
+                  0.0
+                ],
+                "max": [
+                  21.2665,
+                  198.0,
+                  25.3
+                ],
+                "off_bed": false,
+                "excluded": false
+              },
+              {
+                "id": "16",
+                "name": "mystery-box-sg92r-c3-print-drive_gear",
+                "min": [
+                  27.2665,
+                  133.0,
+                  0.0
+                ],
+                "max": [
+                  48.6665,
+                  172.2,
+                  3.0
+                ],
+                "off_bed": false,
+                "excluded": false
+              },
+              {
+                "id": "18",
+                "name": "mystery-box-sg92r-c3-print-cam_gear",
+                "min": [
+                  54.6665,
+                  133.0,
+                  0.0
+                ],
+                "max": [
+                  86.5435,
+                  164.9954,
+                  4.0
+                ],
+                "off_bed": false,
+                "excluded": false
+              },
+              {
+                "id": "20",
+                "name": "mystery-box-sg92r-c3-print-servo_clip",
+                "min": [
+                  92.5435,
+                  133.0,
+                  0.0
+                ],
+                "max": [
+                  107.5435,
+                  162.0,
+                  6.0
+                ],
+                "off_bed": false,
+                "excluded": false
+              },
+              {
+                "id": "22",
+                "name": "mystery-box-sg92r-c3-print-cam_1",
+                "min": [
+                  113.5435,
+                  133.0,
+                  0.0
+                ],
+                "max": [
+                  128.2535,
+                  150.6865,
+                  3.0
+                ],
+                "off_bed": false,
+                "excluded": false
+              },
+              {
+                "id": "24",
+                "name": "mystery-box-sg92r-c3-print-cam_2",
+                "min": [
+                  134.2535,
+                  133.0,
+                  0.0
+                ],
+                "max": [
+                  148.9635,
+                  150.6865,
+                  3.0
+                ],
+                "off_bed": false,
+                "excluded": false
+              },
+              {
+                "id": "26",
+                "name": "mystery-box-sg92r-c3-print-cam_3",
+                "min": [
+                  154.9635,
+                  133.0,
+                  0.0
+                ],
+                "max": [
+                  169.6735,
+                  150.6865,
+                  3.0
+                ],
+                "off_bed": false,
+                "excluded": false
+              },
+              {
+                "id": "28",
+                "name": "mystery-box-sg92r-c3-print-cam_0",
+                "min": [
+                  175.6735,
+                  133.0,
+                  0.0
+                ],
+                "max": [
+                  193.0035,
+                  148.4885,
+                  3.0
+                ],
+                "off_bed": false,
+                "excluded": false
+              },
+              {
+                "id": "30",
+                "name": "mystery-box-sg92r-c3-print-cam_4",
+                "min": [
+                  199.0035,
+                  133.0,
+                  0.0
+                ],
+                "max": [
+                  216.3335,
+                  148.4885,
+                  3.0
+                ],
+                "off_bed": false,
+                "excluded": false
+              },
+              {
+                "id": "32",
+                "name": "mystery-box-sg92r-c3-print-cap_left",
+                "min": [
+                  222.3335,
+                  133.0,
+                  0.0
+                ],
+                "max": [
+                  230.7335,
+                  141.382,
+                  1.05
+                ],
+                "off_bed": false,
+                "excluded": false
+              },
+              {
+                "id": "34",
+                "name": "mystery-box-sg92r-c3-print-cap_right",
+                "min": [
+                  236.7335,
+                  133.0,
+                  0.0
+                ],
+                "max": [
+                  245.1335,
+                  141.382,
+                  1.05
+                ],
+                "off_bed": false,
+                "excluded": false
+              },
+              {
+                "id": "36",
+                "name": "mystery-box-sg92r-c3-print-camshaft",
+                "min": [
+                  10.8665,
+                  204.0,
+                  0.0
+                ],
+                "max": [
+                  90.2665,
+                  209.0,
+                  5.7735
+                ],
+                "off_bed": false,
+                "excluded": false
+              }
+            ],
+            "bbox_overlaps": [],
+            "missing": [],
+            "extra": [],
+            "issues": []
+          },
+          "source_layout_sha256": "8346d76a4cd9b3bf35e7b2be5977b7d0164ab761b7035e8ad2ef58c4e1ce6061",
+          "layout_preserved": true,
+          "log": {
+            "file": "models/mystery-box-sg92r-c3/build/delivery/logs/full-PLA.log",
+            "bytes": 4008,
+            "sha256": "db663156e4336df0ab9172cae6deeb4472be3989c3a0adbc3301865ec64d392a"
+          }
+        },
+        "PETG": {
+          "material": "PETG",
+          "file": {
+            "file": "prints/mystery-box-sg92r-c3/mystery-box-sg92r-c3-PETG.gcode.3mf",
+            "bytes": 1495618,
+            "sha256": "c3728574ddebcdb5182450882753cda040d32dbfa5feafd87a6578927a86ceb7"
+          },
+          "prediction_s": 15661,
+          "weight_g": 143.91,
+          "filament": [
+            [
+              "47.86",
+              "143.91"
+            ]
+          ],
+          "support_used": "false",
+          "objects": {
+            "mystery-box-sg92r-c3-print-camshaft": {
+              "layers": 28,
+              "z_top": 5.6,
+              "layer_steps": {
+                "0.2": [
+                  0.2,
+                  5.4,
+                  27
+                ]
+              },
+              "floating": {
+                "external_unsupported_mm": 3.28,
+                "bridge_mm": 0.0,
+                "bridge_unsupported_mm": 0.0,
+                "internal_unsupported_mm": 18.55
+              },
+              "overhang_walls": [
+                {
+                  "layer": 6,
+                  "z": 1.4,
+                  "feature": "Overhang wall",
+                  "points": 13,
+                  "x": [
+                    -39.5,
+                    39.5
+                  ],
+                  "y": [
+                    -0.6,
+                    0.6
+                  ]
+                },
+                {
+                  "layer": 6,
+                  "z": 1.4,
+                  "feature": "Outer wall",
+                  "points": 12,
+                  "x": [
+                    -39.5,
+                    39.5
+                  ],
+                  "y": [
+                    -0.4,
+                    0.4
+                  ]
+                }
+              ]
+            },
+            "mystery-box-sg92r-c3-print-carrier_4": {
+              "layers": 126,
+              "z_top": 25.2,
+              "layer_steps": {
+                "0.2": [
+                  0.2,
+                  25.0,
+                  125
+                ]
+              },
+              "floating": {
+                "external_unsupported_mm": 211.79,
+                "bridge_mm": 1649.87,
+                "bridge_unsupported_mm": 575.54,
+                "internal_unsupported_mm": 21.82
+              },
+              "overhang_walls": [
+                {
+                  "layer": 72,
+                  "z": 14.6,
+                  "feature": "Overhang wall",
+                  "points": 1076,
+                  "x": [
+                    -2.8,
+                    2.8
+                  ],
+                  "y": [
+                    -32.3,
+                    32.3
+                  ]
+                }
+              ]
+            },
+            "mystery-box-sg92r-c3-print-drive_gear": {
+              "layers": 15,
+              "z_top": 3.0,
+              "layer_steps": {
+                "0.2": [
+                  0.2,
+                  2.8,
+                  14
+                ]
+              },
+              "floating": {
+                "external_unsupported_mm": 0.0,
+                "bridge_mm": 0.0,
+                "bridge_unsupported_mm": 0.0,
+                "internal_unsupported_mm": 0.0
+              },
+              "overhang_walls": []
+            },
+            "mystery-box-sg92r-c3-print-cam_gear": {
+              "layers": 20,
+              "z_top": 4.0,
+              "layer_steps": {
+                "0.2": [
+                  0.2,
+                  3.8,
+                  19
+                ]
+              },
+              "floating": {
+                "external_unsupported_mm": 0.0,
+                "bridge_mm": 988.39,
+                "bridge_unsupported_mm": 396.37,
+                "internal_unsupported_mm": 3.36
+              },
+              "overhang_walls": []
+            },
+            "mystery-box-sg92r-c3-print-servo_clip": {
+              "layers": 30,
+              "z_top": 6.0,
+              "layer_steps": {
+                "0.2": [
+                  0.2,
+                  5.8,
+                  29
+                ]
+              },
+              "floating": {
+                "external_unsupported_mm": 0.0,
+                "bridge_mm": 0.0,
+                "bridge_unsupported_mm": 0.0,
+                "internal_unsupported_mm": 0.0
+              },
+              "overhang_walls": []
+            },
+            "mystery-box-sg92r-c3-print-cam_1": {
+              "layers": 15,
+              "z_top": 3.0,
+              "layer_steps": {
+                "0.2": [
+                  0.2,
+                  2.8,
+                  14
+                ]
+              },
+              "floating": {
+                "external_unsupported_mm": 0.0,
+                "bridge_mm": 187.69,
+                "bridge_unsupported_mm": 55.85,
+                "internal_unsupported_mm": 2.46
+              },
+              "overhang_walls": []
+            },
+            "mystery-box-sg92r-c3-print-cam_2": {
+              "layers": 15,
+              "z_top": 3.0,
+              "layer_steps": {
+                "0.2": [
+                  0.2,
+                  2.8,
+                  14
+                ]
+              },
+              "floating": {
+                "external_unsupported_mm": 0.0,
+                "bridge_mm": 187.53,
+                "bridge_unsupported_mm": 56.68,
+                "internal_unsupported_mm": 2.06
+              },
+              "overhang_walls": []
+            },
+            "mystery-box-sg92r-c3-print-cam_3": {
+              "layers": 15,
+              "z_top": 3.0,
+              "layer_steps": {
+                "0.2": [
+                  0.2,
+                  2.8,
+                  14
+                ]
+              },
+              "floating": {
+                "external_unsupported_mm": 0.0,
+                "bridge_mm": 187.69,
+                "bridge_unsupported_mm": 55.65,
+                "internal_unsupported_mm": 2.06
+              },
+              "overhang_walls": []
+            },
+            "mystery-box-sg92r-c3-print-cam_0": {
+              "layers": 15,
+              "z_top": 3.0,
+              "layer_steps": {
+                "0.2": [
+                  0.2,
+                  2.8,
+                  14
+                ]
+              },
+              "floating": {
+                "external_unsupported_mm": 0.0,
+                "bridge_mm": 187.41,
+                "bridge_unsupported_mm": 52.38,
+                "internal_unsupported_mm": 4.52
+              },
+              "overhang_walls": []
+            },
+            "mystery-box-sg92r-c3-print-cam_4": {
+              "layers": 15,
+              "z_top": 3.0,
+              "layer_steps": {
+                "0.2": [
+                  0.2,
+                  2.8,
+                  14
+                ]
+              },
+              "floating": {
+                "external_unsupported_mm": 0.0,
+                "bridge_mm": 187.4,
+                "bridge_unsupported_mm": 54.16,
+                "internal_unsupported_mm": 4.72
+              },
+              "overhang_walls": []
+            },
+            "mystery-box-sg92r-c3-print-cap_left": {
+              "layers": 5,
+              "z_top": 1.0,
+              "layer_steps": {
+                "0.2": [
+                  0.2,
+                  0.8,
+                  4
+                ]
+              },
+              "floating": {
+                "external_unsupported_mm": 0.0,
+                "bridge_mm": 0.0,
+                "bridge_unsupported_mm": 0.0,
+                "internal_unsupported_mm": 0.0
+              },
+              "overhang_walls": []
+            },
+            "mystery-box-sg92r-c3-print-cap_right": {
+              "layers": 5,
+              "z_top": 1.0,
+              "layer_steps": {
+                "0.2": [
+                  0.2,
+                  0.8,
+                  4
+                ]
+              },
+              "floating": {
+                "external_unsupported_mm": 0.0,
+                "bridge_mm": 0.0,
+                "bridge_unsupported_mm": 0.0,
+                "internal_unsupported_mm": 0.0
+              },
+              "overhang_walls": []
+            },
+            "mystery-box-sg92r-c3-print-carrier_3": {
+              "layers": 126,
+              "z_top": 25.2,
+              "layer_steps": {
+                "0.2": [
+                  0.2,
+                  25.0,
+                  125
+                ]
+              },
+              "floating": {
+                "external_unsupported_mm": 211.94,
+                "bridge_mm": 1649.87,
+                "bridge_unsupported_mm": 575.54,
+                "internal_unsupported_mm": 21.82
+              },
+              "overhang_walls": [
+                {
+                  "layer": 72,
+                  "z": 14.6,
+                  "feature": "Overhang wall",
+                  "points": 1082,
+                  "x": [
+                    -2.8,
+                    2.8
+                  ],
+                  "y": [
+                    -32.3,
+                    32.3
+                  ]
+                }
+              ]
+            },
+            "mystery-box-sg92r-c3-print-carrier_2": {
+              "layers": 126,
+              "z_top": 25.2,
+              "layer_steps": {
+                "0.2": [
+                  0.2,
+                  25.0,
+                  125
+                ]
+              },
+              "floating": {
+                "external_unsupported_mm": 211.94,
+                "bridge_mm": 1649.87,
+                "bridge_unsupported_mm": 575.54,
+                "internal_unsupported_mm": 21.82
+              },
+              "overhang_walls": [
+                {
+                  "layer": 72,
+                  "z": 14.6,
+                  "feature": "Overhang wall",
+                  "points": 1082,
+                  "x": [
+                    -2.8,
+                    2.8
+                  ],
+                  "y": [
+                    -32.3,
+                    32.3
+                  ]
+                }
+              ]
+            },
+            "mystery-box-sg92r-c3-print-carrier_1": {
+              "layers": 126,
+              "z_top": 25.2,
+              "layer_steps": {
+                "0.2": [
+                  0.2,
+                  25.0,
+                  125
+                ]
+              },
+              "floating": {
+                "external_unsupported_mm": 211.94,
+                "bridge_mm": 1649.87,
+                "bridge_unsupported_mm": 575.54,
+                "internal_unsupported_mm": 21.82
+              },
+              "overhang_walls": [
+                {
+                  "layer": 72,
+                  "z": 14.6,
+                  "feature": "Overhang wall",
+                  "points": 1082,
+                  "x": [
+                    -2.8,
+                    2.8
+                  ],
+                  "y": [
+                    -32.3,
+                    32.3
+                  ]
+                }
+              ]
+            },
+            "mystery-box-sg92r-c3-print-carrier_0": {
+              "layers": 126,
+              "z_top": 25.2,
+              "layer_steps": {
+                "0.2": [
+                  0.2,
+                  25.0,
+                  125
+                ]
+              },
+              "floating": {
+                "external_unsupported_mm": 211.94,
+                "bridge_mm": 1649.87,
+                "bridge_unsupported_mm": 575.54,
+                "internal_unsupported_mm": 21.82
+              },
+              "overhang_walls": [
+                {
+                  "layer": 72,
+                  "z": 14.6,
+                  "feature": "Overhang wall",
+                  "points": 1082,
+                  "x": [
+                    -2.8,
+                    2.8
+                  ],
+                  "y": [
+                    -32.3,
+                    32.3
+                  ]
+                }
+              ]
+            },
+            "mystery-box-sg92r-c3-print-top_frame": {
+              "layers": 27,
+              "z_top": 5.4,
+              "layer_steps": {
+                "0.2": [
+                  0.2,
+                  5.2,
+                  26
+                ]
+              },
+              "floating": {
+                "external_unsupported_mm": 0.0,
+                "bridge_mm": 3696.66,
+                "bridge_unsupported_mm": 1489.67,
+                "internal_unsupported_mm": 0.72
+              },
+              "overhang_walls": []
+            },
+            "mystery-box-sg92r-c3-print-shell": {
+              "layers": 400,
+              "z_top": 80.0,
+              "layer_steps": {
+                "0.2": [
+                  0.2,
+                  79.8,
+                  399
+                ]
+              },
+              "floating": {
+                "external_unsupported_mm": 444.9,
+                "bridge_mm": 13573.29,
+                "bridge_unsupported_mm": 7236.4,
+                "internal_unsupported_mm": 402.13
+              },
+              "overhang_walls": [
+                {
+                  "layer": 35,
+                  "z": 7.2,
+                  "feature": "Overhang wall",
+                  "points": 210,
+                  "x": [
+                    -19.4,
+                    -12.6
+                  ],
+                  "y": [
+                    -39.8,
+                    -37.1
+                  ]
+                },
+                {
+                  "layer": 284,
+                  "z": 57.0,
+                  "feature": "Overhang wall",
+                  "points": 24,
+                  "x": [
+                    -38.5,
+                    38.5
+                  ],
+                  "y": [
+                    -0.1,
+                    0.1
+                  ]
+                },
+                {
+                  "layer": 284,
+                  "z": 57.0,
+                  "feature": "Gap infill",
+                  "points": 4,
+                  "x": [
+                    -37.8,
+                    37.8
+                  ],
+                  "y": [
+                    -0.1,
+                    0.1
+                  ]
+                },
+                {
+                  "layer": 290,
+                  "z": 58.2,
+                  "feature": "Overhang wall",
+                  "points": 12,
+                  "x": [
+                    -39.8,
+                    39.8
+                  ],
+                  "y": [
+                    -0.2,
+                    0.2
+                  ]
+                },
+                {
+                  "layer": 294,
+                  "z": 59.0,
+                  "feature": "Overhang wall",
+                  "points": 2008,
+                  "x": [
+                    -36.3,
+                    36.3
+                  ],
+                  "y": [
+                    -32.8,
+                    32.8
+                  ]
+                }
+              ]
+            }
+          },
+          "object_assignment": {
+            "missing": [],
+            "unassigned": [],
+            "bbox_check": {
+              "tolerance_mm": 0.8,
+              "global_offset_mm": [
+                0.0013,
+                2.0
+              ],
+              "matches": {
+                "76": {
+                  "name": "mystery-box-sg92r-c3-print-camshaft",
+                  "candidate_count": 1,
+                  "max_endpoint_error_mm": 0.2108
+                },
+                "32": {
+                  "name": "mystery-box-sg92r-c3-print-carrier_4",
+                  "candidate_count": 1,
+                  "max_endpoint_error_mm": 0.2108
+                },
+                "36": {
+                  "name": "mystery-box-sg92r-c3-print-drive_gear",
+                  "candidate_count": 1,
+                  "max_endpoint_error_mm": 0.35
+                },
+                "40": {
+                  "name": "mystery-box-sg92r-c3-print-cam_gear",
+                  "candidate_count": 1,
+                  "max_endpoint_error_mm": 0.2258
+                },
+                "44": {
+                  "name": "mystery-box-sg92r-c3-print-servo_clip",
+                  "candidate_count": 1,
+                  "max_endpoint_error_mm": 0.2108
+                },
+                "48": {
+                  "name": "mystery-box-sg92r-c3-print-cam_1",
+                  "candidate_count": 1,
+                  "max_endpoint_error_mm": 0.2137
+                },
+                "52": {
+                  "name": "mystery-box-sg92r-c3-print-cam_2",
+                  "candidate_count": 1,
+                  "max_endpoint_error_mm": 0.2119
+                },
+                "56": {
+                  "name": "mystery-box-sg92r-c3-print-cam_3",
+                  "candidate_count": 1,
+                  "max_endpoint_error_mm": 0.2137
+                },
+                "60": {
+                  "name": "mystery-box-sg92r-c3-print-cam_0",
+                  "candidate_count": 1,
+                  "max_endpoint_error_mm": 0.2171
+                },
+                "64": {
+                  "name": "mystery-box-sg92r-c3-print-cam_4",
+                  "candidate_count": 1,
+                  "max_endpoint_error_mm": 0.2171
+                },
+                "68": {
+                  "name": "mystery-box-sg92r-c3-print-cap_left",
+                  "candidate_count": 1,
+                  "max_endpoint_error_mm": 0.215
+                },
+                "72": {
+                  "name": "mystery-box-sg92r-c3-print-cap_right",
+                  "candidate_count": 1,
+                  "max_endpoint_error_mm": 0.2191
+                },
+                "28": {
+                  "name": "mystery-box-sg92r-c3-print-carrier_3",
+                  "candidate_count": 1,
+                  "max_endpoint_error_mm": 0.2108
+                },
+                "24": {
+                  "name": "mystery-box-sg92r-c3-print-carrier_2",
+                  "candidate_count": 1,
+                  "max_endpoint_error_mm": 0.2108
+                },
+                "20": {
+                  "name": "mystery-box-sg92r-c3-print-carrier_1",
+                  "candidate_count": 1,
+                  "max_endpoint_error_mm": 0.2108
+                },
+                "16": {
+                  "name": "mystery-box-sg92r-c3-print-carrier_0",
+                  "candidate_count": 1,
+                  "max_endpoint_error_mm": 0.2108
+                },
+                "12": {
+                  "name": "mystery-box-sg92r-c3-print-top_frame",
+                  "candidate_count": 1,
+                  "max_endpoint_error_mm": 0.2108
+                },
+                "8": {
+                  "name": "mystery-box-sg92r-c3-print-shell",
+                  "candidate_count": 1,
+                  "max_endpoint_error_mm": 0.2108
+                }
+              }
+            }
+          },
+          "visible_unsupported": [
+            {
+              "object": "mystery-box-sg92r-c3-print-camshaft",
+              "external_unsupported_mm": 3.28,
+              "worst_layers": [
+                {
+                  "layer": 6,
+                  "z": 1.4,
+                  "feature": "Overhang wall",
+                  "points": 13,
+                  "x": [
+                    -39.5,
+                    39.5
+                  ],
+                  "y": [
+                    -0.6,
+                    0.6
+                  ]
+                },
+                {
+                  "layer": 6,
+                  "z": 1.4,
+                  "feature": "Outer wall",
+                  "points": 12,
+                  "x": [
+                    -39.5,
+                    39.5
+                  ],
+                  "y": [
+                    -0.4,
+                    0.4
+                  ]
+                }
+              ]
+            },
+            {
+              "object": "mystery-box-sg92r-c3-print-carrier_4",
+              "external_unsupported_mm": 211.79,
+              "worst_layers": [
+                {
+                  "layer": 72,
+                  "z": 14.6,
+                  "feature": "Overhang wall",
+                  "points": 1076,
+                  "x": [
+                    -2.8,
+                    2.8
+                  ],
+                  "y": [
+                    -32.3,
+                    32.3
+                  ]
+                }
+              ]
+            },
+            {
+              "object": "mystery-box-sg92r-c3-print-carrier_3",
+              "external_unsupported_mm": 211.94,
+              "worst_layers": [
+                {
+                  "layer": 72,
+                  "z": 14.6,
+                  "feature": "Overhang wall",
+                  "points": 1082,
+                  "x": [
+                    -2.8,
+                    2.8
+                  ],
+                  "y": [
+                    -32.3,
+                    32.3
+                  ]
+                }
+              ]
+            },
+            {
+              "object": "mystery-box-sg92r-c3-print-carrier_2",
+              "external_unsupported_mm": 211.94,
+              "worst_layers": [
+                {
+                  "layer": 72,
+                  "z": 14.6,
+                  "feature": "Overhang wall",
+                  "points": 1082,
+                  "x": [
+                    -2.8,
+                    2.8
+                  ],
+                  "y": [
+                    -32.3,
+                    32.3
+                  ]
+                }
+              ]
+            },
+            {
+              "object": "mystery-box-sg92r-c3-print-carrier_1",
+              "external_unsupported_mm": 211.94,
+              "worst_layers": [
+                {
+                  "layer": 72,
+                  "z": 14.6,
+                  "feature": "Overhang wall",
+                  "points": 1082,
+                  "x": [
+                    -2.8,
+                    2.8
+                  ],
+                  "y": [
+                    -32.3,
+                    32.3
+                  ]
+                }
+              ]
+            },
+            {
+              "object": "mystery-box-sg92r-c3-print-carrier_0",
+              "external_unsupported_mm": 211.94,
+              "worst_layers": [
+                {
+                  "layer": 72,
+                  "z": 14.6,
+                  "feature": "Overhang wall",
+                  "points": 1082,
+                  "x": [
+                    -2.8,
+                    2.8
+                  ],
+                  "y": [
+                    -32.3,
+                    32.3
+                  ]
+                }
+              ]
+            },
+            {
+              "object": "mystery-box-sg92r-c3-print-shell",
+              "external_unsupported_mm": 444.9,
+              "worst_layers": [
+                {
+                  "layer": 35,
+                  "z": 7.2,
+                  "feature": "Overhang wall",
+                  "points": 210,
+                  "x": [
+                    -19.4,
+                    -12.6
+                  ],
+                  "y": [
+                    -39.8,
+                    -37.1
+                  ]
+                },
+                {
+                  "layer": 284,
+                  "z": 57.0,
+                  "feature": "Overhang wall",
+                  "points": 24,
+                  "x": [
+                    -38.5,
+                    38.5
+                  ],
+                  "y": [
+                    -0.1,
+                    0.1
+                  ]
+                },
+                {
+                  "layer": 284,
+                  "z": 57.0,
+                  "feature": "Gap infill",
+                  "points": 4,
+                  "x": [
+                    -37.8,
+                    37.8
+                  ],
+                  "y": [
+                    -0.1,
+                    0.1
+                  ]
+                },
+                {
+                  "layer": 290,
+                  "z": 58.2,
+                  "feature": "Overhang wall",
+                  "points": 12,
+                  "x": [
+                    -39.8,
+                    39.8
+                  ],
+                  "y": [
+                    -0.2,
+                    0.2
+                  ]
+                },
+                {
+                  "layer": 294,
+                  "z": 59.0,
+                  "feature": "Overhang wall",
+                  "points": 2008,
+                  "x": [
+                    -36.3,
+                    36.3
+                  ],
+                  "y": [
+                    -32.8,
+                    32.8
+                  ]
+                }
+              ]
+            }
+          ],
+          "status": "review_required",
+          "placement": {
+            "ok": true,
+            "objects": [
+              {
+                "id": "2",
+                "name": "mystery-box-sg92r-c3-print-shell",
+                "min": [
+                  10.8665,
+                  47.0,
+                  0.0
+                ],
+                "max": [
+                  90.8665,
+                  127.0,
+                  80.0
+                ],
+                "off_bed": false,
+                "excluded": false
+              },
+              {
+                "id": "4",
+                "name": "mystery-box-sg92r-c3-print-top_frame",
+                "min": [
+                  96.8665,
+                  47.0,
+                  0.0
+                ],
+                "max": [
+                  170.2665,
+                  120.4,
+                  5.5
+                ],
+                "off_bed": false,
+                "excluded": false
+              },
+              {
+                "id": "6",
+                "name": "mystery-box-sg92r-c3-print-carrier_0",
+                "min": [
+                  176.2665,
+                  47.0,
+                  0.0
+                ],
+                "max": [
+                  186.6665,
+                  112.0,
+                  25.3
+                ],
+                "off_bed": false,
+                "excluded": false
+              },
+              {
+                "id": "8",
+                "name": "mystery-box-sg92r-c3-print-carrier_1",
+                "min": [
+                  192.6665,
+                  47.0,
+                  0.0
+                ],
+                "max": [
+                  203.0665,
+                  112.0,
+                  25.3
+                ],
+                "off_bed": false,
+                "excluded": false
+              },
+              {
+                "id": "10",
+                "name": "mystery-box-sg92r-c3-print-carrier_2",
+                "min": [
+                  209.0665,
+                  47.0,
+                  0.0
+                ],
+                "max": [
+                  219.4665,
+                  112.0,
+                  25.3
+                ],
+                "off_bed": false,
+                "excluded": false
+              },
+              {
+                "id": "12",
+                "name": "mystery-box-sg92r-c3-print-carrier_3",
+                "min": [
+                  225.4665,
+                  47.0,
+                  0.0
+                ],
+                "max": [
+                  235.8665,
+                  112.0,
+                  25.3
+                ],
+                "off_bed": false,
+                "excluded": false
+              },
+              {
+                "id": "14",
+                "name": "mystery-box-sg92r-c3-print-carrier_4",
+                "min": [
+                  10.8665,
+                  133.0,
+                  0.0
+                ],
+                "max": [
+                  21.2665,
+                  198.0,
+                  25.3
+                ],
+                "off_bed": false,
+                "excluded": false
+              },
+              {
+                "id": "16",
+                "name": "mystery-box-sg92r-c3-print-drive_gear",
+                "min": [
+                  27.2665,
+                  133.0,
+                  0.0
+                ],
+                "max": [
+                  48.6665,
+                  172.2,
+                  3.0
+                ],
+                "off_bed": false,
+                "excluded": false
+              },
+              {
+                "id": "18",
+                "name": "mystery-box-sg92r-c3-print-cam_gear",
+                "min": [
+                  54.6665,
+                  133.0,
+                  0.0
+                ],
+                "max": [
+                  86.5435,
+                  164.9954,
+                  4.0
+                ],
+                "off_bed": false,
+                "excluded": false
+              },
+              {
+                "id": "20",
+                "name": "mystery-box-sg92r-c3-print-servo_clip",
+                "min": [
+                  92.5435,
+                  133.0,
+                  0.0
+                ],
+                "max": [
+                  107.5435,
+                  162.0,
+                  6.0
+                ],
+                "off_bed": false,
+                "excluded": false
+              },
+              {
+                "id": "22",
+                "name": "mystery-box-sg92r-c3-print-cam_1",
+                "min": [
+                  113.5435,
+                  133.0,
+                  0.0
+                ],
+                "max": [
+                  128.2535,
+                  150.6865,
+                  3.0
+                ],
+                "off_bed": false,
+                "excluded": false
+              },
+              {
+                "id": "24",
+                "name": "mystery-box-sg92r-c3-print-cam_2",
+                "min": [
+                  134.2535,
+                  133.0,
+                  0.0
+                ],
+                "max": [
+                  148.9635,
+                  150.6865,
+                  3.0
+                ],
+                "off_bed": false,
+                "excluded": false
+              },
+              {
+                "id": "26",
+                "name": "mystery-box-sg92r-c3-print-cam_3",
+                "min": [
+                  154.9635,
+                  133.0,
+                  0.0
+                ],
+                "max": [
+                  169.6735,
+                  150.6865,
+                  3.0
+                ],
+                "off_bed": false,
+                "excluded": false
+              },
+              {
+                "id": "28",
+                "name": "mystery-box-sg92r-c3-print-cam_0",
+                "min": [
+                  175.6735,
+                  133.0,
+                  0.0
+                ],
+                "max": [
+                  193.0035,
+                  148.4885,
+                  3.0
+                ],
+                "off_bed": false,
+                "excluded": false
+              },
+              {
+                "id": "30",
+                "name": "mystery-box-sg92r-c3-print-cam_4",
+                "min": [
+                  199.0035,
+                  133.0,
+                  0.0
+                ],
+                "max": [
+                  216.3335,
+                  148.4885,
+                  3.0
+                ],
+                "off_bed": false,
+                "excluded": false
+              },
+              {
+                "id": "32",
+                "name": "mystery-box-sg92r-c3-print-cap_left",
+                "min": [
+                  222.3335,
+                  133.0,
+                  0.0
+                ],
+                "max": [
+                  230.7335,
+                  141.382,
+                  1.05
+                ],
+                "off_bed": false,
+                "excluded": false
+              },
+              {
+                "id": "34",
+                "name": "mystery-box-sg92r-c3-print-cap_right",
+                "min": [
+                  236.7335,
+                  133.0,
+                  0.0
+                ],
+                "max": [
+                  245.1335,
+                  141.382,
+                  1.05
+                ],
+                "off_bed": false,
+                "excluded": false
+              },
+              {
+                "id": "36",
+                "name": "mystery-box-sg92r-c3-print-camshaft",
+                "min": [
+                  10.8665,
+                  204.0,
+                  0.0
+                ],
+                "max": [
+                  90.2665,
+                  209.0,
+                  5.7735
+                ],
+                "off_bed": false,
+                "excluded": false
+              }
+            ],
+            "bbox_overlaps": [],
+            "missing": [],
+            "extra": [],
+            "issues": []
+          },
+          "source_layout_sha256": "8346d76a4cd9b3bf35e7b2be5977b7d0164ab761b7035e8ad2ef58c4e1ce6061",
+          "layout_preserved": true,
+          "log": {
+            "file": "models/mystery-box-sg92r-c3/build/delivery/logs/full-PETG.log",
+            "bytes": 4012,
+            "sha256": "87e42948e5bd858043d6074217a84b57df396335afbfd2e546188b0ca121f8ef"
+          }
+        }
+      }
+    },
+    "fit_test": {
+      "parts": [
+        "fit_horn",
+        "fit_bearing"
+      ],
+      "layout": {
+        "file": "prints/mystery-box-sg92r-c3/mystery-box-sg92r-c3-fit-test-layout.3mf",
+        "bytes": 5412,
+        "sha256": "f61922dbf6b6bd4b4cea982f2ce8a677240aa283f1e9f7e1cfb449f7f3a6d58f"
+      },
+      "placement": {
+        "ok": true,
+        "objects": [
+          {
+            "id": "1",
+            "name": "mystery-box-sg92r-c3-print-fit_horn",
+            "min": [
+              110.3,
+              108.8,
+              0.0
+            ],
+            "max": [
+              131.7,
+              147.2,
+              3.0
+            ],
+            "off_bed": false,
+            "excluded": false
+          },
+          {
+            "id": "2",
+            "name": "mystery-box-sg92r-c3-print-fit_bearing",
+            "min": [
+              137.7,
+              108.8,
+              0.0
+            ],
+            "max": [
+              145.7,
+              135.3,
+              12.0
+            ],
+            "off_bed": false,
+            "excluded": false
+          }
+        ],
+        "bbox_overlaps": [],
+        "missing": [],
+        "extra": [],
+        "issues": []
+      },
+      "materials": {
+        "PLA": {
+          "material": "PLA",
+          "file": {
+            "file": "prints/mystery-box-sg92r-c3/mystery-box-sg92r-c3-fit-test-PLA.gcode.3mf",
+            "bytes": 98539,
+            "sha256": "2f52f5fdd6f1336dee27468d56f65e5f6c12f91be8e724f4de7a99cec04e72ad"
+          },
+          "prediction_s": 874,
+          "weight_g": 2.37,
+          "filament": [
+            [
+              "0.78",
+              "2.37"
+            ]
+          ],
+          "support_used": "false",
+          "objects": {
+            "mystery-box-sg92r-c3-print-fit_bearing": {
+              "layers": 60,
+              "z_top": 12.0,
+              "layer_steps": {
+                "0.2": [
+                  0.2,
+                  11.8,
+                  59
+                ]
+              },
+              "floating": {
+                "external_unsupported_mm": 0.0,
+                "bridge_mm": 0.0,
+                "bridge_unsupported_mm": 0.0,
+                "internal_unsupported_mm": 0.0
+              },
+              "overhang_walls": []
+            },
+            "mystery-box-sg92r-c3-print-fit_horn": {
+              "layers": 15,
+              "z_top": 3.0,
+              "layer_steps": {
+                "0.2": [
+                  0.2,
+                  2.8,
+                  14
+                ]
+              },
+              "floating": {
+                "external_unsupported_mm": 0.0,
+                "bridge_mm": 0.0,
+                "bridge_unsupported_mm": 0.0,
+                "internal_unsupported_mm": 0.0
+              },
+              "overhang_walls": []
+            }
+          },
+          "object_assignment": {
+            "missing": [],
+            "unassigned": [],
+            "bbox_check": {
+              "tolerance_mm": 0.8,
+              "global_offset_mm": [
+                0.0,
+                2.0
+              ],
+              "matches": {
+                "12": {
+                  "name": "mystery-box-sg92r-c3-print-fit_bearing",
+                  "candidate_count": 1,
+                  "max_endpoint_error_mm": 0.21
+                },
+                "8": {
+                  "name": "mystery-box-sg92r-c3-print-fit_horn",
+                  "candidate_count": 1,
+                  "max_endpoint_error_mm": 0.21
+                }
+              }
+            }
+          },
+          "visible_unsupported": [],
+          "status": "ok",
+          "placement": {
+            "ok": true,
+            "objects": [
+              {
+                "id": "2",
+                "name": "mystery-box-sg92r-c3-print-fit_horn",
+                "min": [
+                  110.3,
+                  108.8,
+                  0.0
+                ],
+                "max": [
+                  131.7,
+                  147.2,
+                  3.0
+                ],
+                "off_bed": false,
+                "excluded": false
+              },
+              {
+                "id": "4",
+                "name": "mystery-box-sg92r-c3-print-fit_bearing",
+                "min": [
+                  137.7,
+                  108.8,
+                  0.0
+                ],
+                "max": [
+                  145.7,
+                  135.3,
+                  12.0
+                ],
+                "off_bed": false,
+                "excluded": false
+              }
+            ],
+            "bbox_overlaps": [],
+            "missing": [],
+            "extra": [],
+            "issues": []
+          },
+          "source_layout_sha256": "f61922dbf6b6bd4b4cea982f2ce8a677240aa283f1e9f7e1cfb449f7f3a6d58f",
+          "layout_preserved": true,
+          "log": {
+            "file": "models/mystery-box-sg92r-c3/build/delivery/logs/fit-test-PLA.log",
+            "bytes": 1143,
+            "sha256": "bcdb5c459f4def9fc4755d3ce8206ce99169412cf5eb21c07e3198ef27d8bd2d"
+          }
+        },
+        "PETG": {
+          "material": "PETG",
+          "file": {
+            "file": "prints/mystery-box-sg92r-c3/mystery-box-sg92r-c3-fit-test-PETG.gcode.3mf",
+            "bytes": 95630,
+            "sha256": "ea6a95c1dff008c2aec38e0bb66ce1f278247fb98fc9dff816279cdf68bfcbf0"
+          },
+          "prediction_s": 1295,
+          "weight_g": 2.29,
+          "filament": [
+            [
+              "0.76",
+              "2.29"
+            ]
+          ],
+          "support_used": "false",
+          "objects": {
+            "mystery-box-sg92r-c3-print-fit_bearing": {
+              "layers": 60,
+              "z_top": 12.0,
+              "layer_steps": {
+                "0.2": [
+                  0.2,
+                  11.8,
+                  59
+                ]
+              },
+              "floating": {
+                "external_unsupported_mm": 0.0,
+                "bridge_mm": 0.0,
+                "bridge_unsupported_mm": 0.0,
+                "internal_unsupported_mm": 0.0
+              },
+              "overhang_walls": []
+            },
+            "mystery-box-sg92r-c3-print-fit_horn": {
+              "layers": 15,
+              "z_top": 3.0,
+              "layer_steps": {
+                "0.2": [
+                  0.2,
+                  2.8,
+                  14
+                ]
+              },
+              "floating": {
+                "external_unsupported_mm": 0.0,
+                "bridge_mm": 0.0,
+                "bridge_unsupported_mm": 0.0,
+                "internal_unsupported_mm": 0.0
+              },
+              "overhang_walls": []
+            }
+          },
+          "object_assignment": {
+            "missing": [],
+            "unassigned": [],
+            "bbox_check": {
+              "tolerance_mm": 0.8,
+              "global_offset_mm": [
+                0.0,
+                2.0
+              ],
+              "matches": {
+                "12": {
+                  "name": "mystery-box-sg92r-c3-print-fit_bearing",
+                  "candidate_count": 1,
+                  "max_endpoint_error_mm": 0.21
+                },
+                "8": {
+                  "name": "mystery-box-sg92r-c3-print-fit_horn",
+                  "candidate_count": 1,
+                  "max_endpoint_error_mm": 0.21
+                }
+              }
+            }
+          },
+          "visible_unsupported": [],
+          "status": "ok",
+          "placement": {
+            "ok": true,
+            "objects": [
+              {
+                "id": "2",
+                "name": "mystery-box-sg92r-c3-print-fit_horn",
+                "min": [
+                  110.3,
+                  108.8,
+                  0.0
+                ],
+                "max": [
+                  131.7,
+                  147.2,
+                  3.0
+                ],
+                "off_bed": false,
+                "excluded": false
+              },
+              {
+                "id": "4",
+                "name": "mystery-box-sg92r-c3-print-fit_bearing",
+                "min": [
+                  137.7,
+                  108.8,
+                  0.0
+                ],
+                "max": [
+                  145.7,
+                  135.3,
+                  12.0
+                ],
+                "off_bed": false,
+                "excluded": false
+              }
+            ],
+            "bbox_overlaps": [],
+            "missing": [],
+            "extra": [],
+            "issues": []
+          },
+          "source_layout_sha256": "f61922dbf6b6bd4b4cea982f2ce8a677240aa283f1e9f7e1cfb449f7f3a6d58f",
+          "layout_preserved": true,
+          "log": {
+            "file": "models/mystery-box-sg92r-c3/build/delivery/logs/fit-test-PETG.log",
+            "bytes": 1147,
+            "sha256": "c53be063f7decb36c7c2bdb1d32aaa8de3621a6a7a4bc3da6ebb062416fc762e"
+          }
+        }
+      }
+    }
+  },
+  "visible_unsupported": [
+    {
+      "plate": "full",
+      "material": "PLA",
+      "object": "mystery-box-sg92r-c3-print-camshaft",
+      "external_unsupported_mm": 3.28,
+      "worst_layers": [
+        {
+          "layer": 6,
+          "z": 1.4,
+          "feature": "Overhang wall",
+          "points": 13,
+          "x": [
+            -39.5,
+            39.5
+          ],
+          "y": [
+            -0.6,
+            0.6
+          ]
+        },
+        {
+          "layer": 6,
+          "z": 1.4,
+          "feature": "Outer wall",
+          "points": 12,
+          "x": [
+            -39.5,
+            39.5
+          ],
+          "y": [
+            -0.4,
+            0.4
+          ]
+        }
+      ]
+    },
+    {
+      "plate": "full",
+      "material": "PLA",
+      "object": "mystery-box-sg92r-c3-print-carrier_4",
+      "external_unsupported_mm": 211.79,
+      "worst_layers": [
+        {
+          "layer": 72,
+          "z": 14.6,
+          "feature": "Overhang wall",
+          "points": 1076,
+          "x": [
+            -2.8,
+            2.8
+          ],
+          "y": [
+            -32.3,
+            32.3
+          ]
+        }
+      ]
+    },
+    {
+      "plate": "full",
+      "material": "PLA",
+      "object": "mystery-box-sg92r-c3-print-carrier_3",
+      "external_unsupported_mm": 211.94,
+      "worst_layers": [
+        {
+          "layer": 72,
+          "z": 14.6,
+          "feature": "Overhang wall",
+          "points": 1082,
+          "x": [
+            -2.8,
+            2.8
+          ],
+          "y": [
+            -32.3,
+            32.3
+          ]
+        }
+      ]
+    },
+    {
+      "plate": "full",
+      "material": "PLA",
+      "object": "mystery-box-sg92r-c3-print-carrier_2",
+      "external_unsupported_mm": 211.94,
+      "worst_layers": [
+        {
+          "layer": 72,
+          "z": 14.6,
+          "feature": "Overhang wall",
+          "points": 1082,
+          "x": [
+            -2.8,
+            2.8
+          ],
+          "y": [
+            -32.3,
+            32.3
+          ]
+        }
+      ]
+    },
+    {
+      "plate": "full",
+      "material": "PLA",
+      "object": "mystery-box-sg92r-c3-print-carrier_1",
+      "external_unsupported_mm": 211.94,
+      "worst_layers": [
+        {
+          "layer": 72,
+          "z": 14.6,
+          "feature": "Overhang wall",
+          "points": 1082,
+          "x": [
+            -2.8,
+            2.8
+          ],
+          "y": [
+            -32.3,
+            32.3
+          ]
+        }
+      ]
+    },
+    {
+      "plate": "full",
+      "material": "PLA",
+      "object": "mystery-box-sg92r-c3-print-carrier_0",
+      "external_unsupported_mm": 211.94,
+      "worst_layers": [
+        {
+          "layer": 72,
+          "z": 14.6,
+          "feature": "Overhang wall",
+          "points": 1082,
+          "x": [
+            -2.8,
+            2.8
+          ],
+          "y": [
+            -32.3,
+            32.3
+          ]
+        }
+      ]
+    },
+    {
+      "plate": "full",
+      "material": "PLA",
+      "object": "mystery-box-sg92r-c3-print-shell",
+      "external_unsupported_mm": 444.9,
+      "worst_layers": [
+        {
+          "layer": 35,
+          "z": 7.2,
+          "feature": "Overhang wall",
+          "points": 210,
+          "x": [
+            -19.4,
+            -12.6
+          ],
+          "y": [
+            -39.8,
+            -37.1
+          ]
+        },
+        {
+          "layer": 284,
+          "z": 57.0,
+          "feature": "Overhang wall",
+          "points": 24,
+          "x": [
+            -38.5,
+            38.5
+          ],
+          "y": [
+            -0.1,
+            0.1
+          ]
+        },
+        {
+          "layer": 284,
+          "z": 57.0,
+          "feature": "Gap infill",
+          "points": 4,
+          "x": [
+            -37.8,
+            37.8
+          ],
+          "y": [
+            -0.1,
+            0.1
+          ]
+        },
+        {
+          "layer": 290,
+          "z": 58.2,
+          "feature": "Overhang wall",
+          "points": 12,
+          "x": [
+            -39.8,
+            39.8
+          ],
+          "y": [
+            -0.2,
+            0.2
+          ]
+        },
+        {
+          "layer": 294,
+          "z": 59.0,
+          "feature": "Overhang wall",
+          "points": 2008,
+          "x": [
+            -36.3,
+            36.3
+          ],
+          "y": [
+            -32.8,
+            32.8
+          ]
+        }
+      ]
+    },
+    {
+      "plate": "full",
+      "material": "PETG",
+      "object": "mystery-box-sg92r-c3-print-camshaft",
+      "external_unsupported_mm": 3.28,
+      "worst_layers": [
+        {
+          "layer": 6,
+          "z": 1.4,
+          "feature": "Overhang wall",
+          "points": 13,
+          "x": [
+            -39.5,
+            39.5
+          ],
+          "y": [
+            -0.6,
+            0.6
+          ]
+        },
+        {
+          "layer": 6,
+          "z": 1.4,
+          "feature": "Outer wall",
+          "points": 12,
+          "x": [
+            -39.5,
+            39.5
+          ],
+          "y": [
+            -0.4,
+            0.4
+          ]
+        }
+      ]
+    },
+    {
+      "plate": "full",
+      "material": "PETG",
+      "object": "mystery-box-sg92r-c3-print-carrier_4",
+      "external_unsupported_mm": 211.79,
+      "worst_layers": [
+        {
+          "layer": 72,
+          "z": 14.6,
+          "feature": "Overhang wall",
+          "points": 1076,
+          "x": [
+            -2.8,
+            2.8
+          ],
+          "y": [
+            -32.3,
+            32.3
+          ]
+        }
+      ]
+    },
+    {
+      "plate": "full",
+      "material": "PETG",
+      "object": "mystery-box-sg92r-c3-print-carrier_3",
+      "external_unsupported_mm": 211.94,
+      "worst_layers": [
+        {
+          "layer": 72,
+          "z": 14.6,
+          "feature": "Overhang wall",
+          "points": 1082,
+          "x": [
+            -2.8,
+            2.8
+          ],
+          "y": [
+            -32.3,
+            32.3
+          ]
+        }
+      ]
+    },
+    {
+      "plate": "full",
+      "material": "PETG",
+      "object": "mystery-box-sg92r-c3-print-carrier_2",
+      "external_unsupported_mm": 211.94,
+      "worst_layers": [
+        {
+          "layer": 72,
+          "z": 14.6,
+          "feature": "Overhang wall",
+          "points": 1082,
+          "x": [
+            -2.8,
+            2.8
+          ],
+          "y": [
+            -32.3,
+            32.3
+          ]
+        }
+      ]
+    },
+    {
+      "plate": "full",
+      "material": "PETG",
+      "object": "mystery-box-sg92r-c3-print-carrier_1",
+      "external_unsupported_mm": 211.94,
+      "worst_layers": [
+        {
+          "layer": 72,
+          "z": 14.6,
+          "feature": "Overhang wall",
+          "points": 1082,
+          "x": [
+            -2.8,
+            2.8
+          ],
+          "y": [
+            -32.3,
+            32.3
+          ]
+        }
+      ]
+    },
+    {
+      "plate": "full",
+      "material": "PETG",
+      "object": "mystery-box-sg92r-c3-print-carrier_0",
+      "external_unsupported_mm": 211.94,
+      "worst_layers": [
+        {
+          "layer": 72,
+          "z": 14.6,
+          "feature": "Overhang wall",
+          "points": 1082,
+          "x": [
+            -2.8,
+            2.8
+          ],
+          "y": [
+            -32.3,
+            32.3
+          ]
+        }
+      ]
+    },
+    {
+      "plate": "full",
+      "material": "PETG",
+      "object": "mystery-box-sg92r-c3-print-shell",
+      "external_unsupported_mm": 444.9,
+      "worst_layers": [
+        {
+          "layer": 35,
+          "z": 7.2,
+          "feature": "Overhang wall",
+          "points": 210,
+          "x": [
+            -19.4,
+            -12.6
+          ],
+          "y": [
+            -39.8,
+            -37.1
+          ]
+        },
+        {
+          "layer": 284,
+          "z": 57.0,
+          "feature": "Overhang wall",
+          "points": 24,
+          "x": [
+            -38.5,
+            38.5
+          ],
+          "y": [
+            -0.1,
+            0.1
+          ]
+        },
+        {
+          "layer": 284,
+          "z": 57.0,
+          "feature": "Gap infill",
+          "points": 4,
+          "x": [
+            -37.8,
+            37.8
+          ],
+          "y": [
+            -0.1,
+            0.1
+          ]
+        },
+        {
+          "layer": 290,
+          "z": 58.2,
+          "feature": "Overhang wall",
+          "points": 12,
+          "x": [
+            -39.8,
+            39.8
+          ],
+          "y": [
+            -0.2,
+            0.2
+          ]
+        },
+        {
+          "layer": 294,
+          "z": 59.0,
+          "feature": "Overhang wall",
+          "points": 2008,
+          "x": [
+            -36.3,
+            36.3
+          ],
+          "y": [
+            -32.8,
+            32.8
+          ]
+        }
+      ]
+    }
+  ],
+  "status": "review_required",
+  "studio": {
+    "id": "8346d76a4cd9b3bf35e7b2be5977b7d0164ab761b7035e8ad2ef58c4e1ce6061",
+    "parts": 18,
+    "manifest": {
+      "file": "viewer/studio/plates/mystery-box-sg92r-c3.json",
+      "bytes": 18139,
+      "sha256": "f6d41bfd8bf8a933878992623e1f0d4d53dcb7c17e6a85a9c7ed7316f03824bb"
+    },
+    "source_files": [
+      {
+        "file": "exports/mystery-box-sg92r-c3-print-shell.stl",
+        "bytes": 78384,
+        "sha256": "230e95570e71da845c57ea0af4a3a73ae1071421f2a2de29965bb4605b7733f5"
+      },
+      {
+        "file": "exports/mystery-box-sg92r-c3-print-top_frame.stl",
+        "bytes": 3284,
+        "sha256": "a3b9f0c07b1da1ab17525c2c67a3a76d4b28250dfbba1b3b6eb6faf22f61480a"
+      },
+      {
+        "file": "exports/mystery-box-sg92r-c3-print-carrier_0.stl",
+        "bytes": 12484,
+        "sha256": "cafe5172f310f49a78739bc032ca8ccd4977fe7627a9f6e7e92a10dadc4ea42f"
+      },
+      {
+        "file": "exports/mystery-box-sg92r-c3-print-carrier_1.stl",
+        "bytes": 12484,
+        "sha256": "531869f2ef06b4b40fd60c594c7df4d0b915573bb3906c349dc54b8c9eb0b700"
+      },
+      {
+        "file": "exports/mystery-box-sg92r-c3-print-carrier_2.stl",
+        "bytes": 12484,
+        "sha256": "fd6a44dd8a36161ad80b529bc8138878ed1e64393a90d58acc74bec0cb667da5"
+      },
+      {
+        "file": "exports/mystery-box-sg92r-c3-print-carrier_3.stl",
+        "bytes": 12484,
+        "sha256": "3007edd938393635a30ae2931cf21caa2ba62edc64aab533d93f18a6c401b5d8"
+      },
+      {
+        "file": "exports/mystery-box-sg92r-c3-print-carrier_4.stl",
+        "bytes": 12484,
+        "sha256": "4f3033d23540080e4e14474f4e700e38776dec7c3781e6f41c12bbcc16b34031"
+      },
+      {
+        "file": "exports/mystery-box-sg92r-c3-print-camshaft.stl",
+        "bytes": 28684,
+        "sha256": "92d87da3837e46b82abf04cb167e0a0e9a7d3912cb39ac517dcd57cccd23d16c"
+      },
+      {
+        "file": "exports/mystery-box-sg92r-c3-print-cam_0.stl",
+        "bytes": 23084,
+        "sha256": "9ed08f61b8d56a0a726a53234c709e9f3a7447d4b11fb53e6a927da2a46b2946"
+      },
+      {
+        "file": "exports/mystery-box-sg92r-c3-print-cam_1.stl",
+        "bytes": 27084,
+        "sha256": "87b285bfebd5373f00311552624313bb818e44cc25f19cb7f3e5a56bee146e03"
+      },
+      {
+        "file": "exports/mystery-box-sg92r-c3-print-cam_2.stl",
+        "bytes": 26084,
+        "sha256": "43d9f4bd7e5077ba378d1009c810c9e6932b5157ecaacfd88826b9faaa4dbf0e"
+      },
+      {
+        "file": "exports/mystery-box-sg92r-c3-print-cam_3.stl",
+        "bytes": 27084,
+        "sha256": "f0ac4bc42b8d51e5afc664c858db1e5ebb8aa382daa8ac1b002051f5c0104606"
+      },
+      {
+        "file": "exports/mystery-box-sg92r-c3-print-cam_4.stl",
+        "bytes": 23084,
+        "sha256": "4b25e893b96014b7520677b1f05db0cbde8ed0a0347fd667fa39fc830a054288"
+      },
+      {
+        "file": "exports/mystery-box-sg92r-c3-print-cam_gear.stl",
+        "bytes": 114084,
+        "sha256": "f4d3a15254e47468f605f408ee8eaa926b95c1e4ac12f134efdfb92e0a4ffb34"
+      },
+      {
+        "file": "exports/mystery-box-sg92r-c3-print-drive_gear.stl",
+        "bytes": 12284,
+        "sha256": "575362596ae8c0e98c2dcdfbb8b0f0a25db89eb2ed04b4fb87e448d27fbda40f"
+      },
+      {
+        "file": "exports/mystery-box-sg92r-c3-print-cap_left.stl",
+        "bytes": 20784,
+        "sha256": "519711bc5d4353a76308c4535afaf5bed27cfdb29dd449cda28e1fd976b5aca4"
+      },
+      {
+        "file": "exports/mystery-box-sg92r-c3-print-cap_right.stl",
+        "bytes": 20784,
+        "sha256": "f337a8e0ada4f89587f16c7358452cc68570441be563f8bd666d9ba4ec8a4ac0"
+      },
+      {
+        "file": "exports/mystery-box-sg92r-c3-print-servo_clip.stl",
+        "bytes": 3284,
+        "sha256": "035aa52a68d1262f0f88306a9dd2559963b1b1cf00d6cc881bdcf200c14324ea"
+      }
+    ]
+  },
+  "artifacts": [
+    {
+      "file": "prints/mystery-box-sg92r-c3/mystery-box-sg92r-c3-print-shell.stl",
+      "bytes": 78384,
+      "sha256": "230e95570e71da845c57ea0af4a3a73ae1071421f2a2de29965bb4605b7733f5"
+    },
+    {
+      "file": "prints/mystery-box-sg92r-c3/mystery-box-sg92r-c3-print-top_frame.stl",
+      "bytes": 3284,
+      "sha256": "a3b9f0c07b1da1ab17525c2c67a3a76d4b28250dfbba1b3b6eb6faf22f61480a"
+    },
+    {
+      "file": "prints/mystery-box-sg92r-c3/mystery-box-sg92r-c3-print-carrier_0.stl",
+      "bytes": 12484,
+      "sha256": "cafe5172f310f49a78739bc032ca8ccd4977fe7627a9f6e7e92a10dadc4ea42f"
+    },
+    {
+      "file": "prints/mystery-box-sg92r-c3/mystery-box-sg92r-c3-print-carrier_1.stl",
+      "bytes": 12484,
+      "sha256": "531869f2ef06b4b40fd60c594c7df4d0b915573bb3906c349dc54b8c9eb0b700"
+    },
+    {
+      "file": "prints/mystery-box-sg92r-c3/mystery-box-sg92r-c3-print-carrier_2.stl",
+      "bytes": 12484,
+      "sha256": "fd6a44dd8a36161ad80b529bc8138878ed1e64393a90d58acc74bec0cb667da5"
+    },
+    {
+      "file": "prints/mystery-box-sg92r-c3/mystery-box-sg92r-c3-print-carrier_3.stl",
+      "bytes": 12484,
+      "sha256": "3007edd938393635a30ae2931cf21caa2ba62edc64aab533d93f18a6c401b5d8"
+    },
+    {
+      "file": "prints/mystery-box-sg92r-c3/mystery-box-sg92r-c3-print-carrier_4.stl",
+      "bytes": 12484,
+      "sha256": "4f3033d23540080e4e14474f4e700e38776dec7c3781e6f41c12bbcc16b34031"
+    },
+    {
+      "file": "prints/mystery-box-sg92r-c3/mystery-box-sg92r-c3-print-camshaft.stl",
+      "bytes": 28684,
+      "sha256": "92d87da3837e46b82abf04cb167e0a0e9a7d3912cb39ac517dcd57cccd23d16c"
+    },
+    {
+      "file": "prints/mystery-box-sg92r-c3/mystery-box-sg92r-c3-print-cam_0.stl",
+      "bytes": 23084,
+      "sha256": "9ed08f61b8d56a0a726a53234c709e9f3a7447d4b11fb53e6a927da2a46b2946"
+    },
+    {
+      "file": "prints/mystery-box-sg92r-c3/mystery-box-sg92r-c3-print-cam_1.stl",
+      "bytes": 27084,
+      "sha256": "87b285bfebd5373f00311552624313bb818e44cc25f19cb7f3e5a56bee146e03"
+    },
+    {
+      "file": "prints/mystery-box-sg92r-c3/mystery-box-sg92r-c3-print-cam_2.stl",
+      "bytes": 26084,
+      "sha256": "43d9f4bd7e5077ba378d1009c810c9e6932b5157ecaacfd88826b9faaa4dbf0e"
+    },
+    {
+      "file": "prints/mystery-box-sg92r-c3/mystery-box-sg92r-c3-print-cam_3.stl",
+      "bytes": 27084,
+      "sha256": "f0ac4bc42b8d51e5afc664c858db1e5ebb8aa382daa8ac1b002051f5c0104606"
+    },
+    {
+      "file": "prints/mystery-box-sg92r-c3/mystery-box-sg92r-c3-print-cam_4.stl",
+      "bytes": 23084,
+      "sha256": "4b25e893b96014b7520677b1f05db0cbde8ed0a0347fd667fa39fc830a054288"
+    },
+    {
+      "file": "prints/mystery-box-sg92r-c3/mystery-box-sg92r-c3-print-cam_gear.stl",
+      "bytes": 114084,
+      "sha256": "f4d3a15254e47468f605f408ee8eaa926b95c1e4ac12f134efdfb92e0a4ffb34"
+    },
+    {
+      "file": "prints/mystery-box-sg92r-c3/mystery-box-sg92r-c3-print-drive_gear.stl",
+      "bytes": 12284,
+      "sha256": "575362596ae8c0e98c2dcdfbb8b0f0a25db89eb2ed04b4fb87e448d27fbda40f"
+    },
+    {
+      "file": "prints/mystery-box-sg92r-c3/mystery-box-sg92r-c3-print-cap_left.stl",
+      "bytes": 20784,
+      "sha256": "519711bc5d4353a76308c4535afaf5bed27cfdb29dd449cda28e1fd976b5aca4"
+    },
+    {
+      "file": "prints/mystery-box-sg92r-c3/mystery-box-sg92r-c3-print-cap_right.stl",
+      "bytes": 20784,
+      "sha256": "f337a8e0ada4f89587f16c7358452cc68570441be563f8bd666d9ba4ec8a4ac0"
+    },
+    {
+      "file": "prints/mystery-box-sg92r-c3/mystery-box-sg92r-c3-print-servo_clip.stl",
+      "bytes": 3284,
+      "sha256": "035aa52a68d1262f0f88306a9dd2559963b1b1cf00d6cc881bdcf200c14324ea"
+    },
+    {
+      "file": "prints/mystery-box-sg92r-c3/mystery-box-sg92r-c3-print-fit_horn.stl",
+      "bytes": 11284,
+      "sha256": "f8a69ef9a72ea00cad6dfad86f167b7c7218c5cc0fd87777c453be29693b9009"
+    },
+    {
+      "file": "prints/mystery-box-sg92r-c3/mystery-box-sg92r-c3-print-fit_bearing.stl",
+      "bytes": 11884,
+      "sha256": "3d92f678b6c02e8804dc8511c26890b7da6251df0127fffe757fc34ac77ba3f4"
+    },
+    {
+      "file": "prints/mystery-box-sg92r-c3/mystery-box-sg92r-c3-layout.3mf",
+      "bytes": 78918,
+      "sha256": "8346d76a4cd9b3bf35e7b2be5977b7d0164ab761b7035e8ad2ef58c4e1ce6061"
+    },
+    {
+      "file": "prints/mystery-box-sg92r-c3/mystery-box-sg92r-c3-PLA.gcode.3mf",
+      "bytes": 1494808,
+      "sha256": "b288129263f9abb2014990aca935e5739ed3cadc04f9c8583accd8ffa76205ed"
+    },
+    {
+      "file": "prints/mystery-box-sg92r-c3/mystery-box-sg92r-c3-PETG.gcode.3mf",
+      "bytes": 1495618,
+      "sha256": "c3728574ddebcdb5182450882753cda040d32dbfa5feafd87a6578927a86ceb7"
+    },
+    {
+      "file": "prints/mystery-box-sg92r-c3/mystery-box-sg92r-c3-fit-test-layout.3mf",
+      "bytes": 5412,
+      "sha256": "f61922dbf6b6bd4b4cea982f2ce8a677240aa283f1e9f7e1cfb449f7f3a6d58f"
+    },
+    {
+      "file": "prints/mystery-box-sg92r-c3/mystery-box-sg92r-c3-fit-test-PLA.gcode.3mf",
+      "bytes": 98539,
+      "sha256": "2f52f5fdd6f1336dee27468d56f65e5f6c12f91be8e724f4de7a99cec04e72ad"
+    },
+    {
+      "file": "prints/mystery-box-sg92r-c3/mystery-box-sg92r-c3-fit-test-PETG.gcode.3mf",
+      "bytes": 95630,
+      "sha256": "ea6a95c1dff008c2aec38e0bb66ce1f278247fb98fc9dff816279cdf68bfcbf0"
+    },
+    {
+      "file": "exports/mystery-box-sg92r-c3-layout.3mf",
+      "bytes": 78918,
+      "sha256": "8346d76a4cd9b3bf35e7b2be5977b7d0164ab761b7035e8ad2ef58c4e1ce6061"
+    },
+    {
+      "file": "exports/mystery-box-sg92r-c3-PLA.gcode.3mf",
+      "bytes": 1494808,
+      "sha256": "b288129263f9abb2014990aca935e5739ed3cadc04f9c8583accd8ffa76205ed"
+    },
+    {
+      "file": "exports/mystery-box-sg92r-c3-PETG.gcode.3mf",
+      "bytes": 1495618,
+      "sha256": "c3728574ddebcdb5182450882753cda040d32dbfa5feafd87a6578927a86ceb7"
+    },
+    {
+      "file": "exports/mystery-box-sg92r-c3-fit-test-layout.3mf",
+      "bytes": 5412,
+      "sha256": "f61922dbf6b6bd4b4cea982f2ce8a677240aa283f1e9f7e1cfb449f7f3a6d58f"
+    },
+    {
+      "file": "exports/mystery-box-sg92r-c3-fit-test-PLA.gcode.3mf",
+      "bytes": 98539,
+      "sha256": "2f52f5fdd6f1336dee27468d56f65e5f6c12f91be8e724f4de7a99cec04e72ad"
+    },
+    {
+      "file": "exports/mystery-box-sg92r-c3-fit-test-PETG.gcode.3mf",
+      "bytes": 95630,
+      "sha256": "ea6a95c1dff008c2aec38e0bb66ce1f278247fb98fc9dff816279cdf68bfcbf0"
+    }
+  ]
+}

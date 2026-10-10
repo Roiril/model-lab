@@ -1,0 +1,4 @@
+# Keep the bytes of hash-bound lattice reports stable on Windows checkouts.
+models/mystery-box-sg92r-c3/build/*.json text eol=lf
+models/mystery-box-sg92r-c4/build/*.json text eol=lf
+viewer/lattice/assets/*.json text eol=lf

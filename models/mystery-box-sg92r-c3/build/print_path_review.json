@@ -1,0 +1,108 @@
+{
+  "version": 1,
+  "model": "mystery-box-sg92r-c3",
+  "status": "accepted_with_fit_test",
+  "delivery_status": "review_required",
+  "physical_print_verified": false,
+  "basis": {
+    "manifest_sha256": "262f040cd96d9e7dd558cef81ed969fe37afb979f725a53938f66256be881584",
+    "delivery_report_sha256": "8050cd4eac5f79e4c575479dda040bfc88f50560009b7009508603a0bd3db10d",
+    "gcode_sha256": {
+      "full_PLA": "b288129263f9abb2014990aca935e5739ed3cadc04f9c8583accd8ffa76205ed",
+      "full_PETG": "c3728574ddebcdb5182450882753cda040d32dbfa5feafd87a6578927a86ceb7",
+      "fit_test_PLA": "2f52f5fdd6f1336dee27468d56f65e5f6c12f91be8e724f4de7a99cec04e72ad",
+      "fit_test_PETG": "ea6a95c1dff008c2aec38e0bb66ce1f278247fb98fc9dff816279cdf68bfcbf0"
+    }
+  },
+  "fit_test": {
+    "PLA_visible_unsupported_mm": 0.0,
+    "PETG_visible_unsupported_mm": 0.0,
+    "decision": "slice_pass",
+    "note": "実機印刷と嵌合は未検証。"
+  },
+  "objects": [
+    {
+      "id": "camshaft",
+      "source_stl_sha256": "92d87da3837e46b82abf04cb167e0a0e9a7d3912cb39ac517dcd57cccd23d16c",
+      "warning_z_mm": [1.4],
+      "raw_external_unsupported_mm": 3.28,
+      "max_actual_span_mm": 0.9,
+      "supported_both_ends": false,
+      "surface": "internal",
+      "decision": "accepted",
+      "reason": "5mm六角面を接地した軸端から丸端へ移る片側0.9mmの遷移。積算3.28mmは同じ短い遷移の外周線合計。"
+    },
+    {
+      "id": "carrier_0",
+      "source_stl_sha256": "cafe5172f310f49a78739bc032ca8ccd4977fe7627a9f6e7e92a10dadc4ea42f",
+      "warning_z_mm": [14.6],
+      "raw_external_unsupported_mm": 211.94,
+      "max_actual_span_mm": 5.6,
+      "secondary_span_mm": 4.4,
+      "supported_both_ends": true,
+      "surface": "internal",
+      "decision": "accepted",
+      "reason": "格子は柱間5.6mm、端の柱から案内舌まで4.4mm。積算値は同じ層にある複数の短橋の外周線合計。"
+    },
+    {
+      "id": "carrier_1",
+      "source_stl_sha256": "531869f2ef06b4b40fd60c594c7df4d0b915573bb3906c349dc54b8c9eb0b700",
+      "warning_z_mm": [14.6],
+      "raw_external_unsupported_mm": 211.94,
+      "max_actual_span_mm": 5.6,
+      "secondary_span_mm": 4.4,
+      "supported_both_ends": true,
+      "surface": "internal",
+      "decision": "accepted",
+      "reason": "格子は柱間5.6mm、端の柱から案内舌まで4.4mm。積算値は同じ層にある複数の短橋の外周線合計。"
+    },
+    {
+      "id": "carrier_2",
+      "source_stl_sha256": "fd6a44dd8a36161ad80b529bc8138878ed1e64393a90d58acc74bec0cb667da5",
+      "warning_z_mm": [14.6],
+      "raw_external_unsupported_mm": 211.94,
+      "max_actual_span_mm": 5.6,
+      "secondary_span_mm": 4.4,
+      "supported_both_ends": true,
+      "surface": "internal",
+      "decision": "accepted",
+      "reason": "格子は柱間5.6mm、端の柱から案内舌まで4.4mm。積算値は同じ層にある複数の短橋の外周線合計。"
+    },
+    {
+      "id": "carrier_3",
+      "source_stl_sha256": "3007edd938393635a30ae2931cf21caa2ba62edc64aab533d93f18a6c401b5d8",
+      "warning_z_mm": [14.6],
+      "raw_external_unsupported_mm": 211.94,
+      "max_actual_span_mm": 5.6,
+      "secondary_span_mm": 4.4,
+      "supported_both_ends": true,
+      "surface": "internal",
+      "decision": "accepted",
+      "reason": "格子は柱間5.6mm、端の柱から案内舌まで4.4mm。積算値は同じ層にある複数の短橋の外周線合計。"
+    },
+    {
+      "id": "carrier_4",
+      "source_stl_sha256": "4f3033d23540080e4e14474f4e700e38776dec7c3781e6f41c12bbcc16b34031",
+      "warning_z_mm": [14.6],
+      "raw_external_unsupported_mm": 211.79,
+      "max_actual_span_mm": 5.6,
+      "secondary_span_mm": 4.4,
+      "supported_both_ends": true,
+      "surface": "internal",
+      "decision": "accepted",
+      "reason": "格子は柱間5.6mm、端の柱から案内舌まで4.4mm。積算値は同じ層にある複数の短橋の外周線合計。"
+    },
+    {
+      "id": "shell",
+      "source_stl_sha256": "230e95570e71da845c57ea0af4a3a73ae1071421f2a2de29965bb4605b7733f5",
+      "warning_z_mm": [7.2, 57.0, 58.2, 59.0],
+      "raw_external_unsupported_mm": 444.9,
+      "max_actual_span_mm": 8.0,
+      "secondary_span_mm": 6.2,
+      "supported_both_ends": true,
+      "surface": "internal",
+      "decision": "accepted",
+      "reason": "配線口は8.0mm、軸受けは6.2mmの両端支持。Z57〜59mmの長い検出は床から続く縦リブで支持した前後ガイドの累積外周線で、単一の水平橋ではない。"
+    }
+  ]
+}

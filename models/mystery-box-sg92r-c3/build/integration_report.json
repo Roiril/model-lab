@@ -1,0 +1,290 @@
+{
+  "ok": true,
+  "checks": {
+    "independent_topology_calibration": true,
+    "manifest_matches_delivery": true,
+    "current_sources_match_delivery": true,
+    "delivered_files_match_hashes": true,
+    "source_and_delivered_stl_match": true,
+    "print_stl_topology": true,
+    "print_parts_connected": true,
+    "print_parts_on_bed": true,
+    "frame_angles_increase": true,
+    "motion_parts_exist": true,
+    "motion_matrices_finite": true,
+    "closed_export_dimensions": true,
+    "web_parts_match": true,
+    "web_meshes_match_assembly": true,
+    "web_motion_matches": true,
+    "web_reports_match": true,
+    "print_review_matches_final_files": true,
+    "print_warnings_reviewed": true,
+    "web_print_review_matches": true,
+    "maximum_height_matches_geometry": true,
+    "renders_match_final_geometry": true,
+    "rendered_images_match_hashes": true,
+    "mechanism_report_passes": true,
+    "verification_matches_final_geometry": true,
+    "all_pairs_exact_verification_passes": true,
+    "static_geometry_passes": true,
+    "plates_and_calibration_pass": true
+  },
+  "calibration": {
+    "ok": true,
+    "closed_bad_edges": 0,
+    "opened_bad_edges": 3,
+    "joined_components": 1,
+    "separate_components": 2
+  },
+  "closed_dimensions_mm": [
+    80.0,
+    80.0,
+    80.0
+  ],
+  "animation_frames": 151,
+  "max_height_mm": 83.0,
+  "print_parts": {
+    "shell": {
+      "triangles": 1566,
+      "bad_edges": 0,
+      "duplicate_faces": 0,
+      "collapsed_faces": 0,
+      "components": 1,
+      "min_z_mm": 0.0,
+      "component_min_z_mm": [
+        0.0
+      ],
+      "ok": true
+    },
+    "top_frame": {
+      "triangles": 64,
+      "bad_edges": 0,
+      "duplicate_faces": 0,
+      "collapsed_faces": 0,
+      "components": 1,
+      "min_z_mm": 0.0,
+      "component_min_z_mm": [
+        0.0
+      ],
+      "ok": true
+    },
+    "carrier_0": {
+      "triangles": 248,
+      "bad_edges": 0,
+      "duplicate_faces": 0,
+      "collapsed_faces": 0,
+      "components": 1,
+      "min_z_mm": 0.0,
+      "component_min_z_mm": [
+        0.0
+      ],
+      "ok": true
+    },
+    "carrier_1": {
+      "triangles": 248,
+      "bad_edges": 0,
+      "duplicate_faces": 0,
+      "collapsed_faces": 0,
+      "components": 1,
+      "min_z_mm": 0.0,
+      "component_min_z_mm": [
+        0.0
+      ],
+      "ok": true
+    },
+    "carrier_2": {
+      "triangles": 248,
+      "bad_edges": 0,
+      "duplicate_faces": 0,
+      "collapsed_faces": 0,
+      "components": 1,
+      "min_z_mm": 0.0,
+      "component_min_z_mm": [
+        0.0
+      ],
+      "ok": true
+    },
+    "carrier_3": {
+      "triangles": 248,
+      "bad_edges": 0,
+      "duplicate_faces": 0,
+      "collapsed_faces": 0,
+      "components": 1,
+      "min_z_mm": 0.0,
+      "component_min_z_mm": [
+        0.0
+      ],
+      "ok": true
+    },
+    "carrier_4": {
+      "triangles": 248,
+      "bad_edges": 0,
+      "duplicate_faces": 0,
+      "collapsed_faces": 0,
+      "components": 1,
+      "min_z_mm": 0.0,
+      "component_min_z_mm": [
+        0.0
+      ],
+      "ok": true
+    },
+    "camshaft": {
+      "triangles": 572,
+      "bad_edges": 0,
+      "duplicate_faces": 0,
+      "collapsed_faces": 0,
+      "components": 1,
+      "min_z_mm": 0.0,
+      "component_min_z_mm": [
+        0.0
+      ],
+      "ok": true
+    },
+    "cam_0": {
+      "triangles": 460,
+      "bad_edges": 0,
+      "duplicate_faces": 0,
+      "collapsed_faces": 0,
+      "components": 1,
+      "min_z_mm": 0.0,
+      "component_min_z_mm": [
+        0.0
+      ],
+      "ok": true
+    },
+    "cam_1": {
+      "triangles": 540,
+      "bad_edges": 0,
+      "duplicate_faces": 0,
+      "collapsed_faces": 0,
+      "components": 1,
+      "min_z_mm": 0.0,
+      "component_min_z_mm": [
+        0.0
+      ],
+      "ok": true
+    },
+    "cam_2": {
+      "triangles": 520,
+      "bad_edges": 0,
+      "duplicate_faces": 0,
+      "collapsed_faces": 0,
+      "components": 1,
+      "min_z_mm": 0.0,
+      "component_min_z_mm": [
+        0.0
+      ],
+      "ok": true
+    },
+    "cam_3": {
+      "triangles": 540,
+      "bad_edges": 0,
+      "duplicate_faces": 0,
+      "collapsed_faces": 0,
+      "components": 1,
+      "min_z_mm": 0.0,
+      "component_min_z_mm": [
+        0.0
+      ],
+      "ok": true
+    },
+    "cam_4": {
+      "triangles": 460,
+      "bad_edges": 0,
+      "duplicate_faces": 0,
+      "collapsed_faces": 0,
+      "components": 1,
+      "min_z_mm": 0.0,
+      "component_min_z_mm": [
+        0.0
+      ],
+      "ok": true
+    },
+    "cam_gear": {
+      "triangles": 2280,
+      "bad_edges": 0,
+      "duplicate_faces": 0,
+      "collapsed_faces": 0,
+      "components": 1,
+      "min_z_mm": 0.0,
+      "component_min_z_mm": [
+        0.0
+      ],
+      "ok": true
+    },
+    "drive_gear": {
+      "triangles": 244,
+      "bad_edges": 0,
+      "duplicate_faces": 0,
+      "collapsed_faces": 0,
+      "components": 1,
+      "min_z_mm": 0.0,
+      "component_min_z_mm": [
+        0.0
+      ],
+      "ok": true
+    },
+    "cap_left": {
+      "triangles": 414,
+      "bad_edges": 0,
+      "duplicate_faces": 0,
+      "collapsed_faces": 0,
+      "components": 1,
+      "min_z_mm": 0.0,
+      "component_min_z_mm": [
+        0.0
+      ],
+      "ok": true
+    },
+    "cap_right": {
+      "triangles": 414,
+      "bad_edges": 0,
+      "duplicate_faces": 0,
+      "collapsed_faces": 0,
+      "components": 1,
+      "min_z_mm": 0.0,
+      "component_min_z_mm": [
+        0.0
+      ],
+      "ok": true
+    },
+    "servo_clip": {
+      "triangles": 64,
+      "bad_edges": 0,
+      "duplicate_faces": 0,
+      "collapsed_faces": 0,
+      "components": 1,
+      "min_z_mm": 0.0,
+      "component_min_z_mm": [
+        0.0
+      ],
+      "ok": true
+    },
+    "fit_horn": {
+      "triangles": 224,
+      "bad_edges": 0,
+      "duplicate_faces": 0,
+      "collapsed_faces": 0,
+      "components": 1,
+      "min_z_mm": 0.0,
+      "component_min_z_mm": [
+        0.0
+      ],
+      "ok": true
+    },
+    "fit_bearing": {
+      "triangles": 236,
+      "bad_edges": 0,
+      "duplicate_faces": 0,
+      "collapsed_faces": 0,
+      "components": 2,
+      "min_z_mm": 0.0,
+      "component_min_z_mm": [
+        0.0,
+        0.0
+      ],
+      "ok": true
+    }
+  },
+  "print_path_review_status": "review_required"
+}

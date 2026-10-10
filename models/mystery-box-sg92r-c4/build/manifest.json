@@ -1,0 +1,285 @@
+{
+  "meta": {
+    "dimensions_mm": [
+      76,
+      76,
+      76
+    ],
+    "max_dimensions_mm": [
+      76,
+      76,
+      81.909
+    ],
+    "exterior_parts": [
+      "housing",
+      "bottom",
+      "faceplate"
+    ],
+    "description": "19枚の六角面を3個の偏心円カムで6/4/2mm弱持ち上げる住人の箱C4。",
+    "assembly_steps": [
+      "SG92Rを底から保持台へ入れ、正本+X側の配線を箱+Y側の出口へ通す。",
+      "サーボ保持具を底から押し込み、左右の爪を保持台へ掛ける。",
+      "3枚のカムを底から各位置へ入れ、六角穴を同じ向きへ揃える。",
+      "サーボを90度で静止させ、カムの偏心中心を+Yへ向ける。",
+      "非対称ホーン受けの左右を合わせて付属ホーンへ差し、対辺3.6mmの六角差込を+Xへ向ける。",
+      "対辺6.3mmのカム軸を右側から3枚のカムへ通し、左端の穴を六角差込へ8mm入れる。",
+      "右軸受け保持具を+X外側のキー溝へ入れ、外面と面一の位置で90度回し、板ばねが凹みへ戻る位置で保持する。",
+      "内側と外側の格子を案内枠へ上から通す。中心の格子は+X側からC形開口へ水平に差す。",
+      "3組の格子を通した案内枠を一体で上から外装の四隅の受けへ載せ、従動パッドを各カムへ載せる。",
+      "六角格子の天板を上から外装へ下ろす。",
+      "天板の4本の爪を内側へ軽く押し、外装の凹みへ掛ける。",
+      "底板の4本の爪を内側へ軽く押しながら差し込み、凹みへ掛ける。"
+    ],
+    "decisions": [
+      "閉位置は六角面を天面と面一にし、最大時の段差を5.909/3.939/1.970mmとした。",
+      "左端はSG92R出力軸、右端は着脱式受けで支える両持ち構造とした。主軸6.3mm、穴3.9mm、差込3.6mm、長さ8mmで、穴外に1.2mm残す。",
+      "カム半径は10mm。最大偏心3mmと穴頂点半径3.839mmを差し引く保守最薄部を3.161mmとした。",
+      "各格子は独立した3mm厚案内枠の対向2点で案内し、片側荷重のこじれを抑える。",
+      "右保持具は自由長8mm、厚さ1.2mmの板ばねと幅2.6mm、深さ0.3mmの凹みで90度位置を保つ。回転中の押し量0.15mm、曲げひずみ0.422%。"
+    ],
+    "limitations": [
+      "重力復帰のため天面を上にした姿勢専用。",
+      "無通電SG92Rは逆駆動できるとは限らず、停止角度付近に残り得る。復電後に低速で10度へ戻す。",
+      "ホーン寸法、配線出口、摩擦、PLA/PETGの収縮は実物未検証。",
+      "右保持具の板ばね保持力と繰り返し耐久は実物未検証。"
+    ]
+  },
+  "parts": [
+    {
+      "id": "housing",
+      "label": "外装",
+      "assembly": "build/housing.stl",
+      "print": "build/print_housing.stl",
+      "fit_test": false,
+      "color": "#e5e6e2",
+      "explode": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "faceplate",
+      "label": "六角格子の天板",
+      "assembly": "build/faceplate.stl",
+      "print": "build/print_faceplate.stl",
+      "fit_test": false,
+      "color": "#eeeeeb",
+      "explode": [
+        0,
+        0,
+        20
+      ]
+    },
+    {
+      "id": "guide_frame",
+      "label": "格子の案内枠",
+      "assembly": "build/guide_frame.stl",
+      "print": "build/print_guide_frame.stl",
+      "fit_test": false,
+      "color": "#4a4e50",
+      "explode": [
+        0,
+        0,
+        12
+      ]
+    },
+    {
+      "id": "bottom",
+      "label": "底板",
+      "assembly": "build/bottom.stl",
+      "print": "build/print_bottom.stl",
+      "fit_test": false,
+      "color": "#d7d9d5",
+      "explode": [
+        0,
+        0,
+        -18
+      ]
+    },
+    {
+      "id": "carrier_center",
+      "label": "中心の格子",
+      "assembly": "build/carrier_center.stl",
+      "print": "build/print_carrier_center.stl",
+      "fit_test": false,
+      "color": "#fafafa",
+      "explode": [
+        0,
+        0,
+        34
+      ]
+    },
+    {
+      "id": "carrier_inner",
+      "label": "内側の格子",
+      "assembly": "build/carrier_inner.stl",
+      "print": "build/print_carrier_inner.stl",
+      "fit_test": false,
+      "color": "#f1f1ef",
+      "explode": [
+        0,
+        0,
+        26
+      ]
+    },
+    {
+      "id": "carrier_outer",
+      "label": "外側の格子",
+      "assembly": "build/carrier_outer.stl",
+      "print": "build/print_carrier_outer.stl",
+      "fit_test": false,
+      "color": "#e7e8e5",
+      "explode": [
+        0,
+        0,
+        18
+      ]
+    },
+    {
+      "id": "camshaft",
+      "label": "六角カム軸",
+      "assembly": "build/camshaft.stl",
+      "print": "build/print_camshaft.stl",
+      "fit_test": false,
+      "color": "#34383a",
+      "explode": [
+        10,
+        0,
+        -10
+      ]
+    },
+    {
+      "id": "horn_coupler",
+      "label": "ホーン受け",
+      "assembly": "build/horn_coupler.stl",
+      "print": "build/print_horn_coupler.stl",
+      "fit_test": false,
+      "color": "#34383a",
+      "explode": [
+        -12,
+        0,
+        -10
+      ]
+    },
+    {
+      "id": "cam_center",
+      "label": "中心用偏心カム",
+      "assembly": "build/cam_center.stl",
+      "print": "build/print_cam_center.stl",
+      "fit_test": false,
+      "color": "#34383a",
+      "explode": [
+        0,
+        -14,
+        -10
+      ]
+    },
+    {
+      "id": "cam_inner",
+      "label": "内環用偏心カム",
+      "assembly": "build/cam_inner.stl",
+      "print": "build/print_cam_inner.stl",
+      "fit_test": false,
+      "color": "#3d4244",
+      "explode": [
+        0,
+        -20,
+        -10
+      ]
+    },
+    {
+      "id": "cam_outer",
+      "label": "外環用偏心カム",
+      "assembly": "build/cam_outer.stl",
+      "print": "build/print_cam_outer.stl",
+      "fit_test": false,
+      "color": "#474c4e",
+      "explode": [
+        0,
+        -26,
+        -10
+      ]
+    },
+    {
+      "id": "bearing_keeper",
+      "label": "右軸受け保持具",
+      "assembly": "build/bearing_keeper.stl",
+      "print": "build/print_bearing_keeper.stl",
+      "fit_test": false,
+      "color": "#4a4e50",
+      "explode": [
+        16,
+        0,
+        -12
+      ]
+    },
+    {
+      "id": "servo_clip",
+      "label": "サーボ保持具",
+      "assembly": "build/servo_clip.stl",
+      "print": "build/print_servo_clip.stl",
+      "fit_test": false,
+      "color": "#4a4e50",
+      "explode": [
+        -18,
+        0,
+        -12
+      ]
+    },
+    {
+      "id": "servo_body",
+      "label": "SG92R本体",
+      "assembly": "build/servo_body.stl",
+      "print": null,
+      "fit_test": false,
+      "color": "#335d91",
+      "explode": [
+        -18,
+        0,
+        -18
+      ]
+    },
+    {
+      "id": "servo_horn",
+      "label": "付属クロスホーン",
+      "assembly": "build/servo_horn.stl",
+      "print": null,
+      "fit_test": false,
+      "color": "#f5f5f2",
+      "explode": [
+        -12,
+        0,
+        -10
+      ]
+    },
+    {
+      "id": "servo_wire",
+      "label": "SG92R配線",
+      "assembly": "build/servo_wire.stl",
+      "print": null,
+      "fit_test": false,
+      "color": "#756d65",
+      "explode": [
+        -18,
+        8,
+        -18
+      ]
+    },
+    {
+      "id": "print_test",
+      "label": "ホーン受け・軸継手・サーボ保持試片",
+      "assembly": "build/print_test.stl",
+      "print": "build/print_test.stl",
+      "fit_test": true,
+      "fit_only": true,
+      "expected_print_components": 3,
+      "color": "#d9d1bf",
+      "explode": [
+        0,
+        -55,
+        0
+      ]
+    }
+  ]
+}
