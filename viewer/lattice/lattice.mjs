@@ -1,4 +1,10 @@
 import { createWorkspaceNav, themePalette, watchTheme } from '../shared/workspace.mjs';
+import {
+  C1_REFERENCE_VIEW,
+  MECHANISM_FRAGMENT_SHADER,
+  MECHANISM_VERTEX_SHADER,
+  MECHANISM_VIEW_CONTROLS,
+} from '../shared/mechanism-view.mjs';
 import { frameAt, identity4 } from './motion.mjs';
 import { setupPhysics } from './physics-ui.mjs';
 import { setupAssembly } from './assembly-ui.mjs';
@@ -86,22 +92,6 @@ function lookAt(eye, center, up) {
   return new Float32Array([x[0], y[0], z[0], 0, x[1], y[1], z[1], 0, x[2], y[2], z[2], 0, -dot(x, eye), -dot(y, eye), -dot(z, eye), 1]);
 }
 
-function normalsFor(vertices, triangles) {
-  const normals = new Float32Array(vertices.length);
-  for (let index = 0; index < triangles.length; index += 3) {
-    const ia = triangles[index] * 3, ib = triangles[index + 1] * 3, ic = triangles[index + 2] * 3;
-    const ab = [vertices[ib] - vertices[ia], vertices[ib + 1] - vertices[ia + 1], vertices[ib + 2] - vertices[ia + 2]];
-    const ac = [vertices[ic] - vertices[ia], vertices[ic + 1] - vertices[ia + 1], vertices[ic + 2] - vertices[ia + 2]];
-    const n = [ab[1] * ac[2] - ab[2] * ac[1], ab[2] * ac[0] - ab[0] * ac[2], ab[0] * ac[1] - ab[1] * ac[0]];
-    for (const offset of [ia, ib, ic]) for (let axis = 0; axis < 3; axis += 1) normals[offset + axis] += n[axis];
-  }
-  for (let index = 0; index < normals.length; index += 3) {
-    const length = Math.hypot(normals[index], normals[index + 1], normals[index + 2]) || 1;
-    normals[index] /= length; normals[index + 1] /= length; normals[index + 2] /= length;
-  }
-  return normals;
-}
-
 function createShader(gl, type, source) {
   const shader = gl.createShader(type);
   gl.shaderSource(shader, source);
@@ -120,20 +110,14 @@ function createRenderer(canvas, data, state) {
   const gl = canvas.getContext('webgl2', { antialias: true, alpha: false });
   if (!gl) throw new Error('WebGL2を利用できません');
   const program = gl.createProgram();
-  gl.attachShader(program, createShader(gl, gl.VERTEX_SHADER, `#version 300 es
-    in vec3 position; in vec3 normal; uniform mat4 mvp; uniform mat4 model;
-    out vec3 vNormal; out vec3 vPosition;
-    void main() { vec4 world = model * vec4(position, 1.0); vPosition = world.xyz; vNormal = mat3(model) * normal; gl_Position = mvp * vec4(position, 1.0); }`));
-  gl.attachShader(program, createShader(gl, gl.FRAGMENT_SHADER, `#version 300 es
-    precision highp float; in vec3 vNormal; in vec3 vPosition; uniform vec3 color; uniform bool cut; out vec4 outColor;
-    void main() { if (cut && vPosition.x > 0.0) discard;
-      vec3 n = normalize(vNormal); float diffuse = 0.35 + 0.65 * abs(dot(n, normalize(vec3(0.35, -0.45, 0.82))));
-      float rim = pow(1.0 - abs(n.z), 3.0) * 0.12; outColor = vec4(color * diffuse + rim, 1.0); }`));
+  gl.attachShader(program, createShader(gl, gl.VERTEX_SHADER, MECHANISM_VERTEX_SHADER));
+  gl.attachShader(program, createShader(gl, gl.FRAGMENT_SHADER, MECHANISM_FRAGMENT_SHADER));
+  gl.bindAttribLocation(program, 0, 'aPos');
   gl.linkProgram(program);
   if (!gl.getProgramParameter(program, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(program));
   gl.useProgram(program);
-  const positionLoc = gl.getAttribLocation(program, 'position'), normalLoc = gl.getAttribLocation(program, 'normal');
-  const mvpLoc = gl.getUniformLocation(program, 'mvp'), modelLoc = gl.getUniformLocation(program, 'model'), colorLoc = gl.getUniformLocation(program, 'color'), cutLoc = gl.getUniformLocation(program, 'cut');
+  const uniforms = {};
+  for (const name of ['uVP', 'uM', 'uCol', 'uEye', 'uCutX', 'uCut']) uniforms[name] = gl.getUniformLocation(program, name);
   const exteriorIds = new Set(data.meta?.exterior_parts || []);
   const meshes = data.parts.map((part, partIndex) => {
     // STLの面ごとに頂点を分ける。隣り合う面の法線を平均せず幾何学の稜線を残す。
@@ -145,9 +129,7 @@ function createRenderer(canvas, data, state) {
     });
     const vao = gl.createVertexArray(); gl.bindVertexArray(vao);
     const positions = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, positions); gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
-    gl.enableVertexAttribArray(positionLoc); gl.vertexAttribPointer(positionLoc, 3, gl.FLOAT, false, 0, 0);
-    const normals = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, normals); gl.bufferData(gl.ARRAY_BUFFER, normalsFor(vertices, triangles), gl.STATIC_DRAW);
-    gl.enableVertexAttribArray(normalLoc); gl.vertexAttribPointer(normalLoc, 3, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(0); gl.vertexAttribPointer(0, 3, gl.FLOAT, false, 0, 0);
     const indices = gl.createBuffer(); gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indices); gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, triangles, gl.STATIC_DRAW);
     const exterior = part.exterior ?? (exteriorIds.size ? exteriorIds.has(part.id) : !/^(servo|ref)_/.test(part.id) && EXTERIOR_WORDS.test(part.id));
     return { ...part, vertices, vao, bounds: meshBounds(sourceVertices), count: triangles.length, exterior,
@@ -158,7 +140,15 @@ function createRenderer(canvas, data, state) {
   }, { min: [Infinity, Infinity, Infinity], max: [-Infinity, -Infinity, -Infinity] });
   const center = bounds.min.map((value, index) => (value + bounds.max[index]) / 2);
   const radius = Math.max(20, ...bounds.max.map((value, index) => value - bounds.min[index]));
-  const camera = { yaw: 0.65, pitch: 0.52, zoom: 2.4 };
+  const exteriorWidth = Number(data.meta?.dimensions_mm?.[0]) || bounds.max[0] - bounds.min[0];
+  const target = [...center];
+  target[2] += (C1_REFERENCE_VIEW.targetZ - C1_REFERENCE_VIEW.centerZ) * exteriorWidth / C1_REFERENCE_VIEW.width;
+  const cutX = data.view?.cutX ?? C1_REFERENCE_VIEW.cutX * exteriorWidth / C1_REFERENCE_VIEW.width;
+  const homeDistance = C1_REFERENCE_VIEW.dist * radius / C1_REFERENCE_VIEW.width;
+  const minDistance = MECHANISM_VIEW_CONTROLS.minDist * radius / C1_REFERENCE_VIEW.width;
+  const maxDistance = MECHANISM_VIEW_CONTROLS.maxDist * radius / C1_REFERENCE_VIEW.width;
+  const home = { az: MECHANISM_VIEW_CONTROLS.homeAz, el: MECHANISM_VIEW_CONTROLS.homeEl, dist: homeDistance };
+  const camera = { ...home };
   let frameCount = 0;
 
   function draw() {
@@ -170,19 +160,25 @@ function createRenderer(canvas, data, state) {
     gl.enable(gl.DEPTH_TEST); gl.disable(gl.CULL_FACE);
     const pose = state.transforms ? { transforms: state.transforms } : frameAt(data.motion?.frames || [], state.servoDeg);
     const fitting = state.cameraBounds;
-    const liveCenter = fitting ? fitting.min.map((n, k) => (n + fitting.max[k]) / 2) : center;
+    const liveCenter = fitting ? fitting.min.map((n, k) => (n + fitting.max[k]) / 2) : target;
     const liveRadius = fitting ? Math.max(20, ...fitting.max.map((n, k) => n - fitting.min[k])) : radius;
-    const distance = liveRadius * camera.zoom / Math.min(1, width / height);
-    const eye = [liveCenter[0] + distance * Math.cos(camera.pitch) * Math.sin(camera.yaw), liveCenter[1] - distance * Math.cos(camera.pitch) * Math.cos(camera.yaw), liveCenter[2] + distance * Math.sin(camera.pitch)];
-    const viewProjection = mul(perspective(Math.PI / 4, width / height, Math.max(0.1, liveRadius / 100), liveRadius * 20), lookAt(eye, liveCenter, [0, 0, 1]));
-    const visible = [], matrices = {}, projected = { min: [Infinity, Infinity], max: [-Infinity, -Infinity] };
+    const distance = camera.dist * liveRadius / radius / Math.min(1, width / height);
+    const elevation = camera.el * Math.PI / 180, azimuth = camera.az * Math.PI / 180;
+    const eye = [liveCenter[0] + distance * Math.cos(elevation) * Math.cos(azimuth), liveCenter[1] + distance * Math.cos(elevation) * Math.sin(azimuth), liveCenter[2] + distance * Math.sin(elevation)];
+    const viewProjection = mul(perspective(MECHANISM_VIEW_CONTROLS.fovDeg * Math.PI / 180, width / height, 5, 2000), lookAt(eye, liveCenter, [0, 0, 1]));
+    const visible = [], clipped = [], matrices = {}, projected = { min: [Infinity, Infinity], max: [-Infinity, -Infinity] };
+    gl.uniformMatrix4fv(uniforms.uVP, false, viewProjection);
+    gl.uniform3fv(uniforms.uEye, eye);
+    gl.uniform1f(uniforms.uCutX, cutX);
     for (const mesh of meshes) {
-      if (state.hidden.has(mesh.id) || (state.present && !state.present.has(mesh.id)) || (state.removeExterior && mesh.exterior)) continue;
+      if (state.hidden.has(mesh.id) || (state.present && !state.present.has(mesh.id))) continue;
       const modelMatrix = new Float32Array(pose.transforms?.[mesh.id] || identity4());
       const mvp = mul(viewProjection, modelMatrix);
-      gl.uniformMatrix4fv(modelLoc, false, modelMatrix); gl.uniformMatrix4fv(mvpLoc, false, mvp); gl.uniform3fv(colorLoc, mesh.color);
-      gl.uniform1i(cutLoc, state.cut && mesh.exterior ? 1 : 0);
+      const clip = state.cut && mesh.exterior;
+      gl.uniformMatrix4fv(uniforms.uM, false, modelMatrix); gl.uniform3fv(uniforms.uCol, mesh.color);
+      gl.uniform1f(uniforms.uCut, clip ? 1 : 0);
       gl.bindVertexArray(mesh.vao); gl.drawElements(gl.TRIANGLES, mesh.count, gl.UNSIGNED_INT, 0); visible.push(mesh.id);
+      if (clip) clipped.push(mesh.id);
       matrices[mesh.id] = Array.from(modelMatrix);
       for (let corner = 0; corner < 8; corner++) {
         const p = [0, 1, 2].map(k => mesh.bounds[corner & (1 << k) ? 'max' : 'min'][k]);
@@ -198,14 +194,15 @@ function createRenderer(canvas, data, state) {
     canvas.dataset.currentAngle = state.servoDeg.toFixed(2);
     canvas.dataset.servoDeg = state.servoDeg.toFixed(2);
     canvas.dataset.visibleParts = visible.join(',');
+    canvas.dataset.clippedParts = clipped.join(',');
+    canvas.dataset.cutX = String(cutX);
+    canvas.dataset.camera = JSON.stringify({ az: camera.az, el: camera.el, dist: distance, fovDeg: MECHANISM_VIEW_CONTROLS.fovDeg, target: liveCenter });
     canvas.dataset.renderedMatrices = JSON.stringify(matrices);
     canvas.dataset.projectedBounds = JSON.stringify(projected);
   }
 
   function setCamera(name) {
-    if (name === 'front') Object.assign(camera, { yaw: 0, pitch: 0.08, zoom: 2.4 });
-    else if (name === 'top') Object.assign(camera, { yaw: 0, pitch: 1.48, zoom: 2.5 });
-    else Object.assign(camera, { yaw: 0.65, pitch: 0.52, zoom: 2.4 });
+    Object.assign(camera, home);
     draw();
   }
   const pointers = new Map(); let pinch = 0;
@@ -215,11 +212,11 @@ function createRenderer(canvas, data, state) {
     const previous = pointers.get(event.pointerId);
     pointers.set(event.pointerId, [event.clientX, event.clientY]);
     if (pointers.size === 1) {
-      camera.yaw += (event.clientX - previous[0]) * 0.01;
-      camera.pitch = clamp(camera.pitch + (event.clientY - previous[1]) * 0.01, -1.45, 1.5);
+      camera.az -= (event.clientX - previous[0]) * MECHANISM_VIEW_CONTROLS.dragDegPerPixel;
+      camera.el = clamp(camera.el + (event.clientY - previous[1]) * MECHANISM_VIEW_CONTROLS.dragDegPerPixel, MECHANISM_VIEW_CONTROLS.minPitchDeg, MECHANISM_VIEW_CONTROLS.maxPitchDeg);
     } else if (pointers.size === 2) {
       const [a, b] = [...pointers.values()], distance = Math.hypot(a[0] - b[0], a[1] - b[1]);
-      if (pinch && distance) camera.zoom = clamp(camera.zoom * pinch / distance, 1.2, 7);
+      if (pinch && distance) camera.dist = clamp(camera.dist * pinch / distance, minDistance, maxDistance);
       pinch = distance;
     }
     draw();
@@ -227,10 +224,11 @@ function createRenderer(canvas, data, state) {
   const release = event => { pointers.delete(event.pointerId); pinch = 0; };
   canvas.addEventListener('pointerup', release);
   canvas.addEventListener('pointercancel', release);
-  canvas.addEventListener('wheel', event => { event.preventDefault(); camera.zoom = clamp(camera.zoom * Math.exp(event.deltaY * 0.001), 1.2, 7); draw(); }, { passive: false });
+  canvas.addEventListener('wheel', event => { event.preventDefault(); camera.dist = clamp(camera.dist * Math.exp(event.deltaY * MECHANISM_VIEW_CONTROLS.wheelFactor), minDistance, maxDistance); draw(); }, { passive: false });
   const disposeTheme = watchTheme(draw);
-  addEventListener('resize', draw);
-  addEventListener('pagehide', event => { if (!event.persisted) disposeTheme(); });
+  const resizeObserver = new ResizeObserver(draw);
+  resizeObserver.observe(canvas);
+  addEventListener('pagehide', event => { if (!event.persisted) { disposeTheme(); resizeObserver.disconnect(); } });
   function fit(frames) {
     const points = [];
     for (const frame of frames) for (const mesh of meshes) {
@@ -346,7 +344,7 @@ async function start() {
     const frames = [...data.motion.frames].sort((a, b) => a.servo_deg - b.servo_deg);
     data.motion.frames = frames;
     const minimum = frames[0].servo_deg;
-    const state = { servoDeg: minimum, cut: true, removeExterior: false, hidden: new Set(), transforms: null, present: null };
+    const state = { servoDeg: minimum, cut: true, hidden: new Set(), transforms: null, present: null };
     const canvas = $('gl'), renderer = createRenderer(canvas, data, state), meta = data.meta;
     document.title = `住人の箱 ${profile.label}の${mode === 'assembly' ? '組み立て' : '物理検証'} · model-lab`;
     $('eyebrow').textContent = mode === 'assembly' ? '工具、ねじ、接着剤なし' : '1 自由度の運動方程式';
@@ -357,7 +355,6 @@ async function start() {
     document.querySelector('.workspace-model strong').textContent = `住人の箱 ${profile.label}`;
     document.querySelector('.workspace-model small').textContent = `${dimensionText(meta)} · SG92R 1台 · 印刷 ${data.parts.filter(p => p.printable).length}点`;
     document.querySelector('.workspace-brand').href = `/?model=${model}`;
-    $('removeExterior').addEventListener('change', event => { state.removeExterior = event.currentTarget.checked; renderer.draw(); });
     $('cut').addEventListener('change', event => { state.cut = event.currentTarget.checked; renderer.draw(); });
     $('home').addEventListener('click', () => renderer.setCamera('iso'));
     $('legend').replaceChildren(...renderer.meshes.map(mesh => {

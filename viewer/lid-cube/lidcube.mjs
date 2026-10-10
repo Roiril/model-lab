@@ -2,6 +2,11 @@
 // データ: assets/<モデル名>.json（models/<モデル名>/export_web.py が書く）。外部ライブラリは使わず WebGL2 で描く。
 // どのモデルを開くかは URL の ?model= で決める。
 import { themePalette, watchTheme } from "../shared/workspace.mjs";
+import {
+  MECHANISM_FRAGMENT_SHADER,
+  MECHANISM_VERTEX_SHADER,
+  MECHANISM_VIEW_CONTROLS,
+} from "../shared/mechanism-view.mjs";
 
 export const MODEL = (typeof location !== "undefined" && new URLSearchParams(location.search).get("model")) || "servo-lid-cube";
 const R = Math.PI / 180;
@@ -121,22 +126,10 @@ function cssHex(c) {
 export function createViewer(canvas, D, getState) {
   const gl = canvas.getContext("webgl2", { antialias: true });
   if (!gl) throw new Error("WebGL2 が使えません");
-  const vs = `#version 300 es
-in vec3 aPos; uniform mat4 uVP; uniform mat4 uM; out vec3 vW;
-void main(){ vec4 w = uM * vec4(aPos, 1.0); vW = w.xyz; gl_Position = uVP * w; }`;
-  const fs = `#version 300 es
-precision highp float; in vec3 vW; uniform vec3 uCol; uniform vec3 uEye; uniform float uCutX; uniform float uCut; out vec4 o;
-void main(){
-  if (uCut > 0.5 && vW.x > uCutX) discard;
-  vec3 n = normalize(cross(dFdx(vW), dFdy(vW)));
-  if (dot(n, normalize(uEye - vW)) < 0.0) n = -n;
-  float d = 0.48 + 0.45 * max(dot(n, normalize(vec3(0.45, 0.75, 1.0))), 0.0) + 0.20 * max(dot(n, normalize(vec3(-0.8, -0.3, 0.35))), 0.0);
-  o = vec4(min(uCol * d, vec3(1.0)), 1.0);
-}`;
   const sh = (t, s) => { const x = gl.createShader(t); gl.shaderSource(x, s); gl.compileShader(x);
     if (!gl.getShaderParameter(x, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(x)); return x; };
   const prog = gl.createProgram();
-  gl.attachShader(prog, sh(gl.VERTEX_SHADER, vs)); gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, fs));
+  gl.attachShader(prog, sh(gl.VERTEX_SHADER, MECHANISM_VERTEX_SHADER)); gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, MECHANISM_FRAGMENT_SHADER));
   gl.bindAttribLocation(prog, 0, "aPos"); gl.linkProgram(prog);
   if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(prog));
   const U = {};
@@ -154,8 +147,8 @@ void main(){
     bufs[k] = { vao, n: m.nt * 3 };
   }
   // 視点と「右半分を隠す」の境はモデルの大きさで決まる（データの view）
-  const view = { target: [0, 0, 40], dist: 250, cutX: 6.0, ...(D.view || {}) };
-  const HOME = { az: -35, el: 24, dist: view.dist };
+  const view = { target: [0, 0, 40], dist: MECHANISM_VIEW_CONTROLS.referenceDist, cutX: 6.0, ...(D.view || {}) };
+  const HOME = { az: MECHANISM_VIEW_CONTROLS.homeAz, el: MECHANISM_VIEW_CONTROLS.homeEl, dist: view.dist };
   const cam = { ...HOME, tgt: view.target };
   const hidden = new Set();
   let bg = [1, 1, 1];
@@ -176,7 +169,7 @@ void main(){
     const ce = Math.cos(cam.el * R);
     const eye = [cam.tgt[0] + cam.dist * ce * Math.cos(cam.az * R), cam.tgt[1] + cam.dist * ce * Math.sin(cam.az * R), cam.tgt[2] + cam.dist * Math.sin(cam.el * R)];
     gl.useProgram(prog);
-    gl.uniformMatrix4fv(U.uVP, false, mul(persp(32 * R, canvas.width / canvas.height, 5, 2000), look(eye, cam.tgt, [0, 0, 1])));
+    gl.uniformMatrix4fv(U.uVP, false, mul(persp(MECHANISM_VIEW_CONTROLS.fovDeg * R, canvas.width / canvas.height, 5, 2000), look(eye, cam.tgt, [0, 0, 1])));
     gl.uniform3fv(U.uEye, eye);
     const st = getState();
     for (const [k, , col] of shown) {
@@ -198,14 +191,14 @@ void main(){
     if (!ptrs.has(e.pointerId)) return;
     const p = ptrs.get(e.pointerId), dx = e.clientX - p[0], dy = e.clientY - p[1];
     ptrs.set(e.pointerId, [e.clientX, e.clientY]);
-    if (ptrs.size === 1) { cam.az -= dx * 0.4; cam.el = Math.max(-80, Math.min(85, cam.el + dy * 0.4)); }
+    if (ptrs.size === 1) { cam.az -= dx * MECHANISM_VIEW_CONTROLS.dragDegPerPixel; cam.el = Math.max(MECHANISM_VIEW_CONTROLS.minPitchDeg, Math.min(MECHANISM_VIEW_CONTROLS.maxPitchDeg, cam.el + dy * MECHANISM_VIEW_CONTROLS.dragDegPerPixel)); }
     else if (ptrs.size === 2) {
       const [a, b] = [...ptrs.values()], d = Math.hypot(a[0] - b[0], a[1] - b[1]);
-      if (pinch) cam.dist = Math.max(90, Math.min(600, (cam.dist * pinch) / d)); pinch = d;
+      if (pinch) cam.dist = Math.max(MECHANISM_VIEW_CONTROLS.minDist, Math.min(MECHANISM_VIEW_CONTROLS.maxDist, (cam.dist * pinch) / d)); pinch = d;
     }
     draw();
   });
-  canvas.addEventListener("wheel", (e) => { e.preventDefault(); cam.dist = Math.max(90, Math.min(600, cam.dist * Math.exp(e.deltaY * 0.001))); draw(); }, { passive: false });
+  canvas.addEventListener("wheel", (e) => { e.preventDefault(); cam.dist = Math.max(MECHANISM_VIEW_CONTROLS.minDist, Math.min(MECHANISM_VIEW_CONTROLS.maxDist, cam.dist * Math.exp(e.deltaY * MECHANISM_VIEW_CONTROLS.wheelFactor))); draw(); }, { passive: false });
   new ResizeObserver(draw).observe(canvas);
   return {
     draw,
