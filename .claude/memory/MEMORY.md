@@ -7,3 +7,4 @@
 - [起動中の Blender にはブースが入っている](blender-live-booth-scene.md) — MCP 経由で clear_scene すると全部消える。Cube.005 は姿勢の指定
 - [住人の箱を参考にしない](feedback-no-mystery-box-reference.md) — 形と機構だけが対象。Studio の物理検証・組み立てタブは使い、新モデルの検証もそこで見せる
 - [SG92Rホーンの左右と実物の組立結果](sg92r-horn-orientation.md) — Bは左右逆装着で中心がずれた。向きを直すと組めた。C1は逆装着できず組立と回転に成功
+- [C3とC4の表示経路を使う組立検査](lattice-verified-assembly.md) — C1と同じ物理計算。累積した部品との途中姿勢を検査。90°で組んだ後に下限へ戻して格子を入れる
