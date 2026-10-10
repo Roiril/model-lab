@@ -74,6 +74,8 @@ figcaption { color:var(--mute); font-size:var(--fs-sm); margin-top:var(--sp-2); 
     <p>後ろの固定天面は点検口です。左右の解除つまみを外側から箱の中央へ押して上へ外します。蝶番の荷重は箱本体が受けます。SG92R試験寸法の適合、手操作、長い脚の造形安定性、保持力、電圧、摩擦、音は未確認です。</p>
   </div>
 
+  <p>Studioの依頼に合わせて蓋の腕を天面までつなぎました。付け根はC1と同じく蝶番から23mm先です。腕の厚さは3mmです。断面17か所で腕から天面までの隙間0mmを確認しました。</p>
+
   <div class="grid">
     <div class="card"><b>70 × 70 × 70 mm</b><span>閉じたときの外形</span></div>
     <div class="card"><b>0〜65°</b><span>前側可動天面の範囲</span></div>
@@ -216,6 +218,7 @@ figcaption { color:var(--mute); font-size:var(--fs-sm); margin-top:var(--sp-2); 
     !(D.print_review.parts[key].thin_under_1_2mm || []).some((item) => item.min_mm < 1.195));
   document.getElementById("requirements").innerHTML = [
     ["70mm角の箱", "閉じた外形を70 × 70 × 70mmにした", "model_report.json の外接箱"],
+    ["蓋の腕をC1と同じように天面へつなぐ", "厚さ3mmの腕を天面まで延ばした", "断面17か所で隙間0mm。交換用プレートを実物で確認"],
     ["前側天面0〜65°", "SG92Rと4節リンクで前側だけを動かす", `${V.motion.steps}姿勢で意図しない当たり ${V.motion.poses_with_hits.length}件`],
     ["後ろ固定天面", "外側の解除つまみを箱の中央へ押して上へ外す点検口", `解除変位 ${fmt(V.assembly.J_roof_release.delta_mm, 2)}mm。手操作は未確認`],
     ["印刷部品だけで固定", "圧入、バヨネット、スナップ、落とし込みを使用", "組み立て経路を工程ごとに判定"],

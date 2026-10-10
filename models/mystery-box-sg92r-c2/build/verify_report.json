@@ -1,9 +1,9 @@
 {
  "calibration": {
   "must_hit_link_plus1mm_vs_lid": {
-   "hits": 655,
+   "hits": 646,
    "depth": 0.7,
-   "contained_samples": 1608
+   "contained_samples": 1605
   },
   "must_not_hit_clip_vs_lid": {
    "hits": 0,
@@ -174,7 +174,7 @@
      "pair": "lid-box",
      "hits": 60,
      "depth": 0.018,
-     "contained_samples": 72,
+     "contained_samples": 69,
      "note": "閉姿勢の着座面"
     }
    ]
@@ -940,7 +940,7 @@
     "pair": "lid-box",
     "hits": 60,
     "depth": 0.018,
-    "contained_samples": 72,
+    "contained_samples": 69,
     "note": "閉姿勢の着座面"
    }
   ]
@@ -996,7 +996,7 @@
   "box-lid": {
    "hits": 60,
    "depth": 0.018,
-   "contained_samples": 72
+   "contained_samples": 69
   },
   "box-pin": {
    "hits": 471,
@@ -1059,7 +1059,7 @@
      "worst": {
       "link-lid": {
        "depth": 1.77,
-       "hits": 976,
+       "hits": 960,
        "at": 180.93
       }
      },
@@ -2846,7 +2846,7 @@
        "pull_mm": 0.0,
        "hits": 0,
        "depth": 0.0,
-       "contained_samples": 0
+       "contained_samples": 1
       },
       {
        "pull_mm": 0.25,
@@ -3161,7 +3161,7 @@
        "pull_mm": 5.0,
        "hits": 57,
        "depth": 1.45,
-       "contained_samples": 125
+       "contained_samples": 127
       },
       {
        "pull_mm": 5.25,
@@ -4820,7 +4820,7 @@
        "pull_mm": 1.0,
        "hits": 0,
        "depth": 0.0,
-       "contained_samples": 0
+       "contained_samples": 1
       },
       {
        "pull_mm": 1.25,
@@ -5192,7 +5192,7 @@
        "pull_mm": 0.25,
        "hits": 0,
        "depth": 0.0,
-       "contained_samples": 1
+       "contained_samples": 0
       },
       {
        "pull_mm": 0.5,
@@ -8909,7 +8909,7 @@
        "pull_mm": 0.75,
        "hits": 0,
        "depth": 0.0,
-       "contained_samples": 0
+       "contained_samples": 1
       },
       {
        "pull_mm": 1.0,
@@ -10658,7 +10658,7 @@
        "pull_mm": 0.5,
        "hits": 0,
        "depth": 0.0,
-       "contained_samples": 1
+       "contained_samples": 0
       },
       {
        "pull_mm": 0.75,
@@ -23723,7 +23723,7 @@
        "pull_mm": 0.5,
        "hits": 0,
        "depth": 0.0,
-       "contained_samples": 1
+       "contained_samples": 0
       },
       {
        "pull_mm": 0.75,
@@ -25673,7 +25673,7 @@
        "pull_mm": 0.5,
        "hits": 0,
        "depth": 0.0,
-       "contained_samples": 0
+       "contained_samples": 1
       },
       {
        "pull_mm": 0.75,
@@ -28218,14 +28218,14 @@
  },
  "mass": {
   "lid": {
-   "volume_mm3": 11618.1,
-   "mass_g": 14.41,
+   "volume_mm3": 11921.0,
+   "mass_g": 14.78,
    "com_mm": [
-    0.4,
-    7.89,
-    67.18
+    0.59,
+    7.79,
+    67.07
    ],
-   "ixx_com_mm5": 2665171.0517386235
+   "ixx_com_mm5": 2682194.7587875044
   },
   "crank": {
    "volume_mm3": 2194.1,
@@ -28836,28 +28836,6 @@
     "horizontal": false,
     "supported_edge_ratio": 0.0,
     "span_mm": 20.0
-   },
-   {
-    "area_mm2": 48.58,
-    "z": [
-     3.0,
-     13.06
-    ],
-    "bbox": [
-     [
-      7.3,
-      2.6,
-      6.2
-     ],
-     [
-      8.4,
-      11.0,
-      12.9
-     ]
-    ],
-    "horizontal": false,
-    "supported_edge_ratio": 0.29,
-    "span_mm": 8.46
    },
    {
     "area_mm2": 41.06,
@@ -29600,5 +29578,5 @@
    }
   ]
  },
- "elapsed_s": 74.3
+ "elapsed_s": 71.6
 }
