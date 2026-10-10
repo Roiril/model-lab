@@ -1,0 +1,653 @@
+{
+ "model": "mystery-box-sg92r-d1",
+ "parts": 8,
+ "support": {
+  "required": true,
+  "allowed_surface": "組立時に固定屋根で隠れる蓋内側のグースネック蝶番",
+  "PLA_used": "true",
+  "PETG_used": "true"
+ },
+ "slicing": {
+  "PLA": {
+   "prediction_s": 10590,
+   "weight_g": "142.36",
+   "filament": [
+    [
+     "46.97",
+     "142.36"
+    ]
+   ],
+   "support_region": {
+    "length_mm": 6058.65,
+    "bbox": {
+     "x": [
+      111.87,
+      160.55
+     ],
+     "y": [
+      131.96,
+      146.41
+     ],
+     "z": [
+      0.2,
+      8.4
+     ]
+    },
+    "lid_bbox_xy": [
+     96.1,
+     71.2,
+     176.1,
+     145.7
+    ],
+    "only_lid_xy": true
+   }
+  },
+  "PETG": {
+   "prediction_s": 11866,
+   "weight_g": "136.91",
+   "filament": [
+    [
+     "45.54",
+     "136.91"
+    ]
+   ],
+   "support_region": {
+    "length_mm": 6058.65,
+    "bbox": {
+     "x": [
+      111.87,
+      160.55
+     ],
+     "y": [
+      131.96,
+      146.41
+     ],
+     "z": [
+      0.2,
+      8.4
+     ]
+    },
+    "lid_bbox_xy": [
+     96.1,
+     71.2,
+     176.1,
+     145.7
+    ],
+    "only_lid_xy": true
+   }
+  }
+ },
+ "accepted_short_unsupported": {
+  "box_servo_shelf_mm": 6.1,
+  "box_roof_leg_receiver_mm": 3.8,
+  "roof_ear_hole_layer_step_mm": 0.9,
+  "pin_head_layer_step_mm": 0.56,
+  "limit_mm": 10.0
+ },
+ "floating_meter_limit": "floating_report does not include support extrusion in previous-layer coverage; support-enabled lid values are false positives. Use support_region from the actual G-code.",
+ "placements": {
+  "PLA": {
+   "objects": [
+    {
+     "id": "2",
+     "min": [
+      10.098700000000001,
+      71.2,
+      0.0
+     ],
+     "max": [
+      90.09870000000001,
+      151.2,
+      77.0
+     ],
+     "off_bed": false,
+     "excluded": false
+    },
+    {
+     "id": "4",
+     "min": [
+      96.09870000000001,
+      71.2,
+      0.0
+     ],
+     "max": [
+      176.0987,
+      145.7,
+      33.2999992
+     ],
+     "off_bed": false,
+     "excluded": false
+    },
+    {
+     "id": "6",
+     "min": [
+      182.0987004,
+      71.2,
+      0.0
+     ],
+     "max": [
+      203.89869960000001,
+      114.2,
+      5.1500001
+     ],
+     "off_bed": false,
+     "excluded": false
+    },
+    {
+     "id": "8",
+     "min": [
+      209.8986992,
+      71.2,
+      0.0
+     ],
+     "max": [
+      245.9013008,
+      109.5834,
+      11.6999998
+     ],
+     "off_bed": false,
+     "excluded": false
+    },
+    {
+     "id": "10",
+     "min": [
+      10.098699599999998,
+      157.1999998,
+      0.0
+     ],
+     "max": [
+      38.2987004,
+      184.8000002,
+      3.0
+     ],
+     "off_bed": false,
+     "excluded": false
+    },
+    {
+     "id": "12",
+     "min": [
+      44.2987,
+      157.20000040000002,
+      0.0
+     ],
+     "max": [
+      124.2987,
+      183.5265996,
+      41.0
+     ],
+     "off_bed": false,
+     "excluded": false
+    },
+    {
+     "id": "14",
+     "min": [
+      130.2986992,
+      157.2,
+      0.0
+     ],
+     "max": [
+      180.0499008,
+      169.2,
+      10.60000038
+     ],
+     "off_bed": false,
+     "excluded": false
+    },
+    {
+     "id": "16",
+     "min": [
+      186.0499008,
+      157.19999995,
+      0.0
+     ],
+     "max": [
+      243.6498992,
+      164.60000005,
+      4.5500002
+     ],
+     "off_bed": false,
+     "excluded": false
+    }
+   ],
+   "bbox_overlaps": [],
+   "ok": true
+  },
+  "PETG": {
+   "objects": [
+    {
+     "id": "2",
+     "min": [
+      10.098700000000001,
+      71.2,
+      0.0
+     ],
+     "max": [
+      90.09870000000001,
+      151.2,
+      77.0
+     ],
+     "off_bed": false,
+     "excluded": false
+    },
+    {
+     "id": "4",
+     "min": [
+      96.09870000000001,
+      71.2,
+      0.0
+     ],
+     "max": [
+      176.0987,
+      145.7,
+      33.2999992
+     ],
+     "off_bed": false,
+     "excluded": false
+    },
+    {
+     "id": "6",
+     "min": [
+      182.0987004,
+      71.2,
+      0.0
+     ],
+     "max": [
+      203.89869960000001,
+      114.2,
+      5.1500001
+     ],
+     "off_bed": false,
+     "excluded": false
+    },
+    {
+     "id": "8",
+     "min": [
+      209.8986992,
+      71.2,
+      0.0
+     ],
+     "max": [
+      245.9013008,
+      109.5834,
+      11.6999998
+     ],
+     "off_bed": false,
+     "excluded": false
+    },
+    {
+     "id": "10",
+     "min": [
+      10.098699599999998,
+      157.1999998,
+      0.0
+     ],
+     "max": [
+      38.2987004,
+      184.8000002,
+      3.0
+     ],
+     "off_bed": false,
+     "excluded": false
+    },
+    {
+     "id": "12",
+     "min": [
+      44.2987,
+      157.20000040000002,
+      0.0
+     ],
+     "max": [
+      124.2987,
+      183.5265996,
+      41.0
+     ],
+     "off_bed": false,
+     "excluded": false
+    },
+    {
+     "id": "14",
+     "min": [
+      130.2986992,
+      157.2,
+      0.0
+     ],
+     "max": [
+      180.0499008,
+      169.2,
+      10.60000038
+     ],
+     "off_bed": false,
+     "excluded": false
+    },
+    {
+     "id": "16",
+     "min": [
+      186.0499008,
+      157.19999995,
+      0.0
+     ],
+     "max": [
+      243.6498992,
+      164.60000005,
+      4.5500002
+     ],
+     "off_bed": false,
+     "excluded": false
+    }
+   ],
+   "bbox_overlaps": [],
+   "ok": true
+  },
+  "crank-test-PLA": {
+   "objects": [
+    {
+     "id": "2",
+     "min": [
+      109.9986992,
+      108.8083,
+      0.0
+     ],
+     "max": [
+      146.0013008,
+      147.1917,
+      11.6999998
+     ],
+     "off_bed": false,
+     "excluded": false
+    }
+   ],
+   "bbox_overlaps": [],
+   "ok": true
+  },
+  "joints-test-PLA": {
+   "objects": [
+    {
+     "id": "2",
+     "min": [
+      126.5,
+      122.0,
+      0.0
+     ],
+     "max": [
+      129.5,
+      134.0,
+      12.0
+     ],
+     "off_bed": false,
+     "excluded": false
+    }
+   ],
+   "bbox_overlaps": [],
+   "ok": true
+  },
+  "speaker-test-PLA": {
+   "objects": [
+    {
+     "id": "2",
+     "min": [
+      115.5,
+      107.5,
+      0.0
+     ],
+     "max": [
+      140.5,
+      148.5,
+      40.0
+     ],
+     "off_bed": false,
+     "excluded": false
+    }
+   ],
+   "bbox_overlaps": [],
+   "ok": true
+  },
+  "plate": {
+   "objects": [
+    {
+     "id": "1",
+     "min": [
+      10.098700000000001,
+      71.2,
+      0.0
+     ],
+     "max": [
+      90.09870000000001,
+      151.2,
+      77.0
+     ],
+     "off_bed": false,
+     "excluded": false
+    },
+    {
+     "id": "2",
+     "min": [
+      96.09870000000001,
+      71.2,
+      0.0
+     ],
+     "max": [
+      176.0987,
+      145.7,
+      33.3
+     ],
+     "off_bed": false,
+     "excluded": false
+    },
+    {
+     "id": "3",
+     "min": [
+      182.0987,
+      71.2,
+      0.0
+     ],
+     "max": [
+      203.89870000000002,
+      114.2,
+      5.15
+     ],
+     "off_bed": false,
+     "excluded": false
+    },
+    {
+     "id": "4",
+     "min": [
+      209.89870000000002,
+      71.2,
+      0.0
+     ],
+     "max": [
+      245.9013,
+      109.5834,
+      11.7
+     ],
+     "off_bed": false,
+     "excluded": false
+    },
+    {
+     "id": "5",
+     "min": [
+      10.0987,
+      157.2,
+      0.0
+     ],
+     "max": [
+      38.2987,
+      184.8,
+      3.0
+     ],
+     "off_bed": false,
+     "excluded": false
+    },
+    {
+     "id": "6",
+     "min": [
+      44.2987,
+      157.20000000000002,
+      0.0
+     ],
+     "max": [
+      124.2987,
+      183.5266,
+      41.0
+     ],
+     "off_bed": false,
+     "excluded": false
+    },
+    {
+     "id": "7",
+     "min": [
+      130.2987,
+      157.2,
+      0.0
+     ],
+     "max": [
+      180.04989999999998,
+      169.2,
+      10.6
+     ],
+     "off_bed": false,
+     "excluded": false
+    },
+    {
+     "id": "8",
+     "min": [
+      186.04989999999998,
+      157.20000000000002,
+      0.0
+     ],
+     "max": [
+      243.6499,
+      164.6,
+      4.55
+     ],
+     "off_bed": false,
+     "excluded": false
+    }
+   ],
+   "bbox_overlaps": [],
+   "ok": true
+  }
+ },
+ "files": [
+  {
+   "name": "box.stl",
+   "bytes": 42484,
+   "sha256": "ac1b74d22135024c20d22ac59f29e1a81598bc8651acd0c6a86089d42272f81c"
+  },
+  {
+   "name": "assembly/box.stl",
+   "bytes": 42484,
+   "sha256": "ac1b74d22135024c20d22ac59f29e1a81598bc8651acd0c6a86089d42272f81c"
+  },
+  {
+   "name": "lid.stl",
+   "bytes": 420684,
+   "sha256": "612c74234d0f5b841e2f2d33864b3b7298ef5320edbe4b7b39618a556479a05e"
+  },
+  {
+   "name": "assembly/lid.stl",
+   "bytes": 420684,
+   "sha256": "b15899840c39507d9fe6135ba91746b504bdcbbca23a3ac426fcd5bebd9cf009"
+  },
+  {
+   "name": "roof.stl",
+   "bytes": 78584,
+   "sha256": "a7600789250aa2515a8318291d5702e0fef2d9a76b258100e45e8ea9956b3692"
+  },
+  {
+   "name": "assembly/roof.stl",
+   "bytes": 78584,
+   "sha256": "12d04dadbd66ced8285508f7effc6d0db856c64be7d67c7a30e0d69bcb12e424"
+  },
+  {
+   "name": "crank.stl",
+   "bytes": 323284,
+   "sha256": "0a79eb62446393d0d34aff04e5dfd70032b15b76fcbbecda227fe8a5f8844440"
+  },
+  {
+   "name": "assembly/crank.stl",
+   "bytes": 323284,
+   "sha256": "c9931dce8e8626031b18cb7339b1003e6628e642f64a570d12ce2116bff3b32a"
+  },
+  {
+   "name": "link.stl",
+   "bytes": 217384,
+   "sha256": "0ed8ff284f6faa9e95704a9f1da47d03828ec1737329cf9087da38e5d9e0909c"
+  },
+  {
+   "name": "assembly/link.stl",
+   "bytes": 217384,
+   "sha256": "7fb6e704a1282230948ecd77ab56a4b85134ea89bba8eecbf82360818a61b7f1"
+  },
+  {
+   "name": "pin.stl",
+   "bytes": 55684,
+   "sha256": "a7b0f063ffe7e31e57cdffec92426dddccd4fe138ab30f9ecc13c9f6266524bb"
+  },
+  {
+   "name": "assembly/pin.stl",
+   "bytes": 55684,
+   "sha256": "e2945076b3d178012f190ba8f6b892de5617f6ef8b6badbb863e83a2b6860d3b"
+  },
+  {
+   "name": "clip.stl",
+   "bytes": 4484,
+   "sha256": "1f913680f1e50be16899359a76741f0a7099e3b9e31573696dd8f6ac4f6c179d"
+  },
+  {
+   "name": "assembly/clip.stl",
+   "bytes": 4484,
+   "sha256": "360626de5ecb02a133e33be2ff66cf30134a8196d5f496a027bd9c9b830aa1b5"
+  },
+  {
+   "name": "speaker_clip.stl",
+   "bytes": 5484,
+   "sha256": "28e3fd0d35a233c534bf5e4967b964d200569b9dab30c99c118cd6da15bea84a"
+  },
+  {
+   "name": "assembly/speaker_clip.stl",
+   "bytes": 5484,
+   "sha256": "f4229ab40f4fc40f1d857eac0defe45591571165432c2947a9c346c37f0806d4"
+  },
+  {
+   "name": "joint_b_test.stl",
+   "bytes": 33684,
+   "sha256": "60545a840e2840f3933c8cf821926d159271264a41c0a2117b8b7474e8b21b8f"
+  },
+  {
+   "name": "speaker_test.stl",
+   "bytes": 12384,
+   "sha256": "0cee7e2ad7fce1f613f08318096718e7d8f70b36c1b49445bd73f3dbf5299172"
+  },
+  {
+   "name": "mystery-box-sg92r-d1-PLA.gcode.3mf",
+   "bytes": 1055030,
+   "sha256": "72b0d51ec35310c3422aeab7f26bc3cd01cab69900a41cc11fc9586ed1c6e113"
+  },
+  {
+   "name": "mystery-box-sg92r-d1-PETG.gcode.3mf",
+   "bytes": 1050865,
+   "sha256": "b48f920055a787d51879859b42bac3ded43b2d21b96dd4365861614dc69f7fc5"
+  },
+  {
+   "name": "mystery-box-sg92r-d1-crank-test-PLA.gcode.3mf",
+   "bytes": 206029,
+   "sha256": "791edbf89c95d85ebf502bb7045a8e2b6e2bf10118cea291aa1715aecf972515"
+  },
+  {
+   "name": "mystery-box-sg92r-d1-joints-test-PLA.gcode.3mf",
+   "bytes": 66269,
+   "sha256": "b4b295c26da935a57e1d5d1073370a281df8d7e54db0dbea04c46bf9e88252b0"
+  },
+  {
+   "name": "mystery-box-sg92r-d1-speaker-test-PLA.gcode.3mf",
+   "bytes": 95010,
+   "sha256": "cae3574eafe32d354226e33d33d3bc5ab9d3ae22b864cd5706f74c5b1b70a3af"
+  },
+  {
+   "name": "mystery-box-sg92r-d1-plate.3mf",
+   "bytes": 222496,
+   "sha256": "c5af27043a63e805b6b5fa57f19b66ca9b5d8485fd70f4d34d75d83ca2522a5d"
+  }
+ ]
+}

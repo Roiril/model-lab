@@ -23,6 +23,8 @@ export const WORKSPACE_PAGES = Object.freeze({
   'servo-lid-cube': Object.freeze({ physics: '/viewer/lid-cube/physics.html', assembly: '/viewer/lid-cube/assembly.html' }),
   'mystery-box-sg92r-c1': Object.freeze({ physics: '/viewer/lid-cube/physics.html', assembly: '/viewer/lid-cube/assembly.html' }),
   'mystery-box-sg92r-c2': Object.freeze({ physics: '/viewer/lid-cube/physics.html', assembly: '/viewer/lid-cube/assembly.html' }),
+  'mystery-box-sg92r-d1': Object.freeze({ physics: '/viewer/d-cube/physics.html', assembly: '/viewer/d-cube/assembly.html' }),
+  'mystery-box-sg92r-d2': Object.freeze({ physics: '/viewer/d-cube/physics.html', assembly: '/viewer/d-cube/assembly.html' }),
 });
 
 export function hasWorkspace(mode, model) {

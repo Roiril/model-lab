@@ -1,0 +1,1881 @@
+{
+ "calibration": {
+  "closed": {
+   "triangles": 4,
+   "nonmanifold_edges": 0,
+   "winding_mismatches": 0,
+   "duplicate_faces": 0,
+   "degenerate_faces": 0,
+   "ok": true
+  },
+  "open": {
+   "triangles": 3,
+   "nonmanifold_edges": 3,
+   "winding_mismatches": 3,
+   "duplicate_faces": 0,
+   "degenerate_faces": 0,
+   "ok": false
+  },
+  "overlap_mm3": 0.9999999999999994,
+  "separated_mm3": 0.0,
+  "contained_mm3": 1.0,
+  "ok": true,
+  "exterior": {
+   "closed_ok": true,
+   "missing_face_ok": false,
+   "missing_face_detected": 6160
+  }
+ },
+ "topology": {
+  "box": {
+   "triangles": 878,
+   "nonmanifold_edges": 0,
+   "winding_mismatches": 0,
+   "duplicate_faces": 0,
+   "degenerate_faces": 0,
+   "ok": true
+  },
+  "lid": {
+   "triangles": 8412,
+   "nonmanifold_edges": 0,
+   "winding_mismatches": 0,
+   "duplicate_faces": 0,
+   "degenerate_faces": 0,
+   "ok": true
+  },
+  "roof": {
+   "triangles": 1568,
+   "nonmanifold_edges": 0,
+   "winding_mismatches": 0,
+   "duplicate_faces": 0,
+   "degenerate_faces": 0,
+   "ok": true
+  },
+  "crank": {
+   "triangles": 6464,
+   "nonmanifold_edges": 0,
+   "winding_mismatches": 0,
+   "duplicate_faces": 0,
+   "degenerate_faces": 0,
+   "ok": true
+  },
+  "link": {
+   "triangles": 4406,
+   "nonmanifold_edges": 0,
+   "winding_mismatches": 0,
+   "duplicate_faces": 0,
+   "degenerate_faces": 0,
+   "ok": true
+  },
+  "pin": {
+   "triangles": 1112,
+   "nonmanifold_edges": 0,
+   "winding_mismatches": 0,
+   "duplicate_faces": 0,
+   "degenerate_faces": 0,
+   "ok": true
+  },
+  "clip": {
+   "triangles": 96,
+   "nonmanifold_edges": 0,
+   "winding_mismatches": 0,
+   "duplicate_faces": 0,
+   "degenerate_faces": 0,
+   "ok": true
+  },
+  "speaker_clip": {
+   "triangles": 108,
+   "nonmanifold_edges": 0,
+   "winding_mismatches": 0,
+   "duplicate_faces": 0,
+   "degenerate_faces": 0,
+   "ok": true
+  }
+ },
+ "mass": {
+  "box": {
+   "volume_mm3": 118243.86709788942,
+   "mass_g": 146.62239520138286,
+   "com_mm": [
+    -2.2928736209869385,
+    3.2067790031433105,
+    27.288955688476562
+   ],
+   "ixx_com_mm5": 145846304.92195296
+  },
+  "lid": {
+   "volume_mm3": 12285.757437597658,
+   "mass_g": 15.234339222621095,
+   "com_mm": [
+    0.40395811200141907,
+    13.862228393554688,
+    75.3103256225586
+   ],
+   "ixx_com_mm5": 3644511.4529990978
+  },
+  "roof": {
+   "volume_mm3": 11778.538625667532,
+   "mass_g": 14.60538789582774,
+   "com_mm": [
+    -2.4873097572708502e-06,
+    -16.961509704589844,
+    75.26241302490234
+   ],
+   "ixx_com_mm5": 2822391.6450465024
+  },
+  "crank": {
+   "volume_mm3": 2194.083539278386,
+   "mass_g": 2.720663588705199,
+   "com_mm": [
+    1.7178958654403687,
+    5.942681789398193,
+    27.797048568725586
+   ],
+   "ixx_com_mm5": 415463.9210531354
+  },
+  "link": {
+   "volume_mm3": 1375.3204616188748,
+   "mass_g": 1.7053973724074045,
+   "com_mm": [
+    5.121449947357178,
+    -3.0894124507904053,
+    35.52790832519531
+   ],
+   "ixx_com_mm5": 321934.9280084981
+  },
+  "pin": {
+   "volume_mm3": 1058.7047193249036,
+   "mass_g": 1.3127938519628803,
+   "com_mm": [
+    1.1189215183258057,
+    -12.999993324279785,
+    74.11750793457031
+   ],
+   "ixx_com_mm5": 3308.0371589827446
+  },
+  "clip": {
+   "volume_mm3": 1169.267121315003,
+   "mass_g": 1.4498912304306035,
+   "com_mm": [
+    -20.424997329711914,
+    12.928047180175781,
+    33.09434509277344
+   ],
+   "ixx_com_mm5": 308806.1755594123
+  },
+  "speaker_clip": {
+   "volume_mm3": 817.7925232648847,
+   "mass_g": 1.0140627288484572,
+   "com_mm": [
+    25.59819221496582,
+    16.000001907348633,
+    24.17840003967285
+   ],
+   "ixx_com_mm5": 155236.24464683153
+  },
+  "ref_body": {
+   "volume_mm3": 6828.631009849879,
+   "mass_g": 8.46750245221385,
+   "com_mm": [
+    -18.843631744384766,
+    13.978864669799805,
+    30.60004234313965
+   ],
+   "ixx_com_mm5": 397038.3450851879
+  },
+  "ref_horn": {
+   "volume_mm3": 369.5820917162152,
+   "mass_g": 0.4582817937281068,
+   "com_mm": [
+    -0.9405336976051331,
+    9.464397430419922,
+    31.026994705200195
+   ],
+   "ixx_com_mm5": 23000.50690217688
+  },
+  "ref_wire": {
+   "volume_mm3": 43.51681480805087,
+   "mass_g": 0.05396085036198307,
+   "com_mm": [
+    -26.500049591064453,
+    -0.9000253677368164,
+    30.6000919342041
+   ],
+   "ixx_com_mm5": 284.26400997491925
+  },
+  "ref_speaker": {
+   "volume_mm3": 4905.209589640299,
+   "mass_g": 6.08245989115397,
+   "com_mm": [
+    32.000064849853516,
+    16.000001907348633,
+    20.000011444091797
+   ],
+   "ixx_com_mm5": 382946.8008023131
+  }
+ },
+ "exterior": {
+  "ok": true,
+  "bbox_mm": [
+   [
+    -40.0,
+    -40.0,
+    0.0
+   ],
+   [
+    40.0,
+    40.0,
+    80.0
+   ]
+  ],
+  "size_mm": [
+   80.0,
+   80.0,
+   80.0
+  ],
+  "checked": 38318,
+  "passed": 38318,
+  "seam_samples": 82,
+  "top_seam_y_mm": [
+   2.4776999950408936,
+   2.9059998989105225
+  ],
+  "failures": [],
+  "note": "1mm格子の面確認。継ぎ目は除外。STLの多様体検査を併用。"
+ },
+ "input_sha256": {
+  "box": "6396dcd65c20cf14cf4f1c6dd34fdb5d2e43a0047d6a3f5f1e015fca5a96ca3a",
+  "lid": "f53b96d1f93c5b5c43eee5c42be4408459d3e4b066b66528ee505019b468422c",
+  "roof": "e6668280550e46a5d893dfe38a2de461dc1974e65f3eb18e589bb57402cd83db",
+  "crank": "f7562ce2b62222edfddfd5b98222d76fa15e77801d55d1216f96315816f4fe75",
+  "link": "4369412bd240363ee21518d7f0778f7ee47cc29fe7490acc7445dc0206c9f611",
+  "pin": "52a2d5ab481dbc2776bea15b6eb221c3b283aa40a407a49df800c7a957c3daa5",
+  "clip": "d65a8a5f42db5cb8edf097715fd51461d35be121ccdfb6959484215471400b24",
+  "speaker_clip": "f4229ab40f4fc40f1d857eac0defe45591571165432c2947a9c346c37f0806d4",
+  "ref_body": "93e87b1cc59ec6648860974ce2f67eeb0faaee0667e751f9b808914b5e324f35",
+  "ref_horn": "c9ff1898864b43599777131df2051501e0e75fd9233112be03b9581225fd93e3",
+  "ref_wire": "e53b7118db160f8efd1d44abefd13ef3fb75673944121973ce58f3b4298bbe6e",
+  "ref_speaker": "53f8853cd70961372defb42f63b9ceb133915e95fd4e501c59951376c44cc098"
+ },
+ "motion": {
+  "ok": true,
+  "samples": 27,
+  "step_deg": 2.5,
+  "intersection_tests": 999,
+  "tolerance_mm3": 0.0001,
+  "worst": {
+   "box-lid": {
+    "theta": 0.0,
+    "volume_mm3": 1.5365625438690245e-12
+   },
+   "box-crank": {
+    "theta": 0.0,
+    "volume_mm3": 0.0
+   },
+   "box-link": {
+    "theta": 0.0,
+    "volume_mm3": 0.0
+   },
+   "box-ref_horn": {
+    "theta": 0.0,
+    "volume_mm3": 0.0
+   },
+   "lid-roof": {
+    "theta": 0.0,
+    "volume_mm3": 0.0
+   },
+   "lid-crank": {
+    "theta": 0.0,
+    "volume_mm3": 0.0
+   },
+   "lid-link": {
+    "theta": 0.0,
+    "volume_mm3": 0.0
+   },
+   "lid-pin": {
+    "theta": 0.0,
+    "volume_mm3": 0.0
+   },
+   "lid-clip": {
+    "theta": 0.0,
+    "volume_mm3": 0.0
+   },
+   "lid-speaker_clip": {
+    "theta": 0.0,
+    "volume_mm3": 0.0
+   },
+   "lid-ref_body": {
+    "theta": 0.0,
+    "volume_mm3": 0.0
+   },
+   "lid-ref_horn": {
+    "theta": 0.0,
+    "volume_mm3": 0.0
+   },
+   "lid-ref_wire": {
+    "theta": 0.0,
+    "volume_mm3": 0.0
+   },
+   "lid-ref_speaker": {
+    "theta": 0.0,
+    "volume_mm3": 0.0
+   },
+   "roof-crank": {
+    "theta": 0.0,
+    "volume_mm3": 0.0
+   },
+   "roof-link": {
+    "theta": 0.0,
+    "volume_mm3": 0.0
+   },
+   "roof-ref_horn": {
+    "theta": 0.0,
+    "volume_mm3": 0.0
+   },
+   "crank-link": {
+    "theta": 0.0,
+    "volume_mm3": 0.0
+   },
+   "crank-pin": {
+    "theta": 0.0,
+    "volume_mm3": 0.0
+   },
+   "crank-clip": {
+    "theta": 0.0,
+    "volume_mm3": 0.0
+   },
+   "crank-speaker_clip": {
+    "theta": 0.0,
+    "volume_mm3": 0.0
+   },
+   "crank-ref_body": {
+    "theta": 0.0,
+    "volume_mm3": 0.0
+   },
+   "crank-ref_horn": {
+    "theta": 17.5,
+    "volume_mm3": 9.182066581349749e-07
+   },
+   "crank-ref_wire": {
+    "theta": 0.0,
+    "volume_mm3": 0.0
+   },
+   "crank-ref_speaker": {
+    "theta": 0.0,
+    "volume_mm3": 0.0
+   },
+   "link-pin": {
+    "theta": 0.0,
+    "volume_mm3": 0.0
+   },
+   "link-clip": {
+    "theta": 0.0,
+    "volume_mm3": 0.0
+   },
+   "link-speaker_clip": {
+    "theta": 0.0,
+    "volume_mm3": 0.0
+   },
+   "link-ref_body": {
+    "theta": 0.0,
+    "volume_mm3": 0.0
+   },
+   "link-ref_horn": {
+    "theta": 0.0,
+    "volume_mm3": 0.0
+   },
+   "link-ref_wire": {
+    "theta": 0.0,
+    "volume_mm3": 0.0
+   },
+   "link-ref_speaker": {
+    "theta": 0.0,
+    "volume_mm3": 0.0
+   },
+   "pin-ref_horn": {
+    "theta": 0.0,
+    "volume_mm3": 0.0
+   },
+   "clip-ref_horn": {
+    "theta": 0.0,
+    "volume_mm3": 0.0
+   },
+   "speaker_clip-ref_horn": {
+    "theta": 0.0,
+    "volume_mm3": 0.0
+   },
+   "ref_horn-ref_wire": {
+    "theta": 0.0,
+    "volume_mm3": 0.0
+   },
+   "ref_horn-ref_speaker": {
+    "theta": 0.0,
+    "volume_mm3": 0.0
+   }
+  },
+  "min_clearance_mm": {
+   "lid-roof": 0.2,
+   "link-lid": 0.197,
+   "link-crank": 0.194
+  },
+  "failures": [],
+  "hardware_mating": {
+   "pair": [
+    "ref_body",
+    "ref_horn"
+   ],
+   "status": "excluded_manufactured_mating",
+   "reason": "既製サーボ軸と付属ホーンの嵌合は設計対象外。参照STLのEXACT交差は順序で異なる値になった。印刷部品との交差にはこの除外を適用しない。",
+   "sha256": {
+    "ref_body": "93e87b1cc59ec6648860974ce2f67eeb0faaee0667e751f9b808914b5e324f35",
+    "ref_horn": "c9ff1898864b43599777131df2051501e0e75fd9233112be03b9581225fd93e3"
+   },
+   "diagnostic_mm3": [
+    6828.606520743094,
+    0.026232146481600438
+   ]
+  },
+  "hardware_mating_note": "SG92Rの正本は歯形を再現していない。既製品同士の嵌合の成功は判定しない。"
+ },
+ "assembly": {
+  "ok": true,
+  "status": "verified",
+  "checked": 55,
+  "passed": 55,
+  "failures": [],
+  "physical_tested": false,
+  "calibration": {
+   "ok": true,
+   "checked": 3,
+   "passed": 3,
+   "overlap_mm3": 0.9999999999999994,
+   "contained_mm3": 1.0,
+   "separated_mm3": 0.0,
+   "note": "既知の1mm³交差、1mm³内包、非交差でEXACT交差計器を校正。"
+  },
+  "unit_and_roof": {
+   "ok": true,
+   "checked": 4,
+   "passed": 4,
+   "failures": [],
+   "setup_lid_deg": 65.0,
+   "insertion": {
+    "ok": true,
+    "samples": 44,
+    "intersection_tests": 1056,
+    "tolerance_mm3": 0.0001,
+    "worst": {
+     "lid-box": {
+      "at": 80,
+      "volume_mm3": 0.0
+     },
+     "lid-speaker_clip": {
+      "at": 80,
+      "volume_mm3": 0.0
+     },
+     "lid-ref_speaker": {
+      "at": 80,
+      "volume_mm3": 0.0
+     },
+     "roof-box": {
+      "at": 80,
+      "volume_mm3": 0.0
+     },
+     "roof-speaker_clip": {
+      "at": 80,
+      "volume_mm3": 0.0
+     },
+     "roof-ref_speaker": {
+      "at": 80,
+      "volume_mm3": 0.0
+     },
+     "pin-box": {
+      "at": 80,
+      "volume_mm3": 0.0
+     },
+     "pin-speaker_clip": {
+      "at": 80,
+      "volume_mm3": 0.0
+     },
+     "pin-ref_speaker": {
+      "at": 80,
+      "volume_mm3": 0.0
+     },
+     "crank-box": {
+      "at": 80,
+      "volume_mm3": 0.0
+     },
+     "crank-speaker_clip": {
+      "at": 80,
+      "volume_mm3": 0.0
+     },
+     "crank-ref_speaker": {
+      "at": 80,
+      "volume_mm3": 0.0
+     },
+     "link-box": {
+      "at": 80,
+      "volume_mm3": 0.0
+     },
+     "link-speaker_clip": {
+      "at": 80,
+      "volume_mm3": 0.0
+     },
+     "link-ref_speaker": {
+      "at": 80,
+      "volume_mm3": 0.0
+     },
+     "ref_body-box": {
+      "at": 80,
+      "volume_mm3": 0.0
+     },
+     "ref_body-speaker_clip": {
+      "at": 80,
+      "volume_mm3": 0.0
+     },
+     "ref_body-ref_speaker": {
+      "at": 80,
+      "volume_mm3": 0.0
+     },
+     "ref_horn-box": {
+      "at": 80,
+      "volume_mm3": 0.0
+     },
+     "ref_horn-speaker_clip": {
+      "at": 80,
+      "volume_mm3": 0.0
+     },
+     "ref_horn-ref_speaker": {
+      "at": 80,
+      "volume_mm3": 0.0
+     },
+     "ref_wire-box": {
+      "at": 80,
+      "volume_mm3": 0.0
+     },
+     "ref_wire-speaker_clip": {
+      "at": 80,
+      "volume_mm3": 0.0
+     },
+     "ref_wire-ref_speaker": {
+      "at": 80,
+      "volume_mm3": 0.0
+     }
+    },
+    "failures": []
+   },
+   "roof_snap": {
+    "ok": true,
+    "pressed_intersection_mm3": 0.0,
+    "restored_intersection_mm3": 0.0,
+    "first_block": {
+     "lift_mm": 2.5,
+     "volume_mm3": 0.039998779306406496
+    },
+    "restored_pull": [
+     {
+      "lift_mm": 0.0,
+      "volume_mm3": 0.0
+     },
+     {
+      "lift_mm": 0.25,
+      "volume_mm3": 0.0
+     },
+     {
+      "lift_mm": 0.5,
+      "volume_mm3": 0.0
+     },
+     {
+      "lift_mm": 0.75,
+      "volume_mm3": 0.0
+     },
+     {
+      "lift_mm": 1.0,
+      "volume_mm3": 0.0
+     },
+     {
+      "lift_mm": 1.25,
+      "volume_mm3": 0.0
+     },
+     {
+      "lift_mm": 1.5,
+      "volume_mm3": 0.0
+     },
+     {
+      "lift_mm": 1.75,
+      "volume_mm3": 0.0
+     },
+     {
+      "lift_mm": 2.0,
+      "volume_mm3": 0.0
+     },
+     {
+      "lift_mm": 2.25,
+      "volume_mm3": 0.0
+     },
+     {
+      "lift_mm": 2.5,
+      "volume_mm3": 0.039998779306406496
+     },
+     {
+      "lift_mm": 2.75,
+      "volume_mm3": 0.48999572754832244
+     },
+     {
+      "lift_mm": 3.0,
+      "volume_mm3": 1.439992675790793
+     },
+     {
+      "lift_mm": 3.25,
+      "volume_mm3": 2.87998992920632
+     },
+     {
+      "lift_mm": 3.5,
+      "volume_mm3": 4.4799884033269555
+     },
+     {
+      "lift_mm": 3.75,
+      "volume_mm3": 6.079986877448431
+     },
+     {
+      "lift_mm": 4.0,
+      "volume_mm3": 7.679985351569374
+     },
+     {
+      "lift_mm": 4.25,
+      "volume_mm3": 9.27998382569041
+     },
+     {
+      "lift_mm": 4.5,
+      "volume_mm3": 10.879982299811504
+     },
+     {
+      "lift_mm": 4.75,
+      "volume_mm3": 12.479980773932839
+     },
+     {
+      "lift_mm": 5.0,
+      "volume_mm3": 14.079979248053826
+     },
+     {
+      "lift_mm": 5.25,
+      "volume_mm3": 15.3599829101584
+     },
+     {
+      "lift_mm": 5.5,
+      "volume_mm3": 15.359982910158408
+     },
+     {
+      "lift_mm": 5.75,
+      "volume_mm3": 15.359982910158294
+     },
+     {
+      "lift_mm": 6.0,
+      "volume_mm3": 15.359982910158418
+     },
+     {
+      "lift_mm": 6.25,
+      "volume_mm3": 15.35998291015829
+     },
+     {
+      "lift_mm": 6.5,
+      "volume_mm3": 15.35998291015839
+     },
+     {
+      "lift_mm": 6.75,
+      "volume_mm3": 15.359982910158399
+     },
+     {
+      "lift_mm": 7.0,
+      "volume_mm3": 15.359982910158399
+     },
+     {
+      "lift_mm": 7.25,
+      "volume_mm3": 15.359982910158541
+     },
+     {
+      "lift_mm": 7.5,
+      "volume_mm3": 15.359982910158285
+     },
+     {
+      "lift_mm": 7.75,
+      "volume_mm3": 15.359982910158399
+     },
+     {
+      "lift_mm": 8.0,
+      "volume_mm3": 15.359982910158408
+     },
+     {
+      "lift_mm": 8.25,
+      "volume_mm3": 15.359982910158408
+     },
+     {
+      "lift_mm": 8.5,
+      "volume_mm3": 15.359982910158408
+     },
+     {
+      "lift_mm": 8.75,
+      "volume_mm3": 15.359982910158408
+     },
+     {
+      "lift_mm": 9.0,
+      "volume_mm3": 15.359982910158408
+     },
+     {
+      "lift_mm": 9.25,
+      "volume_mm3": 15.359982910158408
+     },
+     {
+      "lift_mm": 9.5,
+      "volume_mm3": 15.359982910158408
+     },
+     {
+      "lift_mm": 9.75,
+      "volume_mm3": 15.359982910158408
+     }
+    ],
+    "release": {
+     "ok": true,
+     "samples": 30,
+     "intersection_tests": 30,
+     "tolerance_mm3": 0.0001,
+     "worst": {
+      "roof-box": {
+       "at": 0.0,
+       "volume_mm3": 0.0
+      }
+     },
+     "failures": []
+    },
+    "deformation": {
+     "deflection_mm": 1.12,
+     "free_span_mm": 26.0,
+     "estimated_strain_pct": 0.497,
+     "estimate_limit_pct": 2.0,
+     "estimate_ok": true
+    }
+   },
+   "note": "箱外で結合したroof/lid/pinとB/A、SGホーン、サーボ一式を上から下降。roof爪だけを幾何学変形。"
+  },
+  "hinge_pin": {
+   "ok": true,
+   "checked": 5,
+   "passed": 5,
+   "failures": [],
+   "setup_lid_deg": 75.0,
+   "travel_mm": 70.8,
+   "insertion": {
+    "ok": true,
+    "samples": 144,
+    "intersection_tests": 288,
+    "tolerance_mm3": 0.0001,
+    "worst": {
+     "pin-roof": {
+      "at": 70.8,
+      "volume_mm3": 0.0
+     },
+     "pin-lid": {
+      "at": 70.8,
+      "volume_mm3": 0.0
+     }
+    },
+    "failures": []
+   },
+   "pressed_intersection_mm3": 0.0,
+   "restored_intersection_mm3": {
+    "roof": 0.0,
+    "lid": 0.0
+   },
+   "first_block": {
+    "pull_mm": 0.75,
+    "volume_mm3": 0.06088537348285864,
+    "by_part": {
+     "roof": 0.06088537348285864,
+     "lid": 0.0
+    }
+   },
+   "restored_pull": [
+    {
+     "pull_mm": 0.0,
+     "volume_mm3": 0.0,
+     "by_part": {
+      "roof": 0.0,
+      "lid": 0.0
+     }
+    },
+    {
+     "pull_mm": 0.25,
+     "volume_mm3": 0.0,
+     "by_part": {
+      "roof": 0.0,
+      "lid": 0.0
+     }
+    },
+    {
+     "pull_mm": 0.5,
+     "volume_mm3": 0.0,
+     "by_part": {
+      "roof": 0.0,
+      "lid": 0.0
+     }
+    },
+    {
+     "pull_mm": 0.75,
+     "volume_mm3": 0.06088537348285864,
+     "by_part": {
+      "roof": 0.06088537348285864,
+      "lid": 0.0
+     }
+    },
+    {
+     "pull_mm": 1.0,
+     "volume_mm3": 0.16236108401873542,
+     "by_part": {
+      "roof": 0.16236108401873542,
+      "lid": 0.0
+     }
+    },
+    {
+     "pull_mm": 1.25,
+     "volume_mm3": 0.2638369373623734,
+     "by_part": {
+      "roof": 0.2638369373623734,
+      "lid": 0.0
+     }
+    },
+    {
+     "pull_mm": 1.5,
+     "volume_mm3": 0.3653124107742181,
+     "by_part": {
+      "roof": 0.3653124107742181,
+      "lid": 0.0
+     }
+    },
+    {
+     "pull_mm": 1.75,
+     "volume_mm3": 0.4667884145258371,
+     "by_part": {
+      "roof": 0.4667884145258371,
+      "lid": 0.0
+     }
+    },
+    {
+     "pull_mm": 2.0,
+     "volume_mm3": 0.4870834308329395,
+     "by_part": {
+      "roof": 0.4870834308329395,
+      "lid": 0.0
+     }
+    },
+    {
+     "pull_mm": 2.25,
+     "volume_mm3": 0.4870830355740511,
+     "by_part": {
+      "roof": 0.4870830355740511,
+      "lid": 0.0
+     }
+    },
+    {
+     "pull_mm": 2.5,
+     "volume_mm3": 0.4870828874760776,
+     "by_part": {
+      "roof": 0.4870828874760776,
+      "lid": 0.0
+     }
+    },
+    {
+     "pull_mm": 2.75,
+     "volume_mm3": 0.48708363958869405,
+     "by_part": {
+      "roof": 0.48708363958869405,
+      "lid": 0.0
+     }
+    },
+    {
+     "pull_mm": 3.0,
+     "volume_mm3": 0.4870830550359624,
+     "by_part": {
+      "roof": 0.4870830550359624,
+      "lid": 0.0
+     }
+    },
+    {
+     "pull_mm": 3.25,
+     "volume_mm3": 0.48708285660129896,
+     "by_part": {
+      "roof": 0.48708285660129896,
+      "lid": 0.0
+     }
+    }
+   ],
+   "deformation": {
+    "radial_deflection_mm": 0.15,
+    "insertion_clearance_mm": 0.05,
+    "flexible_length_mm": 7.0,
+    "estimated_strain_pct": 1.0561,
+    "estimate_limit_pct": 2.0,
+    "estimate_ok": true
+   },
+   "note": "割り先端を穴径より0.05mm小さく幾何学圧縮して挿入。静止位置で復元し、引抜き経路のEXACT交差を保持として測定。"
+  },
+  "b_joint": {
+   "ok": true,
+   "checked": 8,
+   "passed": 8,
+   "failures": [],
+   "key_link_deg": -160.0,
+   "insertion": {
+    "ok": true,
+    "samples": 33,
+    "intersection_tests": 33,
+    "tolerance_mm3": 0.0001,
+    "worst": {
+     "link-lid": {
+      "at": -8.0,
+      "volume_mm3": 0.0
+     }
+    },
+    "failures": []
+   },
+   "turn": {
+    "ok": true,
+    "chosen_delta_deg": -139.7963,
+    "candidates": [
+     {
+      "delta_deg": 220.2037,
+      "mean_a_z_mm": 97.4373,
+      "ok": false,
+      "samples": 90,
+      "intersection_tests": 90,
+      "tolerance_mm3": 0.0001,
+      "worst": {
+       "link-lid": {
+        "at": 103.9163,
+        "volume_mm3": 115.83465570990472
+       }
+      },
+      "failures": [
+       {
+        "pair": "link-lid",
+        "at": 103.9163,
+        "volume_mm3": 115.83465570990472
+       }
+      ]
+     },
+     {
+      "delta_deg": -139.7963,
+      "mean_a_z_mm": 59.2326,
+      "ok": true,
+      "samples": 57,
+      "intersection_tests": 57,
+      "tolerance_mm3": 0.0001,
+      "worst": {
+       "link-lid": {
+        "at": -0.0,
+        "volume_mm3": 0.0
+       }
+      },
+      "failures": []
+     }
+    ]
+   },
+   "retention": {
+    "ok": true,
+    "pin_exit_mm": 7.3,
+    "operating": [
+     {
+      "theta_deg": 0.0,
+      "ok": true,
+      "first_contact_mm": 1.25,
+      "max_intersection_mm3": 5.044859789183594
+     },
+     {
+      "theta_deg": 16.25,
+      "ok": true,
+      "first_contact_mm": 1.25,
+      "max_intersection_mm3": 6.89314217962694
+     },
+     {
+      "theta_deg": 32.5,
+      "ok": true,
+      "first_contact_mm": 1.25,
+      "max_intersection_mm3": 6.995789609249059
+     },
+     {
+      "theta_deg": 48.75,
+      "ok": true,
+      "first_contact_mm": 1.25,
+      "max_intersection_mm3": 6.9957247444309765
+     },
+     {
+      "theta_deg": 65.0,
+      "ok": true,
+      "first_contact_mm": 1.25,
+      "max_intersection_mm3": 6.99557770945789
+     }
+    ],
+    "key_withdrawal_clear": true,
+    "key_withdrawal": [
+     {
+      "pull_mm": 0.0,
+      "volume_mm3": 0.0
+     },
+     {
+      "pull_mm": 0.25,
+      "volume_mm3": 0.0
+     },
+     {
+      "pull_mm": 0.5,
+      "volume_mm3": 0.0
+     },
+     {
+      "pull_mm": 0.75,
+      "volume_mm3": 0.0
+     },
+     {
+      "pull_mm": 1.0,
+      "volume_mm3": 0.0
+     },
+     {
+      "pull_mm": 1.25,
+      "volume_mm3": 0.0
+     },
+     {
+      "pull_mm": 1.5,
+      "volume_mm3": 0.0
+     },
+     {
+      "pull_mm": 1.75,
+      "volume_mm3": 0.0
+     },
+     {
+      "pull_mm": 2.0,
+      "volume_mm3": 0.0
+     },
+     {
+      "pull_mm": 2.25,
+      "volume_mm3": 0.0
+     },
+     {
+      "pull_mm": 2.5,
+      "volume_mm3": 0.0
+     },
+     {
+      "pull_mm": 2.75,
+      "volume_mm3": 0.0
+     },
+     {
+      "pull_mm": 3.0,
+      "volume_mm3": 0.0
+     },
+     {
+      "pull_mm": 3.25,
+      "volume_mm3": 0.0
+     },
+     {
+      "pull_mm": 3.5,
+      "volume_mm3": 0.0
+     },
+     {
+      "pull_mm": 3.75,
+      "volume_mm3": 0.0
+     },
+     {
+      "pull_mm": 4.0,
+      "volume_mm3": 0.0
+     },
+     {
+      "pull_mm": 4.25,
+      "volume_mm3": 0.0
+     },
+     {
+      "pull_mm": 4.5,
+      "volume_mm3": 0.0
+     },
+     {
+      "pull_mm": 4.75,
+      "volume_mm3": 0.0
+     },
+     {
+      "pull_mm": 5.0,
+      "volume_mm3": 0.0
+     },
+     {
+      "pull_mm": 5.25,
+      "volume_mm3": 0.0
+     },
+     {
+      "pull_mm": 5.5,
+      "volume_mm3": 0.0
+     },
+     {
+      "pull_mm": 5.75,
+      "volume_mm3": 0.0
+     },
+     {
+      "pull_mm": 6.0,
+      "volume_mm3": 0.0
+     },
+     {
+      "pull_mm": 6.25,
+      "volume_mm3": 0.0
+     },
+     {
+      "pull_mm": 6.5,
+      "volume_mm3": 0.0
+     },
+     {
+      "pull_mm": 6.75,
+      "volume_mm3": 0.0
+     },
+     {
+      "pull_mm": 7.0,
+      "volume_mm3": 0.0
+     },
+     {
+      "pull_mm": 7.25,
+      "volume_mm3": 0.0
+     },
+     {
+      "pull_mm": 7.5,
+      "volume_mm3": 0.0
+     },
+     {
+      "pull_mm": 7.75,
+      "volume_mm3": 0.0
+     },
+     {
+      "pull_mm": 8.0,
+      "volume_mm3": 0.0
+     },
+     {
+      "pull_mm": 8.25,
+      "volume_mm3": 0.0
+     },
+     {
+      "pull_mm": 8.5,
+      "volume_mm3": 0.0
+     },
+     {
+      "pull_mm": 8.75,
+      "volume_mm3": 0.0
+     },
+     {
+      "pull_mm": 9.0,
+      "volume_mm3": 0.0
+     },
+     {
+      "pull_mm": 9.25,
+      "volume_mm3": 0.0
+     },
+     {
+      "pull_mm": 9.5,
+      "volume_mm3": 0.0
+     }
+    ]
+   },
+   "note": "B鍵角で挿入して組立角へ回転。通常開角5姿勢で、ピンが抜ける前の保持交差を測定。"
+  },
+  "a_joint": {
+   "ok": true,
+   "checked": 30,
+   "passed": 30,
+   "failures": [],
+   "key_relative_deg": 75.0,
+   "insertion": {
+    "ok": true,
+    "samples": 33,
+    "intersection_tests": 66,
+    "tolerance_mm3": 0.0001,
+    "worst": {
+     "crank-link": {
+      "at": -8.0,
+      "volume_mm3": 0.0
+     },
+     "crank-lid": {
+      "at": -8.0,
+      "volume_mm3": 0.0
+     }
+    },
+    "failures": []
+   },
+   "turn": {
+    "ok": true,
+    "samples": 62,
+    "intersection_tests": 124,
+    "tolerance_mm3": 0.0001,
+    "worst": {
+     "crank-link": {
+      "at": -14.7963,
+      "volume_mm3": 0.0
+     },
+     "crank-lid": {
+      "at": -14.7963,
+      "volume_mm3": 0.0
+     }
+    },
+    "failures": []
+   },
+   "retention": {
+    "ok": true,
+    "pin_exit_mm": 7.3,
+    "operating": [
+     {
+      "theta_deg": 0.0,
+      "relative_deg": -148.1842,
+      "ok": true,
+      "first_contact_mm": 1.25,
+      "remaining_pin_engagement_mm": 6.05,
+      "max_intersection_mm3": 0.01692494217549645,
+      "intersection_order_consistent": true,
+      "direction_mismatch_max_mm3": 7.843313210714742e-09
+     },
+     {
+      "theta_deg": 2.5,
+      "relative_deg": -147.2545,
+      "ok": true,
+      "first_contact_mm": 1.25,
+      "remaining_pin_engagement_mm": 6.05,
+      "max_intersection_mm3": 0.016914980985816064,
+      "intersection_order_consistent": true,
+      "direction_mismatch_max_mm3": 1.3751015427027058e-08
+     },
+     {
+      "theta_deg": 5.0,
+      "relative_deg": -146.1021,
+      "ok": true,
+      "first_contact_mm": 1.25,
+      "remaining_pin_engagement_mm": 6.05,
+      "max_intersection_mm3": 0.016917035162004185,
+      "intersection_order_consistent": true,
+      "direction_mismatch_max_mm3": 2.3382271362171192e-08
+     },
+     {
+      "theta_deg": 7.5,
+      "relative_deg": -144.748,
+      "ok": true,
+      "first_contact_mm": 1.25,
+      "remaining_pin_engagement_mm": 6.05,
+      "max_intersection_mm3": 0.016939842811797903,
+      "intersection_order_consistent": true,
+      "direction_mismatch_max_mm3": 6.307521061010846e-09
+     },
+     {
+      "theta_deg": 10.0,
+      "relative_deg": -143.2135,
+      "ok": true,
+      "first_contact_mm": 1.25,
+      "remaining_pin_engagement_mm": 6.05,
+      "max_intersection_mm3": 0.01698425304133655,
+      "intersection_order_consistent": true,
+      "direction_mismatch_max_mm3": 3.343269518174541e-08
+     },
+     {
+      "theta_deg": 12.5,
+      "relative_deg": -141.5192,
+      "ok": true,
+      "first_contact_mm": 1.25,
+      "remaining_pin_engagement_mm": 6.05,
+      "max_intersection_mm3": 0.0169417877234678,
+      "intersection_order_consistent": true,
+      "direction_mismatch_max_mm3": 2.785932567972438e-09
+     },
+     {
+      "theta_deg": 15.0,
+      "relative_deg": -139.684,
+      "ok": true,
+      "first_contact_mm": 1.25,
+      "remaining_pin_engagement_mm": 6.05,
+      "max_intersection_mm3": 0.016915115902019218,
+      "intersection_order_consistent": true,
+      "direction_mismatch_max_mm3": 8.464550685371997e-09
+     },
+     {
+      "theta_deg": 17.5,
+      "relative_deg": -137.7251,
+      "ok": true,
+      "first_contact_mm": 1.25,
+      "remaining_pin_engagement_mm": 6.05,
+      "max_intersection_mm3": 0.01692825827114869,
+      "intersection_order_consistent": true,
+      "direction_mismatch_max_mm3": 7.860088656330699e-10
+     },
+     {
+      "theta_deg": 20.0,
+      "relative_deg": -135.6573,
+      "ok": true,
+      "first_contact_mm": 1.25,
+      "remaining_pin_engagement_mm": 6.05,
+      "max_intersection_mm3": 0.0169825311860885,
+      "intersection_order_consistent": true,
+      "direction_mismatch_max_mm3": 1.8249303290751584e-08
+     },
+     {
+      "theta_deg": 22.5,
+      "relative_deg": -133.4937,
+      "ok": true,
+      "first_contact_mm": 4.5,
+      "remaining_pin_engagement_mm": 2.8,
+      "max_intersection_mm3": 7.005186817788253,
+      "intersection_order_consistent": true,
+      "direction_mismatch_max_mm3": 6.695110243981617e-09
+     },
+     {
+      "theta_deg": 25.0,
+      "relative_deg": -131.2453,
+      "ok": true,
+      "first_contact_mm": 4.5,
+      "remaining_pin_engagement_mm": 2.8,
+      "max_intersection_mm3": 7.004972248336408,
+      "intersection_order_consistent": true,
+      "direction_mismatch_max_mm3": 1.329465071364666e-08
+     },
+     {
+      "theta_deg": 27.5,
+      "relative_deg": -128.9216,
+      "ok": true,
+      "first_contact_mm": 4.5,
+      "remaining_pin_engagement_mm": 2.8,
+      "max_intersection_mm3": 7.0056041173568175,
+      "intersection_order_consistent": true,
+      "direction_mismatch_max_mm3": 1.3322676295501878e-14
+     },
+     {
+      "theta_deg": 30.0,
+      "relative_deg": -126.5305,
+      "ok": true,
+      "first_contact_mm": 1.25,
+      "remaining_pin_engagement_mm": 6.05,
+      "max_intersection_mm3": 0.016939314937562816,
+      "intersection_order_consistent": true,
+      "direction_mismatch_max_mm3": 4.297465799885103e-09
+     },
+     {
+      "theta_deg": 32.5,
+      "relative_deg": -124.0785,
+      "ok": true,
+      "first_contact_mm": 1.25,
+      "remaining_pin_engagement_mm": 6.05,
+      "max_intersection_mm3": 0.016912575046436784,
+      "intersection_order_consistent": true,
+      "direction_mismatch_max_mm3": 2.7967435589637546e-09
+     },
+     {
+      "theta_deg": 35.0,
+      "relative_deg": -121.5711,
+      "ok": true,
+      "first_contact_mm": 1.25,
+      "remaining_pin_engagement_mm": 6.05,
+      "max_intersection_mm3": 0.016957162890878064,
+      "intersection_order_consistent": true,
+      "direction_mismatch_max_mm3": 1.2348651594329407e-08
+     },
+     {
+      "theta_deg": 37.5,
+      "relative_deg": -119.0129,
+      "ok": true,
+      "first_contact_mm": 1.25,
+      "remaining_pin_engagement_mm": 6.05,
+      "max_intersection_mm3": 0.016938935024572555,
+      "intersection_order_consistent": true,
+      "direction_mismatch_max_mm3": 7.736910223599125e-09
+     },
+     {
+      "theta_deg": 40.0,
+      "relative_deg": -116.4074,
+      "ok": true,
+      "first_contact_mm": 1.25,
+      "remaining_pin_engagement_mm": 6.05,
+      "max_intersection_mm3": 0.016912471421456576,
+      "intersection_order_consistent": true,
+      "direction_mismatch_max_mm3": 8.016777720831758e-09
+     },
+     {
+      "theta_deg": 42.5,
+      "relative_deg": -113.7574,
+      "ok": true,
+      "first_contact_mm": 1.25,
+      "remaining_pin_engagement_mm": 6.05,
+      "max_intersection_mm3": 0.016967132038939847,
+      "intersection_order_consistent": true,
+      "direction_mismatch_max_mm3": 9.02872931973775e-09
+     },
+     {
+      "theta_deg": 45.0,
+      "relative_deg": -111.0652,
+      "ok": true,
+      "first_contact_mm": 1.25,
+      "remaining_pin_engagement_mm": 6.05,
+      "max_intersection_mm3": 0.016928264533749404,
+      "intersection_order_consistent": true,
+      "direction_mismatch_max_mm3": 1.049360487392903e-09
+     },
+     {
+      "theta_deg": 47.5,
+      "relative_deg": -108.3324,
+      "ok": true,
+      "first_contact_mm": 1.25,
+      "remaining_pin_engagement_mm": 6.05,
+      "max_intersection_mm3": 0.016918376369488175,
+      "intersection_order_consistent": true,
+      "direction_mismatch_max_mm3": 8.092281844618299e-10
+     },
+     {
+      "theta_deg": 50.0,
+      "relative_deg": -105.5599,
+      "ok": true,
+      "first_contact_mm": 1.25,
+      "remaining_pin_engagement_mm": 6.05,
+      "max_intersection_mm3": 0.016981229036236833,
+      "intersection_order_consistent": true,
+      "direction_mismatch_max_mm3": 3.327600489599902e-08
+     },
+     {
+      "theta_deg": 52.5,
+      "relative_deg": -102.7484,
+      "ok": true,
+      "first_contact_mm": 1.25,
+      "remaining_pin_engagement_mm": 6.05,
+      "max_intersection_mm3": 0.01691605674891966,
+      "intersection_order_consistent": true,
+      "direction_mismatch_max_mm3": 1.0048098408876882e-08
+     },
+     {
+      "theta_deg": 55.0,
+      "relative_deg": -99.8978,
+      "ok": true,
+      "first_contact_mm": 1.25,
+      "remaining_pin_engagement_mm": 6.05,
+      "max_intersection_mm3": 0.01693224557316156,
+      "intersection_order_consistent": true,
+      "direction_mismatch_max_mm3": 3.211940372005451e-08
+     },
+     {
+      "theta_deg": 57.5,
+      "relative_deg": -97.0077,
+      "ok": true,
+      "first_contact_mm": 1.25,
+      "remaining_pin_engagement_mm": 6.05,
+      "max_intersection_mm3": 0.016954435526426725,
+      "intersection_order_consistent": true,
+      "direction_mismatch_max_mm3": 2.6593807878061426e-08
+     },
+     {
+      "theta_deg": 60.0,
+      "relative_deg": -94.0772,
+      "ok": true,
+      "first_contact_mm": 1.25,
+      "remaining_pin_engagement_mm": 6.05,
+      "max_intersection_mm3": 0.016913102722748596,
+      "intersection_order_consistent": true,
+      "direction_mismatch_max_mm3": 3.748205190667875e-09
+     },
+     {
+      "theta_deg": 62.5,
+      "relative_deg": -91.1047,
+      "ok": true,
+      "first_contact_mm": 4.5,
+      "remaining_pin_engagement_mm": 2.8,
+      "max_intersection_mm3": 7.005834724971078,
+      "intersection_order_consistent": true,
+      "direction_mismatch_max_mm3": 3.1253694121602393e-07
+     },
+     {
+      "theta_deg": 65.0,
+      "relative_deg": -88.0882,
+      "ok": true,
+      "first_contact_mm": 4.5,
+      "remaining_pin_engagement_mm": 2.8,
+      "max_intersection_mm3": 7.005133796492132,
+      "intersection_order_consistent": true,
+      "direction_mismatch_max_mm3": 1.3395426634588148e-07
+     }
+    ],
+    "pin_exit_basis": "LINK_T + AX_GAP + TAB_T。円柱芯はtab先端まで連続し、link近側面が先端を越えると完全離脱。",
+    "samples": 27,
+    "step_deg": 2.5,
+    "minimum_remaining_pin_engagement_mm": 2.8,
+    "relative_range_deg": [
+     -148.1842,
+     -88.0882
+    ],
+    "key_distance_min_deg": 136.8158,
+    "key_closest_theta_deg": 0.0,
+    "key_withdrawal_clear": true,
+    "key_intersection_order_consistent": true,
+    "key_withdrawal": [
+     {
+      "pull_mm": 0.0,
+      "volume_mm3": 0.0,
+      "forward_mm3": 0.0,
+      "reverse_mm3": 0.0
+     },
+     {
+      "pull_mm": 0.25,
+      "volume_mm3": 0.0,
+      "forward_mm3": 0.0,
+      "reverse_mm3": 0.0
+     },
+     {
+      "pull_mm": 0.5,
+      "volume_mm3": 0.0,
+      "forward_mm3": 0.0,
+      "reverse_mm3": 0.0
+     },
+     {
+      "pull_mm": 0.75,
+      "volume_mm3": 0.0,
+      "forward_mm3": 0.0,
+      "reverse_mm3": 0.0
+     },
+     {
+      "pull_mm": 1.0,
+      "volume_mm3": 0.0,
+      "forward_mm3": 0.0,
+      "reverse_mm3": 0.0
+     },
+     {
+      "pull_mm": 1.25,
+      "volume_mm3": 0.0,
+      "forward_mm3": 0.0,
+      "reverse_mm3": 0.0
+     },
+     {
+      "pull_mm": 1.5,
+      "volume_mm3": 0.0,
+      "forward_mm3": 0.0,
+      "reverse_mm3": 0.0
+     },
+     {
+      "pull_mm": 1.75,
+      "volume_mm3": 0.0,
+      "forward_mm3": 0.0,
+      "reverse_mm3": 0.0
+     },
+     {
+      "pull_mm": 2.0,
+      "volume_mm3": 0.0,
+      "forward_mm3": 0.0,
+      "reverse_mm3": 0.0
+     },
+     {
+      "pull_mm": 2.25,
+      "volume_mm3": 0.0,
+      "forward_mm3": 0.0,
+      "reverse_mm3": 0.0
+     },
+     {
+      "pull_mm": 2.5,
+      "volume_mm3": 0.0,
+      "forward_mm3": 0.0,
+      "reverse_mm3": 0.0
+     },
+     {
+      "pull_mm": 2.75,
+      "volume_mm3": 0.0,
+      "forward_mm3": 0.0,
+      "reverse_mm3": 0.0
+     },
+     {
+      "pull_mm": 3.0,
+      "volume_mm3": 0.0,
+      "forward_mm3": 0.0,
+      "reverse_mm3": 0.0
+     },
+     {
+      "pull_mm": 3.25,
+      "volume_mm3": 0.0,
+      "forward_mm3": 0.0,
+      "reverse_mm3": 0.0
+     },
+     {
+      "pull_mm": 3.5,
+      "volume_mm3": 0.0,
+      "forward_mm3": 0.0,
+      "reverse_mm3": 0.0
+     },
+     {
+      "pull_mm": 3.75,
+      "volume_mm3": 0.0,
+      "forward_mm3": 0.0,
+      "reverse_mm3": 0.0
+     },
+     {
+      "pull_mm": 4.0,
+      "volume_mm3": 0.0,
+      "forward_mm3": 0.0,
+      "reverse_mm3": 0.0
+     },
+     {
+      "pull_mm": 4.25,
+      "volume_mm3": 0.0,
+      "forward_mm3": 0.0,
+      "reverse_mm3": 0.0
+     },
+     {
+      "pull_mm": 4.5,
+      "volume_mm3": 0.0,
+      "forward_mm3": 0.0,
+      "reverse_mm3": 0.0
+     },
+     {
+      "pull_mm": 4.75,
+      "volume_mm3": 0.0,
+      "forward_mm3": 0.0,
+      "reverse_mm3": 0.0
+     },
+     {
+      "pull_mm": 5.0,
+      "volume_mm3": 0.0,
+      "forward_mm3": 0.0,
+      "reverse_mm3": 0.0
+     },
+     {
+      "pull_mm": 5.25,
+      "volume_mm3": 0.0,
+      "forward_mm3": 0.0,
+      "reverse_mm3": 0.0
+     },
+     {
+      "pull_mm": 5.5,
+      "volume_mm3": 0.0,
+      "forward_mm3": 0.0,
+      "reverse_mm3": 0.0
+     },
+     {
+      "pull_mm": 5.75,
+      "volume_mm3": 0.0,
+      "forward_mm3": 0.0,
+      "reverse_mm3": 0.0
+     },
+     {
+      "pull_mm": 6.0,
+      "volume_mm3": 0.0,
+      "forward_mm3": 0.0,
+      "reverse_mm3": 0.0
+     },
+     {
+      "pull_mm": 6.25,
+      "volume_mm3": 0.0,
+      "forward_mm3": 0.0,
+      "reverse_mm3": 0.0
+     },
+     {
+      "pull_mm": 6.5,
+      "volume_mm3": 0.0,
+      "forward_mm3": 0.0,
+      "reverse_mm3": 0.0
+     },
+     {
+      "pull_mm": 6.75,
+      "volume_mm3": 0.0,
+      "forward_mm3": 0.0,
+      "reverse_mm3": 0.0
+     },
+     {
+      "pull_mm": 7.0,
+      "volume_mm3": 0.0,
+      "forward_mm3": 0.0,
+      "reverse_mm3": 0.0
+     },
+     {
+      "pull_mm": 7.25,
+      "volume_mm3": 0.0,
+      "forward_mm3": 0.0,
+      "reverse_mm3": 0.0
+     },
+     {
+      "pull_mm": 7.5,
+      "volume_mm3": 0.0,
+      "forward_mm3": 0.0,
+      "reverse_mm3": 0.0
+     },
+     {
+      "pull_mm": 7.75,
+      "volume_mm3": 0.0,
+      "forward_mm3": 0.0,
+      "reverse_mm3": 0.0
+     },
+     {
+      "pull_mm": 8.0,
+      "volume_mm3": 0.0,
+      "forward_mm3": 0.0,
+      "reverse_mm3": 0.0
+     },
+     {
+      "pull_mm": 8.25,
+      "volume_mm3": 0.0,
+      "forward_mm3": 0.0,
+      "reverse_mm3": 0.0
+     },
+     {
+      "pull_mm": 8.5,
+      "volume_mm3": 0.0,
+      "forward_mm3": 0.0,
+      "reverse_mm3": 0.0
+     },
+     {
+      "pull_mm": 8.75,
+      "volume_mm3": 0.0,
+      "forward_mm3": 0.0,
+      "reverse_mm3": 0.0
+     },
+     {
+      "pull_mm": 9.0,
+      "volume_mm3": 0.0,
+      "forward_mm3": 0.0,
+      "reverse_mm3": 0.0
+     },
+     {
+      "pull_mm": 9.25,
+      "volume_mm3": 0.0,
+      "forward_mm3": 0.0,
+      "reverse_mm3": 0.0
+     },
+     {
+      "pull_mm": 9.5,
+      "volume_mm3": 0.0,
+      "forward_mm3": 0.0,
+      "reverse_mm3": 0.0
+     }
+    ]
+   },
+   "note": "Bを保持したlid/linkへA鍵角でcrankを挿入。通常開角を2.5°以下刻みで保持測定し、片側1個の鍵角との360°距離も記録。"
+  },
+  "servo_clip": {
+   "ok": true,
+   "checked": 5,
+   "passed": 5,
+   "failures": [],
+   "setup_lid_deg": 65.0,
+   "insertion": {
+    "ok": true,
+    "samples": 101,
+    "intersection_tests": 606,
+    "tolerance_mm3": 0.0001,
+    "worst": {
+     "clip-box": {
+      "at": 25.0,
+      "volume_mm3": 0.0
+     },
+     "clip-wire": {
+      "at": 25.0,
+      "volume_mm3": 0.0
+     },
+     "clip-crank": {
+      "at": 25.0,
+      "volume_mm3": 0.0
+     },
+     "clip-horn": {
+      "at": 25.0,
+      "volume_mm3": 0.0
+     },
+     "clip-link": {
+      "at": 25.0,
+      "volume_mm3": 0.0
+     },
+     "clip-lid": {
+      "at": 25.0,
+      "volume_mm3": 0.0
+     }
+    },
+    "failures": []
+   },
+   "pressed_intersection_mm3": 0.0,
+   "restored_intersection_mm3": 0.0,
+   "first_block": {
+    "lift_mm": 0.25,
+    "volume_mm3": 1.3904959555877596
+   },
+   "restored_pull": [
+    {
+     "lift_mm": 0.0,
+     "volume_mm3": 0.0
+    },
+    {
+     "lift_mm": 0.25,
+     "volume_mm3": 1.3904959555877596
+    },
+    {
+     "lift_mm": 0.5,
+     "volume_mm3": 3.7079951086057967
+    },
+    {
+     "lift_mm": 0.75,
+     "volume_mm3": 6.025494261623786
+    },
+    {
+     "lift_mm": 1.0,
+     "volume_mm3": 8.291493025542024
+    },
+    {
+     "lift_mm": 1.25,
+     "volume_mm3": 10.029616454065973
+    },
+    {
+     "lift_mm": 1.5,
+     "volume_mm3": 11.123989868880498
+    },
+    {
+     "lift_mm": 1.75,
+     "volume_mm3": 11.574618549767418
+    },
+    {
+     "lift_mm": 2.0,
+     "volume_mm3": 11.58749134481076
+    },
+    {
+     "lift_mm": 2.25,
+     "volume_mm3": 11.587491344810811
+    },
+    {
+     "lift_mm": 2.5,
+     "volume_mm3": 11.587491344810806
+    },
+    {
+     "lift_mm": 2.75,
+     "volume_mm3": 11.58749134481081
+    },
+    {
+     "lift_mm": 3.0,
+     "volume_mm3": 11.587491344810786
+    },
+    {
+     "lift_mm": 3.25,
+     "volume_mm3": 11.587491344810767
+    },
+    {
+     "lift_mm": 3.5,
+     "volume_mm3": 11.58749134481073
+    },
+    {
+     "lift_mm": 3.75,
+     "volume_mm3": 11.587491344810758
+    },
+    {
+     "lift_mm": 4.0,
+     "volume_mm3": 11.587491344810791
+    }
+   ],
+   "deformation": {
+    "deflection_mm": 1.2,
+    "free_span_mm": 16.7,
+    "estimated_strain_pct": 1.6135,
+    "estimate_limit_pct": 2.0,
+    "estimate_ok": true
+   },
+   "servo_preload_intersection_mm3": 0.09467363254089989,
+   "note": "lidを開いてclip脚を幾何学変形し上から挿入。サーボ本体への板ばね予圧は意図接触として別記録。"
+  },
+  "method": "実STLのEXACT交差と幾何学変形で経路を測定。変形時のひずみは片持ち梁の推定値。実物の反復保持力、手と配線の収まりは未確認。",
+  "assembly_order": [
+   "箱の外でlidとBを組む",
+   "AとSGホーンを組む",
+   "roof/pinを65°で組む",
+   "天面とサーボ一式を上から下ろす",
+   "lidを開けてclipを付ける",
+   "roofを復元してsnap保持する"
+  ]
+ },
+ "ok": true
+}

@@ -1,0 +1,22 @@
+.angle-control { display: grid; grid-template-columns: auto minmax(120px, 1fr) 4rem; align-items: center; gap: 8px; flex: 1; min-width: 260px; }
+.angle-control input { width: 100%; min-height: 44px; }
+.angle-control output { font-family: var(--font-mono); font-variant-numeric: tabular-nums; text-align: right; }
+.report { display: grid; gap: 16px; }
+.report-section { min-width: 0; }
+.report-section h2 { margin-bottom: 8px; }
+.report-section p, .report-section ul, .report-section dl { margin: 0; }
+.report-section ul { padding-left: 1.4rem; }
+.report-section li + li { margin-top: 4px; }
+.report-section dl { display: grid; grid-template-columns: minmax(7rem, auto) minmax(0, 1fr); border: 1px solid var(--line); }
+.report-section dt, .report-section dd { min-width: 0; padding: 4px 8px; border-bottom: 1px solid var(--line); overflow-wrap: anywhere; }
+.report-section dt { color: var(--mute); background: var(--card); font-size: var(--fs-xs); }
+.report-section dd { margin: 0; font-variant-numeric: tabular-nums; }
+.report-section dt:last-of-type, .report-section dd:last-of-type { border-bottom: 0; }
+.report-section dd > dl { margin: 4px 0; }
+.unverified { color: var(--mute); }
+button.lc-btn, select.lc-select, .steps button { min-height: 44px; }
+@media (max-width: 480px) {
+  .angle-control { grid-template-columns: auto minmax(80px, 1fr) 3.5rem; min-width: 100%; }
+  .report-section dl { grid-template-columns: 1fr; }
+  .report-section dt, .report-section dd { border-bottom: 1px solid var(--line); }
+}

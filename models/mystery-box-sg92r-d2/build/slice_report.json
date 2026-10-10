@@ -1,0 +1,1173 @@
+{
+ "settings": {
+  "machine": "Bambu Lab X1 Carbon 0.4 nozzle",
+  "process": "0.20mm Standard @BBL X1C",
+  "support": "off",
+  "support_radius_mm": 0.6
+ },
+ "calibration": {
+  "overhang_10mm": {
+   "total": {
+    "external_unsupported_mm": 80.32,
+    "bridge_mm": 496.97,
+    "bridge_unsupported_mm": 272.53,
+    "internal_unsupported_mm": 0.0
+   },
+   "features": {
+    "Overhang wall": 80.32,
+    "Bridge": 272.53
+   }
+  },
+  "slope_45": {
+   "total": {
+    "external_unsupported_mm": 0.0,
+    "bridge_mm": 129.59,
+    "bridge_unsupported_mm": 36.19,
+    "internal_unsupported_mm": 0.0
+   },
+   "features": {
+    "Bridge": 36.19
+   }
+  },
+  "ok": true
+ },
+ "parts": {
+  "PLA/box": {
+   "layers": 385,
+   "stats": {
+    "time": "model printing time: 1h 49m 37s; total estimated time: 1h 56m 52s",
+    "filament_mm": 37053.62,
+    "filament_g_header": "112.30"
+   },
+   "floating": {
+    "external_unsupported_mm": 36.01,
+    "bridge_mm": 14936.99,
+    "bridge_unsupported_mm": 7693.97,
+    "internal_unsupported_mm": 34.73
+   },
+   "floating_by_feature": {
+    "Bridge": 7693.97,
+    "Overhang wall": 36.01
+   },
+   "worst_layers": [
+    {
+     "layer": 10,
+     "z": 2.2,
+     "feature": "Bridge",
+     "points": 29643,
+     "x": [
+      -38.2,
+      38.2
+     ],
+     "y": [
+      -38.2,
+      38.2
+     ]
+    },
+    {
+     "layer": 31,
+     "z": 6.4,
+     "feature": "Bridge",
+     "points": 3132,
+     "x": [
+      13.3,
+      38.2
+     ],
+     "y": [
+      2.7,
+      29.5
+     ]
+    },
+    {
+     "layer": 83,
+     "z": 16.8,
+     "feature": "Bridge",
+     "points": 599,
+     "x": [
+      -28.8,
+      -13.7
+     ],
+     "y": [
+      -2.6,
+      27.1
+     ]
+    },
+    {
+     "layer": 101,
+     "z": 20.4,
+     "feature": "Overhang wall",
+     "points": 115,
+     "x": [
+      -22.7,
+      -18.2
+     ],
+     "y": [
+      -4.5,
+      28.8
+     ]
+    },
+    {
+     "layer": 119,
+     "z": 24.0,
+     "feature": "Bridge",
+     "points": 4509,
+     "x": [
+      -38.2,
+      -12.6
+     ],
+     "y": [
+      -2.6,
+      26.5
+     ]
+    },
+    {
+     "layer": 123,
+     "z": 24.8,
+     "feature": "Overhang wall",
+     "points": 32,
+     "x": [
+      -17.3,
+      -11.4
+     ],
+     "y": [
+      29.4,
+      29.8
+     ]
+    },
+    {
+     "layer": 132,
+     "z": 26.6,
+     "feature": "Bridge",
+     "points": 422,
+     "x": [
+      5.1,
+      14.2
+     ],
+     "y": [
+      4.5,
+      13.0
+     ]
+    },
+    {
+     "layer": 166,
+     "z": 33.4,
+     "feature": "Bridge",
+     "points": 299,
+     "x": [
+      11.4,
+      16.9
+     ],
+     "y": [
+      4.6,
+      13.4
+     ]
+    },
+    {
+     "layer": 241,
+     "z": 48.4,
+     "feature": "Overhang wall",
+     "points": 40,
+     "x": [
+      -37.2,
+      37.2
+     ],
+     "y": [
+      -7.0,
+      -3.2
+     ]
+    }
+   ],
+   "log_warnings": [
+    "[2026-10-10 23:42:01.889725] [0x00006e94] [info]    Slic3r::CLI::run::<lambda_b5986fe34fddedaba4e2da08f7fbd45e>::operator ():load setting file C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-d2\\build\\print\\process_no_support.json, with rule 1",
+    "[2026-10-10 23:42:01.891743] [0x00006e94] [info]    no substitutions performed from file C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-d2\\build\\print\\process_no_support.json",
+    "[2026-10-10 23:42:01.891743] [0x00006e94] [info]    loaded process config C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-d2\\build\\print\\process_no_support.json, type 0.20mm Standard @BBL X1C, name system, inherits 0.20mm Standard @BBL X1C",
+    "[2026-10-10 23:42:01.898828] [0x00006e94] [info]    Slic3r::Print::apply 1847: finished,  this 000001C29EF2B350, m_modified_count 1, apply_status 1, m_support_used 0",
+    "[2026-10-10 23:42:01.997994] [0x00006e94] [warning] tree support default to organic support",
+    "[2026-10-10 23:42:02.012903] [0x00006e94] [info]    max_cantilever_dist=0",
+    "[2026-10-10 23:42:02.013908] [0x00006e94] [info]    is_support_necessary takes 0 secs.",
+    "[2026-10-10 23:42:02.547786] [0x00006e94] [info]    framebuffer_type: Supported"
+   ]
+  },
+  "PLA/lid": {
+   "layers": 166,
+   "stats": {
+    "time": "model printing time: 25m 0s; total estimated time: 32m 15s",
+    "filament_mm": 3881.22,
+    "filament_g_header": "11.76"
+   },
+   "floating": {
+    "external_unsupported_mm": 274.14,
+    "bridge_mm": 6354.45,
+    "bridge_unsupported_mm": 3120.2,
+    "internal_unsupported_mm": 0.0
+   },
+   "floating_by_feature": {
+    "Outer wall": 3.16,
+    "Overhang wall": 236.21,
+    "Gap infill": 34.77,
+    "Bridge": 3120.2
+   },
+   "worst_layers": [
+    {
+     "layer": 8,
+     "z": 1.8,
+     "feature": "Overhang wall",
+     "points": 1125,
+     "x": [
+      -18.4,
+      18.4
+     ],
+     "y": [
+      23.1,
+      25.4
+     ]
+    },
+    {
+     "layer": 8,
+     "z": 1.8,
+     "feature": "Gap infill",
+     "points": 174,
+     "x": [
+      -17.4,
+      17.4
+     ],
+     "y": [
+      24.3,
+      24.3
+     ]
+    },
+    {
+     "layer": 10,
+     "z": 2.2,
+     "feature": "Bridge",
+     "points": 15201,
+     "x": [
+      -37.9,
+      37.9
+     ],
+     "y": [
+      -26.5,
+      5.5
+     ]
+    },
+    {
+     "layer": 43,
+     "z": 8.8,
+     "feature": "Overhang wall",
+     "points": 30,
+     "x": [
+      -18.4,
+      18.4
+     ],
+     "y": [
+      23.8,
+      24.7
+     ]
+    },
+    {
+     "layer": 43,
+     "z": 8.8,
+     "feature": "Bridge",
+     "points": 460,
+     "x": [
+      -17.3,
+      17.3
+     ],
+     "y": [
+      23.8,
+      24.7
+     ]
+    },
+    {
+     "layer": 107,
+     "z": 21.6,
+     "feature": "Overhang wall",
+     "points": 15,
+     "x": [
+      6.5,
+      9.1
+     ],
+     "y": [
+      10.9,
+      10.9
+     ]
+    },
+    {
+     "layer": 153,
+     "z": 30.8,
+     "feature": "Overhang wall",
+     "points": 19,
+     "x": [
+      6.5,
+      9.1
+     ],
+     "y": [
+      9.1,
+      9.6
+     ]
+    },
+    {
+     "layer": 153,
+     "z": 30.8,
+     "feature": "Outer wall",
+     "points": 17,
+     "x": [
+      6.5,
+      9.1
+     ],
+     "y": [
+      8.8,
+      9.1
+     ]
+    }
+   ],
+   "log_warnings": [
+    "[2026-10-10 23:42:13.706698] [0x00006898] [info]    Slic3r::CLI::run::<lambda_b5986fe34fddedaba4e2da08f7fbd45e>::operator ():load setting file C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-d2\\build\\print\\process_no_support.json, with rule 1",
+    "[2026-10-10 23:42:13.709700] [0x00006898] [info]    no substitutions performed from file C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-d2\\build\\print\\process_no_support.json",
+    "[2026-10-10 23:42:13.709700] [0x00006898] [info]    loaded process config C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-d2\\build\\print\\process_no_support.json, type 0.20mm Standard @BBL X1C, name system, inherits 0.20mm Standard @BBL X1C",
+    "[2026-10-10 23:42:13.752943] [0x00006898] [info]    Slic3r::Print::apply 1847: finished,  this 00000201A9547C40, m_modified_count 1, apply_status 1, m_support_used 0",
+    "[2026-10-10 23:42:13.844197] [0x00006898] [warning] tree support default to organic support",
+    "[2026-10-10 23:42:13.865712] [0x00006898] [info]    max_cantilever_dist=1.72921e+06",
+    "[2026-10-10 23:42:13.865712] [0x00006898] [info]    is_support_necessary takes 0 secs.",
+    "[2026-10-10 23:42:13.916713] [0x00006898] [warning] plate 1: found NON_CRITICAL slicing warnings: It seems object print_lid.stl has floating regions. Please re-orient the object or enable support generation."
+   ]
+  },
+  "PLA/roof": {
+   "layers": 205,
+   "stats": {
+    "time": "model printing time: 23m 41s; total estimated time: 30m 57s",
+    "filament_mm": 3599.74,
+    "filament_g_header": "10.91"
+   },
+   "floating": {
+    "external_unsupported_mm": 10.9,
+    "bridge_mm": 6470.08,
+    "bridge_unsupported_mm": 3211.71,
+    "internal_unsupported_mm": 20.09
+   },
+   "floating_by_feature": {
+    "Bridge": 3211.71,
+    "Overhang wall": 10.9
+   },
+   "worst_layers": [
+    {
+     "layer": 10,
+     "z": 2.2,
+     "feature": "Bridge",
+     "points": 15999,
+     "x": [
+      -37.9,
+      37.9
+     ],
+     "y": [
+      -19.4,
+      19.6
+     ]
+    },
+    {
+     "layer": 43,
+     "z": 8.8,
+     "feature": "Overhang wall",
+     "points": 60,
+     "x": [
+      -26.8,
+      26.8
+     ],
+     "y": [
+      -5.8,
+      -4.9
+     ]
+    },
+    {
+     "layer": 43,
+     "z": 8.8,
+     "feature": "Bridge",
+     "points": 150,
+     "x": [
+      -25.7,
+      25.7
+     ],
+     "y": [
+      -5.8,
+      -4.9
+     ]
+    }
+   ],
+   "log_warnings": [
+    "[2026-10-10 23:42:16.144224] [0x00003a7c] [info]    Slic3r::CLI::run::<lambda_b5986fe34fddedaba4e2da08f7fbd45e>::operator ():load setting file C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-d2\\build\\print\\process_no_support.json, with rule 1",
+    "[2026-10-10 23:42:16.147690] [0x00003a7c] [info]    no substitutions performed from file C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-d2\\build\\print\\process_no_support.json",
+    "[2026-10-10 23:42:16.147690] [0x00003a7c] [info]    loaded process config C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-d2\\build\\print\\process_no_support.json, type 0.20mm Standard @BBL X1C, name system, inherits 0.20mm Standard @BBL X1C",
+    "[2026-10-10 23:42:16.159808] [0x00003a7c] [info]    Slic3r::Print::apply 1847: finished,  this 0000020A6DAB88E0, m_modified_count 1, apply_status 1, m_support_used 0",
+    "[2026-10-10 23:42:16.214019] [0x00003a7c] [warning] tree support default to organic support",
+    "[2026-10-10 23:42:16.221356] [0x00003a7c] [info]    max_cantilever_dist=0",
+    "[2026-10-10 23:42:16.221356] [0x00003a7c] [info]    is_support_necessary takes 0 secs.",
+    "[2026-10-10 23:42:16.664148] [0x00003a7c] [info]    framebuffer_type: Supported"
+   ]
+  },
+  "PLA/crank": {
+   "layers": 59,
+   "stats": {
+    "time": "model printing time: 7m 30s; total estimated time: 14m 46s",
+    "filament_mm": 878.58,
+    "filament_g_header": "2.66"
+   },
+   "floating": {
+    "external_unsupported_mm": 0.0,
+    "bridge_mm": 1775.12,
+    "bridge_unsupported_mm": 850.16,
+    "internal_unsupported_mm": 8.57
+   },
+   "floating_by_feature": {
+    "Bridge": 850.16
+   },
+   "worst_layers": [
+    {
+     "layer": 8,
+     "z": 1.8,
+     "feature": "Bridge",
+     "points": 2560,
+     "x": [
+      -14.9,
+      8.6
+     ],
+     "y": [
+      -9.2,
+      16.1
+     ]
+    },
+    {
+     "layer": 14,
+     "z": 3.0,
+     "feature": "Bridge",
+     "points": 235,
+     "x": [
+      3.0,
+      14.3
+     ],
+     "y": [
+      -16.2,
+      -4.9
+     ]
+    },
+    {
+     "layer": 16,
+     "z": 3.4,
+     "feature": "Bridge",
+     "points": 1499,
+     "x": [
+      -15.8,
+      15.4
+     ],
+     "y": [
+      -16.9,
+      16.5
+     ]
+    }
+   ],
+   "log_warnings": [
+    "[2026-10-10 23:42:18.253953] [0x0000cd00] [info]    Slic3r::CLI::run::<lambda_b5986fe34fddedaba4e2da08f7fbd45e>::operator ():load setting file C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-d2\\build\\print\\process_no_support.json, with rule 1",
+    "[2026-10-10 23:42:18.256952] [0x0000cd00] [info]    no substitutions performed from file C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-d2\\build\\print\\process_no_support.json",
+    "[2026-10-10 23:42:18.256952] [0x0000cd00] [info]    loaded process config C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-d2\\build\\print\\process_no_support.json, type 0.20mm Standard @BBL X1C, name system, inherits 0.20mm Standard @BBL X1C",
+    "[2026-10-10 23:42:18.266577] [0x0000cd00] [info]    Slic3r::Print::apply 1847: finished,  this 00000194ABB19010, m_modified_count 1, apply_status 1, m_support_used 0",
+    "[2026-10-10 23:42:18.327858] [0x0000cd00] [warning] tree support default to organic support",
+    "[2026-10-10 23:42:18.335893] [0x0000cd00] [info]    max_cantilever_dist=0",
+    "[2026-10-10 23:42:18.335893] [0x0000cd00] [info]    is_support_necessary takes 0 secs.",
+    "[2026-10-10 23:42:18.650134] [0x0000cd00] [info]    framebuffer_type: Supported"
+   ]
+  },
+  "PLA/link": {
+   "layers": 53,
+   "stats": {
+    "time": "model printing time: 4m 50s; total estimated time: 12m 6s",
+    "filament_mm": 565.88,
+    "filament_g_header": "1.71"
+   },
+   "floating": {
+    "external_unsupported_mm": 0.0,
+    "bridge_mm": 526.14,
+    "bridge_unsupported_mm": 184.99,
+    "internal_unsupported_mm": 0.93
+   },
+   "floating_by_feature": {
+    "Bridge": 184.99
+   },
+   "worst_layers": [
+    {
+     "layer": 10,
+     "z": 2.2,
+     "feature": "Bridge",
+     "points": 938,
+     "x": [
+      -22.8,
+      15.0
+     ],
+     "y": [
+      -5.4,
+      8.7
+     ]
+    }
+   ],
+   "log_warnings": [
+    "[2026-10-10 23:42:19.721376] [0x0000b2d8] [info]    Slic3r::CLI::run::<lambda_b5986fe34fddedaba4e2da08f7fbd45e>::operator ():load setting file C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-d2\\build\\print\\process_no_support.json, with rule 1",
+    "[2026-10-10 23:42:19.725375] [0x0000b2d8] [info]    no substitutions performed from file C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-d2\\build\\print\\process_no_support.json",
+    "[2026-10-10 23:42:19.725375] [0x0000b2d8] [info]    loaded process config C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-d2\\build\\print\\process_no_support.json, type 0.20mm Standard @BBL X1C, name system, inherits 0.20mm Standard @BBL X1C",
+    "[2026-10-10 23:42:19.742337] [0x0000b2d8] [info]    Slic3r::Print::apply 1847: finished,  this 0000026E859C4250, m_modified_count 1, apply_status 1, m_support_used 0",
+    "[2026-10-10 23:42:19.820419] [0x0000b2d8] [warning] tree support default to organic support",
+    "[2026-10-10 23:42:19.827937] [0x0000b2d8] [info]    max_cantilever_dist=0",
+    "[2026-10-10 23:42:19.827937] [0x0000b2d8] [info]    is_support_necessary takes 0 secs.",
+    "[2026-10-10 23:42:20.250526] [0x0000b2d8] [info]    framebuffer_type: Supported"
+   ]
+  },
+  "PLA/pin": {
+   "layers": 23,
+   "stats": {
+    "time": "model printing time: 2m 27s; total estimated time: 9m 43s",
+    "filament_mm": 460.22,
+    "filament_g_header": "1.39"
+   },
+   "floating": {
+    "external_unsupported_mm": 0.0,
+    "bridge_mm": 0.0,
+    "bridge_unsupported_mm": 0.0,
+    "internal_unsupported_mm": 7.49
+   },
+   "floating_by_feature": {},
+   "worst_layers": [],
+   "log_warnings": [
+    "[2026-10-10 23:42:21.220288] [0x00012658] [info]    Slic3r::CLI::run::<lambda_b5986fe34fddedaba4e2da08f7fbd45e>::operator ():load setting file C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-d2\\build\\print\\process_no_support.json, with rule 1",
+    "[2026-10-10 23:42:21.223287] [0x00012658] [info]    no substitutions performed from file C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-d2\\build\\print\\process_no_support.json",
+    "[2026-10-10 23:42:21.223287] [0x00012658] [info]    loaded process config C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-d2\\build\\print\\process_no_support.json, type 0.20mm Standard @BBL X1C, name system, inherits 0.20mm Standard @BBL X1C",
+    "[2026-10-10 23:42:21.235623] [0x00012658] [info]    Slic3r::Print::apply 1847: finished,  this 0000023178926D20, m_modified_count 1, apply_status 1, m_support_used 0",
+    "[2026-10-10 23:42:21.261400] [0x00012658] [warning] tree support default to organic support",
+    "[2026-10-10 23:42:21.264400] [0x00012658] [info]    max_cantilever_dist=0",
+    "[2026-10-10 23:42:21.264400] [0x00012658] [info]    is_support_necessary takes 0 secs.",
+    "[2026-10-10 23:42:21.620060] [0x00012658] [info]    framebuffer_type: Supported"
+   ]
+  },
+  "PLA/clip": {
+   "layers": 26,
+   "stats": {
+    "time": "model printing time: 2m 50s; total estimated time: 10m 6s",
+    "filament_mm": 578.91,
+    "filament_g_header": "1.75"
+   },
+   "floating": {
+    "external_unsupported_mm": 0.0,
+    "bridge_mm": 0.0,
+    "bridge_unsupported_mm": 0.0,
+    "internal_unsupported_mm": 0.0
+   },
+   "floating_by_feature": {},
+   "worst_layers": [],
+   "log_warnings": [
+    "[2026-10-10 23:42:22.333052] [0x0000e4c4] [info]    Slic3r::CLI::run::<lambda_b5986fe34fddedaba4e2da08f7fbd45e>::operator ():load setting file C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-d2\\build\\print\\process_no_support.json, with rule 1",
+    "[2026-10-10 23:42:22.336052] [0x0000e4c4] [info]    no substitutions performed from file C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-d2\\build\\print\\process_no_support.json",
+    "[2026-10-10 23:42:22.336052] [0x0000e4c4] [info]    loaded process config C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-d2\\build\\print\\process_no_support.json, type 0.20mm Standard @BBL X1C, name system, inherits 0.20mm Standard @BBL X1C",
+    "[2026-10-10 23:42:22.352054] [0x0000e4c4] [info]    Slic3r::Print::apply 1847: finished,  this 00000149AF7D7820, m_modified_count 1, apply_status 1, m_support_used 0",
+    "[2026-10-10 23:42:22.381758] [0x0000e4c4] [warning] tree support default to organic support",
+    "[2026-10-10 23:42:22.381758] [0x0000e4c4] [info]    max_cantilever_dist=0",
+    "[2026-10-10 23:42:22.381758] [0x0000e4c4] [info]    is_support_necessary takes 0 secs.",
+    "[2026-10-10 23:42:22.755954] [0x0000e4c4] [info]    framebuffer_type: Supported"
+   ]
+  },
+  "PLA/speaker_clip": {
+   "layers": 15,
+   "stats": {
+    "time": "model printing time: 1m 59s; total estimated time: 9m 15s",
+    "filament_mm": 413.51,
+    "filament_g_header": "1.25"
+   },
+   "floating": {
+    "external_unsupported_mm": 0.0,
+    "bridge_mm": 0.0,
+    "bridge_unsupported_mm": 0.0,
+    "internal_unsupported_mm": 0.0
+   },
+   "floating_by_feature": {},
+   "worst_layers": [],
+   "log_warnings": [
+    "[2026-10-10 23:42:23.542817] [0x00009748] [info]    Slic3r::CLI::run::<lambda_b5986fe34fddedaba4e2da08f7fbd45e>::operator ():load setting file C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-d2\\build\\print\\process_no_support.json, with rule 1",
+    "[2026-10-10 23:42:23.548505] [0x00009748] [info]    no substitutions performed from file C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-d2\\build\\print\\process_no_support.json",
+    "[2026-10-10 23:42:23.548505] [0x00009748] [info]    loaded process config C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-d2\\build\\print\\process_no_support.json, type 0.20mm Standard @BBL X1C, name system, inherits 0.20mm Standard @BBL X1C",
+    "[2026-10-10 23:42:23.563074] [0x00009748] [info]    Slic3r::Print::apply 1847: finished,  this 0000024369135ED0, m_modified_count 1, apply_status 1, m_support_used 0",
+    "[2026-10-10 23:42:23.587658] [0x00009748] [warning] tree support default to organic support",
+    "[2026-10-10 23:42:23.591401] [0x00009748] [info]    max_cantilever_dist=0",
+    "[2026-10-10 23:42:23.591401] [0x00009748] [info]    is_support_necessary takes 0 secs.",
+    "[2026-10-10 23:42:23.998541] [0x00009748] [info]    framebuffer_type: Supported"
+   ]
+  },
+  "PETG/box": {
+   "layers": 385,
+   "stats": {
+    "time": "model printing time: 2h 7m 52s; total estimated time: 2h 15m 8s",
+    "filament_mm": 35922.67,
+    "filament_g_header": "108.01"
+   },
+   "floating": {
+    "external_unsupported_mm": 36.01,
+    "bridge_mm": 14936.99,
+    "bridge_unsupported_mm": 7693.97,
+    "internal_unsupported_mm": 34.73
+   },
+   "floating_by_feature": {
+    "Bridge": 7693.97,
+    "Overhang wall": 36.01
+   },
+   "worst_layers": [
+    {
+     "layer": 10,
+     "z": 2.2,
+     "feature": "Bridge",
+     "points": 29643,
+     "x": [
+      -38.2,
+      38.2
+     ],
+     "y": [
+      -38.2,
+      38.2
+     ]
+    },
+    {
+     "layer": 31,
+     "z": 6.4,
+     "feature": "Bridge",
+     "points": 3132,
+     "x": [
+      13.3,
+      38.2
+     ],
+     "y": [
+      2.7,
+      29.5
+     ]
+    },
+    {
+     "layer": 83,
+     "z": 16.8,
+     "feature": "Bridge",
+     "points": 599,
+     "x": [
+      -28.8,
+      -13.7
+     ],
+     "y": [
+      -2.6,
+      27.1
+     ]
+    },
+    {
+     "layer": 101,
+     "z": 20.4,
+     "feature": "Overhang wall",
+     "points": 115,
+     "x": [
+      -22.7,
+      -18.2
+     ],
+     "y": [
+      -4.5,
+      28.8
+     ]
+    },
+    {
+     "layer": 119,
+     "z": 24.0,
+     "feature": "Bridge",
+     "points": 4509,
+     "x": [
+      -38.2,
+      -12.6
+     ],
+     "y": [
+      -2.6,
+      26.5
+     ]
+    },
+    {
+     "layer": 123,
+     "z": 24.8,
+     "feature": "Overhang wall",
+     "points": 32,
+     "x": [
+      -17.3,
+      -11.4
+     ],
+     "y": [
+      29.4,
+      29.8
+     ]
+    },
+    {
+     "layer": 132,
+     "z": 26.6,
+     "feature": "Bridge",
+     "points": 422,
+     "x": [
+      5.1,
+      14.2
+     ],
+     "y": [
+      4.5,
+      13.0
+     ]
+    },
+    {
+     "layer": 166,
+     "z": 33.4,
+     "feature": "Bridge",
+     "points": 299,
+     "x": [
+      11.4,
+      16.9
+     ],
+     "y": [
+      4.6,
+      13.4
+     ]
+    },
+    {
+     "layer": 241,
+     "z": 48.4,
+     "feature": "Overhang wall",
+     "points": 40,
+     "x": [
+      -37.2,
+      37.2
+     ],
+     "y": [
+      -7.0,
+      -3.2
+     ]
+    }
+   ],
+   "log_warnings": [
+    "[2026-10-10 23:42:24.820525] [0x000167dc] [info]    Slic3r::CLI::run::<lambda_b5986fe34fddedaba4e2da08f7fbd45e>::operator ():load setting file C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-d2\\build\\print\\process_no_support.json, with rule 1",
+    "[2026-10-10 23:42:24.823525] [0x000167dc] [info]    no substitutions performed from file C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-d2\\build\\print\\process_no_support.json",
+    "[2026-10-10 23:42:24.823525] [0x000167dc] [info]    loaded process config C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-d2\\build\\print\\process_no_support.json, type 0.20mm Standard @BBL X1C, name system, inherits 0.20mm Standard @BBL X1C",
+    "[2026-10-10 23:42:24.838375] [0x000167dc] [info]    Slic3r::Print::apply 1847: finished,  this 0000015CA97D7500, m_modified_count 1, apply_status 1, m_support_used 0",
+    "[2026-10-10 23:42:24.992192] [0x000167dc] [warning] tree support default to organic support",
+    "[2026-10-10 23:42:25.013833] [0x000167dc] [info]    max_cantilever_dist=0",
+    "[2026-10-10 23:42:25.014209] [0x000167dc] [info]    is_support_necessary takes 0 secs.",
+    "[2026-10-10 23:42:25.974691] [0x000167dc] [info]    framebuffer_type: Supported"
+   ]
+  },
+  "PETG/lid": {
+   "layers": 166,
+   "stats": {
+    "time": "model printing time: 42m 21s; total estimated time: 49m 37s",
+    "filament_mm": 3765.76,
+    "filament_g_header": "11.32"
+   },
+   "floating": {
+    "external_unsupported_mm": 274.14,
+    "bridge_mm": 6354.45,
+    "bridge_unsupported_mm": 3120.2,
+    "internal_unsupported_mm": 0.0
+   },
+   "floating_by_feature": {
+    "Outer wall": 3.16,
+    "Overhang wall": 236.21,
+    "Gap infill": 34.77,
+    "Bridge": 3120.2
+   },
+   "worst_layers": [
+    {
+     "layer": 8,
+     "z": 1.8,
+     "feature": "Overhang wall",
+     "points": 1125,
+     "x": [
+      -18.4,
+      18.4
+     ],
+     "y": [
+      23.1,
+      25.4
+     ]
+    },
+    {
+     "layer": 8,
+     "z": 1.8,
+     "feature": "Gap infill",
+     "points": 174,
+     "x": [
+      -17.4,
+      17.4
+     ],
+     "y": [
+      24.3,
+      24.3
+     ]
+    },
+    {
+     "layer": 10,
+     "z": 2.2,
+     "feature": "Bridge",
+     "points": 15201,
+     "x": [
+      -37.9,
+      37.9
+     ],
+     "y": [
+      -26.5,
+      5.5
+     ]
+    },
+    {
+     "layer": 43,
+     "z": 8.8,
+     "feature": "Overhang wall",
+     "points": 30,
+     "x": [
+      -18.4,
+      18.4
+     ],
+     "y": [
+      23.8,
+      24.7
+     ]
+    },
+    {
+     "layer": 43,
+     "z": 8.8,
+     "feature": "Bridge",
+     "points": 460,
+     "x": [
+      -17.3,
+      17.3
+     ],
+     "y": [
+      23.8,
+      24.7
+     ]
+    },
+    {
+     "layer": 107,
+     "z": 21.6,
+     "feature": "Overhang wall",
+     "points": 15,
+     "x": [
+      6.5,
+      9.1
+     ],
+     "y": [
+      10.9,
+      10.9
+     ]
+    },
+    {
+     "layer": 153,
+     "z": 30.8,
+     "feature": "Overhang wall",
+     "points": 19,
+     "x": [
+      6.5,
+      9.1
+     ],
+     "y": [
+      9.1,
+      9.6
+     ]
+    },
+    {
+     "layer": 153,
+     "z": 30.8,
+     "feature": "Outer wall",
+     "points": 17,
+     "x": [
+      6.5,
+      9.1
+     ],
+     "y": [
+      8.8,
+      9.1
+     ]
+    }
+   ],
+   "log_warnings": [
+    "[2026-10-10 23:42:47.058473] [0x00004168] [info]    Slic3r::CLI::run::<lambda_b5986fe34fddedaba4e2da08f7fbd45e>::operator ():load setting file C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-d2\\build\\print\\process_no_support.json, with rule 1",
+    "[2026-10-10 23:42:47.063705] [0x00004168] [info]    no substitutions performed from file C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-d2\\build\\print\\process_no_support.json",
+    "[2026-10-10 23:42:47.063705] [0x00004168] [info]    loaded process config C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-d2\\build\\print\\process_no_support.json, type 0.20mm Standard @BBL X1C, name system, inherits 0.20mm Standard @BBL X1C",
+    "[2026-10-10 23:42:47.078415] [0x00004168] [info]    Slic3r::Print::apply 1847: finished,  this 00000290B9735F50, m_modified_count 1, apply_status 1, m_support_used 0",
+    "[2026-10-10 23:42:47.173388] [0x00004168] [warning] tree support default to organic support",
+    "[2026-10-10 23:42:47.199832] [0x00004168] [info]    max_cantilever_dist=1.72921e+06",
+    "[2026-10-10 23:42:47.204070] [0x00004168] [info]    is_support_necessary takes 0 secs.",
+    "[2026-10-10 23:42:47.238582] [0x00004168] [warning] plate 1: found NON_CRITICAL slicing warnings: It seems object print_lid.stl has floating regions. Please re-orient the object or enable support generation."
+   ]
+  },
+  "PETG/roof": {
+   "layers": 205,
+   "stats": {
+    "time": "model printing time: 38m 7s; total estimated time: 45m 23s",
+    "filament_mm": 3492.91,
+    "filament_g_header": "10.50"
+   },
+   "floating": {
+    "external_unsupported_mm": 10.9,
+    "bridge_mm": 6470.08,
+    "bridge_unsupported_mm": 3211.71,
+    "internal_unsupported_mm": 20.09
+   },
+   "floating_by_feature": {
+    "Bridge": 3211.71,
+    "Overhang wall": 10.9
+   },
+   "worst_layers": [
+    {
+     "layer": 10,
+     "z": 2.2,
+     "feature": "Bridge",
+     "points": 15999,
+     "x": [
+      -37.9,
+      37.9
+     ],
+     "y": [
+      -19.4,
+      19.6
+     ]
+    },
+    {
+     "layer": 43,
+     "z": 8.8,
+     "feature": "Overhang wall",
+     "points": 60,
+     "x": [
+      -26.8,
+      26.8
+     ],
+     "y": [
+      -5.8,
+      -4.9
+     ]
+    },
+    {
+     "layer": 43,
+     "z": 8.8,
+     "feature": "Bridge",
+     "points": 150,
+     "x": [
+      -25.7,
+      25.7
+     ],
+     "y": [
+      -5.8,
+      -4.9
+     ]
+    }
+   ],
+   "log_warnings": [
+    "[2026-10-10 23:42:52.546238] [0x0000548c] [info]    Slic3r::CLI::run::<lambda_b5986fe34fddedaba4e2da08f7fbd45e>::operator ():load setting file C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-d2\\build\\print\\process_no_support.json, with rule 1",
+    "[2026-10-10 23:42:52.549239] [0x0000548c] [info]    no substitutions performed from file C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-d2\\build\\print\\process_no_support.json",
+    "[2026-10-10 23:42:52.549239] [0x0000548c] [info]    loaded process config C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-d2\\build\\print\\process_no_support.json, type 0.20mm Standard @BBL X1C, name system, inherits 0.20mm Standard @BBL X1C",
+    "[2026-10-10 23:42:52.569236] [0x0000548c] [info]    Slic3r::Print::apply 1847: finished,  this 000001BBD65996B0, m_modified_count 1, apply_status 1, m_support_used 0",
+    "[2026-10-10 23:42:52.677717] [0x0000548c] [warning] tree support default to organic support",
+    "[2026-10-10 23:42:52.696945] [0x0000548c] [info]    max_cantilever_dist=0",
+    "[2026-10-10 23:42:52.698697] [0x0000548c] [info]    is_support_necessary takes 0 secs.",
+    "[2026-10-10 23:42:53.450576] [0x0000548c] [info]    framebuffer_type: Supported"
+   ]
+  },
+  "PETG/crank": {
+   "layers": 59,
+   "stats": {
+    "time": "model printing time: 13m 14s; total estimated time: 20m 30s",
+    "filament_mm": 855.05,
+    "filament_g_header": "2.57"
+   },
+   "floating": {
+    "external_unsupported_mm": 0.0,
+    "bridge_mm": 1775.12,
+    "bridge_unsupported_mm": 850.16,
+    "internal_unsupported_mm": 8.57
+   },
+   "floating_by_feature": {
+    "Bridge": 850.16
+   },
+   "worst_layers": [
+    {
+     "layer": 8,
+     "z": 1.8,
+     "feature": "Bridge",
+     "points": 2560,
+     "x": [
+      -14.9,
+      8.6
+     ],
+     "y": [
+      -9.2,
+      16.1
+     ]
+    },
+    {
+     "layer": 14,
+     "z": 3.0,
+     "feature": "Bridge",
+     "points": 235,
+     "x": [
+      3.0,
+      14.3
+     ],
+     "y": [
+      -16.2,
+      -4.9
+     ]
+    },
+    {
+     "layer": 16,
+     "z": 3.4,
+     "feature": "Bridge",
+     "points": 1499,
+     "x": [
+      -15.8,
+      15.4
+     ],
+     "y": [
+      -16.9,
+      16.5
+     ]
+    }
+   ],
+   "log_warnings": [
+    "[2026-10-10 23:42:56.588905] [0x00014c08] [info]    Slic3r::CLI::run::<lambda_b5986fe34fddedaba4e2da08f7fbd45e>::operator ():load setting file C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-d2\\build\\print\\process_no_support.json, with rule 1",
+    "[2026-10-10 23:42:56.592240] [0x00014c08] [info]    no substitutions performed from file C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-d2\\build\\print\\process_no_support.json",
+    "[2026-10-10 23:42:56.592240] [0x00014c08] [info]    loaded process config C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-d2\\build\\print\\process_no_support.json, type 0.20mm Standard @BBL X1C, name system, inherits 0.20mm Standard @BBL X1C",
+    "[2026-10-10 23:42:56.611699] [0x00014c08] [info]    Slic3r::Print::apply 1847: finished,  this 00000178332AE060, m_modified_count 1, apply_status 1, m_support_used 0",
+    "[2026-10-10 23:42:56.720492] [0x00014c08] [warning] tree support default to organic support",
+    "[2026-10-10 23:42:56.737502] [0x00014c08] [info]    max_cantilever_dist=0",
+    "[2026-10-10 23:42:56.737502] [0x00014c08] [info]    is_support_necessary takes 0 secs.",
+    "[2026-10-10 23:42:57.321743] [0x00014c08] [info]    framebuffer_type: Supported"
+   ]
+  },
+  "PETG/link": {
+   "layers": 53,
+   "stats": {
+    "time": "model printing time: 7m 41s; total estimated time: 14m 57s",
+    "filament_mm": 551.91,
+    "filament_g_header": "1.66"
+   },
+   "floating": {
+    "external_unsupported_mm": 0.0,
+    "bridge_mm": 526.14,
+    "bridge_unsupported_mm": 184.99,
+    "internal_unsupported_mm": 0.93
+   },
+   "floating_by_feature": {
+    "Bridge": 184.99
+   },
+   "worst_layers": [
+    {
+     "layer": 10,
+     "z": 2.2,
+     "feature": "Bridge",
+     "points": 938,
+     "x": [
+      -22.8,
+      15.0
+     ],
+     "y": [
+      -5.4,
+      8.7
+     ]
+    }
+   ],
+   "log_warnings": [
+    "[2026-10-10 23:42:59.744349] [0x00003da4] [info]    Slic3r::CLI::run::<lambda_b5986fe34fddedaba4e2da08f7fbd45e>::operator ():load setting file C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-d2\\build\\print\\process_no_support.json, with rule 1",
+    "[2026-10-10 23:42:59.777351] [0x00003da4] [info]    no substitutions performed from file C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-d2\\build\\print\\process_no_support.json",
+    "[2026-10-10 23:42:59.777351] [0x00003da4] [info]    loaded process config C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-d2\\build\\print\\process_no_support.json, type 0.20mm Standard @BBL X1C, name system, inherits 0.20mm Standard @BBL X1C",
+    "[2026-10-10 23:42:59.815891] [0x00003da4] [info]    Slic3r::Print::apply 1847: finished,  this 00000204E9436AB0, m_modified_count 1, apply_status 1, m_support_used 0",
+    "[2026-10-10 23:42:59.968431] [0x00003da4] [warning] tree support default to organic support",
+    "[2026-10-10 23:42:59.989457] [0x00003da4] [info]    max_cantilever_dist=0",
+    "[2026-10-10 23:42:59.991471] [0x00003da4] [info]    is_support_necessary takes 0 secs.",
+    "[2026-10-10 23:43:00.633195] [0x00003da4] [info]    framebuffer_type: Supported"
+   ]
+  },
+  "PETG/pin": {
+   "layers": 23,
+   "stats": {
+    "time": "model printing time: 5m 0s; total estimated time: 12m 16s",
+    "filament_mm": 449.49,
+    "filament_g_header": "1.35"
+   },
+   "floating": {
+    "external_unsupported_mm": 0.0,
+    "bridge_mm": 0.0,
+    "bridge_unsupported_mm": 0.0,
+    "internal_unsupported_mm": 7.49
+   },
+   "floating_by_feature": {},
+   "worst_layers": [],
+   "log_warnings": [
+    "[2026-10-10 23:43:02.084130] [0x000090dc] [info]    Slic3r::CLI::run::<lambda_b5986fe34fddedaba4e2da08f7fbd45e>::operator ():load setting file C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-d2\\build\\print\\process_no_support.json, with rule 1",
+    "[2026-10-10 23:43:02.088823] [0x000090dc] [info]    no substitutions performed from file C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-d2\\build\\print\\process_no_support.json",
+    "[2026-10-10 23:43:02.088823] [0x000090dc] [info]    loaded process config C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-d2\\build\\print\\process_no_support.json, type 0.20mm Standard @BBL X1C, name system, inherits 0.20mm Standard @BBL X1C",
+    "[2026-10-10 23:43:02.111474] [0x000090dc] [info]    Slic3r::Print::apply 1847: finished,  this 0000026FE2823DB0, m_modified_count 1, apply_status 1, m_support_used 0",
+    "[2026-10-10 23:43:02.154154] [0x000090dc] [warning] tree support default to organic support",
+    "[2026-10-10 23:43:02.157567] [0x000090dc] [info]    max_cantilever_dist=0",
+    "[2026-10-10 23:43:02.157567] [0x000090dc] [info]    is_support_necessary takes 0 secs.",
+    "[2026-10-10 23:43:02.639054] [0x000090dc] [info]    framebuffer_type: Supported"
+   ]
+  },
+  "PETG/clip": {
+   "layers": 26,
+   "stats": {
+    "time": "model printing time: 5m 52s; total estimated time: 13m 8s",
+    "filament_mm": 564.54,
+    "filament_g_header": "1.70"
+   },
+   "floating": {
+    "external_unsupported_mm": 0.0,
+    "bridge_mm": 0.0,
+    "bridge_unsupported_mm": 0.0,
+    "internal_unsupported_mm": 0.0
+   },
+   "floating_by_feature": {},
+   "worst_layers": [],
+   "log_warnings": [
+    "[2026-10-10 23:43:03.543025] [0x00009650] [info]    Slic3r::CLI::run::<lambda_b5986fe34fddedaba4e2da08f7fbd45e>::operator ():load setting file C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-d2\\build\\print\\process_no_support.json, with rule 1",
+    "[2026-10-10 23:43:03.547025] [0x00009650] [info]    no substitutions performed from file C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-d2\\build\\print\\process_no_support.json",
+    "[2026-10-10 23:43:03.547025] [0x00009650] [info]    loaded process config C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-d2\\build\\print\\process_no_support.json, type 0.20mm Standard @BBL X1C, name system, inherits 0.20mm Standard @BBL X1C",
+    "[2026-10-10 23:43:03.562029] [0x00009650] [info]    Slic3r::Print::apply 1847: finished,  this 0000017E05EAD750, m_modified_count 1, apply_status 1, m_support_used 0",
+    "[2026-10-10 23:43:03.591028] [0x00009650] [warning] tree support default to organic support",
+    "[2026-10-10 23:43:03.594028] [0x00009650] [info]    max_cantilever_dist=0",
+    "[2026-10-10 23:43:03.594028] [0x00009650] [info]    is_support_necessary takes 0 secs.",
+    "[2026-10-10 23:43:04.014910] [0x00009650] [info]    framebuffer_type: Supported"
+   ]
+  },
+  "PETG/speaker_clip": {
+   "layers": 15,
+   "stats": {
+    "time": "model printing time: 3m 35s; total estimated time: 10m 51s",
+    "filament_mm": 404.21,
+    "filament_g_header": "1.22"
+   },
+   "floating": {
+    "external_unsupported_mm": 0.0,
+    "bridge_mm": 0.0,
+    "bridge_unsupported_mm": 0.0,
+    "internal_unsupported_mm": 0.0
+   },
+   "floating_by_feature": {},
+   "worst_layers": [],
+   "log_warnings": [
+    "[2026-10-10 23:43:04.931382] [0x00011e24] [info]    Slic3r::CLI::run::<lambda_b5986fe34fddedaba4e2da08f7fbd45e>::operator ():load setting file C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-d2\\build\\print\\process_no_support.json, with rule 1",
+    "[2026-10-10 23:43:04.934418] [0x00011e24] [info]    no substitutions performed from file C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-d2\\build\\print\\process_no_support.json",
+    "[2026-10-10 23:43:04.934418] [0x00011e24] [info]    loaded process config C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-d2\\build\\print\\process_no_support.json, type 0.20mm Standard @BBL X1C, name system, inherits 0.20mm Standard @BBL X1C",
+    "[2026-10-10 23:43:04.948273] [0x00011e24] [info]    Slic3r::Print::apply 1847: finished,  this 000001F8CCB275F0, m_modified_count 1, apply_status 1, m_support_used 0",
+    "[2026-10-10 23:43:04.982408] [0x00011e24] [warning] tree support default to organic support",
+    "[2026-10-10 23:43:04.984759] [0x00011e24] [info]    max_cantilever_dist=0",
+    "[2026-10-10 23:43:04.984759] [0x00011e24] [info]    is_support_necessary takes 0 secs.",
+    "[2026-10-10 23:43:05.370941] [0x00011e24] [info]    framebuffer_type: Supported"
+   ]
+  }
+ },
+ "support_recommendation": {
+  "required": true,
+  "basis": "lid external_unsupported_mm >= 1.0",
+  "allowed_surface": "組立時に固定屋根で隠れる蓋内側のグースネック蝶番",
+  "measured_mm": {
+   "PLA": 274.14,
+   "PETG": 274.14
+  }
+ }
+}

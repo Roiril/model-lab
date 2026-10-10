@@ -16,7 +16,7 @@ for (const mode of ['physics', 'assembly']) {
 }
 assert.throws(() => workspaceHref('unknown'), RangeError);
 // 画面を登録したモデルは自分の画面へ。登録していないモデルは押せない
-for (const model of ['servo-lid-cube', 'mystery-box-sg92r-c1', 'mystery-box-sg92r-c2']) {
+for (const model of ['servo-lid-cube', 'mystery-box-sg92r-c1', 'mystery-box-sg92r-c2', 'mystery-box-sg92r-d1', 'mystery-box-sg92r-d2']) {
   for (const mode of ['physics', 'assembly']) {
     const url = new URL(workspaceHref(mode, model), 'http://localhost:3000');
     assert.equal(url.pathname, WORKSPACE_PAGES[model][mode]);
@@ -25,6 +25,10 @@ for (const model of ['servo-lid-cube', 'mystery-box-sg92r-c1', 'mystery-box-sg92
     assert.equal(hasWorkspace(mode, B3_MODEL), true);
     assert.equal(hasWorkspace(mode, 'another-model'), false);
   }
+}
+for (const model of ['mystery-box-sg92r-d1', 'mystery-box-sg92r-d2']) {
+  assert.equal(new URL(workspaceHref('physics', model), 'http://localhost:3000').pathname, '/viewer/d-cube/physics.html');
+  assert.equal(new URL(workspaceHref('assembly', model), 'http://localhost:3000').pathname, '/viewer/d-cube/assembly.html');
 }
 assert.equal(hasWorkspace('studio', 'another-model'), true);
 const memory = new Map();
