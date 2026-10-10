@@ -137,33 +137,33 @@
     }
    ],
    "log_warnings": [
-    "[2026-10-10 06:05:45.842909] [0x0000ab74] [info]    Slic3r::Print::apply 1847: finished,  this 000001FF39B27FE0, m_modified_count 1, apply_status 1, m_support_used 0",
-    "[2026-10-10 06:05:46.100172] [0x0000ab74] [warning] tree support default to organic support",
-    "[2026-10-10 06:05:46.143348] [0x0000ab74] [info]    max_cantilever_dist=0",
-    "[2026-10-10 06:05:46.144839] [0x0000ab74] [info]    is_support_necessary takes 0 secs.",
-    "[2026-10-10 06:05:46.871204] [0x0000ab74] [info]    framebuffer_type: Supported",
-    "[2026-10-10 06:05:46.884972] [0x0000ab74] [info]    framebuffer_type: Supported",
-    "[2026-10-10 06:05:46.889045] [0x0000ab74] [info]    framebuffer_type: Supported",
-    "[2026-10-10 06:05:46.889045] [0x0000ab74] [info]    framebuffer_type: Supported"
+    "[2026-10-10 16:24:54.406795] [0x00010a10] [info]    Slic3r::Print::apply 1847: finished,  this 000001FC4D12F580, m_modified_count 1, apply_status 1, m_support_used 0",
+    "[2026-10-10 16:24:54.534139] [0x00010a10] [warning] tree support default to organic support",
+    "[2026-10-10 16:24:54.562206] [0x00010a10] [info]    max_cantilever_dist=0",
+    "[2026-10-10 16:24:54.562206] [0x00010a10] [info]    is_support_necessary takes 0 secs.",
+    "[2026-10-10 16:24:55.067221] [0x00010a10] [info]    framebuffer_type: Supported",
+    "[2026-10-10 16:24:55.076245] [0x00010a10] [info]    framebuffer_type: Supported",
+    "[2026-10-10 16:24:55.078251] [0x00010a10] [info]    framebuffer_type: Supported",
+    "[2026-10-10 16:24:55.078251] [0x00010a10] [info]    framebuffer_type: Supported"
    ]
   },
   "PLA/lid": {
-   "layers": 114,
+   "layers": 116,
    "stats": {
-    "time": "model printing time: 22m 21s; total estimated time: 29m 37s",
-    "filament_mm": 4735.07,
-    "filament_g_header": "14.35"
+    "time": "model printing time: 22m 35s; total estimated time: 29m 51s",
+    "filament_mm": 4747.86,
+    "filament_g_header": "14.39"
    },
    "floating": {
-    "external_unsupported_mm": 3.28,
+    "external_unsupported_mm": 10.07,
     "bridge_mm": 9504.93,
     "bridge_unsupported_mm": 4729.18,
     "internal_unsupported_mm": 0.75
    },
    "floating_by_feature": {
+    "Outer wall": 3.16,
     "Bridge": 4729.18,
-    "Gap infill": 0.2,
-    "Overhang wall": 3.08
+    "Overhang wall": 6.91
    },
    "worst_layers": [
     {
@@ -226,26 +226,40 @@
      "layer": 103,
      "z": 20.8,
      "feature": "Overhang wall",
-     "points": 6,
+     "points": 26,
      "x": [
       6.8,
       9.4
      ],
      "y": [
-      15.1,
-      15.1
+      14.7,
+      15.2
+     ]
+    },
+    {
+     "layer": 103,
+     "z": 20.8,
+     "feature": "Outer wall",
+     "points": 17,
+     "x": [
+      6.8,
+      9.4
+     ],
+     "y": [
+      14.4,
+      14.7
      ]
     }
    ],
    "log_warnings": [
-    "[2026-10-10 06:05:59.450487] [0x00010acc] [info]    Slic3r::Print::apply 1847: finished,  this 000002822D6DF810, m_modified_count 1, apply_status 1, m_support_used 0",
-    "[2026-10-10 06:05:59.501498] [0x00010acc] [warning] tree support default to organic support",
-    "[2026-10-10 06:05:59.508106] [0x00010acc] [info]    max_cantilever_dist=0",
-    "[2026-10-10 06:05:59.508106] [0x00010acc] [info]    is_support_necessary takes 0 secs.",
-    "[2026-10-10 06:05:59.773170] [0x00010acc] [info]    framebuffer_type: Supported",
-    "[2026-10-10 06:05:59.799580] [0x00010acc] [info]    framebuffer_type: Supported",
-    "[2026-10-10 06:05:59.803652] [0x00010acc] [info]    framebuffer_type: Supported",
-    "[2026-10-10 06:05:59.804156] [0x00010acc] [info]    framebuffer_type: Supported"
+    "[2026-10-10 16:25:02.051946] [0x0000e3b8] [info]    Slic3r::Print::apply 1847: finished,  this 0000017965424880, m_modified_count 1, apply_status 1, m_support_used 0",
+    "[2026-10-10 16:25:02.090976] [0x0000e3b8] [warning] tree support default to organic support",
+    "[2026-10-10 16:25:02.095995] [0x0000e3b8] [info]    max_cantilever_dist=0",
+    "[2026-10-10 16:25:02.095995] [0x0000e3b8] [info]    is_support_necessary takes 0 secs.",
+    "[2026-10-10 16:25:02.278471] [0x0000e3b8] [info]    framebuffer_type: Supported",
+    "[2026-10-10 16:25:02.286506] [0x0000e3b8] [info]    framebuffer_type: Supported",
+    "[2026-10-10 16:25:02.290523] [0x0000e3b8] [info]    framebuffer_type: Supported",
+    "[2026-10-10 16:25:02.290523] [0x0000e3b8] [info]    framebuffer_type: Supported"
    ]
   },
   "PLA/crank": {
@@ -295,22 +309,22 @@
     }
    ],
    "log_warnings": [
-    "[2026-10-10 06:06:02.879264] [0x000072a4] [info]    Slic3r::Print::apply 1847: finished,  this 000002A3F0BEC270, m_modified_count 1, apply_status 1, m_support_used 0",
-    "[2026-10-10 06:06:02.990564] [0x000072a4] [warning] tree support default to organic support",
-    "[2026-10-10 06:06:02.998714] [0x000072a4] [info]    max_cantilever_dist=0",
-    "[2026-10-10 06:06:02.998714] [0x000072a4] [info]    is_support_necessary takes 0 secs.",
-    "[2026-10-10 06:06:03.304311] [0x000072a4] [info]    framebuffer_type: Supported",
-    "[2026-10-10 06:06:03.315949] [0x000072a4] [info]    framebuffer_type: Supported",
-    "[2026-10-10 06:06:03.318516] [0x000072a4] [info]    framebuffer_type: Supported",
-    "[2026-10-10 06:06:03.318516] [0x000072a4] [info]    framebuffer_type: Supported"
+    "[2026-10-10 16:25:04.048351] [0x00004028] [info]    Slic3r::Print::apply 1847: finished,  this 0000025FB9F49130, m_modified_count 1, apply_status 1, m_support_used 0",
+    "[2026-10-10 16:25:04.101338] [0x00004028] [warning] tree support default to organic support",
+    "[2026-10-10 16:25:04.107374] [0x00004028] [info]    max_cantilever_dist=0",
+    "[2026-10-10 16:25:04.107374] [0x00004028] [info]    is_support_necessary takes 0 secs.",
+    "[2026-10-10 16:25:04.303012] [0x00004028] [info]    framebuffer_type: Supported",
+    "[2026-10-10 16:25:04.311527] [0x00004028] [info]    framebuffer_type: Supported",
+    "[2026-10-10 16:25:04.314034] [0x00004028] [info]    framebuffer_type: Supported",
+    "[2026-10-10 16:25:04.315041] [0x00004028] [info]    framebuffer_type: Supported"
    ]
   },
   "PLA/link": {
-   "layers": 32,
+   "layers": 53,
    "stats": {
-    "time": "model printing time: 3m 36s; total estimated time: 10m 52s",
-    "filament_mm": 517.91,
-    "filament_g_header": "1.57"
+    "time": "model printing time: 4m 43s; total estimated time: 11m 59s",
+    "filament_mm": 554.79,
+    "filament_g_header": "1.68"
    },
    "floating": {
     "external_unsupported_mm": 0.0,
@@ -338,14 +352,14 @@
     }
    ],
    "log_warnings": [
-    "[2026-10-10 06:06:04.497784] [0x00015cb4] [info]    Slic3r::Print::apply 1847: finished,  this 00000133EB767010, m_modified_count 1, apply_status 1, m_support_used 0",
-    "[2026-10-10 06:06:04.551250] [0x00015cb4] [warning] tree support default to organic support",
-    "[2026-10-10 06:06:04.556884] [0x00015cb4] [info]    max_cantilever_dist=0",
-    "[2026-10-10 06:06:04.556884] [0x00015cb4] [info]    is_support_necessary takes 0 secs.",
-    "[2026-10-10 06:06:05.043583] [0x00015cb4] [info]    framebuffer_type: Supported",
-    "[2026-10-10 06:06:05.062682] [0x00015cb4] [info]    framebuffer_type: Supported",
-    "[2026-10-10 06:06:05.067958] [0x00015cb4] [info]    framebuffer_type: Supported",
-    "[2026-10-10 06:06:05.067958] [0x00015cb4] [info]    framebuffer_type: Supported"
+    "[2026-10-10 16:25:05.009636] [0x000113c0] [info]    Slic3r::Print::apply 1847: finished,  this 000002C41891A020, m_modified_count 1, apply_status 1, m_support_used 0",
+    "[2026-10-10 16:25:05.058253] [0x000113c0] [warning] tree support default to organic support",
+    "[2026-10-10 16:25:05.065339] [0x000113c0] [info]    max_cantilever_dist=0",
+    "[2026-10-10 16:25:05.065339] [0x000113c0] [info]    is_support_necessary takes 0 secs.",
+    "[2026-10-10 16:25:05.242199] [0x000113c0] [info]    framebuffer_type: Supported",
+    "[2026-10-10 16:25:05.252221] [0x000113c0] [info]    framebuffer_type: Supported",
+    "[2026-10-10 16:25:05.255732] [0x000113c0] [info]    framebuffer_type: Supported",
+    "[2026-10-10 16:25:05.255732] [0x000113c0] [info]    framebuffer_type: Supported"
    ]
   },
   "PLA/pin": {
@@ -364,14 +378,14 @@
    "floating_by_feature": {},
    "worst_layers": [],
    "log_warnings": [
-    "[2026-10-10 06:06:05.862160] [0x0000c730] [info]    Slic3r::Print::apply 1847: finished,  this 0000028E38625DB0, m_modified_count 1, apply_status 1, m_support_used 0",
-    "[2026-10-10 06:06:05.882067] [0x0000c730] [warning] tree support default to organic support",
-    "[2026-10-10 06:06:05.884598] [0x0000c730] [info]    max_cantilever_dist=0",
-    "[2026-10-10 06:06:05.884598] [0x0000c730] [info]    is_support_necessary takes 0 secs.",
-    "[2026-10-10 06:06:06.178362] [0x0000c730] [info]    framebuffer_type: Supported",
-    "[2026-10-10 06:06:06.199503] [0x0000c730] [info]    framebuffer_type: Supported",
-    "[2026-10-10 06:06:06.201784] [0x0000c730] [info]    framebuffer_type: Supported",
-    "[2026-10-10 06:06:06.202878] [0x0000c730] [info]    framebuffer_type: Supported"
+    "[2026-10-10 16:25:05.757693] [0x00017f64] [info]    Slic3r::Print::apply 1847: finished,  this 00000260DEBF3100, m_modified_count 1, apply_status 1, m_support_used 0",
+    "[2026-10-10 16:25:05.773709] [0x00017f64] [warning] tree support default to organic support",
+    "[2026-10-10 16:25:05.774714] [0x00017f64] [info]    max_cantilever_dist=0",
+    "[2026-10-10 16:25:05.775713] [0x00017f64] [info]    is_support_necessary takes 0 secs.",
+    "[2026-10-10 16:25:05.916018] [0x00017f64] [info]    framebuffer_type: Supported",
+    "[2026-10-10 16:25:05.927047] [0x00017f64] [info]    framebuffer_type: Supported",
+    "[2026-10-10 16:25:05.930047] [0x00017f64] [info]    framebuffer_type: Supported",
+    "[2026-10-10 16:25:05.931047] [0x00017f64] [info]    framebuffer_type: Supported"
    ]
   },
   "PLA/clip": {
@@ -390,14 +404,14 @@
    "floating_by_feature": {},
    "worst_layers": [],
    "log_warnings": [
-    "[2026-10-10 06:06:07.067831] [0x0000e144] [info]    Slic3r::Print::apply 1847: finished,  this 0000018BA5E23750, m_modified_count 1, apply_status 1, m_support_used 0",
-    "[2026-10-10 06:06:07.087674] [0x0000e144] [warning] tree support default to organic support",
-    "[2026-10-10 06:06:07.090213] [0x0000e144] [info]    max_cantilever_dist=0",
-    "[2026-10-10 06:06:07.090213] [0x0000e144] [info]    is_support_necessary takes 0 secs.",
-    "[2026-10-10 06:06:07.296118] [0x0000e144] [info]    framebuffer_type: Supported",
-    "[2026-10-10 06:06:07.321757] [0x0000e144] [info]    framebuffer_type: Supported",
-    "[2026-10-10 06:06:07.324453] [0x0000e144] [info]    framebuffer_type: Supported",
-    "[2026-10-10 06:06:07.324962] [0x0000e144] [info]    framebuffer_type: Supported"
+    "[2026-10-10 16:25:06.350160] [0x00006020] [info]    Slic3r::Print::apply 1847: finished,  this 000001D14AA294E0, m_modified_count 1, apply_status 1, m_support_used 0",
+    "[2026-10-10 16:25:06.363855] [0x00006020] [warning] tree support default to organic support",
+    "[2026-10-10 16:25:06.364862] [0x00006020] [info]    max_cantilever_dist=0",
+    "[2026-10-10 16:25:06.364862] [0x00006020] [info]    is_support_necessary takes 0 secs.",
+    "[2026-10-10 16:25:06.498452] [0x00006020] [info]    framebuffer_type: Supported",
+    "[2026-10-10 16:25:06.505967] [0x00006020] [info]    framebuffer_type: Supported",
+    "[2026-10-10 16:25:06.508476] [0x00006020] [info]    framebuffer_type: Supported",
+    "[2026-10-10 16:25:06.508476] [0x00006020] [info]    framebuffer_type: Supported"
    ]
   },
   "PLA/speaker_clip": {
@@ -416,14 +430,14 @@
    "floating_by_feature": {},
    "worst_layers": [],
    "log_warnings": [
-    "[2026-10-10 06:06:07.869385] [0x00001b38] [info]    Slic3r::Print::apply 1847: finished,  this 000001EBA8220760, m_modified_count 1, apply_status 1, m_support_used 0",
-    "[2026-10-10 06:06:07.888161] [0x00001b38] [warning] tree support default to organic support",
-    "[2026-10-10 06:06:07.889190] [0x00001b38] [info]    max_cantilever_dist=0",
-    "[2026-10-10 06:06:07.889190] [0x00001b38] [info]    is_support_necessary takes 0 secs.",
-    "[2026-10-10 06:06:08.083256] [0x00001b38] [info]    framebuffer_type: Supported",
-    "[2026-10-10 06:06:08.111986] [0x00001b38] [info]    framebuffer_type: Supported",
-    "[2026-10-10 06:06:08.115065] [0x00001b38] [info]    framebuffer_type: Supported",
-    "[2026-10-10 06:06:08.115577] [0x00001b38] [info]    framebuffer_type: Supported"
+    "[2026-10-10 16:25:06.908463] [0x0000cf38] [info]    Slic3r::Print::apply 1847: finished,  this 0000016E44F8C760, m_modified_count 1, apply_status 1, m_support_used 0",
+    "[2026-10-10 16:25:06.920487] [0x0000cf38] [warning] tree support default to organic support",
+    "[2026-10-10 16:25:06.920487] [0x0000cf38] [info]    max_cantilever_dist=0",
+    "[2026-10-10 16:25:06.920487] [0x0000cf38] [info]    is_support_necessary takes 0 secs.",
+    "[2026-10-10 16:25:07.049230] [0x0000cf38] [info]    framebuffer_type: Supported",
+    "[2026-10-10 16:25:07.057810] [0x0000cf38] [info]    framebuffer_type: Supported",
+    "[2026-10-10 16:25:07.060816] [0x0000cf38] [info]    framebuffer_type: Supported",
+    "[2026-10-10 16:25:07.060816] [0x0000cf38] [info]    framebuffer_type: Supported"
    ]
   },
   "PETG/box": {
@@ -531,33 +545,33 @@
     }
    ],
    "log_warnings": [
-    "[2026-10-10 06:06:08.665539] [0x00017d60] [info]    Slic3r::Print::apply 1847: finished,  this 00000217E7F00D70, m_modified_count 1, apply_status 1, m_support_used 0",
-    "[2026-10-10 06:06:08.840579] [0x00017d60] [warning] tree support default to organic support",
-    "[2026-10-10 06:06:08.884528] [0x00017d60] [info]    max_cantilever_dist=0",
-    "[2026-10-10 06:06:08.885059] [0x00017d60] [info]    is_support_necessary takes 0 secs.",
-    "[2026-10-10 06:06:09.621369] [0x00017d60] [info]    framebuffer_type: Supported",
-    "[2026-10-10 06:06:09.642463] [0x00017d60] [info]    framebuffer_type: Supported",
-    "[2026-10-10 06:06:09.645599] [0x00017d60] [info]    framebuffer_type: Supported",
-    "[2026-10-10 06:06:09.647111] [0x00017d60] [info]    framebuffer_type: Supported"
+    "[2026-10-10 16:25:07.408747] [0x0000faa8] [info]    Slic3r::Print::apply 1847: finished,  this 000001BAB3864120, m_modified_count 1, apply_status 1, m_support_used 0",
+    "[2026-10-10 16:25:07.527998] [0x0000faa8] [warning] tree support default to organic support",
+    "[2026-10-10 16:25:07.556637] [0x0000faa8] [info]    max_cantilever_dist=0",
+    "[2026-10-10 16:25:07.556637] [0x0000faa8] [info]    is_support_necessary takes 0 secs.",
+    "[2026-10-10 16:25:08.027535] [0x0000faa8] [info]    framebuffer_type: Supported",
+    "[2026-10-10 16:25:08.036107] [0x0000faa8] [info]    framebuffer_type: Supported",
+    "[2026-10-10 16:25:08.039103] [0x0000faa8] [info]    framebuffer_type: Supported",
+    "[2026-10-10 16:25:08.039103] [0x0000faa8] [info]    framebuffer_type: Supported"
    ]
   },
   "PETG/lid": {
-   "layers": 114,
+   "layers": 116,
    "stats": {
-    "time": "model printing time: 32m 17s; total estimated time: 39m 33s",
-    "filament_mm": 4593.47,
-    "filament_g_header": "13.81"
+    "time": "model printing time: 32m 46s; total estimated time: 40m 2s",
+    "filament_mm": 4605.87,
+    "filament_g_header": "13.85"
    },
    "floating": {
-    "external_unsupported_mm": 3.28,
+    "external_unsupported_mm": 10.07,
     "bridge_mm": 9504.93,
     "bridge_unsupported_mm": 4729.18,
     "internal_unsupported_mm": 0.75
    },
    "floating_by_feature": {
+    "Outer wall": 3.16,
     "Bridge": 4729.18,
-    "Gap infill": 0.2,
-    "Overhang wall": 3.08
+    "Overhang wall": 6.91
    },
    "worst_layers": [
     {
@@ -620,26 +634,40 @@
      "layer": 103,
      "z": 20.8,
      "feature": "Overhang wall",
-     "points": 6,
+     "points": 26,
      "x": [
       6.8,
       9.4
      ],
      "y": [
-      15.1,
-      15.1
+      14.7,
+      15.2
+     ]
+    },
+    {
+     "layer": 103,
+     "z": 20.8,
+     "feature": "Outer wall",
+     "points": 17,
+     "x": [
+      6.8,
+      9.4
+     ],
+     "y": [
+      14.4,
+      14.7
      ]
     }
    ],
    "log_warnings": [
-    "[2026-10-10 06:06:22.553486] [0x00017b64] [info]    Slic3r::Print::apply 1847: finished,  this 000001837C2CAF20, m_modified_count 1, apply_status 1, m_support_used 0",
-    "[2026-10-10 06:06:22.603136] [0x00017b64] [warning] tree support default to organic support",
-    "[2026-10-10 06:06:22.611414] [0x00017b64] [info]    max_cantilever_dist=0",
-    "[2026-10-10 06:06:22.611414] [0x00017b64] [info]    is_support_necessary takes 0 secs.",
-    "[2026-10-10 06:06:22.870248] [0x00017b64] [info]    framebuffer_type: Supported",
-    "[2026-10-10 06:06:22.896552] [0x00017b64] [info]    framebuffer_type: Supported",
-    "[2026-10-10 06:06:22.899611] [0x00017b64] [info]    framebuffer_type: Supported",
-    "[2026-10-10 06:06:22.900120] [0x00017b64] [info]    framebuffer_type: Supported"
+    "[2026-10-10 16:25:15.094705] [0x000122b0] [info]    Slic3r::Print::apply 1847: finished,  this 00000176B1EF5DC0, m_modified_count 1, apply_status 1, m_support_used 0",
+    "[2026-10-10 16:25:15.132266] [0x000122b0] [warning] tree support default to organic support",
+    "[2026-10-10 16:25:15.137784] [0x000122b0] [info]    max_cantilever_dist=0",
+    "[2026-10-10 16:25:15.137784] [0x000122b0] [info]    is_support_necessary takes 0 secs.",
+    "[2026-10-10 16:25:15.316629] [0x000122b0] [info]    framebuffer_type: Supported",
+    "[2026-10-10 16:25:15.325663] [0x000122b0] [info]    framebuffer_type: Supported",
+    "[2026-10-10 16:25:15.328660] [0x000122b0] [info]    framebuffer_type: Supported",
+    "[2026-10-10 16:25:15.328660] [0x000122b0] [info]    framebuffer_type: Supported"
    ]
   },
   "PETG/crank": {
@@ -689,22 +717,22 @@
     }
    ],
    "log_warnings": [
-    "[2026-10-10 06:06:24.737135] [0x00016b00] [info]    Slic3r::Print::apply 1847: finished,  this 00000268EA659690, m_modified_count 1, apply_status 1, m_support_used 0",
-    "[2026-10-10 06:06:24.791911] [0x00016b00] [warning] tree support default to organic support",
-    "[2026-10-10 06:06:24.797855] [0x00016b00] [info]    max_cantilever_dist=0",
-    "[2026-10-10 06:06:24.798873] [0x00016b00] [info]    is_support_necessary takes 0 secs.",
-    "[2026-10-10 06:06:25.026606] [0x00016b00] [info]    framebuffer_type: Supported",
-    "[2026-10-10 06:06:25.052045] [0x00016b00] [info]    framebuffer_type: Supported",
-    "[2026-10-10 06:06:25.055073] [0x00016b00] [info]    framebuffer_type: Supported",
-    "[2026-10-10 06:06:25.055073] [0x00016b00] [info]    framebuffer_type: Supported"
+    "[2026-10-10 16:25:16.853186] [0x0000ea30] [info]    Slic3r::Print::apply 1847: finished,  this 000001ED8C2B4160, m_modified_count 1, apply_status 1, m_support_used 0",
+    "[2026-10-10 16:25:16.902677] [0x0000ea30] [warning] tree support default to organic support",
+    "[2026-10-10 16:25:16.909468] [0x0000ea30] [info]    max_cantilever_dist=0",
+    "[2026-10-10 16:25:16.909468] [0x0000ea30] [info]    is_support_necessary takes 0 secs.",
+    "[2026-10-10 16:25:17.076751] [0x0000ea30] [info]    framebuffer_type: Supported",
+    "[2026-10-10 16:25:17.084448] [0x0000ea30] [info]    framebuffer_type: Supported",
+    "[2026-10-10 16:25:17.086110] [0x0000ea30] [info]    framebuffer_type: Supported",
+    "[2026-10-10 16:25:17.087727] [0x0000ea30] [info]    framebuffer_type: Supported"
    ]
   },
   "PETG/link": {
-   "layers": 32,
+   "layers": 53,
    "stats": {
-    "time": "model printing time: 5m 33s; total estimated time: 12m 49s",
-    "filament_mm": 505.41,
-    "filament_g_header": "1.52"
+    "time": "model printing time: 7m 37s; total estimated time: 14m 52s",
+    "filament_mm": 541.17,
+    "filament_g_header": "1.63"
    },
    "floating": {
     "external_unsupported_mm": 0.0,
@@ -732,14 +760,14 @@
     }
    ],
    "log_warnings": [
-    "[2026-10-10 06:06:25.827312] [0x00016ad0] [info]    Slic3r::Print::apply 1847: finished,  this 000001D11B54B330, m_modified_count 1, apply_status 1, m_support_used 0",
-    "[2026-10-10 06:06:25.870763] [0x00016ad0] [warning] tree support default to organic support",
-    "[2026-10-10 06:06:25.875777] [0x00016ad0] [info]    max_cantilever_dist=0",
-    "[2026-10-10 06:06:25.875777] [0x00016ad0] [info]    is_support_necessary takes 0 secs.",
-    "[2026-10-10 06:06:26.049877] [0x00016ad0] [info]    framebuffer_type: Supported",
-    "[2026-10-10 06:06:26.065368] [0x00016ad0] [info]    framebuffer_type: Supported",
-    "[2026-10-10 06:06:26.067387] [0x00016ad0] [info]    framebuffer_type: Supported",
-    "[2026-10-10 06:06:26.068393] [0x00016ad0] [info]    framebuffer_type: Supported"
+    "[2026-10-10 16:25:17.680590] [0x00000714] [info]    Slic3r::Print::apply 1847: finished,  this 000001B17CF35000, m_modified_count 1, apply_status 1, m_support_used 0",
+    "[2026-10-10 16:25:17.724560] [0x00000714] [warning] tree support default to organic support",
+    "[2026-10-10 16:25:17.730080] [0x00000714] [info]    max_cantilever_dist=0",
+    "[2026-10-10 16:25:17.730080] [0x00000714] [info]    is_support_necessary takes 0 secs.",
+    "[2026-10-10 16:25:17.882866] [0x00000714] [info]    framebuffer_type: Supported",
+    "[2026-10-10 16:25:17.892381] [0x00000714] [info]    framebuffer_type: Supported",
+    "[2026-10-10 16:25:17.894375] [0x00000714] [info]    framebuffer_type: Supported",
+    "[2026-10-10 16:25:17.895655] [0x00000714] [info]    framebuffer_type: Supported"
    ]
   },
   "PETG/pin": {
@@ -758,14 +786,14 @@
    "floating_by_feature": {},
    "worst_layers": [],
    "log_warnings": [
-    "[2026-10-10 06:06:26.590452] [0x00017a18] [info]    Slic3r::Print::apply 1847: finished,  this 000001C88B1FD160, m_modified_count 1, apply_status 1, m_support_used 0",
-    "[2026-10-10 06:06:26.607097] [0x00017a18] [warning] tree support default to organic support",
-    "[2026-10-10 06:06:26.609601] [0x00017a18] [info]    max_cantilever_dist=0",
-    "[2026-10-10 06:06:26.609601] [0x00017a18] [info]    is_support_necessary takes 0 secs.",
-    "[2026-10-10 06:06:26.801011] [0x00017a18] [info]    framebuffer_type: Supported",
-    "[2026-10-10 06:06:26.822452] [0x00017a18] [info]    framebuffer_type: Supported",
-    "[2026-10-10 06:06:26.825252] [0x00017a18] [info]    framebuffer_type: Supported",
-    "[2026-10-10 06:06:26.825252] [0x00017a18] [info]    framebuffer_type: Supported"
+    "[2026-10-10 16:25:18.340687] [0x00006f8c] [info]    Slic3r::Print::apply 1847: finished,  this 00000202234C3010, m_modified_count 1, apply_status 1, m_support_used 0",
+    "[2026-10-10 16:25:18.355288] [0x00006f8c] [warning] tree support default to organic support",
+    "[2026-10-10 16:25:18.357288] [0x00006f8c] [info]    max_cantilever_dist=0",
+    "[2026-10-10 16:25:18.357288] [0x00006f8c] [info]    is_support_necessary takes 0 secs.",
+    "[2026-10-10 16:25:18.483299] [0x00006f8c] [info]    framebuffer_type: Supported",
+    "[2026-10-10 16:25:18.492494] [0x00006f8c] [info]    framebuffer_type: Supported",
+    "[2026-10-10 16:25:18.494494] [0x00006f8c] [info]    framebuffer_type: Supported",
+    "[2026-10-10 16:25:18.494494] [0x00006f8c] [info]    framebuffer_type: Supported"
    ]
   },
   "PETG/clip": {
@@ -784,14 +812,14 @@
    "floating_by_feature": {},
    "worst_layers": [],
    "log_warnings": [
-    "[2026-10-10 06:06:27.286864] [0x00016fe0] [info]    Slic3r::Print::apply 1847: finished,  this 00000237F99DCA50, m_modified_count 1, apply_status 1, m_support_used 0",
-    "[2026-10-10 06:06:27.301953] [0x00016fe0] [warning] tree support default to organic support",
-    "[2026-10-10 06:06:27.305326] [0x00016fe0] [info]    max_cantilever_dist=0",
-    "[2026-10-10 06:06:27.305326] [0x00016fe0] [info]    is_support_necessary takes 0 secs.",
-    "[2026-10-10 06:06:27.523298] [0x00016fe0] [info]    framebuffer_type: Supported",
-    "[2026-10-10 06:06:27.544428] [0x00016fe0] [info]    framebuffer_type: Supported",
-    "[2026-10-10 06:06:27.545963] [0x00016fe0] [info]    framebuffer_type: Supported",
-    "[2026-10-10 06:06:27.546970] [0x00016fe0] [info]    framebuffer_type: Supported"
+    "[2026-10-10 16:25:18.853333] [0x00017c20] [info]    Slic3r::Print::apply 1847: finished,  this 000001E7FB1FB770, m_modified_count 1, apply_status 1, m_support_used 0",
+    "[2026-10-10 16:25:18.865859] [0x00017c20] [warning] tree support default to organic support",
+    "[2026-10-10 16:25:18.867859] [0x00017c20] [info]    max_cantilever_dist=0",
+    "[2026-10-10 16:25:18.867859] [0x00017c20] [info]    is_support_necessary takes 0 secs.",
+    "[2026-10-10 16:25:19.004245] [0x00017c20] [info]    framebuffer_type: Supported",
+    "[2026-10-10 16:25:19.011256] [0x00017c20] [info]    framebuffer_type: Supported",
+    "[2026-10-10 16:25:19.013256] [0x00017c20] [info]    framebuffer_type: Supported",
+    "[2026-10-10 16:25:19.014250] [0x00017c20] [info]    framebuffer_type: Supported"
    ]
   },
   "PETG/speaker_clip": {
@@ -810,14 +838,14 @@
    "floating_by_feature": {},
    "worst_layers": [],
    "log_warnings": [
-    "[2026-10-10 06:06:28.107357] [0x0001841c] [info]    Slic3r::Print::apply 1847: finished,  this 0000018C4D800230, m_modified_count 1, apply_status 1, m_support_used 0",
-    "[2026-10-10 06:06:28.120383] [0x0001841c] [warning] tree support default to organic support",
-    "[2026-10-10 06:06:28.121889] [0x0001841c] [info]    max_cantilever_dist=0",
-    "[2026-10-10 06:06:28.121889] [0x0001841c] [info]    is_support_necessary takes 0 secs.",
-    "[2026-10-10 06:06:28.302051] [0x0001841c] [info]    framebuffer_type: Supported",
-    "[2026-10-10 06:06:28.324705] [0x0001841c] [info]    framebuffer_type: Supported",
-    "[2026-10-10 06:06:28.326755] [0x0001841c] [info]    framebuffer_type: Supported",
-    "[2026-10-10 06:06:28.327764] [0x0001841c] [info]    framebuffer_type: Supported"
+    "[2026-10-10 16:25:19.418051] [0x000082bc] [info]    Slic3r::Print::apply 1847: finished,  this 0000022733FC5E20, m_modified_count 1, apply_status 1, m_support_used 0",
+    "[2026-10-10 16:25:19.431196] [0x000082bc] [warning] tree support default to organic support",
+    "[2026-10-10 16:25:19.431196] [0x000082bc] [info]    max_cantilever_dist=0",
+    "[2026-10-10 16:25:19.431196] [0x000082bc] [info]    is_support_necessary takes 0 secs.",
+    "[2026-10-10 16:25:19.550060] [0x000082bc] [info]    framebuffer_type: Supported",
+    "[2026-10-10 16:25:19.557603] [0x000082bc] [info]    framebuffer_type: Supported",
+    "[2026-10-10 16:25:19.559602] [0x000082bc] [info]    framebuffer_type: Supported",
+    "[2026-10-10 16:25:19.560594] [0x000082bc] [info]    framebuffer_type: Supported"
    ]
   }
  }

@@ -28,7 +28,8 @@ from printmech.printability import (  # noqa: E402
 BUILD = os.path.join(HERE, "build")
 LAYER = 0.2
 UP = {"box": (0, 0, 1), "lid": (0, 0, -1), "crank": (1, 0, 0),
-      "link": (1, 0, 0), "clip": (-1, 0, 0), "pin": (0, 0, 1), "speaker_clip": (1, 0, 0)}
+      "link": (1, 0, 0), "clip": (-1, 0, 0), "pin": (0, 0, 1), "speaker_clip": (1, 0, 0),
+      "joint_b_test": (0, 0, -1)}
 
 
 def exterior(center):

@@ -1,9 +1,10 @@
 #include <Servo.h>
 
-// 90°でホーンを付けた後の試運転例。閉位置は実物の縁に合わせて変更する。
+// 蓋75°の組立姿勢でサーボ90°にしてホーンを付ける。閉位置は実物の縁に合わせる。
 const int SERVO_PIN = 9;
-const float CLOSED_DEG = 127.8f;
-const float OPEN_DEG = 68.6f;
+const float CLOSED_DEG = 153.6f;
+const float OPEN_DEG = 94.4f;
+const float MIDDLE_DEG = 115.8f;
 const unsigned long MOTION_MS = 1200;
 Servo lid;
 float current = 90.0f;
@@ -32,7 +33,7 @@ void loop() {
     const char key = Serial.read();
     if (key == 'o') beginMotion(OPEN_DEG);
     if (key == 'c') beginMotion(CLOSED_DEG);
-    if (key == 'm') beginMotion(90.0f);
+    if (key == 'm') beginMotion(MIDDLE_DEG);
     if (key == '<') beginMotion(current - 1.0f);
     if (key == '>') beginMotion(current + 1.0f);
   }
@@ -40,7 +41,7 @@ void loop() {
   if (moving && now - lastWrite >= 20) {
     const float x = min(1.0f, (now - started) / float(MOTION_MS));
     const float eased = x * x * (3.0f - 2.0f * x);
-    current = constrain(startAngle + (targetAngle - startAngle) * eased, 60.0f, 125.0f);
+    current = constrain(startAngle + (targetAngle - startAngle) * eased, 90.0f, 155.0f);
     lid.write(int(current + 0.5f));
     lastWrite = now;
     if (x >= 1.0f) moving = false;

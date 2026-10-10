@@ -39,14 +39,24 @@ def contact(a, b, depth=True, step=1):
         return dict(hits=0, depth=0.0)
     maximum = 0.0
     # 交差する面の頂点を調べる。箱の全頂点を毎工程で光線判定する必要はない。
-    candidates = [set(), set()]
+    candidate_faces = [set(), set()]
     for ia, ib in pairs:
-        candidates[0].update(a.t[ia])
-        candidates[1].update(b.t[ib])
+        candidate_faces[0].add(ia)
+        candidate_faces[1].add(ib)
     for index, (mesh, other, tree) in enumerate(((a, b, bb), (b, a, ba))):
-        ids = sorted(candidates[index]) if pairs else range(0, len(mesh.v), step)
-        for vi in ids:
-            v = mesh.v[vi]
+        samples = []
+        if pairs:
+            # 頂点だけでは、全頂点が相手の外にある薄板同士の十字交差を見落とす。
+            # 交差した三角形の辺中点と重心側の面内点も調べる。
+            for face_index in sorted(candidate_faces[index]):
+                p, q, r = (mesh.v[vi] for vi in mesh.t[face_index])
+                for i in range(3):
+                    for j in range(3 - i):
+                        samples.append((p * (2 - i - j) + q * i + r * j) / 2)
+                samples.append((p + q + r) / 3)
+        else:
+            samples = [mesh.v[vi] for vi in range(0, len(mesh.v), step)]
+        for v in samples:
             if other.contains(v, tree):
                 nearest = tree.find_nearest(v)
                 if nearest[0] is not None:
@@ -95,7 +105,21 @@ def calibrate(parts):
     res["must_not_hit_clip_vs_lid"] = contact(parts["clip"], mv["lid"])
     # 距離の校正: クランクの +X 面と受けの -X 面は設計 0.3mm
     res["clearance_crank_vs_box_design_0.3"] = clearance(mv["crank"], parts["box"], step=1)
+    def calibration_box(name, lo, hi):
+        v = [Vector((x, y, z)) for z in (lo[2], hi[2]) for y in (lo[1], hi[1]) for x in (lo[0], hi[0])]
+        t = [(0, 2, 3), (0, 3, 1), (4, 5, 7), (4, 7, 6),
+             (0, 1, 5), (0, 5, 4), (2, 6, 7), (2, 7, 3),
+             (0, 4, 6), (0, 6, 2), (1, 3, 7), (1, 7, 5)]
+        return Mesh(v, t, name)
+    horizontal = calibration_box("horizontal_plate", (-5, -5, -0.5), (5, 5, 0.5))
+    vertical = calibration_box("vertical_plate", (-0.5, -5, -5), (0.5, 5, 5))
+    res["must_hit_crossed_thin_plates"] = contact(horizontal, vertical)
+    res["must_not_hit_separated_thin_plates"] = contact(
+        horizontal, vertical.moved(Matrix.Translation((20, 0, 0))))
     ok = (c_hit["hits"] > 0 and c_hit["depth"] > 0.3 and res["must_not_hit_clip_vs_lid"]["hits"] == 0
+          and res["must_hit_crossed_thin_plates"]["hits"] > 0
+          and res["must_hit_crossed_thin_plates"]["depth"] > 0.1
+          and res["must_not_hit_separated_thin_plates"]["hits"] == 0
           and abs(res["clearance_crank_vs_box_design_0.3"] - 0.3) < 0.05)
     res["ok"] = ok
     return res
@@ -197,155 +221,165 @@ def path_check(moving, static, mats, skip=()):
     return worst
 
 
-def bent_link(mesh, pa, pb, displacement):
-    """A端を動かさない片持ち梁の近似。両端の丸い部分は曲げない。"""
-    direction = Vector((0, pb[0] - pa[0], pb[1] - pa[1])).normalized()
-    length = math.hypot(pb[0] - pa[0], pb[1] - pa[1])
-    root = P.LINK_A_BOSS_R * MM
-    tip = P.LINK_B_BOSS_R * MM
-    span = length - root - tip
-    amplitude = displacement / (1 + 1.5 * tip / span)
-    center_x = (P.SERVO_X0 + P.SG.HORN_TOP_Z + P.CRANK_TOP_T + P.AX_GAP + P.LINK_T / 2) * MM
-    origin = Vector((center_x, pa[0], pa[1]))
-    verts = []
-    for vertex in mesh.v:
-        s = (vertex - origin).dot(direction) - root
-        q = min(1.0, max(0.0, s / span))
-        offset = amplitude * (q * q * (3 - q) / 2 + max(0.0, s - span) * 1.5 / span)
-        slope = amplitude * (3 * q - 1.5 * q * q) / span
-        angle = math.atan(slope)
-        cross = vertex.x - center_x
-        position = vertex.copy() + direction * (cross * math.sin(angle))
-        position.x = center_x + cross * math.cos(angle) - offset
-        verts.append(position)
-    return Mesh(verts, mesh.t, mesh.name)
-
-
 def assembly(parts):
     res = {}
-    lid0 = parts["lid"].moved(rot_x(P.ASSEMBLY_LID_BACK_DEG, HY, HZ))
-    # A. 蝶番ピンを右側面から差す（蓋は閉じた位置）
-    mats = [(t, Matrix.Translation((t, 0, 0))) for t in [78 - i * 1.0 for i in range(79)]]
-    res["A_hinge_pin_insert"] = dict(
-        worst=path_check({"pin": parts["pin"]}, {"box": parts["box"], "lid": lid0}, mats),
-        note="蓋は125°。先端5.3mmと左の貫通穴5.2mmの片側0.05mmだけを圧入する")
+    setup_theta = P.ASSEMBLY_LID_BACK_DEG
+    mv_setup, alpha_setup = pose(parts, setup_theta)
+    lid_setup = mv_setup["lid"]
+    pa_setup, pb_setup = K.pin_a(alpha_setup), K.pin_b(setup_theta)
+    link_setup_deg = K.link_angle(setup_theta, alpha_setup)
+    key_link_deg = setup_theta + P.B_KEY_DEG - 180.0
+    link_at_b_key = mv_setup["link"].moved(
+        rot_x(key_link_deg - link_setup_deg, pb_setup[0], pb_setup[1]))
 
-    # B. ホーンを付けたサーボに、クランクを +X 側から押し込む（箱の外）
-    mats = [(t, Matrix.Translation((t, 0, 0))) for t in [8 - i * 0.25 for i in range(32)] + [0.02]]
-    res["B_crank_onto_horn"] = dict(worst=path_check({"crank": parts["crank"]},
-                                                     {"horn": parts["ref_horn"], "body": parts["ref_body"]}, mats))
+    # B. 箱外で蓋の鍵溝へ B ピンを +X 方向に通す。
+    insert_x = [-8.0 + i * 0.25 for i in range(33)]
+    res["B_retainer_insert"] = dict(
+        worst=path_check({"link": link_at_b_key}, {"lid": lid_setup},
+                         [(x, Matrix.Translation((x, 0, 0))) for x in insert_x]),
+        from_x_mm=-8.0, to_x_mm=0.0, key_link_deg=round(key_link_deg, 3))
 
-    # C. リンクをピン A に（鍵溝の角度で差し、回して止める）
-    a0 = K.ALPHA0
-    rel0 = K.relative_link_crank(0.0, a0)
-    key = P.BAYONET_KEY_DEG
-    pa = K.pin_a(a0)
-    to_key = rot_x(key - rel0, pa[0], pa[1])
-    mats = [(t, Matrix.Translation((t, 0, 0)) @ to_key) for t in [8 - i * 0.25 for i in range(33)]]
-    res["C1_link_push_at_key"] = dict(worst=path_check({"link": parts["link"]}, {"crank": parts["crank"]}, mats))
-    mats = [(ang, rot_x(ang - rel0, pa[0], pa[1])) for ang in [key - i * 5.0 for i in range(int((key - rel0) / 5) + 1)] + [rel0]]
-    res["C2_link_turn_to_operating"] = dict(worst=path_check({"link": parts["link"]}, {"crank": parts["crank"]}, mats),
-                                            from_deg=key, to_deg=round(rel0, 1))
-    # 爪には45度の斜面がある。引く距離を連続に調べ、抜ける前に爪へ当たることを確認する。
-    lock = []
-    for th in (0.0, K.THETA_OPEN / 2, K.THETA_OPEN):
-        s = K.sweep(th, 40) if th > 0 else [(0.0, a0)]
-        al = s[-1][1]
-        rel = K.relative_link_crank(th, al)
-        rotation = rot_x(rel - rel0, pa[0], pa[1])
+    # 鍵角から95°姿勢へは、Bの下側を通る円弧を選ぶ。両方向をactual STLで残す。
+    forward = (link_setup_deg - key_link_deg) % 360.0
+    deltas = (forward, forward - 360.0)
+    turn_candidates = []
+    for delta in deltas:
+        count = max(1, int(math.ceil(abs(delta) / 2.5)))
+        angles = [delta * i / count for i in range(count + 1)]
+        worst = path_check({"link": link_at_b_key}, {"lid": lid_setup},
+                           [(a, rot_x(a, pb_setup[0], pb_setup[1])) for a in angles])
+        a_z = [pb_setup[1] - K.L_LINK * math.sin(math.radians(key_link_deg + a)) for a in angles]
+        turn_candidates.append(dict(delta_deg=round(delta, 3), samples=len(angles), worst=worst,
+                                    mean_a_z_mm=round(sum(a_z) / len(a_z), 3),
+                                    max_a_z_mm=round(max(a_z), 3),
+                                    clear=not any(v["depth"] > 0.003 for v in worst.values())))
+    clear_turns = [row for row in turn_candidates if row["clear"]]
+    chosen_turn = min(clear_turns, key=lambda row: row["mean_a_z_mm"]) if clear_turns else min(
+        turn_candidates, key=lambda row: max((v["depth"] for v in row["worst"].values()), default=0.0))
+    res["B_retainer_turn"] = dict(
+        worst=chosen_turn["worst"], from_link_deg=round(key_link_deg, 3),
+        to_link_deg=round(link_setup_deg, 3), chosen_delta_deg=chosen_turn["delta_deg"],
+        route="underside", candidates=turn_candidates, ok=chosen_turn["clear"])
+
+    # Bの爪は動作0〜65°の131姿勢で、ピンが抜ける前に-X引抜きを止める。
+    pulls = [i * 0.25 for i in range(31)]
+    operating = []
+    for i in range(131):
+        theta = i * K.THETA_OPEN / 130
+        moving, alpha = pose(parts, theta)
         path = []
-        for pull in [i * 0.25 for i in range(31)]:
-            c = contact(parts["link"].moved(Matrix.Translation((pull, 0, 0)) @ rotation), parts["crank"])
+        for pull in pulls:
+            c = contact(moving["link"].moved(Matrix.Translation((-pull, 0, 0))), moving["lid"])
             path.append(dict(pull_mm=pull, **c))
-        at2 = next(r for r in path if r['pull_mm'] == 2.0)
-        first = next((r['pull_mm'] for r in path if r['hits'] > 0), None)
-        lock.append(dict(theta=th, rel=round(rel, 1), pulled_2mm_hits=at2['hits'], depth=at2['depth'],
-                         first_contact_mm=first, path=path))
+        first = next((row for row in path if row["hits"] > 0 and row["depth"] > 0.003), None)
+        operating.append(dict(theta=round(theta, 3), alpha=round(alpha, 3),
+                              first_contact_mm=None if first is None else first["pull_mm"],
+                              first_contact_depth_mm=None if first is None else first["depth"],
+                              max_depth_mm=max(row["depth"] for row in path), path=path))
     key_path = []
-    for pull in [i * 0.25 for i in range(31)]:
-        c = contact(parts['link'].moved(Matrix.Translation((pull, 0, 0)) @ to_key), parts['crank'])
+    for pull in pulls:
+        c = contact(link_at_b_key.moved(Matrix.Translation((-pull, 0, 0))), lid_setup)
         key_path.append(dict(pull_mm=pull, **c))
-    res['C3_bayonet_lock'] = dict(operating=lock, pull_check_mm=2.0, at_key_path=key_path,
-                                 ok=all(r['first_contact_mm'] is not None and r['first_contact_mm'] < 2 for r in lock)
-                                 and all(r['hits'] == 0 for r in key_path))
+    pin_exit = P.FIN_T * MM
+    res["B_retainer_lock"] = dict(
+        operating=operating, at_key_path=key_path, poses=len(operating), pull_max_mm=pulls[-1],
+        pull_step_mm=0.25, pin_exit_mm=round(pin_exit, 3),
+        first_contact_max_mm=max((row["first_contact_mm"] for row in operating
+                                  if row["first_contact_mm"] is not None), default=None),
+        calibration=dict(operating_hit=all(row["first_contact_mm"] is not None for row in operating),
+                         key_withdrawal_clear=all(row["depth"] <= 0.003 for row in key_path)),
+        ok=(all(row["first_contact_mm"] is not None and row["first_contact_mm"] < pin_exit
+                and row["max_depth_mm"] > 0.003 for row in operating)
+            and all(row["depth"] <= 0.003 for row in key_path)))
 
-    # D. サーボ一式（本体・配線・ホーン・クランク・リンク）を上から箱へ下ろす。蓋は開けて倒しておく
-    th_mid = K.THETA_OPEN / 2
-    mv, alpha_mid = pose(parts, th_mid)
-    back = P.ASSEMBLY_LID_BACK_DEG
-    lid_back = parts["lid"].moved(rot_x(back, HY, HZ))
-    sub = dict(body=parts["ref_body"], wire=parts["ref_wire"], horn=mv["horn"], crank=mv["crank"],
-               link=mv["link"])
+    # Aの従来バヨネットも、動作姿勢での保持と鍵角での引抜きを残す。
+    a_lock = []
+    for theta in (0.0, K.THETA_OPEN / 2, K.THETA_OPEN):
+        moving, alpha = pose(parts, theta)
+        path = []
+        for pull in pulls:
+            c = contact(moving["link"].moved(Matrix.Translation((pull, 0, 0))), moving["crank"])
+            path.append(dict(pull_mm=pull, **c))
+        first = next((row for row in path if row["hits"] > 0 and row["depth"] > 0.003), None)
+        a_lock.append(dict(theta=theta, rel=round(K.relative_link_crank(theta, alpha), 3),
+                           first_contact_mm=None if first is None else first["pull_mm"], path=path))
+    moving0, alpha0 = pose(parts, 0.0)
+    pa0 = K.pin_a(alpha0)
+    rel0 = K.relative_link_crank(0.0, alpha0)
+    link_at_a_key = moving0["link"].moved(rot_x(P.BAYONET_KEY_DEG - rel0, pa0[0], pa0[1]))
+    a_key_path = [dict(pull_mm=pull, **contact(
+        link_at_a_key.moved(Matrix.Translation((pull, 0, 0))), moving0["crank"])) for pull in pulls]
+    res["C3_bayonet_lock"] = dict(
+        operating=a_lock, at_key_path=a_key_path,
+        ok=all(row["first_contact_mm"] is not None and row["first_contact_mm"] < 2.0 for row in a_lock)
+        and all(row["depth"] <= 0.003 for row in a_key_path))
+
+    # C. Bを保持した蓋とリンクへ自由クランクをA鍵角で差し、クランクだけを95°姿勢へ回す。
+    alpha_key = link_setup_deg - P.BAYONET_KEY_DEG
+    crank_at_key = mv_setup["crank"].moved(
+        rot_x(alpha_key - alpha_setup, pa_setup[0], pa_setup[1]))
+    res["C_retainer_crank_insert"] = dict(
+        worst=path_check({"crank": crank_at_key}, {"link": mv_setup["link"], "lid": lid_setup},
+                         [(x, Matrix.Translation((x, 0, 0))) for x in insert_x]),
+        from_x_mm=-8.0, to_x_mm=0.0, alpha_key_deg=round(alpha_key, 3))
+    turn_count = max(1, int(math.ceil(abs(alpha_setup - alpha_key) / 2.5)))
+    crank_turn = [alpha_key + (alpha_setup - alpha_key) * i / turn_count for i in range(turn_count + 1)]
+    res["C_retainer_crank_turn"] = dict(
+        worst=path_check({"crank": crank_at_key}, {"link": mv_setup["link"], "lid": lid_setup},
+                         [(a, rot_x(a - alpha_key, pa_setup[0], pa_setup[1])) for a in crank_turn]),
+        from_alpha_deg=round(alpha_key, 3), to_alpha_deg=round(alpha_setup, 3), samples=len(crank_turn))
+
+    # 結合済みの蓋・リンク・クランクを、95°姿勢のホーンへ+X側からかぶせる。
+    assembly95 = {"lid": lid_setup, "link": mv_setup["link"], "crank": mv_setup["crank"]}
+    onto_horn_x = [8.0 - i * 0.25 for i in range(33)]
+    res["C_retainer_horn_insert"] = dict(
+        worst=path_check(assembly95, {"horn": mv_setup["horn"], "body": parts["ref_body"]},
+                         [(x, Matrix.Translation((x, 0, 0))) for x in onto_horn_x],
+                         skip=(("lid", "horn"), ("link", "horn"), ("lid", "body"), ("link", "body"))),
+        from_x_mm=8.0, to_x_mm=0.0)
+
+    # D. 蓋95°を含むサーボ一式を上から箱へ下ろす。
+    sub = dict(body=parts["ref_body"], wire=parts["ref_wire"], horn=mv_setup["horn"],
+               crank=mv_setup["crank"], link=mv_setup["link"], lid=lid_setup)
     mats = [(t, Matrix.Translation((0, 0, t))) for t in [70 - i * 1.0 for i in range(70)] + [0.3, 0.1, 0.0]]
+    lower_contacts = path_check(sub, {"box": parts["box"], "speaker_clip": parts["speaker_clip"],
+                                      "speaker": parts["ref_speaker"]}, mats)
     res["D_servo_unit_lower"] = dict(
-        worst=path_check(sub, {"box": parts["box"],
-                              "speaker_clip": parts["speaker_clip"], "speaker": parts["ref_speaker"]}, mats),
-        crank_alpha=round(alpha_mid, 1),
-        note="サーボを 90° にしてホーンを付けた状態（クランクは動作範囲の中央）。配線は 8mm の固い棒で近似")
+        worst={key: value for key, value in lower_contacts.items() if value["depth"] > 0.003},
+        contacts={key: dict(value, note="基準面の摺動接触")
+                  for key, value in lower_contacts.items() if value["depth"] <= 0.003},
+        lid_deg=round(setup_theta, 3), crank_alpha=round(alpha_setup, 3), travel_mm=70,
+        note="蓋・リンク・クランク・ホーン・サーボ本体・配線を一式で下降。配線は8mmの固い棒で近似")
 
-    # E. 押さえクリップを上から押し込む
-    sub_final = dict(body=parts["ref_body"], wire=parts["ref_wire"], crank=mv["crank"], horn=mv["horn"])
+    # E. 押さえクリップを上から押し込み、蝶番ピンを右側面から差す。
+    sub_final = dict(body=parts["ref_body"], wire=parts["ref_wire"], crank=mv_setup["crank"],
+                     horn=mv_setup["horn"], link=mv_setup["link"], lid=lid_setup)
     mats = [(t, Matrix.Translation((0, 0, t))) for t in [25 - i * 0.25 for i in range(101)]]
     res["E_clip_press"] = dict(worst=path_check({"clip": parts["clip"]}, dict(box=parts["box"], **sub_final), mats),
                                note="爪が台の角を乗り越えるときの食い込み＝脚のたわみ量")
-    # C1ではサーボを先に入れ、125°の蓋を後から上入れする。
-    mats_lid = [(t, Matrix.Translation((0, 0, t))) for t in [40 - i * 0.5 for i in range(81)]]
-    res["G_lid_place_after_servo"] = dict(worst=path_check({"lid": lid_back},
-        dict(box=parts["box"], clip=parts["clip"], link=mv["link"],
-             speaker=parts["ref_speaker"], speaker_clip=parts["speaker_clip"], **sub_final), mats_lid))
+    pin_mats = [(t, Matrix.Translation((t, 0, 0))) for t in [78 - i * 1.0 for i in range(79)]]
+    res["E_hinge_pin_insert"] = dict(
+        worst=path_check({"pin": parts["pin"]}, {"box": parts["box"], "lid": lid_setup}, pin_mats),
+        note=f"蓋は{setup_theta:.0f}°。先端5.3mmと左の貫通穴5.2mmの片側0.05mmだけを圧入する")
 
-    # F. 蓋を下ろしながら、リンクの B 端を -X に逃がしておき、合ったところで離して耳の穴に入れる
-    pb = K.pin_b(th_mid)
-    pa_m = K.pin_a(alpha_mid)
-    ax = Vector((0, pb[0] - pa_m[0], pb[1] - pa_m[1])).normalized()
-    perp = Vector((0, -ax.z, ax.y))  # リンクに直角（YZ 面内）
-    lab = math.hypot(pb[0] - pa_m[0], pb[1] - pa_m[1])
-    defl = P.FIN_T * MM + 0.4
-    ang = math.degrees(math.atan(defl / lab))
-    bend = Matrix.Translation((0, pa_m[0], pa_m[1])) @ Matrix.Rotation(math.radians(ang), 4, perp) \
-        @ Matrix.Translation((0, -pa_m[0], -pa_m[1]))
-    # 向きの確認（B 端が -X に動くこと）
-    probe = bend @ Vector((0, pb[0], pb[1]))
-    if probe.x > 0:
-        bend = Matrix.Translation((0, pa_m[0], pa_m[1])) @ Matrix.Rotation(math.radians(-ang), 4, perp) \
-            @ Matrix.Translation((0, -pa_m[0], -pa_m[1]))
-    link_bent = bent_link(mv['link'], pa_m, pb, defl)
-    hits = {}
-    for th in [back - i * 2.5 for i in range(int((back - th_mid) / 2.5) + 1)] + [th_mid]:
-        lid = parts["lid"].moved(rot_x(th, HY, HZ))
-        c = lid.bvh().overlap(link_bent.bvh())
-        if c:
-            hits[str(round(th, 1))] = contact(lid, link_bent)
-    res["F_lid_down_with_link_bent"] = dict(hits=hits, bend_deg=round(ang, 2), b_end_shift_mm=round(defl, 2))
-    res['F_bent_link_fixed_parts'] = {}
-    for name in ('box', 'crank', 'horn', 'ref_body', 'ref_wire'):
-        other = mv[name] if name in mv else parts[name]
-        c = contact(link_bent, other, depth=False)
-        if c['hits']:
-            res['F_bent_link_fixed_parts'][name] = contact(link_bent, other)
-    # 離す: たわみを戻す途中で耳と当たらないか（最後は穴に入る）
-    rel_hits = {}
-    lid_mid = parts["lid"].moved(rot_x(th_mid, HY, HZ))
-    for k in range(11):
-        f = k / 10
-        bm = Matrix.Translation((0, pa_m[0], pa_m[1])) @ Matrix.Rotation(math.radians(math.copysign(ang, 1) * (1 - f) * (1 if probe.x <= 0 else -1)), 4, perp) \
-            @ Matrix.Translation((0, -pa_m[0], -pa_m[1]))
-        c = contact(lid_mid, bent_link(mv['link'], pa_m, pb, defl * (1 - f)))
-        if c["hits"]:
-            rel_hits[str(f)] = c
-    res["F_release_into_fin"] = dict(hits=rel_hits,
-                                     note="途中で当たるのはピン B の面取りが耳の穴の縁に乗る区間。最後（1.0）が 0 なら入る")
-    # リンクのたわみのひずみ（片持ち、A を根元）
-    t_link = P.LINK_T * MM
-    free_span = lab - (P.LINK_A_BOSS_R + P.LINK_B_BOSS_R) * MM
-    strain = 1.5 * t_link * defl / free_span ** 2
-    res["F_link_bend_strain_pct"] = round(strain * 100, 2)
-    res['F_link_free_span_mm'] = round(free_span, 3)
-    res['F_link_bend_method'] = 'A端を拘束。両端の丸を除く27.75mmを曲げられる長さとした保守的な近似。材料試験や有限要素解析は未実施'
+    # F. 保持済み一式を95°から32.5°まで運動学どおりに下ろす。
+    target_theta = K.THETA_OPEN / 2
+    lower_thetas = [setup_theta - i * 0.5 for i in range(int((setup_theta - target_theta) / 0.5) + 1)]
+    if lower_thetas[-1] != target_theta:
+        lower_thetas.append(target_theta)
+    lower_rows = motion(parts, lower_thetas)
+    res["F_retained_lid_lower"] = dict(
+        from_theta_deg=round(setup_theta, 3), to_theta_deg=round(target_theta, 3),
+        samples=len(lower_rows), rows=lower_rows,
+        hits=[dict(theta=row["theta"], hits=row["hits"]) for row in lower_rows if row["hits"]],
+        ok=not any(row["hits"] for row in lower_rows))
     clip_span = OZ + P.SG.BODY_W * MM / 2 + P.CLIP_TOP_GAP * MM - (P.HOOK_Z + P.HOOK_H) * MM
-    res['clip_snap_strain_pct'] = round(100 * 1.5 * P.CLIP_LEG_T * MM * 0.9 / clip_span ** 2, 2)
+    clip_deflection = res["E_clip_press"]["worst"]["clip-box"]["depth"]
+    res['clip_snap_deflection_mm'] = clip_deflection
+    res['clip_snap_strain_pct'] = round(100 * 1.5 * P.CLIP_LEG_T * MM * clip_deflection / clip_span ** 2, 2)
     res['hinge_tip_strain_pct'] = round(100 * 1.5 * (P.HINGE_TIP_D - P.HINGE_SPLIT_W) * MM / 2 * 0.05 / (P.HINGE_SPLIT_L * MM) ** 2, 2)
-    # H. エキサイターと保持具の上入れ。爪と押し当て以外の食い込みを区別する。
+
+    # H. エキサイターと保持具を上から入れる。
     up = [(t, Matrix.Translation((0, 0, t))) for t in [45 - i * 0.5 for i in range(91)]]
     res['H_speaker_lower'] = dict(worst=path_check({'speaker': parts['ref_speaker']}, {'box': parts['box']}, up))
     res['H_speaker_clip_press'] = dict(worst=path_check({'speaker_clip': parts['speaker_clip']},
@@ -355,8 +389,9 @@ def assembly(parts):
     res['H_speaker_clip_strain_pct'] = round(100 * 1.5 * 3.8 * 0.3 / cap_span ** 2, 2)
     res['H_speaker_clip_preload_mm'] = round(P.EXCITER_PRELOAD * MM, 3)
     res['H_speaker_clip_pull_lock'] = contact(parts['speaker_clip'].moved(Matrix.Translation((0, 0, 1))), parts['box'])
+
     # 取り外しは挿入の逆経路。押し出したピンの右端が側面から2mm出る位置を確認する。
-    res['I_pin_push_out'] = dict(worst=path_check({'pin': parts['pin']}, {'box': parts['box'], 'lid': lid_back},
+    res['I_pin_push_out'] = dict(worst=path_check({'pin': parts['pin']}, {'box': parts['box'], 'lid': lid_setup},
         [(t, Matrix.Translation((t, 0, 0))) for t in (0, 0.5, 1, 2, 3)]),
         right_tip_protrusion_mm=round(parts['pin'].bounds()[1][0] + 3 - P.CUBE * MM / 2, 2))
     return res
@@ -478,10 +513,11 @@ def main():
     report = {}
     report["calibration"] = calibrate(parts)
     print("calibration", report["calibration"], flush=True)
-    thetas = [i * 2.5 for i in range(int(K.THETA_OPEN / 2.5) + 1)]
+    motion_max = max(K.THETA_OPEN, P.ASSEMBLY_LID_BACK_DEG)
+    thetas = [i * .5 for i in range(int(motion_max / .5) + 1)]
     report["motion"] = motion(parts, thetas)
     report["motion_summary"] = dict(
-        steps=len(thetas), theta_max=thetas[-1],
+        steps=len(thetas), theta_max=thetas[-1], nominal_theta_max=K.THETA_OPEN,
         poses_with_hits=[r["theta"] for r in report["motion"] if r["hits"]],
         contacts=[c for r in report["motion"] for c in r.get("contacts", [])])
     print("motion", report["motion_summary"], flush=True)
@@ -489,6 +525,7 @@ def main():
     print("clearance", report["motion_clearance_mm"], flush=True)
     report["lid_free_open_limit_deg"] = free_open_limit(parts)
     report["static_closed"] = {}
+    report["static_contacts"] = {}
     mv, _ = pose(parts, 0.0)
     allp = dict(parts)
     allp.update(dict(lid=mv["lid"], crank=mv["crank"], link=mv["link"]))
@@ -499,8 +536,14 @@ def main():
                 continue
             c = contact(allp[a], allp[b], depth=False)
             if c["hits"]:
-                report["static_closed"][f"{a}-{b}"] = contact(allp[a], allp[b])
+                detail = contact(allp[a], allp[b])
+                if detail["depth"] <= 0.003:
+                    report["static_contacts"][f"{a}-{b}"] = dict(
+                        detail, note="基準面または着座面の接触。食い込みなし")
+                else:
+                    report["static_closed"][f"{a}-{b}"] = detail
     print("static", report["static_closed"])
+    print("static contacts", report["static_contacts"])
     report["assembly"] = assembly(parts)
     print("assembly", json.dumps(report["assembly"], ensure_ascii=False)[:3000])
     # 質量特性（中実 PLA）
@@ -518,6 +561,8 @@ def main():
     for n in ("box", "lid", "crank", "link", "pin", "clip", "speaker_clip"):
         m = Mesh.load(os.path.join(BUILD, f"print_{n}.stl"), n)
         report["overhang"][n] = overhang_report(m)
+    report["overhang"]["joint_b_test"] = overhang_report(
+        Mesh.load(os.path.join(BUILD, "print_joint_b_test.stl"), "joint_b_test"))
     for n, g in report["overhang"].items():
         print("overhang", n, len(g))
         for x in g[:12]:

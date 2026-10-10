@@ -13,7 +13,7 @@ ROOT = HERE.parents[1]
 EXPORTS = ROOT / 'exports'
 DEST = ROOT / 'prints' / HERE.name
 PARTS = ('box', 'lid', 'crank', 'link', 'pin', 'clip', 'speaker_clip', 'roof')
-COUPONS = ('servo_fit_test', 'speaker_test', 'roof_test_body', 'roof_test')
+COUPONS = ('servo_fit_test', 'speaker_test', 'roof_test_body', 'roof_test', 'joint_b_test')
 NS = '{http://schemas.microsoft.com/3dmanufacturing/core/2015/02}'
 IDENTITY = (1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
@@ -63,12 +63,14 @@ def main():
     plates = read('plate_report.json')
     assert all(str(plates[key]['support_used']).lower() == 'false'
                for key in ('PLA', 'PETG', 'crank_test', 'servo_fit_test', 'speaker_test', 'joints_test',
-                           'roof_test_PLA', 'roof_test_PETG'))
+                           'replacement_test', 'roof_test_PLA', 'roof_test_PETG'))
     servo_fit = verify['servo_fit']
     assert servo_fit['ok']
     assert servo_fit['coupon_datums']['components'] == 1
     assert servo_fit['minimum_wall_mm'] >= 1.2
     assert not [row for row in review['parts']['servo_fit_test']['thin_under_1_2mm']
+                if row['min_mm'] < 1.195]
+    assert not [row for row in review['parts']['joint_b_test']['thin_under_1_2mm']
                 if row['min_mm'] < 1.195]
     assert not verify['assembly']['D_servo_unit_lower']['worst']
     assert verify['assembly']['clip_snap_strain_pct'] <= 2
@@ -80,11 +82,17 @@ def main():
                for result in topology['parts'].values())
     assert all(model['parts'][p]['nonmanifold'] == 0 for p in PARTS)
     assert all(not [r for r in review['parts'][p]['thin_under_1_2mm'] if r['min_mm'] < 1.195] for p in PARTS)
-    assert verify['assembly']['F_link_bend_strain_pct'] <= 2
+    assert boolean['horn_crank_setup_mm3'] < boolean['volume_tolerance_mm3']
+    assert verify['assembly']['B_retainer_lock']['ok']
+    assert verify['assembly']['B_retainer_turn']['ok']
+    assert all(hit['depth'] <= 0.003 for key in ('B_retainer_insert', 'B_retainer_turn',
+                                                 'C_retainer_crank_insert', 'C_retainer_crank_turn')
+               for hit in verify['assembly'][key]['worst'].values())
+    horn_insert = verify['assembly']['C_retainer_horn_insert']['worst']
+    assert all(hit['depth'] <= 0.003 for pair, hit in horn_insert.items()
+               if not (pair == 'crank-horn' and hit['at'] == 0))
     assert verify['assembly']['C3_bayonet_lock']['ok']
-    assert not verify['assembly']['G_lid_place_after_servo']['worst']
-    assert not verify['assembly']['F_lid_down_with_link_bent']['hits']
-    assert not verify['assembly']['F_bent_link_fixed_parts']
+    assert verify['assembly']['F_retained_lid_lower']['ok']
     assert not any(verify['assembly']['J_finger_approach']['obstacles'].values())
     assert not any(verify['assembly']['J_finger_press']['obstacles'].values())
     assert verify['assembly']['J_roof_release']['wall_clearance_mm'] >= 0.3
@@ -108,7 +116,7 @@ def main():
         shutil.copyfile(src, dst)
         files.append(dst)
     outputs = ('PLA', 'PETG', 'crank-test-PLA', 'servo-fit-test-PLA', 'speaker-test-PLA', 'joints-test-PLA',
-               'roof-test-PLA', 'roof-test-PETG', 'plate')
+               'replacement-test-PLA', 'roof-test-PLA', 'roof-test-PETG', 'plate')
     placements = {}
     for key in outputs:
         suffix = '.3mf' if key == 'plate' else '.gcode.3mf'
@@ -118,9 +126,13 @@ def main():
         files.append(dst)
         placements[key] = placed_bounds(dst)
         assert placements[key]['ok'], placements[key]
+    B_retainer = verify['assembly']['B_retainer_lock']
+    B_retainer_summary = {key: B_retainer[key] for key in (
+        'poses', 'pull_max_mm', 'pull_step_mm', 'pin_exit_mm', 'first_contact_max_mm', 'ok')}
     manifest = dict(model=HERE.name, parts=len(PARTS), pose_checks=verify['motion_summary']['steps'],
                     servo_dimension_profile=model.get('servo_dimension_profile'),
                     servo_fit=verify.get('servo_fit'),
+                    B_retainer=B_retainer_summary,
                     placements=placements, files=[dict(name=f.name, bytes=f.stat().st_size, sha256=hashlib.sha256(f.read_bytes()).hexdigest()) for f in files])
     tmp = DEST / 'manifest.tmp'
     tmp.write_text(json.dumps(manifest, ensure_ascii=False, indent=1), encoding='utf-8', newline='\n')

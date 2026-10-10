@@ -71,7 +71,7 @@ figcaption { color:var(--mute); font-size:var(--fs-sm); margin-top:var(--sp-2); 
 
   <div class="lead">
     <p>印刷部品は7点です。工具なしで組んで外す構成です。ねじと接着剤は使いません。</p>
-    <p>蓋は0〜65°動きます。C1はサーボ一式を先に箱へ入れます。蓋は125°開いた姿勢で後から載せます。実物の印刷と駆動は未検証です。エキサイターの音量も未確認です。</p>
+    <p>蓋は0〜65°動きます。箱の外でピンBとピンAを留め、蓋95°の一式を上から入れます。旧C1の組み立てと回転は実物確認済みです。新しいピンBの爪とエキサイターの音量は未確認です。</p>
   </div>
 
   <div class="grid">
@@ -100,16 +100,16 @@ figcaption { color:var(--mute); font-size:var(--fs-sm); margin-top:var(--sp-2); 
   </table></div>
 
   <h2>組み立て</h2>
-  <p>旧80mm版と順番が違います。蓋を先に付けるとサーボ一式が途中で当たるため、C1は次の順で組みます。</p>
+  <p>ピンBを箱の外で留めます。リンクを曲げず、蓋を含むサーボ一式を上から入れます。</p>
   <ol>
     <li>エキサイターを上からレールへ入れます。スピーカー押さえを上から差して留めます。</li>
-    <li>箱の外でサーボを90°にします。蓋32.5°の姿勢に合う向きでホーンを付け、クランクをかぶせます。</li>
-    <li>リンクの切り欠きをピンAの爪に合わせて差します。リンクを動作位置まで回します。</li>
-    <li>蓋のない箱へサーボ一式を上から下ろします。クランクの軸を受けへ入れ、配線を切り欠きへ通します。</li>
+    <li>蓋を95°にします。リンクのピンBを蓋の切り欠きへ通し、下側へ回して爪で留めます。</li>
+    <li>クランクをリンクのピンAへ差し、動作位置まで回します。</li>
+    <li>箱の外でサーボを90°にします。付属ホーンを付け、蓋とリンクをつないだクランクをかぶせます。</li>
+    <li>蓋を含むサーボ一式を箱の70mm上から下ろします。配線を切り欠きへ通します。</li>
     <li>サーボ押さえを上から押し込みます。</li>
-    <li>蓋を125°開いた姿勢にします。箱の40mm上から下ろし、節をそろえます。</li>
     <li>蝶番ピンを右から入れます。抜くときは左端を押し、右へ出た端をつまみます。</li>
-    <li>リンクの先を3.4mm曲げます。蓋を125°から32.5°へ下ろし、ピンBを蓋の耳の穴へ入れて離します。</li>
+    <li>蓋を95°から32.5°へ下ろします。リンクは曲げません。</li>
     <li>サーボをゆっくり閉じる側へ動かします。蓋が縁に載った位置を「閉」とします。</li>
   </ol>
   <p id="servoGuide"></p>
@@ -133,25 +133,25 @@ figcaption { color:var(--mute); font-size:var(--fs-sm); margin-top:var(--sp-2); 
     <thead><tr><th>ファイル</th><th>推定時間</th><th>フィラメント</th><th>配置</th></tr></thead>
     <tbody id="deliveries"></tbody>
   </table></div>
-  <p>先にクランクと継ぎ手のプレートを刷ります。<a href="../prints/mystery-box-sg92r-c1/manifest.json">ファイル一覧とSHA256</a>を付属しています。Arduino例は <code>models/mystery-box-sg92r-c1/slow_open/slow_open.ino</code> にあります。D9から信号を送りサーボ用5V電源とGNDを共通にします。閉119°と開66°は計算上の目安です。実物では歯の位置に合わせて端の角度を調整します。</p>
+  <p>先にクランクと継ぎ手のプレートを刷ります。蓋とリンクだけを刷り直す交換プレートも用意しています。<a id="manifestLink" href="../prints/mystery-box-sg92r-c1-retained/manifest.json" download="mystery-box-sg92r-c1-retained-manifest.json">ファイル一覧とSHA256</a>を付属しています。Arduino例は <code>models/mystery-box-sg92r-c1/slow_open/slow_open.ino</code> にあります。D9から信号を送りサーボ用5V電源とGNDを共通にします。閉160.1°と開106.5°は計算上の目安です。実物では歯の位置に合わせて端の角度を調整します。</p>
   <figure id="plate" hidden></figure>
 
   <h2>決めたこと</h2>
   <ul>
     <li>全面蓋を採用しました。70mm角と0〜65°の動きは維持しています。</li>
     <li>リンク長は38.7516mmです。蝶番軸Hは(-30, 65)mm、サーボ軸Oは(3, 30.6)mm、クランク長は24.6mmです。</li>
-    <li>中央姿勢は蓋32.5°です。この姿勢でサーボを90°にしてホーンを取り付けます。</li>
+    <li>組立姿勢は蓋95°です。この姿勢でサーボを90°にしてホーンを取り付けます。</li>
     <li>動作は1.2秒の始めと終わりをゆっくりした指令を推奨します。時間は実物の結果で調整します。</li>
   </ul>
 
   <h2>譲ったこと</h2>
   <p>旧版の分割天面と隠れた蝶番は残していません。部品数を減らし、工具なしで組めることと、サポートなしで刷れることを優先しました。全面蓋のため、開いたときはサーボとリンクが見えます。</p>
-  <p>蝶番の両端を押すため後ろの角にくぼみがあります。外装は3mmです。蝶番穴の天井は最小1.7mmです。レールの爪受けは最小1.3mmです。リンクは3mmです。両端の太い部分を除く27.75mmの長さで曲げを計算しました。推定ひずみ1.99%は2%の目安に近いため実物試験が必要です。この計算は材料の強度を証明しません。</p>
+  <p>蝶番の両端を押すため後ろの角にくぼみがあります。外装は3mmです。蝶番穴の天井は最小1.7mmです。レールの爪受けは最小1.3mmです。リンクは3mmです。ピンBの新しい爪は計算とメッシュで経路を確認しています。保持力と手での着脱は実物試験が必要です。</p>
 
   <h2>実物で確かめること</h2>
   <ol>
     <li>クランクだけを先に刷ります。ホーンが固い場合は <code>HORN_CLR</code> を0.05mmずつ広げます。</li>
-    <li>蝶番ピン、リンクのバヨネット、二つの押さえを試します。割れ、抜け、手で外せるかを見ます。</li>
+    <li>継ぎ手試片でピンBの新しい爪、蝶番ピン、リンクのバヨネット、二つの押さえを試します。割れ、抜け、手で外せるかを見ます。</li>
     <li>エキサイターの接触面と保持力を見ます。音量とびびりを実際に鳴らして確かめます。</li>
     <li>全体を組み、65°まで当たらず動くかを見ます。電源を切ったときの蓋の動きも見ます。</li>
     <li>1.2秒の開閉で端の衝撃を見ます。強ければ時間を延ばします。</li>
@@ -163,17 +163,21 @@ figcaption { color:var(--mute); font-size:var(--fs-sm); margin-top:var(--sp-2); 
 <script>
 (() => {
   const D = window.CUBE;
+  const printHref = (file) => location.protocol === "file:"
+    ? `../prints/mystery-box-sg92r-c1-retained/${file}`
+    : `http://localhost:3000/exports/${file}`;
+  document.getElementById("manifestLink").href = `data:application/json;charset=utf-8,${encodeURIComponent(JSON.stringify(D.delivery, null, 1))}`;
   const fmt = (value, digits = 1) => Number(value).toFixed(digits).replace(/\.0$/, "");
   const esc = (value) => String(value).replace(/[&<>"']/g, (char) => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" })[char]);
   const row = (values) => `<tr>${values.map((value, index) => `<td${index === 1 ? ' class="num"' : ""}>${value}</td>`).join("")}</tr>`;
   const setup = D.servo_setup;
   document.getElementById("stroke").textContent = `${fmt(setup.stroke_deg)}°`;
-  document.getElementById("servoGuide").textContent = `サーボ90°を中央姿勢に合わせます。閉は +${fmt(setup.closed_offset_deg)}°相当、開は ${fmt(setup.open_offset_deg)}°相当です。全体を ${fmt(setup.motion_time_s)} 秒かけて動かします。`;
+  document.getElementById("servoGuide").textContent = `サーボ90°を組立用の蓋95°に合わせます。閉は ${fmt(90 + setup.closed_offset_deg)}°相当、65°開は ${fmt(90 + setup.open_offset_deg)}°相当です。全体を ${fmt(setup.motion_time_s)} 秒かけて動かします。`;
 
   const V = D.verify;
   document.getElementById("requirements").innerHTML = [
     ["70mm角の箱", "閉じた外形を70 × 70 × 70mmにした", "model_report.json の外接箱"],
-    ["蓋0〜65°", "SG92Rと4節リンクで全面蓋を動かす", `${V.motion.steps}姿勢で当たり ${V.motion.poses_with_hits.length}件`],
+    ["蓋0〜65°", "SG92Rと4節リンクで全面蓋を動かす。組立用の95°まで延長検証", `${V.motion.steps}姿勢で当たり ${V.motion.poses_with_hits.length}件`],
     ["印刷部品だけで固定", "圧入、バヨネット、スナップ、落とし込みを使用", "組み立て経路を工程ごとに判定"],
     ["接着剤を使わない", "エキサイターも専用押さえで留める", "保持力と音量は実物確認"],
     ["サポートなし", "見える面を下または上にして7部品を配置", D.slice_calibration ? "スライス計器の校正済み" : "スライス計器は要確認"],
@@ -186,10 +190,12 @@ figcaption { color:var(--mute); font-size:var(--fs-sm); margin-top:var(--sp-2); 
   const clearance = V.clearance;
   document.getElementById("physics").innerHTML = [
     ["4節リンク", `H(${D.kin.H.map((v) => fmt(v)).join(", ")}) / O(${D.kin.O.map((v) => fmt(v)).join(", ")}) / a ${fmt(D.kin.a)}mm / l ${fmt(D.kin.l, 4)}mm`, '<span class="chip ok">寸法化</span>'],
-    ["動作範囲", `0〜${fmt(D.kin.open_theta)}°、${V.motion.steps}姿勢`, V.motion.poses_with_hits.length ? "当たりあり" : '<span class="chip ok">当たりなし</span>'],
-    ["蓋を後から載せる", `125°、40mm上から`, empty(A.G_lid_place_after_servo?.worst) ? '<span class="chip ok">当たりなし</span>' : "当たりあり"],
-    ["リンクを曲げる", `${fmt(A.F_lid_down_with_link_bent.b_end_shift_mm)}mm、推定ひずみ ${fmt(A.F_link_bend_strain_pct, 2)}%`, "端を固定した変形形状で確認。強度は実物試験"],
-    ["曲げたリンクの交差体積", `${D.boolean.bent_link_crank_mm3.toExponential(3)}mm³`, `別のBooleanで検証。許容値 ${D.boolean.volume_tolerance_mm3}mm³`],
+    ["動作と組立の範囲", `0〜${fmt(V.motion.theta_max ?? D.kin.open_theta)}°、${V.motion.steps}姿勢`, V.motion.poses_with_hits.length ? "当たりあり" : '<span class="chip ok">当たりなし</span>'],
+    ["蓋付き一式を下ろす", `蓋95°、上から${fmt(D.assembly.lower_from_mm)}mm`, empty(A.D_servo_unit_lower?.worst) ? '<span class="chip ok">意図しない当たりなし</span>' : "当たりあり"],
+    ["ピンBの抜け止め", "ピンφ5mm。爪幅2mm、半径4.1mm、厚み4mm。穴φ5.4mm", A.B_retainer_lock?.ok ? '<span class="chip ok">横ずれを爪で止める</span>' : "検証結果を確認"],
+    ["箱の外でピンBを留める", "切り欠きを通し、下側へ回す。リンクは曲げない", empty(A.B_retainer_insert?.worst) && empty(A.B_retainer_turn?.worst) ? '<span class="chip ok">経路に当たりなし</span>' : "当たりあり"],
+    ["保持したまま蓋を下ろす", "95°から32.5°まで運動学どおりに動かす", A.F_retained_lid_lower?.ok ? '<span class="chip ok">意図しない当たりなし</span>' : "当たりあり"],
+    ["抜け止めの別検証", D.boolean.ok ? "名目位置の隙間、爪に当たる引抜き、切り欠きからの引抜きを検査" : "検査要確認", `別のBooleanで検証。許容値 ${D.boolean.volume_tolerance_mm3}mm³`],
     ["最大保持トルク", `${fmt(sim.static.max_torque_Nm * 1000)}mN·m`, `停動トルクの ${fmt(sim.static.ratio_to_stall * 100)}%`],
     ["ゆっくり閉じたとき", `縁に当たる速さ ${fmt(sim.eased.lid_impact_rad_s, 2)}rad/s`, `${fmt(setup.motion_time_s)}秒の指令`],
     ["動作中の隙間", `クランク−箱 ${fmt(clearance["crank-box"].min, 2)}mm`, "ピン接触など意図した箇所を除く"],
@@ -205,12 +211,12 @@ figcaption { color:var(--mute); font-size:var(--fs-sm); margin-top:var(--sp-2); 
     return row([label, `${size.map((value) => fmt(value)).join(" × ")}mm`, `${part.nonmanifold}`, result]);
   }).join("");
 
-  const files = { PLA:"PLA", PETG:"PETG", crank_test:"crank-test-PLA", joints_test:"joints-test-PLA", speaker_test:"speaker-test-PLA" };
+  const files = { PLA:"PLA", PETG:"PETG", replacement_test:"replacement-test-PLA", crank_test:"crank-test-PLA", joints_test:"joints-test-PLA", speaker_test:"speaker-test-PLA" };
   document.getElementById("deliveries").innerHTML = Object.entries(files).map(([key, suffix]) => {
     const item = D.plate[key];
     const file = `mystery-box-sg92r-c1-${suffix}.gcode.3mf`;
     const weight = item.filament.reduce((sum, value) => sum + Number(value[1]), 0);
-    return row([`<a href="../prints/mystery-box-sg92r-c1/${file}">${esc(suffix)}</a>`, `${fmt(item.prediction_s / 60)}分`, `${fmt(weight)}g`, D.delivery.placements[suffix]?.ok ? "重なりとはみ出しなし" : "要確認"]);
+    return row([`<a href="${printHref(file)}">${esc(suffix)}</a>`, `${fmt(item.prediction_s / 60)}分`, `${fmt(weight)}g`, D.delivery.placements[suffix]?.ok ? "重なりとはみ出しなし" : "要確認"]);
   }).join("");
 
   if (D.preview_png) {

@@ -28,18 +28,18 @@
  },
  "PLA": {
   "support_used": "false",
-  "prediction_s": 9165,
-  "weight_g": "105.49",
+  "prediction_s": 9206,
+  "weight_g": "105.64",
   "filament": [
    [
-    "34.81",
-    "105.49"
+    "34.86",
+    "105.64"
    ]
   ],
   "stats": {
-   "time": "model printing time: 2h 25m 29s; total estimated time: 2h 32m 45s",
-   "filament_mm": 34808.4,
-   "filament_g_header": "105.49"
+   "time": "model printing time: 2h 26m 11s; total estimated time: 2h 33m 26s",
+   "filament_mm": 34858.27,
+   "filament_g_header": "105.64"
   },
   "objects": {
    "mystery-box-sg92r-c1-clip": {
@@ -79,8 +79,8 @@
     "overhang_walls": []
    },
    "mystery-box-sg92r-c1-lid": {
-    "layers": 154,
-    "z_top": 22.76,
+    "layers": 157,
+    "z_top": 23.36,
     "layer_steps": {
      "0.08": [
       5.0,
@@ -89,12 +89,12 @@
      ],
      "0.2": [
       0.2,
-      22.56,
-      86
+      23.16,
+      89
      ]
     },
     "floating": {
-     "external_unsupported_mm": 2.4,
+     "external_unsupported_mm": 7.76,
      "bridge_mm": 9480.18,
      "bridge_unsupported_mm": 4722.32,
      "internal_unsupported_mm": 0.94
@@ -118,14 +118,28 @@
       "layer": 143,
       "z": 20.76,
       "feature": "Overhang wall",
-      "points": 6,
+      "points": 19,
       "x": [
        6.8,
        9.4
       ],
       "y": [
-       15.1,
+       14.6,
        15.1
+      ]
+     },
+     {
+      "layer": 143,
+      "z": 20.76,
+      "feature": "Outer wall",
+      "points": 17,
+      "x": [
+       6.8,
+       9.4
+      ],
+      "y": [
+       14.4,
+       14.6
       ]
      }
     ]
@@ -167,13 +181,13 @@
     "overhang_walls": []
    },
    "mystery-box-sg92r-c1-link": {
-    "layers": 32,
-    "z_top": 6.4,
+    "layers": 53,
+    "z_top": 10.6,
     "layer_steps": {
      "0.2": [
       0.2,
-      6.2,
-      31
+      10.4,
+      52
      ]
     },
     "floating": {
@@ -306,18 +320,18 @@
  },
  "PETG": {
   "support_used": "false",
-  "prediction_s": 11218,
-  "weight_g": "101.46",
+  "prediction_s": 11275,
+  "weight_g": "101.61",
   "filament": [
    [
-    "33.75",
-    "101.46"
+    "33.79",
+    "101.61"
    ]
   ],
   "stats": {
-   "time": "model printing time: 2h 59m 42s; total estimated time: 3h 6m 58s",
-   "filament_mm": 33746.24,
-   "filament_g_header": "101.46"
+   "time": "model printing time: 3h 0m 39s; total estimated time: 3h 7m 55s",
+   "filament_mm": 33794.58,
+   "filament_g_header": "101.61"
   },
   "objects": {
    "mystery-box-sg92r-c1-clip": {
@@ -357,8 +371,8 @@
     "overhang_walls": []
    },
    "mystery-box-sg92r-c1-lid": {
-    "layers": 154,
-    "z_top": 22.76,
+    "layers": 157,
+    "z_top": 23.36,
     "layer_steps": {
      "0.08": [
       5.0,
@@ -367,12 +381,12 @@
      ],
      "0.2": [
       0.2,
-      22.56,
-      86
+      23.16,
+      89
      ]
     },
     "floating": {
-     "external_unsupported_mm": 2.4,
+     "external_unsupported_mm": 7.76,
      "bridge_mm": 9480.18,
      "bridge_unsupported_mm": 4722.32,
      "internal_unsupported_mm": 0.94
@@ -396,14 +410,28 @@
       "layer": 143,
       "z": 20.76,
       "feature": "Overhang wall",
-      "points": 6,
+      "points": 19,
       "x": [
        6.8,
        9.4
       ],
       "y": [
-       15.1,
+       14.6,
        15.1
+      ]
+     },
+     {
+      "layer": 143,
+      "z": 20.76,
+      "feature": "Outer wall",
+      "points": 17,
+      "x": [
+       6.8,
+       9.4
+      ],
+      "y": [
+       14.4,
+       14.6
       ]
      }
     ]
@@ -445,13 +473,13 @@
     "overhang_walls": []
    },
    "mystery-box-sg92r-c1-link": {
-    "layers": 32,
-    "z_top": 6.4,
+    "layers": 53,
+    "z_top": 10.6,
     "layer_steps": {
      "0.2": [
       0.2,
-      6.2,
-      31
+      10.4,
+      52
      ]
     },
     "floating": {
@@ -683,21 +711,21 @@
  },
  "joints_test": {
   "support_used": "false",
-  "prediction_s": 906,
-  "weight_g": "4.59",
+  "prediction_s": 1059,
+  "weight_g": "5.02",
   "filament": [
    [
-    "1.52",
-    "4.59"
+    "1.66",
+    "5.02"
    ]
   ],
   "stats": {
-   "time": "model printing time: 7m 50s; total estimated time: 15m 6s",
-   "filament_mm": 1515.48,
-   "filament_g_header": "4.59"
+   "time": "model printing time: 10m 24s; total estimated time: 17m 39s",
+   "filament_mm": 1656.11,
+   "filament_g_header": "5.02"
   },
   "objects": {
-   "16": {
+   "20": {
     "layers": 22,
     "z_top": 4.4,
     "layer_steps": {
@@ -715,20 +743,53 @@
     },
     "overhang_walls": []
    },
-   "12": {
-    "layers": 32,
-    "z_top": 6.4,
+   "16": {
+    "layers": 60,
+    "z_top": 12.0,
     "layer_steps": {
      "0.2": [
       0.2,
-      6.2,
-      31
+      11.8,
+      59
+     ]
+    },
+    "floating": {
+     "external_unsupported_mm": 8.78,
+     "bridge_mm": 0.0,
+     "bridge_unsupported_mm": 0.0,
+     "internal_unsupported_mm": 0.0
+    },
+    "overhang_walls": [
+     {
+      "layer": 46,
+      "z": 9.4,
+      "feature": "Overhang wall",
+      "points": 47,
+      "x": [
+       -1.3,
+       1.3
+      ],
+      "y": [
+       -0.6,
+       0.3
+      ]
+     }
+    ]
+   },
+   "12": {
+    "layers": 53,
+    "z_top": 10.6,
+    "layer_steps": {
+     "0.2": [
+      0.2,
+      10.4,
+      52
      ]
     },
     "floating": {
      "external_unsupported_mm": 0.0,
      "bridge_mm": 507.75,
-     "bridge_unsupported_mm": 163.83,
+     "bridge_unsupported_mm": 165.02,
      "internal_unsupported_mm": 0.0
     },
     "overhang_walls": []
@@ -756,7 +817,110 @@
   "object_order": [
    "mystery-box-sg92r-c1-clip",
    "mystery-box-sg92r-c1-link",
+   "mystery-box-sg92r-c1-joint_b_test",
    "mystery-box-sg92r-c1-pin"
+  ]
+ },
+ "replacement_test": {
+  "support_used": "false",
+  "prediction_s": 1983,
+  "weight_g": "15.74",
+  "filament": [
+   [
+    "5.19",
+    "15.74"
+   ]
+  ],
+  "stats": {
+   "time": "model printing time: 25m 47s; total estimated time: 33m 3s",
+   "filament_mm": 5193.07,
+   "filament_g_header": "15.74"
+  },
+  "objects": {
+   "12": {
+    "layers": 53,
+    "z_top": 10.6,
+    "layer_steps": {
+     "0.2": [
+      0.2,
+      10.4,
+      52
+     ]
+    },
+    "floating": {
+     "external_unsupported_mm": 0.0,
+     "bridge_mm": 507.74,
+     "bridge_unsupported_mm": 163.43,
+     "internal_unsupported_mm": 0.0
+    },
+    "overhang_walls": []
+   },
+   "8": {
+    "layers": 116,
+    "z_top": 23.2,
+    "layer_steps": {
+     "0.2": [
+      0.2,
+      23.0,
+      115
+     ]
+    },
+    "floating": {
+     "external_unsupported_mm": 10.07,
+     "bridge_mm": 9507.45,
+     "bridge_unsupported_mm": 4740.28,
+     "internal_unsupported_mm": 0.94
+    },
+    "overhang_walls": [
+     {
+      "layer": 41,
+      "z": 8.4,
+      "feature": "Overhang wall",
+      "points": 12,
+      "x": [
+       -16.4,
+       16.4
+      ],
+      "y": [
+       29.7,
+       29.9
+      ]
+     },
+     {
+      "layer": 103,
+      "z": 20.8,
+      "feature": "Overhang wall",
+      "points": 26,
+      "x": [
+       6.8,
+       9.4
+      ],
+      "y": [
+       14.7,
+       15.2
+      ]
+     },
+     {
+      "layer": 103,
+      "z": 20.8,
+      "feature": "Outer wall",
+      "points": 17,
+      "x": [
+       6.8,
+       9.4
+      ],
+      "y": [
+       14.4,
+       14.7
+      ]
+     }
+    ]
+   }
+  },
+  "file": "C:\\Users\\kouga\\Projects\\Web\\model-lab\\exports\\mystery-box-sg92r-c1-replacement-test-PLA.gcode.3mf",
+  "object_order": [
+   "mystery-box-sg92r-c1-lid",
+   "mystery-box-sg92r-c1-link"
   ]
  }
 }

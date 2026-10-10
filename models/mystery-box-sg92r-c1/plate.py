@@ -7,7 +7,7 @@
   2. 部品間6mmの配置を3mfへ書く。自動配置を明示的に止めて1度切る
   3. できた 3mf に「高さごとの層の厚み」を足して切り直す（箱の節の上面・蓋の筒の段を細かく）
   4. G-code を物体ごとに分けて確かめる: 層の厚みが変わったか、支えの無い押し出し、サポートの有無
-出力: exports/mystery-box-sg92r-c1-<材料>.gcode.3mf と exports/mystery-box-sg92r-c1-crank-test-<材料>.gcode.3mf、
+出力: exports/mystery-box-sg92r-c1-<材料>.gcode.3mf と各試し刷りの .gcode.3mf、
       build/plate_report.json
 """
 import json
@@ -121,8 +121,13 @@ def main():
     r = build("PLA", ["speaker_test", "speaker_clip"], "mystery-box-sg92r-c1-speaker-test-PLA", ranges=False)
     report["speaker_test"] = r
     print(f"\n== speaker test: {r['file']} support_used={r['support_used']} 予測 {r['prediction_s'] / 60:.1f} min")
-    r = build('PLA', ['link', 'pin', 'clip'], 'mystery-box-sg92r-c1-joints-test-PLA', ranges=False)
+    r = build('PLA', ['link', 'joint_b_test', 'pin', 'clip'],
+              'mystery-box-sg92r-c1-joints-test-PLA', ranges=False)
     report['joints_test'] = r
+    r = build('PLA', ['link', 'lid'], 'mystery-box-sg92r-c1-replacement-test-PLA', ranges=False)
+    report['replacement_test'] = r
+    print(f"\n== replacement test: {r['file']} support_used={r['support_used']} "
+          f"予測 {r['prediction_s'] / 60:.1f} min")
     with open(os.path.join(HERE, "build", "plate_report.json"), "w", encoding="utf-8", newline="\n") as fh:
         json.dump(report, fh, ensure_ascii=False, indent=1)
 

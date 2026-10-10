@@ -263,6 +263,34 @@ def fin_poly():
     return clipped
 
 
+def b_keyway_poly():
+    """蓋ローカル+Yを0度とする、ピンBの矩形鍵溝。"""
+    phi = math.radians(P.B_KEY_DEG)
+    d = (math.cos(phi), math.sin(phi))
+    w = (-d[1], d[0])
+    hw = mm(P.B_KEYWAY_W) / 2
+    depth = mm(P.B_KEYWAY_R)
+    return [(K.B0[0] + s * w[0] + r * d[0], K.B0[1] + s * w[1] + r * d[1])
+            for r, s in ((0, -hw), (depth, -hw), (depth, hw), (0, hw))]
+
+
+def cut_b_joint(ob):
+    """蓋の耳と試片へ、同一形状の涙形穴と鍵溝を切る。"""
+    cut(ob, prism(teardrop(K.B0, mm(P.PIN_HOLE_R), up=-1),
+                  "x", FIN_X0 - 0.5, FIN_X1 + 0.5, "b_hole"))
+    # 刷る姿勢の奥端は、内部に隠れる幅2.4mmの短い橋渡しになる。
+    cut(ob, prism(b_keyway_poly(), "x", FIN_X0 - 0.5, FIN_X1 + 0.5, "b_keyway"))
+
+
+def build_joint_b_test():
+    """蓋側のピンB接合面・穴・鍵溝をそのまま切り出した試片。"""
+    coupon = prism(circle(K.B0, mm(P.FIN_B_BOSS_R), 64),
+                   "x", FIN_X0, FIN_X1, "joint_b_test")
+    cut_b_joint(coupon)
+    coupon.name = "joint_b_test"
+    return coupon
+
+
 def build_lid():
     lid = outer_solid("top", "lid")
     cut(lid, box(-HALF - 5, HALF + 5, -HALF - 5, HALF + 5, SPLIT - 15, SPLIT, "below"))
@@ -292,7 +320,7 @@ def build_lid():
     union(lid, prism(fin_poly(), "x", FIN_X0, FIN_X1, "fin"))
     # 穴（刷るときは裏返すので、尖りは組んだ姿勢の -Z 側）
     cut(lid, prism(teardrop((HY, HZ), mm(P.HINGE_HOLE_LID_D) / 2, up=-1), "x", -BKX, BKX, "lid_hole"))
-    cut(lid, prism(teardrop(K.B0, mm(P.PIN_HOLE_R), up=-1), "x", FIN_X0 - 0.5, FIN_X1 + 0.5, "b_hole"))
+    cut_b_joint(lid)
     lid.name = "lid"
     return lid
 
@@ -397,15 +425,18 @@ def build_link(alpha, theta):
     key = [(pa[0] + s * w[0] + rr * d[0], pa[1] + s * w[1] + rr * d[1])
            for rr, s in ((0, -kw), (kr, -kw), (kr, kw), (0, kw))]
     cut(lk, prism(key, "x", LINK_X0 - 1, LINK_X1 + 1, "keyway"))
-    # ピン B（+X 向き、蓋の耳の穴に入る。先端を面取り）
-    tip = FIN_X1
-    ch = []
-    for k in range(48):
-        ang = 2 * math.pi * k / 48
-        for rr, xx in ((mm(P.PIN_R), LINK_X1 - 0.3), (mm(P.PIN_R), tip - mm(P.LINK_PIN_CHAMFER)),
-                       (mm(P.PIN_R) - mm(P.LINK_PIN_CHAMFER), tip)):
-            ch.append((xx, pb[0] + rr * math.cos(ang), pb[1] + rr * math.sin(ang)))
-    union(lk, hull3d(ch, "pin_b"))
+    # ピンB（+X向き）を蓋の耳より先まで延ばし、B→A向きの一体爪を付ける。
+    pin_top = FIN_X1 + GAP + mm(P.B_TAB_T)
+    union(lk, cyl_x(pb, mm(P.PIN_R), LINK_X1 - 0.3, pin_top, 48, "pin_b"))
+    hw = mm(P.B_TAB_W) / 2
+    r_in, r_out = mm(P.PIN_R) - 0.7, mm(P.B_TAB_R)
+    x_lo = FIN_X1 + GAP
+    x_mid = x_lo + (r_out - r_in)  # 刷る姿勢で爪の下面を45°にする
+    pts = []
+    for rr, xx in ((r_in, x_lo), (r_out, x_mid), (r_out, pin_top), (r_in, pin_top)):
+        for s in (-hw, hw):
+            pts.append((xx, pb[0] + rr * d[0] + s * w[0], pb[1] + rr * d[1] + s * w[1]))
+    union(lk, hull3d(pts, "tab_b"))
     lk.name = "link"
     return lk
 
@@ -606,6 +637,13 @@ def main():
     refs = {k: import_ref(k) for k in ("body", "horn", "wire")}
     refs["speaker"] = build_speaker_ref()
     place_horn(refs["horn"], a0)
+    joint_b_test = build_joint_b_test()
+    assert nonmanifold(joint_b_test) == 0, joint_b_test.name
+    save_stl([joint_b_test], os.path.join(BUILD, "joint_b_test.stl"))
+    joint_b_test_print = copy_obj(joint_b_test, "joint_b_test_print")
+    to_print(joint_b_test_print, FLIP_X)
+    assert nonmanifold(joint_b_test_print) == 0, joint_b_test_print.name
+    save_stl([joint_b_test_print], os.path.join(BUILD, "print_joint_b_test.stl"))
     speaker_test = copy_obj(parts["box"], "speaker_test")
     intersect(speaker_test, box(15.0, HALF + 1, -1.0, HALF + 1, -1.0, 40.0, "test_trim"))
     to_print(speaker_test, Matrix.Identity(4))
@@ -618,6 +656,11 @@ def main():
     report["linkage"] = dict(H=K.H, O=K.O, a=K.A_LEN, l=K.L_LINK, B0=K.B0, alpha0=a0,
                              layers=dict(crank=[CRANK_X0, CRANK_X1], link=[LINK_X0, LINK_X1],
                                          fin=[FIN_X0, FIN_X1]))
+    report["parts"]["joint_b_test"] = dict(nonmanifold=nonmanifold(joint_b_test),
+                                                   nm_at=nonmanifold_where(joint_b_test),
+                                                   volume_mm3=round(volume(joint_b_test), 1),
+                                                   bbox=bbox(joint_b_test),
+                                                   print_bbox=bbox(joint_b_test_print))
 
     # 開いた姿勢
     pm = pose_matrices(K.THETA_OPEN)
@@ -648,13 +691,16 @@ def main():
     asm = list(parts.values()) + list(refs.values())
     open_objs = [parts["box"], parts["pin"], parts["clip"], refs["body"], refs["wire"],
                  opened["lid"], opened["crank"], opened["link"], horn_open, parts["speaker_clip"], refs["speaker"]]
-    all_objs = set(asm) | set(open_objs) | set(printed.values()) | {speaker_test}
+    all_objs = set(asm) | set(open_objs) | set(printed.values()) | {
+        speaker_test, joint_b_test, joint_b_test_print,
+    }
     scale_to_m(all_objs)
     export_stl(f"{NAME}-asm", only=asm)
     export_stl(f"{NAME}-open", only=open_objs)
     for k, ob in printed.items():
         export_stl(f"{NAME}-{k}", only=[ob])
     export_stl(f"{NAME}-speaker_test", only=[speaker_test])
+    export_stl(f"{NAME}-joint_b_test", only=[joint_b_test_print])
     with open(os.path.join(BUILD, "model_report.json"), "w", encoding="utf-8", newline="\n") as fh:
         json.dump(report, fh, ensure_ascii=False, indent=1)
     print(json.dumps(report, ensure_ascii=False))

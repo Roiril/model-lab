@@ -1,7 +1,7 @@
 {
  "model": "mystery-box-sg92r-c2",
  "parts": 8,
- "pose_checks": 131,
+ "pose_checks": 151,
  "servo_dimension_profile": {
   "id": "c2-drawing-trial",
   "physical_fit_confirmed": false,
@@ -67,7 +67,8 @@
    "strain_limit_pct": 2.0,
    "initial_contact": {
     "hits": 6,
-    "depth": 0.12
+    "depth": 0.12,
+    "contained_samples": 10
    },
    "insertion_check": "assembly.E_clip_press（上からの全経路）",
    "method": "梁下面を根元固定とする片持ち近似。先端の公称食い込みをたわみ量とした。"
@@ -86,6 +87,14 @@
   "physical_fit_pending": true,
   "ok": true,
   "instrument_calibration_ok": true
+ },
+ "B_retainer": {
+  "poses": 131,
+  "pull_max_mm": 7.5,
+  "pull_step_mm": 0.25,
+  "pin_exit_mm": 3.0,
+  "first_contact_max_mm": 1.5,
+  "ok": true
  },
  "placements": {
   "PLA": {
@@ -115,7 +124,7 @@
      "max": [
       155.6527997,
       128.75839960000002,
-      22.7999992
+      23.2999992
      ],
      "off_bed": false,
      "excluded": false
@@ -175,7 +184,7 @@
      "max": [
       94.4472008,
       174.00800030000002,
-      6.3000002
+      10.60000038
      ],
      "off_bed": false,
      "excluded": false
@@ -241,7 +250,7 @@
      "max": [
       155.6527997,
       128.75839960000002,
-      22.7999992
+      23.2999992
      ],
      "off_bed": false,
      "excluded": false
@@ -301,7 +310,7 @@
      "max": [
       94.4472008,
       174.00800030000002,
-      6.3000002
+      10.60000038
      ],
      "off_bed": false,
      "excluded": false
@@ -453,12 +462,12 @@
     {
      "id": "2",
      "min": [
-      51.3243996,
+      46.8243996,
       108.3500004,
       0.0
      ],
      "max": [
-      73.0244004,
+      68.5244004,
       147.6499996,
       6.5
      ],
@@ -468,14 +477,14 @@
     {
      "id": "4",
      "min": [
-      79.0243992,
+      74.5243992,
       108.34999970000001,
       0.0
      ],
      "max": [
-      128.7756008,
+      124.2756008,
       130.1580003,
-      6.3000002
+      10.60000038
      ],
      "off_bed": false,
      "excluded": false
@@ -483,14 +492,65 @@
     {
      "id": "6",
      "min": [
-      134.7755992,
+      130.2756,
+      108.35,
+      0.0
+     ],
+     "max": [
+      133.2756,
+      120.35,
+      12.0
+     ],
+     "off_bed": false,
+     "excluded": false
+    },
+    {
+     "id": "8",
+     "min": [
+      139.2755992,
       108.3499999,
       0.0
      ],
      "max": [
-      204.67560079999998,
+      209.17560079999998,
       113.6500001,
       4.60160018
+     ],
+     "off_bed": false,
+     "excluded": false
+    }
+   ],
+   "bbox_overlaps": [],
+   "ok": true
+  },
+  "replacement-test-PLA": {
+   "objects": [
+    {
+     "id": "2",
+     "min": [
+      65.5460003,
+      101.7208004,
+      0.0
+     ],
+     "max": [
+      134.70279969999999,
+      154.2791996,
+      23.2999992
+     ],
+     "off_bed": false,
+     "excluded": false
+    },
+    {
+     "id": "4",
+     "min": [
+      140.7027992,
+      101.72079969999999,
+      0.0
+     ],
+     "max": [
+      190.4540008,
+      123.5288003,
+      10.60000038
      ],
      "off_bed": false,
      "excluded": false
@@ -598,7 +658,7 @@
      "max": [
       155.6528,
       128.7584,
-      22.8
+      23.3
      ],
      "off_bed": false,
      "excluded": false
@@ -658,7 +718,7 @@
      "max": [
       94.44720000000001,
       174.008,
-      6.3
+      10.6
      ],
      "off_bed": false,
      "excluded": false
@@ -706,8 +766,8 @@
   },
   {
    "name": "lid.stl",
-   "bytes": 392684,
-   "sha256": "cde8e0006f3888d829c7d6708620bd26e6aca2692cb7877142aac69996213f3c"
+   "bytes": 393084,
+   "sha256": "dd3c872170633b59a8cb64c5b398c2c32c57c571019ea52446a26028ec301883"
   },
   {
    "name": "crank.stl",
@@ -716,8 +776,8 @@
   },
   {
    "name": "link.stl",
-   "bytes": 226984,
-   "sha256": "d97ff44b298a8aabe01e36b51cf4ec21d23024c5e40366047defc192d4f677dc"
+   "bytes": 220384,
+   "sha256": "38592af1f593407feb586e2b83f2b5d0ccceeb250db300596b33e698243b3d06"
   },
   {
    "name": "pin.stl",
@@ -760,49 +820,59 @@
    "sha256": "df9211e14c888ab305f8f8d7a67166efd9f34a04fdb452525552970c86065d1d"
   },
   {
+   "name": "joint_b_test.stl",
+   "bytes": 33684,
+   "sha256": "10f12c74671a4609ae3fdf2848249ecd886f46289d166d0e4a6ed1cf983b86ce"
+  },
+  {
    "name": "mystery-box-sg92r-c2-PLA.gcode.3mf",
-   "bytes": 1252354,
-   "sha256": "5a3b8aa91058cb5c5e63013bc88b3df3590ee1d42cda5ff31f47e07a4d6ad352"
+   "bytes": 1288801,
+   "sha256": "847c89d0c92fb80570731228f345f640cf36e58cec63ab4368f85c0082f78ab2"
   },
   {
    "name": "mystery-box-sg92r-c2-PETG.gcode.3mf",
-   "bytes": 1252984,
-   "sha256": "c844e3c2196ca4932caaf13a13db20a81a981dde65af5161d81d0c589e80c6c4"
+   "bytes": 1288972,
+   "sha256": "bb9bb5b203d0bb45f6320fe2981824a67cb7ae8e156fd34c3dd71ab1c0666192"
   },
   {
    "name": "mystery-box-sg92r-c2-crank-test-PLA.gcode.3mf",
-   "bytes": 206902,
-   "sha256": "043c42291bd1a6f460fc915af108c71beea1fd635bc0aa1619e9ab10f8577172"
+   "bytes": 206930,
+   "sha256": "690ae1c6fed019cfdb031a3417a2ee396e6a347ee90c164cf853765488c418b6"
   },
   {
    "name": "mystery-box-sg92r-c2-servo-fit-test-PLA.gcode.3mf",
-   "bytes": 341096,
-   "sha256": "2bb02d4882c5b44cc3d53816daee910a9bacc0f39bc778049fa4bb16baf1dc3c"
+   "bytes": 341105,
+   "sha256": "4ce8a46b7c8cd5f26310ad9c61beaa80421df0642dcaafea455bdfba33029fca"
   },
   {
    "name": "mystery-box-sg92r-c2-speaker-test-PLA.gcode.3mf",
-   "bytes": 124417,
-   "sha256": "84f56788385fbaf6bfc04a02a1e2e613f20f33cf7aa7db49de4a258027332154"
+   "bytes": 124427,
+   "sha256": "90a4f63d6a49b33a4c8782c2089ca3dbabca027ae016ae8604273c05fb3d8fd0"
   },
   {
    "name": "mystery-box-sg92r-c2-joints-test-PLA.gcode.3mf",
-   "bytes": 165996,
-   "sha256": "5efb926ba49c591a7a3ebd7e7d94262dfca2fba51d844490e53228612b7d656e"
+   "bytes": 198172,
+   "sha256": "22c21e34937bd67e128f4f6184d92af026d833d747c9796a825d4f91ffe57c71"
+  },
+  {
+   "name": "mystery-box-sg92r-c2-replacement-test-PLA.gcode.3mf",
+   "bytes": 302150,
+   "sha256": "6e6d2df3cf47242a2a167896defe361d42cc6e7f7a5fb939f2807369bf13d89f"
   },
   {
    "name": "mystery-box-sg92r-c2-roof-test-PLA.gcode.3mf",
-   "bytes": 99171,
-   "sha256": "10c6dc6fe51140fc24a9d934e8e378a159b492b804c20c2893f98dcd0ee501de"
+   "bytes": 99176,
+   "sha256": "060018b215afbdd74c4013e1e2c29931bf9cf488b2424bb76ff5c389339d1acb"
   },
   {
    "name": "mystery-box-sg92r-c2-roof-test-PETG.gcode.3mf",
-   "bytes": 100428,
-   "sha256": "92eb40ad970471612d570efe8858f2d03a364fef25ffe6068c6956c036711ea1"
+   "bytes": 100419,
+   "sha256": "9f6a990445f8e441f735072c84992177135cc5381620790348e3fea49c0ae5f8"
   },
   {
    "name": "mystery-box-sg92r-c2-plate.3mf",
-   "bytes": 246544,
-   "sha256": "5137df46bed36267ee99916cda0181de353b4c9b16fdf76e239a9071c9997493"
+   "bytes": 245313,
+   "sha256": "d96b85d836396a002ae562899bfcbf0f5a279376eb0b68533a0477a9e56767e1"
   }
  ]
 }

@@ -126,8 +126,13 @@ def main():
     r = build("PLA", ["speaker_test", "speaker_clip"], "mystery-box-sg92r-c2-speaker-test-PLA", ranges=False)
     report["speaker_test"] = r
     print(f"\n== speaker test: {r['file']} support_used={r['support_used']} 予測 {r['prediction_s'] / 60:.1f} min")
-    r = build('PLA', ['link', 'pin', 'clip'], 'mystery-box-sg92r-c2-joints-test-PLA', ranges=False)
+    r = build('PLA', ['link', 'joint_b_test', 'pin', 'clip'],
+              'mystery-box-sg92r-c2-joints-test-PLA', ranges=False)
     report['joints_test'] = r
+    r = build('PLA', ['link', 'lid'], 'mystery-box-sg92r-c2-replacement-test-PLA', ranges=False)
+    report['replacement_test'] = r
+    print(f"\n== replacement test: {r['file']} support_used={r['support_used']} "
+          f"予測 {r['prediction_s'] / 60:.1f} min")
     for material in ('PLA', 'PETG'):
         r = build(material, ['roof_test_body', 'roof_test'],
                   f'mystery-box-sg92r-c2-roof-test-{material}', ranges=False)

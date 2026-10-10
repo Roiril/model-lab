@@ -111,16 +111,16 @@ figcaption { color:var(--mute); font-size:var(--fs-sm); margin-top:var(--sp-2); 
   </table></div>
 
   <h2>組み立て</h2>
-  <p>サーボ一式を先に箱へ入れます。可動天面はその後に95°で載せます。固定天面は最後に付けます。</p>
+  <p>緑のリンクと水色の蓋にも抜け止めを付けました。箱の外で爪を切り欠きに通して回します。蓋付きのサーボ一式を箱へ入れます。</p>
   <ol>
     <li>エキサイターを上から右壁の案内へ入れます。押さえを上から差します。</li>
-    <li>箱の外でサーボを90°にします。中央姿勢に合う向きで付属ホーンを付けます。短い腕をリンクのピンA側へ向けます。長い腕は反対側へ向けます。中心穴が回転中心に合うことを確認してクランクをかぶせます。</li>
-    <li>リンクの鍵溝をピンAの爪に合わせて差します。リンクを動作位置まで回します。</li>
-    <li>サーボ一式を上から箱へ下ろします。配線を後ろの出口へ通します。</li>
+    <li>箱の外で、緑のピンBの爪を水色の蓋の切り欠きに通します。リンクを下側へ回して留めます。</li>
+    <li>黄色のピンAの爪を緑の切り欠きに通します。黄色の部品を回して、蓋75°の姿勢へ合わせます。</li>
+    <li>サーボを90°にして付属ホーンを付けます。短い腕をピンA側へ向けます。長い腕は反対側へ向けます。蓋75°の姿勢の3部品をかぶせます。</li>
+    <li>蓋付きのサーボ一式を70mm上から箱へ下ろします。配線を後ろの出口へ通します。</li>
     <li>サーボ押さえを上から押し込みます。</li>
-    <li>可動天面を95°にします。箱の40mm上から下ろして蝶番を合わせます。</li>
     <li>蝶番ピンを右から入れます。</li>
-    <li>リンクの先を3.4mm逃がします。可動天面を中央姿勢へ下ろし、ピンBを耳の穴へ入れます。</li>
+    <li>サーボをゆっくり動かし、蓋を75°から32.5°へ戻します。リンクを曲げる工程は不要です。</li>
     <li>固定天面を上から下ろします。左右の爪が壁内側の溝へ掛かるまで押します。</li>
     <li>サーボを閉じる側へ1°ずつ動かします。可動天面が縁に載った位置を閉位置とします。</li>
   </ol>
@@ -172,13 +172,13 @@ figcaption { color:var(--mute); font-size:var(--fs-sm); margin-top:var(--sp-2); 
     <li>壁、底、天面は3mmです。外形の角はR5です。</li>
     <li>SG92RはC2だけ <code>c2-drawing-trial</code> を読み込みます。既定寸法は変えません。</li>
     <li>サーボは軸に近い端と座面を隙間0の基準にします。遠い端は0.35mm空け、弾性押さえで基準へ寄せます。</li>
-    <li>可動天面32.5°を中央姿勢にしました。この姿勢でサーボを90°にします。</li>
+    <li>ピンBにも一体爪を付けました。リンクを曲げて差す工程を廃止しました。サーボ90°は組立用の蓋75°へ合わせます。</li>
     <li>動作は1.2秒の始めと終わりをゆっくりした指令を推奨します。時間は実物の結果で調整します。</li>
   </ul>
 
   <h2>譲ったこと</h2>
   <p>天面の分割線と蝶番付近の溝は外から見えます。内部へ手を入れられることと、工具なしで分解できることを優先しました。</p>
-  <p>エキサイターは25 × 10mmの仮包絡です。リンクと固定天面のひずみは梁としての近似です。材料試験や有限要素解析による強度確認ではありません。</p>
+  <p>エキサイターは25 × 10mmの仮包絡です。固定天面のひずみは梁としての近似です。抜け止めの保持力は実物で確認します。</p>
 
   <h2>実物で確かめること</h2>
   <ol>
@@ -207,7 +207,7 @@ figcaption { color:var(--mute); font-size:var(--fs-sm); margin-top:var(--sp-2); 
   const row = (values) => `<tr>${values.map((value, index) => `<td${index === 1 ? ' class="num"' : ""}>${value}</td>`).join("")}</tr>`;
   const setup = D.servo_setup;
   document.getElementById("stroke").textContent = `${fmt(setup.stroke_deg)}°`;
-  document.getElementById("servoGuide").textContent = `サーボ90°を中央姿勢に合わせます。閉は +${fmt(setup.closed_offset_deg)}°相当、開は ${fmt(setup.open_offset_deg)}°相当です。全体を ${fmt(setup.motion_time_s)} 秒かけて動かします。`;
+  document.getElementById("servoGuide").textContent = `サーボ90°を組立用の蓋75°に合わせます。閉は ${fmt(90 + setup.closed_offset_deg)}°相当、65°開は ${fmt(90 + setup.open_offset_deg)}°相当です。組立後の開閉を ${fmt(setup.motion_time_s)} 秒かけて動かします。`;
 
   const V = D.verify;
   const printPartKeys = ["box", "lid", "roof", "crank", "link", "pin", "clip", "speaker_clip"];
@@ -266,15 +266,15 @@ figcaption { color:var(--mute); font-size:var(--fs-sm); margin-top:var(--sp-2); 
   const pressObstacles = Object.values(A.J_finger_press.obstacles).reduce((sum, values) => sum + values.length, 0);
   document.getElementById("physics").innerHTML = [
     ["4節リンク", `H(${D.kin.H.map((v) => fmt(v)).join(", ")}) / O(${D.kin.O.map((v) => fmt(v)).join(", ")}) / a ${fmt(D.kin.a)}mm / l ${fmt(D.kin.l, 4)}mm`, '<span class="chip ok">寸法化</span>'],
-    ["動作範囲", `0〜${fmt(D.kin.open_theta)}°、${V.motion.steps}姿勢`, V.motion.poses_with_hits.length ? "当たりあり" : '<span class="chip ok">当たりなし</span>'],
-    ["サーボ一式を下ろす", `中央姿勢、上から${fmt(D.assembly.lower_from_mm)}mm`, empty(A.D_servo_unit_lower?.worst) ? '<span class="chip ok">意図しない当たりなし</span>' : "当たりあり"],
-    ["可動天面を組む", `${fmt(D.assembly.lid_back_deg)}°、${fmt(D.assembly.lid_place_from_mm)}mm上から載せて蝶番ピンを挿入`, "左の割り先端だけ片側0.05mm圧入"],
-    ["リンクを逃がす", `${fmt(A.F_lid_down_with_link_bent.b_end_shift_mm)}mm、自由長 ${fmt(A.F_link_free_span_mm, 2)}mm、推定ひずみ ${fmt(A.F_link_bend_strain_pct, 2)}%`, "梁の近似。強度は実物試験"],
+    ["動作と組立の範囲", `0〜${fmt(V.motion.theta_max ?? D.kin.open_theta)}°、${V.motion.steps}姿勢`, V.motion.poses_with_hits.length ? "当たりあり" : '<span class="chip ok">当たりなし</span>'],
+    ["蓋付き一式を下ろす", `蓋75°、上から${fmt(D.assembly.lower_from_mm)}mm`, empty(A.D_servo_unit_lower?.worst) ? '<span class="chip ok">意図しない当たりなし</span>' : "当たりあり"],
+    ["緑と水色の抜け止め", "ピンφ5mm。爪幅2mm、半径4.1mm、厚み4mm。穴φ5.4mm", A.B_retainer_lock?.ok ? '<span class="chip ok">横ずれを爪で止める</span>' : "検証結果を確認"],
+    ["箱の外でピンBを留める", "切り欠きを通し、下側へ回す。リンクは曲げない", empty(A.B_retainer_insert?.worst) && empty(A.B_retainer_turn?.worst) ? '<span class="chip ok">経路に当たりなし</span>' : "当たりあり"],
     ["固定天面の着脱", `脚の自由長 ${fmt(A.J_roof_free_span_mm)}mm、解除変位 ${fmt(A.J_roof_release.delta_mm, 2)}mm、推定ひずみ ${fmt(A.J_roof_press_strain_pct, 2)}%`, Object.keys(A.J_roof_release?.blocking || {}).length ? "経路に当たりあり" : '<span class="chip ok">解除経路に妨げなし</span>'],
     ["指を入れる経路", `直径 ${fmt(A.J_finger_approach.diameter_mm)}mm、中心 X=±${fmt(Math.abs(A.J_finger_approach.centers_xz_mm[0][0]), 1)}mm / Z=${fmt(A.J_finger_approach.centers_xz_mm[0][1])}mm`, fingerObstacles ? `障害 ${fingerObstacles}件` : '<span class="chip ok">計算上の障害0</span>'],
     ["つまみを押す経路", `箱の中央へ ${fmt(A.J_finger_press.delta_mm, 2)}mm`, pressObstacles ? `障害 ${pressObstacles}件` : '<span class="chip ok">計算上の障害0。手操作は未確認</span>'],
     ["解除した爪", `外端 X=±${fmt(A.J_roof_release.released_hook_max_abs_x_mm, 2)}mm、壁との隙間 ${fmt(A.J_roof_release.wall_clearance_mm, 2)}mm`, '<span class="chip ok">上へ抜ける隙間あり</span>'],
-    ["曲げたリンクの交差体積", `${D.boolean.bent_link_crank_mm3.toExponential(3)}mm³`, `別のBooleanで検証。許容値 ${D.boolean.volume_tolerance_mm3}mm³`],
+    ["抜け止めの別検証", D.boolean.ok ? "名目位置の隙間、爪に当たる引抜き、切り欠きからの引抜きを検査" : "検査要確認", `別のBooleanで検証。許容値 ${D.boolean.volume_tolerance_mm3}mm³`],
     ["最大保持トルク", `${fmt(sim.static.max_torque_Nm * 1000)}mN·m`, `停動トルクの ${fmt(sim.static.ratio_to_stall * 100)}%`],
     ["動的負荷", `最大 ${fmt(sim.eased.peak_torque_Nm * 1000)}mN·m`, "可動天面、クランク、リンクの質量と慣性を含む"],
     ["ゆっくり閉じたとき", `縁に当たる速さ ${fmt(sim.eased.lid_impact_rad_s, 2)}rad/s`, `${fmt(setup.motion_time_s)}秒の計算`],
@@ -294,7 +294,7 @@ figcaption { color:var(--mute); font-size:var(--fs-sm); margin-top:var(--sp-2); 
   const lidUnsupported = (D.slice["PLA/lid"] || D.slice.lid)?.floating?.external_unsupported_mm;
   document.getElementById("unsupportedNote").textContent = `G-code上の外部未支持経路は箱 ${fmt(boxUnsupported, 2)}mm、可動天面 ${fmt(lidUnsupported, 2)}mmです。`;
 
-  const files = { PLA:"PLA", PETG:"PETG", servo_fit_test:"servo-fit-test-PLA", crank_test:"crank-test-PLA", joints_test:"joints-test-PLA", speaker_test:"speaker-test-PLA", roof_test_PLA:"roof-test-PLA", roof_test_PETG:"roof-test-PETG" };
+  const files = { PLA:"PLA", PETG:"PETG", replacement_test:"replacement-test-PLA", servo_fit_test:"servo-fit-test-PLA", crank_test:"crank-test-PLA", joints_test:"joints-test-PLA", speaker_test:"speaker-test-PLA", roof_test_PLA:"roof-test-PLA", roof_test_PETG:"roof-test-PETG" };
   document.getElementById("deliveries").innerHTML = Object.entries(files).map(([key, suffix]) => {
     const item = D.plate[key];
     const file = `mystery-box-sg92r-c2-${suffix}.gcode.3mf`;

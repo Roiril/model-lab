@@ -65,8 +65,7 @@ def main():
     names = ["box", "lid", "crank", "link", "pin", "clip", "speaker_clip",
              "ref_body", "ref_horn", "ref_wire", "ref_speaker"]
     meshes = {name: load_mesh(name) for name in names}
-    meshes.update({f'link_bend_{i}': load_mesh(f'link_bend_{i}') for i in range(11)})
-    table = K.sweep(K.THETA_OPEN, int(K.THETA_OPEN * 2))
+    table = K.sweep(P.ASSEMBLY_LID_BACK_DEG, int(P.ASSEMBLY_LID_BACK_DEG * 2))
     pa0, pb0 = K.pin_a(K.ALPHA0), K.pin_b(0.0)
     vr = load_json("verify_report.json")
     sr = load_json("simulate_report.json")
@@ -75,20 +74,22 @@ def main():
 
     mid_theta = K.THETA_OPEN / 2
     alpha_mid = K.sweep(mid_theta, 65)[-1][1]
-    alpha_open = table[-1][1]
+    alpha_open = K.sweep(K.THETA_OPEN, int(K.THETA_OPEN * 2))[-1][1]
+    alpha_setup = table[-1][1]
     sim_motion = sr.get("servo_motion", {})
     stroke = sim_motion.get("stroke_deg", abs(K.ALPHA0 - alpha_open))
     motion_time = sr.get("motion_time_s", P.OPEN_TIME_S)
     kin = dict(H=K.H, O=K.O, a=K.A_LEN, l=K.L_LINK, alpha0=K.ALPHA0, A0=pa0, B0=pb0,
                table=[[round(theta, 2), round(alpha, 3)] for theta, alpha in table],
                key_rel=P.BAYONET_KEY_DEG, mid_theta=mid_theta, open_theta=K.THETA_OPEN,
-               bend_deg=vr["assembly"]["F_lid_down_with_link_bent"]["bend_deg"])
+               bend_deg=0)
     data = dict(
         q=Q,
         meshes=meshes,
         kin=kin,
         verify=dict(calibration=vr["calibration"], motion=vr["motion_summary"],
                     clearance=vr["motion_clearance_mm"], static=vr["static_closed"],
+                    static_contacts=vr.get("static_contacts", {}),
                     assembly=vr["assembly"], free_open=vr["lid_free_open_limit_deg"],
                     mass=vr["mass"], overhang=vr.get("overhang"),
                     overhang_calibration=vr.get("overhang_calibration")),
@@ -101,24 +102,29 @@ def main():
     )
     data["meta"] = dict(
         title="住人の箱 C1",
-        summary="70 × 70 × 70 mm · SG92R · 印刷 7 点",
+        summary="70 × 70 × 70 mm · 蓋側抜け止め · 印刷 7 点",
         eyebrow="全面蓋 0〜65° · 工具、ねじ、接着剤なし",
         howto=[
-            "箱の外でサーボを 90° にする。蓋が 32.5° の姿勢に合う向きでホーンを付け、クランクをかぶせる",
-            f"中央から閉じる側は +{K.ALPHA0 - alpha_mid:.1f}° 相当。開く側は {alpha_open - alpha_mid:.1f}° 相当。全ストロークは {stroke:.1f}°",
+            "箱の外で蓋とリンクのピンBを留める。クランクをピンAへ留め、蓋95°の姿勢にする。サーボを90°にしてホーンを付け、クランクをかぶせる",
+            f"サーボ90°は組立用の蓋95°に合わせる。閉は {90 + K.ALPHA0 - alpha_setup:.1f}°、65°開は {90 + alpha_open - alpha_setup:.1f}°、中央32.5°は {90 + alpha_mid - alpha_setup:.1f}°相当。全ストロークは {stroke:.1f}°",
             "組み終わったら 90° から閉じる側へ 1° ずつ動かし、蓋が縁に載った位置を「閉」とする",
             f"{motion_time:.1f} 秒かけて始めと終わりをゆっくり動かす。「閉」より先へ押し込まない",
         ],
         untested="エキサイターは直径25mm、高さ10mmの包絡寸法だけを確認した。実物の接触面、保持力、音量、びびりは未検証。"
-                 "SG92R付属ホーンの幅と先端形状も写真からの推定値なので、クランクを先に刷って嵌まりを確かめる。",
+                 "SG92R付属ホーンの幅と先端形状も写真からの推定値なので、クランクを先に刷って嵌まりを確かめる。"
+                 "旧C1は組み立てと回転を実物確認済み。新しいピンBの爪は試片で保持と着脱を確かめる。",
     )
-    data["view"] = dict(target=[0, 0, 50], dist=300, cutX=6.0)
+    data["view"] = dict(target=[0, 0, 50], dist=300, cutX=14.0)
     data["servo_setup"] = dict(mid_deg=90.0,
-                               closed_offset_deg=round(K.ALPHA0 - alpha_mid, 1),
-                               open_offset_deg=round(alpha_open - alpha_mid, 1),
+                               setup_lid_deg=P.ASSEMBLY_LID_BACK_DEG,
+                               closed_offset_deg=round(K.ALPHA0 - alpha_setup, 1),
+                               open_offset_deg=round(alpha_open - alpha_setup, 1),
                                stroke_deg=round(stroke, 1), motion_time_s=motion_time)
     data["assembly"] = dict(
         unit_first=True,
+        joint_b_retained=True,
+        joint_b_key_deg=P.B_KEY_DEG,
+        setup_alpha_deg=alpha_setup,
         speaker_travel_mm=45,
         speaker_step="エキサイターを上からレールへ入れ、スピーカー押さえを上から差して留める",
         speaker_check="エキサイターは直径25mm、高さ10mmの包絡寸法で確認。保持力と音量は実物で確かめる",
@@ -126,7 +132,7 @@ def main():
         pin_path_mm=70,
         pin_through=True,
         crank_push_mm=8,
-        unit_lift_mm=85,
+        unit_lift_mm=70,
         lower_from_mm=70,
         lid_place_from_mm=40,
         lid_back_deg=P.ASSEMBLY_LID_BACK_DEG,
@@ -162,8 +168,9 @@ def main():
 
     js = "window.CUBE=" + json.dumps(data, ensure_ascii=False, separators=(",", ":")) + ";"
     web_data = os.path.join(BUILD, "web_data.js")
-    with open(web_data, "w", encoding="utf-8", newline="\n") as fh:
+    with open(web_data + ".tmp", "w", encoding="utf-8", newline="\n") as fh:
         fh.write(js)
+    os.replace(web_data + ".tmp", web_data)
     print(web_data, round(len(js) / 1024), "KB", {key: value["nt"] for key, value in meshes.items()})
 
     asset = {key: value for key, value in data.items() if key not in ("plate_png", "preview_png")}
@@ -171,8 +178,11 @@ def main():
     asset_dir = os.path.join(ROOT, "viewer", "lid-cube", "assets")
     os.makedirs(asset_dir, exist_ok=True)
     asset_path = os.path.join(asset_dir, f"{MODEL_ID}.json")
-    with open(asset_path, "w", encoding="utf-8", newline="\n") as fh:
+    with open(asset_path + ".tmp", "w", encoding="utf-8", newline="\n") as fh:
         json.dump(asset, fh, ensure_ascii=False, separators=(",", ":"))
+    with open(asset_path + ".tmp", encoding="utf-8") as fh:
+        json.load(fh)
+    os.replace(asset_path + ".tmp", asset_path)
     print(asset_path)
 
     with open(os.path.join(HERE, "report_template.html"), encoding="utf-8") as fh:
@@ -180,8 +190,9 @@ def main():
     assert template.count("/*CUBE_DATA*/") == 1
     page = template.replace("/*CUBE_DATA*/", js.replace("</", "<\\/"))
     report_path = os.path.join(ROOT, "reports", "2026-10-10_mystery-box-c1.html")
-    with open(report_path, "w", encoding="utf-8", newline="\n") as fh:
+    with open(report_path + ".tmp", "w", encoding="utf-8", newline="\n") as fh:
         fh.write(page)
+    os.replace(report_path + ".tmp", report_path)
     print(report_path, round(len(page) / 1024), "KB")
 
 

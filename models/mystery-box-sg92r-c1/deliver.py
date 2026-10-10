@@ -11,8 +11,9 @@ sys.stdout.reconfigure(encoding='utf-8')
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 EXPORTS = ROOT / 'exports'
-DEST = ROOT / 'prints' / HERE.name
+DEST = ROOT / 'prints' / f'{HERE.name}-retained'
 PARTS = ('box', 'lid', 'crank', 'link', 'pin', 'clip', 'speaker_clip')
+COUPONS = ('speaker_test', 'joint_b_test')
 NS = '{http://schemas.microsoft.com/3dmanufacturing/core/2015/02}'
 IDENTITY = (1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
@@ -57,20 +58,41 @@ def main():
     read = lambda name: json.loads((HERE / 'build' / name).read_text(encoding='utf-8'))
     model, verify, review, sliced, boolean = [read(name) for name in ('model_report.json', 'verify_report.json', 'print_review.json', 'slice_report.json', 'boolean_report.json')]
     assert verify['calibration']['ok'] and sliced['calibration']['ok'] and review['calibration']['ok'] and boolean['ok']
+    assert len(sliced['parts']) == len(PARTS)*2
+    assert all('error' not in part for part in sliced['parts'].values())
+    plates = read('plate_report.json')
+    assert all(str(plates[key]['support_used']).lower() == 'false'
+               for key in ('PLA', 'PETG', 'crank_test', 'speaker_test', 'joints_test',
+                           'replacement_test'))
+    assert not verify['assembly']['D_servo_unit_lower']['worst']
+    assert verify['assembly']['clip_snap_strain_pct'] <= 2
     assert not verify['motion_summary']['poses_with_hits']
+    topology = read('stl_topology.json')
+    assert topology['calibration']['ok']
+    assert all(not any(result[k] for k in ('nonmanifold_edges', 'winding_mismatches',
+                                         'duplicate_faces', 'degenerate_faces'))
+               for result in topology['parts'].values())
     assert all(model['parts'][p]['nonmanifold'] == 0 for p in PARTS)
     assert all(not [r for r in review['parts'][p]['thin_under_1_2mm'] if r['min_mm'] < 1.195] for p in PARTS)
-    assert verify['assembly']['F_link_bend_strain_pct'] <= 2
+    assert not [r for r in review['parts']['joint_b_test']['thin_under_1_2mm']
+                if r['min_mm'] < 1.195]
+    assert verify['assembly']['B_retainer_lock']['ok']
+    assert verify['assembly']['B_retainer_turn']['ok']
+    assert all(hit['depth'] <= 0.003 for key in ('B_retainer_insert', 'B_retainer_turn',
+                                                 'C_retainer_crank_insert', 'C_retainer_crank_turn',
+                                                 'C_retainer_horn_insert')
+               for hit in verify['assembly'][key]['worst'].values())
     assert verify['assembly']['C3_bayonet_lock']['ok']
-    assert not verify['assembly']['G_lid_place_after_servo']['worst']
+    assert verify['assembly']['F_retained_lid_lower']['ok']
     DEST.mkdir(parents=True, exist_ok=True)
     files = []
-    for part in PARTS + ('speaker_test',):
+    for part in PARTS + COUPONS:
         src = EXPORTS / f'{HERE.name}-{part}.stl'
         dst = DEST / f'{part}.stl'
         shutil.copyfile(src, dst)
         files.append(dst)
-    outputs = ('PLA', 'PETG', 'crank-test-PLA', 'speaker-test-PLA', 'joints-test-PLA', 'plate')
+    outputs = ('PLA', 'PETG', 'crank-test-PLA', 'speaker-test-PLA', 'joints-test-PLA',
+               'replacement-test-PLA', 'plate')
     placements = {}
     for key in outputs:
         suffix = '.3mf' if key == 'plate' else '.gcode.3mf'
@@ -81,6 +103,9 @@ def main():
         placements[key] = placed_bounds(dst)
         assert placements[key]['ok'], placements[key]
     manifest = dict(model=HERE.name, parts=len(PARTS), pose_checks=verify['motion_summary']['steps'],
+                    B_retainer={key: verify['assembly']['B_retainer_lock'][key]
+                                for key in ('poses', 'pull_max_mm', 'pull_step_mm',
+                                            'pin_exit_mm', 'first_contact_max_mm', 'ok')},
                     placements=placements, files=[dict(name=f.name, bytes=f.stat().st_size, sha256=hashlib.sha256(f.read_bytes()).hexdigest()) for f in files])
     tmp = DEST / 'manifest.tmp'
     tmp.write_text(json.dumps(manifest, ensure_ascii=False, indent=1), encoding='utf-8', newline='\n')

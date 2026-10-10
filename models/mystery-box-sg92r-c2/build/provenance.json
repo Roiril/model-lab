@@ -1,47 +1,49 @@
 {
  "model": "mystery-box-sg92r-c2",
+ "baseline_head": "6247bb78e8a7f2fc8a83a8e2755d80ee17bd36f7",
  "source_sha256": {
-  "models/mystery-box-sg92r-c2/.gitignore": "a23746724809c8cd9bb21b893a964da25646963a53bf3165ed88590c75eaf2b0",
-  "models/mystery-box-sg92r-c2/catalog.json": "9e8e93784a96c2e73c5738646c1e812bd20d1a1f1bb326f9dd7379552460f879",
-  "models/mystery-box-sg92r-c2/deliver.py": "bd00492bf77c27dee7322a1f7360bf106395db51f18bbc81e215a678ff081b98",
-  "models/mystery-box-sg92r-c2/export_web.py": "d9855db6512cabcb6404ca3167542b60b5cdddeab921914234ee9049a70cede2",
+  "models/mystery-box-sg92r-c2/build_reference.py": "d01ebce7759aa7ac1673016fea9b26012a7587269fa6781a00a9c28dac1df44a",
+  "models/mystery-box-sg92r-c2/catalog.json": "5e8fbf2e1e59ef5ea5c96d50a58da15da0a72ce52ebfe004215ee5ac80c99651",
+  "models/mystery-box-sg92r-c2/deliver.py": "c8cea5b1d8912f1b919ff6c4b35984211bb72f776103afdd324ba5a84b62fae3",
+  "models/mystery-box-sg92r-c2/export_web.py": "d91d37508e1e498bfa9f6d0719f6d5fcaabacb433044973519bf6bb713a03393",
   "models/mystery-box-sg92r-c2/linkage.py": "9a8a247249013b20f419b50fd6881295d73b8c04c2dc2c549d0d056b5979ea79",
-  "models/mystery-box-sg92r-c2/model.py": "62cb43e0c5c395bd4b0d258fe9d952d7f505c105a402d76fd084edc60b18eced",
-  "models/mystery-box-sg92r-c2/params.py": "18d4cbf449e27137bff220c84aa3b7d5170be6852ecd13949c9a7e1a0d7da3e4",
-  "models/mystery-box-sg92r-c2/plate.py": "47e23a11da55d7ae04474af651edfd53659ee2eff883e370d4601ff0e950806d",
+  "models/mystery-box-sg92r-c2/model.py": "152cde551b08ae0f584cc63a5c1fc2a3197dde72ab90297d5be26257304c3fa9",
+  "models/mystery-box-sg92r-c2/params.py": "51a871ad9c8d186ab9e5c305065a897968eae8560d5c6e7783bf2bdc55c6d2f6",
+  "models/mystery-box-sg92r-c2/plate.py": "35638c429ddc9c50cb32f2ab7cbf69e5d33e8b503be7003d20d16b1e6d48eca2",
   "models/mystery-box-sg92r-c2/print_profile.py": "3f46c1ffc4372f59294ae667a2b6d339864db7ce27ce63bc89c3d99fc0ec2901",
-  "models/mystery-box-sg92r-c2/print_review.py": "7e2554c0bd609a7d311fa989ce22af75543cef0467f53f724dcddaa10da74c38",
-  "models/mystery-box-sg92r-c2/README.md": "d6ae65e03d002e679abf83f88773352eda3ce885cf3f38f0f73b61227ac1d192",
+  "models/mystery-box-sg92r-c2/print_review.py": "e35c94dda3e73877b921490fdfb7aac3de8790947f9894c08c68acfa9232a20e",
+  "models/mystery-box-sg92r-c2/README.md": "109bdd68fa759fc6bc50f6dc529186a9f0dd37d9b9935e6ef0a32c7cc9c3a24f",
   "models/mystery-box-sg92r-c2/render_preview.py": "754e2d3d461db180355b255120bfa14e4976936432a16b53187bf4cdc3cddb4d",
-  "models/mystery-box-sg92r-c2/report_template.html": "27dec1f4999bf26f55198a56526e9d2ea80c9b3c50e8982ced836ffc096fdfe7",
+  "models/mystery-box-sg92r-c2/report_template.html": "689ebc970e6ebdd4b90d40da00df19b2c303226fb13ef157327b27153ccb35cb",
   "models/mystery-box-sg92r-c2/simulate.py": "526586f833962a580144192d8b1fe5cbc4a0adb7d35a0d6b1b53d8e309af3577",
   "models/mystery-box-sg92r-c2/slice_check.py": "833a73b8c010c3190d7de188d5f4efb7a3bfc0609fadc223c58e6634dfd4586a",
-  "models/mystery-box-sg92r-c2/verify.py": "0ef60c16e9b8b5bb4ca3d1b810db464e858359ce8c08f9a7349ae863da551147",
-  "models/mystery-box-sg92r-c2/verify_boolean.py": "ec2ae96a081d3a96a6c4409d5110cb3ba196102ff2e085dfb5201ab27e050544",
-  "models/mystery-box-sg92r-c2/verify_stl.py": "6a662661af2cb741ec96b979697778c84cce25bfceeac9327930eebbe1627647",
-  "models/mystery-box-sg92r-c2/slow_open/slow_open.ino": "763a2d3f85dcf7f7ef26731d14b4ce6e16039d7f9de0a4b9b2c928a0f92e6ca2",
-  "models/sg92r-photo/params.py": "99535f8e4df8362e3f5511bb891495ad41f70d069b0108dfedfe1cab615fd835"
+  "models/mystery-box-sg92r-c2/verify.py": "defcd6673961541c0601354009627aed269f11336856219f8c37bbc2f344a946",
+  "models/mystery-box-sg92r-c2/verify_boolean.py": "7bdb7f4595e1deaa665efb132173df8029c325a670739846bc2c200930eb6b1c",
+  "models/mystery-box-sg92r-c2/verify_stl.py": "c704e7dbebe1bed72cec55ce2f4c017fed4f71643450d0b4b6d21efd89d4a4c8",
+  "models/mystery-box-sg92r-c2/slow_open/slow_open.ino": "9358bbe7cd0e8ef1442ec54b331f1f2cf37156b6451a90047e156caae1a89b4a",
+  "models/sg92r-photo/params.py": "99535f8e4df8362e3f5511bb891495ad41f70d069b0108dfedfe1cab615fd835",
+  "models/sg92r-photo/profiles.py": "4ce0f02803988e724128af506947a4eed484f4bf5f7a940d2fb8f3d1ae508106"
  },
  "delivery_files": [
   {
    "name": "box.stl",
-   "bytes": 228284,
-   "sha256": "44b0f6092b39de9362ba28cf7f5bcb0154dec36b0809f19a093d3139a4d4b189"
+   "bytes": 228884,
+   "sha256": "67e66d018efa1a6531472b60e93d9fbccd8cc07ef55a5e26a49de1692e831cf0"
   },
   {
    "name": "lid.stl",
-   "bytes": 392684,
-   "sha256": "fffa889a6aec1d7d7e307fa68ebcac7e25d8c801cefc21dc62b5f998a6db1b0d"
+   "bytes": 393084,
+   "sha256": "dd3c872170633b59a8cb64c5b398c2c32c57c571019ea52446a26028ec301883"
   },
   {
    "name": "crank.stl",
    "bytes": 323284,
-   "sha256": "1db5fb7bd16e2fbbac5d3b3231ac8bfc53be6b55d5736d6703b3057c0bd5d418"
+   "sha256": "2102e55bc8491a1b6e75472b0a864ca2886c2dc2860281b960df3a41ac7db33a"
   },
   {
    "name": "link.stl",
-   "bytes": 226984,
-   "sha256": "3dc050d9ab809cb2e0ac65e74a167ca9bc251419c112b1d5ff064e857c4e4fb5"
+   "bytes": 220384,
+   "sha256": "38592af1f593407feb586e2b83f2b5d0ccceeb250db300596b33e698243b3d06"
   },
   {
    "name": "pin.stl",
@@ -50,8 +52,8 @@
   },
   {
    "name": "clip.stl",
-   "bytes": 2684,
-   "sha256": "bd99c691dee3f57b34f3ef5f9746390e745a2ccbd3aa57bb1a46661228449fa7"
+   "bytes": 4884,
+   "sha256": "e6d1251f9520b60ccd4abb28c4b54efa6b66757110a4c6bdf629cb3fefbcbfab"
   },
   {
    "name": "speaker_clip.stl",
@@ -64,9 +66,14 @@
    "sha256": "3becd937421712379a9b6079b9bdb582309213ae7822561c518ce89567dba790"
   },
   {
+   "name": "servo_fit_test.stl",
+   "bytes": 34584,
+   "sha256": "043287577d537cae49503186997f7a829ffe379dbca2d2b424edc34cd12e615e"
+  },
+  {
    "name": "speaker_test.stl",
    "bytes": 27184,
-   "sha256": "354aada78756be11b5a84e9d2fd08dcaf32770b59aedc4adae91d58221d863f8"
+   "sha256": "e696a3b644171c7467be497909476bb103c05c1082dbb02d9540e8249da03a6f"
   },
   {
    "name": "roof_test_body.stl",
@@ -79,45 +86,67 @@
    "sha256": "df9211e14c888ab305f8f8d7a67166efd9f34a04fdb452525552970c86065d1d"
   },
   {
+   "name": "joint_b_test.stl",
+   "bytes": 33684,
+   "sha256": "10f12c74671a4609ae3fdf2848249ecd886f46289d166d0e4a6ed1cf983b86ce"
+  },
+  {
    "name": "mystery-box-sg92r-c2-PLA.gcode.3mf",
-   "bytes": 1247306,
-   "sha256": "43e673e57a060f4d2f345d17b847c6354130ca3d413a0e3ab806217f5b87f506"
+   "bytes": 1288801,
+   "sha256": "847c89d0c92fb80570731228f345f640cf36e58cec63ab4368f85c0082f78ab2"
   },
   {
    "name": "mystery-box-sg92r-c2-PETG.gcode.3mf",
-   "bytes": 1248456,
-   "sha256": "df965084cca2fd1b3c233902ee134cebb6f7ec3b1fcab1bd6d8a67491d392b5c"
+   "bytes": 1288972,
+   "sha256": "bb9bb5b203d0bb45f6320fe2981824a67cb7ae8e156fd34c3dd71ab1c0666192"
   },
   {
    "name": "mystery-box-sg92r-c2-crank-test-PLA.gcode.3mf",
-   "bytes": 206820,
-   "sha256": "78e6f2bce522ca8e781dd392c21dbcc995e0709fd772001c31524ffb0709a398"
+   "bytes": 206930,
+   "sha256": "690ae1c6fed019cfdb031a3417a2ee396e6a347ee90c164cf853765488c418b6"
+  },
+  {
+   "name": "mystery-box-sg92r-c2-servo-fit-test-PLA.gcode.3mf",
+   "bytes": 341105,
+   "sha256": "4ce8a46b7c8cd5f26310ad9c61beaa80421df0642dcaafea455bdfba33029fca"
   },
   {
    "name": "mystery-box-sg92r-c2-speaker-test-PLA.gcode.3mf",
-   "bytes": 124415,
-   "sha256": "5db4062975387424167db6113bd0cf9a4a2511589f47fd00a44bfad848373af5"
+   "bytes": 124427,
+   "sha256": "90a4f63d6a49b33a4c8782c2089ca3dbabca027ae016ae8604273c05fb3d8fd0"
   },
   {
    "name": "mystery-box-sg92r-c2-joints-test-PLA.gcode.3mf",
-   "bytes": 164851,
-   "sha256": "663af5053bbed2597294dfcd32f46c255fa23b6ab8716d462375f7edf308113e"
+   "bytes": 198172,
+   "sha256": "22c21e34937bd67e128f4f6184d92af026d833d747c9796a825d4f91ffe57c71"
+  },
+  {
+   "name": "mystery-box-sg92r-c2-replacement-test-PLA.gcode.3mf",
+   "bytes": 302150,
+   "sha256": "6e6d2df3cf47242a2a167896defe361d42cc6e7f7a5fb939f2807369bf13d89f"
   },
   {
    "name": "mystery-box-sg92r-c2-roof-test-PLA.gcode.3mf",
-   "bytes": 99177,
-   "sha256": "946a536cb3a7204ec15969e25d2470e9556b75dd5eb7df50030cc0e714d79bed"
+   "bytes": 99176,
+   "sha256": "060018b215afbdd74c4013e1e2c29931bf9cf488b2424bb76ff5c389339d1acb"
   },
   {
    "name": "mystery-box-sg92r-c2-roof-test-PETG.gcode.3mf",
-   "bytes": 100420,
-   "sha256": "3b90b37e34931bd5e9cacc123f2c859c2006f3132492e1be3c00012c4f10317f"
+   "bytes": 100419,
+   "sha256": "9f6a990445f8e441f735072c84992177135cc5381620790348e3fea49c0ae5f8"
   },
   {
    "name": "mystery-box-sg92r-c2-plate.3mf",
-   "bytes": 246039,
-   "sha256": "cee893b94ea765a224899564e9accc3d4696edb92c78d14c9d16638e6413d284"
+   "bytes": 245313,
+   "sha256": "d96b85d836396a002ae562899bfcbf0f5a279376eb0b68533a0477a9e56767e1"
   }
  ],
- "preserved_files": 344
+ "motion_degrees": [
+  0,
+  75.0
+ ],
+ "motion_poses": 151,
+ "B_retainer_poses": 131,
+ "B_retainer_first_contact_max_mm": 1.5,
+ "new_retainer_physical_test_pending": true
 }

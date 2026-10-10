@@ -1,6 +1,6 @@
 // サーボで蓋を開くモデルの組み立て画面（?model= で選ぶ）。工程ごとの部品の動きは models/<モデル>/verify.py の経路と同じ。
 import { createWorkspaceNav } from "../shared/workspace.mjs";
-import { MODEL, ALL, loadData, createKinematics, createViewer, buildLegend, mul, T, I4 } from "./lidcube.mjs";
+import { MODEL, ALL, loadData, createKinematics, createViewer, buildLegend, mul, T, RX, I4 } from "./lidcube.mjs";
 
 const $ = (id) => document.getElementById(id);
 const V = (...k) => new Set(k);
@@ -15,6 +15,7 @@ try {
   const D = await loadData();
   const k = createKinematics(D.kin);
   const A = D.verify.assembly;
+  const hingeCheck = A.E_hinge_pin_insert || A.A_hinge_pin_insert;
   // 工程の動かし方（mm・度）。値はモデルの verify.py の経路と同じ（export_web.py が書く）
   const G = D.assembly;
   const clipDepth = A.E_clip_press.worst["clip-box"].depth;
@@ -51,10 +52,10 @@ try {
       ? "蝶番ピンを右から差し込む。両端は貫通しており、抜くときは左から押して右端をつまむ"
       : "蝶番ピンを右側面から差し込む。奥に当たると端が角の丸みと面一になる",
     r: G.pin_flat_ends
-      ? (A.A_hinge_pin_insert.note || `右から ${G.pin_path_mm}mm 通す経路を検証`)
+      ? (hingeCheck.note || `右から ${G.pin_path_mm}mm 通す経路を検証`)
       : G.pin_through
-      ? `右から ${G.pin_path_mm}mm 通す。先端の割りが穴に ${A.A_hinge_pin_insert.worst["pin-box"].depth}mm 食い込んで留まる`
-      : `当たるのは先端の割りと左の止まり穴だけ（食い込み ${A.A_hinge_pin_insert.worst["pin-box"].depth}mm＝設計した圧入）`,
+      ? `右から ${G.pin_path_mm}mm 通す。先端の割りが穴に ${hingeCheck.worst["pin-box"].depth}mm 食い込んで留まる`
+      : `当たるのは先端の割りと左の止まり穴だけ（食い込み ${hingeCheck.worst["pin-box"].depth}mm＝設計した圧入）`,
     f: (p) => ({ vis: V("box", ...SPK, "lid", "pin"), M: { pin: T(G.pin_travel_mm * (1 - p), 0, 0) } }) };
   const hornNote = G.horn_orientation_note ? `。${G.horn_orientation_note}` : "";
   const hornCheck = D.horn_orientation?.ok ? "。逆向きと、外形を合わせた逆向きは奥まで入らない" : "";
@@ -82,7 +83,7 @@ try {
     r: `${G.lid_place_from_mm}mm 上から下ろす経路で当たり ${Object.keys(lidPlaceCheck.worst).length} 件`,
     f: (p) => ({ vis: V("box", ...SPK, ...UNIT, "link", "clip", "lid"),
       M: above(0, { lid: mul(T(0, 0, G.lid_place_from_mm * (1 - p)), k.poseLid(BACK)), link: k.poseLink(AM, TM) }) }) };
-  const linkB = { t: `リンクの先をサーボ側へ ${A.F_lid_down_with_link_bent.b_end_shift_mm}mm 曲げ、蓋を ${BACK}° から ${TM}° へ下ろす。穴が合ったら離す`,
+  const linkB = { t: `リンクの先をサーボ側へ ${A.F_lid_down_with_link_bent?.b_end_shift_mm}mm 曲げ、蓋を ${BACK}° から ${TM}° へ下ろす。穴が合ったら離す`,
     r: `蓋を下ろす間の当たりなし。曲げのひずみ ${A.F_link_bend_strain_pct}%。離すとピン B が耳の穴に入る`,
     f: (p) => {
       let th = TM, bend = 1;
@@ -108,7 +109,51 @@ try {
   } : null;
   const closeLid = { t: "サーボを動かして閉じる（角度は右の手順で決める）", r: `0〜${OPEN}° の ${D.verify.motion.steps} 姿勢で部品どうしの当たり ${D.verify.motion.poses_with_hits.length} 件`,
     f: (p) => ({ vis: ALL, M: k.pose(TM * (1 - p)) }) };
-  const STEPS = G.unit_first
+  const retained = G.joint_b_retained;
+  const AB = G.setup_alpha_deg, LB = retained ? k.linkAng(AB, BACK) : 0;
+  const PA = retained ? k.pinA(AB) : [0, 0], PB = retained ? k.pinB(BACK) : [0, 0];
+  const retainedPose = retained ? k.pose(BACK, AB) : {};
+  const lift = (M, dz = UP) => Object.fromEntries(Object.entries(M).map(([name, m]) => [name, mul(T(0, 0, dz), m)]));
+  const joinedOutside = { lid: retainedPose.lid, link: retainedPose.link, crank: retainedPose.crank };
+  const bKeyLink = A.B_retainer_turn?.from_link_deg ?? BACK + G.joint_b_key_deg + 180;
+  const bTurn = A.B_retainer_turn?.chosen_delta_deg ?? LB - bKeyLink;
+  const bJoin = { t: "箱の外で、緑のピンの爪を水色の蓋の切り欠きに通す。リンクを下側へ回して留める",
+    r: "爪を通して回す経路を検証。リンクを曲げずに組む",
+    f: (p) => {
+      const lam = p < .5 ? bKeyLink : bKeyLink + bTurn * ((p - .5) / .5);
+      const dx = p < .5 ? (A.B_retainer_insert?.from_x_mm ?? -8) * (1 - p / .5) : 0;
+      return { vis: V("lid", "link"), M: lift({ lid: retainedPose.lid,
+        link: mul(T(dx, 0, 0), mul(RX(lam - LB, ...PB), retainedPose.link)) }) };
+    } };
+  const aJoin = { t: `黄色の爪を緑のリンクの切り欠きに通す。黄色の部品を回して、蓋が${BACK}°開く姿勢にする`,
+    r: "蓋とリンクを動かさずにクランクを差して回す経路を検証",
+    f: (p) => {
+      const keyAlpha = LB - D.kin.key_rel;
+      const al = p < .5 ? keyAlpha : keyAlpha + (AB - keyAlpha) * ((p - .5) / .5);
+      const dx = p < .5 ? (A.C_retainer_crank_insert?.from_x_mm ?? -8) * (1 - p / .5) : 0;
+      return { vis: V("lid", "link", "crank"), M: lift({ ...joinedOutside,
+        crank: mul(T(dx, 0, 0), mul(RX(al - AB, ...PA), retainedPose.crank)) }) };
+    } };
+  const retainedHorn = { t: `箱の外でサーボを90°にする。付属ホーンを付け、つないだ3部品をかぶせる${hornNote}`,
+    r: `蓋を${BACK}°に保ち、${G.crank_push_mm}mm手前から差す経路を検証${hornCheck}`,
+    f: (p) => ({ vis: V(...UNIT, "lid", "link"), M: lift({ ...joinedOutside,
+      ...Object.fromEntries(Object.entries(joinedOutside).map(([name, m]) => [name, mul(T(G.crank_push_mm * (1 - p), 0, 0), m)])),
+      ref_body: I4(), ref_wire: I4(), ref_horn: retainedPose.ref_horn }) }) };
+  const retainedLower = { t: `蓋を${BACK}°に保ち、蓋付きのサーボ一式を上から箱へ下ろす。配線を切り欠きへ通す`,
+    r: `蓋を含む一式を${G.lower_from_mm}mm上から下ろす経路を検証`,
+    f: (p) => ({ vis: V("box", ...SPK, ...UNIT, "link", "lid"),
+      M: lift({ ...retainedPose, ref_body: I4(), ref_wire: I4() }, UP * (1 - p)) }) };
+  const retainedClip = { ...servoClip,
+    f: (p) => ({ vis: V("box", ...SPK, ...UNIT, "link", "lid", "clip"),
+      M: { ...retainedPose, clip: T(0, 0, G.clip_from_mm * (1 - p)) } }) };
+  const retainedPin = { ...hingePin,
+    f: (p) => ({ vis: ASSEMBLED, M: { ...retainedPose, pin: T(G.pin_travel_mm * (1 - p), 0, 0) } }) };
+  const retainedReturn = { t: `蝶番ピンを入れたら、蓋を${BACK}°から${TM}°へ戻す。サーボをゆっくり動かす`,
+    r: `蓋${BACK}°から中央姿勢までの延長範囲も検証。緑と水色の接合を曲げる工程は不要`,
+    f: (p) => ({ vis: ASSEMBLED, M: k.pose(BACK + (TM - BACK) * p) }) };
+  const STEPS = retained
+    ? [speakerStep, bJoin, aJoin, retainedHorn, retainedLower, retainedClip, retainedPin, retainedReturn, roofStep, closeLid].filter(Boolean)
+    : G.unit_first
     ? [speakerStep, buildUnit, attachLink, lowerUnit, servoClip, placeLid, hingePin, linkB, roofStep, closeLid].filter(Boolean)
     : [speakerStep, lidFirst, hingePin, buildUnit, attachLink, lidBack, lowerUnit, servoClip, linkB, roofStep, closeLid].filter(Boolean);
   $("eyebrow").textContent = D.meta.eyebrow;
@@ -167,17 +212,20 @@ try {
   });
 
   const empty = (w) => !w || Object.keys(w).length === 0;
+  const clear = (w) => !w || Object.values(w).every((hit) => hit.depth <= 0.003);
   const rows = [
     ...(SPK.length ? [["エキサイターと押さえ", `${G.speaker_travel_mm}mm 上から`, G.speaker_check]] : []),
-    ["蝶番ピンを差す", `右側面から ${G.pin_path_mm}mm`, G.pin_flat_ends ? (A.A_hinge_pin_insert.note || "経路を検証") : `先端の圧入 ${A.A_hinge_pin_insert.worst["pin-box"].depth}mm のみ`],
-    ["クランクをホーンへ", `${G.crank_push_mm}mm 手前から`, empty(A.B_crank_onto_horn.worst) ? "当たりなし" : "当たりあり"],
-    ["リンクをピン A へ", "鍵溝の角度で差し、回す", empty(A.C1_link_push_at_key.worst) && empty(A.C2_link_turn_to_operating.worst) ? "当たりなし" : "当たりあり"],
-    ["抜け止め", `動作範囲の 3 姿勢で ${A.C3_bayonet_lock.pull_check_mm ?? 1}mm 引く`, A.C3_bayonet_lock.operating.every((r) =>
-      r.first_contact_mm != null ? r.first_contact_mm <= (A.C3_bayonet_lock.pull_check_mm ?? 1) : (r.pulled_2mm_hits ?? r.pulled_1mm_hits) > 0) ? "3 姿勢とも爪に当たる" : "抜ける姿勢あり"],
+    ["蝶番ピンを差す", `右側面から ${G.pin_path_mm}mm`, G.pin_flat_ends ? (hingeCheck.note || "経路を検証") : `先端の圧入 ${hingeCheck.worst["pin-box"].depth}mm のみ`],
+    ["クランクをホーンへ", `${G.crank_push_mm}mm 手前から`, (retained ? clear(A.C_retainer_horn_insert.worst) : empty(A.B_crank_onto_horn.worst)) ? "当たりなし" : "当たりあり"],
+    ["リンクをピン A へ", "鍵溝の角度で差し、回す", (retained ? clear(A.C_retainer_crank_insert.worst) && clear(A.C_retainer_crank_turn.worst) : empty(A.C1_link_push_at_key.worst) && empty(A.C2_link_turn_to_operating.worst)) ? "当たりなし" : "当たりあり"],
+    ["黄色と緑の抜け止め", `動作範囲の 3 姿勢で ${A.C3_bayonet_lock.pull_check_mm ?? 2}mm 引く`, (A.C3_bayonet_lock.ok ?? A.C3_bayonet_lock.operating.every((r) =>
+      r.first_contact_mm != null ? r.first_contact_mm <= (A.C3_bayonet_lock.pull_check_mm ?? 2) : (r.pulled_2mm_hits ?? r.pulled_1mm_hits) > 0)) ? "3 姿勢とも爪に当たる" : "抜ける姿勢あり"],
     ["サーボ一式を下ろす", `${G.lower_from_mm}mm 上から`, empty(A.D_servo_unit_lower.worst) ? "当たりなし" : "当たりあり"],
     ["クリップを押し込む", `${G.clip_from_mm}mm 上から`, clipCheck],
-    ...(G.unit_first ? [["蓋を後から載せる", `${G.lid_place_from_mm}mm 上から。蓋 ${BACK}°`, empty(lidPlaceCheck.worst) ? "当たりなし" : "当たりあり"]] : []),
-    ["ピン B を入れる", `蓋 ${BACK}° → ${TM}°`, empty(A.F_lid_down_with_link_bent.hits) ? `当たりなし（ひずみ ${A.F_link_bend_strain_pct}%）` : "当たりあり"],
+    ...(!retained && G.unit_first ? [["蓋を後から載せる", `${G.lid_place_from_mm}mm 上から。蓋 ${BACK}°`, empty(lidPlaceCheck.worst) ? "当たりなし" : "当たりあり"]] : []),
+    ...(retained ? [["緑と水色の抜け止め", "0〜65°で横方向へ引く", A.B_retainer_lock?.ok ? "爪に当たり、抜ける前に止まる" : "検証結果を確認"],
+      ["箱の外でピンBを留める", "切り欠きを通して回す", clear(A.B_retainer_insert?.worst) && A.B_retainer_turn?.ok ? "当たりなし。曲げ不要" : "当たりあり"]]
+      : [["ピン B を入れる", `蓋 ${BACK}° → ${TM}°`, empty(A.F_lid_down_with_link_bent.hits) ? `当たりなし（ひずみ ${A.F_link_bend_strain_pct}%）` : "当たりあり"]]),
     ...(D.meshes.roof ? [["固定天面を付ける", `${G.roof_from_mm ?? 45}mm 上から。蓋 ${G.roof_lid_deg ?? TM}°`,
       roofLower && !roofUnexpected.length ? `爪 ${roofLatch?.depth ?? "未計測"}mm、ほかの当たりなし（脚のひずみ ${roofStrain ?? "未計測"}%）` : "検証値を確認"]] : []),
   ];
