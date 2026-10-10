@@ -2,93 +2,73 @@
 <html lang="ja">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>格子の住人の箱 · model-lab</title>
   <link rel="stylesheet" href="../shared/workspace.css">
+  <link rel="stylesheet" href="../lid-cube/style.css">
   <link rel="stylesheet" href="lattice.css">
 </head>
 <body>
-  <a class="workspace-skip" href="#stage">3D表示へ移動</a>
+  <a class="skip-link" href="#main">検証と組み立てへ移動</a>
   <header class="workspace-header">
-    <a class="workspace-brand" href="/">model-lab</a>
-    <div class="workspace-model"><strong>格子の住人の箱</strong><small>形を読み込み中…</small></div>
+    <a class="workspace-brand" href="/" aria-label="model-lab Studio へ">model-lab</a>
+    <div class="workspace-model"><strong>読み込み中</strong><small></small></div>
     <div id="workspaceNav"></div>
+    <span id="loading" role="status">読み込み中…</span>
   </header>
-
-  <main class="lattice-layout">
-    <section class="lattice-stage" id="stage" tabindex="-1" aria-labelledby="pageTitle">
-      <div class="stage-toolbar" aria-label="3D表示の操作">
-        <div class="physics-only actions">
-          <button id="play" class="control primary" type="button">動かす</button>
-          <button id="stop" class="control" type="button" disabled>止める</button>
-        </div>
-        <label class="range-field physics-only" for="angle">
-          <span>サーボ角度</span>
-          <input id="angle" type="range" min="0" max="180" step="1" value="0">
-          <output id="angleValue" for="angle">0°</output>
-        </label>
-        <label class="range-field assembly-only" for="explode">
-          <span>分解</span>
-          <input id="explode" type="range" min="0" max="100" step="1" value="0">
-          <output id="explodeValue" for="explode">0%</output>
-        </label>
-        <label class="check"><input id="removeExterior" type="checkbox"> 外装を外す</label>
-        <div class="camera" aria-label="カメラ">
-          <span>視点</span>
-          <button class="control" type="button" data-camera="front">正面</button>
-          <button class="control" type="button" data-camera="iso" aria-pressed="true">斜め</button>
-          <button class="control" type="button" data-camera="top">真上</button>
-        </div>
+  <main id="main" class="lc-layout">
+    <section class="lc-stage" aria-label="実際の部品形状による3D表示">
+      <div class="lc-bar">
+        <label class="check"><input id="cut" type="checkbox" checked>箱の右半分を隠す</label>
+        <button id="home" class="lc-btn" type="button">視点を戻す</button>
+        <label class="check"><input id="removeExterior" type="checkbox">外装を外す</label>
       </div>
-      <div class="canvas-wrap">
-        <canvas id="gl" data-frame-count="0" data-current-angle="0" data-servo-deg="0" data-visible-parts="" aria-label="実際のSTL形状を使った格子機構の3D表示"></canvas>
-        <p id="loading" class="loading" role="status" aria-live="polite">形を読み込んでいます…</p>
-        <p class="view-help">ドラッグで回転。ホイールで拡大・縮小。</p>
+      <div class="lc-canvas">
+        <canvas id="gl" data-frame-count="0" aria-label="格子機構の3D表示。ドラッグで回転、ホイールかピンチで拡大"></canvas>
+        <div class="viewnote">ドラッグで回転 / ホイールかピンチで拡大</div>
       </div>
-      <div id="legend" class="legend" aria-label="部品の色分け"></div>
+      <div id="legend" class="lc-legend" aria-label="部品の表示"></div>
+      <div class="lc-bar bottom physics-only" aria-label="計算結果の再生">
+        <button id="pause" class="lc-btn" type="button" disabled>一時停止</button>
+        <label>再生速度 <select id="rate" class="lc-select"><option value="0.1">0.1×</option><option value="0.25" selected>0.25×</option><option value="0.5">0.5×</option><option value="1">1×</option></select></label>
+        <span id="clock" class="workspace-number">0.000 s</span>
+      </div>
+      <div class="lc-bar bottom assembly-only" aria-label="工程の操作">
+        <button id="prev" class="lc-btn" type="button" disabled>前へ</button>
+        <button id="play" class="lc-btn primary" type="button" disabled>この工程を再生</button>
+        <button id="next" class="lc-btn" type="button" disabled>次へ</button>
+        <button id="all" class="lc-btn" type="button" disabled>全部を順に再生</button>
+        <label>速さ <select id="speed" class="lc-select"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label>
+      </div>
     </section>
-
-    <aside class="lattice-panel" aria-labelledby="pageTitle">
-      <div>
-        <p id="eyebrow" class="eyebrow">格子の住人の箱</p>
-        <h1 id="pageTitle">格子の動作</h1>
-        <p id="summary" class="lead">形と動きを読み込んでいます。</p>
-      </div>
-      <nav class="model-switch" aria-label="モデル切り替え">
-        <a id="c3Link" href="?model=mystery-box-sg92r-c3&amp;mode=physics">C3 立方格子</a>
-        <a id="c4Link" href="?model=mystery-box-sg92r-c4&amp;mode=physics">C4 六角格子</a>
-      </nav>
-      <dl id="metrics" class="metrics"></dl>
-
+    <aside class="lc-aside" aria-label="操作と検証結果">
+      <div><span id="eyebrow" class="eyebrow"></span><h1 id="pageTitle"></h1><p id="summary"></p></div>
+      <nav class="model-switch" aria-label="モデル切り替え"><a id="c3Link" href="?model=mystery-box-sg92r-c3">C3 立方格子</a><a id="c4Link" href="?model=mystery-box-sg92r-c4">C4 六角格子</a></nav>
+      <div class="actions physics-only" aria-label="格子の操作"><button id="open" class="lc-btn primary" type="button" disabled>進める</button><button id="close" class="lc-btn" type="button" disabled>戻す</button></div>
       <section class="physics-only">
-        <h2>動作原理</h2>
-        <p id="principle">サーボの回転が天面の上下運動に変わります。</p>
+        <h2>条件</h2>
+        <div class="field"><label for="profile">動かし方</label><select id="profile" class="lc-select"><option value="ease">ゆっくり</option><option value="step">全速で切り替え</option></select><span></span></div>
+        <div class="field"><label for="torque">トルクの上限</label><input id="torque" type="range" min="0" max="100" step="5" value="100"><output id="torqueOut" for="torque">100%</output></div>
+        <div class="field"><label for="mass">格子の重さ</label><input id="mass" type="range" min="0.5" max="4" step="0.25" value="1"><output id="massOut" for="mass">1.00×</output></div>
+        <p id="massNote" class="small"></p>
       </section>
-
+      <div id="metrics" class="metrics physics-only" aria-label="いまの値"></div>
+      <p id="status" class="small physics-only" role="status" aria-live="polite"></p>
+      <section class="physics-only"><h2>直前の動作</h2><div id="chartLift" class="chart"></div><div id="liftLegend" class="chart-legend"></div><div id="chartTau" class="chart"></div></section>
+      <section class="physics-only"><h2>重力を支えるのに要るトルク</h2><div id="chartHold" class="chart"></div><p id="holdText" class="small"></p></section>
+      <section class="physics-only"><h2>この計算の確かめ</h2><ul id="checks" class="checklist"></ul></section>
       <section class="assembly-only">
-        <h2>部品</h2>
-        <div id="partList" class="part-list"></div>
-        <h2>組み立て手順</h2>
-        <ol id="assemblySteps" class="steps"></ol>
+        <div id="stepnow" class="stepnow" aria-live="polite"><p><span id="stepNumber" class="n"></span> <span id="stepTitle"></span></p><p id="stepInstruction"></p><p id="stepResult" class="res"></p></div>
+        <ol id="steps" class="steps" aria-label="組み立て工程"></ol>
       </section>
-
-      <section>
-        <h2>検証結果</h2>
-        <div class="table-wrap"><table class="result-table"><thead><tr><th>項目</th><th>結果</th></tr></thead><tbody id="verifyRows"></tbody></table></div>
-        <p><a id="verifyDownload" class="download" href="#" download hidden>検証データをダウンロード</a></p>
-      </section>
-
-      <section>
-        <h2>印刷データ</h2>
-        <div class="table-wrap"><table class="result-table"><thead><tr><th>項目</th><th>結果</th></tr></thead><tbody id="deliveryRows"></tbody></table></div>
-        <ul id="printDownloads" class="steps"></ul>
-        <p><a id="dataDownload" class="download" href="#" download>表示データの詳細をダウンロード</a></p>
-      </section>
-
-      <p class="limits"><strong>確認範囲</strong><br>上向き面の卓上デモを想定しています。重力で戻る機構です。姿勢を変えた動作は対象外です。指で押した入力は検出しません。実機での動作と耐久性は未確認です。</p>
-      <div id="fatal" class="fatal" role="alert" hidden><p id="fatalMessage"></p><button id="retry" class="control" type="button">読み直す</button></div>
+      <section class="assembly-only"><h2>判定のまとめ</h2><div class="table-wrap"><table class="lc-table"><thead><tr><th>工程</th><th>検査</th><th>結果</th></tr></thead><tbody id="assemblyRows"></tbody></table></div><p id="assemblyCalibration" class="small"></p></section>
+      <section class="assembly-only"><h2>サーボの角度を決める</h2><p id="servoSetup"></p><p>付属ホーンの形と嵌まりは試片で確かめます。工程の逆順で分解します。実物の着脱力と保持力は未確認です。</p></section>
+      <section><h2>形状と動作の検証</h2><div class="table-wrap"><table class="lc-table"><thead><tr><th>項目</th><th>結果</th></tr></thead><tbody id="verifyRows"></tbody></table></div><p><a id="verifyDownload" href="#" download>検証データをダウンロード</a></p></section>
+      <details><summary>印刷データ</summary><div class="table-wrap"><table class="lc-table"><thead><tr><th>項目</th><th>結果</th></tr></thead><tbody id="deliveryRows"></tbody></table></div><ul id="printDownloads"></ul></details>
+      <div class="limits"><p>確認範囲</p><p id="limitsText">上向き面の卓上デモです。指で押した入力は検出しません。実物の動作と耐久性は未確認です。</p><p class="physics-only" id="simLimits"></p><p><a id="dataDownload" href="#" download>表示データの詳細</a></p></div>
     </aside>
   </main>
+  <div id="fatal" class="fatal" role="alert" hidden><p id="fatalMessage"></p><button id="retry" class="lc-btn" type="button">読み直す</button></div>
   <script type="module" src="lattice.mjs"></script>
 </body>
 </html>

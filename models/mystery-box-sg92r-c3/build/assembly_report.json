@@ -1,0 +1,3903 @@
+{
+  "model": "mystery-box-sg92r-c3",
+  "method": "display transforms and Blender Boolean EXACT are generated from the same column-major millimetre frames",
+  "calibration": {
+    "positiveCommonVolumeMm3": 0.5,
+    "negativeCommonVolumeMm3": 0.0,
+    "pass": true
+  },
+  "frameValidation": {
+    "pass": true,
+    "boundaryErrors": [],
+    "motionErrors": [],
+    "maxTranslationStepMm": 0.987961,
+    "maxRotationStepDeg": 1.000137
+  },
+  "steps": [
+    {
+      "id": "servo-at-90",
+      "pass": true,
+      "samples": 67,
+      "pairs": [
+        {
+          "parts": [
+            "drive_gear",
+            "ref_horn"
+          ],
+          "samples": 67,
+          "aabbZeroSamples": 0,
+          "exactSamples": 67,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "drive_gear",
+            "ref_servo"
+          ],
+          "samples": 67,
+          "aabbZeroSamples": 67,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "drive_gear",
+            "ref_wire"
+          ],
+          "samples": 67,
+          "aabbZeroSamples": 67,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "drive_gear",
+            "shell"
+          ],
+          "samples": 67,
+          "aabbZeroSamples": 0,
+          "exactSamples": 67,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "ref_horn",
+            "ref_servo"
+          ],
+          "samples": 67,
+          "aabbZeroSamples": 67,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "ref_horn",
+            "ref_wire"
+          ],
+          "samples": 67,
+          "aabbZeroSamples": 67,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "ref_horn",
+            "shell"
+          ],
+          "samples": 67,
+          "aabbZeroSamples": 0,
+          "exactSamples": 67,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "ref_servo",
+            "ref_wire"
+          ],
+          "samples": 67,
+          "aabbZeroSamples": 0,
+          "exactSamples": 67,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "ref_servo",
+            "shell"
+          ],
+          "samples": 67,
+          "aabbZeroSamples": 3,
+          "exactSamples": 64,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "ref_wire",
+            "shell"
+          ],
+          "samples": 67,
+          "aabbZeroSamples": 7,
+          "exactSamples": 60,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        }
+      ],
+      "maxCommonVolumeMm3": 0.0,
+      "allowedContacts": []
+    },
+    {
+      "id": "servo-clip",
+      "pass": true,
+      "samples": 22,
+      "pairs": [
+        {
+          "parts": [
+            "drive_gear",
+            "servo_clip"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "ref_horn",
+            "servo_clip"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "ref_servo",
+            "servo_clip"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 9,
+          "exactSamples": 13,
+          "maxCommonVolumeMm3": 9.600014,
+          "allowedSamples": 13,
+          "pass": true
+        },
+        {
+          "parts": [
+            "ref_wire",
+            "servo_clip"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "servo_clip",
+            "shell"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 0,
+          "exactSamples": 22,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        }
+      ],
+      "maxCommonVolumeMm3": 9.600014,
+      "allowedContacts": [
+        {
+          "parts": [
+            "servo_clip",
+            "ref_servo"
+          ],
+          "kind": "press_fit",
+          "deflectionMm": 0.1,
+          "strainPercent": 0.31250000000000006,
+          "samples": 13,
+          "maxCommonVolumeMm3": 9.6000137
+        }
+      ]
+    },
+    {
+      "id": "cams-at-90",
+      "pass": true,
+      "samples": 37,
+      "pairs": [
+        {
+          "parts": [
+            "cam_0",
+            "cam_1"
+          ],
+          "samples": 37,
+          "aabbZeroSamples": 37,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_0",
+            "cam_2"
+          ],
+          "samples": 37,
+          "aabbZeroSamples": 37,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_0",
+            "cam_3"
+          ],
+          "samples": 37,
+          "aabbZeroSamples": 37,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_0",
+            "cam_4"
+          ],
+          "samples": 37,
+          "aabbZeroSamples": 37,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_0",
+            "cam_gear"
+          ],
+          "samples": 37,
+          "aabbZeroSamples": 37,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_0",
+            "drive_gear"
+          ],
+          "samples": 37,
+          "aabbZeroSamples": 37,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_0",
+            "ref_horn"
+          ],
+          "samples": 37,
+          "aabbZeroSamples": 37,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_0",
+            "ref_servo"
+          ],
+          "samples": 37,
+          "aabbZeroSamples": 37,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_0",
+            "ref_wire"
+          ],
+          "samples": 37,
+          "aabbZeroSamples": 37,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_0",
+            "servo_clip"
+          ],
+          "samples": 37,
+          "aabbZeroSamples": 37,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_0",
+            "shell"
+          ],
+          "samples": 37,
+          "aabbZeroSamples": 3,
+          "exactSamples": 34,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_1",
+            "cam_2"
+          ],
+          "samples": 37,
+          "aabbZeroSamples": 37,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_1",
+            "cam_3"
+          ],
+          "samples": 37,
+          "aabbZeroSamples": 37,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_1",
+            "cam_4"
+          ],
+          "samples": 37,
+          "aabbZeroSamples": 37,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_1",
+            "cam_gear"
+          ],
+          "samples": 37,
+          "aabbZeroSamples": 37,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_1",
+            "drive_gear"
+          ],
+          "samples": 37,
+          "aabbZeroSamples": 37,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_1",
+            "ref_horn"
+          ],
+          "samples": 37,
+          "aabbZeroSamples": 37,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_1",
+            "ref_servo"
+          ],
+          "samples": 37,
+          "aabbZeroSamples": 37,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_1",
+            "ref_wire"
+          ],
+          "samples": 37,
+          "aabbZeroSamples": 37,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_1",
+            "servo_clip"
+          ],
+          "samples": 37,
+          "aabbZeroSamples": 37,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_1",
+            "shell"
+          ],
+          "samples": 37,
+          "aabbZeroSamples": 3,
+          "exactSamples": 34,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_2",
+            "cam_3"
+          ],
+          "samples": 37,
+          "aabbZeroSamples": 37,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_2",
+            "cam_4"
+          ],
+          "samples": 37,
+          "aabbZeroSamples": 37,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_2",
+            "cam_gear"
+          ],
+          "samples": 37,
+          "aabbZeroSamples": 37,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_2",
+            "drive_gear"
+          ],
+          "samples": 37,
+          "aabbZeroSamples": 37,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_2",
+            "ref_horn"
+          ],
+          "samples": 37,
+          "aabbZeroSamples": 37,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_2",
+            "ref_servo"
+          ],
+          "samples": 37,
+          "aabbZeroSamples": 37,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_2",
+            "ref_wire"
+          ],
+          "samples": 37,
+          "aabbZeroSamples": 37,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_2",
+            "servo_clip"
+          ],
+          "samples": 37,
+          "aabbZeroSamples": 37,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_2",
+            "shell"
+          ],
+          "samples": 37,
+          "aabbZeroSamples": 3,
+          "exactSamples": 34,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_3",
+            "cam_4"
+          ],
+          "samples": 37,
+          "aabbZeroSamples": 37,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_3",
+            "cam_gear"
+          ],
+          "samples": 37,
+          "aabbZeroSamples": 37,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_3",
+            "drive_gear"
+          ],
+          "samples": 37,
+          "aabbZeroSamples": 37,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_3",
+            "ref_horn"
+          ],
+          "samples": 37,
+          "aabbZeroSamples": 37,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_3",
+            "ref_servo"
+          ],
+          "samples": 37,
+          "aabbZeroSamples": 37,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_3",
+            "ref_wire"
+          ],
+          "samples": 37,
+          "aabbZeroSamples": 37,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_3",
+            "servo_clip"
+          ],
+          "samples": 37,
+          "aabbZeroSamples": 37,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_3",
+            "shell"
+          ],
+          "samples": 37,
+          "aabbZeroSamples": 3,
+          "exactSamples": 34,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_4",
+            "cam_gear"
+          ],
+          "samples": 37,
+          "aabbZeroSamples": 37,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_4",
+            "drive_gear"
+          ],
+          "samples": 37,
+          "aabbZeroSamples": 37,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_4",
+            "ref_horn"
+          ],
+          "samples": 37,
+          "aabbZeroSamples": 37,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_4",
+            "ref_servo"
+          ],
+          "samples": 37,
+          "aabbZeroSamples": 37,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_4",
+            "ref_wire"
+          ],
+          "samples": 37,
+          "aabbZeroSamples": 37,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_4",
+            "servo_clip"
+          ],
+          "samples": 37,
+          "aabbZeroSamples": 37,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_4",
+            "shell"
+          ],
+          "samples": 37,
+          "aabbZeroSamples": 3,
+          "exactSamples": 34,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_gear",
+            "drive_gear"
+          ],
+          "samples": 37,
+          "aabbZeroSamples": 37,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_gear",
+            "ref_horn"
+          ],
+          "samples": 37,
+          "aabbZeroSamples": 37,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_gear",
+            "ref_servo"
+          ],
+          "samples": 37,
+          "aabbZeroSamples": 37,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_gear",
+            "ref_wire"
+          ],
+          "samples": 37,
+          "aabbZeroSamples": 37,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_gear",
+            "servo_clip"
+          ],
+          "samples": 37,
+          "aabbZeroSamples": 37,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_gear",
+            "shell"
+          ],
+          "samples": 37,
+          "aabbZeroSamples": 0,
+          "exactSamples": 37,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        }
+      ],
+      "maxCommonVolumeMm3": 0.0,
+      "allowedContacts": []
+    },
+    {
+      "id": "camshaft-at-90",
+      "pass": true,
+      "samples": 84,
+      "pairs": [
+        {
+          "parts": [
+            "cam_0",
+            "camshaft"
+          ],
+          "samples": 84,
+          "aabbZeroSamples": 64,
+          "exactSamples": 20,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_1",
+            "camshaft"
+          ],
+          "samples": 84,
+          "aabbZeroSamples": 53,
+          "exactSamples": 31,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_2",
+            "camshaft"
+          ],
+          "samples": 84,
+          "aabbZeroSamples": 42,
+          "exactSamples": 42,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_3",
+            "camshaft"
+          ],
+          "samples": 84,
+          "aabbZeroSamples": 30,
+          "exactSamples": 54,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_4",
+            "camshaft"
+          ],
+          "samples": 84,
+          "aabbZeroSamples": 19,
+          "exactSamples": 65,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_gear",
+            "camshaft"
+          ],
+          "samples": 84,
+          "aabbZeroSamples": 36,
+          "exactSamples": 48,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "camshaft",
+            "drive_gear"
+          ],
+          "samples": 84,
+          "aabbZeroSamples": 84,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "camshaft",
+            "ref_horn"
+          ],
+          "samples": 84,
+          "aabbZeroSamples": 84,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "camshaft",
+            "ref_servo"
+          ],
+          "samples": 84,
+          "aabbZeroSamples": 84,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "camshaft",
+            "ref_wire"
+          ],
+          "samples": 84,
+          "aabbZeroSamples": 84,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "camshaft",
+            "servo_clip"
+          ],
+          "samples": 84,
+          "aabbZeroSamples": 84,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "camshaft",
+            "shell"
+          ],
+          "samples": 84,
+          "aabbZeroSamples": 3,
+          "exactSamples": 81,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        }
+      ],
+      "maxCommonVolumeMm3": 0.0,
+      "allowedContacts": []
+    },
+    {
+      "id": "right-cap",
+      "pass": true,
+      "samples": 10,
+      "pairs": [
+        {
+          "parts": [
+            "cam_0",
+            "cap_right"
+          ],
+          "samples": 10,
+          "aabbZeroSamples": 10,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_1",
+            "cap_right"
+          ],
+          "samples": 10,
+          "aabbZeroSamples": 10,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_2",
+            "cap_right"
+          ],
+          "samples": 10,
+          "aabbZeroSamples": 10,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_3",
+            "cap_right"
+          ],
+          "samples": 10,
+          "aabbZeroSamples": 10,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_4",
+            "cap_right"
+          ],
+          "samples": 10,
+          "aabbZeroSamples": 10,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_gear",
+            "cap_right"
+          ],
+          "samples": 10,
+          "aabbZeroSamples": 10,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "camshaft",
+            "cap_right"
+          ],
+          "samples": 10,
+          "aabbZeroSamples": 9,
+          "exactSamples": 1,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cap_right",
+            "drive_gear"
+          ],
+          "samples": 10,
+          "aabbZeroSamples": 10,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cap_right",
+            "ref_horn"
+          ],
+          "samples": 10,
+          "aabbZeroSamples": 10,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cap_right",
+            "ref_servo"
+          ],
+          "samples": 10,
+          "aabbZeroSamples": 10,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cap_right",
+            "ref_wire"
+          ],
+          "samples": 10,
+          "aabbZeroSamples": 10,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cap_right",
+            "servo_clip"
+          ],
+          "samples": 10,
+          "aabbZeroSamples": 10,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cap_right",
+            "shell"
+          ],
+          "samples": 10,
+          "aabbZeroSamples": 8,
+          "exactSamples": 2,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        }
+      ],
+      "maxCommonVolumeMm3": 0.0,
+      "allowedContacts": []
+    },
+    {
+      "id": "left-cap",
+      "pass": true,
+      "samples": 10,
+      "pairs": [
+        {
+          "parts": [
+            "cam_0",
+            "cap_left"
+          ],
+          "samples": 10,
+          "aabbZeroSamples": 10,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_1",
+            "cap_left"
+          ],
+          "samples": 10,
+          "aabbZeroSamples": 10,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_2",
+            "cap_left"
+          ],
+          "samples": 10,
+          "aabbZeroSamples": 10,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_3",
+            "cap_left"
+          ],
+          "samples": 10,
+          "aabbZeroSamples": 10,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_4",
+            "cap_left"
+          ],
+          "samples": 10,
+          "aabbZeroSamples": 10,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_gear",
+            "cap_left"
+          ],
+          "samples": 10,
+          "aabbZeroSamples": 10,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "camshaft",
+            "cap_left"
+          ],
+          "samples": 10,
+          "aabbZeroSamples": 9,
+          "exactSamples": 1,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cap_left",
+            "cap_right"
+          ],
+          "samples": 10,
+          "aabbZeroSamples": 10,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cap_left",
+            "drive_gear"
+          ],
+          "samples": 10,
+          "aabbZeroSamples": 10,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cap_left",
+            "ref_horn"
+          ],
+          "samples": 10,
+          "aabbZeroSamples": 10,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cap_left",
+            "ref_servo"
+          ],
+          "samples": 10,
+          "aabbZeroSamples": 10,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cap_left",
+            "ref_wire"
+          ],
+          "samples": 10,
+          "aabbZeroSamples": 10,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cap_left",
+            "servo_clip"
+          ],
+          "samples": 10,
+          "aabbZeroSamples": 10,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cap_left",
+            "shell"
+          ],
+          "samples": 10,
+          "aabbZeroSamples": 8,
+          "exactSamples": 2,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        }
+      ],
+      "maxCommonVolumeMm3": 0.0,
+      "allowedContacts": []
+    },
+    {
+      "id": "return-to-15",
+      "pass": true,
+      "samples": 76,
+      "pairs": [
+        {
+          "parts": [
+            "cam_0",
+            "cam_1"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_0",
+            "cam_2"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_0",
+            "cam_3"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_0",
+            "cam_4"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_0",
+            "cam_gear"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_0",
+            "camshaft"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 0,
+          "exactSamples": 76,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_0",
+            "cap_left"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_0",
+            "cap_right"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_0",
+            "drive_gear"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_0",
+            "ref_horn"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_0",
+            "ref_servo"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_0",
+            "ref_wire"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_0",
+            "servo_clip"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_0",
+            "shell"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 0,
+          "exactSamples": 76,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_1",
+            "cam_2"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_1",
+            "cam_3"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_1",
+            "cam_4"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_1",
+            "cam_gear"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_1",
+            "camshaft"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 0,
+          "exactSamples": 76,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_1",
+            "cap_left"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_1",
+            "cap_right"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_1",
+            "drive_gear"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_1",
+            "ref_horn"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_1",
+            "ref_servo"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_1",
+            "ref_wire"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_1",
+            "servo_clip"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_1",
+            "shell"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 0,
+          "exactSamples": 76,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_2",
+            "cam_3"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_2",
+            "cam_4"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_2",
+            "cam_gear"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_2",
+            "camshaft"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 0,
+          "exactSamples": 76,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_2",
+            "cap_left"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_2",
+            "cap_right"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_2",
+            "drive_gear"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_2",
+            "ref_horn"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_2",
+            "ref_servo"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_2",
+            "ref_wire"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_2",
+            "servo_clip"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_2",
+            "shell"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 0,
+          "exactSamples": 76,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_3",
+            "cam_4"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_3",
+            "cam_gear"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_3",
+            "camshaft"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 0,
+          "exactSamples": 76,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_3",
+            "cap_left"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_3",
+            "cap_right"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_3",
+            "drive_gear"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_3",
+            "ref_horn"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_3",
+            "ref_servo"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_3",
+            "ref_wire"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_3",
+            "servo_clip"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_3",
+            "shell"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 0,
+          "exactSamples": 76,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_4",
+            "cam_gear"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_4",
+            "camshaft"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 0,
+          "exactSamples": 76,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_4",
+            "cap_left"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_4",
+            "cap_right"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_4",
+            "drive_gear"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_4",
+            "ref_horn"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_4",
+            "ref_servo"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_4",
+            "ref_wire"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_4",
+            "servo_clip"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_4",
+            "shell"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 0,
+          "exactSamples": 76,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_gear",
+            "camshaft"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 0,
+          "exactSamples": 76,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_gear",
+            "cap_left"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_gear",
+            "cap_right"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_gear",
+            "drive_gear"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_gear",
+            "ref_horn"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_gear",
+            "ref_servo"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_gear",
+            "ref_wire"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_gear",
+            "servo_clip"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_gear",
+            "shell"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 0,
+          "exactSamples": 76,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "camshaft",
+            "cap_left"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 0,
+          "exactSamples": 76,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "camshaft",
+            "cap_right"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 0,
+          "exactSamples": 76,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "camshaft",
+            "drive_gear"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "camshaft",
+            "ref_horn"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "camshaft",
+            "ref_servo"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "camshaft",
+            "ref_wire"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "camshaft",
+            "servo_clip"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "camshaft",
+            "shell"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 0,
+          "exactSamples": 76,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cap_left",
+            "drive_gear"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cap_left",
+            "ref_horn"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cap_right",
+            "drive_gear"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cap_right",
+            "ref_horn"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "drive_gear",
+            "ref_horn"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 0,
+          "exactSamples": 76,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "drive_gear",
+            "ref_servo"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "drive_gear",
+            "ref_wire"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "drive_gear",
+            "servo_clip"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "drive_gear",
+            "shell"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 0,
+          "exactSamples": 76,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "ref_horn",
+            "ref_servo"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "ref_horn",
+            "ref_wire"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "ref_horn",
+            "servo_clip"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 76,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "ref_horn",
+            "shell"
+          ],
+          "samples": 76,
+          "aabbZeroSamples": 0,
+          "exactSamples": 76,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        }
+      ],
+      "maxCommonVolumeMm3": 0.0,
+      "allowedContacts": []
+    },
+    {
+      "id": "carrier-1",
+      "pass": true,
+      "samples": 14,
+      "pairs": [
+        {
+          "parts": [
+            "cam_0",
+            "carrier_0"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 8,
+          "exactSamples": 6,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_1",
+            "carrier_0"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_2",
+            "carrier_0"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_3",
+            "carrier_0"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_4",
+            "carrier_0"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_gear",
+            "carrier_0"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "camshaft",
+            "carrier_0"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 11,
+          "exactSamples": 3,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cap_left",
+            "carrier_0"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cap_right",
+            "carrier_0"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_0",
+            "drive_gear"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_0",
+            "ref_horn"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_0",
+            "ref_servo"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_0",
+            "ref_wire"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_0",
+            "servo_clip"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_0",
+            "shell"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 0,
+          "exactSamples": 14,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        }
+      ],
+      "maxCommonVolumeMm3": 0.0,
+      "allowedContacts": []
+    },
+    {
+      "id": "carrier-2",
+      "pass": true,
+      "samples": 14,
+      "pairs": [
+        {
+          "parts": [
+            "cam_0",
+            "carrier_1"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_1",
+            "carrier_1"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 8,
+          "exactSamples": 6,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_2",
+            "carrier_1"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_3",
+            "carrier_1"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_4",
+            "carrier_1"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_gear",
+            "carrier_1"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "camshaft",
+            "carrier_1"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 11,
+          "exactSamples": 3,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cap_left",
+            "carrier_1"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cap_right",
+            "carrier_1"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_0",
+            "carrier_1"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_1",
+            "drive_gear"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_1",
+            "ref_horn"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_1",
+            "ref_servo"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_1",
+            "ref_wire"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_1",
+            "servo_clip"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_1",
+            "shell"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 0,
+          "exactSamples": 14,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        }
+      ],
+      "maxCommonVolumeMm3": 0.0,
+      "allowedContacts": []
+    },
+    {
+      "id": "carrier-3",
+      "pass": true,
+      "samples": 14,
+      "pairs": [
+        {
+          "parts": [
+            "cam_0",
+            "carrier_2"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_1",
+            "carrier_2"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_2",
+            "carrier_2"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 5,
+          "exactSamples": 9,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_3",
+            "carrier_2"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_4",
+            "carrier_2"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_gear",
+            "carrier_2"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 0,
+          "exactSamples": 14,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "camshaft",
+            "carrier_2"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 11,
+          "exactSamples": 3,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cap_left",
+            "carrier_2"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cap_right",
+            "carrier_2"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_0",
+            "carrier_2"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_1",
+            "carrier_2"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_2",
+            "drive_gear"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_2",
+            "ref_horn"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_2",
+            "ref_servo"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_2",
+            "ref_wire"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_2",
+            "servo_clip"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_2",
+            "shell"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 0,
+          "exactSamples": 14,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        }
+      ],
+      "maxCommonVolumeMm3": 0.0,
+      "allowedContacts": []
+    },
+    {
+      "id": "carrier-4",
+      "pass": true,
+      "samples": 14,
+      "pairs": [
+        {
+          "parts": [
+            "cam_0",
+            "carrier_3"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_1",
+            "carrier_3"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_2",
+            "carrier_3"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_3",
+            "carrier_3"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 8,
+          "exactSamples": 6,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_4",
+            "carrier_3"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_gear",
+            "carrier_3"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 0,
+          "exactSamples": 14,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "camshaft",
+            "carrier_3"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 11,
+          "exactSamples": 3,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cap_left",
+            "carrier_3"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cap_right",
+            "carrier_3"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_0",
+            "carrier_3"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_1",
+            "carrier_3"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_2",
+            "carrier_3"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_3",
+            "drive_gear"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_3",
+            "ref_horn"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_3",
+            "ref_servo"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_3",
+            "ref_wire"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_3",
+            "servo_clip"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_3",
+            "shell"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 0,
+          "exactSamples": 14,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        }
+      ],
+      "maxCommonVolumeMm3": 0.0,
+      "allowedContacts": []
+    },
+    {
+      "id": "carrier-5",
+      "pass": true,
+      "samples": 14,
+      "pairs": [
+        {
+          "parts": [
+            "cam_0",
+            "carrier_4"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_1",
+            "carrier_4"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_2",
+            "carrier_4"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_3",
+            "carrier_4"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_4",
+            "carrier_4"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 8,
+          "exactSamples": 6,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_gear",
+            "carrier_4"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "camshaft",
+            "carrier_4"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 11,
+          "exactSamples": 3,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cap_left",
+            "carrier_4"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cap_right",
+            "carrier_4"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_0",
+            "carrier_4"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_1",
+            "carrier_4"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_2",
+            "carrier_4"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_3",
+            "carrier_4"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_4",
+            "drive_gear"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_4",
+            "ref_horn"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_4",
+            "ref_servo"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_4",
+            "ref_wire"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_4",
+            "servo_clip"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_4",
+            "shell"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 0,
+          "exactSamples": 14,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        }
+      ],
+      "maxCommonVolumeMm3": 0.0,
+      "allowedContacts": []
+    },
+    {
+      "id": "top-frame",
+      "pass": true,
+      "samples": 14,
+      "pairs": [
+        {
+          "parts": [
+            "cam_0",
+            "top_frame"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_1",
+            "top_frame"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_2",
+            "top_frame"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_3",
+            "top_frame"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_4",
+            "top_frame"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_gear",
+            "top_frame"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "camshaft",
+            "top_frame"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cap_left",
+            "top_frame"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cap_right",
+            "top_frame"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_0",
+            "top_frame"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 8,
+          "exactSamples": 6,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_1",
+            "top_frame"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 8,
+          "exactSamples": 6,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_2",
+            "top_frame"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 8,
+          "exactSamples": 6,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_3",
+            "top_frame"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 8,
+          "exactSamples": 6,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_4",
+            "top_frame"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 8,
+          "exactSamples": 6,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "drive_gear",
+            "top_frame"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "ref_horn",
+            "top_frame"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "ref_servo",
+            "top_frame"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "ref_wire",
+            "top_frame"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "servo_clip",
+            "top_frame"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "shell",
+            "top_frame"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 8,
+          "exactSamples": 6,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        }
+      ],
+      "maxCommonVolumeMm3": 0.0,
+      "allowedContacts": []
+    }
+  ],
+  "violations": [],
+  "finalState": {
+    "pass": true,
+    "expectedParts": [
+      "shell",
+      "top_frame",
+      "carrier_0",
+      "carrier_1",
+      "carrier_2",
+      "carrier_3",
+      "carrier_4",
+      "camshaft",
+      "cam_0",
+      "cam_1",
+      "cam_2",
+      "cam_3",
+      "cam_4",
+      "cam_gear",
+      "drive_gear",
+      "cap_left",
+      "cap_right",
+      "servo_clip",
+      "ref_servo",
+      "ref_horn",
+      "ref_wire"
+    ],
+    "missing": [],
+    "extra": [],
+    "nonIdentityTransforms": []
+  },
+  "reverseDisassembly": {
+    "pass": true,
+    "method": "same inspected frames replayed in reverse order",
+    "steps": [
+      {
+        "id": "top-frame",
+        "samples": 14,
+        "pass": true
+      },
+      {
+        "id": "carrier-5",
+        "samples": 14,
+        "pass": true
+      },
+      {
+        "id": "carrier-4",
+        "samples": 14,
+        "pass": true
+      },
+      {
+        "id": "carrier-3",
+        "samples": 14,
+        "pass": true
+      },
+      {
+        "id": "carrier-2",
+        "samples": 14,
+        "pass": true
+      },
+      {
+        "id": "carrier-1",
+        "samples": 14,
+        "pass": true
+      },
+      {
+        "id": "return-to-15",
+        "samples": 76,
+        "pass": true
+      },
+      {
+        "id": "left-cap",
+        "samples": 10,
+        "pass": true
+      },
+      {
+        "id": "right-cap",
+        "samples": 10,
+        "pass": true
+      },
+      {
+        "id": "camshaft-at-90",
+        "samples": 84,
+        "pass": true
+      },
+      {
+        "id": "cams-at-90",
+        "samples": 37,
+        "pass": true
+      },
+      {
+        "id": "servo-clip",
+        "samples": 22,
+        "pass": true
+      },
+      {
+        "id": "servo-at-90",
+        "samples": 67,
+        "pass": true
+      }
+    ]
+  },
+  "sourceIntegrity": {
+    "pass": true,
+    "start": {
+      "shell": "230e95570e71da845c57ea0af4a3a73ae1071421f2a2de29965bb4605b7733f5",
+      "top_frame": "21cf70d141d8a5c26d94692b0694600a99df343a7fd5e8059c22b5995e635965",
+      "carrier_0": "d3dc2e0c18e7317823a4c3620873b345c7182c5ecf47fbc0b47e36b479d7f538",
+      "carrier_1": "937d667bd44479df869a6cf3a3a4ef29659b35149aee1fdab2ab4261c7be9e7f",
+      "carrier_2": "9c7ab191b108eb34c1c7f0d28d5ff2d2b0955dbf198210c10d02297dc3e163f5",
+      "carrier_3": "cd10c4d9d76032fd3a04ea00d51bcded341643517850f6209e63ea1e570a79b6",
+      "carrier_4": "1762d2aefe1208814aae67a238e871a9987f303a115391f5446a6a71503003bc",
+      "camshaft": "28856eac092f76ff240f073621099471e4ceb9c39c211965546c4e7afd99e148",
+      "cam_0": "1ae2048ced9b1c84240952ae9bcd3dc3f954e86a6b00d0e2b8e9d1ba5a952df4",
+      "cam_1": "c217d02dbc58b3e96a61f320762f2755d380a437d06f9f4c93b42e2fef3740d3",
+      "cam_2": "efa8437a72b8757721d70f24be810e0480860b49d48d904ad66c5f80acf44b65",
+      "cam_3": "8362d0e65e454f75c1bbe9400c3b808fd2d1a3855402bfecca64ab4278d85221",
+      "cam_4": "8d6691840b4b30e9aa8019268b8f4d2d638f83e7d24070d5308a5b721a3831c9",
+      "cam_gear": "fd340a486fd5bca772ae3c771efccd048fda70f8774a1b07a5e555589675a958",
+      "drive_gear": "c14266abc59aeb618fa9cb20825e66c42271115709437e3b9d44447000a917a5",
+      "cap_left": "fa4d6c41a82a73b822b85e70d2f1bfbc5af041947f900742983b5e15e8060dfc",
+      "cap_right": "54b4047f195978c3e60e9c7dcccf2de9827db05696fd5eaa6d5b5b88b56dd3f1",
+      "servo_clip": "769364c10b75a697faf03c5a876fff15cc33247f5bd2edae517b98b7ceeb7a61",
+      "ref_servo": "a2023254ebc1fb1725d7dcf56bdf0c162519124cdf4000a34cf22cf23d4ddc37",
+      "ref_horn": "82e9eb138d944078b1932b4f7e2066df4d2ff76647a2926ce9db1f24ea97c69b",
+      "ref_wire": "cf637b63ec9f07c9ddab48a65b7aeb016328d9ef50ab124f22024a32be52d7c0"
+    },
+    "end": {
+      "shell": "230e95570e71da845c57ea0af4a3a73ae1071421f2a2de29965bb4605b7733f5",
+      "top_frame": "21cf70d141d8a5c26d94692b0694600a99df343a7fd5e8059c22b5995e635965",
+      "carrier_0": "d3dc2e0c18e7317823a4c3620873b345c7182c5ecf47fbc0b47e36b479d7f538",
+      "carrier_1": "937d667bd44479df869a6cf3a3a4ef29659b35149aee1fdab2ab4261c7be9e7f",
+      "carrier_2": "9c7ab191b108eb34c1c7f0d28d5ff2d2b0955dbf198210c10d02297dc3e163f5",
+      "carrier_3": "cd10c4d9d76032fd3a04ea00d51bcded341643517850f6209e63ea1e570a79b6",
+      "carrier_4": "1762d2aefe1208814aae67a238e871a9987f303a115391f5446a6a71503003bc",
+      "camshaft": "28856eac092f76ff240f073621099471e4ceb9c39c211965546c4e7afd99e148",
+      "cam_0": "1ae2048ced9b1c84240952ae9bcd3dc3f954e86a6b00d0e2b8e9d1ba5a952df4",
+      "cam_1": "c217d02dbc58b3e96a61f320762f2755d380a437d06f9f4c93b42e2fef3740d3",
+      "cam_2": "efa8437a72b8757721d70f24be810e0480860b49d48d904ad66c5f80acf44b65",
+      "cam_3": "8362d0e65e454f75c1bbe9400c3b808fd2d1a3855402bfecca64ab4278d85221",
+      "cam_4": "8d6691840b4b30e9aa8019268b8f4d2d638f83e7d24070d5308a5b721a3831c9",
+      "cam_gear": "fd340a486fd5bca772ae3c771efccd048fda70f8774a1b07a5e555589675a958",
+      "drive_gear": "c14266abc59aeb618fa9cb20825e66c42271115709437e3b9d44447000a917a5",
+      "cap_left": "fa4d6c41a82a73b822b85e70d2f1bfbc5af041947f900742983b5e15e8060dfc",
+      "cap_right": "54b4047f195978c3e60e9c7dcccf2de9827db05696fd5eaa6d5b5b88b56dd3f1",
+      "servo_clip": "769364c10b75a697faf03c5a876fff15cc33247f5bd2edae517b98b7ceeb7a61",
+      "ref_servo": "a2023254ebc1fb1725d7dcf56bdf0c162519124cdf4000a34cf22cf23d4ddc37",
+      "ref_horn": "82e9eb138d944078b1932b4f7e2066df4d2ff76647a2926ce9db1f24ea97c69b",
+      "ref_wire": "cf637b63ec9f07c9ddab48a65b7aeb016328d9ef50ab124f22024a32be52d7c0"
+    }
+  },
+  "limitations": [
+    "SG92Rホーンの実物装着と電源操作は未検証。",
+    "圧入、スナップ、材料収縮、摩擦は実物未検証。",
+    "離散経路は並進1mm以下、回転5度以下。フレーム間の連続空間全体は解析していない。"
+  ],
+  "pass": true
+}

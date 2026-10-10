@@ -1,5 +1,7 @@
 import { createWorkspaceNav, themePalette, watchTheme } from '../shared/workspace.mjs';
-import { frameAt, identity4, quintic } from './motion.mjs';
+import { frameAt, identity4 } from './motion.mjs';
+import { setupPhysics } from './physics-ui.mjs';
+import { setupAssembly } from './assembly-ui.mjs';
 
 const $ = id => document.getElementById(id);
 const params = new URLSearchParams(location.search);
@@ -14,20 +16,39 @@ const profile = model.endsWith('-c4')
 document.body.dataset.mode = mode;
 const nav = createWorkspaceNav({ active: mode, model });
 $('workspaceNav').replaceWith(nav.element);
-for (const [id, target] of [['c3Link', 'mystery-box-sg92r-c3'], ['c4Link', 'mystery-box-sg92r-c4']]) {
-  const link = $(id);
-  const url = new URL(location.href);
-  url.searchParams.set('model', target);
-  url.searchParams.set('mode', mode);
-  link.href = url.pathname + url.search;
-  if (target === model) link.setAttribute('aria-current', 'page');
+function updateModelLinks() {
+  for (const [id, target] of [['c3Link', 'mystery-box-sg92r-c3'], ['c4Link', 'mystery-box-sg92r-c4']]) {
+    const link = $(id);
+    const url = new URL(location.href);
+    url.searchParams.set('model', target);
+    url.searchParams.set('mode', mode);
+    link.href = url.pathname + url.search;
+    if (target === model) link.setAttribute('aria-current', 'page');
+  }
 }
+updateModelLinks();
+const disposeModelTheme = watchTheme(updateModelLinks);
+addEventListener('pagehide', () => disposeModelTheme(), { once: true });
 $('dataDownload').href = assetUrl;
 $('dataDownload').download = `${model}.json`;
 
 const EXTERIOR_WORDS = /(?:box|body|bottom|shell|facade|wall|case|housing|enclosure|roof|frame|base)/i;
 const DEFAULT_COLORS = ['#0072b2', '#e69f00', '#009e73', '#cc79a7', '#d55e00', '#56b4e9', '#f0e442'];
 const clamp = (value, low, high) => Math.max(low, Math.min(high, value));
+
+function technicalColor(id, original) {
+  const column = id.match(/^(?:carrier|cam)_(\d)$/);
+  if (column) return [DEFAULT_COLORS[0], DEFAULT_COLORS[1], DEFAULT_COLORS[2], DEFAULT_COLORS[3], DEFAULT_COLORS[4]][Number(column[1])];
+  for (const [suffix, color] of [['center', DEFAULT_COLORS[0]], ['inner', DEFAULT_COLORS[1]], ['outer', DEFAULT_COLORS[2]]]) {
+    if (id === `carrier_${suffix}` || id === `cam_${suffix}`) return color;
+  }
+  if (/servo_clip/.test(id)) return DEFAULT_COLORS[3];
+  if (/wire/.test(id)) return DEFAULT_COLORS[4];
+  if (/^(ref_servo|servo_body)$/.test(id)) return DEFAULT_COLORS[0];
+  if (/gear/.test(id)) return DEFAULT_COLORS[1];
+  if (/^(camshaft|horn_coupler|ref_horn|servo_horn)$/.test(id)) return '#4d4d4d';
+  return original || '#bdb4a6';
+}
 
 function rgb(value) {
   const match = String(value || '').trim().match(/^#([0-9a-f]{6})$/i);
@@ -104,14 +125,15 @@ function createRenderer(canvas, data, state) {
     out vec3 vNormal; out vec3 vPosition;
     void main() { vec4 world = model * vec4(position, 1.0); vPosition = world.xyz; vNormal = mat3(model) * normal; gl_Position = mvp * vec4(position, 1.0); }`));
   gl.attachShader(program, createShader(gl, gl.FRAGMENT_SHADER, `#version 300 es
-    precision highp float; in vec3 vNormal; in vec3 vPosition; uniform vec3 color; out vec4 outColor;
-    void main() { vec3 n = normalize(vNormal); float diffuse = 0.35 + 0.65 * abs(dot(n, normalize(vec3(0.35, -0.45, 0.82))));
+    precision highp float; in vec3 vNormal; in vec3 vPosition; uniform vec3 color; uniform bool cut; out vec4 outColor;
+    void main() { if (cut && vPosition.x > 0.0) discard;
+      vec3 n = normalize(vNormal); float diffuse = 0.35 + 0.65 * abs(dot(n, normalize(vec3(0.35, -0.45, 0.82))));
       float rim = pow(1.0 - abs(n.z), 3.0) * 0.12; outColor = vec4(color * diffuse + rim, 1.0); }`));
   gl.linkProgram(program);
   if (!gl.getProgramParameter(program, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(program));
   gl.useProgram(program);
   const positionLoc = gl.getAttribLocation(program, 'position'), normalLoc = gl.getAttribLocation(program, 'normal');
-  const mvpLoc = gl.getUniformLocation(program, 'mvp'), modelLoc = gl.getUniformLocation(program, 'model'), colorLoc = gl.getUniformLocation(program, 'color');
+  const mvpLoc = gl.getUniformLocation(program, 'mvp'), modelLoc = gl.getUniformLocation(program, 'model'), colorLoc = gl.getUniformLocation(program, 'color'), cutLoc = gl.getUniformLocation(program, 'cut');
   const exteriorIds = new Set(data.meta?.exterior_parts || []);
   const meshes = data.parts.map((part, partIndex) => {
     // STLの面ごとに頂点を分ける。隣り合う面の法線を平均せず幾何学の稜線を残す。
@@ -129,78 +151,100 @@ function createRenderer(canvas, data, state) {
     const indices = gl.createBuffer(); gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indices); gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, triangles, gl.STATIC_DRAW);
     const exterior = part.exterior ?? (exteriorIds.size ? exteriorIds.has(part.id) : !/^(servo|ref)_/.test(part.id) && EXTERIOR_WORDS.test(part.id));
     return { ...part, vertices, vao, bounds: meshBounds(sourceVertices), count: triangles.length, exterior,
-      color: rgb(part.color || (exterior ? '#d8d2c8' : DEFAULT_COLORS[partIndex % DEFAULT_COLORS.length])) };
+      color: rgb(technicalColor(part.id, part.color)) };
   });
   const bounds = data.parts.flatMap(part => part.mesh?.vertices || []).reduce((box, value, index) => {
     const axis = index % 3; box.min[axis] = Math.min(box.min[axis], value); box.max[axis] = Math.max(box.max[axis], value); return box;
   }, { min: [Infinity, Infinity, Infinity], max: [-Infinity, -Infinity, -Infinity] });
   const center = bounds.min.map((value, index) => (value + bounds.max[index]) / 2);
   const radius = Math.max(20, ...bounds.max.map((value, index) => value - bounds.min[index]));
-  const camera = { yaw: -0.65, pitch: 0.52, zoom: 2.4 };
+  const camera = { yaw: 0.65, pitch: 0.52, zoom: 2.4 };
   let frameCount = 0;
 
   function draw() {
     const ratio = Math.min(devicePixelRatio || 1, 2), width = Math.max(1, Math.floor(canvas.clientWidth * ratio)), height = Math.max(1, Math.floor(canvas.clientHeight * ratio));
     if (canvas.width !== width || canvas.height !== height) { canvas.width = width; canvas.height = height; }
     gl.viewport(0, 0, width, height);
-    const palette = themePalette(), clear = rgb(palette.card || '#ece4d4');
+    const palette = themePalette(), clear = rgb(palette.paper || '#f5f0e1');
     gl.clearColor(clear[0], clear[1], clear[2], 1); gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-    gl.enable(gl.DEPTH_TEST); gl.enable(gl.CULL_FACE); gl.cullFace(gl.BACK);
-    const pose = frameAt(data.motion?.frames || [], state.servoDeg);
-    let liveCenter = center, liveRadius = radius;
-    if (state.explode > 0) {
-      const points = [];
-      for (const mesh of meshes) {
-        const matrix = pose.transforms?.[mesh.id] || identity4(), spread = mesh.explode || [0, 0, 0];
-        for (let corner = 0; corner < 8; corner += 1) {
-          const p = [0, 1, 2].map(k => mesh.bounds[corner & (1 << k) ? 'max' : 'min'][k]);
-          for (let k = 0; k < 3; k += 1) points.push(matrix[k] * p[0] + matrix[4 + k] * p[1] + matrix[8 + k] * p[2] + matrix[12 + k] + (Number(spread[k]) || 0) * state.explode);
-        }
-      }
-      const expanded = meshBounds(points);
-      liveCenter = expanded.min.map((n, k) => (n + expanded.max[k]) / 2);
-      liveRadius = Math.max(20, ...expanded.max.map((n, k) => n - expanded.min[k]));
-    }
-    const distance = liveRadius * camera.zoom;
+    gl.enable(gl.DEPTH_TEST); gl.disable(gl.CULL_FACE);
+    const pose = state.transforms ? { transforms: state.transforms } : frameAt(data.motion?.frames || [], state.servoDeg);
+    const fitting = state.cameraBounds;
+    const liveCenter = fitting ? fitting.min.map((n, k) => (n + fitting.max[k]) / 2) : center;
+    const liveRadius = fitting ? Math.max(20, ...fitting.max.map((n, k) => n - fitting.min[k])) : radius;
+    const distance = liveRadius * camera.zoom / Math.min(1, width / height);
     const eye = [liveCenter[0] + distance * Math.cos(camera.pitch) * Math.sin(camera.yaw), liveCenter[1] - distance * Math.cos(camera.pitch) * Math.cos(camera.yaw), liveCenter[2] + distance * Math.sin(camera.pitch)];
     const viewProjection = mul(perspective(Math.PI / 4, width / height, Math.max(0.1, liveRadius / 100), liveRadius * 20), lookAt(eye, liveCenter, [0, 0, 1]));
-    const visible = [];
+    const visible = [], matrices = {}, projected = { min: [Infinity, Infinity], max: [-Infinity, -Infinity] };
     for (const mesh of meshes) {
-      if (state.hidden.has(mesh.id) || (state.removeExterior && mesh.exterior)) continue;
+      if (state.hidden.has(mesh.id) || (state.present && !state.present.has(mesh.id)) || (state.removeExterior && mesh.exterior)) continue;
       const modelMatrix = new Float32Array(pose.transforms?.[mesh.id] || identity4());
-      const explode = mesh.explode || [0, 0, 0];
-      for (let axis = 0; axis < 3; axis += 1) modelMatrix[12 + axis] += (Number(explode[axis]) || 0) * state.explode;
-      gl.uniformMatrix4fv(modelLoc, false, modelMatrix); gl.uniformMatrix4fv(mvpLoc, false, mul(viewProjection, modelMatrix)); gl.uniform3fv(colorLoc, mesh.color);
+      const mvp = mul(viewProjection, modelMatrix);
+      gl.uniformMatrix4fv(modelLoc, false, modelMatrix); gl.uniformMatrix4fv(mvpLoc, false, mvp); gl.uniform3fv(colorLoc, mesh.color);
+      gl.uniform1i(cutLoc, state.cut && mesh.exterior ? 1 : 0);
       gl.bindVertexArray(mesh.vao); gl.drawElements(gl.TRIANGLES, mesh.count, gl.UNSIGNED_INT, 0); visible.push(mesh.id);
+      matrices[mesh.id] = Array.from(modelMatrix);
+      for (let corner = 0; corner < 8; corner++) {
+        const p = [0, 1, 2].map(k => mesh.bounds[corner & (1 << k) ? 'max' : 'min'][k]);
+        const w = mvp[3]*p[0] + mvp[7]*p[1] + mvp[11]*p[2] + mvp[15];
+        for (let k = 0; k < 2; k++) {
+          const v = (mvp[k]*p[0] + mvp[4+k]*p[1] + mvp[8+k]*p[2] + mvp[12+k]) / w;
+          projected.min[k] = Math.min(projected.min[k], v); projected.max[k] = Math.max(projected.max[k], v);
+        }
+      }
     }
     frameCount += 1;
     canvas.dataset.frameCount = String(frameCount);
     canvas.dataset.currentAngle = state.servoDeg.toFixed(2);
     canvas.dataset.servoDeg = state.servoDeg.toFixed(2);
     canvas.dataset.visibleParts = visible.join(',');
+    canvas.dataset.renderedMatrices = JSON.stringify(matrices);
+    canvas.dataset.projectedBounds = JSON.stringify(projected);
   }
 
   function setCamera(name) {
     if (name === 'front') Object.assign(camera, { yaw: 0, pitch: 0.08, zoom: 2.4 });
     else if (name === 'top') Object.assign(camera, { yaw: 0, pitch: 1.48, zoom: 2.5 });
-    else Object.assign(camera, { yaw: -0.65, pitch: 0.52, zoom: 2.4 });
+    else Object.assign(camera, { yaw: 0.65, pitch: 0.52, zoom: 2.4 });
     draw();
   }
-  let drag = null;
-  canvas.addEventListener('pointerdown', event => { drag = [event.clientX, event.clientY]; canvas.setPointerCapture(event.pointerId); });
+  const pointers = new Map(); let pinch = 0;
+  canvas.addEventListener('pointerdown', event => { pointers.set(event.pointerId, [event.clientX, event.clientY]); canvas.setPointerCapture(event.pointerId); });
   canvas.addEventListener('pointermove', event => {
-    if (!drag) return;
-    camera.yaw += (event.clientX - drag[0]) * 0.01;
-    camera.pitch = clamp(camera.pitch + (event.clientY - drag[1]) * 0.01, -1.45, 1.5);
-    drag = [event.clientX, event.clientY]; draw();
+    if (!pointers.has(event.pointerId)) return;
+    const previous = pointers.get(event.pointerId);
+    pointers.set(event.pointerId, [event.clientX, event.clientY]);
+    if (pointers.size === 1) {
+      camera.yaw += (event.clientX - previous[0]) * 0.01;
+      camera.pitch = clamp(camera.pitch + (event.clientY - previous[1]) * 0.01, -1.45, 1.5);
+    } else if (pointers.size === 2) {
+      const [a, b] = [...pointers.values()], distance = Math.hypot(a[0] - b[0], a[1] - b[1]);
+      if (pinch && distance) camera.zoom = clamp(camera.zoom * pinch / distance, 1.2, 7);
+      pinch = distance;
+    }
+    draw();
   });
-  canvas.addEventListener('pointerup', () => { drag = null; });
-  canvas.addEventListener('pointercancel', () => { drag = null; });
+  const release = event => { pointers.delete(event.pointerId); pinch = 0; };
+  canvas.addEventListener('pointerup', release);
+  canvas.addEventListener('pointercancel', release);
   canvas.addEventListener('wheel', event => { event.preventDefault(); camera.zoom = clamp(camera.zoom * Math.exp(event.deltaY * 0.001), 1.2, 7); draw(); }, { passive: false });
   const disposeTheme = watchTheme(draw);
   addEventListener('resize', draw);
   addEventListener('pagehide', event => { if (!event.persisted) disposeTheme(); });
-  return { draw, setCamera, meshes };
+  function fit(frames) {
+    const points = [];
+    for (const frame of frames) for (const mesh of meshes) {
+      if (!Object.hasOwn(frame.transforms, mesh.id)) continue;
+      const matrix = frame.transforms[mesh.id];
+      for (let corner = 0; corner < 8; corner++) {
+        const p = [0, 1, 2].map(k => mesh.bounds[corner & (1 << k) ? 'max' : 'min'][k]);
+        for (let k = 0; k < 3; k++) points.push(matrix[k] * p[0] + matrix[4 + k] * p[1] + matrix[8 + k] * p[2] + matrix[12 + k]);
+      }
+    }
+    state.cameraBounds = points.length ? meshBounds(points) : null;
+    draw();
+  }
+  return { draw, setCamera, meshes, fit };
 }
 
 function textValue(value) {
@@ -238,7 +282,7 @@ function reportRows(target, report, emptyMessage) {
   }
 }
 
-function verificationSummary(report) {
+function verificationSummary(report, assembly) {
   if (!report) return null;
   const rows = [];
   rows.push(['計算上の判定', (report.ok ?? report.pass) === true ? '記録した検査は適合' : '要確認']);
@@ -257,7 +301,9 @@ function verificationSummary(report) {
   const torqueRatio = report.torque?.stall_ratio ?? report.physics?.stall_fraction;
   if (torque !== undefined) rows.push(['必要トルクの推定', `${torque} N·m`]);
   if (torqueRatio !== undefined) rows.push(['公称停動トルクに対する比', `${(torqueRatio * 100).toFixed(2)} %`]);
-  if (report.assembly) rows.push(['組み立て', (report.assembly.ok ?? report.assembly.pass) === true ? '記録した経路を確認' : '実物での確認が必要']);
+  if (assembly) rows.push(['組み立て', assembly.pass === true
+    ? `${assembly.steps.length}工程の表示経路と逆順の分解を確認`
+    : '表示経路に要確認箇所あり']);
   rows.push(['実物の動作', '未確認']);
   return rows;
 }
@@ -291,100 +337,60 @@ function dimensionText(meta) {
 }
 
 async function start() {
-  $('fatal').hidden = true; $('loading').hidden = false; $('loading').textContent = '形を読み込んでいます…';
+  $('fatal').hidden = true; $('loading').textContent = '形を読み込んでいます…';
   try {
     const response = await fetch(assetUrl, { cache: 'no-store' });
-    if (!response.ok) throw new Error(`${assetUrl}を読めません（${response.status}）`);
+    if (!response.ok) throw new Error(`表示データを読めません（${response.status}）`);
     const data = await response.json();
     if (!Array.isArray(data.parts) || !data.parts.length) throw new Error('表示できる部品がありません');
-    const frames = [...(data.motion?.frames || [])].sort((a, b) => a.servo_deg - b.servo_deg);
-    data.motion = { ...(data.motion || {}), frames };
-    const minimum = frames[0]?.servo_deg ?? 0, maximum = frames.at(-1)?.servo_deg ?? 180;
-    const home = clamp(Number(data.motion?.home_servo_deg ?? minimum), minimum, maximum);
-    const state = { servoDeg: home, explode: 0, removeExterior: false, hidden: new Set() };
-    const canvas = $('gl'), renderer = createRenderer(canvas, data, state);
-    const meta = data.meta || {};
-    document.title = `${profile.title}の${mode === 'assembly' ? '組み立て' : '物理検証'} · model-lab`;
-    $('pageTitle').textContent = profile.title;
-    $('summary').textContent = meta.summary || (mode === 'assembly' ? '実際の印刷部品を分解し、部品ごとの位置と組み立て順を確かめます。' : profile.pattern);
-    $('principle').textContent = meta.motion_principle || profile.pattern;
-    document.querySelector('.workspace-model strong').textContent = `${profile.label} ${profile.title}`;
-    document.querySelector('.workspace-model small').textContent = mode === 'assembly' ? '部品と組み立て方' : '格子が持ち上がる動き';
-    $('metrics').replaceChildren(
-      metric('外形', dimensionText(meta)),
-      metric('印刷部品', `${data.parts.filter(part => part.printable).length}点`),
-      metric('可動範囲', `${minimum}〜${maximum}°`),
-      metric('片道', `${Number(data.motion?.duration_s ?? 1.5).toFixed(1)}秒`),
-    );
-
-    const angle = $('angle'); angle.min = String(minimum); angle.max = String(maximum); angle.value = String(home);
-    const setAngle = value => { state.servoDeg = clamp(Number(value), minimum, maximum); angle.value = String(state.servoDeg); $('angleValue').value = `${state.servoDeg.toFixed(state.servoDeg % 1 ? 1 : 0)}°`; renderer.draw(); };
-    setAngle(home);
-    angle.addEventListener('input', () => { stopAnimation(); setAngle(angle.value); });
+    const frames = [...data.motion.frames].sort((a, b) => a.servo_deg - b.servo_deg);
+    data.motion.frames = frames;
+    const minimum = frames[0].servo_deg;
+    const state = { servoDeg: minimum, cut: true, removeExterior: false, hidden: new Set(), transforms: null, present: null };
+    const canvas = $('gl'), renderer = createRenderer(canvas, data, state), meta = data.meta;
+    document.title = `住人の箱 ${profile.label}の${mode === 'assembly' ? '組み立て' : '物理検証'} · model-lab`;
+    $('eyebrow').textContent = mode === 'assembly' ? '工具、ねじ、接着剤なし' : '1 自由度の運動方程式';
+    $('pageTitle').textContent = mode === 'assembly' ? '組み立ての手順と検証' : profile.title;
+    $('summary').textContent = mode === 'assembly'
+      ? '表示する経路で実際のSTLを動かし、据えた部品との共通体積を測ります。実物では未検証です。'
+      : '形状から求めた質量と慣性に、サーボのトルク上限と速度の限界を入れて解きます。実機では未検証です。';
+    document.querySelector('.workspace-model strong').textContent = `住人の箱 ${profile.label}`;
+    document.querySelector('.workspace-model small').textContent = `${dimensionText(meta)} · SG92R 1台 · 印刷 ${data.parts.filter(p => p.printable).length}点`;
+    document.querySelector('.workspace-brand').href = `/?model=${model}`;
     $('removeExterior').addEventListener('change', event => { state.removeExterior = event.currentTarget.checked; renderer.draw(); });
-    $('explode').addEventListener('input', event => { state.explode = Number(event.currentTarget.value) / 100; $('explodeValue').value = `${event.currentTarget.value}%`; renderer.draw(); });
-    for (const button of document.querySelectorAll('[data-camera]')) button.addEventListener('click', () => {
-      document.querySelectorAll('[data-camera]').forEach(peer => peer.setAttribute('aria-pressed', String(peer === button)));
-      renderer.setCamera(button.dataset.camera);
-    });
-
-    let animation = 0;
-    function stopAnimation() { cancelAnimationFrame(animation); animation = 0; $('stop').disabled = true; }
-    $('stop').addEventListener('click', stopAnimation);
-    $('play').addEventListener('click', () => {
-      stopAnimation();
-      const from = state.servoDeg;
-      const target = Math.abs(from - minimum) < Math.abs(from - maximum) ? maximum : minimum;
-      if (matchMedia('(prefers-reduced-motion: reduce)').matches) { setAngle(target); return; }
-      $('stop').disabled = false;
-      const duration = Math.max(0.1, Number(data.motion?.duration_s ?? 1.5)) * 1000, started = performance.now();
-      const tick = now => {
-        const progress = clamp((now - started) / duration, 0, 1);
-        setAngle(from + (target - from) * quintic(progress));
-        if (progress < 1) animation = requestAnimationFrame(tick); else { animation = 0; $('stop').disabled = true; }
-      };
-      animation = requestAnimationFrame(tick);
-    });
+    $('cut').addEventListener('change', event => { state.cut = event.currentTarget.checked; renderer.draw(); });
+    $('home').addEventListener('click', () => renderer.setCamera('iso'));
     $('legend').replaceChildren(...renderer.meshes.map(mesh => {
-      const item = document.createElement('span'), swatch = document.createElement('i'); swatch.style.background = `rgb(${mesh.color.map(v => Math.round(v * 255)).join(' ')})`;
-      item.append(swatch, document.createTextNode(mesh.label || mesh.id)); return item;
-    }));
-    $('partList').replaceChildren(...renderer.meshes.map(mesh => {
       const label = document.createElement('label'), input = document.createElement('input'), swatch = document.createElement('i');
-      input.type = 'checkbox'; input.checked = true; swatch.className = 'part-color'; swatch.style.background = `rgb(${mesh.color.map(v => Math.round(v * 255)).join(' ')})`;
+      label.dataset.part = mesh.id; input.type = 'checkbox'; input.checked = true;
+      swatch.style.background = `rgb(${mesh.color.map(v => Math.round(v * 255)).join(' ')})`;
       input.addEventListener('change', () => { input.checked ? state.hidden.delete(mesh.id) : state.hidden.add(mesh.id); renderer.draw(); });
       label.append(input, swatch, document.createTextNode(mesh.label || mesh.id)); return label;
     }));
-    const steps = Array.isArray(meta.assembly_steps) ? meta.assembly_steps : [];
-    $('assemblySteps').replaceChildren(...(steps.length ? steps : ['組み立て手順はまだ登録されていません。']).map(step => {
-      const li = document.createElement('li');
-      li.textContent = (typeof step === 'string' ? step : step.text || step.label || '未登録')
-        .replaceAll('列キャリア', '格子列').replaceAll('片道2秒のquintic補間で', '始めと終わりをゆっくり動かしながら片道2秒で');
-      return li;
-    }));
-    reportRows('verifyRows', verificationSummary(data.verify), '検証データの生成待ち');
-    reportRows('deliveryRows', deliverySummary(data.delivery, data.print_path_review), '印刷データの検証待ち');
+    reportRows('verifyRows', verificationSummary(data.verify, data.assembly), '検証データなし');
+    reportRows('deliveryRows', deliverySummary(data.delivery, data.print_path_review), '印刷データなし');
     const printLinks = [];
     for (const [kind, plate] of Object.entries(data.delivery?.plates || {})) {
       for (const [material, result] of Object.entries(plate.materials || {})) {
         const filename = String(result.file?.file || '').split('/').at(-1);
         if (!filename?.startsWith(`${model}-`) || !filename.endsWith('.gcode.3mf')) continue;
         const li = document.createElement('li'), link = document.createElement('a');
-        link.href = `/exports/${encodeURIComponent(filename)}`;
-        link.download = filename;
+        link.href = `/exports/${encodeURIComponent(filename)}`; link.download = filename;
         link.textContent = `${kind === 'full' ? '全体' : '試片'} · ${material}をダウンロード`;
         li.append(link); printLinks.push(li);
       }
     }
     $('printDownloads').replaceChildren(...printLinks);
-    if (data.verify) { $('verifyDownload').hidden = false; $('verifyDownload').href = assetUrl; $('verifyDownload').download = `${model}-with-verify.json`; }
-    $('loading').hidden = true; renderer.draw();
+    $('verifyDownload').href = assetUrl; $('verifyDownload').download = `${model}-with-verify.json`;
+    for (const id of ['prev', 'play', 'next', 'all', 'open', 'close']) $(id).disabled = false;
+    if (mode === 'assembly') setupAssembly({ data, state, renderer });
+    else setupPhysics({ data, state, renderer });
+    $('loading').textContent = ''; renderer.draw();
   } catch (error) {
     console.error(error);
-    $('loading').hidden = true; $('fatal').hidden = false;
-    $('fatalMessage').textContent = `${error.message}。モデルをビルドして tools/lattice_web.py を実行後、読み直してください。`;
+    $('loading').textContent = '読み込めませんでした'; $('fatal').hidden = false;
+    $('fatalMessage').textContent = `${error.message}。表示データを更新してから読み直してください。`;
   }
 }
-
-$('retry').addEventListener('click', start);
+$('retry').addEventListener('click', () => location.reload());
 start();

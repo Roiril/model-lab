@@ -46,6 +46,13 @@ def export(model):
     for key in ("verify", "delivery", "print_path_review"):
         report = folder / "build" / ("print_path_review.json" if key == "print_path_review" else f"{key}_report.json")
         data[key] = json.loads(report.read_text(encoding="utf-8")) if report.exists() else None
+    for key, filename in (("simTables", "sim_tables.json"), ("sim", "simulate_report.json"),
+                          ("assembly", "assembly.json")):
+        report = folder / "build" / filename
+        if not report.exists():
+            raise FileNotFoundError(f"C1-style workflow requires {report}")
+        data[key] = json.loads(report.read_text(encoding="utf-8"))
+    data["meta"]["assembly_steps"] = [step["instruction"] for step in data["assembly"]["steps"]]
     target = ROOT / "viewer/lattice/assets" / f"{model}.json"
     target.parent.mkdir(parents=True, exist_ok=True)
     temp = target.with_suffix(".tmp")

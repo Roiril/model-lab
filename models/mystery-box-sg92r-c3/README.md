@@ -4,6 +4,10 @@ SG92R 1台で5×5の格子を動かす80mm角の箱。5本の列キャリアを5
 
 Studio: http://localhost:3000/?model=mystery-box-sg92r-c3
 
+物理検証: http://localhost:3000/viewer/lattice/index.html?model=mystery-box-sg92r-c3&mode=physics
+
+組み立て: http://localhost:3000/viewer/lattice/index.html?model=mystery-box-sg92r-c3&mode=assembly
+
 ## 部品
 
 印刷部品:
@@ -70,29 +74,29 @@ Studio: http://localhost:3000/?model=mystery-box-sg92r-c3
 5. 5個のカムと従動歯車を90°姿勢にそろえる。偏心方向が異なる3種類を混ぜず、すべての六角穴の面を同じ向きへ合わせる
 6. 従動歯車を駆動歯車にかみ合わせる。歯先を押し込まず、歯底との間に隙間が残る位置を使う
 7. 右から六角軸を通す。軸が通らないカムだけを60°単位で回し、無理に押さない
-8. キャップを付けた後、列を入れる前に15°へ2秒以上かけて動かす
+8. キャップを付けた後、列を入れる前にシリアルの `h` を送り、15°へ2秒かけて動かして停止する
 9. 格子列と天面案内板を組み、15°で25枚が案内板と面一になることを見る
-10. 90°へ低速で戻す。以後はシリアルの `g` を受けるまで静止させる
+10. 15°で静止させる。シリアルの `g` を送って低速往復を始める
 
 ホーンは20山なので18°単位でしか付け直せない。端角度はホーンをずらさずソフト側の15°と165°で決める。
 
 ## 組み立て
 
-1. 箱を口が上になる向きで置く。SG92Rを上から着座レールへ入れる
-2. 3ピン配線を前面下の8 × 4mm出口へ通す
-3. 90°の角度合わせを行う。サーボ押さえを上から差して固定する
+1. 箱を口が上になる向きで置く。箱の外でSG92Rを90°に合わせる。電源を切って付属ホーンと駆動歯車を付ける
+2. SG92Rを上から着座レールへ入れる。3ピン配線を前面下の8 × 4mm出口へ通す
+3. サーボ押さえを上から差して固定する
 4. `cam_0..4`の順を守り、5個のカムを左から所定の列へ置く
 5. 従動歯車を置く。右側から六角軸を通す
 6. 左右の軸端キャップを外から押し込む。軸が左右へ0.3mm動けることを見る
-7. 15°へ低速移動する。5本の格子列を前後ガイドへ上から入れる
+7. 電源を入れて `h` を送り、15°へ低速移動して停止する。5本の格子列を前後ガイドへ上から1本ずつ入れる
 8. 天面案内板を格子列の周囲へ下ろす。4辺の棚へ平らに置く
-9. 15°で面一を確認する。90°へ低速で戻す
+9. 15°で面一を確認する。`g` を送って低速往復を始める
 
-分解は逆順で行う。案内板と格子列を上へ抜く。左右キャップを外へ引く。六角軸を右へ抜く。カム、従動歯車、サーボ押さえ、SG92Rを取り出す。組立STLを使った1mm刻みの途中姿勢検査は `build/verify_report.json` に保存する。
+分解は逆順で行う。`h` で15°に止める。案内板と格子列を上へ抜く。格子がない状態で `c` を送り、90°へ低速で戻して電源を切る。左右キャップを外へ引く。六角軸を右へ抜く。カムと従動歯車を上へ抜く。サーボ押さえとSG92Rを取り出す。表示する13工程の位置は `build/assembly.json`。累積した部品との途中姿勢と逆順の検査は `build/assembly_report.json` に保存する。
 
 ## 制御
 
-`demo/demo.ino` は起動後に90°で静止する。115200bpsのシリアルモニターから `g` を送ると、まず15°へ2秒で移動する。その後15〜165°を片道2秒で往復する。`s` は現在角度で停止する。初回は試片を確認し、格子列を外した状態で15〜165°を動かす。
+`demo/demo.ino` は起動後に90°で静止する。115200bpsのシリアルモニターから `h` を送ると、15°へ2秒で移動して停止する。`c` は90°へ2秒で戻して停止する。`g` は15°へ戻した後に15〜165°を片道2秒で往復する。`s` は現在角度で停止する。初回は試片を確認し、格子列を外した状態で15〜165°を動かす。Arduino用コンパイラがないためコンパイルと書き込みは未検証。
 
 信号線はD9。サーボは4.8Vの外部電源から給電する。外部電源とArduinoのGNDを共通にする。
 
@@ -101,17 +105,23 @@ Studio: http://localhost:3000/?model=mystery-box-sg92r-c3
 ```powershell
 & 'C:/Program Files/Blender Foundation/Blender 5.1/blender.exe' --background --python-exit-code 1 --python models/mystery-box-sg92r-c3/model.py
 & 'C:/Program Files/Blender Foundation/Blender 5.1/blender.exe' --background --python-exit-code 1 --python models/mystery-box-sg92r-c3/verify.py
+& 'C:/Program Files/Blender Foundation/Blender 5.1/blender.exe' --background --python-exit-code 1 --python models/mystery-box-sg92r-c3/assembly.py
+py -3.11 tools/lattice_simulation.py mystery-box-sg92r-c3
 & 'C:/Program Files/Blender Foundation/Blender 5.1/blender.exe' --background --python-exit-code 1 --python models/mystery-box-sg92r-c3/render_preview.py
 & 'C:/Program Files/Blender Foundation/Blender 5.1/blender.exe' --background --python-exit-code 1 --python tools/lattice_render.py -- mystery-box-sg92r-c3
 py -3.11 tools/lattice_delivery.py mystery-box-sg92r-c3
 py -3.11 tools/lattice_web.py mystery-box-sg92r-c3
 py -3.11 tools/lattice_audit.py mystery-box-sg92r-c3
 node tools/catalog.js check
+node viewer/lattice/motion.test.mjs
+node viewer/lattice/sim.test.mjs
 ```
 
 寸法を変えて再スライスした場合は、`build/print_path_review.json` の警告判定を新しいSTLと印刷経路でやり直す。最終検査はファイルのハッシュが一致しない旧判定を受け付けない。
 
-`build/motion.json` は15〜165°を1°刻みで151フレーム持つ。変換は組立STLに対する列優先4×4行列。`verify.py` はSTLを直接読む。全210組を2.5°刻みの61姿勢で検査する。外接箱が交わらない組は共通体積0。残りはBlenderのEXACT Booleanで実体積を測る。組立経路も1mm刻みで同じ検査を行う。許容する圧入はサーボ押さえの左右0.1mmだけ。接触位置と推定ひずみを制限する。形状のSHA-256を検査前後で照合する。メッシュと重力負荷の検査も行う。
+`build/motion.json` は15〜165°を1°刻みで151フレーム持つ。変換は組立STLに対する列優先4×4行列。`verify.py` はSTLを直接読む。全210組を2.5°刻みの61姿勢で検査する。外接箱が交わらない組は共通体積0。残りはBlenderのEXACT Booleanで実体積を測る。`assembly.py` は表示と同じ13工程を1mm以下・5°以下の途中姿勢で検査する。移動部品同士と既設部品の全組み合わせが対象。許容する圧入はサーボ押さえの左右0.1mmだけ。接触位置と推定ひずみを制限する。形状のSHA-256を検査前後で照合する。最終位置と逆順の経路も検査する。
+
+物理検証はC1と同じ1自由度の時間積分を使う。STLの体積から質量と慣性を求める。SG92Rのトルク・速度制限と推定摩擦を含む。標準・逆方向・30%トルク・格子4倍・急な指令の5条件を計算する。Pythonとブラウザの全時刻が一致することを検査する。時間刻みは0.00005秒。半分の刻みとの変化も記録する。重さの操作は格子だけに適用する。標準条件の最大トルクは約0.004796N·m。接触境界の相対速度は最大11.145mm/s。衝撃・接触後の跳ね・自由落下は未計算。計算結果は `build/simulate_report.json` に保存する。
 
 ## 要件ごとの結果
 

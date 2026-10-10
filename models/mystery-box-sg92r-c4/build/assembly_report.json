@@ -1,0 +1,3183 @@
+{
+  "model": "mystery-box-sg92r-c4",
+  "method": "display transforms and Blender Boolean EXACT are generated from the same column-major millimetre frames",
+  "calibration": {
+    "positiveCommonVolumeMm3": 0.5,
+    "negativeCommonVolumeMm3": 0.0,
+    "pass": true
+  },
+  "frameValidation": {
+    "pass": true,
+    "boundaryErrors": [],
+    "motionErrors": [],
+    "maxTranslationStepMm": 0.989021,
+    "maxRotationStepDeg": 1.000137
+  },
+  "steps": [
+    {
+      "id": "route-wire",
+      "pass": true,
+      "samples": 51,
+      "pairs": [
+        {
+          "parts": [
+            "housing",
+            "servo_wire"
+          ],
+          "samples": 51,
+          "aabbZeroSamples": 0,
+          "exactSamples": 51,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        }
+      ],
+      "maxCommonVolumeMm3": 0.0,
+      "allowedContacts": []
+    },
+    {
+      "id": "servo-body",
+      "pass": true,
+      "samples": 38,
+      "pairs": [
+        {
+          "parts": [
+            "housing",
+            "servo_body"
+          ],
+          "samples": 38,
+          "aabbZeroSamples": 0,
+          "exactSamples": 38,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "servo_body",
+            "servo_wire"
+          ],
+          "samples": 38,
+          "aabbZeroSamples": 29,
+          "exactSamples": 9,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        }
+      ],
+      "maxCommonVolumeMm3": 0.0,
+      "allowedContacts": []
+    },
+    {
+      "id": "servo-clip",
+      "pass": true,
+      "samples": 26,
+      "pairs": [
+        {
+          "parts": [
+            "housing",
+            "servo_clip"
+          ],
+          "samples": 26,
+          "aabbZeroSamples": 0,
+          "exactSamples": 26,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "servo_body",
+            "servo_clip"
+          ],
+          "samples": 26,
+          "aabbZeroSamples": 21,
+          "exactSamples": 5,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "servo_clip",
+            "servo_wire"
+          ],
+          "samples": 26,
+          "aabbZeroSamples": 25,
+          "exactSamples": 1,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        }
+      ],
+      "maxCommonVolumeMm3": 0.0,
+      "allowedContacts": []
+    },
+    {
+      "id": "horn-at-90",
+      "pass": true,
+      "samples": 14,
+      "pairs": [
+        {
+          "parts": [
+            "housing",
+            "servo_horn"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 0,
+          "exactSamples": 14,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "servo_body",
+            "servo_horn"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 10,
+          "exactSamples": 4,
+          "maxCommonVolumeMm3": 0.000234,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "servo_clip",
+            "servo_horn"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "servo_horn",
+            "servo_wire"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        }
+      ],
+      "maxCommonVolumeMm3": 0.000234,
+      "allowedContacts": []
+    },
+    {
+      "id": "coupler-at-90",
+      "pass": true,
+      "samples": 14,
+      "pairs": [
+        {
+          "parts": [
+            "horn_coupler",
+            "housing"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 0,
+          "exactSamples": 14,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "horn_coupler",
+            "servo_body"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 13,
+          "exactSamples": 1,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "horn_coupler",
+            "servo_clip"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "horn_coupler",
+            "servo_horn"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 12,
+          "exactSamples": 2,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "horn_coupler",
+            "servo_wire"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        }
+      ],
+      "maxCommonVolumeMm3": 0.0,
+      "allowedContacts": []
+    },
+    {
+      "id": "cam_center",
+      "pass": true,
+      "samples": 50,
+      "pairs": [
+        {
+          "parts": [
+            "cam_center",
+            "horn_coupler"
+          ],
+          "samples": 50,
+          "aabbZeroSamples": 41,
+          "exactSamples": 9,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_center",
+            "housing"
+          ],
+          "samples": 50,
+          "aabbZeroSamples": 0,
+          "exactSamples": 50,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_center",
+            "servo_body"
+          ],
+          "samples": 50,
+          "aabbZeroSamples": 50,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_center",
+            "servo_clip"
+          ],
+          "samples": 50,
+          "aabbZeroSamples": 50,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_center",
+            "servo_horn"
+          ],
+          "samples": 50,
+          "aabbZeroSamples": 50,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_center",
+            "servo_wire"
+          ],
+          "samples": 50,
+          "aabbZeroSamples": 50,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        }
+      ],
+      "maxCommonVolumeMm3": 0.0,
+      "allowedContacts": []
+    },
+    {
+      "id": "cam_inner",
+      "pass": true,
+      "samples": 34,
+      "pairs": [
+        {
+          "parts": [
+            "cam_center",
+            "cam_inner"
+          ],
+          "samples": 34,
+          "aabbZeroSamples": 34,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_inner",
+            "horn_coupler"
+          ],
+          "samples": 34,
+          "aabbZeroSamples": 34,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_inner",
+            "housing"
+          ],
+          "samples": 34,
+          "aabbZeroSamples": 0,
+          "exactSamples": 34,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_inner",
+            "servo_body"
+          ],
+          "samples": 34,
+          "aabbZeroSamples": 34,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_inner",
+            "servo_clip"
+          ],
+          "samples": 34,
+          "aabbZeroSamples": 34,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_inner",
+            "servo_horn"
+          ],
+          "samples": 34,
+          "aabbZeroSamples": 34,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_inner",
+            "servo_wire"
+          ],
+          "samples": 34,
+          "aabbZeroSamples": 34,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        }
+      ],
+      "maxCommonVolumeMm3": 0.0,
+      "allowedContacts": []
+    },
+    {
+      "id": "cam_outer",
+      "pass": true,
+      "samples": 34,
+      "pairs": [
+        {
+          "parts": [
+            "cam_center",
+            "cam_outer"
+          ],
+          "samples": 34,
+          "aabbZeroSamples": 34,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_inner",
+            "cam_outer"
+          ],
+          "samples": 34,
+          "aabbZeroSamples": 34,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_outer",
+            "horn_coupler"
+          ],
+          "samples": 34,
+          "aabbZeroSamples": 34,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_outer",
+            "housing"
+          ],
+          "samples": 34,
+          "aabbZeroSamples": 0,
+          "exactSamples": 34,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_outer",
+            "servo_body"
+          ],
+          "samples": 34,
+          "aabbZeroSamples": 34,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_outer",
+            "servo_clip"
+          ],
+          "samples": 34,
+          "aabbZeroSamples": 34,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_outer",
+            "servo_horn"
+          ],
+          "samples": 34,
+          "aabbZeroSamples": 34,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_outer",
+            "servo_wire"
+          ],
+          "samples": 34,
+          "aabbZeroSamples": 34,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        }
+      ],
+      "maxCommonVolumeMm3": 0.0,
+      "allowedContacts": []
+    },
+    {
+      "id": "camshaft-at-90",
+      "pass": true,
+      "samples": 44,
+      "pairs": [
+        {
+          "parts": [
+            "cam_center",
+            "camshaft"
+          ],
+          "samples": 44,
+          "aabbZeroSamples": 31,
+          "exactSamples": 13,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_inner",
+            "camshaft"
+          ],
+          "samples": 44,
+          "aabbZeroSamples": 18,
+          "exactSamples": 26,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_outer",
+            "camshaft"
+          ],
+          "samples": 44,
+          "aabbZeroSamples": 10,
+          "exactSamples": 34,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "camshaft",
+            "horn_coupler"
+          ],
+          "samples": 44,
+          "aabbZeroSamples": 35,
+          "exactSamples": 9,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "camshaft",
+            "housing"
+          ],
+          "samples": 44,
+          "aabbZeroSamples": 2,
+          "exactSamples": 42,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "camshaft",
+            "servo_body"
+          ],
+          "samples": 44,
+          "aabbZeroSamples": 44,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "camshaft",
+            "servo_clip"
+          ],
+          "samples": 44,
+          "aabbZeroSamples": 44,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "camshaft",
+            "servo_horn"
+          ],
+          "samples": 44,
+          "aabbZeroSamples": 44,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "camshaft",
+            "servo_wire"
+          ],
+          "samples": 44,
+          "aabbZeroSamples": 44,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        }
+      ],
+      "maxCommonVolumeMm3": 0.0,
+      "allowedContacts": []
+    },
+    {
+      "id": "keeper-bayonet",
+      "pass": true,
+      "samples": 104,
+      "pairs": [
+        {
+          "parts": [
+            "bearing_keeper",
+            "cam_center"
+          ],
+          "samples": 104,
+          "aabbZeroSamples": 104,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "bearing_keeper",
+            "cam_inner"
+          ],
+          "samples": 104,
+          "aabbZeroSamples": 104,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "bearing_keeper",
+            "cam_outer"
+          ],
+          "samples": 104,
+          "aabbZeroSamples": 104,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "bearing_keeper",
+            "camshaft"
+          ],
+          "samples": 104,
+          "aabbZeroSamples": 104,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "bearing_keeper",
+            "horn_coupler"
+          ],
+          "samples": 104,
+          "aabbZeroSamples": 104,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "bearing_keeper",
+            "housing"
+          ],
+          "samples": 104,
+          "aabbZeroSamples": 9,
+          "exactSamples": 95,
+          "maxCommonVolumeMm3": 0.385936,
+          "allowedSamples": 93,
+          "pass": true
+        },
+        {
+          "parts": [
+            "bearing_keeper",
+            "servo_body"
+          ],
+          "samples": 104,
+          "aabbZeroSamples": 104,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "bearing_keeper",
+            "servo_clip"
+          ],
+          "samples": 104,
+          "aabbZeroSamples": 104,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "bearing_keeper",
+            "servo_horn"
+          ],
+          "samples": 104,
+          "aabbZeroSamples": 104,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "bearing_keeper",
+            "servo_wire"
+          ],
+          "samples": 104,
+          "aabbZeroSamples": 104,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        }
+      ],
+      "maxCommonVolumeMm3": 0.385936,
+      "allowedContacts": [
+        {
+          "parts": [
+            "bearing_keeper",
+            "housing"
+          ],
+          "kind": "snap",
+          "zone": "keeper_detent",
+          "deflectionMm": 0.15,
+          "strainPercent": 0.42187499999999994,
+          "samples": 93,
+          "maxCommonVolumeMm3": 0.385936
+        }
+      ]
+    },
+    {
+      "id": "return-to-10",
+      "pass": true,
+      "samples": 81,
+      "pairs": [
+        {
+          "parts": [
+            "bearing_keeper",
+            "cam_center"
+          ],
+          "samples": 81,
+          "aabbZeroSamples": 81,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "bearing_keeper",
+            "cam_inner"
+          ],
+          "samples": 81,
+          "aabbZeroSamples": 81,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "bearing_keeper",
+            "cam_outer"
+          ],
+          "samples": 81,
+          "aabbZeroSamples": 81,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "bearing_keeper",
+            "camshaft"
+          ],
+          "samples": 81,
+          "aabbZeroSamples": 81,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "bearing_keeper",
+            "horn_coupler"
+          ],
+          "samples": 81,
+          "aabbZeroSamples": 81,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "bearing_keeper",
+            "servo_horn"
+          ],
+          "samples": 81,
+          "aabbZeroSamples": 81,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_center",
+            "cam_inner"
+          ],
+          "samples": 81,
+          "aabbZeroSamples": 81,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_center",
+            "cam_outer"
+          ],
+          "samples": 81,
+          "aabbZeroSamples": 81,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_center",
+            "camshaft"
+          ],
+          "samples": 81,
+          "aabbZeroSamples": 0,
+          "exactSamples": 81,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_center",
+            "horn_coupler"
+          ],
+          "samples": 81,
+          "aabbZeroSamples": 0,
+          "exactSamples": 81,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_center",
+            "housing"
+          ],
+          "samples": 81,
+          "aabbZeroSamples": 0,
+          "exactSamples": 81,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_center",
+            "servo_body"
+          ],
+          "samples": 81,
+          "aabbZeroSamples": 81,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_center",
+            "servo_clip"
+          ],
+          "samples": 81,
+          "aabbZeroSamples": 81,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_center",
+            "servo_horn"
+          ],
+          "samples": 81,
+          "aabbZeroSamples": 81,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_center",
+            "servo_wire"
+          ],
+          "samples": 81,
+          "aabbZeroSamples": 81,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_inner",
+            "cam_outer"
+          ],
+          "samples": 81,
+          "aabbZeroSamples": 81,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_inner",
+            "camshaft"
+          ],
+          "samples": 81,
+          "aabbZeroSamples": 0,
+          "exactSamples": 81,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_inner",
+            "horn_coupler"
+          ],
+          "samples": 81,
+          "aabbZeroSamples": 81,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_inner",
+            "housing"
+          ],
+          "samples": 81,
+          "aabbZeroSamples": 0,
+          "exactSamples": 81,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_inner",
+            "servo_body"
+          ],
+          "samples": 81,
+          "aabbZeroSamples": 81,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_inner",
+            "servo_clip"
+          ],
+          "samples": 81,
+          "aabbZeroSamples": 81,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_inner",
+            "servo_horn"
+          ],
+          "samples": 81,
+          "aabbZeroSamples": 81,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_inner",
+            "servo_wire"
+          ],
+          "samples": 81,
+          "aabbZeroSamples": 81,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_outer",
+            "camshaft"
+          ],
+          "samples": 81,
+          "aabbZeroSamples": 0,
+          "exactSamples": 81,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_outer",
+            "horn_coupler"
+          ],
+          "samples": 81,
+          "aabbZeroSamples": 81,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_outer",
+            "housing"
+          ],
+          "samples": 81,
+          "aabbZeroSamples": 0,
+          "exactSamples": 81,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_outer",
+            "servo_body"
+          ],
+          "samples": 81,
+          "aabbZeroSamples": 81,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_outer",
+            "servo_clip"
+          ],
+          "samples": 81,
+          "aabbZeroSamples": 81,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_outer",
+            "servo_horn"
+          ],
+          "samples": 81,
+          "aabbZeroSamples": 81,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_outer",
+            "servo_wire"
+          ],
+          "samples": 81,
+          "aabbZeroSamples": 81,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "camshaft",
+            "horn_coupler"
+          ],
+          "samples": 81,
+          "aabbZeroSamples": 0,
+          "exactSamples": 81,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "camshaft",
+            "housing"
+          ],
+          "samples": 81,
+          "aabbZeroSamples": 0,
+          "exactSamples": 81,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "camshaft",
+            "servo_body"
+          ],
+          "samples": 81,
+          "aabbZeroSamples": 81,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "camshaft",
+            "servo_clip"
+          ],
+          "samples": 81,
+          "aabbZeroSamples": 81,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "camshaft",
+            "servo_horn"
+          ],
+          "samples": 81,
+          "aabbZeroSamples": 81,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "camshaft",
+            "servo_wire"
+          ],
+          "samples": 81,
+          "aabbZeroSamples": 81,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "horn_coupler",
+            "housing"
+          ],
+          "samples": 81,
+          "aabbZeroSamples": 0,
+          "exactSamples": 81,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "horn_coupler",
+            "servo_body"
+          ],
+          "samples": 81,
+          "aabbZeroSamples": 0,
+          "exactSamples": 81,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "horn_coupler",
+            "servo_clip"
+          ],
+          "samples": 81,
+          "aabbZeroSamples": 81,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "horn_coupler",
+            "servo_horn"
+          ],
+          "samples": 81,
+          "aabbZeroSamples": 0,
+          "exactSamples": 81,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "horn_coupler",
+            "servo_wire"
+          ],
+          "samples": 81,
+          "aabbZeroSamples": 81,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "housing",
+            "servo_horn"
+          ],
+          "samples": 81,
+          "aabbZeroSamples": 0,
+          "exactSamples": 81,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "servo_body",
+            "servo_horn"
+          ],
+          "samples": 81,
+          "aabbZeroSamples": 0,
+          "exactSamples": 81,
+          "maxCommonVolumeMm3": 0.029693,
+          "allowedSamples": 79,
+          "pass": true
+        },
+        {
+          "parts": [
+            "servo_clip",
+            "servo_horn"
+          ],
+          "samples": 81,
+          "aabbZeroSamples": 81,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "servo_horn",
+            "servo_wire"
+          ],
+          "samples": 81,
+          "aabbZeroSamples": 81,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        }
+      ],
+      "maxCommonVolumeMm3": 0.029693,
+      "allowedContacts": [
+        {
+          "parts": [
+            "servo_body",
+            "servo_horn"
+          ],
+          "kind": "reference_internal",
+          "limitCommonVolumeMm3": 0.03,
+          "boundsMm": [
+            [
+              -7.5,
+              -2.3,
+              37.7
+            ],
+            [
+              -4.5,
+              2.3,
+              42.3
+            ]
+          ],
+          "samples": 79,
+          "maxCommonVolumeMm3": 0.029693
+        }
+      ]
+    },
+    {
+      "id": "stage-guide-frame",
+      "pass": true,
+      "samples": 22,
+      "pairs": [
+        {
+          "parts": [
+            "bearing_keeper",
+            "guide_frame"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_center",
+            "guide_frame"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_inner",
+            "guide_frame"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_outer",
+            "guide_frame"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "camshaft",
+            "guide_frame"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "guide_frame",
+            "horn_coupler"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "guide_frame",
+            "housing"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "guide_frame",
+            "servo_body"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "guide_frame",
+            "servo_clip"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "guide_frame",
+            "servo_horn"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "guide_frame",
+            "servo_wire"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        }
+      ],
+      "maxCommonVolumeMm3": 0.0,
+      "allowedContacts": []
+    },
+    {
+      "id": "center-into-guide",
+      "pass": true,
+      "samples": 14,
+      "pairs": [
+        {
+          "parts": [
+            "bearing_keeper",
+            "carrier_center"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_center",
+            "carrier_center"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_inner",
+            "carrier_center"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_outer",
+            "carrier_center"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "camshaft",
+            "carrier_center"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_center",
+            "guide_frame"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 0,
+          "exactSamples": 14,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_center",
+            "horn_coupler"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_center",
+            "housing"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_center",
+            "servo_body"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_center",
+            "servo_clip"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_center",
+            "servo_horn"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_center",
+            "servo_wire"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        }
+      ],
+      "maxCommonVolumeMm3": 0.0,
+      "allowedContacts": []
+    },
+    {
+      "id": "inner-into-guide",
+      "pass": true,
+      "samples": 22,
+      "pairs": [
+        {
+          "parts": [
+            "bearing_keeper",
+            "carrier_inner"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_center",
+            "carrier_inner"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_inner",
+            "carrier_inner"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_outer",
+            "carrier_inner"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "camshaft",
+            "carrier_inner"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_center",
+            "carrier_inner"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 0,
+          "exactSamples": 22,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_inner",
+            "guide_frame"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 4,
+          "exactSamples": 18,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_inner",
+            "horn_coupler"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_inner",
+            "housing"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_inner",
+            "servo_body"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_inner",
+            "servo_clip"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_inner",
+            "servo_horn"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_inner",
+            "servo_wire"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        }
+      ],
+      "maxCommonVolumeMm3": 0.0,
+      "allowedContacts": []
+    },
+    {
+      "id": "outer-into-guide",
+      "pass": true,
+      "samples": 22,
+      "pairs": [
+        {
+          "parts": [
+            "bearing_keeper",
+            "carrier_outer"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_center",
+            "carrier_outer"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_inner",
+            "carrier_outer"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_outer",
+            "carrier_outer"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "camshaft",
+            "carrier_outer"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_center",
+            "carrier_outer"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 0,
+          "exactSamples": 22,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_inner",
+            "carrier_outer"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 0,
+          "exactSamples": 22,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_outer",
+            "guide_frame"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 5,
+          "exactSamples": 17,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_outer",
+            "horn_coupler"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_outer",
+            "housing"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_outer",
+            "servo_body"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_outer",
+            "servo_clip"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_outer",
+            "servo_horn"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_outer",
+            "servo_wire"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        }
+      ],
+      "maxCommonVolumeMm3": 0.0,
+      "allowedContacts": []
+    },
+    {
+      "id": "lower-guide-group",
+      "pass": true,
+      "samples": 92,
+      "pairs": [
+        {
+          "parts": [
+            "bearing_keeper",
+            "carrier_center"
+          ],
+          "samples": 92,
+          "aabbZeroSamples": 92,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "bearing_keeper",
+            "carrier_inner"
+          ],
+          "samples": 92,
+          "aabbZeroSamples": 92,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "bearing_keeper",
+            "carrier_outer"
+          ],
+          "samples": 92,
+          "aabbZeroSamples": 92,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "bearing_keeper",
+            "guide_frame"
+          ],
+          "samples": 92,
+          "aabbZeroSamples": 92,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_center",
+            "carrier_center"
+          ],
+          "samples": 92,
+          "aabbZeroSamples": 92,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_center",
+            "carrier_inner"
+          ],
+          "samples": 92,
+          "aabbZeroSamples": 92,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_center",
+            "carrier_outer"
+          ],
+          "samples": 92,
+          "aabbZeroSamples": 92,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_center",
+            "guide_frame"
+          ],
+          "samples": 92,
+          "aabbZeroSamples": 92,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_inner",
+            "carrier_center"
+          ],
+          "samples": 92,
+          "aabbZeroSamples": 92,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_inner",
+            "carrier_inner"
+          ],
+          "samples": 92,
+          "aabbZeroSamples": 92,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_inner",
+            "carrier_outer"
+          ],
+          "samples": 92,
+          "aabbZeroSamples": 92,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_inner",
+            "guide_frame"
+          ],
+          "samples": 92,
+          "aabbZeroSamples": 92,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_outer",
+            "carrier_center"
+          ],
+          "samples": 92,
+          "aabbZeroSamples": 92,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_outer",
+            "carrier_inner"
+          ],
+          "samples": 92,
+          "aabbZeroSamples": 92,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_outer",
+            "carrier_outer"
+          ],
+          "samples": 92,
+          "aabbZeroSamples": 92,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_outer",
+            "guide_frame"
+          ],
+          "samples": 92,
+          "aabbZeroSamples": 92,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "camshaft",
+            "carrier_center"
+          ],
+          "samples": 92,
+          "aabbZeroSamples": 92,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "camshaft",
+            "carrier_inner"
+          ],
+          "samples": 92,
+          "aabbZeroSamples": 92,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "camshaft",
+            "carrier_outer"
+          ],
+          "samples": 92,
+          "aabbZeroSamples": 92,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "camshaft",
+            "guide_frame"
+          ],
+          "samples": 92,
+          "aabbZeroSamples": 92,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_center",
+            "carrier_inner"
+          ],
+          "samples": 92,
+          "aabbZeroSamples": 0,
+          "exactSamples": 92,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_center",
+            "carrier_outer"
+          ],
+          "samples": 92,
+          "aabbZeroSamples": 0,
+          "exactSamples": 92,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_center",
+            "guide_frame"
+          ],
+          "samples": 92,
+          "aabbZeroSamples": 0,
+          "exactSamples": 92,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_center",
+            "horn_coupler"
+          ],
+          "samples": 92,
+          "aabbZeroSamples": 78,
+          "exactSamples": 14,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_center",
+            "housing"
+          ],
+          "samples": 92,
+          "aabbZeroSamples": 64,
+          "exactSamples": 28,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_center",
+            "servo_body"
+          ],
+          "samples": 92,
+          "aabbZeroSamples": 92,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_center",
+            "servo_clip"
+          ],
+          "samples": 92,
+          "aabbZeroSamples": 92,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_center",
+            "servo_horn"
+          ],
+          "samples": 92,
+          "aabbZeroSamples": 81,
+          "exactSamples": 11,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_center",
+            "servo_wire"
+          ],
+          "samples": 92,
+          "aabbZeroSamples": 92,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_inner",
+            "carrier_outer"
+          ],
+          "samples": 92,
+          "aabbZeroSamples": 0,
+          "exactSamples": 92,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_inner",
+            "guide_frame"
+          ],
+          "samples": 92,
+          "aabbZeroSamples": 0,
+          "exactSamples": 92,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_inner",
+            "horn_coupler"
+          ],
+          "samples": 92,
+          "aabbZeroSamples": 79,
+          "exactSamples": 13,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_inner",
+            "housing"
+          ],
+          "samples": 92,
+          "aabbZeroSamples": 65,
+          "exactSamples": 27,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_inner",
+            "servo_body"
+          ],
+          "samples": 92,
+          "aabbZeroSamples": 92,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_inner",
+            "servo_clip"
+          ],
+          "samples": 92,
+          "aabbZeroSamples": 92,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_inner",
+            "servo_horn"
+          ],
+          "samples": 92,
+          "aabbZeroSamples": 82,
+          "exactSamples": 10,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_inner",
+            "servo_wire"
+          ],
+          "samples": 92,
+          "aabbZeroSamples": 92,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_outer",
+            "guide_frame"
+          ],
+          "samples": 92,
+          "aabbZeroSamples": 0,
+          "exactSamples": 92,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_outer",
+            "horn_coupler"
+          ],
+          "samples": 92,
+          "aabbZeroSamples": 80,
+          "exactSamples": 12,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_outer",
+            "housing"
+          ],
+          "samples": 92,
+          "aabbZeroSamples": 66,
+          "exactSamples": 26,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_outer",
+            "servo_body"
+          ],
+          "samples": 92,
+          "aabbZeroSamples": 92,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_outer",
+            "servo_clip"
+          ],
+          "samples": 92,
+          "aabbZeroSamples": 92,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_outer",
+            "servo_horn"
+          ],
+          "samples": 92,
+          "aabbZeroSamples": 83,
+          "exactSamples": 9,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_outer",
+            "servo_wire"
+          ],
+          "samples": 92,
+          "aabbZeroSamples": 92,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "guide_frame",
+            "horn_coupler"
+          ],
+          "samples": 92,
+          "aabbZeroSamples": 92,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "guide_frame",
+            "housing"
+          ],
+          "samples": 92,
+          "aabbZeroSamples": 78,
+          "exactSamples": 14,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "guide_frame",
+            "servo_body"
+          ],
+          "samples": 92,
+          "aabbZeroSamples": 92,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "guide_frame",
+            "servo_clip"
+          ],
+          "samples": 92,
+          "aabbZeroSamples": 92,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "guide_frame",
+            "servo_horn"
+          ],
+          "samples": 92,
+          "aabbZeroSamples": 92,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "guide_frame",
+            "servo_wire"
+          ],
+          "samples": 92,
+          "aabbZeroSamples": 92,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        }
+      ],
+      "maxCommonVolumeMm3": 0.0,
+      "allowedContacts": []
+    },
+    {
+      "id": "faceplate",
+      "pass": true,
+      "samples": 22,
+      "pairs": [
+        {
+          "parts": [
+            "bearing_keeper",
+            "faceplate"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_center",
+            "faceplate"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_inner",
+            "faceplate"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_outer",
+            "faceplate"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "camshaft",
+            "faceplate"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_center",
+            "faceplate"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 5,
+          "exactSamples": 17,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_inner",
+            "faceplate"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 5,
+          "exactSamples": 17,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_outer",
+            "faceplate"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 5,
+          "exactSamples": 17,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "faceplate",
+            "guide_frame"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 17,
+          "exactSamples": 5,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "faceplate",
+            "horn_coupler"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 21,
+          "exactSamples": 1,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "faceplate",
+            "housing"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 7,
+          "exactSamples": 15,
+          "maxCommonVolumeMm3": 25.600098,
+          "allowedSamples": 13,
+          "pass": true
+        },
+        {
+          "parts": [
+            "faceplate",
+            "servo_body"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "faceplate",
+            "servo_clip"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "faceplate",
+            "servo_horn"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "faceplate",
+            "servo_wire"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        }
+      ],
+      "maxCommonVolumeMm3": 25.600098,
+      "allowedContacts": [
+        {
+          "parts": [
+            "faceplate",
+            "housing"
+          ],
+          "kind": "snap",
+          "zone": "faceplate",
+          "deflectionMm": 0.4,
+          "strainPercent": 0.5510204081632654,
+          "samples": 13,
+          "maxCommonVolumeMm3": 25.600098
+        }
+      ]
+    },
+    {
+      "id": "bottom",
+      "pass": true,
+      "samples": 22,
+      "pairs": [
+        {
+          "parts": [
+            "bearing_keeper",
+            "bottom"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "bottom",
+            "cam_center"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "bottom",
+            "cam_inner"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "bottom",
+            "cam_outer"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "bottom",
+            "camshaft"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "bottom",
+            "carrier_center"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "bottom",
+            "carrier_inner"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "bottom",
+            "carrier_outer"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "bottom",
+            "faceplate"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "bottom",
+            "guide_frame"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "bottom",
+            "horn_coupler"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "bottom",
+            "housing"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 4,
+          "exactSamples": 18,
+          "maxCommonVolumeMm3": 31.500094,
+          "allowedSamples": 17,
+          "pass": true
+        },
+        {
+          "parts": [
+            "bottom",
+            "servo_body"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "bottom",
+            "servo_clip"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "bottom",
+            "servo_horn"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "bottom",
+            "servo_wire"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        }
+      ],
+      "maxCommonVolumeMm3": 31.500094,
+      "allowedContacts": [
+        {
+          "parts": [
+            "bottom",
+            "housing"
+          ],
+          "kind": "snap",
+          "zone": "bottom",
+          "deflectionMm": 0.4,
+          "strainPercent": 0.5510204081632653,
+          "samples": 17,
+          "maxCommonVolumeMm3": 31.500094
+        }
+      ]
+    }
+  ],
+  "violations": [],
+  "finalState": {
+    "pass": true,
+    "expectedParts": [
+      "housing",
+      "faceplate",
+      "guide_frame",
+      "bottom",
+      "carrier_center",
+      "carrier_inner",
+      "carrier_outer",
+      "camshaft",
+      "horn_coupler",
+      "cam_center",
+      "cam_inner",
+      "cam_outer",
+      "bearing_keeper",
+      "servo_clip",
+      "servo_body",
+      "servo_horn",
+      "servo_wire"
+    ],
+    "missing": [],
+    "extra": [],
+    "nonIdentityTransforms": []
+  },
+  "reverseDisassembly": {
+    "pass": true,
+    "method": "same inspected frames replayed in reverse order",
+    "steps": [
+      {
+        "id": "bottom",
+        "samples": 22,
+        "pass": true
+      },
+      {
+        "id": "faceplate",
+        "samples": 22,
+        "pass": true
+      },
+      {
+        "id": "lower-guide-group",
+        "samples": 92,
+        "pass": true
+      },
+      {
+        "id": "outer-into-guide",
+        "samples": 22,
+        "pass": true
+      },
+      {
+        "id": "inner-into-guide",
+        "samples": 22,
+        "pass": true
+      },
+      {
+        "id": "center-into-guide",
+        "samples": 14,
+        "pass": true
+      },
+      {
+        "id": "stage-guide-frame",
+        "samples": 22,
+        "pass": true
+      },
+      {
+        "id": "return-to-10",
+        "samples": 81,
+        "pass": true
+      },
+      {
+        "id": "keeper-bayonet",
+        "samples": 104,
+        "pass": true
+      },
+      {
+        "id": "camshaft-at-90",
+        "samples": 44,
+        "pass": true
+      },
+      {
+        "id": "cam_outer",
+        "samples": 34,
+        "pass": true
+      },
+      {
+        "id": "cam_inner",
+        "samples": 34,
+        "pass": true
+      },
+      {
+        "id": "cam_center",
+        "samples": 50,
+        "pass": true
+      },
+      {
+        "id": "coupler-at-90",
+        "samples": 14,
+        "pass": true
+      },
+      {
+        "id": "horn-at-90",
+        "samples": 14,
+        "pass": true
+      },
+      {
+        "id": "servo-clip",
+        "samples": 26,
+        "pass": true
+      },
+      {
+        "id": "servo-body",
+        "samples": 38,
+        "pass": true
+      },
+      {
+        "id": "route-wire",
+        "samples": 51,
+        "pass": true
+      }
+    ]
+  },
+  "sourceIntegrity": {
+    "pass": true,
+    "start": {
+      "housing": "dc62b38a0bc8b8f8d1317974a73b499c75e3d86900755678a9dda1fe6078696d",
+      "faceplate": "e7adf56c7dd9f593a2ca5a744eb037d541cae5eb060fbb4ed9a50b52ae7e2eb5",
+      "guide_frame": "b86ef928d268a88f4c72498a86b65483b8771beec0576ff802a69ef93bf45d77",
+      "bottom": "4b3e531e67d26c2e5adc570c6c63589d094fb205a009d1f3639e6eeab2f6fad4",
+      "carrier_center": "4a32bb9e1c62ee342bdb8770579d573b69c32742aca8f09f180bc8a871a2be5d",
+      "carrier_inner": "77fad60da7459269d6d7262df492787723b4e67149e61650c6409be1ae16a7ee",
+      "carrier_outer": "59a4a4e621b836b2a21fc87d40ce21236e58014970a93d45cb1173d070d13d91",
+      "camshaft": "03c5f2759cd2adc41e8eecb0dd341b07a71c1be6150f196d79931b91506b8a54",
+      "horn_coupler": "15714fadb54f1fd8ec6311a2cd32f520bb159b44915c027de7e0fb4e613b9098",
+      "cam_center": "b0c48a7e8c10af68ddfd76e8deaf73bd07de8cb0e109d8043b0e7ff969f2ffdb",
+      "cam_inner": "68253d51657e34016347cf1ac80de5aec28f49a4b85241a21b6232f4e3b5011c",
+      "cam_outer": "253f6882012b1a249e980755d6fdab48ac696a224a6bf05da2801cce1449789c",
+      "bearing_keeper": "d9313bc753158604f1a3a1fa1475ddedeadcb45691a0f3a61e6207180630b150",
+      "servo_clip": "f5897b68e65625f44dee89e915a6825951284c27c5df30048fbb6f7999c89299",
+      "servo_body": "672f101648914f7dc0045c2cde3bb77e1868c657e178132d87d06bdff9d3c9a8",
+      "servo_horn": "d6e7581121fece2f9c80a9bb54882d23ebe1da32e995674e8a70c5c2ab011cda",
+      "servo_wire": "52a0af6a6ee4a0eb8fb437a83b9c9e41ea8c3d45c4048f9588c950d92a66429c"
+    },
+    "end": {
+      "housing": "dc62b38a0bc8b8f8d1317974a73b499c75e3d86900755678a9dda1fe6078696d",
+      "faceplate": "e7adf56c7dd9f593a2ca5a744eb037d541cae5eb060fbb4ed9a50b52ae7e2eb5",
+      "guide_frame": "b86ef928d268a88f4c72498a86b65483b8771beec0576ff802a69ef93bf45d77",
+      "bottom": "4b3e531e67d26c2e5adc570c6c63589d094fb205a009d1f3639e6eeab2f6fad4",
+      "carrier_center": "4a32bb9e1c62ee342bdb8770579d573b69c32742aca8f09f180bc8a871a2be5d",
+      "carrier_inner": "77fad60da7459269d6d7262df492787723b4e67149e61650c6409be1ae16a7ee",
+      "carrier_outer": "59a4a4e621b836b2a21fc87d40ce21236e58014970a93d45cb1173d070d13d91",
+      "camshaft": "03c5f2759cd2adc41e8eecb0dd341b07a71c1be6150f196d79931b91506b8a54",
+      "horn_coupler": "15714fadb54f1fd8ec6311a2cd32f520bb159b44915c027de7e0fb4e613b9098",
+      "cam_center": "b0c48a7e8c10af68ddfd76e8deaf73bd07de8cb0e109d8043b0e7ff969f2ffdb",
+      "cam_inner": "68253d51657e34016347cf1ac80de5aec28f49a4b85241a21b6232f4e3b5011c",
+      "cam_outer": "253f6882012b1a249e980755d6fdab48ac696a224a6bf05da2801cce1449789c",
+      "bearing_keeper": "d9313bc753158604f1a3a1fa1475ddedeadcb45691a0f3a61e6207180630b150",
+      "servo_clip": "f5897b68e65625f44dee89e915a6825951284c27c5df30048fbb6f7999c89299",
+      "servo_body": "672f101648914f7dc0045c2cde3bb77e1868c657e178132d87d06bdff9d3c9a8",
+      "servo_horn": "d6e7581121fece2f9c80a9bb54882d23ebe1da32e995674e8a70c5c2ab011cda",
+      "servo_wire": "52a0af6a6ee4a0eb8fb437a83b9c9e41ea8c3d45c4048f9588c950d92a66429c"
+    }
+  },
+  "limitations": [
+    "SG92Rホーンの実物装着と電源操作は未検証。",
+    "圧入、スナップ、材料収縮、摩擦は実物未検証。",
+    "離散経路は並進1mm以下、回転5度以下。フレーム間の連続空間全体は解析していない。"
+  ],
+  "pass": true
+}

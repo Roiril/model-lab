@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 from collections import Counter
 import hashlib
+import itertools
 import json
 import math
 import os
@@ -116,6 +117,70 @@ def audit(model):
         part["mesh"] == read_mesh(folder / parts[part["id"]]["assembly"]) for part in web["parts"])
     checks["web_motion_matches"] = web["motion"] == motion
     checks["web_reports_match"] = web["verify"] == verify and web["delivery"] == delivery
+    assembly, assembly_report, sim_tables, sim_report = (read(name) for name in (
+        "assembly.json", "assembly_report.json", "sim_tables.json", "simulate_report.json"))
+    checks["web_workflows_match_reports"] = (web.get("assembly") == assembly and
+        web.get("simTables") == sim_tables and web.get("sim") == sim_report)
+    checks["assembly_display_paths_pass"] = assembly["pass"] and assembly_report["pass"]
+    checks["assembly_path_calibration"] = assembly["calibration"]["pass"]
+    checks["assembly_sources_match"] = (set(assembly["source_sha256"]) == set(parts) and all(
+        digest(folder / parts[key]["assembly"]) == value
+        for key, value in assembly["source_sha256"].items()))
+    checks["assembly_final_and_reverse_pass"] = (assembly_report["finalState"]["pass"] and
+        assembly_report["reverseDisassembly"]["pass"])
+    continuity = coverage = rigidity = True
+    previous = None
+    for step in assembly["steps"]:
+        step_frames = step["frames"]
+        presence = set(step["installed"]) | set(step["moving"])
+        coverage &= all(set(frame["transforms"]) == presence for frame in step_frames)
+        coverage &= (step_frames[0]["progress"] == 0 and step_frames[-1]["progress"] == 1 and
+            all(a["progress"] < b["progress"] for a, b in zip(step_frames, step_frames[1:])))
+        pairs = {tuple(sorted(pair)) for pair in itertools.combinations(presence, 2)
+                 if set(pair) & set(step["moving"])}
+        recorded_pairs = {tuple(sorted(row["parts"])) for row in step["report"]["pairs"]}
+        coverage &= pairs == recorded_pairs and all(
+            row["samples"] == len(step_frames) and
+            row["aabbZeroSamples"] + row["exactSamples"] == row["samples"]
+            for row in step["report"]["pairs"])
+        if previous:
+            current = step_frames[0]["transforms"]
+            continuity &= set(previous) <= set(current) and all(
+                max(abs(a - b) for a, b in zip(previous[key], current[key])) < 1e-6
+                for key in previous)
+        for frame in step_frames:
+            for matrix in frame["transforms"].values():
+                rigidity &= len(matrix) == 16 and all(math.isfinite(v) for v in matrix)
+                for c in range(3):
+                    for d in range(3):
+                        rigidity &= abs(sum(matrix[4*c+k] * matrix[4*d+k] for k in range(3))
+                                        - (1 if c == d else 0)) < 2e-6
+        previous = step_frames[-1]["transforms"]
+    identity = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
+    checks["assembly_all_frames_covered"] = bool(coverage)
+    checks["assembly_between_steps_continuous"] = bool(continuity)
+    checks["assembly_transforms_rigid"] = bool(rigidity)
+    checks["assembly_ends_in_actual_geometry"] = (set(previous) == set(parts) and all(
+        max(abs(a-b) for a, b in zip(matrix, identity)) < 1e-6 for matrix in previous.values()))
+    checks["simulation_passes"] = sim_report["overall"]["pass"] and all(
+        row["pass"] for row in sim_report["calibration"])
+    checks["simulation_sources_match"] = sim_tables["sourceHashes"] == sim_report["sourceHashes"] and all(
+        digest(folder / key) == value
+        for key, value in sim_tables["sourceHashes"].items())
+    checks["simulation_algorithms_match"] = sim_tables.get("algorithmHashes") == sim_report.get("algorithmHashes") and bool(
+        sim_tables.get("algorithmHashes")) and all(digest(ROOT / path) == expected
+        for path, expected in sim_tables.get("algorithmHashes", {}).items())
+    convergence = sim_report.get("integrationConvergence", {}).get("reportedUpperBound", {})
+    # 表示精度より小さい差を要求する。実測結果に合わせて閾値を広げない。
+    limits = {"finalServoDeg": .01, "maxTraceServoDeg": .01, "maxTraceTorqueNm": .0001,
+              "maxTraceLiftMm": .001, "peakTorqueNm": .0001, "maxContactSpeedMmS": .01}
+    checks["simulation_time_step_converges"] = all(
+        key in convergence and 0 <= convergence[key] <= limit for key, limit in limits.items())
+    checks["simulation_traces_in_verified_range"] = all(
+        sim_tables["limitsDeg"][0] - 1e-9 <= row["servoDeg"] <= sim_tables["limitsDeg"][1] + 1e-9 and
+        len(row["liftsMm"]) == len(sim_tables["groups"]) and
+        all(math.isfinite(value) for value in row["liftsMm"])
+        for scenario in sim_report["scenarios"].values() for row in scenario["trace"])
     review_path = build / "print_path_review.json"
     if review_path.exists():
         path_review = read("print_path_review.json")
