@@ -1,0 +1,283 @@
+{
+  "image": "C:\\Users\\kouga\\Downloads\\SG92R_2.jpg",
+  "image_sha256": "f679c1485697b6826a48b8e235e38d4560fa3bbad166c02cb7f9f3b7bb87991d",
+  "image_size_pixels": [
+    600,
+    600
+  ],
+  "written_dimensions_mm": {
+    "A": 34.5,
+    "B": 22.8,
+    "C": 26.7,
+    "D": 12.6,
+    "E": 32.5,
+    "F": 16
+  },
+  "manual_pixel_landmarks": {
+    "front_case_x": [
+      60,
+      138
+    ],
+    "front_shaft_x": 118,
+    "top_ear_y": [
+      228,
+      336
+    ],
+    "top_width_x": [
+      188,
+      227
+    ],
+    "top_shaft_center": [
+      207.3728149586859,
+      300.48829706685984
+    ],
+    "front_height_A_pixels": 92,
+    "front_height_C_pixels": 76,
+    "side_height_F_pixels": 59
+  },
+  "inferred_not_measured_mm": {
+    "near_body_end_to_shaft": 5.846153846153847,
+    "far_body_end_to_shaft": 16.953846153846154,
+    "shaft_offset_from_body_center": 5.553846153846154,
+    "shaft_offset_from_ear_center": 5.5636079136383785,
+    "mount_hole_pitch": 29.181493740364104,
+    "ear_projection_each_if_symmetric": 4.85
+  },
+  "scale_mm_per_pixel": {
+    "front_B": 0.2923076923076923,
+    "top_E": 0.30092592592592593,
+    "top_D": 0.3230769230769231,
+    "front_C": 0.3513157894736842,
+    "front_A": 0.375,
+    "side_F": 0.2711864406779661
+  },
+  "drawing_consistency": {
+    "A_using_C_scale_mm": 32.32105263157895,
+    "F_using_C_scale_mm": 20.727631578947367,
+    "warning": "Views and dimensions are not consistently to scale. Pixel uncertainty does not cover drafting or real-part variation."
+  },
+  "binary_stl_sections_at_z20_mm": {
+    "canonical": [
+      [
+        -16.5,
+        -6.0
+      ],
+      [
+        6.5,
+        6.0
+      ]
+    ],
+    "B3_snapshot": [
+      [
+        -16.5,
+        -6.0
+      ],
+      [
+        6.5,
+        6.0
+      ]
+    ]
+  },
+  "binary_stl_body_bbox_mm": [
+    [
+      -21.000001907348633,
+      -6.0,
+      0.0
+    ],
+    [
+      11.000000953674316,
+      6.0,
+      30.5
+    ]
+  ],
+  "B3_transform_mm": "(X,Y,Z)=(z+9,x+40,y+37)",
+  "B3_conditional_fit_image1_mm": {
+    "ear_pocket_length": 32.6,
+    "image_ear_total_free_length": 0.1,
+    "case_pocket_length": 23.6,
+    "image_case_total_free_length": 0.8,
+    "floor_Z": 31,
+    "predicted_shaft_Z_if_width_12_6_and_centred": 37.3,
+    "intended_shaft_Z": 37,
+    "predicted_shaft_Y_if_ear_centred": 40.56360791363838,
+    "intended_shaft_Y": 40
+  },
+  "canonical_parameters_mm": {
+    "BODY_L": 23.0,
+    "BODY_W": 12.0,
+    "BODY_H": 22.0,
+    "FLANGE_L": 32.0,
+    "FLANGE_W": 12.0,
+    "FLANGE_BOTTOM_Z": 16.0,
+    "FLANGE_T": 2.0,
+    "GEAR_COVER_L": 14.0,
+    "GEAR_COVER_W": 12.0,
+    "GEAR_NECK_DIA": 4.0,
+    "GEAR_COVER_BOTTOM_Z": 22.0,
+    "GEAR_COVER_H": 5.0,
+    "SHAFT_DIA": 4.6,
+    "SHAFT_BOTTOM_Z": 27.0,
+    "SHAFT_H": 3.5,
+    "HORN_LEFT_X": -18.0,
+    "HORN_RIGHT_X": 16.0,
+    "HORN_SPAN_Y": 17.0,
+    "HORN_ROOT_W": 7.0,
+    "HORN_TIP_W": 4.0,
+    "HORN_SHORT_W": 4.0,
+    "HORN_ARM_BOTTOM_Z": 30.5,
+    "HORN_ARM_T": 1.5,
+    "HORN_HUB_DIA": 7.0,
+    "HORN_HUB_BOTTOM_Z": 27.5,
+    "HORN_TOP_Z": 32.0,
+    "BODY_CENTER_X": -5.0,
+    "MOUNT_HOLE_SPACING": 28.84,
+    "MOUNT_HOLE_DIA": 2.0,
+    "MOUNT_SLOT_W": 1.0,
+    "WIRE_W": 4.0,
+    "WIRE_LENGTH": 8.0,
+    "WIRE_T": 1.6,
+    "WIRE_EXIT_Z": 5.0,
+    "HORN_SOCKET_DIA": 4.6,
+    "HORN_SOCKET_TOP_Z": 31.0,
+    "CENTER_HOLE_DIA": 2.4,
+    "ARM_HOLE_DIA": 1.0
+  },
+  "B3_snapshot_parameters": {
+    "BODY_L": 0.023,
+    "BODY_W": 0.012,
+    "BODY_H": 0.022,
+    "FLANGE_L": 0.032,
+    "FLANGE_W": 0.012,
+    "FLANGE_BOTTOM_Z": 0.016,
+    "FLANGE_T": 0.002,
+    "GEAR_COVER_L": 0.014,
+    "GEAR_COVER_W": 0.012,
+    "GEAR_NECK_DIA": 0.004,
+    "GEAR_COVER_BOTTOM_Z": 0.022,
+    "GEAR_COVER_H": 0.005,
+    "SHAFT_DIA": 0.0046,
+    "SHAFT_BOTTOM_Z": 0.027,
+    "SHAFT_H": 0.0035,
+    "HORN_LEFT_X": -0.018,
+    "HORN_RIGHT_X": 0.016,
+    "HORN_SPAN_Y": 0.017,
+    "HORN_ROOT_W": 0.007,
+    "HORN_TIP_W": 0.004,
+    "HORN_SHORT_W": 0.004,
+    "HORN_ARM_BOTTOM_Z": 0.0305,
+    "HORN_ARM_T": 0.0015,
+    "HORN_HUB_DIA": 0.007,
+    "HORN_HUB_BOTTOM_Z": 0.0275,
+    "HORN_TOP_Z": 0.032,
+    "BODY_CENTER_X": -0.005,
+    "MOUNT_HOLE_SPACING": 0.02884,
+    "MOUNT_HOLE_DIA": 0.002,
+    "MOUNT_SLOT_W": 0.001,
+    "WIRE_W": 0.004,
+    "WIRE_LENGTH": 0.008,
+    "WIRE_T": 0.0016,
+    "WIRE_EXIT_Z": 0.005,
+    "HORN_SOCKET_DIA": 0.0046,
+    "HORN_SOCKET_TOP_Z": 0.031,
+    "CENTER_HOLE_DIA": 0.0024,
+    "ARM_HOLE_DIA": 0.001,
+    "ARM_HOLES_X_LEFT": [
+      -0.0165,
+      -0.0145,
+      -0.0125,
+      -0.0105,
+      -0.0085,
+      -0.0065,
+      -0.0045
+    ],
+    "ARM_HOLES_X_RIGHT": [
+      0.005,
+      0.007,
+      0.009,
+      0.011,
+      0.013,
+      0.015
+    ],
+    "ARM_HOLES_Y": [
+      -0.0068,
+      -0.0048,
+      0.0048,
+      0.0068
+    ]
+  },
+  "models_modified": false,
+  "additional_images": [
+    {
+      "path": "C:\\Users\\kouga\\Downloads\\images.png",
+      "sha256": "ba10dcced72241569219abecba7df3d1faa98a20d8ee549cb4bc7e597930fd2d",
+      "size": [
+        383,
+        522
+      ]
+    },
+    {
+      "path": "C:\\Users\\kouga\\Downloads\\servo-mini-towerpro-sg92r-details.jpg",
+      "sha256": "e959267947189694aa83597088d7d04538e911aa895eca7ce3f2b9f6597dc976",
+      "size": [
+        1000,
+        858
+      ]
+    }
+  ],
+  "images_png_written_mm": {
+    "body_length": 22.4,
+    "width": 12.5,
+    "body_height": 22.2,
+    "gear_height": 4.3,
+    "horn_top": 30,
+    "flange_length": 32,
+    "hole_pitch": 27.7,
+    "hole_diameter": 2.2,
+    "flange_bottom": 15.7,
+    "case_top_to_flange_top": 4
+  },
+  "images_png_derived_mm": {
+    "flange_top": 18.2,
+    "flange_thickness": 2.5,
+    "gear_top": 26.5,
+    "near_body_end_to_shaft_approx": 6.278787878787878,
+    "far_body_end_to_shaft_approx": 16.12121212121212
+  },
+  "details_jpg_written_mm": {
+    "near_body_end_to_shaft": 5.9,
+    "length_segments": [
+      5.9,
+      8.8,
+      7.8
+    ],
+    "body_length": 22.5,
+    "width": 11.8,
+    "body_height": 22.7,
+    "gear_height": 4,
+    "gear_top": 26.7,
+    "shaft_height": 3.2,
+    "shaft_diameter": 4.6,
+    "flange_bottom": 15.9,
+    "flange_thickness": 2.5,
+    "flange_top": 18.4,
+    "ear_projection_left": 4.7,
+    "hole_to_right_ear_end": 2.3,
+    "mount_hole_diameter": 2,
+    "slot_width": 1.3,
+    "gear_large_diameter": 11.8,
+    "gear_small_width": 5,
+    "center_hole_diameter": 1.7,
+    "wire_bottom": 4.5,
+    "wire_height": 1.2,
+    "wire_width": 3.6,
+    "label_tolerance_percent": 1.5
+  },
+  "details_jpg_derived_mm": {
+    "far_body_end_to_shaft": 16.6,
+    "shaft_offset": 5.3500000000000005,
+    "shaft_top": 29.9,
+    "flange_length_if_symmetric": 31.9,
+    "hole_pitch_approx_from_pixels": 27.31132075471698,
+    "wire_center": 5.1
+  }
+}
