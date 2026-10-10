@@ -53,6 +53,158 @@ def contact(a, b, depth=True, step=1):
                     maximum = max(maximum, nearest[3])
     return dict(hits=len(pairs), depth=round(maximum, 3))
 
+
+def component_count(mesh):
+    by_vertex = {i: set() for i in range(len(mesh.v))}
+    for tri in mesh.t:
+        for i, vertex in enumerate(tri):
+            by_vertex[vertex].update((tri[(i + 1) % 3], tri[(i + 2) % 3]))
+    remaining = set(by_vertex)
+    count = 0
+    while remaining:
+        count += 1
+        pending = [remaining.pop()]
+        while pending:
+            vertex = pending.pop()
+            linked = by_vertex[vertex] & remaining
+            remaining.difference_update(linked)
+            pending.extend(linked)
+    return count
+
+
+def flat_plane(mesh, axis, target, center_ok):
+    candidates = []
+    for tri in mesh.t:
+        points = [mesh.v[index] for index in tri]
+        values = [point[axis] for point in points]
+        if max(values) - min(values) > 0.002:
+            continue
+        center = sum(points, Vector()) / 3
+        if center_ok(center):
+            candidates.append(sum(values) / 3)
+    if not candidates:
+        raise ValueError(f"{mesh.name}: 基準面を検出できません axis={axis} target={target}")
+    return min(candidates, key=lambda value: abs(value - target))
+
+
+def calibrate_flat_plane():
+    mesh = Mesh(
+        [Vector((0, 0, 7)), Vector((4, 0, 7)), Vector((0, 4, 7)),
+         Vector((10, 3, 0)), Vector((14, 3, 0)), Vector((10, 3, 4))],
+        [(0, 1, 2), (3, 4, 5)], "datum_calibration")
+    z_plane = flat_plane(mesh, 2, 7, lambda p: p.x < 5)
+    y_plane = flat_plane(mesh, 1, 3, lambda p: p.x > 5)
+    miss_raises = False
+    try:
+        flat_plane(mesh, 2, 0, lambda p: False)
+    except ValueError:
+        miss_raises = True
+    return dict(z_plane_mm=round(z_plane, 4), y_plane_mm=round(y_plane, 4),
+                missing_plane_rejected=miss_raises,
+                ok=abs(z_plane - 7) < 0.001 and abs(y_plane - 3) < 0.001 and miss_raises)
+
+
+def servo_fit(parts, coupon):
+    """実際のSTLから座面と長手基準面を読み、寸法図の仮定と試片を照合する。"""
+    body = parts["box"]
+    clip = parts["clip"]
+    seat_expected = OZ - P.SG.BODY_W * MM / 2
+    near_offset_expected = (P.SG.BODY_CENTER_X + P.SG.BODY_L / 2) * MM
+    near_expected = OY - near_offset_expected
+    far_expected = OY - (P.SG.BODY_CENTER_X - P.SG.BODY_L / 2) * MM
+    far_gap = P.SERVO_FAR_END_GAP * MM
+    far_wall = far_expected + far_gap
+    seat_filter = lambda p: (-31.5 < p.x < P.PED_X1 * MM - 0.5
+                             and near_expected + 1 < p.y < far_expected - 1
+                             and P.FLOOR * MM < p.z < OZ)
+    near_filter = lambda p: (p.x < P.END_WALL_X1 * MM - 0.2
+                             and seat_expected + 0.2 < p.z < OZ + P.SG.BODY_W * MM / 2 - 0.2)
+    seat_actual = flat_plane(body, 2, seat_expected, seat_filter)
+    near_actual = flat_plane(body, 1, near_expected, near_filter)
+    coupon_seat = flat_plane(coupon, 2, seat_expected, seat_filter)
+    coupon_near = flat_plane(coupon, 1, near_expected, near_filter)
+
+    tip_z0 = seat_expected + P.SERVO_SPRING_TIP_ABOVE_SEAT * MM
+    tip_z1 = tip_z0 + P.SERVO_SPRING_TIP_H * MM
+    tip_vertices = [v for v in clip.v
+                    if P.CLIP_X0 * MM - 0.01 <= v.x <= P.CLIP_X1 * MM + 0.01
+                    and tip_z0 - 0.01 <= v.z <= tip_z1 + 0.01
+                    and v.y > near_expected]
+    if not tip_vertices:
+        raise ValueError("clip: サーボ長手押さえの先端を検出できません")
+    spring_tip_y = min(v.y for v in tip_vertices)
+    intent_actual = far_expected - spring_tip_y
+    root_z = OZ + P.SG.BODY_W * MM / 2 + P.CLIP_TOP_GAP * MM
+    tip_mid_z = (tip_z0 + tip_z1) / 2
+    free_length = root_z - tip_mid_z
+    spring_t = P.SERVO_SPRING_T * MM
+    strain = 1.5 * spring_t * intent_actual / free_length ** 2
+    strain_limit = 0.02
+    deflection_at_limit = strain_limit * free_length ** 2 / (1.5 * spring_t)
+    leaf_outer = far_wall + spring_t
+    front_leg_inner = (P.PED_Y1 + P.CLIP_SIDE_GAP) * MM
+    positive_length_error = min(deflection_at_limit - intent_actual,
+                                front_leg_inner - leaf_outer)
+    axis_tol = P.SERVO_DATUM_AXIS_TOL * MM
+    body_datums = dict(
+        seat_z_mm=round(seat_actual, 4),
+        shaft_z_from_seat_mm=round(OZ - seat_actual, 4),
+        shaft_z_expected_mm=round(P.SG.BODY_W * MM / 2, 4),
+        shaft_z_error_mm=round(OZ - seat_actual - P.SG.BODY_W * MM / 2, 4),
+        near_plane_y_mm=round(near_actual, 4),
+        shaft_y_from_near_plane_mm=round(OY - near_actual, 4),
+        shaft_y_expected_mm=round(near_offset_expected, 4),
+        shaft_y_error_mm=round(OY - near_actual - near_offset_expected, 4),
+    )
+    coupon_datums = dict(
+        components=component_count(coupon),
+        seat_z_mm=round(coupon_seat, 4),
+        near_plane_y_mm=round(coupon_near, 4),
+        seat_matches_body_mm=round(coupon_seat - seat_actual, 4),
+        near_plane_matches_body_mm=round(coupon_near - near_actual, 4),
+    )
+    initial_contact = contact(clip, parts["ref_body"])
+    spring = dict(
+        thickness_mm=round(spring_t, 4),
+        intent_design_mm=round(P.SERVO_SPRING_INTENT * MM, 4),
+        intent_mesh_mm=round(intent_actual, 4),
+        free_length_mm=round(free_length, 4),
+        nominal_strain_pct=round(strain * 100, 4),
+        strain_limit_pct=round(strain_limit * 100, 2),
+        initial_contact=initial_contact,
+        insertion_check="assembly.E_clip_press（上からの全経路）",
+        method="梁下面を根元固定とする片持ち近似。先端の公称食い込みをたわみ量とした。",
+    )
+    allowance = dict(
+        body_width_error_abs_max_mm=round(axis_tol * 2, 4),
+        shaft_to_near_end_error_abs_max_mm=round(axis_tol, 4),
+        body_length_error_range_mm=[round(-intent_actual, 4), round(positive_length_error, 4)],
+        condition="実測幅の差の半分と軸寄り端寸法の差が各軸誤差内で、長さ差が範囲内なら形状で吸収できる。試片で確認する。",
+    )
+    numerical_tol = 0.003
+    minimum_wall = min(P.WALL, P.FLOOR, P.SERVO_SPRING_T) * MM
+    ok = (abs(body_datums["shaft_z_error_mm"]) <= numerical_tol
+          and abs(body_datums["shaft_y_error_mm"]) <= numerical_tol
+          and coupon_datums["components"] == 1
+          and abs(coupon_datums["seat_matches_body_mm"]) <= numerical_tol
+          and abs(coupon_datums["near_plane_matches_body_mm"]) <= numerical_tol
+          and abs(intent_actual - P.SERVO_SPRING_INTENT * MM) <= numerical_tol
+          and initial_contact["hits"] > 0 and 0.08 <= initial_contact["depth"] <= 0.16
+          and strain < strain_limit and minimum_wall >= 1.2 - numerical_tol
+          and P.SG.REFERENCE_PREFIX == "sg92r-photo-c2-drawing-trial")
+    return dict(
+        profile=P.SERVO_DIMENSION_PROFILE,
+        body_datums=body_datums,
+        coupon_datums=coupon_datums,
+        spring=spring,
+        drawing_error_allowance=allowance,
+        minimum_wall_mm=round(minimum_wall, 4),
+        minimum_wall_design_mm=round(minimum_wall, 4),
+        physical_fit_pending=not P.SERVO_DIMENSION_PROFILE["physical_fit_confirmed"],
+        ok=ok,
+    )
+
+
 def rot_x(deg, cy, cz):
     return (Matrix.Translation((0, cy, cz)) @ Matrix.Rotation(math.radians(deg), 4, "X")
             @ Matrix.Translation((0, -cy, -cz)))
@@ -277,9 +429,13 @@ def assembly(parts):
     sub = dict(body=parts["ref_body"], wire=parts["ref_wire"], horn=mv["horn"], crank=mv["crank"],
                link=mv["link"])
     mats = [(t, Matrix.Translation((0, 0, t))) for t in [70 - i * 1.0 for i in range(70)] + [0.3, 0.1, 0.0]]
+    lower_contacts = path_check(sub, {"box": parts["box"],
+                                      "speaker_clip": parts["speaker_clip"],
+                                      "speaker": parts["ref_speaker"]}, mats)
     res["D_servo_unit_lower"] = dict(
-        worst=path_check(sub, {"box": parts["box"],
-                              "speaker_clip": parts["speaker_clip"], "speaker": parts["ref_speaker"]}, mats),
+        worst={key: value for key, value in lower_contacts.items() if value["depth"] > 0.003},
+        contacts={key: dict(value, note="基準面の摺動接触")
+                  for key, value in lower_contacts.items() if value["depth"] <= 0.003},
         crank_alpha=round(alpha_mid, 1),
         note="サーボを 90° にしてホーンを付けた状態（クランクは動作範囲の中央）。配線は 8mm の固い棒で近似")
 
@@ -343,7 +499,9 @@ def assembly(parts):
     res['F_link_free_span_mm'] = round(free_span, 3)
     res['F_link_bend_method'] = f'A端を拘束。両端の丸を除く{free_span:.2f}mmを曲げられる長さとした保守的な近似。材料試験や有限要素解析は未実施'
     clip_span = OZ + P.SG.BODY_W * MM / 2 + P.CLIP_TOP_GAP * MM - (P.HOOK_Z + P.HOOK_H) * MM
-    res['clip_snap_strain_pct'] = round(100 * 1.5 * P.CLIP_LEG_T * MM * 0.9 / clip_span ** 2, 2)
+    clip_deflection = res["E_clip_press"]["worst"]["clip-box"]["depth"]
+    res['clip_snap_deflection_mm'] = clip_deflection
+    res['clip_snap_strain_pct'] = round(100 * 1.5 * P.CLIP_LEG_T * MM * clip_deflection / clip_span ** 2, 2)
     res['hinge_tip_strain_pct'] = round(100 * 1.5 * (P.HINGE_TIP_D - P.HINGE_SPLIT_W) * MM / 2 * 0.05 / (P.HINGE_SPLIT_L * MM) ** 2, 2)
     # H. エキサイターと保持具の上入れ。爪と押し当て以外の食い込みを区別する。
     up = [(t, Matrix.Translation((0, 0, t))) for t in [45 - i * 0.5 for i in range(91)]]
@@ -540,9 +698,18 @@ def main():
     t0 = time.time()
     names = ["box", "lid", "crank", "link", "pin", "clip", "speaker_clip", "ref_speaker", "ref_body", "ref_horn", "ref_wire", "roof"]
     parts = {n: Mesh.load(os.path.join(BUILD, f"{n}.stl"), n) for n in names}
+    servo_coupon = Mesh.load(os.path.join(BUILD, "servo_fit_test.stl"), "servo_fit_test")
     report = {}
     report["calibration"] = calibrate(parts)
+    report["calibration"]["flat_plane"] = calibrate_flat_plane()
+    report["calibration"]["ok"] = (report["calibration"]["ok"]
+                                      and report["calibration"]["flat_plane"]["ok"])
     print("calibration", report["calibration"], flush=True)
+    report["servo_fit"] = servo_fit(parts, servo_coupon)
+    report["servo_fit"]["instrument_calibration_ok"] = report["calibration"]["ok"]
+    report["servo_fit"]["ok"] = (report["servo_fit"]["ok"]
+                                  and report["servo_fit"]["instrument_calibration_ok"])
+    print("servo fit", json.dumps(report["servo_fit"], ensure_ascii=False), flush=True)
     thetas = [i * .5 for i in range(int(K.THETA_OPEN / .5) + 1)]
     report["motion"] = motion(parts, thetas)
     report["motion_summary"] = dict(
@@ -554,6 +721,7 @@ def main():
     print("clearance", report["motion_clearance_mm"], flush=True)
     report["lid_free_open_limit_deg"] = free_open_limit(parts)
     report["static_closed"] = {}
+    report["static_contacts"] = {}
     mv, _ = pose(parts, 0.0)
     allp = dict(parts)
     allp.update(dict(lid=mv["lid"], crank=mv["crank"], link=mv["link"]))
@@ -564,8 +732,14 @@ def main():
                 continue
             c = contact(allp[a], allp[b], depth=False)
             if c["hits"]:
-                report["static_closed"][f"{a}-{b}"] = contact(allp[a], allp[b])
+                detail = contact(allp[a], allp[b])
+                if detail["depth"] <= 0.003:
+                    report["static_contacts"][f"{a}-{b}"] = dict(
+                        detail, note="基準面または着座面の接触。食い込みなし")
+                else:
+                    report["static_closed"][f"{a}-{b}"] = detail
     print("static", report["static_closed"])
+    print("static contacts", report["static_contacts"])
     report["assembly"] = assembly(parts)
     print("assembly", json.dumps(report["assembly"], ensure_ascii=False)[:3000])
     # 質量特性（中実 PLA）
@@ -583,6 +757,8 @@ def main():
     for n in ("box", "lid", "crank", "link", "pin", "clip", "speaker_clip", "roof"):
         m = Mesh.load(os.path.join(BUILD, f"print_{n}.stl"), n)
         report["overhang"][n] = overhang_report(m)
+    report["overhang"]["servo_fit_test"] = overhang_report(
+        Mesh.load(os.path.join(BUILD, "print_servo_fit_test.stl"), "servo_fit_test"))
     for n, g in report["overhang"].items():
         print("overhang", n, len(g))
         for x in g[:12]:

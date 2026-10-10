@@ -89,6 +89,7 @@ def main():
         kin=kin,
         verify=dict(calibration=vr["calibration"], motion=vr["motion_summary"],
                     clearance=vr["motion_clearance_mm"], static=vr["static_closed"],
+                    static_contacts=vr.get("static_contacts", {}),
                     assembly=vr["assembly"], free_open=vr["lid_free_open_limit_deg"],
                     mass=vr["mass"], overhang=vr.get("overhang"),
                     overhang_calibration=vr.get("overhang_calibration")),
@@ -98,19 +99,22 @@ def main():
                for key, value in sl["parts"].items()},
         slice_calibration=sl["calibration"].get("ok"),
         parts=mr["parts"],
+        servo_dimension_profile=mr.get("servo_dimension_profile"),
+        servo_fit=vr.get("servo_fit"),
     )
     data["meta"] = dict(
-        title="住人の箱 C2",
-        summary="70 × 70 × 70 mm · SG92R · 印刷 8 点",
-        eyebrow="前側の蓋 0〜65° · 工具・ねじ・接着剤なし",
+        title="住人の箱 C2・試験寸法",
+        summary="70 × 70 × 70 mm · SG92R試験寸法 · 印刷 8 点",
+        eyebrow="前側の蓋 0〜65° · SG92R実物適合待ち",
         howto=[
             "箱の外でサーボを 90° にする。蓋が 32.5° の姿勢に合う向きでホーンを付け、クランクをかぶせる",
             f"中央から閉じる側は +{K.ALPHA0 - alpha_mid:.1f}° 相当。開く側は {alpha_open - alpha_mid:.1f}° 相当。全ストロークは {stroke:.1f}°",
             "組み終わったら 90° から閉じる側へ 1° ずつ動かし、蓋が縁に載った位置を「閉」とする",
             f"{motion_time:.1f} 秒かけて始めと終わりをゆっくり動かす。「閉」より先へ押し込まない",
         ],
-        untested="エキサイターは直径25mm、高さ10mmの包絡寸法だけを確認した。実物の接触面、保持力、音量、びびりは未検証。"
-                 "SG92R付属ホーンの幅と先端形状も写真からの推定値なので、クランクを先に刷って嵌まりを確かめる。",
+        untested="SG92Rのc2-drawing-trialは寸法図から採った試験値で、実物との適合は未確認。"
+                 "サーボ座、クランク、サーボ押さえの試片を本体より先に刷る。"
+                 "エキサイターは直径25mm、高さ10mmの包絡寸法だけを確認した。実物の接触面、保持力、音量、びびりは未検証。",
     )
     data["view"] = dict(target=[0, 0, 50], dist=300, cutX=6.0)
     data["servo_setup"] = dict(mid_deg=90.0,

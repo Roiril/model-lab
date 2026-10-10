@@ -9,7 +9,79 @@
    "depth": 0.0
   },
   "clearance_crank_vs_box_design_0.3": 0.296,
-  "ok": true
+  "ok": true,
+  "flat_plane": {
+   "z_plane_mm": 7.0,
+   "y_plane_mm": 3.0,
+   "missing_plane_rejected": true,
+   "ok": true
+  }
+ },
+ "servo_fit": {
+  "profile": {
+   "id": "c2-drawing-trial",
+   "physical_fit_confirmed": false,
+   "source": "servo-mini-towerpro-sg92r-details.jpg; images.png; SG92R_2.jpg",
+   "body_mm": [
+    22.5,
+    11.8,
+    22.7
+   ],
+   "shaft_near_end_mm": 5.9,
+   "shaft_far_end_mm": 16.6,
+   "flange_bottom_mm": 15.9,
+   "flange_thickness_mm": 2.5,
+   "gear_top_mm": 26.7,
+   "bare_shaft_top_mm": 29.9,
+   "cross_horn_top_mm": 31.7,
+   "horn_note": "クロスホーン上端31.7mmは積層を保った仮値。実物組立前。",
+   "confirmation": "サーボ座試片とC2の印刷・組立が成功した後に実物適合を記録する。"
+  },
+  "body_datums": {
+   "seat_z_mm": 24.7,
+   "shaft_z_from_seat_mm": 5.9,
+   "shaft_z_expected_mm": 5.9,
+   "shaft_z_error_mm": -0.0,
+   "near_plane_y_mm": 3.1,
+   "shaft_y_from_near_plane_mm": 5.9,
+   "shaft_y_expected_mm": 5.9,
+   "shaft_y_error_mm": 0.0
+  },
+  "coupon_datums": {
+   "components": 1,
+   "seat_z_mm": 24.7,
+   "near_plane_y_mm": 3.1,
+   "seat_matches_body_mm": 0.0,
+   "near_plane_matches_body_mm": 0.0
+  },
+  "spring": {
+   "thickness_mm": 1.2,
+   "intent_design_mm": 0.12,
+   "intent_mesh_mm": 0.12,
+   "free_length_mm": 9.4,
+   "nominal_strain_pct": 0.2445,
+   "strain_limit_pct": 2.0,
+   "initial_contact": {
+    "hits": 6,
+    "depth": 0.12
+   },
+   "insertion_check": "assembly.E_clip_press（上からの全経路）",
+   "method": "梁下面を根元固定とする片持ち近似。先端の公称食い込みをたわみ量とした。"
+  },
+  "drawing_error_allowance": {
+   "body_width_error_abs_max_mm": 0.2,
+   "shaft_to_near_end_error_abs_max_mm": 0.1,
+   "body_length_error_range_mm": [
+    -0.12,
+    0.8618
+   ],
+   "condition": "実測幅の差の半分と軸寄り端寸法の差が各軸誤差内で、長さ差が範囲内なら形状で吸収できる。試片で確認する。"
+  },
+  "minimum_wall_mm": 1.2,
+  "minimum_wall_design_mm": 1.2,
+  "physical_fit_pending": true,
+  "ok": true,
+  "instrument_calibration_ok": true
  },
  "motion": [
   {
@@ -689,7 +761,7 @@
    "at_theta": 0.0
   },
   "crank-ref_body": {
-   "min": 1.5,
+   "min": 1.8,
    "at_theta": 0.0
   },
   "link-box": {
@@ -713,12 +785,12 @@
    "at_theta": 0.0
   },
   "link-ref_body": {
-   "min": 7.945,
+   "min": 8.116,
    "at_theta": 0.0
   },
   "lid-clip": {
-   "min": 20.813,
-   "at_theta": 8.5
+   "min": 20.911,
+   "at_theta": 8.0
   },
   "lid-roof": {
    "min": 0.995,
@@ -727,29 +799,43 @@
  },
  "lid_free_open_limit_deg": 105,
  "static_closed": {
-  "box-lid": {
-   "hits": 63,
-   "depth": 0.0
-  },
   "box-pin": {
    "hits": 471,
    "depth": 0.05
   },
   "box-clip": {
-   "hits": 12,
-   "depth": 0.4
+   "hits": 29,
+   "depth": 0.75
   },
-  "box-ref_speaker": {
-   "hits": 192,
-   "depth": 0.0
-  },
-  "box-roof": {
-   "hits": 76,
-   "depth": 0.0
+  "clip-ref_body": {
+   "hits": 6,
+   "depth": 0.12
   },
   "speaker_clip-ref_speaker": {
    "hits": 200,
    "depth": 0.1
+  }
+ },
+ "static_contacts": {
+  "box-lid": {
+   "hits": 63,
+   "depth": 0.0,
+   "note": "基準面または着座面の接触。食い込みなし"
+  },
+  "box-ref_speaker": {
+   "hits": 192,
+   "depth": 0.0,
+   "note": "基準面または着座面の接触。食い込みなし"
+  },
+  "box-ref_body": {
+   "hits": 101,
+   "depth": 0.0,
+   "note": "基準面または着座面の接触。食い込みなし"
+  },
+  "box-roof": {
+   "hits": 76,
+   "depth": 0.0,
+   "note": "基準面または着座面の接触。食い込みなし"
   }
  },
  "assembly": {
@@ -1431,15 +1517,28 @@
   },
   "D_servo_unit_lower": {
    "worst": {},
+   "contacts": {
+    "body-box": {
+     "depth": 0.0,
+     "hits": 10,
+     "at": 10.0,
+     "note": "基準面の摺動接触"
+    }
+   },
    "crank_alpha": 184.8,
    "note": "サーボを 90° にしてホーンを付けた状態（クランクは動作範囲の中央）。配線は 8mm の固い棒で近似"
   },
   "E_clip_press": {
    "worst": {
     "clip-box": {
-     "depth": 0.9,
-     "hits": 44,
-     "at": 4.5
+     "depth": 1.05,
+     "hits": 12,
+     "at": 11.5
+    },
+    "clip-body": {
+     "depth": 0.12,
+     "hits": 6,
+     "at": 9.0
     }
    },
    "note": "爪が台の角を乗り越えるときの食い込み＝脚のたわみ量"
@@ -1477,7 +1576,8 @@
   "F_link_bend_strain_pct": 1.79,
   "F_link_free_span_mm": 29.23,
   "F_link_bend_method": "A端を拘束。両端の丸を除く29.23mmを曲げられる長さとした保守的な近似。材料試験や有限要素解析は未実施",
-  "clip_snap_strain_pct": 1.2,
+  "clip_snap_deflection_mm": 1.05,
+  "clip_snap_strain_pct": 1.41,
   "hinge_tip_strain_pct": 0.25,
   "H_speaker_lower": {
    "worst": {
@@ -1593,51 +1693,51 @@
    "volume_mm3": 11576.1,
    "mass_g": 14.35,
    "com_mm": [
-    0.39,
+    0.37,
     7.92,
     67.23
    ],
-   "ixx_com_mm5": 2652677.127045514
+   "ixx_com_mm5": 2652677.6528541134
   },
   "crank": {
    "volume_mm3": 2194.1,
    "mass_g": 2.72,
    "com_mm": [
-    2.02,
+    1.72,
     5.94,
     27.8
    ],
-   "ixx_com_mm5": 415463.8198644944
+   "ixx_com_mm5": 415463.9210531354
   },
   "link": {
    "volume_mm3": 1280.8,
    "mass_g": 1.59,
    "com_mm": [
-    4.95,
+    4.65,
     -3.44,
     34.28
    ],
-   "ixx_com_mm5": 290351.72254367487
+   "ixx_com_mm5": 290351.58710261877
   },
   "box": {
-   "volume_mm3": 91840.3,
-   "mass_g": 113.88,
+   "volume_mm3": 92151.9,
+   "mass_g": 114.27,
    "com_mm": [
-    -1.96,
-    2.91,
-    25.61
+    -1.99,
+    2.92,
+    25.59
    ],
-   "ixx_com_mm5": 84960813.95236778
+   "ixx_com_mm5": 84967472.68510114
   },
   "clip": {
-   "volume_mm3": 1399.2,
-   "mass_g": 1.73,
+   "volume_mm3": 1475.8,
+   "mass_g": 1.83,
    "com_mm": [
     -19.75,
-    12.15,
-    33.24
+    12.93,
+    33.09
    ],
-   "ixx_com_mm5": 375165.5422089248
+   "ixx_com_mm5": 389755.42795872927
   },
   "pin": {
    "volume_mm3": 1273.9,
@@ -1731,12 +1831,12 @@
     ],
     "bbox": [
      [
-      4.4,
+      4.1,
       6.8,
       21.7
      ],
      [
-      5.5,
+      5.2,
       11.2,
       22.8
      ]
@@ -1868,14 +1968,14 @@
       20.1
      ],
      [
-      -16.2,
+      -17.0,
       28.5,
       20.1
      ]
     ],
     "horizontal": true,
-    "supported_edge_ratio": 0.43,
-    "span_mm": 4.73
+    "supported_edge_ratio": 0.5,
+    "span_mm": 3.93
    },
    {
     "area_mm2": 8.87,
@@ -2076,6 +2176,50 @@
     "span_mm": 2.37
    },
    {
+    "area_mm2": 1.68,
+    "z": [
+     24.5,
+     24.5
+    ],
+    "bbox": [
+     [
+      -17.4,
+      29.4,
+      24.5
+     ],
+     [
+      -16.5,
+      29.7,
+      24.5
+     ]
+    ],
+    "horizontal": true,
+    "supported_edge_ratio": 0.4,
+    "span_mm": 0.92
+   },
+   {
+    "area_mm2": 1.68,
+    "z": [
+     24.5,
+     24.5
+    ],
+    "bbox": [
+     [
+      -12.6,
+      29.4,
+      24.5
+     ],
+     [
+      -11.7,
+      29.7,
+      24.5
+     ]
+    ],
+    "horizontal": true,
+    "supported_edge_ratio": 0.4,
+    "span_mm": 0.92
+   },
+   {
     "area_mm2": 1.57,
     "z": [
      60.0,
@@ -2118,50 +2262,6 @@
     "horizontal": false,
     "supported_edge_ratio": 0.48,
     "span_mm": 6.91
-   },
-   {
-    "area_mm2": 1.12,
-    "z": [
-     24.05,
-     24.05
-    ],
-    "bbox": [
-     [
-      -17.2,
-      29.2,
-      24.0
-     ],
-     [
-      -16.3,
-      29.5,
-      24.0
-     ]
-    ],
-    "horizontal": true,
-    "supported_edge_ratio": 0.4,
-    "span_mm": 0.97
-   },
-   {
-    "area_mm2": 1.12,
-    "z": [
-     24.05,
-     24.05
-    ],
-    "bbox": [
-     [
-      -13.1,
-      29.2,
-      24.0
-     ],
-     [
-      -12.2,
-      29.5,
-      24.0
-     ]
-    ],
-    "horizontal": true,
-    "supported_edge_ratio": 0.4,
-    "span_mm": 0.97
    },
    {
     "area_mm2": 0.02,
@@ -2217,12 +2317,12 @@
     ],
     "bbox": [
      [
-      7.6,
+      7.3,
       2.9,
       6.3
      ],
      [
-      8.7,
+      8.5,
       11.1,
       13.3
      ]
@@ -2525,12 +2625,12 @@
     ],
     "bbox": [
      [
-      7.6,
+      7.3,
       6.2,
       20.5
      ],
      [
-      8.6,
+      8.3,
       7.1,
       20.5
      ]
@@ -2547,12 +2647,12 @@
     ],
     "bbox": [
      [
-      7.6,
+      7.3,
       5.6,
       20.1
      ],
      [
-      8.6,
+      8.3,
       5.7,
       20.3
      ]
@@ -2569,12 +2669,12 @@
     ],
     "bbox": [
      [
-      7.6,
+      7.3,
       4.8,
       19.3
      ],
      [
-      8.6,
+      8.3,
       4.9,
       19.4
      ]
@@ -2670,7 +2770,7 @@
      ]
     ],
     "horizontal": true,
-    "supported_edge_ratio": 0.8,
+    "supported_edge_ratio": 0.79,
     "span_mm": 26.58
    },
    {
@@ -2944,7 +3044,97 @@
     "supported_edge_ratio": 0.25,
     "span_mm": 3.33
    }
+  ],
+  "servo_fit_test": [
+   {
+    "area_mm2": 10.65,
+    "z": [
+     18.3,
+     18.3
+    ],
+    "bbox": [
+     [
+      -13.6,
+      -16.4,
+      18.3
+     ],
+     [
+      -10.3,
+      -15.9,
+      18.3
+     ]
+    ],
+    "horizontal": true,
+    "supported_edge_ratio": 0.6,
+    "span_mm": 3.31
+   },
+   {
+    "area_mm2": 10.65,
+    "z": [
+     18.3,
+     18.3
+    ],
+    "bbox": [
+     [
+      -12.7,
+      15.9,
+      18.3
+     ],
+     [
+      -8.8,
+      16.4,
+      18.3
+     ]
+    ],
+    "horizontal": true,
+    "supported_edge_ratio": 0.5,
+    "span_mm": 3.93
+   },
+   {
+    "area_mm2": 1.6,
+    "z": [
+     22.7,
+     22.7
+    ],
+    "bbox": [
+     [
+      -9.2,
+      17.2,
+      22.7
+     ],
+     [
+      -8.2,
+      17.5,
+      22.7
+     ]
+    ],
+    "horizontal": true,
+    "supported_edge_ratio": 0.33,
+    "span_mm": 0.93
+   },
+   {
+    "area_mm2": 1.6,
+    "z": [
+     22.7,
+     22.7
+    ],
+    "bbox": [
+     [
+      -4.4,
+      17.2,
+      22.7
+     ],
+     [
+      -3.4,
+      17.5,
+      22.7
+     ]
+    ],
+    "horizontal": true,
+    "supported_edge_ratio": 0.33,
+    "span_mm": 0.93
+   }
   ]
  },
- "elapsed_s": 20.5
+ "elapsed_s": 24.3
 }

@@ -17,6 +17,11 @@ try {
   const A = D.verify.assembly;
   // 工程の動かし方（mm・度）。値はモデルの verify.py の経路と同じ（export_web.py が書く）
   const G = D.assembly;
+  const clipDepth = A.E_clip_press.worst["clip-box"].depth;
+  const servoSpring = D.servo_fit?.spring;
+  const clipCheck = servoSpring
+    ? `爪の押込み ${clipDepth}mm（脚の推定ひずみ ${A.clip_snap_strain_pct}%）。長手押さえの押込み ${servoSpring.intent_mesh_mm}mm（推定ひずみ ${servoSpring.nominal_strain_pct}%）。保持力は実物で確認`
+    : `爪の食い込み ${clipDepth}mm のみ`;
   const lidPlaceCheck = A.G_lid_place_after_servo || { worst: {} };
   const OPEN = D.kin.open_theta;
   const AM = k.alphaOf(D.kin.mid_theta), TM = D.kin.mid_theta;
@@ -68,7 +73,7 @@ try {
     r: G.unit_first ? `${G.lower_from_mm}mm 上から下ろす経路を検証` : `${G.lower_from_mm}mm 上から下ろす経路で当たりなし（蓋は ${BACK}° に倒した状態）`,
     f: (p) => { const dz = UP * (1 - p); return { vis: V("box", ...SPK, ...HINGED, ...UNIT, "link"), M: above(dz, {
       ...(G.unit_first ? {} : { lid: k.poseLid(BACK) }), link: mul(T(0, 0, dz), k.poseLink(AM, TM)) }) }; } };
-  const servoClip = { t: G.unit_first ? "サーボ押さえを上から押し込み、爪を台の溝に掛ける" : "押さえクリップを上から押し込み、爪を台の溝に掛ける", r: `爪が台の角を乗り越えるときの食い込み ${A.E_clip_press.worst["clip-box"].depth}mm（脚のたわみ）。ほかの当たりなし`,
+  const servoClip = { t: G.unit_first ? "サーボ押さえを上から押し込み、爪を台の溝に掛ける" : "押さえクリップを上から押し込み、爪を台の溝に掛ける", r: servoSpring ? clipCheck : `爪が台の角を乗り越えるときの食い込み ${clipDepth}mm（脚のたわみ）。ほかの当たりなし`,
     f: (p) => ({ vis: V("box", ...SPK, ...HINGED, ...UNIT, "link", "clip"), M: above(0, {
       clip: T(0, 0, (G.clip_from_mm + 3) * (1 - p)), ...(G.unit_first ? {} : { lid: k.poseLid(BACK) }), link: k.poseLink(AM, TM) }) }) };
   const placeLid = { t: `蓋を ${BACK}° 開いた姿勢にし、箱の ${G.lid_place_from_mm}mm 上から節がそろうまで下ろす`,
@@ -168,7 +173,7 @@ try {
     ["抜け止め", `動作範囲の 3 姿勢で ${A.C3_bayonet_lock.pull_check_mm ?? 1}mm 引く`, A.C3_bayonet_lock.operating.every((r) =>
       r.first_contact_mm != null ? r.first_contact_mm <= (A.C3_bayonet_lock.pull_check_mm ?? 1) : (r.pulled_2mm_hits ?? r.pulled_1mm_hits) > 0) ? "3 姿勢とも爪に当たる" : "抜ける姿勢あり"],
     ["サーボ一式を下ろす", `${G.lower_from_mm}mm 上から`, empty(A.D_servo_unit_lower.worst) ? "当たりなし" : "当たりあり"],
-    ["クリップを押し込む", `${G.clip_from_mm}mm 上から`, `爪の食い込み ${A.E_clip_press.worst["clip-box"].depth}mm のみ`],
+    ["クリップを押し込む", `${G.clip_from_mm}mm 上から`, clipCheck],
     ...(G.unit_first ? [["蓋を後から載せる", `${G.lid_place_from_mm}mm 上から。蓋 ${BACK}°`, empty(lidPlaceCheck.worst) ? "当たりなし" : "当たりあり"]] : []),
     ["ピン B を入れる", `蓋 ${BACK}° → ${TM}°`, empty(A.F_lid_down_with_link_bent.hits) ? `当たりなし（ひずみ ${A.F_link_bend_strain_pct}%）` : "当たりあり"],
     ...(D.meshes.roof ? [["固定天面を付ける", `${G.roof_from_mm ?? 45}mm 上から。蓋 ${G.roof_lid_deg ?? TM}°`,

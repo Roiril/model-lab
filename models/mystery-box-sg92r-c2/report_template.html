@@ -2,7 +2,7 @@
 <html lang="ja">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>住人の箱 C2 — 設計と検証</title>
+<title>住人の箱 C2・試験寸法 — 設計と検証</title>
 <style>
 :root {
   --paper:#f5efe2; --card:#ece4d4; --ink:#2b2723; --mute:#6a6257; --line:#d8cdb8;
@@ -66,12 +66,12 @@ figcaption { color:var(--mute); font-size:var(--fs-sm); margin-top:var(--sp-2); 
 </style>
 <main class="wrap">
   <p class="eyebrow">3Dプリント用機構 · 2026-10-10</p>
-  <h1>住人の箱 C2</h1>
-  <p class="sub">B3を現行の検証手順で見直した、前側可動天面と後ろ固定天面の別モデル</p>
+  <h1>住人の箱 C2・試験寸法</h1>
+  <p class="sub">B3を現行の検証手順で見直し、提供された寸法図をC2だけに採用した別モデル</p>
 
   <div class="lead">
     <p>70mm角と0〜65°を保ち、印刷部品をB3の22点から8点へ減らしました。工具、ねじ、接着剤を使わずに組んで外す構成です。</p>
-    <p>後ろの固定天面は点検口です。左右の解除つまみを外側から箱の中央へ押して上へ外します。蝶番の荷重は箱本体が受けます。手操作、長い脚の造形安定性、保持力、電圧、摩擦、音は未確認です。</p>
+    <p>後ろの固定天面は点検口です。左右の解除つまみを外側から箱の中央へ押して上へ外します。蝶番の荷重は箱本体が受けます。SG92R試験寸法の適合、手操作、長い脚の造形安定性、保持力、電圧、摩擦、音は未確認です。</p>
   </div>
 
   <div class="grid">
@@ -89,12 +89,19 @@ figcaption { color:var(--mute); font-size:var(--fs-sm); margin-top:var(--sp-2); 
     <tbody id="requirements"></tbody>
   </table></div>
 
+  <h2>SG92Rの採用寸法</h2>
+  <div class="tblwrap"><table>
+    <thead><tr><th>項目</th><th>採用値</th><th>扱い</th></tr></thead>
+    <tbody id="servoDimensions"></tbody>
+  </table></div>
+  <p id="servoFitStatus">サーボ座試片の結果を読込中です。</p>
+
   <h2>部品</h2>
   <div class="tblwrap"><table>
     <thead><tr><th>種類</th><th>部品</th><th>扱い</th></tr></thead>
     <tbody>
       <tr><td>印刷</td><td>箱、可動天面、固定天面、クランク、リンク、蝶番ピン、サーボ押さえ、エキサイター押さえ</td><td>PLAとPETGを各1枚へ配置する</td></tr>
-      <tr><td>既製</td><td>SG92R、付属ホーン、配線</td><td><code>models/sg92r-photo/</code> の正本を読み込む</td></tr>
+      <tr><td>既製</td><td>SG92R、付属ホーン、配線</td><td>C2だけ <code>c2-drawing-trial</code> を読み込む。実物適合は未確認</td></tr>
       <tr><td>既製</td><td>直径25mm、高さ10mmのエキサイター</td><td>仮の包絡寸法。接触面、保持力、音は未確認</td></tr>
     </tbody>
   </table></div>
@@ -149,7 +156,7 @@ figcaption { color:var(--mute); font-size:var(--fs-sm); margin-top:var(--sp-2); 
     <thead><tr><th>ファイル</th><th>推定時間</th><th>フィラメント</th><th>配置</th></tr></thead>
     <tbody id="deliveries"></tbody>
   </table></div>
-  <p>付属ホーン、継ぎ手、エキサイター保持、固定天面を試片で先に確かめます。固定天面だけはPLAとPETGの両方を刷ります。<a id="manifestLink" href="../prints/mystery-box-sg92r-c2/manifest.json" download="mystery-box-sg92r-c2-manifest.json">ファイル一覧とSHA256</a>に最終ファイルの検査値を収めました。Arduino例の端角は計算上の目安です。実物では歯の位置に合わせて1°ずつ調整します。</p>
+  <p>本体より先に、サーボ座、クランク、サーボ押さえを収めた <a id="servoFitPrint" href="../prints/mystery-box-sg92r-c2/mystery-box-sg92r-c2-servo-fit-test-PLA.gcode.3mf">サーボ座試片</a>を刷ります。付属ホーン、継ぎ手、エキサイター保持、固定天面も試片で確かめます。固定天面だけはPLAとPETGの両方を刷ります。<a id="manifestLink" href="../prints/mystery-box-sg92r-c2/manifest.json" download="mystery-box-sg92r-c2-manifest.json">ファイル一覧とSHA256</a>に最終ファイルの検査値を収めました。Arduino例の端角は計算上の目安です。実物では歯の位置に合わせて1°ずつ調整します。</p>
   <figure id="plate" hidden></figure>
 
   <h2>決めたこと</h2>
@@ -159,7 +166,8 @@ figcaption { color:var(--mute); font-size:var(--fs-sm); margin-top:var(--sp-2); 
     <li>固定天面は外側の解除つまみを箱の中央へ押して上へ外します。箱本体が蝶番を支えます。</li>
     <li>解除つまみの下端はX=±18〜20mm、Z=39〜41mmです。45°の一体腕で16mmの脚へつなぎました。爪は高さ4.8mmで、先端に2mmの厚みを残しました。</li>
     <li>壁、底、天面は3mmです。外形の角はR5です。</li>
-    <li>SG92Rと付属ホーンは <code>models/sg92r-photo/</code> の正本を読み込みます。</li>
+    <li>SG92RはC2だけ <code>c2-drawing-trial</code> を読み込みます。既定寸法は変えません。</li>
+    <li>サーボは軸に近い端と座面を隙間0の基準にします。遠い端は0.35mm空け、弾性押さえで基準へ寄せます。</li>
     <li>可動天面32.5°を中央姿勢にしました。この姿勢でサーボを90°にします。</li>
     <li>動作は1.2秒の始めと終わりをゆっくりした指令を推奨します。時間は実物の結果で調整します。</li>
   </ul>
@@ -170,6 +178,7 @@ figcaption { color:var(--mute); font-size:var(--fs-sm); margin-top:var(--sp-2); 
 
   <h2>実物で確かめること</h2>
   <ol>
+    <li>サーボ座試片を刷ります。座面、近い端の基準、遠い端の0.35mmの隙間、弾性押さえ、クランクの嵌まりを確かめます。C2本体も印刷して組み立てに成功した後に、この個体の正寸法として記録します。</li>
     <li>付属ホーン試片を刷ります。固い場合は <code>HORN_CLR</code> を0.05mmずつ広げます。</li>
     <li>PLAとPETGの固定天面試片を刷ります。外側の解除つまみを中央へ押せるか、16mmの脚が安定して造形できるか、爪が保持できるか、白化せず外せるかを比べます。</li>
     <li>蝶番ピン、リンク、サーボ押さえを試します。割れ、抜け、手で外せるかを見ます。</li>
@@ -187,6 +196,7 @@ figcaption { color:var(--mute); font-size:var(--fs-sm); margin-top:var(--sp-2); 
   const printHref = (file) => location.protocol === "file:"
     ? `../prints/mystery-box-sg92r-c2/${file}`
     : `http://localhost:3000/exports/${file}`;
+  document.getElementById("servoFitPrint").href = printHref("mystery-box-sg92r-c2-servo-fit-test-PLA.gcode.3mf");
   document.getElementById("manifestLink").href = `data:application/json;charset=utf-8,${encodeURIComponent(JSON.stringify(D.delivery, null, 1))}`;
   const fmt = (value, digits = 1) => Number(value).toFixed(digits).replace(/\.0$/, "");
   const esc = (value) => String(value).replace(/[&<>"']/g, (char) => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" })[char]);
@@ -198,7 +208,8 @@ figcaption { color:var(--mute); font-size:var(--fs-sm); margin-top:var(--sp-2); 
   const V = D.verify;
   const printPartKeys = ["box", "lid", "roof", "crank", "link", "pin", "clip", "speaker_clip"];
   const meshOk = printPartKeys.every((key) => D.parts[key].nonmanifold === 0);
-  const thinOk = printPartKeys.every((key) => (D.print_review.parts[key].thin_under_1_2mm || []).length === 0);
+  const thinOk = printPartKeys.every((key) =>
+    !(D.print_review.parts[key].thin_under_1_2mm || []).some((item) => item.min_mm < 1.195));
   document.getElementById("requirements").innerHTML = [
     ["70mm角の箱", "閉じた外形を70 × 70 × 70mmにした", "model_report.json の外接箱"],
     ["前側天面0〜65°", "SG92Rと4節リンクで前側だけを動かす", `${V.motion.steps}姿勢で意図しない当たり ${V.motion.poses_with_hits.length}件`],
@@ -206,9 +217,34 @@ figcaption { color:var(--mute); font-size:var(--fs-sm); margin-top:var(--sp-2); 
     ["印刷部品だけで固定", "圧入、バヨネット、スナップ、落とし込みを使用", "組み立て経路を工程ごとに判定"],
     ["接着剤を使わない", "エキサイターも専用押さえで留める", "保持力と音は実物確認"],
     ["サポートなし", "見える面を下または上にして8部品を配置", D.slice_calibration ? "スライス計器を校正済み" : "スライス計器は要確認"],
-    ["印刷メッシュ", "8部品の非多様体辺と1.2mm未満の薄肉を調べる", meshOk && thinOk ? "非多様体辺0。薄肉リスト空" : "要確認"],
+    ["印刷メッシュ", "8部品の非多様体辺と1.2mm未満の薄肉を調べる", meshOk && thinOk ? "非多様体辺0。肉厚1.2mm以上（数値誤差0.005mmを許容）" : "要確認"],
     ["分解できる", "蝶番、固定天面、サーボ押さえを手で外す", "手での操作は実物確認"],
   ].map(row).join("");
+
+  const profile = D.servo_dimension_profile || {};
+  const servoFit = D.servo_fit || {};
+  const body = Array.isArray(profile.body_mm) ? profile.body_mm.map((value) => fmt(value)).join(" × ") : "結果なし";
+  document.getElementById("servoDimensions").innerHTML = [
+    ["寸法プロファイル", esc(profile.id || "結果なし"), "C2だけで使用。既定寸法は維持"],
+    ["本体", `${body}mm`, "長さ × 幅 × 高さ"],
+    ["軸から本体端", `近い側 ${fmt(profile.shaft_near_end_mm)}mm / 遠い側 ${fmt(profile.shaft_far_end_mm)}mm`, "近い側を基準にする"],
+    ["取付耳", `下面 ${fmt(profile.flange_bottom_mm)}mm / 厚み ${fmt(profile.flange_thickness_mm)}mm`, "高さは寸法図から採用"],
+    ["ギアと軸", `ギア上端 ${fmt(profile.gear_top_mm)}mm / 裸軸上端 ${fmt(profile.bare_shaft_top_mm)}mm`, "寸法図から採用"],
+    ["クロスホーン", `34 × 17mm / 上端 ${fmt(profile.cross_horn_top_mm)}mm`, "外形は既存実測。上端は仮値"],
+    ["取付穴ピッチ", "28.84mm", "既存実測を維持。配線寸法も維持"],
+    ["サーボ座", "座面0mm / 近い端0mm / 遠い端0.35mm", "遠い端を弾性押さえで寄せる"],
+  ].map(row).join("");
+  const fitDetails = [];
+  const couponWall = servoFit.minimum_wall_design_mm ?? servoFit.minimum_wall_mm;
+  if (Number.isFinite(couponWall)) fitDetails.push(`設計最小肉厚 ${fmt(couponWall)}mm`);
+  if (Number.isFinite(servoFit.coupon_datums?.components)) fitDetails.push(`サーボ座メッシュ ${fmt(servoFit.coupon_datums.components, 0)}体`);
+  const fitCalculation = servoFit.ok === true
+    ? `形状計算は通過${fitDetails.length ? `（${fitDetails.join("、")}）` : ""}。`
+    : servoFit.ok === false ? "試片の形状計算は要確認です。" : "";
+  const physicalFitConfirmed = profile.physical_fit_confirmed === true;
+  document.getElementById("servoFitStatus").innerHTML = physicalFitConfirmed
+    ? '<span class="chip ok">実物適合を確認済み</span>'
+    : `<span class="chip">実物の結果待ち</span> ${fitCalculation}サーボ座試片を先に刷ります。`;
 
   const A = V.assembly;
   const empty = (value) => !value || Object.keys(value).length === 0;
@@ -246,7 +282,7 @@ figcaption { color:var(--mute); font-size:var(--fs-sm); margin-top:var(--sp-2); 
   const lidUnsupported = (D.slice["PLA/lid"] || D.slice.lid)?.floating?.external_unsupported_mm;
   document.getElementById("unsupportedNote").textContent = `G-code上の外部未支持経路は箱 ${fmt(boxUnsupported, 2)}mm、可動天面 ${fmt(lidUnsupported, 2)}mmです。`;
 
-  const files = { PLA:"PLA", PETG:"PETG", crank_test:"crank-test-PLA", joints_test:"joints-test-PLA", speaker_test:"speaker-test-PLA", roof_test_PLA:"roof-test-PLA", roof_test_PETG:"roof-test-PETG" };
+  const files = { PLA:"PLA", PETG:"PETG", servo_fit_test:"servo-fit-test-PLA", crank_test:"crank-test-PLA", joints_test:"joints-test-PLA", speaker_test:"speaker-test-PLA", roof_test_PLA:"roof-test-PLA", roof_test_PETG:"roof-test-PETG" };
   document.getElementById("deliveries").innerHTML = Object.entries(files).map(([key, suffix]) => {
     const item = D.plate[key];
     const file = `mystery-box-sg92r-c2-${suffix}.gcode.3mf`;

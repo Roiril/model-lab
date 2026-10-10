@@ -18,7 +18,7 @@
  },
  "parts": {
   "box": {
-   "triangles": 4564,
+   "triangles": 4576,
    "nonmanifold_edges": 0,
    "winding_mismatches": 0,
    "duplicate_faces": 0,
@@ -53,7 +53,7 @@
    "degenerate_faces": 0
   },
   "clip": {
-   "triangles": 52,
+   "triangles": 96,
    "nonmanifold_edges": 0,
    "winding_mismatches": 0,
    "duplicate_faces": 0,
@@ -68,6 +68,13 @@
   },
   "roof": {
    "triangles": 402,
+   "nonmanifold_edges": 0,
+   "winding_mismatches": 0,
+   "duplicate_faces": 0,
+   "degenerate_faces": 0
+  },
+  "servo_fit_test": {
+   "triangles": 690,
    "nonmanifold_edges": 0,
    "winding_mismatches": 0,
    "duplicate_faces": 0,

@@ -2,19 +2,29 @@
 
 座標: X = 左右（蝶番の軸方向）、Y = 前(+)/後(-)、Z = 上。立方体は x,y ∈ [-35, 35]mm、z ∈ [0, 70]mm。
 前側の天面はY=-13mm・Z=65mmの蝶番で開く。サーボは左の壁ぎわに寝かせ、出力軸は +X を向く。
-サーボの寸法は models/sg92r-photo/params.py（ユーザー確定の正本）から読む。ここには書き写さない。
+サーボの寸法は models/sg92r-photo/ の候補プロファイルから読む。ここには書き写さない。
 """
 # CATEGORY: ケースと展示
 
 import importlib.util as _ilu
 import os as _os
 
-_spec = _ilu.spec_from_file_location(
+_base_spec = _ilu.spec_from_file_location(
     "sg92r_photo_params",
     _os.path.join(_os.path.dirname(__file__), "..", "sg92r-photo", "params.py"),
 )
-SG = _ilu.module_from_spec(_spec)
-_spec.loader.exec_module(SG)
+_base_sg = _ilu.module_from_spec(_base_spec)
+_base_spec.loader.exec_module(_base_sg)
+_profiles_spec = _ilu.spec_from_file_location(
+    "sg92r_photo_profiles",
+    _os.path.join(_os.path.dirname(__file__), "..", "sg92r-photo", "profiles.py"),
+)
+_profiles = _ilu.module_from_spec(_profiles_spec)
+_profiles_spec.loader.exec_module(_profiles)
+
+# ユーザーの寸法図を採ったC2試作候補。実物SG92Rとの一致はservo_fit_testで未確認。
+SG = _profiles.load_profile("c2-drawing-trial", _base_sg)
+SERVO_DIMENSION_PROFILE = _profiles.profile_record(SG)
 
 # --- 外形 -------------------------------------------------------------
 CUBE = 0.070
@@ -107,7 +117,9 @@ U_COL_X1 = 0.019
 U_COL_HW = 0.0065               # 柱の幅の半分（6.5mm）
 
 # --- サーボの台 -----------------------------------------------------------
-SERVO_CLR = 0.00035             # 本体と台の壁の隙間（片側 0.35mm）
+SERVO_CLR = 0.00035             # 上から挿入する横方向だけの隙間（片側0.35mm）
+SERVO_FAR_END_GAP = 0.00035     # 軸から遠い本体端の逃げ（0.35mm）
+SERVO_DATUM_AXIS_TOL = 0.00010  # 寸法図と実物の差で許す軸位置誤差（0.10mm、試片で要確認）
 PED_X1 = -0.0105
 PED_Y0 = -0.0047                # 台の後端（-4.7mm）
 PED_Y1 = 0.0290                 # 台の前端（29mm）。クリップの外側を内壁から離す
@@ -131,6 +143,10 @@ HOOK_D = 0.0015                 # 爪のかかり（1.5mm）
 HOOK_H = 0.0020                 # 爪の高さ（2mm）
 HOOK_Z = 0.0180
 NOTCH_H = 0.0030                # 台の受け溝の高さ（3mm）
+SERVO_SPRING_T = 0.0012         # 長手押さえの厚み（1.2mm）
+SERVO_SPRING_INTENT = 0.00012   # 遠い端への公称押込み（0.12mm）
+SERVO_SPRING_TIP_ABOVE_SEAT = 0.0020  # 押さえ先端の下端（座面から2mm）
+SERVO_SPRING_TIP_H = 0.0012     # 先端の案内斜面の高さ（1.2mm）
 
 # --- 配線の出口（後ろの壁の下端）------------------------------------------
 WIRE_EXIT_X0 = -0.0300

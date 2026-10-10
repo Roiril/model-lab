@@ -118,6 +118,11 @@ def main():
     r = build("PLA", ["crank"], "mystery-box-sg92r-c2-crank-test-PLA", ranges=False)
     report["crank_test"] = r
     print(f"\n== crank test: {r['file']} support_used={r['support_used']} 予測 {r['prediction_s'] / 60:.1f} min")
+    r = build('PLA', ['servo_fit_test', 'crank', 'clip'],
+              'mystery-box-sg92r-c2-servo-fit-test-PLA', ranges=False)
+    report['servo_fit_test'] = r
+    print(f"\n== servo fit test: {r['file']} support_used={r['support_used']} "
+          f"予測 {r['prediction_s'] / 60:.1f} min")
     r = build("PLA", ["speaker_test", "speaker_clip"], "mystery-box-sg92r-c2-speaker-test-PLA", ranges=False)
     report["speaker_test"] = r
     print(f"\n== speaker test: {r['file']} support_used={r['support_used']} 予測 {r['prediction_s'] / 60:.1f} min")

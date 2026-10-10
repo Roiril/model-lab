@@ -13,7 +13,7 @@ ROOT = HERE.parents[1]
 EXPORTS = ROOT / 'exports'
 DEST = ROOT / 'prints' / HERE.name
 PARTS = ('box', 'lid', 'crank', 'link', 'pin', 'clip', 'speaker_clip', 'roof')
-COUPONS = ('speaker_test', 'roof_test_body', 'roof_test')
+COUPONS = ('servo_fit_test', 'speaker_test', 'roof_test_body', 'roof_test')
 NS = '{http://schemas.microsoft.com/3dmanufacturing/core/2015/02}'
 IDENTITY = (1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
@@ -62,8 +62,16 @@ def main():
     assert all('error' not in part for part in sliced['parts'].values())
     plates = read('plate_report.json')
     assert all(str(plates[key]['support_used']).lower() == 'false'
-               for key in ('PLA', 'PETG', 'crank_test', 'speaker_test', 'joints_test',
+               for key in ('PLA', 'PETG', 'crank_test', 'servo_fit_test', 'speaker_test', 'joints_test',
                            'roof_test_PLA', 'roof_test_PETG'))
+    servo_fit = verify['servo_fit']
+    assert servo_fit['ok']
+    assert servo_fit['coupon_datums']['components'] == 1
+    assert servo_fit['minimum_wall_mm'] >= 1.2
+    assert not [row for row in review['parts']['servo_fit_test']['thin_under_1_2mm']
+                if row['min_mm'] < 1.195]
+    assert not verify['assembly']['D_servo_unit_lower']['worst']
+    assert verify['assembly']['clip_snap_strain_pct'] <= 2
     assert not verify['motion_summary']['poses_with_hits']
     topology = read('stl_topology.json')
     assert topology['calibration']['ok']
@@ -99,7 +107,7 @@ def main():
         dst = DEST / f'{part}.stl'
         shutil.copyfile(src, dst)
         files.append(dst)
-    outputs = ('PLA', 'PETG', 'crank-test-PLA', 'speaker-test-PLA', 'joints-test-PLA',
+    outputs = ('PLA', 'PETG', 'crank-test-PLA', 'servo-fit-test-PLA', 'speaker-test-PLA', 'joints-test-PLA',
                'roof-test-PLA', 'roof-test-PETG', 'plate')
     placements = {}
     for key in outputs:
@@ -111,6 +119,8 @@ def main():
         placements[key] = placed_bounds(dst)
         assert placements[key]['ok'], placements[key]
     manifest = dict(model=HERE.name, parts=len(PARTS), pose_checks=verify['motion_summary']['steps'],
+                    servo_dimension_profile=model.get('servo_dimension_profile'),
+                    servo_fit=verify.get('servo_fit'),
                     placements=placements, files=[dict(name=f.name, bytes=f.stat().st_size, sha256=hashlib.sha256(f.read_bytes()).hexdigest()) for f in files])
     tmp = DEST / 'manifest.tmp'
     tmp.write_text(json.dumps(manifest, ensure_ascii=False, indent=1), encoding='utf-8', newline='\n')

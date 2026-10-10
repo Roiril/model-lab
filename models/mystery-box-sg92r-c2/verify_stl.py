@@ -5,7 +5,7 @@ import struct
 import sys
 sys.stdout.reconfigure(encoding='utf-8')
 ROOT = Path(__file__).resolve().parents[2]
-PARTS = ('box','lid','crank','link','pin','clip','speaker_clip','roof','speaker_test','roof_test_body','roof_test')
+PARTS = ('box','lid','crank','link','pin','clip','speaker_clip','roof','servo_fit_test','speaker_test','roof_test_body','roof_test')
 def check(path):
     data = path.read_bytes()
     count = struct.unpack_from('<I', data, 80)[0]

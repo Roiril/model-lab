@@ -14,6 +14,10 @@ from mathutils import Vector
 
 from blender_utils import EXPORTS_DIR, clear_scene, export_stl
 from params import *
+from profiles import load_profile
+
+_profile = load_profile(os.environ.get("SG92R_PROFILE", "approved"), globals())
+globals().update(vars(_profile))
 
 
 EPS = 0.00002  # 0.02 mm overlap keeps adjacent solids stable under EXACT union
@@ -315,10 +319,11 @@ def write_validation(body, horn, cable):
             },
             "separateClosedParts": 3,
         },
-        "note": "The photo-consistent flange is centred at body X=-5 mm, so the assembly X envelope is 37 mm rather than 34 mm.",
+        "note": f"Flange centre X={BODY_CENTER_X * 1000:.2f} mm; dimension profile {PROFILE_ID}.",
     }
     os.makedirs(EXPORTS_DIR, exist_ok=True)
-    path = os.path.join(EXPORTS_DIR, "sg92r-photo-validation.json")
+    data["dimension_profile"] = PROFILE_ID
+    path = os.path.join(EXPORTS_DIR, f"{REFERENCE_PREFIX}-validation.json")
     with open(path, "w", encoding="utf-8", newline="\n") as handle:
         json.dump(data, handle, ensure_ascii=False, indent=2)
         handle.write("\n")
@@ -331,8 +336,8 @@ body = build_body()
 horn = build_horn()
 cable = build_cable()
 
-export_stl("sg92r-photo-body", only=[body])
-export_stl("sg92r-photo-horn", only=[horn])
-export_stl("sg92r-photo-wire", only=[cable])
-export_stl("sg92r-photo", only=[body, horn, cable])
+export_stl(f"{REFERENCE_PREFIX}-body", only=[body])
+export_stl(f"{REFERENCE_PREFIX}-horn", only=[horn])
+export_stl(f"{REFERENCE_PREFIX}-wire", only=[cable])
+export_stl(REFERENCE_PREFIX, only=[body, horn, cable])
 write_validation(body, horn, cable)

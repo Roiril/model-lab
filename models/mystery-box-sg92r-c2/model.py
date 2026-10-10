@@ -162,24 +162,32 @@ def build_box():
         cut(b, box(-BKX, BKX, -HALF - 1, -HALF + lip, z_flat, L + 10, "back_lip"))
 
     # --- サーボの台 ---
-    sz0 = OZ - mm(SG.BODY_W) / 2           # 本体の下側面 34.6
-    sz1 = OZ + mm(SG.BODY_W) / 2           # 上側面 46.6
+    sz0 = OZ - mm(SG.BODY_W) / 2
+    sz1 = OZ + mm(SG.BODY_W) / 2
     clr = mm(P.SERVO_CLR)
-    ped_top = sz0 - clr
+    ped_top = sz0                           # 座面を軸Zの基準にする（隙間0）
     ped_x1 = mm(P.PED_X1)
     ped_y0, ped_y1 = mm(P.PED_Y0), mm(P.PED_Y1)
     union(b, box(-IN - 0.2, ped_x1, ped_y0, ped_y1, FLOOR - 0.2, ped_top, "pedestal"))
-    # 本体の両端（配線側 y=-3.5、反対側 y=19.5）を止める壁
-    near_end = OY - (mm(SG.BODY_CENTER_X) + mm(SG.BODY_L) / 2)          # X_s=+6.5 → y=3-6.5
-    far_end = OY - (mm(SG.BODY_CENTER_X) - mm(SG.BODY_L) / 2)           # X_s=-16.5 → y=19.5
+    # 軸に近い本体端をYの基準面にする。反対端だけ0.35mm逃がす。
+    near_end = OY - (mm(SG.BODY_CENTER_X) + mm(SG.BODY_L) / 2)
+    far_end = OY - (mm(SG.BODY_CENTER_X) - mm(SG.BODY_L) / 2)
+    far_gap = mm(P.SERVO_FAR_END_GAP)
     ewt = mm(P.END_WALL_T)
     ew_top = sz1 + mm(P.END_WALL_ABOVE)
     ew_x1 = mm(P.END_WALL_X1)
-    wall_n = box(-IN - 0.2, ew_x1, near_end - clr - ewt, near_end - clr, ped_top - 0.2, ew_top, "end_n")
-    cut(wall_n, box(mm(P.WIRE_SLOT_X0), mm(P.WIRE_SLOT_X1), near_end - clr - ewt - 1, near_end - clr + 1,
+    wall_n = box(-IN - 0.2, ew_x1, near_end - ewt, near_end, ped_top - 0.2, ew_top, "end_n")
+    cut(wall_n, box(mm(P.WIRE_SLOT_X0), mm(P.WIRE_SLOT_X1), near_end - ewt - 1, near_end + 1,
                     OZ - 3.0, ew_top + 1, "wire_slot"))
     union(b, wall_n)
-    union(b, box(-IN - 0.2, ew_x1, far_end + clr, far_end + clr + ewt, ped_top - 0.2, ew_top, "end_f"))
+    wall_f = box(-IN - 0.2, ew_x1, far_end + far_gap, far_end + far_gap + ewt,
+                 ped_top - 0.2, ew_top, "end_f")
+    spring_tip_z0 = ped_top + mm(P.SERVO_SPRING_TIP_ABOVE_SEAT)
+    spring_root_z = sz1 + mm(P.CLIP_TOP_GAP)
+    cut(wall_f, box(mm(P.CLIP_X0) - 0.2, ew_x1 + 0.2,
+                    far_end + far_gap - 0.5, far_end + far_gap + ewt + 0.5,
+                    spring_tip_z0 - 0.2, spring_root_z + 0.3, "spring_window"))
+    union(b, wall_f)
     # 取付耳を X で挟む柵
     ear_x0 = SX0 + mm(SG.FLANGE_BOTTOM_Z)
     ear_x1 = ear_x0 + mm(SG.FLANGE_T)
@@ -188,8 +196,8 @@ def build_box():
     fl_lo = OY - (mm(SG.BODY_CENTER_X) + mm(SG.FLANGE_L) / 2)   # 耳の後端 -8
     fl_hi = OY - (mm(SG.BODY_CENTER_X) - mm(SG.FLANGE_L) / 2)   # 耳の前端 24
     for ya, yb in ((fl_lo + 0.3, near_end - 0.5), (far_end + 0.5, fl_hi - 0.3)):
-        union(b, box(ear_x0 - 0.25 - ft, ear_x0 - 0.25, ya, yb, ped_top - 0.2, f_top, "fence_a"))
-        union(b, box(ear_x1 + 0.25, ear_x1 + 0.25 + ft, ya, yb, ped_top - 0.2, f_top, "fence_b"))
+        union(b, box(ear_x0 - clr - ft, ear_x0 - clr, ya, yb, ped_top - 0.2, f_top, "fence_a"))
+        union(b, box(ear_x1 + clr, ear_x1 + clr + ft, ya, yb, ped_top - 0.2, f_top, "fence_b"))
     # クリップの爪が掛かる溝（台の両端面）
     nz0 = mm(P.HOOK_Z) - 0.5
     nz1 = mm(P.HOOK_Z) + mm(P.HOOK_H) + 0.1
@@ -528,6 +536,21 @@ def clip_poly():
 
 def build_clip():
     c = prism(clip_poly(), "x", mm(P.CLIP_X0), mm(P.CLIP_X1), "clip")
+    sz0 = OZ - mm(SG.BODY_W) / 2
+    sz1 = OZ + mm(SG.BODY_W) / 2
+    far_end = OY - (mm(SG.BODY_CENTER_X) - mm(SG.BODY_L) / 2)
+    leaf_in = far_end + mm(P.SERVO_FAR_END_GAP)
+    leaf_out = leaf_in + mm(P.SERVO_SPRING_T)
+    tip_z0 = sz0 + mm(P.SERVO_SPRING_TIP_ABOVE_SEAT)
+    tip_z1 = tip_z0 + mm(P.SERVO_SPRING_TIP_H)
+    root_z = sz1 + mm(P.CLIP_TOP_GAP)
+    tip_y = far_end - mm(P.SERVO_SPRING_INTENT)
+    spring = prism([
+        (leaf_in, root_z + 0.2), (leaf_out, root_z + 0.2),
+        (leaf_out, tip_z0), (leaf_in, tip_z0),
+        (tip_y, (tip_z0 + tip_z1) / 2), (leaf_in, tip_z1),
+    ], "x", mm(P.CLIP_X0), mm(P.CLIP_X1), "servo_spring")
+    union(c, spring)
     c.name = "clip"
     return c
 
@@ -566,7 +589,7 @@ SERVO_MAT = Matrix(((0, 0, 1, SX0), (-1, 0, 0, OY), (0, -1, 0, OZ), (0, 0, 0, 1)
 
 
 def import_ref(name):
-    path = os.path.join(EXPORTS_DIR, f"sg92r-photo-{name}.stl")
+    path = os.path.join(EXPORTS_DIR, f"{SG.REFERENCE_PREFIX}-{name}.stl")
     before = set(bpy.data.objects)
     bpy.ops.wm.stl_import(filepath=path)
     ob = [o for o in bpy.data.objects if o not in before][0]
@@ -622,6 +645,25 @@ def bbox(ob):
     return [round(min(p[i] for p in xs), 3) for i in range(3)], [round(max(p[i] for p in xs), 3) for i in range(3)]
 
 
+def component_count(ob):
+    bm = bmesh.new()
+    bm.from_mesh(ob.data)
+    remaining = set(bm.verts)
+    count = 0
+    while remaining:
+        count += 1
+        pending = [remaining.pop()]
+        while pending:
+            vert = pending.pop()
+            for edge in vert.link_edges:
+                other = edge.other_vert(vert)
+                if other in remaining:
+                    remaining.remove(other)
+                    pending.append(other)
+    bm.free()
+    return count
+
+
 def scale_to_m(objs):
     s = Matrix.Scale(1 / MM, 4)
     for o in objs:
@@ -661,6 +703,25 @@ def main():
     to_print(speaker_test, Matrix.Identity(4))
     assert nonmanifold(speaker_test) == 0, speaker_test.name
     save_stl([speaker_test], os.path.join(BUILD, "print_speaker_test.stl"))
+    # サーボ座・長手押さえ・クランク受けを、本体と同じ面のまま先に試せる切り出し。
+    servo_fit_test = copy_obj(parts["box"], "servo_fit_test")
+    crop_z0 = FLOOR - mm(P.SERVO_SPRING_T)
+    crop_z1 = OZ + mm(P.SG.BODY_W) / 2 + 4
+    servo_fit_crop = box(-HALF - 1, mm(P.PED_X1) + 1.5,
+                         mm(P.PED_Y0) - 1, mm(P.PED_Y1) + 1,
+                         crop_z0, crop_z1, "servo_fit_seat_crop")
+    union(servo_fit_crop, box(mm(P.PED_X1) + 1.0, mm(P.U_COL_X1) - 0.5,
+                              OY - mm(P.U_COL_HW) - 1, OY + mm(P.U_COL_HW) + 1,
+                              crop_z0, crop_z1, "servo_fit_receiver_crop"))
+    intersect(servo_fit_test, servo_fit_crop)
+    assert nonmanifold(servo_fit_test) == 0, servo_fit_test.name
+    assert component_count(servo_fit_test) == 1, servo_fit_test.name
+    save_stl([servo_fit_test], os.path.join(BUILD, "servo_fit_test.stl"))
+    servo_fit_test_print = copy_obj(servo_fit_test, "servo_fit_test_print")
+    to_print(servo_fit_test_print, Matrix.Identity(4))
+    assert nonmanifold(servo_fit_test_print) == 0, servo_fit_test_print.name
+    assert component_count(servo_fit_test_print) == 1, servo_fit_test_print.name
+    save_stl([servo_fit_test_print], os.path.join(BUILD, "print_servo_fit_test.stl"))
     roof_test_body = copy_obj(parts['box'], 'roof_test_body')
     intersect(roof_test_body, box(-HALF-1, HALF+1, -26, -18.4, 35, L+1, 'roof_test_crop'))
     union(roof_test_body, box(-IN-0.2, IN+0.2, -26, -18.4, 35, 37, 'roof_test_beam'))
@@ -674,7 +735,8 @@ def main():
         assert nonmanifold(ob) == 0, ob.name
         save_stl([ob], os.path.join(BUILD, f'print_{ob.name}.stl'))
 
-    report = {"units": "mm", "parts": {}}
+    report = {"units": "mm", "parts": {},
+              "servo_dimension_profile": P.SERVO_DIMENSION_PROFILE}
     for k, ob in list(parts.items()) + [("pin_print", pin_print)]:
         report["parts"][k] = dict(nonmanifold=nonmanifold(ob), nm_at=nonmanifold_where(ob),
                                   volume_mm3=round(volume(ob), 1), bbox=bbox(ob))
@@ -682,6 +744,9 @@ def main():
     report["linkage"] = dict(H=K.H, O=K.O, a=K.A_LEN, l=K.L_LINK, B0=K.B0, alpha0=a0,
                              layers=dict(crank=[CRANK_X0, CRANK_X1], link=[LINK_X0, LINK_X1],
                                          fin=[FIN_X0, FIN_X1]))
+    report["tests"] = dict(servo_fit_test=dict(nonmanifold=nonmanifold(servo_fit_test),
+                                                components=component_count(servo_fit_test),
+                                                bbox=bbox(servo_fit_test)))
 
     # 開いた姿勢
     pm = pose_matrices(K.THETA_OPEN)
@@ -712,13 +777,16 @@ def main():
     asm = list(parts.values()) + list(refs.values())
     open_objs = [parts["box"], parts["pin"], parts["clip"], refs["body"], refs["wire"],
                  opened["lid"], opened["crank"], opened["link"], horn_open, parts["speaker_clip"], refs["speaker"], parts["roof"]]
-    all_objs = set(asm) | set(open_objs) | set(printed.values()) | {speaker_test, roof_test_body, roof_test}
+    all_objs = set(asm) | set(open_objs) | set(printed.values()) | {
+        speaker_test, servo_fit_test, servo_fit_test_print, roof_test_body, roof_test,
+    }
     scale_to_m(all_objs)
     export_stl(f"{NAME}-asm", only=asm)
     export_stl(f"{NAME}-open", only=open_objs)
     for k, ob in printed.items():
         export_stl(f"{NAME}-{k}", only=[ob])
     export_stl(f"{NAME}-speaker_test", only=[speaker_test])
+    export_stl(f"{NAME}-servo_fit_test", only=[servo_fit_test_print])
     export_stl(f'{NAME}-roof_test_body', only=[roof_test_body])
     export_stl(f'{NAME}-roof_test', only=[roof_test])
     with open(os.path.join(BUILD, "model_report.json"), "w", encoding="utf-8", newline="\n") as fh:

@@ -2,6 +2,91 @@
  "model": "mystery-box-sg92r-c2",
  "parts": 8,
  "pose_checks": 131,
+ "servo_dimension_profile": {
+  "id": "c2-drawing-trial",
+  "physical_fit_confirmed": false,
+  "source": "servo-mini-towerpro-sg92r-details.jpg; images.png; SG92R_2.jpg",
+  "body_mm": [
+   22.5,
+   11.8,
+   22.7
+  ],
+  "shaft_near_end_mm": 5.9,
+  "shaft_far_end_mm": 16.6,
+  "flange_bottom_mm": 15.9,
+  "flange_thickness_mm": 2.5,
+  "gear_top_mm": 26.7,
+  "bare_shaft_top_mm": 29.9,
+  "cross_horn_top_mm": 31.7,
+  "horn_note": "クロスホーン上端31.7mmは積層を保った仮値。実物組立前。",
+  "confirmation": "サーボ座試片とC2の印刷・組立が成功した後に実物適合を記録する。"
+ },
+ "servo_fit": {
+  "profile": {
+   "id": "c2-drawing-trial",
+   "physical_fit_confirmed": false,
+   "source": "servo-mini-towerpro-sg92r-details.jpg; images.png; SG92R_2.jpg",
+   "body_mm": [
+    22.5,
+    11.8,
+    22.7
+   ],
+   "shaft_near_end_mm": 5.9,
+   "shaft_far_end_mm": 16.6,
+   "flange_bottom_mm": 15.9,
+   "flange_thickness_mm": 2.5,
+   "gear_top_mm": 26.7,
+   "bare_shaft_top_mm": 29.9,
+   "cross_horn_top_mm": 31.7,
+   "horn_note": "クロスホーン上端31.7mmは積層を保った仮値。実物組立前。",
+   "confirmation": "サーボ座試片とC2の印刷・組立が成功した後に実物適合を記録する。"
+  },
+  "body_datums": {
+   "seat_z_mm": 24.7,
+   "shaft_z_from_seat_mm": 5.9,
+   "shaft_z_expected_mm": 5.9,
+   "shaft_z_error_mm": -0.0,
+   "near_plane_y_mm": 3.1,
+   "shaft_y_from_near_plane_mm": 5.9,
+   "shaft_y_expected_mm": 5.9,
+   "shaft_y_error_mm": 0.0
+  },
+  "coupon_datums": {
+   "components": 1,
+   "seat_z_mm": 24.7,
+   "near_plane_y_mm": 3.1,
+   "seat_matches_body_mm": 0.0,
+   "near_plane_matches_body_mm": 0.0
+  },
+  "spring": {
+   "thickness_mm": 1.2,
+   "intent_design_mm": 0.12,
+   "intent_mesh_mm": 0.12,
+   "free_length_mm": 9.4,
+   "nominal_strain_pct": 0.2445,
+   "strain_limit_pct": 2.0,
+   "initial_contact": {
+    "hits": 6,
+    "depth": 0.12
+   },
+   "insertion_check": "assembly.E_clip_press（上からの全経路）",
+   "method": "梁下面を根元固定とする片持ち近似。先端の公称食い込みをたわみ量とした。"
+  },
+  "drawing_error_allowance": {
+   "body_width_error_abs_max_mm": 0.2,
+   "shaft_to_near_end_error_abs_max_mm": 0.1,
+   "body_length_error_range_mm": [
+    -0.12,
+    0.8618
+   ],
+   "condition": "実測幅の差の半分と軸寄り端寸法の差が各軸誤差内で、長さ差が範囲内なら形状で吸収できる。試片で確認する。"
+  },
+  "minimum_wall_mm": 1.2,
+  "minimum_wall_design_mm": 1.2,
+  "physical_fit_pending": true,
+  "ok": true,
+  "instrument_calibration_ok": true
+ },
  "placements": {
   "PLA": {
    "objects": [
@@ -38,12 +123,12 @@
     {
      "id": "6",
      "min": [
-      161.6528004,
+      161.6527996,
       76.2000004,
       0.0
      ],
      "max": [
-      183.4527996,
+      183.3528004,
       115.4999996,
       6.5
      ],
@@ -53,12 +138,12 @@
     {
      "id": "8",
      "min": [
-      189.4527996,
+      189.3527996,
       76.2,
       0.0
      ],
      "max": [
-      225.4555004,
+      225.3555004,
       114.5834,
       11.6999998
      ],
@@ -164,12 +249,12 @@
     {
      "id": "6",
      "min": [
-      161.6528004,
+      161.6527996,
       76.2000004,
       0.0
      ],
      "max": [
-      183.4527996,
+      183.3528004,
       115.4999996,
       6.5
      ],
@@ -179,12 +264,12 @@
     {
      "id": "8",
      "min": [
-      189.4527996,
+      189.3527996,
       76.2,
       0.0
      ],
      "max": [
-      225.4555004,
+      225.3555004,
       114.5834,
       11.6999998
      ],
@@ -276,6 +361,57 @@
    "bbox_overlaps": [],
    "ok": true
   },
+  "servo-fit-test-PLA": {
+   "objects": [
+    {
+     "id": "2",
+     "min": [
+      66.3985996,
+      108.3500004,
+      0.0
+     ],
+     "max": [
+      88.0986004,
+      147.6499996,
+      6.5
+     ],
+     "off_bed": false,
+     "excluded": false
+    },
+    {
+     "id": "4",
+     "min": [
+      94.0986996,
+      108.35000000000001,
+      0.0
+     ],
+     "max": [
+      130.1014004,
+      146.73340000000002,
+      11.6999998
+     ],
+     "off_bed": false,
+     "excluded": false
+    },
+    {
+     "id": "6",
+     "min": [
+      136.1014,
+      108.3499996,
+      0.0
+     ],
+     "max": [
+      189.6014,
+      144.0500004,
+      38.7000008
+     ],
+     "off_bed": false,
+     "excluded": false
+    }
+   ],
+   "bbox_overlaps": [],
+   "ok": true
+  },
   "speaker-test-PLA": {
    "objects": [
     {
@@ -317,12 +453,12 @@
     {
      "id": "2",
      "min": [
-      51.2744004,
+      51.3243996,
       108.3500004,
       0.0
      ],
      "max": [
-      73.07439959999999,
+      73.0244004,
       147.6499996,
       6.5
      ],
@@ -332,12 +468,12 @@
     {
      "id": "4",
      "min": [
-      79.0743992,
+      79.0243992,
       108.34999970000001,
       0.0
      ],
      "max": [
-      128.82560080000002,
+      128.7756008,
       130.1580003,
       6.3000002
      ],
@@ -347,12 +483,12 @@
     {
      "id": "6",
      "min": [
-      134.8255992,
+      134.7755992,
       108.3499999,
       0.0
      ],
      "max": [
-      204.7256008,
+      204.67560079999998,
       113.6500001,
       4.60160018
      ],
@@ -470,12 +606,12 @@
     {
      "id": "3",
      "min": [
-      161.65279999999998,
+      161.6528,
       76.19999999999999,
       0.0
      ],
      "max": [
-      183.4528,
+      183.3528,
       115.5,
       6.5
      ],
@@ -485,12 +621,12 @@
     {
      "id": "4",
      "min": [
-      189.4528,
+      189.3528,
       76.2,
       0.0
      ],
      "max": [
-      225.45549999999997,
+      225.3555,
       114.5834,
       11.7
      ],
@@ -565,23 +701,23 @@
  "files": [
   {
    "name": "box.stl",
-   "bytes": 228284,
-   "sha256": "44b0f6092b39de9362ba28cf7f5bcb0154dec36b0809f19a093d3139a4d4b189"
+   "bytes": 228884,
+   "sha256": "67e66d018efa1a6531472b60e93d9fbccd8cc07ef55a5e26a49de1692e831cf0"
   },
   {
    "name": "lid.stl",
    "bytes": 392684,
-   "sha256": "fffa889a6aec1d7d7e307fa68ebcac7e25d8c801cefc21dc62b5f998a6db1b0d"
+   "sha256": "cde8e0006f3888d829c7d6708620bd26e6aca2692cb7877142aac69996213f3c"
   },
   {
    "name": "crank.stl",
    "bytes": 323284,
-   "sha256": "1db5fb7bd16e2fbbac5d3b3231ac8bfc53be6b55d5736d6703b3057c0bd5d418"
+   "sha256": "2102e55bc8491a1b6e75472b0a864ca2886c2dc2860281b960df3a41ac7db33a"
   },
   {
    "name": "link.stl",
    "bytes": 226984,
-   "sha256": "3dc050d9ab809cb2e0ac65e74a167ca9bc251419c112b1d5ff064e857c4e4fb5"
+   "sha256": "d97ff44b298a8aabe01e36b51cf4ec21d23024c5e40366047defc192d4f677dc"
   },
   {
    "name": "pin.stl",
@@ -590,8 +726,8 @@
   },
   {
    "name": "clip.stl",
-   "bytes": 2684,
-   "sha256": "bd99c691dee3f57b34f3ef5f9746390e745a2ccbd3aa57bb1a46661228449fa7"
+   "bytes": 4884,
+   "sha256": "e6d1251f9520b60ccd4abb28c4b54efa6b66757110a4c6bdf629cb3fefbcbfab"
   },
   {
    "name": "speaker_clip.stl",
@@ -604,9 +740,14 @@
    "sha256": "3becd937421712379a9b6079b9bdb582309213ae7822561c518ce89567dba790"
   },
   {
+   "name": "servo_fit_test.stl",
+   "bytes": 34584,
+   "sha256": "043287577d537cae49503186997f7a829ffe379dbca2d2b424edc34cd12e615e"
+  },
+  {
    "name": "speaker_test.stl",
    "bytes": 27184,
-   "sha256": "354aada78756be11b5a84e9d2fd08dcaf32770b59aedc4adae91d58221d863f8"
+   "sha256": "e696a3b644171c7467be497909476bb103c05c1082dbb02d9540e8249da03a6f"
   },
   {
    "name": "roof_test_body.stl",
@@ -620,43 +761,48 @@
   },
   {
    "name": "mystery-box-sg92r-c2-PLA.gcode.3mf",
-   "bytes": 1247306,
-   "sha256": "43e673e57a060f4d2f345d17b847c6354130ca3d413a0e3ab806217f5b87f506"
+   "bytes": 1252354,
+   "sha256": "5a3b8aa91058cb5c5e63013bc88b3df3590ee1d42cda5ff31f47e07a4d6ad352"
   },
   {
    "name": "mystery-box-sg92r-c2-PETG.gcode.3mf",
-   "bytes": 1248456,
-   "sha256": "df965084cca2fd1b3c233902ee134cebb6f7ec3b1fcab1bd6d8a67491d392b5c"
+   "bytes": 1252984,
+   "sha256": "c844e3c2196ca4932caaf13a13db20a81a981dde65af5161d81d0c589e80c6c4"
   },
   {
    "name": "mystery-box-sg92r-c2-crank-test-PLA.gcode.3mf",
-   "bytes": 206820,
-   "sha256": "78e6f2bce522ca8e781dd392c21dbcc995e0709fd772001c31524ffb0709a398"
+   "bytes": 206902,
+   "sha256": "043c42291bd1a6f460fc915af108c71beea1fd635bc0aa1619e9ab10f8577172"
+  },
+  {
+   "name": "mystery-box-sg92r-c2-servo-fit-test-PLA.gcode.3mf",
+   "bytes": 341096,
+   "sha256": "2bb02d4882c5b44cc3d53816daee910a9bacc0f39bc778049fa4bb16baf1dc3c"
   },
   {
    "name": "mystery-box-sg92r-c2-speaker-test-PLA.gcode.3mf",
-   "bytes": 124415,
-   "sha256": "5db4062975387424167db6113bd0cf9a4a2511589f47fd00a44bfad848373af5"
+   "bytes": 124417,
+   "sha256": "84f56788385fbaf6bfc04a02a1e2e613f20f33cf7aa7db49de4a258027332154"
   },
   {
    "name": "mystery-box-sg92r-c2-joints-test-PLA.gcode.3mf",
-   "bytes": 164851,
-   "sha256": "663af5053bbed2597294dfcd32f46c255fa23b6ab8716d462375f7edf308113e"
+   "bytes": 165996,
+   "sha256": "5efb926ba49c591a7a3ebd7e7d94262dfca2fba51d844490e53228612b7d656e"
   },
   {
    "name": "mystery-box-sg92r-c2-roof-test-PLA.gcode.3mf",
-   "bytes": 99177,
-   "sha256": "946a536cb3a7204ec15969e25d2470e9556b75dd5eb7df50030cc0e714d79bed"
+   "bytes": 99171,
+   "sha256": "10c6dc6fe51140fc24a9d934e8e378a159b492b804c20c2893f98dcd0ee501de"
   },
   {
    "name": "mystery-box-sg92r-c2-roof-test-PETG.gcode.3mf",
-   "bytes": 100420,
-   "sha256": "3b90b37e34931bd5e9cacc123f2c859c2006f3132492e1be3c00012c4f10317f"
+   "bytes": 100428,
+   "sha256": "92eb40ad970471612d570efe8858f2d03a364fef25ffe6068c6956c036711ea1"
   },
   {
    "name": "mystery-box-sg92r-c2-plate.3mf",
-   "bytes": 246039,
-   "sha256": "cee893b94ea765a224899564e9accc3d4696edb92c78d14c9d16638e6413d284"
+   "bytes": 246544,
+   "sha256": "5137df46bed36267ee99916cda0181de353b4c9b16fdf76e239a9071c9997493"
   }
  ]
 }
