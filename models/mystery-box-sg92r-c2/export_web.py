@@ -101,13 +101,14 @@ def main():
         parts=mr["parts"],
         servo_dimension_profile=mr.get("servo_dimension_profile"),
         servo_fit=vr.get("servo_fit"),
+        horn_orientation=vr.get("horn_orientation"),
     )
     data["meta"] = dict(
         title="住人の箱 C2・試験寸法",
         summary="70 × 70 × 70 mm · SG92R試験寸法 · 印刷 8 点",
         eyebrow="前側の蓋 0〜65° · SG92R実物適合待ち",
         howto=[
-            "箱の外でサーボを 90° にする。蓋が 32.5° の姿勢に合う向きでホーンを付け、クランクをかぶせる",
+            "箱の外でサーボを90°にする。蓋が32.5°の姿勢に合う向きでホーンを付ける。短い腕をリンクのピンA側へ向け、長い腕を反対側へ向けてクランクをかぶせる",
             f"中央から閉じる側は +{K.ALPHA0 - alpha_mid:.1f}° 相当。開く側は {alpha_open - alpha_mid:.1f}° 相当。全ストロークは {stroke:.1f}°",
             "組み終わったら 90° から閉じる側へ 1° ずつ動かし、蓋が縁に載った位置を「閉」とする",
             f"{motion_time:.1f} 秒かけて始めと終わりをゆっくり動かす。「閉」より先へ押し込まない",
@@ -123,6 +124,7 @@ def main():
                                stroke_deg=round(stroke, 1), motion_time_s=motion_time)
     data["assembly"] = dict(
         unit_first=True,
+        horn_orientation_note="短い腕をリンクのピンA側へ向ける。長い腕は反対側へ向ける。中心穴を回転中心に合わせる",
         speaker_travel_mm=45,
         speaker_step="エキサイターを上からレールへ入れ、スピーカー押さえを上から差して留める",
         speaker_check="エキサイターは直径25mm、高さ10mmの包絡寸法で確認。保持力と音量は実物で確かめる",

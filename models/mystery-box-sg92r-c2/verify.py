@@ -232,6 +232,74 @@ def pose(parts, theta, alpha=None, link_extra=None):
     return out, alpha
 
 
+def horn_orientation(parts):
+    """非対称な参照ホーンを逆向きに付けた場合のクランク食い込みを調べる。"""
+    crank = parts["crank"]
+    horn = parts["ref_horn"]
+    calibration_hit = contact(
+        crank, horn.moved(Matrix.Translation((1.0, 0, 0))))
+    calibration_miss = contact(
+        crank, horn.moved(Matrix.Translation((100.0, 0, 0))))
+    calibration_ok = (calibration_hit["depth"] > 0.3
+                      and calibration_miss["hits"] == 0)
+
+    correct_contact = contact(crank, horn)
+    correct_ok = correct_contact["depth"] <= 0.02
+    reversed_horn = horn.moved(rot_x(180.0, OY, OZ))
+    reversed_same_center_contact = contact(crank, reversed_horn)
+    reversed_same_center_rejected = reversed_same_center_contact["depth"] > 0.1
+
+    left_mm = abs(P.SG.HORN_LEFT_X * MM)
+    right_mm = P.SG.HORN_RIGHT_X * MM
+    length_difference = left_mm - right_mm
+    signed_shift = (P.SG.HORN_LEFT_X + P.SG.HORN_RIGHT_X) * MM
+    alpha = math.radians(K.ALPHA0)
+    long_arm_direction = Vector((0, math.cos(alpha), math.sin(alpha)))
+    displacement = long_arm_direction * signed_shift
+    outline_aligned = reversed_horn.moved(Matrix.Translation(displacement))
+    outline_aligned_contact = contact(crank, outline_aligned)
+    outline_aligned_rejected = outline_aligned_contact["depth"] > 0.1
+
+    overall_ok = (calibration_ok and correct_ok
+                  and reversed_same_center_rejected and outline_aligned_rejected)
+    return dict(
+        left_mm=round(left_mm, 3),
+        right_mm=round(right_mm, 3),
+        length_difference_mm=round(length_difference, 3),
+        calibration=dict(
+            horn_plus_x_1mm=calibration_hit,
+            horn_plus_x_100mm=calibration_miss,
+            ok=calibration_ok,
+        ),
+        correct=dict(correct_contact, contact=correct_contact, ok=correct_ok),
+        reversed_same_center=dict(
+            reversed_same_center_contact,
+            contact=reversed_same_center_contact,
+            rejected=reversed_same_center_rejected,
+        ),
+        reversed_outline_aligned=dict(
+            outline_aligned_contact,
+            contact=outline_aligned_contact,
+            shift_mm=round(signed_shift, 3),
+            axis_displacement_mm=round(displacement.length, 3),
+            rejected=outline_aligned_rejected,
+        ),
+        note="名目形状。実物の弾性と印刷誤差は未確認",
+        ok=overall_ok,
+        overall_ok=overall_ok,
+    )
+
+
+def print_horn_orientation(result):
+    print("horn orientation", dict(
+        calibration=result["calibration"]["ok"],
+        correct_depth_mm=result["correct"]["depth"],
+        reversed_same_center_depth_mm=result["reversed_same_center"]["depth"],
+        reversed_outline_aligned_depth_mm=result["reversed_outline_aligned"]["depth"],
+        ok=result["overall_ok"],
+    ), flush=True)
+
+
 # ---------------------------------------------------------------------------
 # 1. 計器の校正
 # ---------------------------------------------------------------------------
@@ -696,6 +764,18 @@ def calib_overhang():
 
 def main():
     t0 = time.time()
+    if "--horn-orientation-only" in sys.argv:
+        parts = {name: Mesh.load(os.path.join(BUILD, f"{name}.stl"), name)
+                 for name in ("crank", "ref_horn")}
+        result = horn_orientation(parts)
+        with open(os.path.join(BUILD, "horn_orientation_report.json"), "w",
+                  encoding="utf-8", newline="\n") as fh:
+            json.dump(result, fh, ensure_ascii=False, indent=1)
+        print_horn_orientation(result)
+        if not result["overall_ok"]:
+            raise RuntimeError("ホーン逆向き装着の検査に失敗しました")
+        return
+
     names = ["box", "lid", "crank", "link", "pin", "clip", "speaker_clip", "ref_speaker", "ref_body", "ref_horn", "ref_wire", "roof"]
     parts = {n: Mesh.load(os.path.join(BUILD, f"{n}.stl"), n) for n in names}
     servo_coupon = Mesh.load(os.path.join(BUILD, "servo_fit_test.stl"), "servo_fit_test")
@@ -705,6 +785,10 @@ def main():
     report["calibration"]["ok"] = (report["calibration"]["ok"]
                                       and report["calibration"]["flat_plane"]["ok"])
     print("calibration", report["calibration"], flush=True)
+    report["horn_orientation"] = horn_orientation(parts)
+    print_horn_orientation(report["horn_orientation"])
+    if not report["horn_orientation"]["overall_ok"]:
+        raise RuntimeError("ホーン逆向き装着の検査に失敗しました")
     report["servo_fit"] = servo_fit(parts, servo_coupon)
     report["servo_fit"]["instrument_calibration_ok"] = report["calibration"]["ok"]
     report["servo_fit"]["ok"] = (report["servo_fit"]["ok"]

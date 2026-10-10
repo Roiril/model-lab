@@ -56,7 +56,9 @@ try {
       ? `右から ${G.pin_path_mm}mm 通す。先端の割りが穴に ${A.A_hinge_pin_insert.worst["pin-box"].depth}mm 食い込んで留まる`
       : `当たるのは先端の割りと左の止まり穴だけ（食い込み ${A.A_hinge_pin_insert.worst["pin-box"].depth}mm＝設計した圧入）`,
     f: (p) => ({ vis: V("box", ...SPK, "lid", "pin"), M: { pin: T(G.pin_travel_mm * (1 - p), 0, 0) } }) };
-  const buildUnit = { t: "箱の外で、90° にしたサーボへホーンを押し込み、クランクをかぶせる", r: `クランクを ${G.crank_push_mm}mm 手前から押し込む経路で当たりなし`,
+  const hornNote = G.horn_orientation_note ? `。${G.horn_orientation_note}` : "";
+  const hornCheck = D.horn_orientation?.ok ? "。逆向きと、外形を合わせた逆向きは奥まで入らない" : "";
+  const buildUnit = { t: `箱の外で、90° にしたサーボへホーンを押し込み、クランクをかぶせる${hornNote}`, r: `クランクを ${G.crank_push_mm}mm 手前から押し込む経路で当たりなし${hornCheck}`,
     f: (p) => ({ vis: V("box", ...SPK, ...HINGED, ...UNIT), M: above(UP, { crank: mul(T(0, 0, UP), mul(T((G.crank_push_mm + 6) * (1 - p), 0, 0), k.poseCrank(AM))) }) }) };
   const attachLink = { t: "リンクの穴の切り欠きをピン A の爪に合わせて差し、回して戻す",
     r: `差す・回すとも当たりなし。動作範囲では ${A.C3_bayonet_lock.pull_check_mm ?? 1}mm 引くと爪に当たる（抜けない）`,

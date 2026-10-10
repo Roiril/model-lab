@@ -95,6 +95,10 @@ figcaption { color:var(--mute); font-size:var(--fs-sm); margin-top:var(--sp-2); 
     <tbody id="servoDimensions"></tbody>
   </table></div>
   <p id="servoFitStatus">サーボ座試片の結果を読込中です。</p>
+  <h3>実物で判明したこと</h3>
+  <p>Bの組立不能はホーンの左右逆装着が主因でした。向きを直すとBも組めました。C1は変更せず印刷して組め、回転も成功しました。寸法差を主因とした推測は撤回します。</p>
+  <p>この結果からC2の幅11.8mmは確定しません。<a href="https://towerpro.com.tw/product/sg92r-7/">メーカーの製品ページ</a>も、仕様欄の23 × 12.2 × 27mmと寸法表のB=22.8mm、C=26.7mm、D=12.6mmが一致しません。C2は詳細図の一式を試験値として保ちます。</p>
+  <p id="hornOrientationStatus"></p>
 
   <h2>部品</h2>
   <div class="tblwrap"><table>
@@ -110,7 +114,7 @@ figcaption { color:var(--mute); font-size:var(--fs-sm); margin-top:var(--sp-2); 
   <p>サーボ一式を先に箱へ入れます。可動天面はその後に95°で載せます。固定天面は最後に付けます。</p>
   <ol>
     <li>エキサイターを上から右壁の案内へ入れます。押さえを上から差します。</li>
-    <li>箱の外でサーボを90°にします。中央姿勢に合う向きで付属ホーンを付け、クランクをかぶせます。</li>
+    <li>箱の外でサーボを90°にします。中央姿勢に合う向きで付属ホーンを付けます。短い腕をリンクのピンA側へ向けます。長い腕は反対側へ向けます。中心穴が回転中心に合うことを確認してクランクをかぶせます。</li>
     <li>リンクの鍵溝をピンAの爪に合わせて差します。リンクを動作位置まで回します。</li>
     <li>サーボ一式を上から箱へ下ろします。配線を後ろの出口へ通します。</li>
     <li>サーボ押さえを上から押し込みます。</li>
@@ -245,6 +249,14 @@ figcaption { color:var(--mute); font-size:var(--fs-sm); margin-top:var(--sp-2); 
   document.getElementById("servoFitStatus").innerHTML = physicalFitConfirmed
     ? '<span class="chip ok">実物適合を確認済み</span>'
     : `<span class="chip">実物の結果待ち</span> ${fitCalculation}サーボ座試片を先に刷ります。`;
+  const hornOrientation = D.horn_orientation;
+  if (hornOrientation) {
+    const reversed = hornOrientation.reversed_same_center;
+    const aligned = hornOrientation.reversed_outline_aligned;
+    document.getElementById("hornOrientationStatus").textContent = hornOrientation.ok
+      ? `C2の名目形状は正しい向きで食い込みなし。180°逆向きでは${fmt(reversed.depth)}mm食い込みます。外形を合わせて中心を${fmt(aligned.axis_displacement_mm)}mm移しても${fmt(aligned.depth)}mm食い込みます。実物の弾性と印刷誤差は未確認です。`
+      : "C2のホーンの向きは形状検査を要確認です。";
+  }
 
   const A = V.assembly;
   const empty = (value) => !value || Object.keys(value).length === 0;

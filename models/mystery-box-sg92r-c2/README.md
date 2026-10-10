@@ -4,6 +4,10 @@ B3 の70mm角と0〜65°の開閉範囲を保ち、現行の検証手順で作�
 
 C2 は `c2-drawing-trial` 寸法プロファイルを使う。これは提供された寸法図を採った試験値で、実物SG92Rとの適合は未確認。`models/sg92r-photo/params.py` の既定寸法は変更しない。サーボ座試片を先に確認する。C2本体も印刷して組み立てに成功した後に、この個体の正寸法として記録する。
 
+2026-10-10の実物確認で、Bの組立不能はホーンの左右逆装着が主因と判明した。向きを直すとBも組めた。C1は変更せず印刷して組め、回転も成功した。サーボ本体の寸法差を主因とした推測は撤回する。この結果からC2の幅11.8mmやホーン上端31.7mmは確定しない。
+
+候補は詳細図の一式を保つ。メーカーの[SG92R製品ページ](https://towerpro.com.tw/product/sg92r-7/)も仕様欄の23 × 12.2 × 27mmと寸法表のB=22.8mm、C=26.7mm、D=12.6mmが一致しない。組めなかったことを根拠に値を変更せず、同じ座と受けを持つ試片で確かめる。
+
 Studio: http://localhost:3000/?model=mystery-box-sg92r-c2
 
 検証レポート: `reports/2026-10-10_mystery-box-c2.html`
@@ -60,7 +64,7 @@ Studio: http://localhost:3000/?model=mystery-box-sg92r-c2
 工具、ねじ、結束バンド、接着剤は使わない。
 
 1. エキサイターを上から右壁の案内へ入れる。`speaker_clip` を上から押し込む
-2. 箱の外でサーボを90°にする。中央姿勢に合う向きで付属ホーンを付け、`crank` をかぶせる
+2. 箱の外でサーボを90°にする。中央姿勢に合う向きで付属ホーンを付ける。ホーンの短い腕をリンクのピンA側へ向ける。長い腕は反対側へ向ける。中心穴がクランクの回転中心に合うことを確認して `crank` をかぶせる
 3. `link` の鍵溝をピンAの爪へ合わせて差す。動作位置まで回す
 4. サーボ一式を上から箱へ下ろす。配線を後ろの出口へ通す
 5. `clip` を上から押し込み、サーボを留める
@@ -102,6 +106,7 @@ Bambu Lab X1C、0.4mmノズル、PEIプレート用。PLA用とPETG用を各1枚
 ```bash
 py -3.11 models/mystery-box-sg92r-c2/build_reference.py
 ./run.sh models/mystery-box-sg92r-c2/model.py
+"C:/Program Files/Blender Foundation/Blender 5.1/blender.exe" --background --python-exit-code 1 --python models/mystery-box-sg92r-c2/verify.py -- --horn-orientation-only
 "C:/Program Files/Blender Foundation/Blender 5.1/blender.exe" --background --python-exit-code 1 --python models/mystery-box-sg92r-c2/verify.py
 py -3.11 models/mystery-box-sg92r-c2/simulate.py
 py -3.11 models/mystery-box-sg92r-c2/slice_check.py

@@ -1,0 +1,48 @@
+{
+ "left_mm": 18.0,
+ "right_mm": 16.0,
+ "length_difference_mm": 2.0,
+ "calibration": {
+  "horn_plus_x_1mm": {
+   "hits": 1853,
+   "depth": 1.0
+  },
+  "horn_plus_x_100mm": {
+   "hits": 0,
+   "depth": 0.0
+  },
+  "ok": true
+ },
+ "correct": {
+  "hits": 1560,
+  "depth": 0.0,
+  "contact": {
+   "hits": 1560,
+   "depth": 0.0
+  },
+  "ok": true
+ },
+ "reversed_same_center": {
+  "hits": 1573,
+  "depth": 1.564,
+  "contact": {
+   "hits": 1573,
+   "depth": 1.564
+  },
+  "rejected": true
+ },
+ "reversed_outline_aligned": {
+  "hits": 1962,
+  "depth": 0.822,
+  "contact": {
+   "hits": 1962,
+   "depth": 0.822
+  },
+  "shift_mm": -2.0,
+  "axis_displacement_mm": 2.0,
+  "rejected": true
+ },
+ "note": "名目形状。実物の弾性と印刷誤差は未確認",
+ "ok": true,
+ "overall_ok": true
+}
