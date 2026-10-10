@@ -82,6 +82,7 @@ bpy.data.objects.remove(cutter, do_unlink=True)
 ### Transform の適用
 
 スケール変更後は必ず `bpy.ops.object.transform_apply(scale=True)` を実行する。
+分解表示で `location` や `rotation_euler` を変更した後は、`bpy.context.view_layer.update()` を呼んでから `matrix_world` と `bound_box` を読む。投影後の最小・最大からカメラを合わせ、実画像で四辺の余白を確認する。表示だけの修正では検証済みSTLを再出力しない。
 Boolean前に適用しないと寸法がずれる。
 
 ---
