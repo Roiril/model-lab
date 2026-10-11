@@ -56,6 +56,7 @@ def frames():
             "drive_gear": rotate_x_matrix(-delta, P.SERVO_AXIS_Y * 1000, P.SERVO_AXIS_Z * 1000),
             "ref_horn": rotate_x_matrix(-delta, P.SERVO_AXIS_Y * 1000, P.SERVO_AXIS_Z * 1000),
             "camshaft": rotate_x_matrix(delta, P.CAM_AXIS_Y * 1000, P.CAM_AXIS_Z * 1000),
+            "left_spacer": rotate_x_matrix(delta, P.CAM_AXIS_Y * 1000, P.CAM_AXIS_Z * 1000),
             "cam_gear": rotate_x_matrix(delta, P.CAM_AXIS_Y * 1000, P.CAM_AXIS_Z * 1000),
         }
         for i in range(P.GRID_N):

@@ -1,4 +1,4 @@
-"""格子箱の組立工程を表示用JSONとEXACT検査へ同じフレームから書き出す。"""
+"""格子箱の組立工程を表示用JSONとMANIFOLD検査へ同じフレームから書き出す。"""
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -160,7 +160,7 @@ class ExactAdapter:
                 self.meshes, left, right, left_matrix, right_matrix)
             return {
                 "common_volume_mm3": result["volume_mm3"],
-                "intersection_bounds_mm": None,
+                "intersection_bounds_mm": result.get("intersection_bounds_mm"),
                 "existing_allowed": bool(result.get("flex") and result["ok"]),
                 "existing_detail": result.get("flex"),
                 "zone_ok": None,
@@ -223,13 +223,15 @@ def audit_step(adapter, step):
                 continue
             allowance = allowance_map.get(key)
             cache_key = None
-            if allowance is None or allowance.kind == "reference_internal":
+            if allowance is None:
                 cache_key = (key, relative_key(matrices[left], matrices[right]))
             measured = cache.get(cache_key) if cache_key is not None else None
             if measured is None:
                 measured = adapter.measure(
                     left, right, matrices[left], matrices[right], allowance)
-                if cache_key is not None:
+                # 接触位置を記録する場合は各姿勢の実境界を測る。
+                # 共通剛体運動で体積が同じでも、前の姿勢の世界座標を再利用しない。
+                if cache_key is not None and measured["common_volume_mm3"] <= VOLUME_LIMIT_MM3:
                     cache[cache_key] = measured
             row["exactSamples"] += 1
             volume = measured["common_volume_mm3"]
@@ -330,6 +332,11 @@ def file_hashes(build, parts):
 def run(plan, verify, build, load_mesh: Callable[[str], object], calibration):
     build = Path(build)
     start_hashes = file_hashes(build, plan.target_parts)
+    root = Path(__file__).resolve().parents[1]
+    algorithms = [Path(__file__).resolve(), root / 'lib/solid_volume.py',
+                  *(build.parent / name for name in ('verify.py', 'assembly.py', 'params.py'))]
+    algorithm_hashes = {path.relative_to(root).as_posix(): hashlib.sha256(path.read_bytes()).hexdigest()
+                        for path in algorithms}
     meshes = {part: load_mesh(part) for part in plan.target_parts}
     adapter = ExactAdapter(plan.model, verify, meshes)
     frame_validation = validate_frames(plan)
@@ -343,6 +350,7 @@ def run(plan, verify, build, load_mesh: Callable[[str], object], calibration):
                    if part in plan.state and not matrix_close(plan.state[part], IDENTITY)]
     final_state = {
         "pass": not final_missing and not final_extra and not final_moved,
+        "basis": "part completeness and final identity transforms; final collision poses are included in step audits",
         "expectedParts": list(plan.target_parts),
         "missing": final_missing,
         "extra": final_extra,
@@ -358,9 +366,11 @@ def run(plan, verify, build, load_mesh: Callable[[str], object], calibration):
     end_hashes = file_hashes(build, plan.target_parts)
     source_integrity = {"pass": start_hashes == end_hashes,
                         "start": start_hashes, "end": end_hashes}
+    algorithm_integrity = all(hashlib.sha256((root / path).read_bytes()).hexdigest() == expected
+                              for path, expected in algorithm_hashes.items())
     passed = (calibration["pass"] and frame_validation["pass"]
               and all(step["report"]["pass"] for step in plan.steps)
-              and final_state["pass"] and reverse["pass"] and source_integrity["pass"])
+              and final_state["pass"] and reverse["pass"] and source_integrity["pass"] and algorithm_integrity)
     output_steps = []
     for step in plan.steps:
         output_steps.append({key: value for key, value in step.items()
@@ -368,13 +378,14 @@ def run(plan, verify, build, load_mesh: Callable[[str], object], calibration):
     document = {
         "model": plan.model,
         "source_sha256": start_hashes,
+        "algorithm_sha256": algorithm_hashes,
         "steps": output_steps,
         "calibration": calibration,
         "pass": passed,
     }
     report = {
         "model": plan.model,
-        "method": ("display transforms and Blender Boolean EXACT are generated from the same "
+        "method": ("display transforms and Blender Boolean MANIFOLD are generated from the same "
                    "column-major millimetre frames"),
         "calibration": calibration,
         "frameValidation": frame_validation,
@@ -383,6 +394,8 @@ def run(plan, verify, build, load_mesh: Callable[[str], object], calibration):
         "finalState": final_state,
         "reverseDisassembly": reverse,
         "sourceIntegrity": source_integrity,
+        "algorithm_sha256": algorithm_hashes,
+        "algorithmIntegrity": algorithm_integrity,
         "limitations": [
             "SG92Rホーンの実物装着と電源操作は未検証。",
             "圧入、スナップ、材料収縮、摩擦は実物未検証。",

@@ -2,16 +2,16 @@
   "version": 1,
   "model": "mystery-box-sg92r-c3",
   "kind": "plate",
-  "id": "8346d76a4cd9b3bf35e7b2be5977b7d0164ab761b7035e8ad2ef58c4e1ce6061",
+  "id": "9f374bde535c3b6600e182298258f6dc9bd805e40b10b094b048876f6a39dc27",
   "source3mf": "mystery-box-sg92r-c3-layout.3mf",
-  "source3mfSha256": "8346d76a4cd9b3bf35e7b2be5977b7d0164ab761b7035e8ad2ef58c4e1ce6061",
+  "source3mfSha256": "9f374bde535c3b6600e182298258f6dc9bd805e40b10b094b048876f6a39dc27",
   "bed": {
     "width": 256.0,
     "depth": 256.0
   },
   "parts": [
     {
-      "file": "mystery-box-sg92r-c3-studio-plate-8346d76a4cd9-print-shell-1.stl",
+      "file": "mystery-box-sg92r-c3-studio-plate-9f374bde535c-print-shell-1.stl",
       "sourcePart": "mystery-box-sg92r-c3-print-shell",
       "sourceFile": "mystery-box-sg92r-c3-print-shell.stl",
       "objectId": "1",
@@ -25,33 +25,33 @@
         0.0,
         0.0,
         1.0,
-        50.8665,
-        87.0,
+        55.5,
+        81.625,
         0.0
       ],
-      "sha256": "63750295a76bd462e82360561169502527a1359ab13e599d8424fd338689135c",
-      "size": 78384,
+      "sha256": "4b4c32db5fda012d5dcba8895d62be8a7728f1394bc1abfe18ff1863212c7825",
+      "size": 160384,
       "bbox": {
         "min": [
-          10.866499900817871,
-          47.0,
+          15.5,
+          41.625,
           0.0
         ],
         "max": [
-          90.86650085449219,
-          127.0,
+          95.5,
+          121.625,
           80.0
         ]
       },
       "source": {
         "file": "mystery-box-sg92r-c3-print-shell.stl",
-        "sha256": "230e95570e71da845c57ea0af4a3a73ae1071421f2a2de29965bb4605b7733f5",
-        "size": 78384,
-        "mtime": 1791643414529.7625
+        "sha256": "bc20801e100c4bed1d3f1efad876796b1c30743e9ca2c298b590ba0795b953b0",
+        "size": 160384,
+        "mtime": 1791682389376.4854
       }
     },
     {
-      "file": "mystery-box-sg92r-c3-studio-plate-8346d76a4cd9-print-top_frame-2.stl",
+      "file": "mystery-box-sg92r-c3-studio-plate-9f374bde535c-print-top_frame-2.stl",
       "sourcePart": "mystery-box-sg92r-c3-print-top_frame",
       "sourceFile": "mystery-box-sg92r-c3-print-top_frame.stl",
       "objectId": "2",
@@ -65,21 +65,21 @@
         0.0,
         0.0,
         1.0,
-        133.5665,
-        83.7,
+        138.2,
+        78.325,
         0.0
       ],
-      "sha256": "f546d458bab3ee7055936f8e4ba6ad4e911d6dc67d053cfe11fe323996c8c45b",
+      "sha256": "5a22297251a13bb5b29d3398891458c671e3082d8821f553eb8b46d021463a00",
       "size": 3284,
       "bbox": {
         "min": [
-          96.86650085449219,
-          47.0,
+          101.5,
+          41.625,
           0.0
         ],
         "max": [
-          170.26649475097656,
-          120.4000015258789,
+          174.89999389648438,
+          115.0250015258789,
           5.5
         ]
       },
@@ -91,7 +91,7 @@
       }
     },
     {
-      "file": "mystery-box-sg92r-c3-studio-plate-8346d76a4cd9-print-carrier_0-3.stl",
+      "file": "mystery-box-sg92r-c3-studio-plate-9f374bde535c-print-carrier_0-3.stl",
       "sourcePart": "mystery-box-sg92r-c3-print-carrier_0",
       "sourceFile": "mystery-box-sg92r-c3-print-carrier_0.stl",
       "objectId": "3",
@@ -105,33 +105,33 @@
         0.0,
         0.0,
         1.0,
-        159.0665,
-        79.5,
+        163.7,
+        74.125,
         0.0
       ],
-      "sha256": "71482f7428568fec221cc3f3dc5e829355a6aa5dcc99277e554eaa74da176acf",
-      "size": 12484,
+      "sha256": "0d6f4cba881749c8435c928d1602e77490d896912dcffa4470e20597513b37f2",
+      "size": 12884,
       "bbox": {
         "min": [
-          176.26649475097656,
-          47.0,
+          180.89999389648438,
+          41.625,
           0.0
         ],
         "max": [
-          186.66650390625,
-          112.0,
+          191.3000030517578,
+          106.625,
           25.299999237060547
         ]
       },
       "source": {
         "file": "mystery-box-sg92r-c3-print-carrier_0.stl",
-        "sha256": "cafe5172f310f49a78739bc032ca8ccd4977fe7627a9f6e7e92a10dadc4ea42f",
-        "size": 12484,
-        "mtime": 1791642329544.4746
+        "sha256": "518f234bcd01fd30dde1fb4079ef9a816f861a5328d538d5d5c37117e7a67c8a",
+        "size": 12884,
+        "mtime": 1791682673134.8022
       }
     },
     {
-      "file": "mystery-box-sg92r-c3-studio-plate-8346d76a4cd9-print-carrier_1-4.stl",
+      "file": "mystery-box-sg92r-c3-studio-plate-9f374bde535c-print-carrier_1-4.stl",
       "sourcePart": "mystery-box-sg92r-c3-print-carrier_1",
       "sourceFile": "mystery-box-sg92r-c3-print-carrier_1.stl",
       "objectId": "4",
@@ -145,35 +145,35 @@
         0.0,
         0.0,
         1.0,
-        186.6665,
-        79.5,
+        191.3,
+        74.125,
         0.0
       ],
-      "sha256": "0b42e0ab7fd1ccdaacc522db787c6811531325a4f0a86a138f8d6704400621a2",
-      "size": 12484,
+      "sha256": "fb754a4d801a24843edec10bc5b28c068039c523c815145d998a254293efafec",
+      "size": 12884,
       "bbox": {
         "min": [
-          192.66650390625,
-          47.0,
+          197.3000030517578,
+          41.625,
           0.0
         ],
         "max": [
-          203.06649780273438,
-          112.0,
+          207.6999969482422,
+          106.625,
           25.299999237060547
         ]
       },
       "source": {
         "file": "mystery-box-sg92r-c3-print-carrier_1.stl",
-        "sha256": "531869f2ef06b4b40fd60c594c7df4d0b915573bb3906c349dc54b8c9eb0b700",
-        "size": 12484,
-        "mtime": 1791642329564.468
+        "sha256": "48da64161ee99b3efb1297ef38e6ebac5b0d9eb319115ca27a39beb281416097",
+        "size": 12884,
+        "mtime": 1791682673148.832
       }
     },
     {
-      "file": "mystery-box-sg92r-c3-studio-plate-8346d76a4cd9-print-carrier_2-5.stl",
-      "sourcePart": "mystery-box-sg92r-c3-print-carrier_2",
-      "sourceFile": "mystery-box-sg92r-c3-print-carrier_2.stl",
+      "file": "mystery-box-sg92r-c3-studio-plate-9f374bde535c-print-carrier_3-5.stl",
+      "sourcePart": "mystery-box-sg92r-c3-print-carrier_3",
+      "sourceFile": "mystery-box-sg92r-c3-print-carrier_3.stl",
       "objectId": "5",
       "buildTransform": [
         1.0,
@@ -185,35 +185,35 @@
         0.0,
         0.0,
         1.0,
-        214.2665,
-        79.5,
+        230.1,
+        74.125,
         0.0
       ],
-      "sha256": "ad7b71e4861ab3e7c1c5d3502357e0bdab903e89df5e23569ada4d5b5041cf27",
-      "size": 12484,
+      "sha256": "cf68f56a78c381038c297968d8ffafebe440e97ab0560e05f4f095ae624f7f79",
+      "size": 12884,
       "bbox": {
         "min": [
-          209.06649780273438,
-          47.0,
+          213.6999969482422,
+          41.625,
           0.0
         ],
         "max": [
-          219.4665069580078,
-          112.0,
+          224.10000610351562,
+          106.625,
           25.299999237060547
         ]
       },
       "source": {
-        "file": "mystery-box-sg92r-c3-print-carrier_2.stl",
-        "sha256": "fd6a44dd8a36161ad80b529bc8138878ed1e64393a90d58acc74bec0cb667da5",
-        "size": 12484,
-        "mtime": 1791642329581.866
+        "file": "mystery-box-sg92r-c3-print-carrier_3.stl",
+        "sha256": "db21858c3787713b1cca6be8e1a734a361436c47ae3007a280f04b10e7f730d6",
+        "size": 12884,
+        "mtime": 1791682673173.2996
       }
     },
     {
-      "file": "mystery-box-sg92r-c3-studio-plate-8346d76a4cd9-print-carrier_3-6.stl",
-      "sourcePart": "mystery-box-sg92r-c3-print-carrier_3",
-      "sourceFile": "mystery-box-sg92r-c3-print-carrier_3.stl",
+      "file": "mystery-box-sg92r-c3-studio-plate-9f374bde535c-print-carrier_4-6.stl",
+      "sourcePart": "mystery-box-sg92r-c3-print-carrier_4",
+      "sourceFile": "mystery-box-sg92r-c3-print-carrier_4.stl",
       "objectId": "6",
       "buildTransform": [
         1.0,
@@ -225,35 +225,35 @@
         0.0,
         0.0,
         1.0,
-        241.8665,
-        79.5,
+        257.7,
+        74.125,
         0.0
       ],
-      "sha256": "249714d4f357dc7dd301b956debf74d12d472d52c26cf53cc1a23c3debbc378f",
-      "size": 12484,
+      "sha256": "a4718769a23b42c1f5b80b90d58eacdb61b1b34d2bde6eee8be7aab9bbda083d",
+      "size": 12884,
       "bbox": {
         "min": [
-          225.4665069580078,
-          47.0,
+          230.10000610351562,
+          41.625,
           0.0
         ],
         "max": [
-          235.8665008544922,
-          112.0,
+          240.5,
+          106.625,
           25.299999237060547
         ]
       },
       "source": {
-        "file": "mystery-box-sg92r-c3-print-carrier_3.stl",
-        "sha256": "3007edd938393635a30ae2931cf21caa2ba62edc64aab533d93f18a6c401b5d8",
-        "size": 12484,
-        "mtime": 1791642329600.067
+        "file": "mystery-box-sg92r-c3-print-carrier_4.stl",
+        "sha256": "2f645cc8f99afc8264042566f6e0ba20334d14e616d167e5e34660c0c90491e4",
+        "size": 12884,
+        "mtime": 1791682673187.3
       }
     },
     {
-      "file": "mystery-box-sg92r-c3-studio-plate-8346d76a4cd9-print-carrier_4-7.stl",
-      "sourcePart": "mystery-box-sg92r-c3-print-carrier_4",
-      "sourceFile": "mystery-box-sg92r-c3-print-carrier_4.stl",
+      "file": "mystery-box-sg92r-c3-studio-plate-9f374bde535c-print-carrier_2-7.stl",
+      "sourcePart": "mystery-box-sg92r-c3-print-carrier_2",
+      "sourceFile": "mystery-box-sg92r-c3-print-carrier_2.stl",
       "objectId": "7",
       "buildTransform": [
         1.0,
@@ -265,33 +265,33 @@
         0.0,
         0.0,
         1.0,
-        38.4665,
-        165.5,
+        20.7,
+        160.075,
         0.0
       ],
-      "sha256": "fc1f3a39cc87d294d0e29842369e7601115ef91201ce9eacb887445a8edec275",
-      "size": 12484,
+      "sha256": "8fefbc0737ce51c068d2a9d4838981eabba9c63c3a1efec4f30a5c455e26eb6c",
+      "size": 14184,
       "bbox": {
         "min": [
-          10.866499900817871,
-          133.0,
+          15.5,
+          127.625,
           0.0
         ],
         "max": [
-          21.26650047302246,
-          198.0,
+          25.899999618530273,
+          192.5749969482422,
           25.299999237060547
         ]
       },
       "source": {
-        "file": "mystery-box-sg92r-c3-print-carrier_4.stl",
-        "sha256": "4f3033d23540080e4e14474f4e700e38776dec7c3781e6f41c12bbcc16b34031",
-        "size": 12484,
-        "mtime": 1791642329618.2483
+        "file": "mystery-box-sg92r-c3-print-carrier_2.stl",
+        "sha256": "166c3c86634d4ed5142ed3e1f4ed3f2614985910d5df963e31c45bde543b3d99",
+        "size": 14184,
+        "mtime": 1791685816106.8235
       }
     },
     {
-      "file": "mystery-box-sg92r-c3-studio-plate-8346d76a4cd9-print-drive_gear-8.stl",
+      "file": "mystery-box-sg92r-c3-studio-plate-9f374bde535c-print-drive_gear-8.stl",
       "sourcePart": "mystery-box-sg92r-c3-print-drive_gear",
       "sourceFile": "mystery-box-sg92r-c3-print-drive_gear.stl",
       "objectId": "8",
@@ -305,33 +305,33 @@
         0.0,
         0.0,
         1.0,
-        14.4665,
-        154.0,
+        24.3967,
+        147.825,
         0.0
       ],
-      "sha256": "8cf6a653bab34867204d69851c4e912ed6afccdffcc1e21a4afb7d37e428eff9",
-      "size": 12284,
+      "sha256": "dc3913f84c626dcd63b1cd6d0b02a809da700b5b6974fdc60e6a2eb3f743101f",
+      "size": 324284,
       "bbox": {
         "min": [
-          27.26650047302246,
-          133.0,
+          31.899999618530273,
+          127.625,
           0.0
         ],
         "max": [
-          48.666500091552734,
-          172.1999969482422,
-          3.0
+          63.89339828491211,
+          166.02499389648438,
+          28.600000381469727
         ]
       },
       "source": {
         "file": "mystery-box-sg92r-c3-print-drive_gear.stl",
-        "sha256": "575362596ae8c0e98c2dcdfbb8b0f0a25db89eb2ed04b4fb87e448d27fbda40f",
-        "size": 12284,
-        "mtime": 1791642329758.3997
+        "sha256": "85fc9fa5d6d12b19ce6af0ef0ae31d30bf3746ed1d5a10861b5c8e34115ad6f3",
+        "size": 324284,
+        "mtime": 1791685531507.5469
       }
     },
     {
-      "file": "mystery-box-sg92r-c3-studio-plate-8346d76a4cd9-print-cam_gear-9.stl",
+      "file": "mystery-box-sg92r-c3-studio-plate-9f374bde535c-print-cam_gear-9.stl",
       "sourcePart": "mystery-box-sg92r-c3-print-cam_gear",
       "sourceFile": "mystery-box-sg92r-c3-print-cam_gear.stl",
       "objectId": "9",
@@ -345,33 +345,33 @@
         0.0,
         0.0,
         1.0,
-        16.905,
-        148.9977,
+        139.5365,
+        143.6217,
         0.0
       ],
-      "sha256": "ba9862429804382b30f186cd30c049cee487673373aa6d41481774564242991a",
-      "size": 114084,
+      "sha256": "f7823a572c0a17f6eb28fb17ba6d271ec5539537366f3ea991e58d6e9fbdbfea",
+      "size": 135484,
       "bbox": {
         "min": [
-          54.666500091552734,
-          133.0,
+          69.89340209960938,
+          127.625,
           0.0
         ],
         "max": [
-          86.54350280761719,
-          164.9954071044922,
-          4.0
+          101.77960205078125,
+          159.61839294433594,
+          6.5
         ]
       },
       "source": {
         "file": "mystery-box-sg92r-c3-print-cam_gear.stl",
-        "sha256": "f4d3a15254e47468f605f408ee8eaa926b95c1e4ac12f134efdfb92e0a4ffb34",
-        "size": 114084,
-        "mtime": 1791642329739.2104
+        "sha256": "c37a94898ff0d25a75c6c9623c96fbd5c3c093cde22955041453c4c53f5aa3b5",
+        "size": 135484,
+        "mtime": 1791685531487.5476
       }
     },
     {
-      "file": "mystery-box-sg92r-c3-studio-plate-8346d76a4cd9-print-servo_clip-10.stl",
+      "file": "mystery-box-sg92r-c3-studio-plate-9f374bde535c-print-servo_clip-10.stl",
       "sourcePart": "mystery-box-sg92r-c3-print-servo_clip",
       "sourceFile": "mystery-box-sg92r-c3-print-servo_clip.stl",
       "objectId": "10",
@@ -385,21 +385,21 @@
         0.0,
         0.0,
         1.0,
-        75.0435,
-        152.5,
+        90.2796,
+        147.125,
         0.0
       ],
-      "sha256": "74803fa45dfd2677379d1152b142f919d6a46d55cd8bad230e3f69a5f9867440",
+      "sha256": "ccefbf213356ec97ae3aad9f8b668cfbbac207b399f1086d7a630320051df20e",
       "size": 3284,
       "bbox": {
         "min": [
-          92.54350280761719,
-          133.0,
+          107.77960205078125,
+          127.625,
           0.0
         ],
         "max": [
-          107.54350280761719,
-          162.0,
+          122.77960205078125,
+          156.625,
           6.0
         ]
       },
@@ -411,9 +411,9 @@
       }
     },
     {
-      "file": "mystery-box-sg92r-c3-studio-plate-8346d76a4cd9-print-cam_1-11.stl",
-      "sourcePart": "mystery-box-sg92r-c3-print-cam_1",
-      "sourceFile": "mystery-box-sg92r-c3-print-cam_1.stl",
+      "file": "mystery-box-sg92r-c3-studio-plate-9f374bde535c-print-cap_right-11.stl",
+      "sourcePart": "mystery-box-sg92r-c3-print-cap_right",
+      "sourceFile": "mystery-box-sg92r-c3-print-cap_right.stl",
       "objectId": "11",
       "buildTransform": [
         1.0,
@@ -425,35 +425,35 @@
         0.0,
         0.0,
         1.0,
-        68.5535,
-        138.9885,
+        82.8296,
+        138.125,
         0.0
       ],
-      "sha256": "1cb48284a29aa8caa4e28e8a4a62f8550e2b188496cfa637b6eb10e26bc397f8",
-      "size": 27084,
+      "sha256": "5ce402d29995a3bd20e6c95da9001b11719168046916b522d452f3c788c2e4fb",
+      "size": 149784,
       "bbox": {
         "min": [
-          113.54350280761719,
-          133.0,
+          128.77960205078125,
+          127.625,
           0.0
         ],
         "max": [
-          128.2534942626953,
-          150.68649291992188,
-          3.0
+          144.27960205078125,
+          148.625,
+          4.400000095367432
         ]
       },
       "source": {
-        "file": "mystery-box-sg92r-c3-print-cam_1.stl",
-        "sha256": "87b285bfebd5373f00311552624313bb818e44cc25f19cb7f3e5a56bee146e03",
-        "size": 27084,
-        "mtime": 1791642329666.6826
+        "file": "mystery-box-sg92r-c3-print-cap_right.stl",
+        "sha256": "c48c420942bbd39e69801e29f328f7f1c094a813873f88ee2f3944f1414faaf1",
+        "size": 149784,
+        "mtime": 1791687678192.748
       }
     },
     {
-      "file": "mystery-box-sg92r-c3-studio-plate-8346d76a4cd9-print-cam_2-12.stl",
-      "sourcePart": "mystery-box-sg92r-c3-print-cam_2",
-      "sourceFile": "mystery-box-sg92r-c3-print-cam_2.stl",
+      "file": "mystery-box-sg92r-c3-studio-plate-9f374bde535c-print-cap_left-12.stl",
+      "sourcePart": "mystery-box-sg92r-c3-print-cap_left",
+      "sourceFile": "mystery-box-sg92r-c3-print-cap_left.stl",
       "objectId": "12",
       "buildTransform": [
         1.0,
@@ -465,35 +465,35 @@
         0.0,
         0.0,
         1.0,
-        86.5535,
-        138.9885,
+        211.7296,
+        138.125,
         0.0
       ],
-      "sha256": "ff4ebf7aa6049a94430dc9da62ea92d0e0ab8d7b351784f644f3ef44fe99e93a",
-      "size": 26084,
+      "sha256": "fe346164d8319f744b38bb74f8766f1ee7abca6cadb4a3838b1f01e8722e7e46",
+      "size": 149784,
       "bbox": {
         "min": [
-          134.2534942626953,
-          133.0,
+          150.27960205078125,
+          127.625,
           0.0
         ],
         "max": [
-          148.9635009765625,
-          150.68649291992188,
-          3.0
+          165.77960205078125,
+          148.625,
+          4.400000095367432
         ]
       },
       "source": {
-        "file": "mystery-box-sg92r-c3-print-cam_2.stl",
-        "sha256": "43d9f4bd7e5077ba378d1009c810c9e6932b5157ecaacfd88826b9faaa4dbf0e",
-        "size": 26084,
-        "mtime": 1791642329682.7354
+        "file": "mystery-box-sg92r-c3-print-cap_left.stl",
+        "sha256": "694acfa4aa93ebcaab5eb4faa0dd87f9bcf31d45f06ffa205b24119d4a3a5842",
+        "size": 149784,
+        "mtime": 1791687918197.034
       }
     },
     {
-      "file": "mystery-box-sg92r-c3-studio-plate-8346d76a4cd9-print-cam_3-13.stl",
-      "sourcePart": "mystery-box-sg92r-c3-print-cam_3",
-      "sourceFile": "mystery-box-sg92r-c3-print-cam_3.stl",
+      "file": "mystery-box-sg92r-c3-studio-plate-9f374bde535c-print-cam_1-13.stl",
+      "sourcePart": "mystery-box-sg92r-c3-print-cam_1",
+      "sourceFile": "mystery-box-sg92r-c3-print-cam_1.stl",
       "objectId": "13",
       "buildTransform": [
         1.0,
@@ -505,35 +505,35 @@
         0.0,
         0.0,
         1.0,
-        109.9735,
-        138.9885,
+        231.7796,
+        133.925,
         0.0
       ],
-      "sha256": "26e7c98c9ac8910dcc5557a0f3420360598462862a6b493817d08a7ec9713f53",
-      "size": 27084,
+      "sha256": "82c6032df8990fc362c44f6ad00934a1d5ad53d8a7cf9f6f8205116ed67071a7",
+      "size": 44584,
       "bbox": {
         "min": [
-          154.9635009765625,
-          133.0,
+          171.77960205078125,
+          127.625,
           0.0
         ],
         "max": [
-          169.67349243164062,
-          150.68649291992188,
-          3.0
+          186.7895965576172,
+          145.6230010986328,
+          11.0
         ]
       },
       "source": {
-        "file": "mystery-box-sg92r-c3-print-cam_3.stl",
-        "sha256": "f0ac4bc42b8d51e5afc664c858db1e5ebb8aa382daa8ac1b002051f5c0104606",
-        "size": 27084,
-        "mtime": 1791642329705.057
+        "file": "mystery-box-sg92r-c3-print-cam_1.stl",
+        "sha256": "9225139604cac3552cc6dc17e1aa3785c09f9c56fa9d6d35a9c8b7e7f676d36c",
+        "size": 44584,
+        "mtime": 1791681738410.2183
       }
     },
     {
-      "file": "mystery-box-sg92r-c3-studio-plate-8346d76a4cd9-print-cam_0-14.stl",
-      "sourcePart": "mystery-box-sg92r-c3-print-cam_0",
-      "sourceFile": "mystery-box-sg92r-c3-print-cam_0.stl",
+      "file": "mystery-box-sg92r-c3-studio-plate-9f374bde535c-print-cam_2-14.stl",
+      "sourcePart": "mystery-box-sg92r-c3-print-cam_2",
+      "sourceFile": "mystery-box-sg92r-c3-print-cam_2.stl",
       "objectId": "14",
       "buildTransform": [
         1.0,
@@ -545,35 +545,35 @@
         0.0,
         0.0,
         1.0,
-        133.3035,
-        138.9885,
+        255.1996,
+        133.925,
         0.0
       ],
-      "sha256": "33bf3f410152afb403dbc3451ac7845fde2160c17d9f1c17236a495705cee664",
-      "size": 23084,
+      "sha256": "8d4627cd6436fc7afd1e7998529eefd4a4e9249e5db0b959c4471345b06d68ca",
+      "size": 44384,
       "bbox": {
         "min": [
-          175.67349243164062,
-          133.0,
+          192.7895965576172,
+          127.625,
           0.0
         ],
         "max": [
-          193.0034942626953,
-          148.48849487304688,
-          3.0
+          207.7996063232422,
+          145.6230010986328,
+          4.300000190734863
         ]
       },
       "source": {
-        "file": "mystery-box-sg92r-c3-print-cam_0.stl",
-        "sha256": "9ed08f61b8d56a0a726a53234c709e9f3a7447d4b11fb53e6a927da2a46b2946",
-        "size": 23084,
-        "mtime": 1791642329652.6294
+        "file": "mystery-box-sg92r-c3-print-cam_2.stl",
+        "sha256": "cf39e2815c2315471b3f980af1694a425f4899cf2f8aee00437e8bbd0dc1c9a6",
+        "size": 44384,
+        "mtime": 1791685531459.1328
       }
     },
     {
-      "file": "mystery-box-sg92r-c3-studio-plate-8346d76a4cd9-print-cam_4-15.stl",
-      "sourcePart": "mystery-box-sg92r-c3-print-cam_4",
-      "sourceFile": "mystery-box-sg92r-c3-print-cam_4.stl",
+      "file": "mystery-box-sg92r-c3-studio-plate-9f374bde535c-print-cam_3-15.stl",
+      "sourcePart": "mystery-box-sg92r-c3-print-cam_3",
+      "sourceFile": "mystery-box-sg92r-c3-print-cam_3.stl",
       "objectId": "15",
       "buildTransform": [
         1.0,
@@ -585,35 +585,35 @@
         0.0,
         0.0,
         1.0,
-        156.6335,
-        138.9885,
+        273.7996,
+        133.925,
         0.0
       ],
-      "sha256": "2d5e4b10358e7a9bba61c6fecd1b246a67ddb06f5ef0969ae072ff2dbb1d243a",
-      "size": 23084,
+      "sha256": "9945b1d682a16c009e867386e60d817ffc3fe2e4dd52b48f881e7950a7a4d9d3",
+      "size": 44584,
       "bbox": {
         "min": [
-          199.0034942626953,
-          133.0,
+          213.7996063232422,
+          127.625,
           0.0
         ],
         "max": [
-          216.33349609375,
-          148.48849487304688,
-          3.0
+          228.80960083007812,
+          145.6230010986328,
+          11.0
         ]
       },
       "source": {
-        "file": "mystery-box-sg92r-c3-print-cam_4.stl",
-        "sha256": "4b25e893b96014b7520677b1f05db0cbde8ed0a0347fd667fa39fc830a054288",
-        "size": 23084,
-        "mtime": 1791642329722.2097
+        "file": "mystery-box-sg92r-c3-print-cam_3.stl",
+        "sha256": "b767c8335a89bc510734ba8e55b085f83459ba383d2a5abcfa5f95b6832c7702",
+        "size": 44584,
+        "mtime": 1791681738446.1553
       }
     },
     {
-      "file": "mystery-box-sg92r-c3-studio-plate-8346d76a4cd9-print-cap_left-16.stl",
-      "sourcePart": "mystery-box-sg92r-c3-print-cap_left",
-      "sourceFile": "mystery-box-sg92r-c3-print-cap_left.stl",
+      "file": "mystery-box-sg92r-c3-studio-plate-9f374bde535c-print-cam_0-16.stl",
+      "sourcePart": "mystery-box-sg92r-c3-print-cam_0",
+      "sourceFile": "mystery-box-sg92r-c3-print-cam_0.stl",
       "objectId": "16",
       "buildTransform": [
         1.0,
@@ -625,35 +625,35 @@
         0.0,
         0.0,
         1.0,
-        172.8335,
-        137.2,
+        75.5,
+        204.875,
         0.0
       ],
-      "sha256": "25181f2a0dd7ee74b522838cdda417a593d9cccdf57800ac22bc549743648911",
-      "size": 20784,
+      "sha256": "9f55966a9084d3653112bdfbe6d52f5c5886c16537c0022a7c589533be48cbe0",
+      "size": 42684,
       "bbox": {
         "min": [
-          222.33349609375,
-          133.0,
+          15.5,
+          198.5749969482422,
           0.0
         ],
         "max": [
-          230.73350524902344,
-          141.3820037841797,
-          1.0499999523162842
+          33.130001068115234,
+          214.375,
+          11.0
         ]
       },
       "source": {
-        "file": "mystery-box-sg92r-c3-print-cap_left.stl",
-        "sha256": "519711bc5d4353a76308c4535afaf5bed27cfdb29dd449cda28e1fd976b5aca4",
-        "size": 20784,
-        "mtime": 1791642329774.5005
+        "file": "mystery-box-sg92r-c3-print-cam_0.stl",
+        "sha256": "e6fb32d8aa40d8d9dda9156a064d07b2d9b6fbd3a48fc17205abb616e75a67b2",
+        "size": 42684,
+        "mtime": 1791681738393.2407
       }
     },
     {
-      "file": "mystery-box-sg92r-c3-studio-plate-8346d76a4cd9-print-cap_right-17.stl",
-      "sourcePart": "mystery-box-sg92r-c3-print-cap_right",
-      "sourceFile": "mystery-box-sg92r-c3-print-cap_right.stl",
+      "file": "mystery-box-sg92r-c3-studio-plate-9f374bde535c-print-cam_4-17.stl",
+      "sourcePart": "mystery-box-sg92r-c3-print-cam_4",
+      "sourceFile": "mystery-box-sg92r-c3-print-cam_4.stl",
       "objectId": "17",
       "buildTransform": [
         1.0,
@@ -665,35 +665,35 @@
         0.0,
         0.0,
         1.0,
-        187.2335,
-        137.2,
+        99.13,
+        204.875,
         0.0
       ],
-      "sha256": "050d42bf46ba344e5a05806cc8f2fd91a49c203f26c6608f3e9facbcf09cf42f",
-      "size": 20784,
+      "sha256": "16f770a7041f83884dad83b577e27595aae229cc201621094d7fcbd0b027529f",
+      "size": 42684,
       "bbox": {
         "min": [
-          236.73350524902344,
-          133.0,
+          39.130001068115234,
+          198.5749969482422,
           0.0
         ],
         "max": [
-          245.1334991455078,
-          141.3820037841797,
-          1.0499999523162842
+          56.7599983215332,
+          214.375,
+          15.899999618530273
         ]
       },
       "source": {
-        "file": "mystery-box-sg92r-c3-print-cap_right.stl",
-        "sha256": "f337a8e0ada4f89587f16c7358452cc68570441be563f8bd666d9ba4ec8a4ac0",
-        "size": 20784,
-        "mtime": 1791642329789.6106
+        "file": "mystery-box-sg92r-c3-print-cam_4.stl",
+        "sha256": "3a216cf4938bd247be6f3f0b94676f08f87c888f2caeeabfad79f31f30bedc6c",
+        "size": 42684,
+        "mtime": 1791681738464.2612
       }
     },
     {
-      "file": "mystery-box-sg92r-c3-studio-plate-8346d76a4cd9-print-camshaft-18.stl",
-      "sourcePart": "mystery-box-sg92r-c3-print-camshaft",
-      "sourceFile": "mystery-box-sg92r-c3-print-camshaft.stl",
+      "file": "mystery-box-sg92r-c3-studio-plate-9f374bde535c-print-drive_bearing_clip-18.stl",
+      "sourcePart": "mystery-box-sg92r-c3-print-drive_bearing_clip",
+      "sourceFile": "mystery-box-sg92r-c3-print-drive_bearing_clip.stl",
       "objectId": "18",
       "buildTransform": [
         1.0,
@@ -705,29 +705,109 @@
         0.0,
         0.0,
         1.0,
-        50.5665,
-        206.5,
+        43.16,
+        206.275,
         0.0
       ],
-      "sha256": "5f5505c0f2dee4612752c6ded371c569a69d9ff4a3e2ffcd72b2a8a8fb71a140",
-      "size": 28684,
+      "sha256": "a10dd86b946f6924a6cf5e696360e83d36779f83f5981e42b7c617687f2c48a4",
+      "size": 4384,
       "bbox": {
         "min": [
-          10.866499900817871,
-          204.0,
+          62.7599983215332,
+          198.5749969482422,
           0.0
         ],
         "max": [
-          90.2665023803711,
-          209.0,
-          5.773499965667725
+          72.91000366210938,
+          213.97500610351562,
+          3.0
+        ]
+      },
+      "source": {
+        "file": "mystery-box-sg92r-c3-print-drive_bearing_clip.stl",
+        "sha256": "412ea503901fd665d470b00d1ee0ba70963f3379521e5760c9bda6c235d09bc2",
+        "size": 4384,
+        "mtime": 1791681738569.8862
+      }
+    },
+    {
+      "file": "mystery-box-sg92r-c3-studio-plate-9f374bde535c-print-left_spacer-19.stl",
+      "sourcePart": "mystery-box-sg92r-c3-print-left_spacer",
+      "sourceFile": "mystery-box-sg92r-c3-print-left_spacer.stl",
+      "objectId": "19",
+      "buildTransform": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        31.51,
+        204.875,
+        0.0
+      ],
+      "sha256": "81862d2bcfb356fc2bcf55216d9aac8c27aa15f86f4ec57adb13fdf009cca019",
+      "size": 23484,
+      "bbox": {
+        "min": [
+          78.91000366210938,
+          198.5749969482422,
+          0.0
+        ],
+        "max": [
+          91.51000213623047,
+          211.16299438476562,
+          12.699999809265137
+        ]
+      },
+      "source": {
+        "file": "mystery-box-sg92r-c3-print-left_spacer.stl",
+        "sha256": "ca688b31c4c145dac604a1adb51e934899cbf1dd5d7fb2587b259e84315a34d1",
+        "size": 23484,
+        "mtime": 1791681738379.9707
+      }
+    },
+    {
+      "file": "mystery-box-sg92r-c3-studio-plate-9f374bde535c-print-camshaft-20.stl",
+      "sourcePart": "mystery-box-sg92r-c3-print-camshaft",
+      "sourceFile": "mystery-box-sg92r-c3-print-camshaft.stl",
+      "objectId": "20",
+      "buildTransform": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        137.21,
+        228.3118,
+        0.0
+      ],
+      "sha256": "d6cc70e593902234e6f2a56c7b7fcb5ade1ed89ef5be5e3981f04c6fd53a9a86",
+      "size": 28684,
+      "bbox": {
+        "min": [
+          97.51000213623047,
+          198.5749969482422,
+          0.0
+        ],
+        "max": [
+          176.91000366210938,
+          204.34849548339844,
+          5.0
         ]
       },
       "source": {
         "file": "mystery-box-sg92r-c3-print-camshaft.stl",
-        "sha256": "92d87da3837e46b82abf04cb167e0a0e9a7d3912cb39ac517dcd57cccd23d16c",
+        "sha256": "5884542f95438c90f43e0da48f1a8430315dac7ca57e89967c8274e75ebac75b",
         "size": 28684,
-        "mtime": 1791643414578.846
+        "mtime": 1791681738358.2805
       }
     }
   ]

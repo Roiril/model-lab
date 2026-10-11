@@ -1,0 +1,5128 @@
+{
+  "version": 1,
+  "model": "mystery-box-sg92r-c4",
+  "method": {
+    "input": "build/print_*.stl and the fit-test STL in their final print orientation",
+    "bed": "Down-facing triangles within 0.05 mm of minimum Z",
+    "thin": "Triangle-centroid inward ray to an oppositely facing triangle; clusters below 1.2 mm",
+    "overhang": "Down-facing triangles steeper than 44.8 degrees, grouped spatially",
+    "limits": "Triangle checks locate risk regions. G-code continuity decides actual unsupported span length."
+  },
+  "calibration": {
+    "plate_0.6_thin": [
+      {
+        "min_mm": 0.6,
+        "area_mm2": 200.0,
+        "at": [
+          [
+            0.0,
+            6.7,
+            6.7
+          ],
+          [
+            0.6,
+            6.7,
+            6.7
+          ]
+        ]
+      }
+    ],
+    "plate_2.0_thin": [],
+    "wedge_10_terrace": [
+      {
+        "min_slope_deg": 10.0,
+        "area_mm2": 203.1,
+        "exterior_mm2": 0,
+        "at": [
+          [
+            6.7,
+            3.3,
+            3.2
+          ],
+          [
+            13.3,
+            6.7,
+            4.4
+          ]
+        ]
+      }
+    ],
+    "wedge_45_terrace": [],
+    "knife_20_thin": [
+      {
+        "min_mm": 0.73,
+        "area_mm2": 61.9,
+        "at": [
+          [
+            2.0,
+            3.3,
+            0.0
+          ],
+          [
+            2.0,
+            6.7,
+            0.7
+          ]
+        ]
+      }
+    ],
+    "blunt_70_thin": [],
+    "ok": true
+  },
+  "calibrationPass": true,
+  "manifestSha256": "14917a7739bb8f1acf9c46ba5bb9cd95f38eb9cab8d6319cd21ca42a9b2de232",
+  "parts": {
+    "housing": {
+      "source": {
+        "file": "models/mystery-box-sg92r-c4/build/print_housing.stl",
+        "bytes": 145584,
+        "sha256": "68e911d72fe35a466b7bf9fd225a2a193e2fffbec946532738fc1d905ca79d72"
+      },
+      "boundsMm": [
+        [
+          -38.0,
+          -38.0,
+          0.0
+        ],
+        [
+          38.0,
+          38.0,
+          74.0
+        ]
+      ],
+      "bed": {
+        "contact_mm2": 956.6,
+        "footprint_mm": [
+          82.4,
+          104.1
+        ],
+        "height_mm": 74.0,
+        "com_over_footprint": true,
+        "height_to_min_footprint": 0.9
+      },
+      "thinClusterCount": 3,
+      "thinUnder1_2mm": [
+        {
+          "min_mm": 0.01,
+          "area_mm2": 102.7,
+          "at": [
+            [
+              34.5,
+              2.0,
+              33.0
+            ],
+            [
+              38.0,
+              8.4,
+              47.0
+            ]
+          ]
+        },
+        {
+          "min_mm": 0.05,
+          "area_mm2": 14.6,
+          "at": [
+            [
+              34.0,
+              -6.9,
+              33.0
+            ],
+            [
+              35.3,
+              -2.0,
+              38.0
+            ]
+          ]
+        },
+        {
+          "min_mm": 0.05,
+          "area_mm2": 16.4,
+          "at": [
+            [
+              34.0,
+              -6.9,
+              42.0
+            ],
+            [
+              35.3,
+              -2.0,
+              47.0
+            ]
+          ]
+        }
+      ],
+      "overhangClusterCount": 51,
+      "largestOverhangClusters": [
+        {
+          "area_mm2": 55.2,
+          "supported": 0.71,
+          "h": [
+            41.75,
+            47.19
+          ],
+          "at": [
+            [
+              32.0,
+              -6.8,
+              41.8
+            ],
+            [
+              38.0,
+              5.0,
+              47.2
+            ]
+          ]
+        },
+        {
+          "area_mm2": 34.97,
+          "supported": 0.05,
+          "h": [
+            33.05,
+            33.05
+          ],
+          "at": [
+            [
+              31.3,
+              -3.4,
+              33.0
+            ],
+            [
+              35.3,
+              3.4,
+              33.0
+            ]
+          ]
+        },
+        {
+          "area_mm2": 13.55,
+          "supported": 0.09,
+          "h": [
+            46.35,
+            46.35
+          ],
+          "at": [
+            [
+              -16.1,
+              -16.4,
+              46.3
+            ],
+            [
+              -12.6,
+              -14.2,
+              46.3
+            ]
+          ]
+        }
+      ]
+    },
+    "faceplate": {
+      "source": {
+        "file": "models/mystery-box-sg92r-c4/build/print_faceplate.stl",
+        "bytes": 41384,
+        "sha256": "0876a950877757fd8033a900c963d046eadd58f91b8e012c0d8292614580faaf"
+      },
+      "boundsMm": [
+        [
+          -38.0,
+          -38.0,
+          0.0
+        ],
+        [
+          38.0,
+          38.0,
+          16.0
+        ]
+      ],
+      "bed": {
+        "contact_mm2": 3712.0,
+        "footprint_mm": [
+          75.0,
+          75.0
+        ],
+        "height_mm": 16.0,
+        "com_over_footprint": true,
+        "height_to_min_footprint": 0.21
+      },
+      "thinClusterCount": 11,
+      "thinUnder1_2mm": [
+        {
+          "min_mm": 1.2,
+          "area_mm2": 25.9,
+          "at": [
+            [
+              -4.3,
+              4.3,
+              0.7
+            ],
+            [
+              -1.9,
+              6.4,
+              1.3
+            ]
+          ]
+        },
+        {
+          "min_mm": 1.2,
+          "area_mm2": 115.2,
+          "at": [
+            [
+              1.4,
+              3.5,
+              0.7
+            ],
+            [
+              16.7,
+              16.1,
+              1.3
+            ]
+          ]
+        },
+        {
+          "min_mm": 1.2,
+          "area_mm2": 25.9,
+          "at": [
+            [
+              -10.5,
+              4.3,
+              0.7
+            ],
+            [
+              -8.1,
+              6.4,
+              1.3
+            ]
+          ]
+        },
+        {
+          "min_mm": 1.2,
+          "area_mm2": 25.9,
+          "at": [
+            [
+              -13.0,
+              9.7,
+              0.7
+            ],
+            [
+              -11.8,
+              11.8,
+              1.3
+            ]
+          ]
+        }
+      ],
+      "overhangClusterCount": 8,
+      "largestOverhangClusters": [
+        {
+          "area_mm2": 4.82,
+          "supported": 0.0,
+          "h": [
+            13.0,
+            13.0
+          ],
+          "at": [
+            [
+              -35.8,
+              11.4,
+              13.0
+            ],
+            [
+              -35.5,
+              14.1,
+              13.0
+            ]
+          ]
+        },
+        {
+          "area_mm2": 4.82,
+          "supported": 0.0,
+          "h": [
+            13.0,
+            13.0
+          ],
+          "at": [
+            [
+              -35.8,
+              -12.6,
+              13.0
+            ],
+            [
+              -35.5,
+              -9.9,
+              13.0
+            ]
+          ]
+        },
+        {
+          "area_mm2": 4.82,
+          "supported": 0.0,
+          "h": [
+            13.0,
+            13.0
+          ],
+          "at": [
+            [
+              35.5,
+              9.9,
+              13.0
+            ],
+            [
+              35.8,
+              12.6,
+              13.0
+            ]
+          ]
+        }
+      ]
+    },
+    "guide_frame": {
+      "source": {
+        "file": "models/mystery-box-sg92r-c4/build/print_guide_frame.stl",
+        "bytes": 56684,
+        "sha256": "9aa49e4e72a4bbaf09ef2e43ff058f18f1731c3d3a9df50e174d007271f8784f"
+      },
+      "boundsMm": [
+        [
+          -35.35,
+          -35.35,
+          0.0
+        ],
+        [
+          35.35,
+          35.35,
+          3.95
+        ]
+      ],
+      "bed": {
+        "contact_mm2": 1348.9,
+        "footprint_mm": [
+          95.9,
+          97.1
+        ],
+        "height_mm": 4.0,
+        "com_over_footprint": true,
+        "height_to_min_footprint": 0.04
+      },
+      "thinClusterCount": 4,
+      "thinUnder1_2mm": [
+        {
+          "min_mm": 1.2,
+          "area_mm2": 1.3,
+          "at": [
+            [
+              -32.3,
+              -7.7,
+              0.1
+            ],
+            [
+              -32.1,
+              -7.7,
+              2.2
+            ]
+          ]
+        },
+        {
+          "min_mm": 1.2,
+          "area_mm2": 1.0,
+          "at": [
+            [
+              32.1,
+              -7.7,
+              1.0
+            ],
+            [
+              32.2,
+              -7.7,
+              2.0
+            ]
+          ]
+        },
+        {
+          "min_mm": 1.2,
+          "area_mm2": 1.0,
+          "at": [
+            [
+              32.1,
+              7.7,
+              1.0
+            ],
+            [
+              32.2,
+              7.7,
+              2.0
+            ]
+          ]
+        },
+        {
+          "min_mm": 1.2,
+          "area_mm2": 1.0,
+          "at": [
+            [
+              -32.2,
+              7.7,
+              0.9
+            ],
+            [
+              -32.1,
+              7.7,
+              2.9
+            ]
+          ]
+        }
+      ],
+      "overhangClusterCount": 0,
+      "largestOverhangClusters": []
+    },
+    "bottom": {
+      "source": {
+        "file": "models/mystery-box-sg92r-c4/build/print_bottom.stl",
+        "bytes": 19584,
+        "sha256": "4b3e531e67d26c2e5adc570c6c63589d094fb205a009d1f3639e6eeab2f6fad4"
+      },
+      "boundsMm": [
+        [
+          -36.0,
+          -35.3,
+          0.0
+        ],
+        [
+          36.0,
+          35.3,
+          16.4
+        ]
+      ],
+      "bed": {
+        "contact_mm2": 4671.8,
+        "footprint_mm": [
+          64.3,
+          63.9
+        ],
+        "height_mm": 16.4,
+        "com_over_footprint": true,
+        "height_to_min_footprint": 0.26
+      },
+      "thinClusterCount": 0,
+      "thinUnder1_2mm": [],
+      "overhangClusterCount": 9,
+      "largestOverhangClusters": [
+        {
+          "area_mm2": 4.82,
+          "supported": 0.0,
+          "h": [
+            14.4,
+            14.4
+          ],
+          "at": [
+            [
+              -35.8,
+              -14.1,
+              14.4
+            ],
+            [
+              -35.5,
+              -11.4,
+              14.4
+            ]
+          ]
+        },
+        {
+          "area_mm2": 4.82,
+          "supported": 0.0,
+          "h": [
+            14.4,
+            14.4
+          ],
+          "at": [
+            [
+              -35.8,
+              9.9,
+              14.4
+            ],
+            [
+              -35.5,
+              12.6,
+              14.4
+            ]
+          ]
+        },
+        {
+          "area_mm2": 4.82,
+          "supported": 0.0,
+          "h": [
+            14.4,
+            14.4
+          ],
+          "at": [
+            [
+              35.5,
+              -12.6,
+              14.4
+            ],
+            [
+              35.8,
+              -9.9,
+              14.4
+            ]
+          ]
+        }
+      ]
+    },
+    "carrier_center": {
+      "source": {
+        "file": "models/mystery-box-sg92r-c4/build/print_carrier_center.stl",
+        "bytes": 202384,
+        "sha256": "f0add24df27ef5c6ab9c2f257384e1839e10071c333332a19f4e906a698d96d6"
+      },
+      "boundsMm": [
+        [
+          -5.25,
+          -6.9,
+          0.0
+        ],
+        [
+          7.6,
+          6.9,
+          28.9544
+        ]
+      ],
+      "bed": {
+        "contact_mm2": 57.5,
+        "footprint_mm": [
+          11.6,
+          9.0
+        ],
+        "height_mm": 29.0,
+        "com_over_footprint": true,
+        "height_to_min_footprint": 3.23
+      },
+      "thinClusterCount": 2,
+      "thinUnder1_2mm": [
+        {
+          "min_mm": 0.4,
+          "area_mm2": 23.9,
+          "at": [
+            [
+              3.1,
+              0.0,
+              0.4
+            ],
+            [
+              7.4,
+              3.2,
+              8.6
+            ]
+          ]
+        },
+        {
+          "min_mm": 0.57,
+          "area_mm2": 24.6,
+          "at": [
+            [
+              -3.4,
+              -4.7,
+              4.2
+            ],
+            [
+              2.3,
+              3.0,
+              8.4
+            ]
+          ]
+        }
+      ],
+      "overhangClusterCount": 4,
+      "largestOverhangClusters": [
+        {
+          "area_mm2": 96.9,
+          "supported": 0.05,
+          "h": [
+            8.3,
+            11.1
+          ],
+          "at": [
+            [
+              -4.3,
+              -6.9,
+              8.3
+            ],
+            [
+              5.9,
+              6.9,
+              11.1
+            ]
+          ]
+        },
+        {
+          "area_mm2": 29.4,
+          "supported": 0.0,
+          "h": [
+            25.95,
+            25.95
+          ],
+          "at": [
+            [
+              1.9,
+              -3.0,
+              26.0
+            ],
+            [
+              7.3,
+              3.7,
+              26.0
+            ]
+          ]
+        },
+        {
+          "area_mm2": 4.2,
+          "supported": null,
+          "h": [
+            25.95,
+            25.95
+          ],
+          "at": [
+            [
+              2.9,
+              3.0,
+              26.0
+            ],
+            [
+              2.9,
+              3.0,
+              26.0
+            ]
+          ]
+        }
+      ]
+    },
+    "carrier_inner": {
+      "source": {
+        "file": "models/mystery-box-sg92r-c4/build/print_carrier_inner.stl",
+        "bytes": 277184,
+        "sha256": "2c80af1638416281f3fda58e6efe88c7aea7bd92183613135d29b380887d24ba"
+      },
+      "boundsMm": [
+        [
+          -17.65,
+          -16.8009,
+          0.0
+        ],
+        [
+          19.9,
+          16.8009,
+          27.9696
+        ]
+      ],
+      "bed": {
+        "contact_mm2": 332.6,
+        "footprint_mm": [
+          32.7,
+          32.9
+        ],
+        "height_mm": 28.0,
+        "com_over_footprint": true,
+        "height_to_min_footprint": 0.85
+      },
+      "thinClusterCount": 0,
+      "thinUnder1_2mm": [],
+      "overhangClusterCount": 9,
+      "largestOverhangClusters": [
+        {
+          "area_mm2": 268.07,
+          "supported": 0.13,
+          "h": [
+            8.3,
+            11.1
+          ],
+          "at": [
+            [
+              -15.8,
+              -13.5,
+              8.3
+            ],
+            [
+              18.5,
+              14.2,
+              11.1
+            ]
+          ]
+        },
+        {
+          "area_mm2": 17.6,
+          "supported": 0.0,
+          "h": [
+            24.97,
+            24.97
+          ],
+          "at": [
+            [
+              13.2,
+              1.3,
+              25.0
+            ],
+            [
+              14.6,
+              3.2,
+              25.0
+            ]
+          ]
+        },
+        {
+          "area_mm2": 17.6,
+          "supported": 0.0,
+          "h": [
+            24.97,
+            24.97
+          ],
+          "at": [
+            [
+              13.2,
+              -3.2,
+              25.0
+            ],
+            [
+              14.6,
+              -1.3,
+              25.0
+            ]
+          ]
+        }
+      ]
+    },
+    "carrier_outer": {
+      "source": {
+        "file": "models/mystery-box-sg92r-c4/build/print_carrier_outer.stl",
+        "bytes": 594484,
+        "sha256": "32ef930418710851a50ae4a5d93b56b5f515ced5266a22e2a81fad1f702d0d2b"
+      },
+      "boundsMm": [
+        [
+          -30.05,
+          -32.2,
+          0.0
+        ],
+        [
+          32.3,
+          32.0,
+          26.9848
+        ]
+      ],
+      "bed": {
+        "contact_mm2": 681.1,
+        "footprint_mm": [
+          56.7,
+          56.9
+        ],
+        "height_mm": 27.0,
+        "com_over_footprint": true,
+        "height_to_min_footprint": 0.48
+      },
+      "thinClusterCount": 1,
+      "thinUnder1_2mm": [
+        {
+          "min_mm": 0.4,
+          "area_mm2": 2.7,
+          "at": [
+            [
+              -1.7,
+              -32.2,
+              0.4
+            ],
+            [
+              1.7,
+              -27.8,
+              0.4
+            ]
+          ]
+        }
+      ],
+      "overhangClusterCount": 13,
+      "largestOverhangClusters": [
+        {
+          "area_mm2": 326.84,
+          "supported": 0.1,
+          "h": [
+            8.3,
+            11.1
+          ],
+          "at": [
+            [
+              -3.7,
+              -32.0,
+              8.3
+            ],
+            [
+              30.9,
+              32.0,
+              11.1
+            ]
+          ]
+        },
+        {
+          "area_mm2": 206.42,
+          "supported": 0.09,
+          "h": [
+            8.3,
+            8.5
+          ],
+          "at": [
+            [
+              -28.2,
+              -23.8,
+              8.3
+            ],
+            [
+              -5.3,
+              24.9,
+              8.5
+            ]
+          ]
+        },
+        {
+          "area_mm2": 17.6,
+          "supported": 0.0,
+          "h": [
+            23.98,
+            23.98
+          ],
+          "at": [
+            [
+              25.6,
+              1.3,
+              24.0
+            ],
+            [
+              27.0,
+              3.2,
+              24.0
+            ]
+          ]
+        }
+      ]
+    },
+    "camshaft": {
+      "source": {
+        "file": "models/mystery-box-sg92r-c4/build/print_camshaft.stl",
+        "bytes": 17084,
+        "sha256": "33f7174c95f8b82b033f1889ec203b5201c8de5fee562a379e8f5e09a17ec4d5"
+      },
+      "boundsMm": [
+        [
+          1.2,
+          -3.6373,
+          0.0
+        ],
+        [
+          35.0,
+          3.6373,
+          6.3
+        ]
+      ],
+      "bed": {
+        "contact_mm2": 117.9,
+        "footprint_mm": [
+          17.1,
+          15.4
+        ],
+        "height_mm": 6.3,
+        "com_over_footprint": true,
+        "height_to_min_footprint": 0.41
+      },
+      "thinClusterCount": 3,
+      "thinUnder1_2mm": [
+        {
+          "min_mm": 1.2,
+          "area_mm2": 23.2,
+          "at": [
+            [
+              7.0,
+              3.2,
+              2.4
+            ],
+            [
+              7.0,
+              3.2,
+              3.9
+            ]
+          ]
+        },
+        {
+          "min_mm": 1.2,
+          "area_mm2": 7.1,
+          "at": [
+            [
+              3.9,
+              2.1,
+              2.9
+            ],
+            [
+              3.9,
+              2.1,
+              3.4
+            ]
+          ]
+        },
+        {
+          "min_mm": 1.2,
+          "area_mm2": 15.8,
+          "at": [
+            [
+              4.1,
+              -3.0,
+              4.2
+            ],
+            [
+              4.1,
+              -3.0,
+              4.2
+            ]
+          ]
+        }
+      ],
+      "overhangClusterCount": 2,
+      "largestOverhangClusters": [
+        {
+          "area_mm2": 18.46,
+          "supported": 0.0,
+          "h": [
+            5.1,
+            5.1
+          ],
+          "at": [
+            [
+              3.9,
+              -0.4,
+              5.1
+            ],
+            [
+              6.7,
+              0.4,
+              5.1
+            ]
+          ]
+        },
+        {
+          "area_mm2": 5.94,
+          "supported": 0.0,
+          "h": [
+            0.45,
+            1.18
+          ],
+          "at": [
+            [
+              10.4,
+              -1.8,
+              0.5
+            ],
+            [
+              10.8,
+              1.8,
+              1.2
+            ]
+          ]
+        }
+      ]
+    },
+    "horn_coupler": {
+      "source": {
+        "file": "models/mystery-box-sg92r-c4/build/print_horn_coupler.stl",
+        "bytes": 313984,
+        "sha256": "5156194b8f9ca7a89da2583ed797b56f512ebc9221ccbe95d241d31a13fca8a3"
+      },
+      "boundsMm": [
+        [
+          -5.3,
+          -59.9423,
+          0.0
+        ],
+        [
+          9.2,
+          -20.8423,
+          20.9
+        ]
+      ],
+      "bed": {
+        "contact_mm2": 42.2,
+        "footprint_mm": [
+          10.3,
+          10.5
+        ],
+        "height_mm": 20.9,
+        "com_over_footprint": true,
+        "height_to_min_footprint": 2.03
+      },
+      "thinClusterCount": 1,
+      "thinUnder1_2mm": [
+        {
+          "min_mm": 0.4,
+          "area_mm2": 160.9,
+          "at": [
+            [
+              0.0,
+              -43.4,
+              0.0
+            ],
+            [
+              8.2,
+              -35.3,
+              14.3
+            ]
+          ]
+        }
+      ],
+      "overhangClusterCount": 17,
+      "largestOverhangClusters": [
+        {
+          "area_mm2": 33.26,
+          "supported": 0.06,
+          "h": [
+            7.82,
+            9.08
+          ],
+          "at": [
+            [
+              3.9,
+              -41.3,
+              7.8
+            ],
+            [
+              6.5,
+              -37.9,
+              9.1
+            ]
+          ]
+        },
+        {
+          "area_mm2": 22.49,
+          "supported": null,
+          "h": [
+            4.53,
+            4.53
+          ],
+          "at": [
+            [
+              -4.0,
+              -49.0,
+              4.5
+            ],
+            [
+              -4.0,
+              -49.0,
+              4.5
+            ]
+          ]
+        },
+        {
+          "area_mm2": 20.93,
+          "supported": null,
+          "h": [
+            4.45,
+            4.45
+          ],
+          "at": [
+            [
+              -4.0,
+              -31.3,
+              4.5
+            ],
+            [
+              -4.0,
+              -31.3,
+              4.5
+            ]
+          ]
+        }
+      ]
+    },
+    "joint_keeper": {
+      "source": {
+        "file": "models/mystery-box-sg92r-c4/build/print_joint_keeper.stl",
+        "bytes": 72284,
+        "sha256": "fe0939d1dcf3018df26832f27a0374b181444e02af8dab383e1b0189943d5e5b"
+      },
+      "boundsMm": [
+        [
+          -1.3,
+          -6.6,
+          0.0
+        ],
+        [
+          11.2,
+          6.6,
+          42.8277
+        ]
+      ],
+      "bed": {
+        "contact_mm2": 75.0,
+        "footprint_mm": [
+          4.4,
+          1.5
+        ],
+        "height_mm": 42.8,
+        "com_over_footprint": true,
+        "height_to_min_footprint": 27.95
+      },
+      "thinClusterCount": 8,
+      "thinUnder1_2mm": [
+        {
+          "min_mm": 0.69,
+          "area_mm2": 121.1,
+          "at": [
+            [
+              -1.3,
+              -5.6,
+              31.4
+            ],
+            [
+              -0.1,
+              6.6,
+              42.8
+            ]
+          ]
+        },
+        {
+          "min_mm": 0.92,
+          "area_mm2": 127.7,
+          "at": [
+            [
+              10.0,
+              -4.9,
+              32.2
+            ],
+            [
+              11.2,
+              5.9,
+              42.3
+            ]
+          ]
+        },
+        {
+          "min_mm": 1.2,
+          "area_mm2": 31.9,
+          "at": [
+            [
+              -1.3,
+              1.0,
+              26.4
+            ],
+            [
+              -0.1,
+              2.8,
+              26.8
+            ]
+          ]
+        },
+        {
+          "min_mm": 1.2,
+          "area_mm2": 40.4,
+          "at": [
+            [
+              -1.3,
+              -2.8,
+              26.4
+            ],
+            [
+              -0.1,
+              -1.2,
+              26.8
+            ]
+          ]
+        }
+      ],
+      "overhangClusterCount": 4,
+      "largestOverhangClusters": [
+        {
+          "area_mm2": 2.48,
+          "supported": 0.5,
+          "h": [
+            31.44,
+            32.49
+          ],
+          "at": [
+            [
+              -0.9,
+              -4.5,
+              31.4
+            ],
+            [
+              -0.5,
+              -3.0,
+              32.5
+            ]
+          ]
+        },
+        {
+          "area_mm2": 2.48,
+          "supported": 0.5,
+          "h": [
+            31.44,
+            32.49
+          ],
+          "at": [
+            [
+              -0.9,
+              3.0,
+              31.4
+            ],
+            [
+              -0.5,
+              4.5,
+              32.5
+            ]
+          ]
+        },
+        {
+          "area_mm2": 1.78,
+          "supported": 0.5,
+          "h": [
+            32.28,
+            33.0
+          ],
+          "at": [
+            [
+              10.4,
+              -4.0,
+              32.3
+            ],
+            [
+              10.8,
+              -3.1,
+              33.0
+            ]
+          ]
+        }
+      ]
+    },
+    "cam_center": {
+      "source": {
+        "file": "models/mystery-box-sg92r-c4/build/print_cam_center.stl",
+        "bytes": 70484,
+        "sha256": "5d2a08198b8c8bf6ca90cca1aff32f36b89d0a949ee7ca6c825edc0917812d23"
+      },
+      "boundsMm": [
+        [
+          -47.0456,
+          -9.4791,
+          0.0
+        ],
+        [
+          -27.0456,
+          10.5209,
+          8.9
+        ]
+      ],
+      "bed": {
+        "contact_mm2": 241.7,
+        "footprint_mm": [
+          18.2,
+          15.5
+        ],
+        "height_mm": 8.9,
+        "com_over_footprint": true,
+        "height_to_min_footprint": 0.58
+      },
+      "thinClusterCount": 0,
+      "thinUnder1_2mm": [],
+      "overhangClusterCount": 1,
+      "largestOverhangClusters": [
+        {
+          "area_mm2": 33.97,
+          "supported": 0.4,
+          "h": [
+            0.6,
+            0.6
+          ],
+          "at": [
+            [
+              -44.3,
+              -4.5,
+              0.6
+            ],
+            [
+              -35.7,
+              4.8,
+              0.6
+            ]
+          ]
+        }
+      ]
+    },
+    "cam_inner": {
+      "source": {
+        "file": "models/mystery-box-sg92r-c4/build/print_cam_inner.stl",
+        "bytes": 119984,
+        "sha256": "ff985bc76ef6a871c517d5f42638ee4cd476c23a64e24773ae96a018a6006714"
+      },
+      "boundsMm": [
+        [
+          -48.0304,
+          -9.6527,
+          0.0
+        ],
+        [
+          -28.0304,
+          10.3473,
+          12.1
+        ]
+      ],
+      "bed": {
+        "contact_mm2": 275.6,
+        "footprint_mm": [
+          18.1,
+          16.3
+        ],
+        "height_mm": 12.1,
+        "com_over_footprint": true,
+        "height_to_min_footprint": 0.74
+      },
+      "thinClusterCount": 0,
+      "thinUnder1_2mm": [],
+      "overhangClusterCount": 0,
+      "largestOverhangClusters": []
+    },
+    "cam_outer": {
+      "source": {
+        "file": "models/mystery-box-sg92r-c4/build/print_cam_outer.stl",
+        "bytes": 50484,
+        "sha256": "82e972b77cb09002867691dd5f98f9df4c035dce6b8e087fcf72c7b0dd267cf2"
+      },
+      "boundsMm": [
+        [
+          -49.0152,
+          -9.8264,
+          0.0
+        ],
+        [
+          -29.0152,
+          10.1736,
+          6.5
+        ]
+      ],
+      "bed": {
+        "contact_mm2": 275.6,
+        "footprint_mm": [
+          17.3,
+          16.0
+        ],
+        "height_mm": 6.5,
+        "com_over_footprint": true,
+        "height_to_min_footprint": 0.41
+      },
+      "thinClusterCount": 0,
+      "thinUnder1_2mm": [],
+      "overhangClusterCount": 0,
+      "largestOverhangClusters": []
+    },
+    "bearing_keeper": {
+      "source": {
+        "file": "models/mystery-box-sg92r-c4/build/print_bearing_keeper.stl",
+        "bytes": 18484,
+        "sha256": "402340113c0da529ab73c3e8ea8e1a034bf8ca1470fa01b6bd803430578a2c90"
+      },
+      "boundsMm": [
+        [
+          33.3,
+          -5.5,
+          0.0
+        ],
+        [
+          46.7,
+          5.5,
+          3.6
+        ]
+      ],
+      "bed": {
+        "contact_mm2": 94.2,
+        "footprint_mm": [
+          7.8,
+          7.3
+        ],
+        "height_mm": 3.6,
+        "com_over_footprint": true,
+        "height_to_min_footprint": 0.49
+      },
+      "thinClusterCount": 0,
+      "thinUnder1_2mm": [],
+      "overhangClusterCount": 2,
+      "largestOverhangClusters": [
+        {
+          "area_mm2": 3.82,
+          "supported": 0.0,
+          "h": [
+            2.2,
+            2.2
+          ],
+          "at": [
+            [
+              33.7,
+              -1.4,
+              2.2
+            ],
+            [
+              34.2,
+              1.4,
+              2.2
+            ]
+          ]
+        },
+        {
+          "area_mm2": 3.82,
+          "supported": 0.0,
+          "h": [
+            2.2,
+            2.2
+          ],
+          "at": [
+            [
+              45.8,
+              -1.4,
+              2.2
+            ],
+            [
+              46.3,
+              1.4,
+              2.2
+            ]
+          ]
+        }
+      ]
+    },
+    "servo_clip": {
+      "source": {
+        "file": "models/mystery-box-sg92r-c4/build/print_servo_clip.stl",
+        "bytes": 3484,
+        "sha256": "784b7ecaf513e8816e36961501c06a8c5df8c8bc4258c8293b9affc6b1a6b410"
+      },
+      "boundsMm": [
+        [
+          31.15,
+          -21.85,
+          0.0
+        ],
+        [
+          38.5,
+          11.85,
+          6.5
+        ]
+      ],
+      "bed": {
+        "contact_mm2": 111.3,
+        "footprint_mm": [
+          24.1,
+          25.8
+        ],
+        "height_mm": 6.5,
+        "com_over_footprint": true,
+        "height_to_min_footprint": 0.27
+      },
+      "thinClusterCount": 0,
+      "thinUnder1_2mm": [],
+      "overhangClusterCount": 0,
+      "largestOverhangClusters": []
+    },
+    "print_test": {
+      "source": {
+        "file": "models/mystery-box-sg92r-c4/build/print_test.stl",
+        "bytes": 250984,
+        "sha256": "29c1aac1ea36ad9baf929be38e50d83e785d954ed957b4555f480c8be17d6b2c"
+      },
+      "boundsMm": [
+        [
+          -20.55,
+          -14.0,
+          0.0
+        ],
+        [
+          120.0,
+          11.05,
+          11.0
+        ]
+      ],
+      "bed": {
+        "contact_mm2": 1191.1,
+        "footprint_mm": [
+          100.1,
+          100.7
+        ],
+        "height_mm": 11.0,
+        "com_over_footprint": true,
+        "height_to_min_footprint": 0.11
+      },
+      "thinClusterCount": 9,
+      "thinUnder1_2mm": [
+        {
+          "min_mm": 1.2,
+          "area_mm2": 2.2,
+          "at": [
+            [
+              19.2,
+              -1.8,
+              1.2
+            ],
+            [
+              19.9,
+              0.7,
+              1.2
+            ]
+          ]
+        },
+        {
+          "min_mm": 1.2,
+          "area_mm2": 0.7,
+          "at": [
+            [
+              23.2,
+              0.3,
+              1.2
+            ],
+            [
+              23.2,
+              0.3,
+              1.2
+            ]
+          ]
+        },
+        {
+          "min_mm": 1.2,
+          "area_mm2": 14.5,
+          "at": [
+            [
+              45.0,
+              3.0,
+              2.7
+            ],
+            [
+              45.0,
+              3.0,
+              2.7
+            ]
+          ]
+        },
+        {
+          "min_mm": 1.2,
+          "area_mm2": 30.5,
+          "at": [
+            [
+              45.8,
+              -3.0,
+              2.7
+            ],
+            [
+              48.0,
+              0.8,
+              2.7
+            ]
+          ]
+        }
+      ],
+      "overhangClusterCount": 2,
+      "largestOverhangClusters": [
+        {
+          "area_mm2": 32.08,
+          "supported": 0.0,
+          "h": [
+            0.3,
+            3.09
+          ],
+          "at": [
+            [
+              114.8,
+              -3.8,
+              0.3
+            ],
+            [
+              119.2,
+              3.8,
+              3.1
+            ]
+          ]
+        },
+        {
+          "area_mm2": 11.51,
+          "supported": 0.0,
+          "h": [
+            3.7,
+            3.7
+          ],
+          "at": [
+            [
+              79.0,
+              -3.0,
+              3.7
+            ],
+            [
+              85.0,
+              3.0,
+              3.7
+            ]
+          ]
+        }
+      ]
+    }
+  },
+  "driveFeatures": {
+    "sources": {
+      "models/mystery-box-sg92r-c4/build/horn_coupler.stl": "4ca1af668999733702f92b1671128a705cf60d03941b52c3a1fa59d8b34cf818",
+      "models/mystery-box-sg92r-c4/build/servo_horn.stl": "b91fdc5764256ac936ca0a27d85ce4d65f688091fe7e7ac3d8ce74a5113f2114"
+    },
+    "blindFloor": {
+      "pass": true,
+      "minimumAxialThicknessMm": 1.25,
+      "projectionSamples": 5093,
+      "sections": [
+        {
+          "xMm": -2.64,
+          "coveredSamples": 5093,
+          "totalSamples": 5093,
+          "pass": true
+        },
+        {
+          "xMm": -2.025,
+          "coveredSamples": 5093,
+          "totalSamples": 5093,
+          "pass": true
+        },
+        {
+          "xMm": -1.41,
+          "coveredSamples": 5093,
+          "totalSamples": 5093,
+          "pass": true
+        }
+      ],
+      "floorRangeXmm": [
+        -2.65,
+        -1.4
+      ]
+    },
+    "shoulder": {
+      "witnessYZmm": [
+        4.0,
+        40.0
+      ],
+      "boundariesXmm": [
+        -2.65,
+        -1.4,
+        0.0,
+        1.2
+      ],
+      "containingIntervalXmm": null
+    },
+    "peg": {
+      "witnessYZmm": [
+        0.0,
+        40.0
+      ],
+      "boundariesXmm": [
+        -2.65,
+        9.2
+      ],
+      "containingIntervalXmm": [
+        -2.65,
+        9.2
+      ],
+      "projectionBeyondShoulderMm": 8.0
+    },
+    "calibration": {
+      "positive1_25mm": {
+        "pass": true,
+        "minimumAxialThicknessMm": 1.25,
+        "projectionSamples": 3,
+        "sections": [
+          {
+            "xMm": 0.01,
+            "coveredSamples": 3,
+            "totalSamples": 3,
+            "pass": true
+          },
+          {
+            "xMm": 0.625,
+            "coveredSamples": 3,
+            "totalSamples": 3,
+            "pass": true
+          },
+          {
+            "xMm": 1.24,
+            "coveredSamples": 3,
+            "totalSamples": 3,
+            "pass": true
+          }
+        ],
+        "floorRangeXmm": [
+          0,
+          1.25
+        ]
+      },
+      "negative0_15mm": {
+        "pass": false,
+        "minimumAxialThicknessMm": 0.15,
+        "projectionSamples": 3,
+        "sections": [
+          {
+            "xMm": 0.01,
+            "coveredSamples": 3,
+            "totalSamples": 3,
+            "pass": true
+          },
+          {
+            "xMm": 0.075,
+            "coveredSamples": 3,
+            "totalSamples": 3,
+            "pass": true
+          },
+          {
+            "xMm": 0.14,
+            "coveredSamples": 3,
+            "totalSamples": 3,
+            "pass": true
+          }
+        ],
+        "floorRangeXmm": [
+          0,
+          0.15
+        ]
+      }
+    }
+  },
+  "orientationCandidates": {
+    "horn_coupler": {
+      "axis_vertical_blind_down": {
+        "boundsMm": [
+          [
+            -60.2896,
+            -10.229,
+            0.0
+          ],
+          [
+            -21.68,
+            10.9339,
+            14.5
+          ]
+        ],
+        "bed": {
+          "contact_mm2": 205.0,
+          "footprint_mm": [
+            32.2,
+            25.2
+          ],
+          "height_mm": 14.5,
+          "com_over_footprint": true,
+          "height_to_min_footprint": 0.58
+        },
+        "minimumDetectedThicknessMm": 1.2,
+        "thinClusterCount": 2,
+        "largestOverhangClusters": [
+          {
+            "area_mm2": 125.04,
+            "supported": 0.04,
+            "h": [
+              2.65,
+              3.9
+            ],
+            "at": [
+              [
+                -45.6,
+                -6.9,
+                2.7
+              ],
+              [
+                -32.5,
+                7.7,
+                3.9
+              ]
+            ]
+          },
+          {
+            "area_mm2": 56.16,
+            "supported": 0.0,
+            "h": [
+              2.65,
+              2.65
+            ],
+            "at": [
+              [
+                -48.4,
+                -3.4,
+                2.7
+              ],
+              [
+                -47.3,
+                1.1,
+                2.7
+              ]
+            ]
+          },
+          {
+            "area_mm2": 30.12,
+            "supported": 0.3,
+            "h": [
+              2.65,
+              2.65
+            ],
+            "at": [
+              [
+                -30.0,
+                1.4,
+                2.7
+              ],
+              [
+                -28.9,
+                4.2,
+                2.7
+              ]
+            ]
+          }
+        ]
+      },
+      "axis_vertical_mouth_up": {
+        "boundsMm": [
+          [
+            21.68,
+            -10.229,
+            0.0
+          ],
+          [
+            60.2896,
+            10.9339,
+            14.5
+          ]
+        ],
+        "bed": {
+          "contact_mm2": 11.2,
+          "footprint_mm": [
+            2.3,
+            1.5
+          ],
+          "height_mm": 14.5,
+          "com_over_footprint": false,
+          "height_to_min_footprint": 9.87
+        },
+        "minimumDetectedThicknessMm": 1.2,
+        "thinClusterCount": 1,
+        "largestOverhangClusters": [
+          {
+            "area_mm2": 291.85,
+            "supported": 0.0,
+            "h": [
+              10.6,
+              10.6
+            ],
+            "at": [
+              [
+                25.0,
+                -10.2,
+                10.6
+              ],
+              [
+                47.9,
+                9.1,
+                10.6
+              ]
+            ]
+          },
+          {
+            "area_mm2": 87.85,
+            "supported": 0.0,
+            "h": [
+              10.6,
+              10.6
+            ],
+            "at": [
+              [
+                50.2,
+                -4.9,
+                10.6
+              ],
+              [
+                51.6,
+                3.4,
+                10.6
+              ]
+            ]
+          },
+          {
+            "area_mm2": 52.29,
+            "supported": 0.0,
+            "h": [
+              8.0,
+              8.0
+            ],
+            "at": [
+              [
+                36.9,
+                -3.7,
+                8.0
+              ],
+              [
+                43.2,
+                4.5,
+                8.0
+              ]
+            ]
+          }
+        ]
+      },
+      "axis_horizontal_identity": {
+        "boundsMm": [
+          [
+            -5.3,
+            -10.229,
+            0.0
+          ],
+          [
+            9.2,
+            10.9339,
+            38.6096
+          ]
+        ],
+        "bed": {
+          "contact_mm2": 4.6,
+          "footprint_mm": [
+            1.2,
+            0.6
+          ],
+          "height_mm": 38.6,
+          "com_over_footprint": false,
+          "height_to_min_footprint": 60.37
+        },
+        "minimumDetectedThicknessMm": 1.2,
+        "thinClusterCount": 1,
+        "largestOverhangClusters": [
+          {
+            "area_mm2": 17.08,
+            "supported": 0.14,
+            "h": [
+              12.66,
+              13.56
+            ],
+            "at": [
+              [
+                -4.0,
+                -9.1,
+                12.7
+              ],
+              [
+                -2.7,
+                -5.2,
+                13.6
+              ]
+            ]
+          },
+          {
+            "area_mm2": 16.63,
+            "supported": 0.0,
+            "h": [
+              16.52,
+              16.52
+            ],
+            "at": [
+              [
+                3.9,
+                -1.0,
+                16.5
+              ],
+              [
+                6.5,
+                0.9,
+                16.5
+              ]
+            ]
+          },
+          {
+            "area_mm2": 15.73,
+            "supported": 0.06,
+            "h": [
+              13.83,
+              15.91
+            ],
+            "at": [
+              [
+                -0.9,
+                -3.1,
+                13.8
+              ],
+              [
+                0.8,
+                3.1,
+                15.9
+              ]
+            ]
+          }
+        ]
+      },
+      "axis_horizontal_x_plus_80": {
+        "boundsMm": [
+          [
+            -5.3,
+            -59.9423,
+            0.0
+          ],
+          [
+            9.2,
+            -20.8423,
+            20.9
+          ]
+        ],
+        "bed": {
+          "contact_mm2": 23.7,
+          "footprint_mm": [
+            4.7,
+            4.6
+          ],
+          "height_mm": 20.9,
+          "com_over_footprint": true,
+          "height_to_min_footprint": 4.56
+        },
+        "minimumDetectedThicknessMm": 1.2,
+        "thinClusterCount": 1,
+        "largestOverhangClusters": [
+          {
+            "area_mm2": 33.26,
+            "supported": 0.0,
+            "h": [
+              7.82,
+              9.08
+            ],
+            "at": [
+              [
+                3.9,
+                -41.3,
+                7.8
+              ],
+              [
+                6.5,
+                -37.9,
+                9.1
+              ]
+            ]
+          },
+          {
+            "area_mm2": 22.49,
+            "supported": null,
+            "h": [
+              4.53,
+              4.53
+            ],
+            "at": [
+              [
+                -4.0,
+                -49.0,
+                4.5
+              ],
+              [
+                -4.0,
+                -49.0,
+                4.5
+              ]
+            ]
+          },
+          {
+            "area_mm2": 20.93,
+            "supported": null,
+            "h": [
+              4.45,
+              4.45
+            ],
+            "at": [
+              [
+                -4.0,
+                -31.3,
+                4.5
+              ],
+              [
+                -4.0,
+                -31.3,
+                4.5
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    "joint_keeper": {
+      "current_x_plus_90": {
+        "boundsMm": [
+          [
+            -1.3,
+            -45.5277,
+            0.0
+          ],
+          [
+            11.2,
+            -2.7,
+            13.2
+          ]
+        ],
+        "bed": {
+          "contact_mm2": 0.0,
+          "footprint_mm": [
+            0,
+            0
+          ],
+          "height_mm": 13.2,
+          "com_over_footprint": false,
+          "height_to_min_footprint": null
+        },
+        "minimumDetectedThicknessMm": 0.69,
+        "thinClusterCount": 6,
+        "largestOverhangClusters": [
+          {
+            "area_mm2": 109.38,
+            "supported": null,
+            "h": [
+              3.6,
+              3.6
+            ],
+            "at": [
+              [
+                3.3,
+                -8.5,
+                3.6
+              ],
+              [
+                3.3,
+                -8.5,
+                3.6
+              ]
+            ]
+          },
+          {
+            "area_mm2": 88.38,
+            "supported": null,
+            "h": [
+              3.6,
+              3.6
+            ],
+            "at": [
+              [
+                7.0,
+                -14.4,
+                3.6
+              ],
+              [
+                7.0,
+                -14.4,
+                3.6
+              ]
+            ]
+          },
+          {
+            "area_mm2": 11.12,
+            "supported": 0.0,
+            "h": [
+              0.71,
+              2.3
+            ],
+            "at": [
+              [
+                10.4,
+                -44.0,
+                0.7
+              ],
+              [
+                10.8,
+                -36.0,
+                2.3
+              ]
+            ]
+          }
+        ]
+      },
+      "assembly_identity": {
+        "boundsMm": [
+          [
+            -1.3,
+            -6.6,
+            0.0
+          ],
+          [
+            11.2,
+            6.6,
+            42.8277
+          ]
+        ],
+        "bed": {
+          "contact_mm2": 75.0,
+          "footprint_mm": [
+            4.4,
+            1.5
+          ],
+          "height_mm": 42.8,
+          "com_over_footprint": true,
+          "height_to_min_footprint": 27.95
+        },
+        "minimumDetectedThicknessMm": 0.69,
+        "thinClusterCount": 8,
+        "largestOverhangClusters": [
+          {
+            "area_mm2": 2.48,
+            "supported": 0.5,
+            "h": [
+              31.44,
+              32.49
+            ],
+            "at": [
+              [
+                -0.9,
+                -4.5,
+                31.4
+              ],
+              [
+                -0.5,
+                -3.0,
+                32.5
+              ]
+            ]
+          },
+          {
+            "area_mm2": 2.48,
+            "supported": 0.5,
+            "h": [
+              31.44,
+              32.49
+            ],
+            "at": [
+              [
+                -0.9,
+                3.0,
+                31.4
+              ],
+              [
+                -0.5,
+                4.5,
+                32.5
+              ]
+            ]
+          },
+          {
+            "area_mm2": 1.78,
+            "supported": 0.5,
+            "h": [
+              32.28,
+              33.0
+            ],
+            "at": [
+              [
+                10.4,
+                -4.0,
+                32.3
+              ],
+              [
+                10.8,
+                -3.1,
+                33.0
+              ]
+            ]
+          }
+        ]
+      },
+      "y_plus_90": {
+        "boundsMm": [
+          [
+            2.7,
+            -6.6,
+            0.0
+          ],
+          [
+            45.5277,
+            6.6,
+            12.5
+          ]
+        ],
+        "bed": {
+          "contact_mm2": 253.5,
+          "footprint_mm": [
+            27.2,
+            28.6
+          ],
+          "height_mm": 12.5,
+          "com_over_footprint": true,
+          "height_to_min_footprint": 0.46
+        },
+        "minimumDetectedThicknessMm": 0.69,
+        "thinClusterCount": 8,
+        "largestOverhangClusters": [
+          {
+            "area_mm2": 71.3,
+            "supported": 0.0,
+            "h": [
+              11.3,
+              11.3
+            ],
+            "at": [
+              [
+                34.1,
+                -5.6,
+                11.3
+              ],
+              [
+                45.5,
+                6.6,
+                11.3
+              ]
+            ]
+          },
+          {
+            "area_mm2": 39.04,
+            "supported": 0.0,
+            "h": [
+              11.3,
+              11.3
+            ],
+            "at": [
+              [
+                24.7,
+                -0.2,
+                11.3
+              ],
+              [
+                24.8,
+                2.2,
+                11.3
+              ]
+            ]
+          },
+          {
+            "area_mm2": 20.22,
+            "supported": 0.0,
+            "h": [
+              11.3,
+              11.3
+            ],
+            "at": [
+              [
+                29.1,
+                -2.8,
+                11.3
+              ],
+              [
+                29.5,
+                -1.2,
+                11.3
+              ]
+            ]
+          }
+        ]
+      },
+      "y_minus_90": {
+        "boundsMm": [
+          [
+            -45.5277,
+            -6.6,
+            0.0
+          ],
+          [
+            -2.7,
+            6.6,
+            12.5
+          ]
+        ],
+        "bed": {
+          "contact_mm2": 256.9,
+          "footprint_mm": [
+            29.4,
+            27.9
+          ],
+          "height_mm": 12.5,
+          "com_over_footprint": true,
+          "height_to_min_footprint": 0.45
+        },
+        "minimumDetectedThicknessMm": 0.69,
+        "thinClusterCount": 8,
+        "largestOverhangClusters": [
+          {
+            "area_mm2": 63.51,
+            "supported": 0.0,
+            "h": [
+              11.3,
+              11.3
+            ],
+            "at": [
+              [
+                -45.0,
+                -4.9,
+                11.3
+              ],
+              [
+                -34.9,
+                5.9,
+                11.3
+              ]
+            ]
+          },
+          {
+            "area_mm2": 41.13,
+            "supported": 0.0,
+            "h": [
+              11.3,
+              11.3
+            ],
+            "at": [
+              [
+                -25.0,
+                -2.2,
+                11.3
+              ],
+              [
+                -25.0,
+                0.2,
+                11.3
+              ]
+            ]
+          },
+          {
+            "area_mm2": 21.36,
+            "supported": 0.0,
+            "h": [
+              11.3,
+              11.3
+            ],
+            "at": [
+              [
+                -30.0,
+                1.2,
+                11.3
+              ],
+              [
+                -29.5,
+                2.9,
+                11.3
+              ]
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "straightSpanEvidence": {
+    "fullPLA": {
+      "file": "models/mystery-box-sg92r-c4/build/print_spans_PLA.json",
+      "bytes": 3615395,
+      "sha256": "ad4db78392bacf476255fe76e5602189bffaf66e383629e1b14e8c103659b5b5",
+      "sourceGcodeSha256": "b00c022d7ae0a56e00ee18671e923109cb328f0ed757a64fd32012e8828bbc69",
+      "calibrationPass": true,
+      "objectAssignmentComplete": true,
+      "method": "Intervals at least 10 mm whose endpoint distance is at least 98% of path length. Closed rings and accumulated curves are excluded.",
+      "maximumStraightIntervalByObject": {
+        "mystery-box-sg92r-c4-print-housing": {
+          "object": "mystery-box-sg92r-c4-print-housing",
+          "zMm": 33.2,
+          "feature": "Overhang wall",
+          "category": "external",
+          "support": "both_ends",
+          "pathLengthMm": 7.7025,
+          "endpointDistanceMm": 7.7026,
+          "straightness": 1.0,
+          "startXYmm": [
+            80.659,
+            70.8487
+          ],
+          "endXYmm": [
+            80.659,
+            78.5513
+          ],
+          "boundsXYmm": [
+            [
+              80.659,
+              80.659
+            ],
+            [
+              70.8487,
+              78.5513
+            ]
+          ]
+        },
+        "mystery-box-sg92r-c4-print-faceplate": {
+          "object": "mystery-box-sg92r-c4-print-faceplate",
+          "zMm": 13.2,
+          "feature": "Overhang wall",
+          "category": "external",
+          "support": "both_ends",
+          "pathLengthMm": 7.58,
+          "endpointDistanceMm": 7.58,
+          "straightness": 1.0,
+          "startXYmm": [
+            166.44,
+            82.91
+          ],
+          "endXYmm": [
+            166.44,
+            90.49
+          ],
+          "boundsXYmm": [
+            [
+              166.44,
+              166.44
+            ],
+            [
+              82.91,
+              90.49
+            ]
+          ]
+        },
+        "mystery-box-sg92r-c4-print-bottom": {
+          "object": "mystery-box-sg92r-c4-print-bottom",
+          "zMm": 14.6,
+          "feature": "Overhang wall",
+          "category": "external",
+          "support": "both_ends",
+          "pathLengthMm": 7.58,
+          "endpointDistanceMm": 7.58,
+          "straightness": 1.0,
+          "startXYmm": [
+            82.44,
+            138.21
+          ],
+          "endXYmm": [
+            82.44,
+            145.79
+          ],
+          "boundsXYmm": [
+            [
+              82.44,
+              82.44
+            ],
+            [
+              138.21,
+              145.79
+            ]
+          ]
+        },
+        "mystery-box-sg92r-c4-print-carrier_outer": {
+          "object": "mystery-box-sg92r-c4-print-carrier_outer",
+          "zMm": 8.8,
+          "feature": "Overhang wall",
+          "category": "external",
+          "support": "both_ends",
+          "pathLengthMm": 6.0065,
+          "endpointDistanceMm": 6.0064,
+          "straightness": 1.0,
+          "startXYmm": [
+            102.0265,
+            163.9944
+          ],
+          "endXYmm": [
+            99.0235,
+            158.7926
+          ],
+          "boundsXYmm": [
+            [
+              99.0235,
+              102.0265
+            ],
+            [
+              158.7926,
+              163.9944
+            ]
+          ]
+        },
+        "mystery-box-sg92r-c4-print-horn_coupler": {
+          "object": "mystery-box-sg92r-c4-print-horn_coupler",
+          "zMm": 8.2,
+          "feature": "Overhang wall",
+          "category": "external",
+          "support": "one_end",
+          "pathLengthMm": 7.4304,
+          "endpointDistanceMm": 7.2917,
+          "straightness": 0.9813,
+          "startXYmm": [
+            171.29,
+            139.355
+          ],
+          "endXYmm": [
+            163.9996,
+            139.495
+          ],
+          "boundsXYmm": [
+            [
+              163.9996,
+              171.29
+            ],
+            [
+              139.355,
+              139.495
+            ]
+          ]
+        },
+        "mystery-box-sg92r-c4-print-carrier_inner": {
+          "object": "mystery-box-sg92r-c4-print-carrier_inner",
+          "zMm": 27.2,
+          "feature": "Bridge",
+          "category": "bridge",
+          "support": "both_ends",
+          "pathLengthMm": 3.9541,
+          "endpointDistanceMm": 3.9541,
+          "straightness": 1.0,
+          "startXYmm": [
+            219.5042,
+            136.794
+          ],
+          "endXYmm": [
+            222.3005,
+            133.9983
+          ],
+          "boundsXYmm": [
+            [
+              219.5042,
+              222.3005
+            ],
+            [
+              133.9983,
+              136.794
+            ]
+          ]
+        },
+        "mystery-box-sg92r-c4-print-cam_center": {
+          "object": "mystery-box-sg92r-c4-print-cam_center",
+          "zMm": 3.4,
+          "feature": "Bridge",
+          "category": "bridge",
+          "support": "both_ends",
+          "pathLengthMm": 4.1812,
+          "endpointDistanceMm": 4.1813,
+          "straightness": 1.0,
+          "startXYmm": [
+            23.6736,
+            203.1916
+          ],
+          "endXYmm": [
+            26.6302,
+            206.1482
+          ],
+          "boundsXYmm": [
+            [
+              23.6736,
+              26.6302
+            ],
+            [
+              203.1916,
+              206.1482
+            ]
+          ]
+        },
+        "mystery-box-sg92r-c4-print-cam_inner": {
+          "object": "mystery-box-sg92r-c4-print-cam_inner",
+          "zMm": 3.4,
+          "feature": "Bridge",
+          "category": "bridge",
+          "support": "both_ends",
+          "pathLengthMm": 4.1806,
+          "endpointDistanceMm": 4.1807,
+          "straightness": 1.0,
+          "startXYmm": [
+            47.7972,
+            213.1338
+          ],
+          "endXYmm": [
+            50.7534,
+            210.1776
+          ],
+          "boundsXYmm": [
+            [
+              47.7972,
+              50.7534
+            ],
+            [
+              210.1776,
+              213.1338
+            ]
+          ]
+        },
+        "mystery-box-sg92r-c4-print-cam_outer": {
+          "object": "mystery-box-sg92r-c4-print-cam_outer",
+          "zMm": 3.4,
+          "feature": "Bridge",
+          "category": "bridge",
+          "support": "both_ends",
+          "pathLengthMm": 4.1806,
+          "endpointDistanceMm": 4.1807,
+          "straightness": 1.0,
+          "startXYmm": [
+            71.5732,
+            213.2042
+          ],
+          "endXYmm": [
+            68.617,
+            210.248
+          ],
+          "boundsXYmm": [
+            [
+              68.617,
+              71.5732
+            ],
+            [
+              210.248,
+              213.2042
+            ]
+          ]
+        },
+        "mystery-box-sg92r-c4-print-carrier_center": {
+          "object": "mystery-box-sg92r-c4-print-carrier_center",
+          "zMm": 8.8,
+          "feature": "Bridge",
+          "category": "bridge",
+          "support": "both_ends",
+          "pathLengthMm": 6.5528,
+          "endpointDistanceMm": 6.5528,
+          "straightness": 1.0,
+          "startXYmm": [
+            94.3764,
+            199.0197
+          ],
+          "endXYmm": [
+            93.9484,
+            205.5585
+          ],
+          "boundsXYmm": [
+            [
+              93.9484,
+              94.3764
+            ],
+            [
+              199.0197,
+              205.5585
+            ]
+          ]
+        },
+        "mystery-box-sg92r-c4-print-joint_keeper": {
+          "object": "mystery-box-sg92r-c4-print-joint_keeper",
+          "zMm": 17.0,
+          "feature": "Bridge",
+          "category": "bridge",
+          "support": "both_ends",
+          "pathLengthMm": 2.5467,
+          "endpointDistanceMm": 2.5467,
+          "straightness": 1.0,
+          "startXYmm": [
+            117.9284,
+            201.0276
+          ],
+          "endXYmm": [
+            116.1276,
+            202.8284
+          ],
+          "boundsXYmm": [
+            [
+              116.1276,
+              117.9284
+            ],
+            [
+              201.0276,
+              202.8284
+            ]
+          ]
+        },
+        "mystery-box-sg92r-c4-print-bearing_keeper": {
+          "object": "mystery-box-sg92r-c4-print-bearing_keeper",
+          "zMm": 1.6,
+          "feature": "Bridge",
+          "category": "bridge",
+          "support": "both_ends",
+          "pathLengthMm": 2.6861,
+          "endpointDistanceMm": 2.686,
+          "straightness": 1.0,
+          "startXYmm": [
+            132.6276,
+            199.6724
+          ],
+          "endXYmm": [
+            134.5269,
+            197.7731
+          ],
+          "boundsXYmm": [
+            [
+              132.6276,
+              134.5269
+            ],
+            [
+              197.7731,
+              199.6724
+            ]
+          ]
+        },
+        "mystery-box-sg92r-c4-print-camshaft": {
+          "object": "mystery-box-sg92r-c4-print-camshaft",
+          "zMm": 5.6,
+          "feature": "Floating vertical shell",
+          "category": "internal",
+          "support": "both_ends",
+          "pathLengthMm": 1.9947,
+          "endpointDistanceMm": 1.9947,
+          "straightness": 1.0,
+          "startXYmm": [
+            158.0265,
+            199.094
+          ],
+          "endXYmm": [
+            160.0212,
+            199.094
+          ],
+          "boundsXYmm": [
+            [
+              158.0265,
+              160.0212
+            ],
+            [
+              199.094,
+              199.094
+            ]
+          ]
+        }
+      },
+      "oneEndOrNoneMaximumByGroup": [
+        {
+          "object": "mystery-box-sg92r-c4-print-bottom",
+          "zMm": 1.6,
+          "feature": "Floating vertical shell",
+          "category": "internal",
+          "support": "one_end",
+          "pathLengthMm": 2.0866,
+          "endpointDistanceMm": 2.0866,
+          "straightness": 1.0,
+          "startXYmm": [
+            29.6,
+            135.715
+          ],
+          "endXYmm": [
+            29.6,
+            133.6284
+          ],
+          "boundsXYmm": [
+            [
+              29.6,
+              29.6
+            ],
+            [
+              133.6284,
+              135.715
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-bottom",
+          "zMm": 2.8,
+          "feature": "Gap infill",
+          "category": "external",
+          "support": "one_end",
+          "pathLengthMm": 0.1996,
+          "endpointDistanceMm": 0.1996,
+          "straightness": 1.0,
+          "startXYmm": [
+            12.25,
+            163.0056
+          ],
+          "endXYmm": [
+            12.25,
+            162.806
+          ],
+          "boundsXYmm": [
+            [
+              12.25,
+              12.25
+            ],
+            [
+              162.806,
+              163.0056
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-bottom",
+          "zMm": 1.4,
+          "feature": "Sparse infill",
+          "category": "internal",
+          "support": "one_end",
+          "pathLengthMm": 0.7895,
+          "endpointDistanceMm": 0.5816,
+          "straightness": 0.7366,
+          "startXYmm": [
+            13.3645,
+            132.715
+          ],
+          "endXYmm": [
+            13.085,
+            132.205
+          ],
+          "boundsXYmm": [
+            [
+              13.085,
+              13.3645
+            ],
+            [
+              132.205,
+              132.715
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-cam_center",
+          "zMm": 0.8,
+          "feature": "Overhang wall",
+          "category": "external",
+          "support": "none",
+          "pathLengthMm": 24.4316,
+          "endpointDistanceMm": 0.06,
+          "straightness": 0.0025,
+          "startXYmm": [
+            14.161,
+            202.827
+          ],
+          "endXYmm": [
+            14.161,
+            202.887
+          ],
+          "boundsXYmm": [
+            [
+              14.161,
+              21.231
+            ],
+            [
+              200.697,
+              208.861
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-cam_center",
+          "zMm": 3.2,
+          "feature": "Sparse infill",
+          "category": "internal",
+          "support": "one_end",
+          "pathLengthMm": 0.1355,
+          "endpointDistanceMm": 0.1355,
+          "straightness": 0.9999,
+          "startXYmm": [
+            27.4436,
+            209.9953
+          ],
+          "endXYmm": [
+            27.525,
+            209.887
+          ],
+          "boundsXYmm": [
+            [
+              27.4436,
+              27.525
+            ],
+            [
+              209.887,
+              209.9953
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-cam_inner",
+          "zMm": 3.2,
+          "feature": "Sparse infill",
+          "category": "internal",
+          "support": "one_end",
+          "pathLengthMm": 0.8132,
+          "endpointDistanceMm": 0.8131,
+          "straightness": 0.9999,
+          "startXYmm": [
+            42.063,
+            198.425
+          ],
+          "endXYmm": [
+            41.4215,
+            198.9246
+          ],
+          "boundsXYmm": [
+            [
+              41.4215,
+              42.063
+            ],
+            [
+              198.425,
+              198.9246
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-cam_outer",
+          "zMm": 3.2,
+          "feature": "Sparse infill",
+          "category": "internal",
+          "support": "one_end",
+          "pathLengthMm": 0.8132,
+          "endpointDistanceMm": 0.8131,
+          "straightness": 0.9999,
+          "startXYmm": [
+            67.4217,
+            211.6751
+          ],
+          "endXYmm": [
+            68.063,
+            212.175
+          ],
+          "boundsXYmm": [
+            [
+              67.4217,
+              68.063
+            ],
+            [
+              211.6751,
+              212.175
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-carrier_center",
+          "zMm": 11.4,
+          "feature": "Overhang wall",
+          "category": "external",
+          "support": "none",
+          "pathLengthMm": 3.868,
+          "endpointDistanceMm": 0.06,
+          "straightness": 0.0155,
+          "startXYmm": [
+            98.709,
+            204.209
+          ],
+          "endXYmm": [
+            98.709,
+            204.269
+          ],
+          "boundsXYmm": [
+            [
+              98.709,
+              99.691
+            ],
+            [
+              204.209,
+              205.191
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-carrier_center",
+          "zMm": 26.2,
+          "feature": "Bridge",
+          "category": "bridge",
+          "support": "one_end",
+          "pathLengthMm": 17.0925,
+          "endpointDistanceMm": 5.5711,
+          "straightness": 0.3259,
+          "startXYmm": [
+            96.249,
+            199.373
+          ],
+          "endXYmm": [
+            97.2245,
+            204.858
+          ],
+          "boundsXYmm": [
+            [
+              96.249,
+              97.2245
+            ],
+            [
+              199.373,
+              204.858
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-carrier_center",
+          "zMm": 8.6,
+          "feature": "Gap infill",
+          "category": "external",
+          "support": "one_end",
+          "pathLengthMm": 1.2166,
+          "endpointDistanceMm": 1.2154,
+          "straightness": 0.999,
+          "startXYmm": [
+            92.888,
+            198.361
+          ],
+          "endXYmm": [
+            91.8038,
+            198.9103
+          ],
+          "boundsXYmm": [
+            [
+              91.8038,
+              92.888
+            ],
+            [
+              198.361,
+              198.9103
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-carrier_center",
+          "zMm": 10.4,
+          "feature": "Sparse infill",
+          "category": "internal",
+          "support": "one_end",
+          "pathLengthMm": 0.8614,
+          "endpointDistanceMm": 0.8614,
+          "straightness": 1.0,
+          "startXYmm": [
+            94.236,
+            199.281
+          ],
+          "endXYmm": [
+            93.4249,
+            199.5711
+          ],
+          "boundsXYmm": [
+            [
+              93.4249,
+              94.236
+            ],
+            [
+              199.281,
+              199.5711
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-carrier_inner",
+          "zMm": 8.8,
+          "feature": "Bridge",
+          "category": "bridge",
+          "support": "none",
+          "pathLengthMm": 1.779,
+          "endpointDistanceMm": 0.4697,
+          "straightness": 0.264,
+          "startXYmm": [
+            214.767,
+            125.533
+          ],
+          "endXYmm": [
+            215.22,
+            125.409
+          ],
+          "boundsXYmm": [
+            [
+              214.767,
+              215.22
+            ],
+            [
+              124.808,
+              125.533
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-carrier_inner",
+          "zMm": 8.6,
+          "feature": "Gap infill",
+          "category": "external",
+          "support": "none",
+          "pathLengthMm": 3.1747,
+          "endpointDistanceMm": 3.1747,
+          "straightness": 1.0,
+          "startXYmm": [
+            198.406,
+            139.496
+          ],
+          "endXYmm": [
+            199.994,
+            142.245
+          ],
+          "boundsXYmm": [
+            [
+              198.406,
+              199.994
+            ],
+            [
+              139.496,
+              142.245
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-carrier_inner",
+          "zMm": 11.4,
+          "feature": "Gap infill",
+          "category": "external",
+          "support": "one_end",
+          "pathLengthMm": 3.8819,
+          "endpointDistanceMm": 3.8819,
+          "straightness": 1.0,
+          "startXYmm": [
+            226.1,
+            134.4061
+          ],
+          "endXYmm": [
+            226.1,
+            138.288
+          ],
+          "boundsXYmm": [
+            [
+              226.1,
+              226.1
+            ],
+            [
+              134.4061,
+              138.288
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-carrier_inner",
+          "zMm": 8.6,
+          "feature": "Overhang wall",
+          "category": "external",
+          "support": "one_end",
+          "pathLengthMm": 0.0985,
+          "endpointDistanceMm": 0.0985,
+          "straightness": 0.9997,
+          "startXYmm": [
+            199.4142,
+            131.5567
+          ],
+          "endXYmm": [
+            199.365,
+            131.642
+          ],
+          "boundsXYmm": [
+            [
+              199.365,
+              199.4142
+            ],
+            [
+              131.5567,
+              131.642
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-carrier_outer",
+          "zMm": 8.6,
+          "feature": "Gap infill",
+          "category": "external",
+          "support": "none",
+          "pathLengthMm": 4.1595,
+          "endpointDistanceMm": 4.0701,
+          "straightness": 0.9785,
+          "startXYmm": [
+            118.987,
+            124.173
+          ],
+          "endXYmm": [
+            118.7,
+            120.113
+          ],
+          "boundsXYmm": [
+            [
+              118.7,
+              118.987
+            ],
+            [
+              120.113,
+              124.173
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-carrier_outer",
+          "zMm": 8.6,
+          "feature": "Overhang wall",
+          "category": "external",
+          "support": "none",
+          "pathLengthMm": 19.2773,
+          "endpointDistanceMm": 0.06,
+          "straightness": 0.0031,
+          "startXYmm": [
+            117.41,
+            125.999
+          ],
+          "endXYmm": [
+            117.462,
+            125.969
+          ],
+          "boundsXYmm": [
+            [
+              117.41,
+              119.99
+            ],
+            [
+              119.11,
+              125.999
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-carrier_outer",
+          "zMm": 11.4,
+          "feature": "Gap infill",
+          "category": "external",
+          "support": "one_end",
+          "pathLengthMm": 3.8819,
+          "endpointDistanceMm": 3.8819,
+          "straightness": 1.0,
+          "startXYmm": [
+            148.7,
+            149.8051
+          ],
+          "endXYmm": [
+            148.7,
+            153.687
+          ],
+          "boundsXYmm": [
+            [
+              148.7,
+              148.7
+            ],
+            [
+              149.8051,
+              153.687
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-carrier_outer",
+          "zMm": 8.6,
+          "feature": "Overhang wall",
+          "category": "external",
+          "support": "one_end",
+          "pathLengthMm": 5.3536,
+          "endpointDistanceMm": 3.5822,
+          "straightness": 0.6691,
+          "startXYmm": [
+            126.691,
+            172.0004
+          ],
+          "endXYmm": [
+            123.109,
+            171.964
+          ],
+          "boundsXYmm": [
+            [
+              123.109,
+              126.691
+            ],
+            [
+              171.964,
+              172.868
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-faceplate",
+          "zMm": 1.0,
+          "feature": "Sparse infill",
+          "category": "internal",
+          "support": "one_end",
+          "pathLengthMm": 0.1925,
+          "endpointDistanceMm": 0.1925,
+          "straightness": 1.0,
+          "startXYmm": [
+            150.385,
+            49.373
+          ],
+          "endXYmm": [
+            150.385,
+            49.1805
+          ],
+          "boundsXYmm": [
+            [
+              150.385,
+              150.385
+            ],
+            [
+              49.1805,
+              49.373
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-horn_coupler",
+          "zMm": 5.6,
+          "feature": "Gap infill",
+          "category": "external",
+          "support": "none",
+          "pathLengthMm": 1.46,
+          "endpointDistanceMm": 1.46,
+          "straightness": 1.0,
+          "startXYmm": [
+            162.9,
+            139.976
+          ],
+          "endXYmm": [
+            162.9,
+            138.516
+          ],
+          "boundsXYmm": [
+            [
+              162.9,
+              162.9
+            ],
+            [
+              138.516,
+              139.976
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-horn_coupler",
+          "zMm": 5.6,
+          "feature": "Overhang wall",
+          "category": "external",
+          "support": "none",
+          "pathLengthMm": 5.204,
+          "endpointDistanceMm": 0.06,
+          "straightness": 0.0115,
+          "startXYmm": [
+            163.29,
+            139.332
+          ],
+          "endXYmm": [
+            163.29,
+            139.272
+          ],
+          "boundsXYmm": [
+            [
+              162.51,
+              163.29
+            ],
+            [
+              138.32,
+              140.172
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-horn_coupler",
+          "zMm": 10.2,
+          "feature": "Floating vertical shell",
+          "category": "internal",
+          "support": "one_end",
+          "pathLengthMm": 1.8944,
+          "endpointDistanceMm": 1.8944,
+          "straightness": 1.0,
+          "startXYmm": [
+            169.672,
+            139.294
+          ],
+          "endXYmm": [
+            167.7776,
+            139.294
+          ],
+          "boundsXYmm": [
+            [
+              167.7776,
+              169.672
+            ],
+            [
+              139.294,
+              139.294
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-horn_coupler",
+          "zMm": 8.2,
+          "feature": "Gap infill",
+          "category": "external",
+          "support": "one_end",
+          "pathLengthMm": 7.1,
+          "endpointDistanceMm": 7.1,
+          "straightness": 1.0,
+          "startXYmm": [
+            171.094,
+            139.12
+          ],
+          "endXYmm": [
+            163.994,
+            139.12
+          ],
+          "boundsXYmm": [
+            [
+              163.994,
+              171.094
+            ],
+            [
+              139.12,
+              139.12
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-horn_coupler",
+          "zMm": 8.2,
+          "feature": "Outer wall",
+          "category": "external",
+          "support": "one_end",
+          "pathLengthMm": 7.8726,
+          "endpointDistanceMm": 7.2882,
+          "straightness": 0.9258,
+          "startXYmm": [
+            164.0274,
+            138.745
+          ],
+          "endXYmm": [
+            171.29,
+            139.355
+          ],
+          "boundsXYmm": [
+            [
+              164.0274,
+              171.29
+            ],
+            [
+              138.745,
+              139.355
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-horn_coupler",
+          "zMm": 8.2,
+          "feature": "Overhang wall",
+          "category": "external",
+          "support": "one_end",
+          "pathLengthMm": 7.4304,
+          "endpointDistanceMm": 7.2917,
+          "straightness": 0.9813,
+          "startXYmm": [
+            171.29,
+            139.355
+          ],
+          "endXYmm": [
+            163.9996,
+            139.495
+          ],
+          "boundsXYmm": [
+            [
+              163.9996,
+              171.29
+            ],
+            [
+              139.355,
+              139.495
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-housing",
+          "zMm": 46.6,
+          "feature": "Bridge",
+          "category": "bridge",
+          "support": "none",
+          "pathLengthMm": 3.992,
+          "endpointDistanceMm": 0.422,
+          "straightness": 0.1057,
+          "startXYmm": [
+            33.323,
+            80.186
+          ],
+          "endXYmm": [
+            33.323,
+            79.764
+          ],
+          "boundsXYmm": [
+            [
+              33.323,
+              35.108
+            ],
+            [
+              79.764,
+              80.186
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-housing",
+          "zMm": 33.2,
+          "feature": "Gap infill",
+          "category": "external",
+          "support": "none",
+          "pathLengthMm": 6.512,
+          "endpointDistanceMm": 6.512,
+          "straightness": 1.0,
+          "startXYmm": [
+            81.15,
+            71.444
+          ],
+          "endXYmm": [
+            81.15,
+            77.956
+          ],
+          "boundsXYmm": [
+            [
+              81.15,
+              81.15
+            ],
+            [
+              71.444,
+              77.956
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-housing",
+          "zMm": 44.8,
+          "feature": "Outer wall",
+          "category": "external",
+          "support": "none",
+          "pathLengthMm": 3.953,
+          "endpointDistanceMm": 0.06,
+          "straightness": 0.0152,
+          "startXYmm": [
+            84.76,
+            78.624
+          ],
+          "endXYmm": [
+            84.82,
+            78.624
+          ],
+          "boundsXYmm": [
+            [
+              84.76,
+              86.44
+            ],
+            [
+              78.297,
+              78.624
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-housing",
+          "zMm": 33.2,
+          "feature": "Bridge",
+          "category": "bridge",
+          "support": "one_end",
+          "pathLengthMm": 2.1917,
+          "endpointDistanceMm": 2.1917,
+          "straightness": 1.0,
+          "startXYmm": [
+            83.8137,
+            71.286
+          ],
+          "endXYmm": [
+            81.622,
+            71.286
+          ],
+          "boundsXYmm": [
+            [
+              81.622,
+              83.8137
+            ],
+            [
+              71.286,
+              71.286
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-housing",
+          "zMm": 42.0,
+          "feature": "Gap infill",
+          "category": "external",
+          "support": "one_end",
+          "pathLengthMm": 0.1961,
+          "endpointDistanceMm": 0.1961,
+          "straightness": 1.0,
+          "startXYmm": [
+            85.6,
+            68.422
+          ],
+          "endXYmm": [
+            85.6,
+            68.2259
+          ],
+          "boundsXYmm": [
+            [
+              85.6,
+              85.6
+            ],
+            [
+              68.2259,
+              68.422
+            ]
+          ]
+        }
+      ],
+      "straightIntervalsAtLeast10mm": []
+    },
+    "fullPETG": {
+      "file": "models/mystery-box-sg92r-c4/build/print_spans_PETG.json",
+      "bytes": 3615387,
+      "sha256": "ac84e8c0831e1b7012df7ebb2fd3860a15332ac1852210d95be3c58e4853e440",
+      "sourceGcodeSha256": "f19e388e8b2248529c177d1520493c6e42c18929a1d01b85d664a907409ebf1d",
+      "calibrationPass": true,
+      "objectAssignmentComplete": true,
+      "method": "Intervals at least 10 mm whose endpoint distance is at least 98% of path length. Closed rings and accumulated curves are excluded.",
+      "maximumStraightIntervalByObject": {
+        "mystery-box-sg92r-c4-print-housing": {
+          "object": "mystery-box-sg92r-c4-print-housing",
+          "zMm": 33.2,
+          "feature": "Overhang wall",
+          "category": "external",
+          "support": "both_ends",
+          "pathLengthMm": 7.7025,
+          "endpointDistanceMm": 7.7026,
+          "straightness": 1.0,
+          "startXYmm": [
+            80.659,
+            70.8487
+          ],
+          "endXYmm": [
+            80.659,
+            78.5513
+          ],
+          "boundsXYmm": [
+            [
+              80.659,
+              80.659
+            ],
+            [
+              70.8487,
+              78.5513
+            ]
+          ]
+        },
+        "mystery-box-sg92r-c4-print-faceplate": {
+          "object": "mystery-box-sg92r-c4-print-faceplate",
+          "zMm": 13.2,
+          "feature": "Overhang wall",
+          "category": "external",
+          "support": "both_ends",
+          "pathLengthMm": 7.58,
+          "endpointDistanceMm": 7.58,
+          "straightness": 1.0,
+          "startXYmm": [
+            166.44,
+            82.91
+          ],
+          "endXYmm": [
+            166.44,
+            90.49
+          ],
+          "boundsXYmm": [
+            [
+              166.44,
+              166.44
+            ],
+            [
+              82.91,
+              90.49
+            ]
+          ]
+        },
+        "mystery-box-sg92r-c4-print-bottom": {
+          "object": "mystery-box-sg92r-c4-print-bottom",
+          "zMm": 14.6,
+          "feature": "Overhang wall",
+          "category": "external",
+          "support": "both_ends",
+          "pathLengthMm": 7.58,
+          "endpointDistanceMm": 7.58,
+          "straightness": 1.0,
+          "startXYmm": [
+            82.44,
+            138.21
+          ],
+          "endXYmm": [
+            82.44,
+            145.79
+          ],
+          "boundsXYmm": [
+            [
+              82.44,
+              82.44
+            ],
+            [
+              138.21,
+              145.79
+            ]
+          ]
+        },
+        "mystery-box-sg92r-c4-print-carrier_outer": {
+          "object": "mystery-box-sg92r-c4-print-carrier_outer",
+          "zMm": 8.8,
+          "feature": "Overhang wall",
+          "category": "external",
+          "support": "both_ends",
+          "pathLengthMm": 6.0065,
+          "endpointDistanceMm": 6.0064,
+          "straightness": 1.0,
+          "startXYmm": [
+            102.0265,
+            163.9944
+          ],
+          "endXYmm": [
+            99.0235,
+            158.7926
+          ],
+          "boundsXYmm": [
+            [
+              99.0235,
+              102.0265
+            ],
+            [
+              158.7926,
+              163.9944
+            ]
+          ]
+        },
+        "mystery-box-sg92r-c4-print-horn_coupler": {
+          "object": "mystery-box-sg92r-c4-print-horn_coupler",
+          "zMm": 8.2,
+          "feature": "Overhang wall",
+          "category": "external",
+          "support": "one_end",
+          "pathLengthMm": 7.4304,
+          "endpointDistanceMm": 7.2917,
+          "straightness": 0.9813,
+          "startXYmm": [
+            171.29,
+            139.355
+          ],
+          "endXYmm": [
+            163.9996,
+            139.495
+          ],
+          "boundsXYmm": [
+            [
+              163.9996,
+              171.29
+            ],
+            [
+              139.355,
+              139.495
+            ]
+          ]
+        },
+        "mystery-box-sg92r-c4-print-carrier_inner": {
+          "object": "mystery-box-sg92r-c4-print-carrier_inner",
+          "zMm": 27.2,
+          "feature": "Bridge",
+          "category": "bridge",
+          "support": "both_ends",
+          "pathLengthMm": 3.9541,
+          "endpointDistanceMm": 3.9541,
+          "straightness": 1.0,
+          "startXYmm": [
+            219.5042,
+            136.794
+          ],
+          "endXYmm": [
+            222.3005,
+            133.9983
+          ],
+          "boundsXYmm": [
+            [
+              219.5042,
+              222.3005
+            ],
+            [
+              133.9983,
+              136.794
+            ]
+          ]
+        },
+        "mystery-box-sg92r-c4-print-cam_center": {
+          "object": "mystery-box-sg92r-c4-print-cam_center",
+          "zMm": 3.4,
+          "feature": "Bridge",
+          "category": "bridge",
+          "support": "both_ends",
+          "pathLengthMm": 4.1812,
+          "endpointDistanceMm": 4.1813,
+          "straightness": 1.0,
+          "startXYmm": [
+            23.6736,
+            203.1916
+          ],
+          "endXYmm": [
+            26.6302,
+            206.1482
+          ],
+          "boundsXYmm": [
+            [
+              23.6736,
+              26.6302
+            ],
+            [
+              203.1916,
+              206.1482
+            ]
+          ]
+        },
+        "mystery-box-sg92r-c4-print-cam_inner": {
+          "object": "mystery-box-sg92r-c4-print-cam_inner",
+          "zMm": 3.4,
+          "feature": "Bridge",
+          "category": "bridge",
+          "support": "both_ends",
+          "pathLengthMm": 4.1806,
+          "endpointDistanceMm": 4.1807,
+          "straightness": 1.0,
+          "startXYmm": [
+            47.7972,
+            213.1338
+          ],
+          "endXYmm": [
+            50.7534,
+            210.1776
+          ],
+          "boundsXYmm": [
+            [
+              47.7972,
+              50.7534
+            ],
+            [
+              210.1776,
+              213.1338
+            ]
+          ]
+        },
+        "mystery-box-sg92r-c4-print-cam_outer": {
+          "object": "mystery-box-sg92r-c4-print-cam_outer",
+          "zMm": 3.4,
+          "feature": "Bridge",
+          "category": "bridge",
+          "support": "both_ends",
+          "pathLengthMm": 4.1806,
+          "endpointDistanceMm": 4.1807,
+          "straightness": 1.0,
+          "startXYmm": [
+            71.5732,
+            213.2042
+          ],
+          "endXYmm": [
+            68.617,
+            210.248
+          ],
+          "boundsXYmm": [
+            [
+              68.617,
+              71.5732
+            ],
+            [
+              210.248,
+              213.2042
+            ]
+          ]
+        },
+        "mystery-box-sg92r-c4-print-carrier_center": {
+          "object": "mystery-box-sg92r-c4-print-carrier_center",
+          "zMm": 8.8,
+          "feature": "Bridge",
+          "category": "bridge",
+          "support": "both_ends",
+          "pathLengthMm": 6.5528,
+          "endpointDistanceMm": 6.5528,
+          "straightness": 1.0,
+          "startXYmm": [
+            94.3764,
+            199.0197
+          ],
+          "endXYmm": [
+            93.9484,
+            205.5585
+          ],
+          "boundsXYmm": [
+            [
+              93.9484,
+              94.3764
+            ],
+            [
+              199.0197,
+              205.5585
+            ]
+          ]
+        },
+        "mystery-box-sg92r-c4-print-joint_keeper": {
+          "object": "mystery-box-sg92r-c4-print-joint_keeper",
+          "zMm": 17.0,
+          "feature": "Bridge",
+          "category": "bridge",
+          "support": "both_ends",
+          "pathLengthMm": 2.5467,
+          "endpointDistanceMm": 2.5467,
+          "straightness": 1.0,
+          "startXYmm": [
+            117.9284,
+            201.0276
+          ],
+          "endXYmm": [
+            116.1276,
+            202.8284
+          ],
+          "boundsXYmm": [
+            [
+              116.1276,
+              117.9284
+            ],
+            [
+              201.0276,
+              202.8284
+            ]
+          ]
+        },
+        "mystery-box-sg92r-c4-print-bearing_keeper": {
+          "object": "mystery-box-sg92r-c4-print-bearing_keeper",
+          "zMm": 1.6,
+          "feature": "Bridge",
+          "category": "bridge",
+          "support": "both_ends",
+          "pathLengthMm": 2.6861,
+          "endpointDistanceMm": 2.686,
+          "straightness": 1.0,
+          "startXYmm": [
+            132.6276,
+            199.6724
+          ],
+          "endXYmm": [
+            134.5269,
+            197.7731
+          ],
+          "boundsXYmm": [
+            [
+              132.6276,
+              134.5269
+            ],
+            [
+              197.7731,
+              199.6724
+            ]
+          ]
+        },
+        "mystery-box-sg92r-c4-print-camshaft": {
+          "object": "mystery-box-sg92r-c4-print-camshaft",
+          "zMm": 5.6,
+          "feature": "Floating vertical shell",
+          "category": "internal",
+          "support": "both_ends",
+          "pathLengthMm": 1.9947,
+          "endpointDistanceMm": 1.9947,
+          "straightness": 1.0,
+          "startXYmm": [
+            158.0265,
+            199.094
+          ],
+          "endXYmm": [
+            160.0212,
+            199.094
+          ],
+          "boundsXYmm": [
+            [
+              158.0265,
+              160.0212
+            ],
+            [
+              199.094,
+              199.094
+            ]
+          ]
+        }
+      },
+      "oneEndOrNoneMaximumByGroup": [
+        {
+          "object": "mystery-box-sg92r-c4-print-bottom",
+          "zMm": 1.6,
+          "feature": "Floating vertical shell",
+          "category": "internal",
+          "support": "one_end",
+          "pathLengthMm": 2.0866,
+          "endpointDistanceMm": 2.0866,
+          "straightness": 1.0,
+          "startXYmm": [
+            29.6,
+            135.715
+          ],
+          "endXYmm": [
+            29.6,
+            133.6284
+          ],
+          "boundsXYmm": [
+            [
+              29.6,
+              29.6
+            ],
+            [
+              133.6284,
+              135.715
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-bottom",
+          "zMm": 2.8,
+          "feature": "Gap infill",
+          "category": "external",
+          "support": "one_end",
+          "pathLengthMm": 0.1996,
+          "endpointDistanceMm": 0.1996,
+          "straightness": 1.0,
+          "startXYmm": [
+            12.25,
+            163.0056
+          ],
+          "endXYmm": [
+            12.25,
+            162.806
+          ],
+          "boundsXYmm": [
+            [
+              12.25,
+              12.25
+            ],
+            [
+              162.806,
+              163.0056
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-bottom",
+          "zMm": 1.4,
+          "feature": "Sparse infill",
+          "category": "internal",
+          "support": "one_end",
+          "pathLengthMm": 0.7895,
+          "endpointDistanceMm": 0.5816,
+          "straightness": 0.7366,
+          "startXYmm": [
+            13.3645,
+            132.715
+          ],
+          "endXYmm": [
+            13.085,
+            132.205
+          ],
+          "boundsXYmm": [
+            [
+              13.085,
+              13.3645
+            ],
+            [
+              132.205,
+              132.715
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-cam_center",
+          "zMm": 0.8,
+          "feature": "Overhang wall",
+          "category": "external",
+          "support": "none",
+          "pathLengthMm": 24.4316,
+          "endpointDistanceMm": 0.06,
+          "straightness": 0.0025,
+          "startXYmm": [
+            14.161,
+            202.827
+          ],
+          "endXYmm": [
+            14.161,
+            202.887
+          ],
+          "boundsXYmm": [
+            [
+              14.161,
+              21.231
+            ],
+            [
+              200.697,
+              208.861
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-cam_center",
+          "zMm": 3.2,
+          "feature": "Sparse infill",
+          "category": "internal",
+          "support": "one_end",
+          "pathLengthMm": 0.1355,
+          "endpointDistanceMm": 0.1355,
+          "straightness": 0.9999,
+          "startXYmm": [
+            27.4436,
+            209.9953
+          ],
+          "endXYmm": [
+            27.525,
+            209.887
+          ],
+          "boundsXYmm": [
+            [
+              27.4436,
+              27.525
+            ],
+            [
+              209.887,
+              209.9953
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-cam_inner",
+          "zMm": 3.2,
+          "feature": "Sparse infill",
+          "category": "internal",
+          "support": "one_end",
+          "pathLengthMm": 0.8132,
+          "endpointDistanceMm": 0.8131,
+          "straightness": 0.9999,
+          "startXYmm": [
+            42.063,
+            198.425
+          ],
+          "endXYmm": [
+            41.4215,
+            198.9246
+          ],
+          "boundsXYmm": [
+            [
+              41.4215,
+              42.063
+            ],
+            [
+              198.425,
+              198.9246
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-cam_outer",
+          "zMm": 3.2,
+          "feature": "Sparse infill",
+          "category": "internal",
+          "support": "one_end",
+          "pathLengthMm": 0.8132,
+          "endpointDistanceMm": 0.8131,
+          "straightness": 0.9999,
+          "startXYmm": [
+            67.4217,
+            211.6751
+          ],
+          "endXYmm": [
+            68.063,
+            212.175
+          ],
+          "boundsXYmm": [
+            [
+              67.4217,
+              68.063
+            ],
+            [
+              211.6751,
+              212.175
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-carrier_center",
+          "zMm": 11.4,
+          "feature": "Overhang wall",
+          "category": "external",
+          "support": "none",
+          "pathLengthMm": 3.868,
+          "endpointDistanceMm": 0.06,
+          "straightness": 0.0155,
+          "startXYmm": [
+            98.709,
+            204.209
+          ],
+          "endXYmm": [
+            98.709,
+            204.269
+          ],
+          "boundsXYmm": [
+            [
+              98.709,
+              99.691
+            ],
+            [
+              204.209,
+              205.191
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-carrier_center",
+          "zMm": 26.2,
+          "feature": "Bridge",
+          "category": "bridge",
+          "support": "one_end",
+          "pathLengthMm": 17.0925,
+          "endpointDistanceMm": 5.5711,
+          "straightness": 0.3259,
+          "startXYmm": [
+            96.249,
+            199.373
+          ],
+          "endXYmm": [
+            97.2245,
+            204.858
+          ],
+          "boundsXYmm": [
+            [
+              96.249,
+              97.2245
+            ],
+            [
+              199.373,
+              204.858
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-carrier_center",
+          "zMm": 8.6,
+          "feature": "Gap infill",
+          "category": "external",
+          "support": "one_end",
+          "pathLengthMm": 1.2166,
+          "endpointDistanceMm": 1.2154,
+          "straightness": 0.999,
+          "startXYmm": [
+            92.888,
+            198.361
+          ],
+          "endXYmm": [
+            91.8038,
+            198.9103
+          ],
+          "boundsXYmm": [
+            [
+              91.8038,
+              92.888
+            ],
+            [
+              198.361,
+              198.9103
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-carrier_center",
+          "zMm": 10.4,
+          "feature": "Sparse infill",
+          "category": "internal",
+          "support": "one_end",
+          "pathLengthMm": 0.8614,
+          "endpointDistanceMm": 0.8614,
+          "straightness": 1.0,
+          "startXYmm": [
+            94.236,
+            199.281
+          ],
+          "endXYmm": [
+            93.4249,
+            199.5711
+          ],
+          "boundsXYmm": [
+            [
+              93.4249,
+              94.236
+            ],
+            [
+              199.281,
+              199.5711
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-carrier_inner",
+          "zMm": 8.8,
+          "feature": "Bridge",
+          "category": "bridge",
+          "support": "none",
+          "pathLengthMm": 1.779,
+          "endpointDistanceMm": 0.4697,
+          "straightness": 0.264,
+          "startXYmm": [
+            214.767,
+            125.533
+          ],
+          "endXYmm": [
+            215.22,
+            125.409
+          ],
+          "boundsXYmm": [
+            [
+              214.767,
+              215.22
+            ],
+            [
+              124.808,
+              125.533
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-carrier_inner",
+          "zMm": 8.6,
+          "feature": "Gap infill",
+          "category": "external",
+          "support": "none",
+          "pathLengthMm": 3.1747,
+          "endpointDistanceMm": 3.1747,
+          "straightness": 1.0,
+          "startXYmm": [
+            198.406,
+            139.496
+          ],
+          "endXYmm": [
+            199.994,
+            142.245
+          ],
+          "boundsXYmm": [
+            [
+              198.406,
+              199.994
+            ],
+            [
+              139.496,
+              142.245
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-carrier_inner",
+          "zMm": 11.4,
+          "feature": "Gap infill",
+          "category": "external",
+          "support": "one_end",
+          "pathLengthMm": 3.8819,
+          "endpointDistanceMm": 3.8819,
+          "straightness": 1.0,
+          "startXYmm": [
+            226.1,
+            134.4061
+          ],
+          "endXYmm": [
+            226.1,
+            138.288
+          ],
+          "boundsXYmm": [
+            [
+              226.1,
+              226.1
+            ],
+            [
+              134.4061,
+              138.288
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-carrier_inner",
+          "zMm": 8.6,
+          "feature": "Overhang wall",
+          "category": "external",
+          "support": "one_end",
+          "pathLengthMm": 0.0985,
+          "endpointDistanceMm": 0.0985,
+          "straightness": 0.9997,
+          "startXYmm": [
+            199.4142,
+            131.5567
+          ],
+          "endXYmm": [
+            199.365,
+            131.642
+          ],
+          "boundsXYmm": [
+            [
+              199.365,
+              199.4142
+            ],
+            [
+              131.5567,
+              131.642
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-carrier_outer",
+          "zMm": 8.6,
+          "feature": "Gap infill",
+          "category": "external",
+          "support": "none",
+          "pathLengthMm": 4.1595,
+          "endpointDistanceMm": 4.0701,
+          "straightness": 0.9785,
+          "startXYmm": [
+            118.987,
+            124.173
+          ],
+          "endXYmm": [
+            118.7,
+            120.113
+          ],
+          "boundsXYmm": [
+            [
+              118.7,
+              118.987
+            ],
+            [
+              120.113,
+              124.173
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-carrier_outer",
+          "zMm": 8.6,
+          "feature": "Overhang wall",
+          "category": "external",
+          "support": "none",
+          "pathLengthMm": 19.2773,
+          "endpointDistanceMm": 0.06,
+          "straightness": 0.0031,
+          "startXYmm": [
+            117.41,
+            125.999
+          ],
+          "endXYmm": [
+            117.462,
+            125.969
+          ],
+          "boundsXYmm": [
+            [
+              117.41,
+              119.99
+            ],
+            [
+              119.11,
+              125.999
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-carrier_outer",
+          "zMm": 11.4,
+          "feature": "Gap infill",
+          "category": "external",
+          "support": "one_end",
+          "pathLengthMm": 3.8819,
+          "endpointDistanceMm": 3.8819,
+          "straightness": 1.0,
+          "startXYmm": [
+            148.7,
+            149.8051
+          ],
+          "endXYmm": [
+            148.7,
+            153.687
+          ],
+          "boundsXYmm": [
+            [
+              148.7,
+              148.7
+            ],
+            [
+              149.8051,
+              153.687
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-carrier_outer",
+          "zMm": 8.6,
+          "feature": "Overhang wall",
+          "category": "external",
+          "support": "one_end",
+          "pathLengthMm": 5.3536,
+          "endpointDistanceMm": 3.5822,
+          "straightness": 0.6691,
+          "startXYmm": [
+            126.691,
+            172.0004
+          ],
+          "endXYmm": [
+            123.109,
+            171.964
+          ],
+          "boundsXYmm": [
+            [
+              123.109,
+              126.691
+            ],
+            [
+              171.964,
+              172.868
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-faceplate",
+          "zMm": 1.0,
+          "feature": "Sparse infill",
+          "category": "internal",
+          "support": "one_end",
+          "pathLengthMm": 0.1925,
+          "endpointDistanceMm": 0.1925,
+          "straightness": 1.0,
+          "startXYmm": [
+            150.385,
+            49.373
+          ],
+          "endXYmm": [
+            150.385,
+            49.1805
+          ],
+          "boundsXYmm": [
+            [
+              150.385,
+              150.385
+            ],
+            [
+              49.1805,
+              49.373
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-horn_coupler",
+          "zMm": 5.6,
+          "feature": "Gap infill",
+          "category": "external",
+          "support": "none",
+          "pathLengthMm": 1.46,
+          "endpointDistanceMm": 1.46,
+          "straightness": 1.0,
+          "startXYmm": [
+            162.9,
+            139.976
+          ],
+          "endXYmm": [
+            162.9,
+            138.516
+          ],
+          "boundsXYmm": [
+            [
+              162.9,
+              162.9
+            ],
+            [
+              138.516,
+              139.976
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-horn_coupler",
+          "zMm": 5.6,
+          "feature": "Overhang wall",
+          "category": "external",
+          "support": "none",
+          "pathLengthMm": 5.204,
+          "endpointDistanceMm": 0.06,
+          "straightness": 0.0115,
+          "startXYmm": [
+            163.29,
+            139.332
+          ],
+          "endXYmm": [
+            163.29,
+            139.272
+          ],
+          "boundsXYmm": [
+            [
+              162.51,
+              163.29
+            ],
+            [
+              138.32,
+              140.172
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-horn_coupler",
+          "zMm": 10.2,
+          "feature": "Floating vertical shell",
+          "category": "internal",
+          "support": "one_end",
+          "pathLengthMm": 1.8944,
+          "endpointDistanceMm": 1.8944,
+          "straightness": 1.0,
+          "startXYmm": [
+            169.672,
+            139.294
+          ],
+          "endXYmm": [
+            167.7776,
+            139.294
+          ],
+          "boundsXYmm": [
+            [
+              167.7776,
+              169.672
+            ],
+            [
+              139.294,
+              139.294
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-horn_coupler",
+          "zMm": 8.2,
+          "feature": "Gap infill",
+          "category": "external",
+          "support": "one_end",
+          "pathLengthMm": 7.1,
+          "endpointDistanceMm": 7.1,
+          "straightness": 1.0,
+          "startXYmm": [
+            171.094,
+            139.12
+          ],
+          "endXYmm": [
+            163.994,
+            139.12
+          ],
+          "boundsXYmm": [
+            [
+              163.994,
+              171.094
+            ],
+            [
+              139.12,
+              139.12
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-horn_coupler",
+          "zMm": 8.2,
+          "feature": "Outer wall",
+          "category": "external",
+          "support": "one_end",
+          "pathLengthMm": 7.8726,
+          "endpointDistanceMm": 7.2882,
+          "straightness": 0.9258,
+          "startXYmm": [
+            164.0274,
+            138.745
+          ],
+          "endXYmm": [
+            171.29,
+            139.355
+          ],
+          "boundsXYmm": [
+            [
+              164.0274,
+              171.29
+            ],
+            [
+              138.745,
+              139.355
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-horn_coupler",
+          "zMm": 8.2,
+          "feature": "Overhang wall",
+          "category": "external",
+          "support": "one_end",
+          "pathLengthMm": 7.4304,
+          "endpointDistanceMm": 7.2917,
+          "straightness": 0.9813,
+          "startXYmm": [
+            171.29,
+            139.355
+          ],
+          "endXYmm": [
+            163.9996,
+            139.495
+          ],
+          "boundsXYmm": [
+            [
+              163.9996,
+              171.29
+            ],
+            [
+              139.355,
+              139.495
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-housing",
+          "zMm": 46.6,
+          "feature": "Bridge",
+          "category": "bridge",
+          "support": "none",
+          "pathLengthMm": 3.992,
+          "endpointDistanceMm": 0.422,
+          "straightness": 0.1057,
+          "startXYmm": [
+            33.323,
+            80.186
+          ],
+          "endXYmm": [
+            33.323,
+            79.764
+          ],
+          "boundsXYmm": [
+            [
+              33.323,
+              35.108
+            ],
+            [
+              79.764,
+              80.186
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-housing",
+          "zMm": 33.2,
+          "feature": "Gap infill",
+          "category": "external",
+          "support": "none",
+          "pathLengthMm": 6.512,
+          "endpointDistanceMm": 6.512,
+          "straightness": 1.0,
+          "startXYmm": [
+            81.15,
+            71.444
+          ],
+          "endXYmm": [
+            81.15,
+            77.956
+          ],
+          "boundsXYmm": [
+            [
+              81.15,
+              81.15
+            ],
+            [
+              71.444,
+              77.956
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-housing",
+          "zMm": 44.8,
+          "feature": "Outer wall",
+          "category": "external",
+          "support": "none",
+          "pathLengthMm": 3.953,
+          "endpointDistanceMm": 0.06,
+          "straightness": 0.0152,
+          "startXYmm": [
+            84.76,
+            78.624
+          ],
+          "endXYmm": [
+            84.82,
+            78.624
+          ],
+          "boundsXYmm": [
+            [
+              84.76,
+              86.44
+            ],
+            [
+              78.297,
+              78.624
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-housing",
+          "zMm": 33.2,
+          "feature": "Bridge",
+          "category": "bridge",
+          "support": "one_end",
+          "pathLengthMm": 2.1917,
+          "endpointDistanceMm": 2.1917,
+          "straightness": 1.0,
+          "startXYmm": [
+            83.8137,
+            71.286
+          ],
+          "endXYmm": [
+            81.622,
+            71.286
+          ],
+          "boundsXYmm": [
+            [
+              81.622,
+              83.8137
+            ],
+            [
+              71.286,
+              71.286
+            ]
+          ]
+        },
+        {
+          "object": "mystery-box-sg92r-c4-print-housing",
+          "zMm": 42.0,
+          "feature": "Gap infill",
+          "category": "external",
+          "support": "one_end",
+          "pathLengthMm": 0.1961,
+          "endpointDistanceMm": 0.1961,
+          "straightness": 1.0,
+          "startXYmm": [
+            85.6,
+            68.422
+          ],
+          "endXYmm": [
+            85.6,
+            68.2259
+          ],
+          "boundsXYmm": [
+            [
+              85.6,
+              85.6
+            ],
+            [
+              68.2259,
+              68.422
+            ]
+          ]
+        }
+      ],
+      "straightIntervalsAtLeast10mm": []
+    },
+    "fitPLA": {
+      "file": "models/mystery-box-sg92r-c4/build/print_spans_fit_PLA.json",
+      "bytes": 277418,
+      "sha256": "150da9a7ae397dff225109ef760e8fa5e9d695461c67694841c912ea06501b04",
+      "sourceGcodeSha256": "6001f54a92d02402013f68359f84334034ad5f47711889c18d659c7db7422ea3",
+      "calibrationPass": true,
+      "objectAssignmentComplete": true,
+      "method": "Intervals at least 10 mm whose endpoint distance is at least 98% of path length. Closed rings and accumulated curves are excluded.",
+      "maximumStraightIntervalByObject": {
+        "mystery-box-sg92r-c4-print-print_test": {
+          "object": "mystery-box-sg92r-c4-print-print_test",
+          "zMm": 1.6,
+          "feature": "Bridge",
+          "category": "bridge",
+          "support": "both_ends",
+          "pathLengthMm": 4.2996,
+          "endpointDistanceMm": 4.2996,
+          "straightness": 1.0,
+          "startXYmm": [
+            111.4315,
+            125.5655
+          ],
+          "endXYmm": [
+            108.3912,
+            128.6058
+          ],
+          "boundsXYmm": [
+            [
+              108.3912,
+              111.4315
+            ],
+            [
+              125.5655,
+              128.6058
+            ]
+          ]
+        }
+      },
+      "oneEndOrNoneMaximumByGroup": [
+        {
+          "object": "mystery-box-sg92r-c4-print-print_test",
+          "zMm": 0.4,
+          "feature": "Overhang wall",
+          "category": "external",
+          "support": "one_end",
+          "pathLengthMm": 1.5154,
+          "endpointDistanceMm": 1.2319,
+          "straightness": 0.8129,
+          "startXYmm": [
+            196.185,
+            126.24
+          ],
+          "endXYmm": [
+            197.3724,
+            125.912
+          ],
+          "boundsXYmm": [
+            [
+              196.185,
+              197.3724
+            ],
+            [
+              125.912,
+              126.24
+            ]
+          ]
+        }
+      ],
+      "straightIntervalsAtLeast10mm": []
+    },
+    "fitPETG": {
+      "file": "models/mystery-box-sg92r-c4/build/print_spans_fit_PETG.json",
+      "bytes": 277419,
+      "sha256": "b50f1e546b8f12782d43274bde049c3e11a719dfca2dc8514b527df285a45009",
+      "sourceGcodeSha256": "cc9d03f262fb4aeb1823b507ee0c4103bc49de3db1b39b8c741c9086ec0cb2c8",
+      "calibrationPass": true,
+      "objectAssignmentComplete": true,
+      "method": "Intervals at least 10 mm whose endpoint distance is at least 98% of path length. Closed rings and accumulated curves are excluded.",
+      "maximumStraightIntervalByObject": {
+        "mystery-box-sg92r-c4-print-print_test": {
+          "object": "mystery-box-sg92r-c4-print-print_test",
+          "zMm": 1.6,
+          "feature": "Bridge",
+          "category": "bridge",
+          "support": "both_ends",
+          "pathLengthMm": 4.2996,
+          "endpointDistanceMm": 4.2996,
+          "straightness": 1.0,
+          "startXYmm": [
+            111.4315,
+            125.5655
+          ],
+          "endXYmm": [
+            108.3912,
+            128.6058
+          ],
+          "boundsXYmm": [
+            [
+              108.3912,
+              111.4315
+            ],
+            [
+              125.5655,
+              128.6058
+            ]
+          ]
+        }
+      },
+      "oneEndOrNoneMaximumByGroup": [
+        {
+          "object": "mystery-box-sg92r-c4-print-print_test",
+          "zMm": 0.4,
+          "feature": "Overhang wall",
+          "category": "external",
+          "support": "one_end",
+          "pathLengthMm": 1.5154,
+          "endpointDistanceMm": 1.2319,
+          "straightness": 0.8129,
+          "startXYmm": [
+            196.185,
+            126.24
+          ],
+          "endXYmm": [
+            197.3724,
+            125.912
+          ],
+          "boundsXYmm": [
+            [
+              196.185,
+              197.3724
+            ],
+            [
+              125.912,
+              126.24
+            ]
+          ]
+        }
+      ],
+      "straightIntervalsAtLeast10mm": []
+    }
+  }
+}

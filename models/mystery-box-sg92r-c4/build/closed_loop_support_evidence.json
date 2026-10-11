@@ -1,0 +1,4426 @@
+{
+  "model": "mystery-box-sg92r-c4",
+  "sourceAlgorithmSha256": {
+    "tools/lattice_closed_loop_support.py": "0160879b31e9901b0f82f82773e19b74056c3286d4fbfb3aae702f97a0cd4499",
+    "tools/lattice_print_spans.py": "73f02f6625682d3cdb60ec314f2114e7d7df52757677af3dd24e9013673a6d0d",
+    "tools/lattice_span_locator.py": "417f18b57e8bb33b31b1c7a907489a941757e9c7558dd291da1735bd1ca7bf7d",
+    "tools/lattice_delivery.py": "322d7f6f7f698cb4e0140e32e3396f8802fb2f0908c9ebf42616ae6166d6c49d",
+    "tools/plate_3mf.py": "0d7d2167446c1f2881099f8fe268d11e8e4d604afc673c6b6e081647b2cb68cb",
+    "lib/printmech/gcode.py": "94835e53210a0d21fa368e4bcef381006571a93a03e13a058fefdd799417f14a"
+  },
+  "sourceAlgorithmIntegrity": {
+    "start": {
+      "tools/lattice_closed_loop_support.py": "0160879b31e9901b0f82f82773e19b74056c3286d4fbfb3aae702f97a0cd4499",
+      "tools/lattice_print_spans.py": "73f02f6625682d3cdb60ec314f2114e7d7df52757677af3dd24e9013673a6d0d",
+      "tools/lattice_span_locator.py": "417f18b57e8bb33b31b1c7a907489a941757e9c7558dd291da1735bd1ca7bf7d",
+      "tools/lattice_delivery.py": "322d7f6f7f698cb4e0140e32e3396f8802fb2f0908c9ebf42616ae6166d6c49d",
+      "tools/plate_3mf.py": "0d7d2167446c1f2881099f8fe268d11e8e4d604afc673c6b6e081647b2cb68cb",
+      "lib/printmech/gcode.py": "94835e53210a0d21fa368e4bcef381006571a93a03e13a058fefdd799417f14a"
+    },
+    "end": {
+      "tools/lattice_closed_loop_support.py": "0160879b31e9901b0f82f82773e19b74056c3286d4fbfb3aae702f97a0cd4499",
+      "tools/lattice_print_spans.py": "73f02f6625682d3cdb60ec314f2114e7d7df52757677af3dd24e9013673a6d0d",
+      "tools/lattice_span_locator.py": "417f18b57e8bb33b31b1c7a907489a941757e9c7558dd291da1735bd1ca7bf7d",
+      "tools/lattice_delivery.py": "322d7f6f7f698cb4e0140e32e3396f8802fb2f0908c9ebf42616ae6166d6c49d",
+      "tools/plate_3mf.py": "0d7d2167446c1f2881099f8fe268d11e8e4d604afc673c6b6e081647b2cb68cb",
+      "lib/printmech/gcode.py": "94835e53210a0d21fa368e4bcef381006571a93a03e13a058fefdd799417f14a"
+    },
+    "pass": true
+  },
+  "calibration": {
+    "positivePreviousLayerSupportedFraction": 1.0,
+    "negativePreviousLayerSupportedFraction": 0.0,
+    "negativeHasNoneRun": true,
+    "sameLayerIntersectionDetected": true,
+    "floatingEarlierLoopDoesNotSupportNextLoop": true,
+    "positiveMaterialFaceGapMm": 0.2,
+    "zeroMaterialFaceGapMm": 0.0,
+    "materialFaceGapCalibrationPass": true,
+    "pass": true
+  },
+  "overall": {
+    "findingCount": 24,
+    "failedFindingCount": 0,
+    "pass": true
+  },
+  "plates": {
+    "PLA": {
+      "sourceGcode": {
+        "file": "prints/mystery-box-sg92r-c4/mystery-box-sg92r-c4-PLA.gcode.3mf",
+        "sha256": "b00c022d7ae0a56e00ee18671e923109cb328f0ed757a64fd32012e8828bbc69"
+      },
+      "sourceSpanReport": {
+        "file": "models/mystery-box-sg92r-c4/build/print_spans_PLA.json",
+        "sha256": "ad4db78392bacf476255fe76e5602189bffaf66e383629e1b14e8c103659b5b5"
+      },
+      "summary": {
+        "closedUnsupportedPathCount": 12,
+        "pathsWithNoEarlierSupportedConnection": 6
+      },
+      "closedUnsupportedPaths": [
+        {
+          "objectId": 36,
+          "objectName": "mystery-box-sg92r-c4-print-carrier_inner",
+          "zMm": 8.8,
+          "pathIndex": 146,
+          "feature": "Bridge",
+          "pathLengthMm": 1.779,
+          "endpointCenterlineGapMm": 0.46966,
+          "plateBoundsXYMm": [
+            [
+              214.767,
+              215.22
+            ],
+            [
+              124.808,
+              125.533
+            ]
+          ],
+          "printStlBoundsXYMm": [
+            [
+              6.2704,
+              6.7234
+            ],
+            [
+              -10.6932,
+              -9.9682
+            ]
+          ],
+          "printStlCenterMm": [
+            6.4969,
+            -10.3307,
+            8.8
+          ],
+          "sourcePrintStl": {
+            "file": "prints/mystery-box-sg92r-c4/mystery-box-sg92r-c4-print-carrier_inner.stl",
+            "sha256": "2c80af1638416281f3fda58e6efe88c7aea7bd92183613135d29b380887d24ba"
+          },
+          "sourceLayout": {
+            "file": "prints/mystery-box-sg92r-c4/mystery-box-sg92r-c4-layout.3mf",
+            "sha256": "cee9d9677bf093fde4016e0321ea64de5a995f6a928ce159b5018d6bd0662749"
+          },
+          "sourceManifest": {
+            "file": "models/mystery-box-sg92r-c4/build/manifest.json",
+            "sha256": "14917a7739bb8f1acf9c46ba5bb9cd95f38eb9cab8d6319cd21ca42a9b2de232"
+          },
+          "lineWidthsMm": [
+            0.4954
+          ],
+          "previousLayerSupportedFraction": 0.0,
+          "noneRuns": [
+            {
+              "lengthMm": 1.779,
+              "supportedBefore": false,
+              "supportedAfter": false,
+              "support": "none",
+              "startXYmm": [
+                214.767,
+                125.533
+              ],
+              "endXYmm": [
+                215.22,
+                125.409
+              ],
+              "boundsXYmm": [
+                [
+                  214.767,
+                  215.22
+                ],
+                [
+                  124.808,
+                  125.533
+                ]
+              ]
+            }
+          ],
+          "sameLayerEarlierConnections": [
+            {
+              "pathIndex": 105,
+              "feature": "Overhang wall",
+              "earlierLineWidthMm": 0.45,
+              "centerlineOverlapLimitMm": 0.4727,
+              "minimumCenterlineDistanceMm": 0.371,
+              "targetPathOverlapLengthMm": 0.6916,
+              "targetPathOverlapFraction": 0.388758,
+              "targetEndpointCenterlineDistancesMm": [
+                0.85034,
+                0.38084
+              ],
+              "targetEndpointsOverlap": [
+                false,
+                true
+              ],
+              "earlierPathPreviousLayerSupportedFraction": 0.059131,
+              "earlierPathSupportedBridgePass": true,
+              "earlierPathMaximumUnsupportedRunMm": 9.3463,
+              "earlierPathUnsupportedRuns": [
+                {
+                  "lengthMm": 9.3463,
+                  "supportedBefore": true,
+                  "supportedAfter": true,
+                  "support": "both_ends",
+                  "startXYmm": [
+                    211.7915,
+                    124.271
+                  ],
+                  "endXYmm": [
+                    216.5771,
+                    127.0317
+                  ],
+                  "boundsXYmm": [
+                    [
+                      211.7915,
+                      216.5771
+                    ],
+                    [
+                      123.01,
+                      127.0317
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "pathIndex": 44,
+              "feature": "Overhang wall",
+              "earlierLineWidthMm": 0.45,
+              "centerlineOverlapLimitMm": 0.4727,
+              "minimumCenterlineDistanceMm": 0.18581,
+              "targetPathOverlapLengthMm": 0.6344,
+              "targetPathOverlapFraction": 0.356591,
+              "targetEndpointCenterlineDistancesMm": [
+                0.16316,
+                0.61748
+              ],
+              "targetEndpointsOverlap": [
+                true,
+                false
+              ],
+              "earlierPathPreviousLayerSupportedFraction": 0.083335,
+              "earlierPathSupportedBridgePass": true,
+              "earlierPathMaximumUnsupportedRunMm": 5.3474,
+              "earlierPathUnsupportedRuns": [
+                {
+                  "lengthMm": 5.3474,
+                  "supportedBefore": true,
+                  "supportedAfter": true,
+                  "support": "both_ends",
+                  "startXYmm": [
+                    211.7917,
+                    125.253
+                  ],
+                  "endXYmm": [
+                    215.7778,
+                    127.6106
+                  ],
+                  "boundsXYmm": [
+                    [
+                      211.7917,
+                      215.7778
+                    ],
+                    [
+                      125.253,
+                      127.6106
+                    ]
+                  ]
+                }
+              ]
+            }
+          ],
+          "targetEndpointsHaveEarlierSupportedOverlap": [
+            true,
+            true
+          ],
+          "maximumOverlapFractionFromAnEarlierSupportedPath": 0.388758,
+          "decision": "accepted",
+          "basis": "material_width_connection_to_established_earlier_path",
+          "decisionEvidence": {
+            "connectedFraction": 0.388758,
+            "startAndEndConnected": [
+              true,
+              true
+            ],
+            "maximumUnconnectedLengthMm": 1.0874,
+            "earlierPathIndices": [
+              105,
+              44
+            ]
+          }
+        },
+        {
+          "objectId": 36,
+          "objectName": "mystery-box-sg92r-c4-print-carrier_inner",
+          "zMm": 8.8,
+          "pathIndex": 151,
+          "feature": "Bridge",
+          "pathLengthMm": 1.748,
+          "endpointCenterlineGapMm": 0.45683,
+          "plateBoundsXYMm": [
+            [
+              201.808,
+              202.261
+            ],
+            [
+              124.808,
+              125.485
+            ]
+          ],
+          "printStlBoundsXYMm": [
+            [
+              -6.6886,
+              -6.2356
+            ],
+            [
+              -10.6932,
+              -10.0162
+            ]
+          ],
+          "printStlCenterMm": [
+            -6.4621,
+            -10.3547,
+            8.8
+          ],
+          "sourcePrintStl": {
+            "file": "prints/mystery-box-sg92r-c4/mystery-box-sg92r-c4-print-carrier_inner.stl",
+            "sha256": "2c80af1638416281f3fda58e6efe88c7aea7bd92183613135d29b380887d24ba"
+          },
+          "sourceLayout": {
+            "file": "prints/mystery-box-sg92r-c4/mystery-box-sg92r-c4-layout.3mf",
+            "sha256": "cee9d9677bf093fde4016e0321ea64de5a995f6a928ce159b5018d6bd0662749"
+          },
+          "sourceManifest": {
+            "file": "models/mystery-box-sg92r-c4/build/manifest.json",
+            "sha256": "14917a7739bb8f1acf9c46ba5bb9cd95f38eb9cab8d6319cd21ca42a9b2de232"
+          },
+          "lineWidthsMm": [
+            0.4954
+          ],
+          "previousLayerSupportedFraction": 0.0,
+          "noneRuns": [
+            {
+              "lengthMm": 1.748,
+              "supportedBefore": false,
+              "supportedAfter": false,
+              "support": "none",
+              "startXYmm": [
+                201.808,
+                125.426
+              ],
+              "endXYmm": [
+                202.261,
+                125.485
+              ],
+              "boundsXYmm": [
+                [
+                  201.808,
+                  202.261
+                ],
+                [
+                  124.808,
+                  125.485
+                ]
+              ]
+            }
+          ],
+          "sameLayerEarlierConnections": [
+            {
+              "pathIndex": 99,
+              "feature": "Overhang wall",
+              "earlierLineWidthMm": 0.45,
+              "centerlineOverlapLimitMm": 0.4727,
+              "minimumCenterlineDistanceMm": 0.399,
+              "targetPathOverlapLengthMm": 0.7086,
+              "targetPathOverlapFraction": 0.405378,
+              "targetEndpointCenterlineDistancesMm": [
+                0.41208,
+                0.86726
+              ],
+              "targetEndpointsOverlap": [
+                true,
+                false
+              ],
+              "earlierPathPreviousLayerSupportedFraction": 0.059131,
+              "earlierPathSupportedBridgePass": true,
+              "earlierPathMaximumUnsupportedRunMm": 9.3463,
+              "earlierPathUnsupportedRuns": [
+                {
+                  "lengthMm": 9.3463,
+                  "supportedBefore": true,
+                  "supportedAfter": true,
+                  "support": "both_ends",
+                  "startXYmm": [
+                    200.4229,
+                    127.0317
+                  ],
+                  "endXYmm": [
+                    205.2085,
+                    124.271
+                  ],
+                  "boundsXYmm": [
+                    [
+                      200.4229,
+                      205.2085
+                    ],
+                    [
+                      123.01,
+                      127.0317
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "pathIndex": 42,
+              "feature": "Overhang wall",
+              "earlierLineWidthMm": 0.45,
+              "centerlineOverlapLimitMm": 0.4727,
+              "minimumCenterlineDistanceMm": 0.18708,
+              "targetPathOverlapLengthMm": 0.5803,
+              "targetPathOverlapFraction": 0.331971,
+              "targetEndpointCenterlineDistancesMm": [
+                0.58473,
+                0.1629
+              ],
+              "targetEndpointsOverlap": [
+                false,
+                true
+              ],
+              "earlierPathPreviousLayerSupportedFraction": 0.083335,
+              "earlierPathSupportedBridgePass": true,
+              "earlierPathMaximumUnsupportedRunMm": 5.3474,
+              "earlierPathUnsupportedRuns": [
+                {
+                  "lengthMm": 5.3474,
+                  "supportedBefore": true,
+                  "supportedAfter": true,
+                  "support": "both_ends",
+                  "startXYmm": [
+                    201.2222,
+                    127.6106
+                  ],
+                  "endXYmm": [
+                    205.2083,
+                    125.253
+                  ],
+                  "boundsXYmm": [
+                    [
+                      201.2222,
+                      205.2083
+                    ],
+                    [
+                      125.253,
+                      127.6106
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "pathIndex": 150,
+              "feature": "Gap infill",
+              "earlierLineWidthMm": 0.63338,
+              "centerlineOverlapLimitMm": 0.56439,
+              "minimumCenterlineDistanceMm": 0.23214,
+              "targetPathOverlapLengthMm": 0.5466,
+              "targetPathOverlapFraction": 0.312684,
+              "targetEndpointCenterlineDistancesMm": [
+                0.188,
+                0.47101
+              ],
+              "targetEndpointsOverlap": [
+                true,
+                true
+              ],
+              "earlierPathPreviousLayerSupportedFraction": 0.538003,
+              "earlierPathSupportedBridgePass": false,
+              "earlierPathMaximumUnsupportedRunMm": 5.8816,
+              "earlierPathUnsupportedRuns": [
+                {
+                  "lengthMm": 5.8816,
+                  "supportedBefore": true,
+                  "supportedAfter": true,
+                  "support": "both_ends",
+                  "startXYmm": [
+                    197.5793,
+                    138.0634
+                  ],
+                  "endXYmm": [
+                    197.5768,
+                    132.9428
+                  ],
+                  "boundsXYmm": [
+                    [
+                      196.1385,
+                      197.5793
+                    ],
+                    [
+                      132.9428,
+                      138.0634
+                    ]
+                  ]
+                },
+                {
+                  "lengthMm": 3.2512,
+                  "supportedBefore": false,
+                  "supportedAfter": true,
+                  "support": "one_end",
+                  "startXYmm": [
+                    202.134,
+                    146.458
+                  ],
+                  "endXYmm": [
+                    200.8207,
+                    143.6776
+                  ],
+                  "boundsXYmm": [
+                    [
+                      200.8207,
+                      202.315
+                    ],
+                    [
+                      143.6776,
+                      146.458
+                    ]
+                  ]
+                },
+                {
+                  "lengthMm": 1.9912,
+                  "supportedBefore": true,
+                  "supportedAfter": false,
+                  "support": "one_end",
+                  "startXYmm": [
+                    200.8124,
+                    127.3384
+                  ],
+                  "endXYmm": [
+                    201.808,
+                    125.614
+                  ],
+                  "boundsXYmm": [
+                    [
+                      200.8124,
+                      201.808
+                    ],
+                    [
+                      125.614,
+                      127.3384
+                    ]
+                  ]
+                }
+              ]
+            }
+          ],
+          "targetEndpointsHaveEarlierSupportedOverlap": [
+            true,
+            true
+          ],
+          "maximumOverlapFractionFromAnEarlierSupportedPath": 0.405378,
+          "decision": "accepted",
+          "basis": "material_width_connection_to_established_earlier_path",
+          "decisionEvidence": {
+            "connectedFraction": 0.405378,
+            "startAndEndConnected": [
+              true,
+              true
+            ],
+            "maximumUnconnectedLengthMm": 1.0394,
+            "earlierPathIndices": [
+              99,
+              42
+            ]
+          }
+        },
+        {
+          "objectId": 40,
+          "objectName": "mystery-box-sg92r-c4-print-cam_center",
+          "zMm": 0.8,
+          "pathIndex": 14,
+          "feature": "Overhang wall",
+          "pathLengthMm": 24.4316,
+          "endpointCenterlineGapMm": 0.06,
+          "plateBoundsXYMm": [
+            [
+              14.161,
+              21.231
+            ],
+            [
+              200.697,
+              208.861
+            ]
+          ],
+          "printStlBoundsXYMm": [
+            [
+              -43.5312,
+              -36.4612
+            ],
+            [
+              -4.0824,
+              4.0816
+            ]
+          ],
+          "printStlCenterMm": [
+            -39.9962,
+            -0.0004,
+            0.8
+          ],
+          "sourcePrintStl": {
+            "file": "prints/mystery-box-sg92r-c4/mystery-box-sg92r-c4-print-cam_center.stl",
+            "sha256": "5d2a08198b8c8bf6ca90cca1aff32f36b89d0a949ee7ca6c825edc0917812d23"
+          },
+          "sourceLayout": {
+            "file": "prints/mystery-box-sg92r-c4/mystery-box-sg92r-c4-layout.3mf",
+            "sha256": "cee9d9677bf093fde4016e0321ea64de5a995f6a928ce159b5018d6bd0662749"
+          },
+          "sourceManifest": {
+            "file": "models/mystery-box-sg92r-c4/build/manifest.json",
+            "sha256": "14917a7739bb8f1acf9c46ba5bb9cd95f38eb9cab8d6319cd21ca42a9b2de232"
+          },
+          "lineWidthsMm": [
+            0.45
+          ],
+          "previousLayerSupportedFraction": 0.0,
+          "noneRuns": [
+            {
+              "lengthMm": 24.4316,
+              "supportedBefore": false,
+              "supportedAfter": false,
+              "support": "none",
+              "startXYmm": [
+                14.161,
+                202.827
+              ],
+              "endXYmm": [
+                14.161,
+                202.887
+              ],
+              "boundsXYmm": [
+                [
+                  14.161,
+                  21.231
+                ],
+                [
+                  200.697,
+                  208.861
+                ]
+              ]
+            }
+          ],
+          "sameLayerEarlierConnections": [
+            {
+              "pathIndex": 13,
+              "feature": "Overhang wall",
+              "earlierLineWidthMm": 0.45,
+              "centerlineOverlapLimitMm": 0.45,
+              "minimumCenterlineDistanceMm": 0.39176,
+              "targetPathOverlapLengthMm": 24.4316,
+              "targetPathOverlapFraction": 1.0,
+              "targetEndpointCenterlineDistancesMm": [
+                0.392,
+                0.392
+              ],
+              "targetEndpointsOverlap": [
+                true,
+                true
+              ],
+              "earlierPathPreviousLayerSupportedFraction": 0.225391,
+              "earlierPathSupportedBridgePass": true,
+              "earlierPathMaximumUnsupportedRunMm": 3.5483,
+              "earlierPathUnsupportedRuns": [
+                {
+                  "lengthMm": 3.5483,
+                  "supportedBefore": true,
+                  "supportedAfter": true,
+                  "support": "both_ends",
+                  "startXYmm": [
+                    21.623,
+                    203.0048
+                  ],
+                  "endXYmm": [
+                    21.623,
+                    206.5532
+                  ],
+                  "boundsXYmm": [
+                    [
+                      21.623,
+                      21.623
+                    ],
+                    [
+                      203.0048,
+                      206.5532
+                    ]
+                  ]
+                },
+                {
+                  "lengthMm": 3.4505,
+                  "supportedBefore": true,
+                  "supportedAfter": true,
+                  "support": "both_ends",
+                  "startXYmm": [
+                    21.1962,
+                    207.2925
+                  ],
+                  "endXYmm": [
+                    18.2082,
+                    209.0182
+                  ],
+                  "boundsXYmm": [
+                    [
+                      18.2082,
+                      21.1962
+                    ],
+                    [
+                      207.2925,
+                      209.0182
+                    ]
+                  ]
+                },
+                {
+                  "lengthMm": 3.4505,
+                  "supportedBefore": true,
+                  "supportedAfter": true,
+                  "support": "both_ends",
+                  "startXYmm": [
+                    17.1838,
+                    209.0182
+                  ],
+                  "endXYmm": [
+                    14.1958,
+                    207.2925
+                  ],
+                  "boundsXYmm": [
+                    [
+                      14.1958,
+                      17.1838
+                    ],
+                    [
+                      207.2925,
+                      209.0182
+                    ]
+                  ]
+                },
+                {
+                  "lengthMm": 3.3668,
+                  "supportedBefore": true,
+                  "supportedAfter": true,
+                  "support": "both_ends",
+                  "startXYmm": [
+                    13.769,
+                    206.3528
+                  ],
+                  "endXYmm": [
+                    13.769,
+                    202.986
+                  ],
+                  "boundsXYmm": [
+                    [
+                      13.769,
+                      13.769
+                    ],
+                    [
+                      202.986,
+                      206.3528
+                    ]
+                  ]
+                },
+                {
+                  "lengthMm": 3.3519,
+                  "supportedBefore": true,
+                  "supportedAfter": true,
+                  "support": "both_ends",
+                  "startXYmm": [
+                    18.2936,
+                    200.5891
+                  ],
+                  "endXYmm": [
+                    21.1962,
+                    202.2655
+                  ],
+                  "boundsXYmm": [
+                    [
+                      18.2936,
+                      21.1962
+                    ],
+                    [
+                      200.5891,
+                      202.2655
+                    ]
+                  ]
+                },
+                {
+                  "lengthMm": 3.2814,
+                  "supportedBefore": true,
+                  "supportedAfter": true,
+                  "support": "both_ends",
+                  "startXYmm": [
+                    14.1995,
+                    202.2633
+                  ],
+                  "endXYmm": [
+                    17.041,
+                    200.622
+                  ],
+                  "boundsXYmm": [
+                    [
+                      14.1995,
+                      17.041
+                    ],
+                    [
+                      200.622,
+                      202.2633
+                    ]
+                  ]
+                },
+                {
+                  "lengthMm": 0.2958,
+                  "supportedBefore": true,
+                  "supportedAfter": true,
+                  "support": "both_ends",
+                  "startXYmm": [
+                    17.9521,
+                    200.3919
+                  ],
+                  "endXYmm": [
+                    18.2082,
+                    200.5398
+                  ],
+                  "boundsXYmm": [
+                    [
+                      17.9521,
+                      18.2082
+                    ],
+                    [
+                      200.3919,
+                      200.5398
+                    ]
+                  ]
+                },
+                {
+                  "lengthMm": 0.2836,
+                  "supportedBefore": true,
+                  "supportedAfter": true,
+                  "support": "both_ends",
+                  "startXYmm": [
+                    17.2048,
+                    200.5275
+                  ],
+                  "endXYmm": [
+                    17.4504,
+                    200.3858
+                  ],
+                  "boundsXYmm": [
+                    [
+                      17.2048,
+                      17.4504
+                    ],
+                    [
+                      200.3858,
+                      200.5275
+                    ]
+                  ]
+                }
+              ]
+            }
+          ],
+          "targetEndpointsHaveEarlierSupportedOverlap": [
+            true,
+            true
+          ],
+          "maximumOverlapFractionFromAnEarlierSupportedPath": 1.0,
+          "decision": "accepted",
+          "basis": "material_width_connection_to_established_earlier_path",
+          "decisionEvidence": {
+            "connectedFraction": 1.0,
+            "startAndEndConnected": [
+              true,
+              true
+            ],
+            "maximumUnconnectedLengthMm": 0.0,
+            "earlierPathIndices": [
+              13
+            ]
+          }
+        },
+        {
+          "objectId": 8,
+          "objectName": "mystery-box-sg92r-c4-print-housing",
+          "zMm": 44.8,
+          "pathIndex": 8,
+          "feature": "Outer wall",
+          "pathLengthMm": 3.953,
+          "endpointCenterlineGapMm": 0.06,
+          "plateBoundsXYMm": [
+            [
+              84.76,
+              86.44
+            ],
+            [
+              78.297,
+              78.624
+            ]
+          ],
+          "printStlBoundsXYMm": [
+            [
+              36.1134,
+              37.7934
+            ],
+            [
+              3.5967,
+              3.9237
+            ]
+          ],
+          "printStlCenterMm": [
+            36.9534,
+            3.7602,
+            44.8
+          ],
+          "sourcePrintStl": {
+            "file": "prints/mystery-box-sg92r-c4/mystery-box-sg92r-c4-print-housing.stl",
+            "sha256": "68e911d72fe35a466b7bf9fd225a2a193e2fffbec946532738fc1d905ca79d72"
+          },
+          "sourceLayout": {
+            "file": "prints/mystery-box-sg92r-c4/mystery-box-sg92r-c4-layout.3mf",
+            "sha256": "cee9d9677bf093fde4016e0321ea64de5a995f6a928ce159b5018d6bd0662749"
+          },
+          "sourceManifest": {
+            "file": "models/mystery-box-sg92r-c4/build/manifest.json",
+            "sha256": "14917a7739bb8f1acf9c46ba5bb9cd95f38eb9cab8d6319cd21ca42a9b2de232"
+          },
+          "lineWidthsMm": [
+            0.42
+          ],
+          "previousLayerSupportedFraction": 0.0,
+          "noneRuns": [
+            {
+              "lengthMm": 3.953,
+              "supportedBefore": false,
+              "supportedAfter": false,
+              "support": "none",
+              "startXYmm": [
+                84.76,
+                78.624
+              ],
+              "endXYmm": [
+                84.82,
+                78.624
+              ],
+              "boundsXYmm": [
+                [
+                  84.76,
+                  86.44
+                ],
+                [
+                  78.297,
+                  78.624
+                ]
+              ]
+            }
+          ],
+          "sameLayerEarlierConnections": [],
+          "targetEndpointsHaveEarlierSupportedOverlap": [
+            false,
+            false
+          ],
+          "maximumOverlapFractionFromAnEarlierSupportedPath": 0.0,
+          "externalSupportEvidence": {
+            "supportId": "housing_detent_support",
+            "geometryEvidenceFile": "models/mystery-box-sg92r-c4/build/print_support_geometry.json",
+            "geometryEvidenceSha256": "b3a6daf30eebe59218d2bb06f1573185ce36958c7461f71e680e823612e735b8",
+            "geometryPass": true,
+            "supportTopGcodeZMm": 44.4,
+            "materialFaceGapMm": 0.2,
+            "supportTopLayerHeightsMm": [
+              0.2
+            ],
+            "productFirstLayerHeightsMm": [
+              0.2
+            ],
+            "productMaterialBottomMm": 44.6,
+            "actualMaterialFaceGapMm": 0.2,
+            "gapMatchesDefinition": true,
+            "pathCoverageFraction": 1.0,
+            "startAndEndCovered": [
+              true,
+              true
+            ],
+            "supportSegmentCount": 4,
+            "supportLineWidthsMm": [
+              0.37851
+            ]
+          },
+          "decision": "accepted",
+          "basis": "removable_support_below_first_product_path",
+          "decisionEvidence": {
+            "connectedFraction": 1.0,
+            "maximumUnconnectedLengthMm": 0.0
+          }
+        },
+        {
+          "objectId": 8,
+          "objectName": "mystery-box-sg92r-c4-print-housing",
+          "zMm": 46.6,
+          "pathIndex": 46,
+          "feature": "Bridge",
+          "pathLengthMm": 3.992,
+          "endpointCenterlineGapMm": 0.422,
+          "plateBoundsXYMm": [
+            [
+              33.323,
+              35.108
+            ],
+            [
+              79.764,
+              80.186
+            ]
+          ],
+          "printStlBoundsXYMm": [
+            [
+              -15.3236,
+              -13.5386
+            ],
+            [
+              5.0637,
+              5.4857
+            ]
+          ],
+          "printStlCenterMm": [
+            -14.4311,
+            5.2747,
+            46.6
+          ],
+          "sourcePrintStl": {
+            "file": "prints/mystery-box-sg92r-c4/mystery-box-sg92r-c4-print-housing.stl",
+            "sha256": "68e911d72fe35a466b7bf9fd225a2a193e2fffbec946532738fc1d905ca79d72"
+          },
+          "sourceLayout": {
+            "file": "prints/mystery-box-sg92r-c4/mystery-box-sg92r-c4-layout.3mf",
+            "sha256": "cee9d9677bf093fde4016e0321ea64de5a995f6a928ce159b5018d6bd0662749"
+          },
+          "sourceManifest": {
+            "file": "models/mystery-box-sg92r-c4/build/manifest.json",
+            "sha256": "14917a7739bb8f1acf9c46ba5bb9cd95f38eb9cab8d6319cd21ca42a9b2de232"
+          },
+          "lineWidthsMm": [
+            0.46405
+          ],
+          "previousLayerSupportedFraction": 0.0,
+          "noneRuns": [
+            {
+              "lengthMm": 3.992,
+              "supportedBefore": false,
+              "supportedAfter": false,
+              "support": "none",
+              "startXYmm": [
+                33.323,
+                80.186
+              ],
+              "endXYmm": [
+                33.323,
+                79.764
+              ],
+              "boundsXYmm": [
+                [
+                  33.323,
+                  35.108
+                ],
+                [
+                  79.764,
+                  80.186
+                ]
+              ]
+            }
+          ],
+          "sameLayerEarlierConnections": [
+            {
+              "pathIndex": 11,
+              "feature": "Overhang wall",
+              "earlierLineWidthMm": 0.45,
+              "centerlineOverlapLimitMm": 0.45703,
+              "minimumCenterlineDistanceMm": 0.21358,
+              "targetPathOverlapLengthMm": 3.992,
+              "targetPathOverlapFraction": 1.0,
+              "targetEndpointCenterlineDistancesMm": [
+                0.164,
+                0.164
+              ],
+              "targetEndpointsOverlap": [
+                true,
+                true
+              ],
+              "earlierPathPreviousLayerSupportedFraction": 0.092728,
+              "earlierPathSupportedBridgePass": true,
+              "earlierPathMaximumUnsupportedRunMm": 7.3162,
+              "earlierPathUnsupportedRuns": [
+                {
+                  "lengthMm": 7.3162,
+                  "supportedBefore": true,
+                  "supportedAfter": true,
+                  "support": "both_ends",
+                  "startXYmm": [
+                    35.441,
+                    80.9618
+                  ],
+                  "endXYmm": [
+                    35.059,
+                    80.9904
+                  ],
+                  "boundsXYmm": [
+                    [
+                      33.159,
+                      35.441
+                    ],
+                    [
+                      79.409,
+                      80.9904
+                    ]
+                  ]
+                }
+              ]
+            }
+          ],
+          "targetEndpointsHaveEarlierSupportedOverlap": [
+            true,
+            true
+          ],
+          "maximumOverlapFractionFromAnEarlierSupportedPath": 1.0,
+          "decision": "accepted",
+          "basis": "material_width_connection_to_established_earlier_path",
+          "decisionEvidence": {
+            "connectedFraction": 1.0,
+            "startAndEndConnected": [
+              true,
+              true
+            ],
+            "maximumUnconnectedLengthMm": 0.0,
+            "earlierPathIndices": [
+              11
+            ]
+          }
+        },
+        {
+          "objectId": 8,
+          "objectName": "mystery-box-sg92r-c4-print-housing",
+          "zMm": 46.6,
+          "pathIndex": 47,
+          "feature": "Bridge",
+          "pathLengthMm": 3.992,
+          "endpointCenterlineGapMm": 0.422,
+          "plateBoundsXYMm": [
+            [
+              33.323,
+              35.108
+            ],
+            [
+              59.214,
+              59.636
+            ]
+          ],
+          "printStlBoundsXYMm": [
+            [
+              -15.3236,
+              -13.5386
+            ],
+            [
+              -15.4863,
+              -15.0643
+            ]
+          ],
+          "printStlCenterMm": [
+            -14.4311,
+            -15.2753,
+            46.6
+          ],
+          "sourcePrintStl": {
+            "file": "prints/mystery-box-sg92r-c4/mystery-box-sg92r-c4-print-housing.stl",
+            "sha256": "68e911d72fe35a466b7bf9fd225a2a193e2fffbec946532738fc1d905ca79d72"
+          },
+          "sourceLayout": {
+            "file": "prints/mystery-box-sg92r-c4/mystery-box-sg92r-c4-layout.3mf",
+            "sha256": "cee9d9677bf093fde4016e0321ea64de5a995f6a928ce159b5018d6bd0662749"
+          },
+          "sourceManifest": {
+            "file": "models/mystery-box-sg92r-c4/build/manifest.json",
+            "sha256": "14917a7739bb8f1acf9c46ba5bb9cd95f38eb9cab8d6319cd21ca42a9b2de232"
+          },
+          "lineWidthsMm": [
+            0.46405
+          ],
+          "previousLayerSupportedFraction": 0.0,
+          "noneRuns": [
+            {
+              "lengthMm": 3.992,
+              "supportedBefore": false,
+              "supportedAfter": false,
+              "support": "none",
+              "startXYmm": [
+                33.323,
+                59.636
+              ],
+              "endXYmm": [
+                33.323,
+                59.214
+              ],
+              "boundsXYmm": [
+                [
+                  33.323,
+                  35.108
+                ],
+                [
+                  59.214,
+                  59.636
+                ]
+              ]
+            }
+          ],
+          "sameLayerEarlierConnections": [
+            {
+              "pathIndex": 9,
+              "feature": "Overhang wall",
+              "earlierLineWidthMm": 0.45,
+              "centerlineOverlapLimitMm": 0.45703,
+              "minimumCenterlineDistanceMm": 0.21358,
+              "targetPathOverlapLengthMm": 3.992,
+              "targetPathOverlapFraction": 1.0,
+              "targetEndpointCenterlineDistancesMm": [
+                0.164,
+                0.164
+              ],
+              "targetEndpointsOverlap": [
+                true,
+                true
+              ],
+              "earlierPathPreviousLayerSupportedFraction": 0.092728,
+              "earlierPathSupportedBridgePass": true,
+              "earlierPathMaximumUnsupportedRunMm": 7.3162,
+              "earlierPathUnsupportedRuns": [
+                {
+                  "lengthMm": 7.3162,
+                  "supportedBefore": true,
+                  "supportedAfter": true,
+                  "support": "both_ends",
+                  "startXYmm": [
+                    35.059,
+                    58.4096
+                  ],
+                  "endXYmm": [
+                    35.441,
+                    58.4382
+                  ],
+                  "boundsXYmm": [
+                    [
+                      33.159,
+                      35.441
+                    ],
+                    [
+                      58.4096,
+                      59.991
+                    ]
+                  ]
+                }
+              ]
+            }
+          ],
+          "targetEndpointsHaveEarlierSupportedOverlap": [
+            true,
+            true
+          ],
+          "maximumOverlapFractionFromAnEarlierSupportedPath": 1.0,
+          "decision": "accepted",
+          "basis": "material_width_connection_to_established_earlier_path",
+          "decisionEvidence": {
+            "connectedFraction": 1.0,
+            "startAndEndConnected": [
+              true,
+              true
+            ],
+            "maximumUnconnectedLengthMm": 0.0,
+            "earlierPathIndices": [
+              9
+            ]
+          }
+        },
+        {
+          "objectId": 52,
+          "objectName": "mystery-box-sg92r-c4-print-carrier_center",
+          "zMm": 11.4,
+          "pathIndex": 0,
+          "feature": "Overhang wall",
+          "pathLengthMm": 3.868,
+          "endpointCenterlineGapMm": 0.06,
+          "plateBoundsXYMm": [
+            [
+              98.709,
+              99.691
+            ],
+            [
+              204.209,
+              205.191
+            ]
+          ],
+          "printStlBoundsXYMm": [
+            [
+              4.8124,
+              5.7944
+            ],
+            [
+              2.0087,
+              2.9907
+            ]
+          ],
+          "printStlCenterMm": [
+            5.3034,
+            2.4997,
+            11.4
+          ],
+          "sourcePrintStl": {
+            "file": "prints/mystery-box-sg92r-c4/mystery-box-sg92r-c4-print-carrier_center.stl",
+            "sha256": "f0add24df27ef5c6ab9c2f257384e1839e10071c333332a19f4e906a698d96d6"
+          },
+          "sourceLayout": {
+            "file": "prints/mystery-box-sg92r-c4/mystery-box-sg92r-c4-layout.3mf",
+            "sha256": "cee9d9677bf093fde4016e0321ea64de5a995f6a928ce159b5018d6bd0662749"
+          },
+          "sourceManifest": {
+            "file": "models/mystery-box-sg92r-c4/build/manifest.json",
+            "sha256": "14917a7739bb8f1acf9c46ba5bb9cd95f38eb9cab8d6319cd21ca42a9b2de232"
+          },
+          "lineWidthsMm": [
+            0.45
+          ],
+          "previousLayerSupportedFraction": 0.0,
+          "noneRuns": [
+            {
+              "lengthMm": 3.868,
+              "supportedBefore": false,
+              "supportedAfter": false,
+              "support": "none",
+              "startXYmm": [
+                98.709,
+                204.209
+              ],
+              "endXYmm": [
+                98.709,
+                204.269
+              ],
+              "boundsXYmm": [
+                [
+                  98.709,
+                  99.691
+                ],
+                [
+                  204.209,
+                  205.191
+                ]
+              ]
+            }
+          ],
+          "sameLayerEarlierConnections": [],
+          "targetEndpointsHaveEarlierSupportedOverlap": [
+            false,
+            false
+          ],
+          "maximumOverlapFractionFromAnEarlierSupportedPath": 0.0,
+          "externalSupportEvidence": {
+            "supportId": "carrier_center_support",
+            "geometryEvidenceFile": "models/mystery-box-sg92r-c4/build/print_support_geometry.json",
+            "geometryEvidenceSha256": "b3a6daf30eebe59218d2bb06f1573185ce36958c7461f71e680e823612e735b8",
+            "geometryPass": true,
+            "supportTopGcodeZMm": 11.0,
+            "materialFaceGapMm": 0.2,
+            "supportTopLayerHeightsMm": [
+              0.2
+            ],
+            "productFirstLayerHeightsMm": [
+              0.2
+            ],
+            "productMaterialBottomMm": 11.2,
+            "actualMaterialFaceGapMm": 0.2,
+            "gapMatchesDefinition": true,
+            "pathCoverageFraction": 1.0,
+            "startAndEndCovered": [
+              true,
+              true
+            ],
+            "supportSegmentCount": 4,
+            "supportLineWidthsMm": [
+              0.42
+            ]
+          },
+          "decision": "accepted",
+          "basis": "removable_support_below_first_product_path",
+          "decisionEvidence": {
+            "connectedFraction": 1.0,
+            "maximumUnconnectedLengthMm": 0.0
+          }
+        },
+        {
+          "objectId": 24,
+          "objectName": "mystery-box-sg92r-c4-print-carrier_outer",
+          "zMm": 8.6,
+          "pathIndex": 67,
+          "feature": "Overhang wall",
+          "pathLengthMm": 11.4684,
+          "endpointCenterlineGapMm": 0.06003,
+          "plateBoundsXYMm": [
+            [
+              118.209,
+              119.191
+            ],
+            [
+              119.909,
+              124.615
+            ]
+          ],
+          "printStlBoundsXYMm": [
+            [
+              -0.4876,
+              0.4944
+            ],
+            [
+              -30.9913,
+              -26.2853
+            ]
+          ],
+          "printStlCenterMm": [
+            0.0034,
+            -28.6383,
+            8.6
+          ],
+          "sourcePrintStl": {
+            "file": "prints/mystery-box-sg92r-c4/mystery-box-sg92r-c4-print-carrier_outer.stl",
+            "sha256": "32ef930418710851a50ae4a5d93b56b5f515ced5266a22e2a81fad1f702d0d2b"
+          },
+          "sourceLayout": {
+            "file": "prints/mystery-box-sg92r-c4/mystery-box-sg92r-c4-layout.3mf",
+            "sha256": "cee9d9677bf093fde4016e0321ea64de5a995f6a928ce159b5018d6bd0662749"
+          },
+          "sourceManifest": {
+            "file": "models/mystery-box-sg92r-c4/build/manifest.json",
+            "sha256": "14917a7739bb8f1acf9c46ba5bb9cd95f38eb9cab8d6319cd21ca42a9b2de232"
+          },
+          "lineWidthsMm": [
+            0.45
+          ],
+          "previousLayerSupportedFraction": 0.0,
+          "noneRuns": [
+            {
+              "lengthMm": 11.4684,
+              "supportedBefore": false,
+              "supportedAfter": false,
+              "support": "none",
+              "startXYmm": [
+                118.209,
+                124.615
+              ],
+              "endXYmm": [
+                118.261,
+                124.585
+              ],
+              "boundsXYmm": [
+                [
+                  118.209,
+                  119.191
+                ],
+                [
+                  119.909,
+                  124.615
+                ]
+              ]
+            }
+          ],
+          "sameLayerEarlierConnections": [],
+          "targetEndpointsHaveEarlierSupportedOverlap": [
+            false,
+            false
+          ],
+          "maximumOverlapFractionFromAnEarlierSupportedPath": 0.0,
+          "externalSupportEvidence": {
+            "supportId": "carrier_outer_support",
+            "geometryEvidenceFile": "models/mystery-box-sg92r-c4/build/print_support_geometry.json",
+            "geometryEvidenceSha256": "b3a6daf30eebe59218d2bb06f1573185ce36958c7461f71e680e823612e735b8",
+            "geometryPass": true,
+            "supportTopGcodeZMm": 8.2,
+            "materialFaceGapMm": 0.2,
+            "supportTopLayerHeightsMm": [
+              0.2
+            ],
+            "productFirstLayerHeightsMm": [
+              0.2
+            ],
+            "productMaterialBottomMm": 8.4,
+            "actualMaterialFaceGapMm": 0.2,
+            "gapMatchesDefinition": true,
+            "pathCoverageFraction": 1.0,
+            "startAndEndCovered": [
+              true,
+              true
+            ],
+            "supportSegmentCount": 21,
+            "supportLineWidthsMm": [
+              0.11797,
+              0.42
+            ]
+          },
+          "decision": "accepted",
+          "basis": "removable_support_below_first_product_path",
+          "decisionEvidence": {
+            "connectedFraction": 1.0,
+            "maximumUnconnectedLengthMm": 0.0
+          }
+        },
+        {
+          "objectId": 24,
+          "objectName": "mystery-box-sg92r-c4-print-carrier_outer",
+          "zMm": 8.6,
+          "pathIndex": 68,
+          "feature": "Overhang wall",
+          "pathLengthMm": 15.4463,
+          "endpointCenterlineGapMm": 0.06003,
+          "plateBoundsXYMm": [
+            [
+              117.802,
+              119.598
+            ],
+            [
+              119.502,
+              125.32
+            ]
+          ],
+          "printStlBoundsXYMm": [
+            [
+              -0.8946,
+              0.9014
+            ],
+            [
+              -31.3983,
+              -25.5803
+            ]
+          ],
+          "printStlCenterMm": [
+            0.0034,
+            -28.4893,
+            8.6
+          ],
+          "sourcePrintStl": {
+            "file": "prints/mystery-box-sg92r-c4/mystery-box-sg92r-c4-print-carrier_outer.stl",
+            "sha256": "32ef930418710851a50ae4a5d93b56b5f515ced5266a22e2a81fad1f702d0d2b"
+          },
+          "sourceLayout": {
+            "file": "prints/mystery-box-sg92r-c4/mystery-box-sg92r-c4-layout.3mf",
+            "sha256": "cee9d9677bf093fde4016e0321ea64de5a995f6a928ce159b5018d6bd0662749"
+          },
+          "sourceManifest": {
+            "file": "models/mystery-box-sg92r-c4/build/manifest.json",
+            "sha256": "14917a7739bb8f1acf9c46ba5bb9cd95f38eb9cab8d6319cd21ca42a9b2de232"
+          },
+          "lineWidthsMm": [
+            0.45
+          ],
+          "previousLayerSupportedFraction": 0.0,
+          "noneRuns": [
+            {
+              "lengthMm": 15.4463,
+              "supportedBefore": false,
+              "supportedAfter": false,
+              "support": "none",
+              "startXYmm": [
+                117.802,
+                125.32
+              ],
+              "endXYmm": [
+                117.854,
+                125.29
+              ],
+              "boundsXYmm": [
+                [
+                  117.802,
+                  119.598
+                ],
+                [
+                  119.502,
+                  125.32
+                ]
+              ]
+            }
+          ],
+          "sameLayerEarlierConnections": [
+            {
+              "pathIndex": 67,
+              "feature": "Overhang wall",
+              "earlierLineWidthMm": 0.45,
+              "centerlineOverlapLimitMm": 0.45,
+              "minimumCenterlineDistanceMm": 0.40671,
+              "targetPathOverlapLengthMm": 12.7067,
+              "targetPathOverlapFraction": 0.822632,
+              "targetEndpointCenterlineDistancesMm": [
+                0.81405,
+                0.76266
+              ],
+              "targetEndpointsOverlap": [
+                false,
+                false
+              ],
+              "earlierPathPreviousLayerSupportedFraction": 0.0,
+              "earlierPathSupportedBridgePass": false,
+              "earlierPathMaximumUnsupportedRunMm": 11.4684,
+              "earlierPathUnsupportedRuns": [
+                {
+                  "lengthMm": 11.4684,
+                  "supportedBefore": false,
+                  "supportedAfter": false,
+                  "support": "none",
+                  "startXYmm": [
+                    118.209,
+                    124.615
+                  ],
+                  "endXYmm": [
+                    118.261,
+                    124.585
+                  ],
+                  "boundsXYmm": [
+                    [
+                      118.209,
+                      119.191
+                    ],
+                    [
+                      119.909,
+                      124.615
+                    ]
+                  ]
+                }
+              ]
+            }
+          ],
+          "targetEndpointsHaveEarlierSupportedOverlap": [
+            false,
+            false
+          ],
+          "maximumOverlapFractionFromAnEarlierSupportedPath": 0.0,
+          "externalSupportEvidence": {
+            "supportId": "carrier_outer_support",
+            "geometryEvidenceFile": "models/mystery-box-sg92r-c4/build/print_support_geometry.json",
+            "geometryEvidenceSha256": "b3a6daf30eebe59218d2bb06f1573185ce36958c7461f71e680e823612e735b8",
+            "geometryPass": true,
+            "supportTopGcodeZMm": 8.2,
+            "materialFaceGapMm": 0.2,
+            "supportTopLayerHeightsMm": [
+              0.2
+            ],
+            "productFirstLayerHeightsMm": [
+              0.2
+            ],
+            "productMaterialBottomMm": 8.4,
+            "actualMaterialFaceGapMm": 0.2,
+            "gapMatchesDefinition": true,
+            "pathCoverageFraction": 1.0,
+            "startAndEndCovered": [
+              true,
+              true
+            ],
+            "supportSegmentCount": 21,
+            "supportLineWidthsMm": [
+              0.11797,
+              0.42
+            ]
+          },
+          "decision": "accepted",
+          "basis": "removable_support_below_first_product_path",
+          "decisionEvidence": {
+            "connectedFraction": 1.0,
+            "maximumUnconnectedLengthMm": 0.0
+          }
+        },
+        {
+          "objectId": 24,
+          "objectName": "mystery-box-sg92r-c4-print-carrier_outer",
+          "zMm": 8.6,
+          "pathIndex": 69,
+          "feature": "Overhang wall",
+          "pathLengthMm": 19.2773,
+          "endpointCenterlineGapMm": 0.06003,
+          "plateBoundsXYMm": [
+            [
+              117.41,
+              119.99
+            ],
+            [
+              119.11,
+              125.999
+            ]
+          ],
+          "printStlBoundsXYMm": [
+            [
+              -1.2866,
+              1.2934
+            ],
+            [
+              -31.7903,
+              -24.9013
+            ]
+          ],
+          "printStlCenterMm": [
+            0.0034,
+            -28.3458,
+            8.6
+          ],
+          "sourcePrintStl": {
+            "file": "prints/mystery-box-sg92r-c4/mystery-box-sg92r-c4-print-carrier_outer.stl",
+            "sha256": "32ef930418710851a50ae4a5d93b56b5f515ced5266a22e2a81fad1f702d0d2b"
+          },
+          "sourceLayout": {
+            "file": "prints/mystery-box-sg92r-c4/mystery-box-sg92r-c4-layout.3mf",
+            "sha256": "cee9d9677bf093fde4016e0321ea64de5a995f6a928ce159b5018d6bd0662749"
+          },
+          "sourceManifest": {
+            "file": "models/mystery-box-sg92r-c4/build/manifest.json",
+            "sha256": "14917a7739bb8f1acf9c46ba5bb9cd95f38eb9cab8d6319cd21ca42a9b2de232"
+          },
+          "lineWidthsMm": [
+            0.45
+          ],
+          "previousLayerSupportedFraction": 0.0,
+          "noneRuns": [
+            {
+              "lengthMm": 19.2773,
+              "supportedBefore": false,
+              "supportedAfter": false,
+              "support": "none",
+              "startXYmm": [
+                117.41,
+                125.999
+              ],
+              "endXYmm": [
+                117.462,
+                125.969
+              ],
+              "boundsXYmm": [
+                [
+                  117.41,
+                  119.99
+                ],
+                [
+                  119.11,
+                  125.999
+                ]
+              ]
+            }
+          ],
+          "sameLayerEarlierConnections": [
+            {
+              "pathIndex": 68,
+              "feature": "Overhang wall",
+              "earlierLineWidthMm": 0.45,
+              "centerlineOverlapLimitMm": 0.45,
+              "minimumCenterlineDistanceMm": 0.39194,
+              "targetPathOverlapLengthMm": 16.6048,
+              "targetPathOverlapFraction": 0.861366,
+              "targetEndpointCenterlineDistancesMm": [
+                0.78403,
+                0.73267
+              ],
+              "targetEndpointsOverlap": [
+                false,
+                false
+              ],
+              "earlierPathPreviousLayerSupportedFraction": 0.0,
+              "earlierPathSupportedBridgePass": false,
+              "earlierPathMaximumUnsupportedRunMm": 15.4463,
+              "earlierPathUnsupportedRuns": [
+                {
+                  "lengthMm": 15.4463,
+                  "supportedBefore": false,
+                  "supportedAfter": false,
+                  "support": "none",
+                  "startXYmm": [
+                    117.802,
+                    125.32
+                  ],
+                  "endXYmm": [
+                    117.854,
+                    125.29
+                  ],
+                  "boundsXYmm": [
+                    [
+                      117.802,
+                      119.598
+                    ],
+                    [
+                      119.502,
+                      125.32
+                    ]
+                  ]
+                }
+              ]
+            }
+          ],
+          "targetEndpointsHaveEarlierSupportedOverlap": [
+            false,
+            false
+          ],
+          "maximumOverlapFractionFromAnEarlierSupportedPath": 0.0,
+          "externalSupportEvidence": {
+            "supportId": "carrier_outer_support",
+            "geometryEvidenceFile": "models/mystery-box-sg92r-c4/build/print_support_geometry.json",
+            "geometryEvidenceSha256": "b3a6daf30eebe59218d2bb06f1573185ce36958c7461f71e680e823612e735b8",
+            "geometryPass": true,
+            "supportTopGcodeZMm": 8.2,
+            "materialFaceGapMm": 0.2,
+            "supportTopLayerHeightsMm": [
+              0.2
+            ],
+            "productFirstLayerHeightsMm": [
+              0.2
+            ],
+            "productMaterialBottomMm": 8.4,
+            "actualMaterialFaceGapMm": 0.2,
+            "gapMatchesDefinition": true,
+            "pathCoverageFraction": 1.0,
+            "startAndEndCovered": [
+              true,
+              true
+            ],
+            "supportSegmentCount": 21,
+            "supportLineWidthsMm": [
+              0.11797,
+              0.42
+            ]
+          },
+          "decision": "accepted",
+          "basis": "removable_support_below_first_product_path",
+          "decisionEvidence": {
+            "connectedFraction": 1.0,
+            "maximumUnconnectedLengthMm": 0.0
+          }
+        },
+        {
+          "objectId": 24,
+          "objectName": "mystery-box-sg92r-c4-print-carrier_outer",
+          "zMm": 8.8,
+          "pathIndex": 288,
+          "feature": "Gap infill",
+          "pathLengthMm": 0.3048,
+          "endpointCenterlineGapMm": 0.30401,
+          "plateBoundsXYMm": [
+            [
+              106.131,
+              106.315
+            ],
+            [
+              129.206,
+              129.448
+            ]
+          ],
+          "printStlBoundsXYMm": [
+            [
+              -12.5656,
+              -12.3816
+            ],
+            [
+              -21.6943,
+              -21.4523
+            ]
+          ],
+          "printStlCenterMm": [
+            -12.4736,
+            -21.5733,
+            8.8
+          ],
+          "sourcePrintStl": {
+            "file": "prints/mystery-box-sg92r-c4/mystery-box-sg92r-c4-print-carrier_outer.stl",
+            "sha256": "32ef930418710851a50ae4a5d93b56b5f515ced5266a22e2a81fad1f702d0d2b"
+          },
+          "sourceLayout": {
+            "file": "prints/mystery-box-sg92r-c4/mystery-box-sg92r-c4-layout.3mf",
+            "sha256": "cee9d9677bf093fde4016e0321ea64de5a995f6a928ce159b5018d6bd0662749"
+          },
+          "sourceManifest": {
+            "file": "models/mystery-box-sg92r-c4/build/manifest.json",
+            "sha256": "14917a7739bb8f1acf9c46ba5bb9cd95f38eb9cab8d6319cd21ca42a9b2de232"
+          },
+          "lineWidthsMm": [
+            0.59167,
+            0.63314
+          ],
+          "previousLayerSupportedFraction": 0.0,
+          "noneRuns": [
+            {
+              "lengthMm": 0.3048,
+              "supportedBefore": false,
+              "supportedAfter": false,
+              "support": "none",
+              "startXYmm": [
+                106.315,
+                129.448
+              ],
+              "endXYmm": [
+                106.131,
+                129.206
+              ],
+              "boundsXYmm": [
+                [
+                  106.131,
+                  106.315
+                ],
+                [
+                  129.206,
+                  129.448
+                ]
+              ]
+            }
+          ],
+          "sameLayerEarlierConnections": [
+            {
+              "pathIndex": 179,
+              "feature": "Overhang wall",
+              "earlierLineWidthMm": 0.45,
+              "centerlineOverlapLimitMm": 0.54157,
+              "minimumCenterlineDistanceMm": 0.2333,
+              "targetPathOverlapLengthMm": 0.3048,
+              "targetPathOverlapFraction": 1.0,
+              "targetEndpointCenterlineDistancesMm": [
+                0.49944,
+                0.19785
+              ],
+              "targetEndpointsOverlap": [
+                true,
+                true
+              ],
+              "earlierPathPreviousLayerSupportedFraction": 0.085132,
+              "earlierPathSupportedBridgePass": true,
+              "earlierPathMaximumUnsupportedRunMm": 6.3148,
+              "earlierPathUnsupportedRuns": [
+                {
+                  "lengthMm": 6.3148,
+                  "supportedBefore": true,
+                  "supportedAfter": true,
+                  "support": "both_ends",
+                  "startXYmm": [
+                    104.4219,
+                    131.6936
+                  ],
+                  "endXYmm": [
+                    109.2062,
+                    128.932
+                  ],
+                  "boundsXYmm": [
+                    [
+                      104.4219,
+                      109.2062
+                    ],
+                    [
+                      128.932,
+                      131.6936
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "pathIndex": 285,
+              "feature": "Gap infill",
+              "earlierLineWidthMm": 0.73731,
+              "centerlineOverlapLimitMm": 0.68523,
+              "minimumCenterlineDistanceMm": 0.00763,
+              "targetPathOverlapLengthMm": 0.3048,
+              "targetPathOverlapFraction": 1.0,
+              "targetEndpointCenterlineDistancesMm": [
+                0.0,
+                0.30401
+              ],
+              "targetEndpointsOverlap": [
+                true,
+                true
+              ],
+              "earlierPathPreviousLayerSupportedFraction": 0.53853,
+              "earlierPathSupportedBridgePass": false,
+              "earlierPathMaximumUnsupportedRunMm": 6.2263,
+              "earlierPathUnsupportedRuns": [
+                {
+                  "lengthMm": 6.2263,
+                  "supportedBefore": true,
+                  "supportedAfter": true,
+                  "support": "both_ends",
+                  "startXYmm": [
+                    115.8245,
+                    129.423
+                  ],
+                  "endXYmm": [
+                    118.7,
+                    126.0091
+                  ],
+                  "boundsXYmm": [
+                    [
+                      115.8245,
+                      118.7
+                    ],
+                    [
+                      126.0091,
+                      129.423
+                    ]
+                  ]
+                },
+                {
+                  "lengthMm": 5.9922,
+                  "supportedBefore": true,
+                  "supportedAfter": true,
+                  "support": "both_ends",
+                  "startXYmm": [
+                    101.5731,
+                    164.1904
+                  ],
+                  "endXYmm": [
+                    98.577,
+                    159.0011
+                  ],
+                  "boundsXYmm": [
+                    [
+                      98.577,
+                      101.5731
+                    ],
+                    [
+                      159.0011,
+                      164.1904
+                    ]
+                  ]
+                },
+                {
+                  "lengthMm": 5.9922,
+                  "supportedBefore": true,
+                  "supportedAfter": true,
+                  "support": "both_ends",
+                  "startXYmm": [
+                    98.577,
+                    142.7989
+                  ],
+                  "endXYmm": [
+                    101.5731,
+                    137.6096
+                  ],
+                  "boundsXYmm": [
+                    [
+                      98.577,
+                      101.5731
+                    ],
+                    [
+                      137.6096,
+                      142.7989
+                    ]
+                  ]
+                },
+                {
+                  "lengthMm": 5.8941,
+                  "supportedBefore": true,
+                  "supportedAfter": true,
+                  "support": "both_ends",
+                  "startXYmm": [
+                    95.3812,
+                    153.4657
+                  ],
+                  "endXYmm": [
+                    95.3812,
+                    148.3343
+                  ],
+                  "boundsXYmm": [
+                    [
+                      93.9385,
+                      95.3812
+                    ],
+                    [
+                      148.3343,
+                      153.4657
+                    ]
+                  ]
+                },
+                {
+                  "lengthMm": 5.7924,
+                  "supportedBefore": true,
+                  "supportedAfter": true,
+                  "support": "both_ends",
+                  "startXYmm": [
+                    104.8188,
+                    131.9877
+                  ],
+                  "endXYmm": [
+                    109.1541,
+                    129.423
+                  ],
+                  "boundsXYmm": [
+                    [
+                      104.8188,
+                      109.1541
+                    ],
+                    [
+                      129.423,
+                      131.9877
+                    ]
+                  ]
+                },
+                {
+                  "lengthMm": 2.9505,
+                  "supportedBefore": false,
+                  "supportedAfter": true,
+                  "support": "one_end",
+                  "startXYmm": [
+                    106.315,
+                    172.352
+                  ],
+                  "endXYmm": [
+                    104.8188,
+                    169.8123
+                  ],
+                  "boundsXYmm": [
+                    [
+                      104.8188,
+                      106.315
+                    ],
+                    [
+                      169.8123,
+                      172.352
+                    ]
+                  ]
+                }
+              ]
+            }
+          ],
+          "targetEndpointsHaveEarlierSupportedOverlap": [
+            true,
+            true
+          ],
+          "maximumOverlapFractionFromAnEarlierSupportedPath": 1.0,
+          "decision": "accepted",
+          "basis": "material_width_connection_to_established_earlier_path",
+          "decisionEvidence": {
+            "connectedFraction": 1.0,
+            "startAndEndConnected": [
+              true,
+              true
+            ],
+            "maximumUnconnectedLengthMm": 0.0,
+            "earlierPathIndices": [
+              179
+            ]
+          }
+        },
+        {
+          "objectId": 28,
+          "objectName": "mystery-box-sg92r-c4-print-horn_coupler",
+          "zMm": 5.6,
+          "pathIndex": 22,
+          "feature": "Overhang wall",
+          "pathLengthMm": 5.204,
+          "endpointCenterlineGapMm": 0.06,
+          "plateBoundsXYMm": [
+            [
+              162.51,
+              163.29
+            ],
+            [
+              138.32,
+              140.172
+            ]
+          ],
+          "printStlBoundsXYMm": [
+            [
+              0.2134,
+              0.9934
+            ],
+            [
+              -40.3226,
+              -38.4706
+            ]
+          ],
+          "printStlCenterMm": [
+            0.6034,
+            -39.3966,
+            5.6
+          ],
+          "sourcePrintStl": {
+            "file": "prints/mystery-box-sg92r-c4/mystery-box-sg92r-c4-print-horn_coupler.stl",
+            "sha256": "5156194b8f9ca7a89da2583ed797b56f512ebc9221ccbe95d241d31a13fca8a3"
+          },
+          "sourceLayout": {
+            "file": "prints/mystery-box-sg92r-c4/mystery-box-sg92r-c4-layout.3mf",
+            "sha256": "cee9d9677bf093fde4016e0321ea64de5a995f6a928ce159b5018d6bd0662749"
+          },
+          "sourceManifest": {
+            "file": "models/mystery-box-sg92r-c4/build/manifest.json",
+            "sha256": "14917a7739bb8f1acf9c46ba5bb9cd95f38eb9cab8d6319cd21ca42a9b2de232"
+          },
+          "lineWidthsMm": [
+            0.45
+          ],
+          "previousLayerSupportedFraction": 0.0,
+          "noneRuns": [
+            {
+              "lengthMm": 5.204,
+              "supportedBefore": false,
+              "supportedAfter": false,
+              "support": "none",
+              "startXYmm": [
+                163.29,
+                139.332
+              ],
+              "endXYmm": [
+                163.29,
+                139.272
+              ],
+              "boundsXYmm": [
+                [
+                  162.51,
+                  163.29
+                ],
+                [
+                  138.32,
+                  140.172
+                ]
+              ]
+            }
+          ],
+          "sameLayerEarlierConnections": [],
+          "targetEndpointsHaveEarlierSupportedOverlap": [
+            false,
+            false
+          ],
+          "maximumOverlapFractionFromAnEarlierSupportedPath": 0.0,
+          "externalSupportEvidence": {
+            "supportId": "horn_coupler_loop_support",
+            "geometryEvidenceFile": "models/mystery-box-sg92r-c4/build/print_support_geometry.json",
+            "geometryEvidenceSha256": "b3a6daf30eebe59218d2bb06f1573185ce36958c7461f71e680e823612e735b8",
+            "geometryPass": true,
+            "supportTopGcodeZMm": 5.2,
+            "materialFaceGapMm": 0.2,
+            "supportTopLayerHeightsMm": [
+              0.2
+            ],
+            "productFirstLayerHeightsMm": [
+              0.2
+            ],
+            "productMaterialBottomMm": 5.4,
+            "actualMaterialFaceGapMm": 0.2,
+            "gapMatchesDefinition": true,
+            "pathCoverageFraction": 1.0,
+            "startAndEndCovered": [
+              true,
+              true
+            ],
+            "supportSegmentCount": 6,
+            "supportLineWidthsMm": [
+              0.23086,
+              0.37851,
+              0.42
+            ]
+          },
+          "decision": "accepted",
+          "basis": "removable_support_below_first_product_path",
+          "decisionEvidence": {
+            "connectedFraction": 1.0,
+            "maximumUnconnectedLengthMm": 0.0
+          }
+        }
+      ]
+    },
+    "PETG": {
+      "sourceGcode": {
+        "file": "prints/mystery-box-sg92r-c4/mystery-box-sg92r-c4-PETG.gcode.3mf",
+        "sha256": "f19e388e8b2248529c177d1520493c6e42c18929a1d01b85d664a907409ebf1d"
+      },
+      "sourceSpanReport": {
+        "file": "models/mystery-box-sg92r-c4/build/print_spans_PETG.json",
+        "sha256": "ac84e8c0831e1b7012df7ebb2fd3860a15332ac1852210d95be3c58e4853e440"
+      },
+      "summary": {
+        "closedUnsupportedPathCount": 12,
+        "pathsWithNoEarlierSupportedConnection": 6
+      },
+      "closedUnsupportedPaths": [
+        {
+          "objectId": 36,
+          "objectName": "mystery-box-sg92r-c4-print-carrier_inner",
+          "zMm": 8.8,
+          "pathIndex": 146,
+          "feature": "Bridge",
+          "pathLengthMm": 1.779,
+          "endpointCenterlineGapMm": 0.46966,
+          "plateBoundsXYMm": [
+            [
+              214.767,
+              215.22
+            ],
+            [
+              124.808,
+              125.533
+            ]
+          ],
+          "printStlBoundsXYMm": [
+            [
+              6.2704,
+              6.7234
+            ],
+            [
+              -10.6932,
+              -9.9682
+            ]
+          ],
+          "printStlCenterMm": [
+            6.4969,
+            -10.3307,
+            8.8
+          ],
+          "sourcePrintStl": {
+            "file": "prints/mystery-box-sg92r-c4/mystery-box-sg92r-c4-print-carrier_inner.stl",
+            "sha256": "2c80af1638416281f3fda58e6efe88c7aea7bd92183613135d29b380887d24ba"
+          },
+          "sourceLayout": {
+            "file": "prints/mystery-box-sg92r-c4/mystery-box-sg92r-c4-layout.3mf",
+            "sha256": "cee9d9677bf093fde4016e0321ea64de5a995f6a928ce159b5018d6bd0662749"
+          },
+          "sourceManifest": {
+            "file": "models/mystery-box-sg92r-c4/build/manifest.json",
+            "sha256": "14917a7739bb8f1acf9c46ba5bb9cd95f38eb9cab8d6319cd21ca42a9b2de232"
+          },
+          "lineWidthsMm": [
+            0.4954
+          ],
+          "previousLayerSupportedFraction": 0.0,
+          "noneRuns": [
+            {
+              "lengthMm": 1.779,
+              "supportedBefore": false,
+              "supportedAfter": false,
+              "support": "none",
+              "startXYmm": [
+                214.767,
+                125.533
+              ],
+              "endXYmm": [
+                215.22,
+                125.409
+              ],
+              "boundsXYmm": [
+                [
+                  214.767,
+                  215.22
+                ],
+                [
+                  124.808,
+                  125.533
+                ]
+              ]
+            }
+          ],
+          "sameLayerEarlierConnections": [
+            {
+              "pathIndex": 105,
+              "feature": "Overhang wall",
+              "earlierLineWidthMm": 0.45,
+              "centerlineOverlapLimitMm": 0.4727,
+              "minimumCenterlineDistanceMm": 0.371,
+              "targetPathOverlapLengthMm": 0.6916,
+              "targetPathOverlapFraction": 0.388758,
+              "targetEndpointCenterlineDistancesMm": [
+                0.85034,
+                0.38084
+              ],
+              "targetEndpointsOverlap": [
+                false,
+                true
+              ],
+              "earlierPathPreviousLayerSupportedFraction": 0.059131,
+              "earlierPathSupportedBridgePass": true,
+              "earlierPathMaximumUnsupportedRunMm": 9.3463,
+              "earlierPathUnsupportedRuns": [
+                {
+                  "lengthMm": 9.3463,
+                  "supportedBefore": true,
+                  "supportedAfter": true,
+                  "support": "both_ends",
+                  "startXYmm": [
+                    211.7915,
+                    124.271
+                  ],
+                  "endXYmm": [
+                    216.5771,
+                    127.0317
+                  ],
+                  "boundsXYmm": [
+                    [
+                      211.7915,
+                      216.5771
+                    ],
+                    [
+                      123.01,
+                      127.0317
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "pathIndex": 44,
+              "feature": "Overhang wall",
+              "earlierLineWidthMm": 0.45,
+              "centerlineOverlapLimitMm": 0.4727,
+              "minimumCenterlineDistanceMm": 0.18581,
+              "targetPathOverlapLengthMm": 0.6344,
+              "targetPathOverlapFraction": 0.356591,
+              "targetEndpointCenterlineDistancesMm": [
+                0.16316,
+                0.61748
+              ],
+              "targetEndpointsOverlap": [
+                true,
+                false
+              ],
+              "earlierPathPreviousLayerSupportedFraction": 0.083335,
+              "earlierPathSupportedBridgePass": true,
+              "earlierPathMaximumUnsupportedRunMm": 5.3474,
+              "earlierPathUnsupportedRuns": [
+                {
+                  "lengthMm": 5.3474,
+                  "supportedBefore": true,
+                  "supportedAfter": true,
+                  "support": "both_ends",
+                  "startXYmm": [
+                    211.7917,
+                    125.253
+                  ],
+                  "endXYmm": [
+                    215.7778,
+                    127.6106
+                  ],
+                  "boundsXYmm": [
+                    [
+                      211.7917,
+                      215.7778
+                    ],
+                    [
+                      125.253,
+                      127.6106
+                    ]
+                  ]
+                }
+              ]
+            }
+          ],
+          "targetEndpointsHaveEarlierSupportedOverlap": [
+            true,
+            true
+          ],
+          "maximumOverlapFractionFromAnEarlierSupportedPath": 0.388758,
+          "decision": "accepted",
+          "basis": "material_width_connection_to_established_earlier_path",
+          "decisionEvidence": {
+            "connectedFraction": 0.388758,
+            "startAndEndConnected": [
+              true,
+              true
+            ],
+            "maximumUnconnectedLengthMm": 1.0874,
+            "earlierPathIndices": [
+              105,
+              44
+            ]
+          }
+        },
+        {
+          "objectId": 36,
+          "objectName": "mystery-box-sg92r-c4-print-carrier_inner",
+          "zMm": 8.8,
+          "pathIndex": 151,
+          "feature": "Bridge",
+          "pathLengthMm": 1.748,
+          "endpointCenterlineGapMm": 0.45683,
+          "plateBoundsXYMm": [
+            [
+              201.808,
+              202.261
+            ],
+            [
+              124.808,
+              125.485
+            ]
+          ],
+          "printStlBoundsXYMm": [
+            [
+              -6.6886,
+              -6.2356
+            ],
+            [
+              -10.6932,
+              -10.0162
+            ]
+          ],
+          "printStlCenterMm": [
+            -6.4621,
+            -10.3547,
+            8.8
+          ],
+          "sourcePrintStl": {
+            "file": "prints/mystery-box-sg92r-c4/mystery-box-sg92r-c4-print-carrier_inner.stl",
+            "sha256": "2c80af1638416281f3fda58e6efe88c7aea7bd92183613135d29b380887d24ba"
+          },
+          "sourceLayout": {
+            "file": "prints/mystery-box-sg92r-c4/mystery-box-sg92r-c4-layout.3mf",
+            "sha256": "cee9d9677bf093fde4016e0321ea64de5a995f6a928ce159b5018d6bd0662749"
+          },
+          "sourceManifest": {
+            "file": "models/mystery-box-sg92r-c4/build/manifest.json",
+            "sha256": "14917a7739bb8f1acf9c46ba5bb9cd95f38eb9cab8d6319cd21ca42a9b2de232"
+          },
+          "lineWidthsMm": [
+            0.4954
+          ],
+          "previousLayerSupportedFraction": 0.0,
+          "noneRuns": [
+            {
+              "lengthMm": 1.748,
+              "supportedBefore": false,
+              "supportedAfter": false,
+              "support": "none",
+              "startXYmm": [
+                201.808,
+                125.426
+              ],
+              "endXYmm": [
+                202.261,
+                125.485
+              ],
+              "boundsXYmm": [
+                [
+                  201.808,
+                  202.261
+                ],
+                [
+                  124.808,
+                  125.485
+                ]
+              ]
+            }
+          ],
+          "sameLayerEarlierConnections": [
+            {
+              "pathIndex": 99,
+              "feature": "Overhang wall",
+              "earlierLineWidthMm": 0.45,
+              "centerlineOverlapLimitMm": 0.4727,
+              "minimumCenterlineDistanceMm": 0.399,
+              "targetPathOverlapLengthMm": 0.7086,
+              "targetPathOverlapFraction": 0.405378,
+              "targetEndpointCenterlineDistancesMm": [
+                0.41208,
+                0.86726
+              ],
+              "targetEndpointsOverlap": [
+                true,
+                false
+              ],
+              "earlierPathPreviousLayerSupportedFraction": 0.059131,
+              "earlierPathSupportedBridgePass": true,
+              "earlierPathMaximumUnsupportedRunMm": 9.3463,
+              "earlierPathUnsupportedRuns": [
+                {
+                  "lengthMm": 9.3463,
+                  "supportedBefore": true,
+                  "supportedAfter": true,
+                  "support": "both_ends",
+                  "startXYmm": [
+                    200.4229,
+                    127.0317
+                  ],
+                  "endXYmm": [
+                    205.2085,
+                    124.271
+                  ],
+                  "boundsXYmm": [
+                    [
+                      200.4229,
+                      205.2085
+                    ],
+                    [
+                      123.01,
+                      127.0317
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "pathIndex": 42,
+              "feature": "Overhang wall",
+              "earlierLineWidthMm": 0.45,
+              "centerlineOverlapLimitMm": 0.4727,
+              "minimumCenterlineDistanceMm": 0.18708,
+              "targetPathOverlapLengthMm": 0.5803,
+              "targetPathOverlapFraction": 0.331971,
+              "targetEndpointCenterlineDistancesMm": [
+                0.58473,
+                0.1629
+              ],
+              "targetEndpointsOverlap": [
+                false,
+                true
+              ],
+              "earlierPathPreviousLayerSupportedFraction": 0.083335,
+              "earlierPathSupportedBridgePass": true,
+              "earlierPathMaximumUnsupportedRunMm": 5.3474,
+              "earlierPathUnsupportedRuns": [
+                {
+                  "lengthMm": 5.3474,
+                  "supportedBefore": true,
+                  "supportedAfter": true,
+                  "support": "both_ends",
+                  "startXYmm": [
+                    201.2222,
+                    127.6106
+                  ],
+                  "endXYmm": [
+                    205.2083,
+                    125.253
+                  ],
+                  "boundsXYmm": [
+                    [
+                      201.2222,
+                      205.2083
+                    ],
+                    [
+                      125.253,
+                      127.6106
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "pathIndex": 150,
+              "feature": "Gap infill",
+              "earlierLineWidthMm": 0.63338,
+              "centerlineOverlapLimitMm": 0.56439,
+              "minimumCenterlineDistanceMm": 0.23214,
+              "targetPathOverlapLengthMm": 0.5466,
+              "targetPathOverlapFraction": 0.312684,
+              "targetEndpointCenterlineDistancesMm": [
+                0.188,
+                0.47101
+              ],
+              "targetEndpointsOverlap": [
+                true,
+                true
+              ],
+              "earlierPathPreviousLayerSupportedFraction": 0.538003,
+              "earlierPathSupportedBridgePass": false,
+              "earlierPathMaximumUnsupportedRunMm": 5.8816,
+              "earlierPathUnsupportedRuns": [
+                {
+                  "lengthMm": 5.8816,
+                  "supportedBefore": true,
+                  "supportedAfter": true,
+                  "support": "both_ends",
+                  "startXYmm": [
+                    197.5793,
+                    138.0634
+                  ],
+                  "endXYmm": [
+                    197.5768,
+                    132.9428
+                  ],
+                  "boundsXYmm": [
+                    [
+                      196.1385,
+                      197.5793
+                    ],
+                    [
+                      132.9428,
+                      138.0634
+                    ]
+                  ]
+                },
+                {
+                  "lengthMm": 3.2512,
+                  "supportedBefore": false,
+                  "supportedAfter": true,
+                  "support": "one_end",
+                  "startXYmm": [
+                    202.134,
+                    146.458
+                  ],
+                  "endXYmm": [
+                    200.8207,
+                    143.6776
+                  ],
+                  "boundsXYmm": [
+                    [
+                      200.8207,
+                      202.315
+                    ],
+                    [
+                      143.6776,
+                      146.458
+                    ]
+                  ]
+                },
+                {
+                  "lengthMm": 1.9912,
+                  "supportedBefore": true,
+                  "supportedAfter": false,
+                  "support": "one_end",
+                  "startXYmm": [
+                    200.8124,
+                    127.3384
+                  ],
+                  "endXYmm": [
+                    201.808,
+                    125.614
+                  ],
+                  "boundsXYmm": [
+                    [
+                      200.8124,
+                      201.808
+                    ],
+                    [
+                      125.614,
+                      127.3384
+                    ]
+                  ]
+                }
+              ]
+            }
+          ],
+          "targetEndpointsHaveEarlierSupportedOverlap": [
+            true,
+            true
+          ],
+          "maximumOverlapFractionFromAnEarlierSupportedPath": 0.405378,
+          "decision": "accepted",
+          "basis": "material_width_connection_to_established_earlier_path",
+          "decisionEvidence": {
+            "connectedFraction": 0.405378,
+            "startAndEndConnected": [
+              true,
+              true
+            ],
+            "maximumUnconnectedLengthMm": 1.0394,
+            "earlierPathIndices": [
+              99,
+              42
+            ]
+          }
+        },
+        {
+          "objectId": 40,
+          "objectName": "mystery-box-sg92r-c4-print-cam_center",
+          "zMm": 0.8,
+          "pathIndex": 14,
+          "feature": "Overhang wall",
+          "pathLengthMm": 24.4316,
+          "endpointCenterlineGapMm": 0.06,
+          "plateBoundsXYMm": [
+            [
+              14.161,
+              21.231
+            ],
+            [
+              200.697,
+              208.861
+            ]
+          ],
+          "printStlBoundsXYMm": [
+            [
+              -43.5312,
+              -36.4612
+            ],
+            [
+              -4.0824,
+              4.0816
+            ]
+          ],
+          "printStlCenterMm": [
+            -39.9962,
+            -0.0004,
+            0.8
+          ],
+          "sourcePrintStl": {
+            "file": "prints/mystery-box-sg92r-c4/mystery-box-sg92r-c4-print-cam_center.stl",
+            "sha256": "5d2a08198b8c8bf6ca90cca1aff32f36b89d0a949ee7ca6c825edc0917812d23"
+          },
+          "sourceLayout": {
+            "file": "prints/mystery-box-sg92r-c4/mystery-box-sg92r-c4-layout.3mf",
+            "sha256": "cee9d9677bf093fde4016e0321ea64de5a995f6a928ce159b5018d6bd0662749"
+          },
+          "sourceManifest": {
+            "file": "models/mystery-box-sg92r-c4/build/manifest.json",
+            "sha256": "14917a7739bb8f1acf9c46ba5bb9cd95f38eb9cab8d6319cd21ca42a9b2de232"
+          },
+          "lineWidthsMm": [
+            0.45
+          ],
+          "previousLayerSupportedFraction": 0.0,
+          "noneRuns": [
+            {
+              "lengthMm": 24.4316,
+              "supportedBefore": false,
+              "supportedAfter": false,
+              "support": "none",
+              "startXYmm": [
+                14.161,
+                202.827
+              ],
+              "endXYmm": [
+                14.161,
+                202.887
+              ],
+              "boundsXYmm": [
+                [
+                  14.161,
+                  21.231
+                ],
+                [
+                  200.697,
+                  208.861
+                ]
+              ]
+            }
+          ],
+          "sameLayerEarlierConnections": [
+            {
+              "pathIndex": 13,
+              "feature": "Overhang wall",
+              "earlierLineWidthMm": 0.45,
+              "centerlineOverlapLimitMm": 0.45,
+              "minimumCenterlineDistanceMm": 0.39176,
+              "targetPathOverlapLengthMm": 24.4316,
+              "targetPathOverlapFraction": 1.0,
+              "targetEndpointCenterlineDistancesMm": [
+                0.392,
+                0.392
+              ],
+              "targetEndpointsOverlap": [
+                true,
+                true
+              ],
+              "earlierPathPreviousLayerSupportedFraction": 0.225391,
+              "earlierPathSupportedBridgePass": true,
+              "earlierPathMaximumUnsupportedRunMm": 3.5483,
+              "earlierPathUnsupportedRuns": [
+                {
+                  "lengthMm": 3.5483,
+                  "supportedBefore": true,
+                  "supportedAfter": true,
+                  "support": "both_ends",
+                  "startXYmm": [
+                    21.623,
+                    203.0048
+                  ],
+                  "endXYmm": [
+                    21.623,
+                    206.5532
+                  ],
+                  "boundsXYmm": [
+                    [
+                      21.623,
+                      21.623
+                    ],
+                    [
+                      203.0048,
+                      206.5532
+                    ]
+                  ]
+                },
+                {
+                  "lengthMm": 3.4505,
+                  "supportedBefore": true,
+                  "supportedAfter": true,
+                  "support": "both_ends",
+                  "startXYmm": [
+                    21.1962,
+                    207.2925
+                  ],
+                  "endXYmm": [
+                    18.2082,
+                    209.0182
+                  ],
+                  "boundsXYmm": [
+                    [
+                      18.2082,
+                      21.1962
+                    ],
+                    [
+                      207.2925,
+                      209.0182
+                    ]
+                  ]
+                },
+                {
+                  "lengthMm": 3.4505,
+                  "supportedBefore": true,
+                  "supportedAfter": true,
+                  "support": "both_ends",
+                  "startXYmm": [
+                    17.1838,
+                    209.0182
+                  ],
+                  "endXYmm": [
+                    14.1958,
+                    207.2925
+                  ],
+                  "boundsXYmm": [
+                    [
+                      14.1958,
+                      17.1838
+                    ],
+                    [
+                      207.2925,
+                      209.0182
+                    ]
+                  ]
+                },
+                {
+                  "lengthMm": 3.3668,
+                  "supportedBefore": true,
+                  "supportedAfter": true,
+                  "support": "both_ends",
+                  "startXYmm": [
+                    13.769,
+                    206.3528
+                  ],
+                  "endXYmm": [
+                    13.769,
+                    202.986
+                  ],
+                  "boundsXYmm": [
+                    [
+                      13.769,
+                      13.769
+                    ],
+                    [
+                      202.986,
+                      206.3528
+                    ]
+                  ]
+                },
+                {
+                  "lengthMm": 3.3519,
+                  "supportedBefore": true,
+                  "supportedAfter": true,
+                  "support": "both_ends",
+                  "startXYmm": [
+                    18.2936,
+                    200.5891
+                  ],
+                  "endXYmm": [
+                    21.1962,
+                    202.2655
+                  ],
+                  "boundsXYmm": [
+                    [
+                      18.2936,
+                      21.1962
+                    ],
+                    [
+                      200.5891,
+                      202.2655
+                    ]
+                  ]
+                },
+                {
+                  "lengthMm": 3.2814,
+                  "supportedBefore": true,
+                  "supportedAfter": true,
+                  "support": "both_ends",
+                  "startXYmm": [
+                    14.1995,
+                    202.2633
+                  ],
+                  "endXYmm": [
+                    17.041,
+                    200.622
+                  ],
+                  "boundsXYmm": [
+                    [
+                      14.1995,
+                      17.041
+                    ],
+                    [
+                      200.622,
+                      202.2633
+                    ]
+                  ]
+                },
+                {
+                  "lengthMm": 0.2958,
+                  "supportedBefore": true,
+                  "supportedAfter": true,
+                  "support": "both_ends",
+                  "startXYmm": [
+                    17.9521,
+                    200.3919
+                  ],
+                  "endXYmm": [
+                    18.2082,
+                    200.5398
+                  ],
+                  "boundsXYmm": [
+                    [
+                      17.9521,
+                      18.2082
+                    ],
+                    [
+                      200.3919,
+                      200.5398
+                    ]
+                  ]
+                },
+                {
+                  "lengthMm": 0.2836,
+                  "supportedBefore": true,
+                  "supportedAfter": true,
+                  "support": "both_ends",
+                  "startXYmm": [
+                    17.2048,
+                    200.5275
+                  ],
+                  "endXYmm": [
+                    17.4504,
+                    200.3858
+                  ],
+                  "boundsXYmm": [
+                    [
+                      17.2048,
+                      17.4504
+                    ],
+                    [
+                      200.3858,
+                      200.5275
+                    ]
+                  ]
+                }
+              ]
+            }
+          ],
+          "targetEndpointsHaveEarlierSupportedOverlap": [
+            true,
+            true
+          ],
+          "maximumOverlapFractionFromAnEarlierSupportedPath": 1.0,
+          "decision": "accepted",
+          "basis": "material_width_connection_to_established_earlier_path",
+          "decisionEvidence": {
+            "connectedFraction": 1.0,
+            "startAndEndConnected": [
+              true,
+              true
+            ],
+            "maximumUnconnectedLengthMm": 0.0,
+            "earlierPathIndices": [
+              13
+            ]
+          }
+        },
+        {
+          "objectId": 8,
+          "objectName": "mystery-box-sg92r-c4-print-housing",
+          "zMm": 44.8,
+          "pathIndex": 8,
+          "feature": "Outer wall",
+          "pathLengthMm": 3.953,
+          "endpointCenterlineGapMm": 0.06,
+          "plateBoundsXYMm": [
+            [
+              84.76,
+              86.44
+            ],
+            [
+              78.297,
+              78.624
+            ]
+          ],
+          "printStlBoundsXYMm": [
+            [
+              36.1134,
+              37.7934
+            ],
+            [
+              3.5967,
+              3.9237
+            ]
+          ],
+          "printStlCenterMm": [
+            36.9534,
+            3.7602,
+            44.8
+          ],
+          "sourcePrintStl": {
+            "file": "prints/mystery-box-sg92r-c4/mystery-box-sg92r-c4-print-housing.stl",
+            "sha256": "68e911d72fe35a466b7bf9fd225a2a193e2fffbec946532738fc1d905ca79d72"
+          },
+          "sourceLayout": {
+            "file": "prints/mystery-box-sg92r-c4/mystery-box-sg92r-c4-layout.3mf",
+            "sha256": "cee9d9677bf093fde4016e0321ea64de5a995f6a928ce159b5018d6bd0662749"
+          },
+          "sourceManifest": {
+            "file": "models/mystery-box-sg92r-c4/build/manifest.json",
+            "sha256": "14917a7739bb8f1acf9c46ba5bb9cd95f38eb9cab8d6319cd21ca42a9b2de232"
+          },
+          "lineWidthsMm": [
+            0.42
+          ],
+          "previousLayerSupportedFraction": 0.0,
+          "noneRuns": [
+            {
+              "lengthMm": 3.953,
+              "supportedBefore": false,
+              "supportedAfter": false,
+              "support": "none",
+              "startXYmm": [
+                84.76,
+                78.624
+              ],
+              "endXYmm": [
+                84.82,
+                78.624
+              ],
+              "boundsXYmm": [
+                [
+                  84.76,
+                  86.44
+                ],
+                [
+                  78.297,
+                  78.624
+                ]
+              ]
+            }
+          ],
+          "sameLayerEarlierConnections": [],
+          "targetEndpointsHaveEarlierSupportedOverlap": [
+            false,
+            false
+          ],
+          "maximumOverlapFractionFromAnEarlierSupportedPath": 0.0,
+          "externalSupportEvidence": {
+            "supportId": "housing_detent_support",
+            "geometryEvidenceFile": "models/mystery-box-sg92r-c4/build/print_support_geometry.json",
+            "geometryEvidenceSha256": "b3a6daf30eebe59218d2bb06f1573185ce36958c7461f71e680e823612e735b8",
+            "geometryPass": true,
+            "supportTopGcodeZMm": 44.4,
+            "materialFaceGapMm": 0.2,
+            "supportTopLayerHeightsMm": [
+              0.2
+            ],
+            "productFirstLayerHeightsMm": [
+              0.2
+            ],
+            "productMaterialBottomMm": 44.6,
+            "actualMaterialFaceGapMm": 0.2,
+            "gapMatchesDefinition": true,
+            "pathCoverageFraction": 1.0,
+            "startAndEndCovered": [
+              true,
+              true
+            ],
+            "supportSegmentCount": 4,
+            "supportLineWidthsMm": [
+              0.37851
+            ]
+          },
+          "decision": "accepted",
+          "basis": "removable_support_below_first_product_path",
+          "decisionEvidence": {
+            "connectedFraction": 1.0,
+            "maximumUnconnectedLengthMm": 0.0
+          }
+        },
+        {
+          "objectId": 8,
+          "objectName": "mystery-box-sg92r-c4-print-housing",
+          "zMm": 46.6,
+          "pathIndex": 46,
+          "feature": "Bridge",
+          "pathLengthMm": 3.992,
+          "endpointCenterlineGapMm": 0.422,
+          "plateBoundsXYMm": [
+            [
+              33.323,
+              35.108
+            ],
+            [
+              79.764,
+              80.186
+            ]
+          ],
+          "printStlBoundsXYMm": [
+            [
+              -15.3236,
+              -13.5386
+            ],
+            [
+              5.0637,
+              5.4857
+            ]
+          ],
+          "printStlCenterMm": [
+            -14.4311,
+            5.2747,
+            46.6
+          ],
+          "sourcePrintStl": {
+            "file": "prints/mystery-box-sg92r-c4/mystery-box-sg92r-c4-print-housing.stl",
+            "sha256": "68e911d72fe35a466b7bf9fd225a2a193e2fffbec946532738fc1d905ca79d72"
+          },
+          "sourceLayout": {
+            "file": "prints/mystery-box-sg92r-c4/mystery-box-sg92r-c4-layout.3mf",
+            "sha256": "cee9d9677bf093fde4016e0321ea64de5a995f6a928ce159b5018d6bd0662749"
+          },
+          "sourceManifest": {
+            "file": "models/mystery-box-sg92r-c4/build/manifest.json",
+            "sha256": "14917a7739bb8f1acf9c46ba5bb9cd95f38eb9cab8d6319cd21ca42a9b2de232"
+          },
+          "lineWidthsMm": [
+            0.46405
+          ],
+          "previousLayerSupportedFraction": 0.0,
+          "noneRuns": [
+            {
+              "lengthMm": 3.992,
+              "supportedBefore": false,
+              "supportedAfter": false,
+              "support": "none",
+              "startXYmm": [
+                33.323,
+                80.186
+              ],
+              "endXYmm": [
+                33.323,
+                79.764
+              ],
+              "boundsXYmm": [
+                [
+                  33.323,
+                  35.108
+                ],
+                [
+                  79.764,
+                  80.186
+                ]
+              ]
+            }
+          ],
+          "sameLayerEarlierConnections": [
+            {
+              "pathIndex": 11,
+              "feature": "Overhang wall",
+              "earlierLineWidthMm": 0.45,
+              "centerlineOverlapLimitMm": 0.45703,
+              "minimumCenterlineDistanceMm": 0.21358,
+              "targetPathOverlapLengthMm": 3.992,
+              "targetPathOverlapFraction": 1.0,
+              "targetEndpointCenterlineDistancesMm": [
+                0.164,
+                0.164
+              ],
+              "targetEndpointsOverlap": [
+                true,
+                true
+              ],
+              "earlierPathPreviousLayerSupportedFraction": 0.092728,
+              "earlierPathSupportedBridgePass": true,
+              "earlierPathMaximumUnsupportedRunMm": 7.3162,
+              "earlierPathUnsupportedRuns": [
+                {
+                  "lengthMm": 7.3162,
+                  "supportedBefore": true,
+                  "supportedAfter": true,
+                  "support": "both_ends",
+                  "startXYmm": [
+                    35.441,
+                    80.9618
+                  ],
+                  "endXYmm": [
+                    35.059,
+                    80.9904
+                  ],
+                  "boundsXYmm": [
+                    [
+                      33.159,
+                      35.441
+                    ],
+                    [
+                      79.409,
+                      80.9904
+                    ]
+                  ]
+                }
+              ]
+            }
+          ],
+          "targetEndpointsHaveEarlierSupportedOverlap": [
+            true,
+            true
+          ],
+          "maximumOverlapFractionFromAnEarlierSupportedPath": 1.0,
+          "decision": "accepted",
+          "basis": "material_width_connection_to_established_earlier_path",
+          "decisionEvidence": {
+            "connectedFraction": 1.0,
+            "startAndEndConnected": [
+              true,
+              true
+            ],
+            "maximumUnconnectedLengthMm": 0.0,
+            "earlierPathIndices": [
+              11
+            ]
+          }
+        },
+        {
+          "objectId": 8,
+          "objectName": "mystery-box-sg92r-c4-print-housing",
+          "zMm": 46.6,
+          "pathIndex": 47,
+          "feature": "Bridge",
+          "pathLengthMm": 3.992,
+          "endpointCenterlineGapMm": 0.422,
+          "plateBoundsXYMm": [
+            [
+              33.323,
+              35.108
+            ],
+            [
+              59.214,
+              59.636
+            ]
+          ],
+          "printStlBoundsXYMm": [
+            [
+              -15.3236,
+              -13.5386
+            ],
+            [
+              -15.4863,
+              -15.0643
+            ]
+          ],
+          "printStlCenterMm": [
+            -14.4311,
+            -15.2753,
+            46.6
+          ],
+          "sourcePrintStl": {
+            "file": "prints/mystery-box-sg92r-c4/mystery-box-sg92r-c4-print-housing.stl",
+            "sha256": "68e911d72fe35a466b7bf9fd225a2a193e2fffbec946532738fc1d905ca79d72"
+          },
+          "sourceLayout": {
+            "file": "prints/mystery-box-sg92r-c4/mystery-box-sg92r-c4-layout.3mf",
+            "sha256": "cee9d9677bf093fde4016e0321ea64de5a995f6a928ce159b5018d6bd0662749"
+          },
+          "sourceManifest": {
+            "file": "models/mystery-box-sg92r-c4/build/manifest.json",
+            "sha256": "14917a7739bb8f1acf9c46ba5bb9cd95f38eb9cab8d6319cd21ca42a9b2de232"
+          },
+          "lineWidthsMm": [
+            0.46405
+          ],
+          "previousLayerSupportedFraction": 0.0,
+          "noneRuns": [
+            {
+              "lengthMm": 3.992,
+              "supportedBefore": false,
+              "supportedAfter": false,
+              "support": "none",
+              "startXYmm": [
+                33.323,
+                59.636
+              ],
+              "endXYmm": [
+                33.323,
+                59.214
+              ],
+              "boundsXYmm": [
+                [
+                  33.323,
+                  35.108
+                ],
+                [
+                  59.214,
+                  59.636
+                ]
+              ]
+            }
+          ],
+          "sameLayerEarlierConnections": [
+            {
+              "pathIndex": 9,
+              "feature": "Overhang wall",
+              "earlierLineWidthMm": 0.45,
+              "centerlineOverlapLimitMm": 0.45703,
+              "minimumCenterlineDistanceMm": 0.21358,
+              "targetPathOverlapLengthMm": 3.992,
+              "targetPathOverlapFraction": 1.0,
+              "targetEndpointCenterlineDistancesMm": [
+                0.164,
+                0.164
+              ],
+              "targetEndpointsOverlap": [
+                true,
+                true
+              ],
+              "earlierPathPreviousLayerSupportedFraction": 0.092728,
+              "earlierPathSupportedBridgePass": true,
+              "earlierPathMaximumUnsupportedRunMm": 7.3162,
+              "earlierPathUnsupportedRuns": [
+                {
+                  "lengthMm": 7.3162,
+                  "supportedBefore": true,
+                  "supportedAfter": true,
+                  "support": "both_ends",
+                  "startXYmm": [
+                    35.059,
+                    58.4096
+                  ],
+                  "endXYmm": [
+                    35.441,
+                    58.4382
+                  ],
+                  "boundsXYmm": [
+                    [
+                      33.159,
+                      35.441
+                    ],
+                    [
+                      58.4096,
+                      59.991
+                    ]
+                  ]
+                }
+              ]
+            }
+          ],
+          "targetEndpointsHaveEarlierSupportedOverlap": [
+            true,
+            true
+          ],
+          "maximumOverlapFractionFromAnEarlierSupportedPath": 1.0,
+          "decision": "accepted",
+          "basis": "material_width_connection_to_established_earlier_path",
+          "decisionEvidence": {
+            "connectedFraction": 1.0,
+            "startAndEndConnected": [
+              true,
+              true
+            ],
+            "maximumUnconnectedLengthMm": 0.0,
+            "earlierPathIndices": [
+              9
+            ]
+          }
+        },
+        {
+          "objectId": 52,
+          "objectName": "mystery-box-sg92r-c4-print-carrier_center",
+          "zMm": 11.4,
+          "pathIndex": 0,
+          "feature": "Overhang wall",
+          "pathLengthMm": 3.868,
+          "endpointCenterlineGapMm": 0.06,
+          "plateBoundsXYMm": [
+            [
+              98.709,
+              99.691
+            ],
+            [
+              204.209,
+              205.191
+            ]
+          ],
+          "printStlBoundsXYMm": [
+            [
+              4.8124,
+              5.7944
+            ],
+            [
+              2.0087,
+              2.9907
+            ]
+          ],
+          "printStlCenterMm": [
+            5.3034,
+            2.4997,
+            11.4
+          ],
+          "sourcePrintStl": {
+            "file": "prints/mystery-box-sg92r-c4/mystery-box-sg92r-c4-print-carrier_center.stl",
+            "sha256": "f0add24df27ef5c6ab9c2f257384e1839e10071c333332a19f4e906a698d96d6"
+          },
+          "sourceLayout": {
+            "file": "prints/mystery-box-sg92r-c4/mystery-box-sg92r-c4-layout.3mf",
+            "sha256": "cee9d9677bf093fde4016e0321ea64de5a995f6a928ce159b5018d6bd0662749"
+          },
+          "sourceManifest": {
+            "file": "models/mystery-box-sg92r-c4/build/manifest.json",
+            "sha256": "14917a7739bb8f1acf9c46ba5bb9cd95f38eb9cab8d6319cd21ca42a9b2de232"
+          },
+          "lineWidthsMm": [
+            0.45
+          ],
+          "previousLayerSupportedFraction": 0.0,
+          "noneRuns": [
+            {
+              "lengthMm": 3.868,
+              "supportedBefore": false,
+              "supportedAfter": false,
+              "support": "none",
+              "startXYmm": [
+                98.709,
+                204.209
+              ],
+              "endXYmm": [
+                98.709,
+                204.269
+              ],
+              "boundsXYmm": [
+                [
+                  98.709,
+                  99.691
+                ],
+                [
+                  204.209,
+                  205.191
+                ]
+              ]
+            }
+          ],
+          "sameLayerEarlierConnections": [],
+          "targetEndpointsHaveEarlierSupportedOverlap": [
+            false,
+            false
+          ],
+          "maximumOverlapFractionFromAnEarlierSupportedPath": 0.0,
+          "externalSupportEvidence": {
+            "supportId": "carrier_center_support",
+            "geometryEvidenceFile": "models/mystery-box-sg92r-c4/build/print_support_geometry.json",
+            "geometryEvidenceSha256": "b3a6daf30eebe59218d2bb06f1573185ce36958c7461f71e680e823612e735b8",
+            "geometryPass": true,
+            "supportTopGcodeZMm": 11.0,
+            "materialFaceGapMm": 0.2,
+            "supportTopLayerHeightsMm": [
+              0.2
+            ],
+            "productFirstLayerHeightsMm": [
+              0.2
+            ],
+            "productMaterialBottomMm": 11.2,
+            "actualMaterialFaceGapMm": 0.2,
+            "gapMatchesDefinition": true,
+            "pathCoverageFraction": 1.0,
+            "startAndEndCovered": [
+              true,
+              true
+            ],
+            "supportSegmentCount": 4,
+            "supportLineWidthsMm": [
+              0.42
+            ]
+          },
+          "decision": "accepted",
+          "basis": "removable_support_below_first_product_path",
+          "decisionEvidence": {
+            "connectedFraction": 1.0,
+            "maximumUnconnectedLengthMm": 0.0
+          }
+        },
+        {
+          "objectId": 24,
+          "objectName": "mystery-box-sg92r-c4-print-carrier_outer",
+          "zMm": 8.6,
+          "pathIndex": 67,
+          "feature": "Overhang wall",
+          "pathLengthMm": 11.4684,
+          "endpointCenterlineGapMm": 0.06003,
+          "plateBoundsXYMm": [
+            [
+              118.209,
+              119.191
+            ],
+            [
+              119.909,
+              124.615
+            ]
+          ],
+          "printStlBoundsXYMm": [
+            [
+              -0.4876,
+              0.4944
+            ],
+            [
+              -30.9913,
+              -26.2853
+            ]
+          ],
+          "printStlCenterMm": [
+            0.0034,
+            -28.6383,
+            8.6
+          ],
+          "sourcePrintStl": {
+            "file": "prints/mystery-box-sg92r-c4/mystery-box-sg92r-c4-print-carrier_outer.stl",
+            "sha256": "32ef930418710851a50ae4a5d93b56b5f515ced5266a22e2a81fad1f702d0d2b"
+          },
+          "sourceLayout": {
+            "file": "prints/mystery-box-sg92r-c4/mystery-box-sg92r-c4-layout.3mf",
+            "sha256": "cee9d9677bf093fde4016e0321ea64de5a995f6a928ce159b5018d6bd0662749"
+          },
+          "sourceManifest": {
+            "file": "models/mystery-box-sg92r-c4/build/manifest.json",
+            "sha256": "14917a7739bb8f1acf9c46ba5bb9cd95f38eb9cab8d6319cd21ca42a9b2de232"
+          },
+          "lineWidthsMm": [
+            0.45
+          ],
+          "previousLayerSupportedFraction": 0.0,
+          "noneRuns": [
+            {
+              "lengthMm": 11.4684,
+              "supportedBefore": false,
+              "supportedAfter": false,
+              "support": "none",
+              "startXYmm": [
+                118.209,
+                124.615
+              ],
+              "endXYmm": [
+                118.261,
+                124.585
+              ],
+              "boundsXYmm": [
+                [
+                  118.209,
+                  119.191
+                ],
+                [
+                  119.909,
+                  124.615
+                ]
+              ]
+            }
+          ],
+          "sameLayerEarlierConnections": [],
+          "targetEndpointsHaveEarlierSupportedOverlap": [
+            false,
+            false
+          ],
+          "maximumOverlapFractionFromAnEarlierSupportedPath": 0.0,
+          "externalSupportEvidence": {
+            "supportId": "carrier_outer_support",
+            "geometryEvidenceFile": "models/mystery-box-sg92r-c4/build/print_support_geometry.json",
+            "geometryEvidenceSha256": "b3a6daf30eebe59218d2bb06f1573185ce36958c7461f71e680e823612e735b8",
+            "geometryPass": true,
+            "supportTopGcodeZMm": 8.2,
+            "materialFaceGapMm": 0.2,
+            "supportTopLayerHeightsMm": [
+              0.2
+            ],
+            "productFirstLayerHeightsMm": [
+              0.2
+            ],
+            "productMaterialBottomMm": 8.4,
+            "actualMaterialFaceGapMm": 0.2,
+            "gapMatchesDefinition": true,
+            "pathCoverageFraction": 1.0,
+            "startAndEndCovered": [
+              true,
+              true
+            ],
+            "supportSegmentCount": 21,
+            "supportLineWidthsMm": [
+              0.11797,
+              0.42
+            ]
+          },
+          "decision": "accepted",
+          "basis": "removable_support_below_first_product_path",
+          "decisionEvidence": {
+            "connectedFraction": 1.0,
+            "maximumUnconnectedLengthMm": 0.0
+          }
+        },
+        {
+          "objectId": 24,
+          "objectName": "mystery-box-sg92r-c4-print-carrier_outer",
+          "zMm": 8.6,
+          "pathIndex": 68,
+          "feature": "Overhang wall",
+          "pathLengthMm": 15.4463,
+          "endpointCenterlineGapMm": 0.06003,
+          "plateBoundsXYMm": [
+            [
+              117.802,
+              119.598
+            ],
+            [
+              119.502,
+              125.32
+            ]
+          ],
+          "printStlBoundsXYMm": [
+            [
+              -0.8946,
+              0.9014
+            ],
+            [
+              -31.3983,
+              -25.5803
+            ]
+          ],
+          "printStlCenterMm": [
+            0.0034,
+            -28.4893,
+            8.6
+          ],
+          "sourcePrintStl": {
+            "file": "prints/mystery-box-sg92r-c4/mystery-box-sg92r-c4-print-carrier_outer.stl",
+            "sha256": "32ef930418710851a50ae4a5d93b56b5f515ced5266a22e2a81fad1f702d0d2b"
+          },
+          "sourceLayout": {
+            "file": "prints/mystery-box-sg92r-c4/mystery-box-sg92r-c4-layout.3mf",
+            "sha256": "cee9d9677bf093fde4016e0321ea64de5a995f6a928ce159b5018d6bd0662749"
+          },
+          "sourceManifest": {
+            "file": "models/mystery-box-sg92r-c4/build/manifest.json",
+            "sha256": "14917a7739bb8f1acf9c46ba5bb9cd95f38eb9cab8d6319cd21ca42a9b2de232"
+          },
+          "lineWidthsMm": [
+            0.45
+          ],
+          "previousLayerSupportedFraction": 0.0,
+          "noneRuns": [
+            {
+              "lengthMm": 15.4463,
+              "supportedBefore": false,
+              "supportedAfter": false,
+              "support": "none",
+              "startXYmm": [
+                117.802,
+                125.32
+              ],
+              "endXYmm": [
+                117.854,
+                125.29
+              ],
+              "boundsXYmm": [
+                [
+                  117.802,
+                  119.598
+                ],
+                [
+                  119.502,
+                  125.32
+                ]
+              ]
+            }
+          ],
+          "sameLayerEarlierConnections": [
+            {
+              "pathIndex": 67,
+              "feature": "Overhang wall",
+              "earlierLineWidthMm": 0.45,
+              "centerlineOverlapLimitMm": 0.45,
+              "minimumCenterlineDistanceMm": 0.40671,
+              "targetPathOverlapLengthMm": 12.7067,
+              "targetPathOverlapFraction": 0.822632,
+              "targetEndpointCenterlineDistancesMm": [
+                0.81405,
+                0.76266
+              ],
+              "targetEndpointsOverlap": [
+                false,
+                false
+              ],
+              "earlierPathPreviousLayerSupportedFraction": 0.0,
+              "earlierPathSupportedBridgePass": false,
+              "earlierPathMaximumUnsupportedRunMm": 11.4684,
+              "earlierPathUnsupportedRuns": [
+                {
+                  "lengthMm": 11.4684,
+                  "supportedBefore": false,
+                  "supportedAfter": false,
+                  "support": "none",
+                  "startXYmm": [
+                    118.209,
+                    124.615
+                  ],
+                  "endXYmm": [
+                    118.261,
+                    124.585
+                  ],
+                  "boundsXYmm": [
+                    [
+                      118.209,
+                      119.191
+                    ],
+                    [
+                      119.909,
+                      124.615
+                    ]
+                  ]
+                }
+              ]
+            }
+          ],
+          "targetEndpointsHaveEarlierSupportedOverlap": [
+            false,
+            false
+          ],
+          "maximumOverlapFractionFromAnEarlierSupportedPath": 0.0,
+          "externalSupportEvidence": {
+            "supportId": "carrier_outer_support",
+            "geometryEvidenceFile": "models/mystery-box-sg92r-c4/build/print_support_geometry.json",
+            "geometryEvidenceSha256": "b3a6daf30eebe59218d2bb06f1573185ce36958c7461f71e680e823612e735b8",
+            "geometryPass": true,
+            "supportTopGcodeZMm": 8.2,
+            "materialFaceGapMm": 0.2,
+            "supportTopLayerHeightsMm": [
+              0.2
+            ],
+            "productFirstLayerHeightsMm": [
+              0.2
+            ],
+            "productMaterialBottomMm": 8.4,
+            "actualMaterialFaceGapMm": 0.2,
+            "gapMatchesDefinition": true,
+            "pathCoverageFraction": 1.0,
+            "startAndEndCovered": [
+              true,
+              true
+            ],
+            "supportSegmentCount": 21,
+            "supportLineWidthsMm": [
+              0.11797,
+              0.42
+            ]
+          },
+          "decision": "accepted",
+          "basis": "removable_support_below_first_product_path",
+          "decisionEvidence": {
+            "connectedFraction": 1.0,
+            "maximumUnconnectedLengthMm": 0.0
+          }
+        },
+        {
+          "objectId": 24,
+          "objectName": "mystery-box-sg92r-c4-print-carrier_outer",
+          "zMm": 8.6,
+          "pathIndex": 69,
+          "feature": "Overhang wall",
+          "pathLengthMm": 19.2773,
+          "endpointCenterlineGapMm": 0.06003,
+          "plateBoundsXYMm": [
+            [
+              117.41,
+              119.99
+            ],
+            [
+              119.11,
+              125.999
+            ]
+          ],
+          "printStlBoundsXYMm": [
+            [
+              -1.2866,
+              1.2934
+            ],
+            [
+              -31.7903,
+              -24.9013
+            ]
+          ],
+          "printStlCenterMm": [
+            0.0034,
+            -28.3458,
+            8.6
+          ],
+          "sourcePrintStl": {
+            "file": "prints/mystery-box-sg92r-c4/mystery-box-sg92r-c4-print-carrier_outer.stl",
+            "sha256": "32ef930418710851a50ae4a5d93b56b5f515ced5266a22e2a81fad1f702d0d2b"
+          },
+          "sourceLayout": {
+            "file": "prints/mystery-box-sg92r-c4/mystery-box-sg92r-c4-layout.3mf",
+            "sha256": "cee9d9677bf093fde4016e0321ea64de5a995f6a928ce159b5018d6bd0662749"
+          },
+          "sourceManifest": {
+            "file": "models/mystery-box-sg92r-c4/build/manifest.json",
+            "sha256": "14917a7739bb8f1acf9c46ba5bb9cd95f38eb9cab8d6319cd21ca42a9b2de232"
+          },
+          "lineWidthsMm": [
+            0.45
+          ],
+          "previousLayerSupportedFraction": 0.0,
+          "noneRuns": [
+            {
+              "lengthMm": 19.2773,
+              "supportedBefore": false,
+              "supportedAfter": false,
+              "support": "none",
+              "startXYmm": [
+                117.41,
+                125.999
+              ],
+              "endXYmm": [
+                117.462,
+                125.969
+              ],
+              "boundsXYmm": [
+                [
+                  117.41,
+                  119.99
+                ],
+                [
+                  119.11,
+                  125.999
+                ]
+              ]
+            }
+          ],
+          "sameLayerEarlierConnections": [
+            {
+              "pathIndex": 68,
+              "feature": "Overhang wall",
+              "earlierLineWidthMm": 0.45,
+              "centerlineOverlapLimitMm": 0.45,
+              "minimumCenterlineDistanceMm": 0.39194,
+              "targetPathOverlapLengthMm": 16.6048,
+              "targetPathOverlapFraction": 0.861366,
+              "targetEndpointCenterlineDistancesMm": [
+                0.78403,
+                0.73267
+              ],
+              "targetEndpointsOverlap": [
+                false,
+                false
+              ],
+              "earlierPathPreviousLayerSupportedFraction": 0.0,
+              "earlierPathSupportedBridgePass": false,
+              "earlierPathMaximumUnsupportedRunMm": 15.4463,
+              "earlierPathUnsupportedRuns": [
+                {
+                  "lengthMm": 15.4463,
+                  "supportedBefore": false,
+                  "supportedAfter": false,
+                  "support": "none",
+                  "startXYmm": [
+                    117.802,
+                    125.32
+                  ],
+                  "endXYmm": [
+                    117.854,
+                    125.29
+                  ],
+                  "boundsXYmm": [
+                    [
+                      117.802,
+                      119.598
+                    ],
+                    [
+                      119.502,
+                      125.32
+                    ]
+                  ]
+                }
+              ]
+            }
+          ],
+          "targetEndpointsHaveEarlierSupportedOverlap": [
+            false,
+            false
+          ],
+          "maximumOverlapFractionFromAnEarlierSupportedPath": 0.0,
+          "externalSupportEvidence": {
+            "supportId": "carrier_outer_support",
+            "geometryEvidenceFile": "models/mystery-box-sg92r-c4/build/print_support_geometry.json",
+            "geometryEvidenceSha256": "b3a6daf30eebe59218d2bb06f1573185ce36958c7461f71e680e823612e735b8",
+            "geometryPass": true,
+            "supportTopGcodeZMm": 8.2,
+            "materialFaceGapMm": 0.2,
+            "supportTopLayerHeightsMm": [
+              0.2
+            ],
+            "productFirstLayerHeightsMm": [
+              0.2
+            ],
+            "productMaterialBottomMm": 8.4,
+            "actualMaterialFaceGapMm": 0.2,
+            "gapMatchesDefinition": true,
+            "pathCoverageFraction": 1.0,
+            "startAndEndCovered": [
+              true,
+              true
+            ],
+            "supportSegmentCount": 21,
+            "supportLineWidthsMm": [
+              0.11797,
+              0.42
+            ]
+          },
+          "decision": "accepted",
+          "basis": "removable_support_below_first_product_path",
+          "decisionEvidence": {
+            "connectedFraction": 1.0,
+            "maximumUnconnectedLengthMm": 0.0
+          }
+        },
+        {
+          "objectId": 24,
+          "objectName": "mystery-box-sg92r-c4-print-carrier_outer",
+          "zMm": 8.8,
+          "pathIndex": 288,
+          "feature": "Gap infill",
+          "pathLengthMm": 0.3048,
+          "endpointCenterlineGapMm": 0.30401,
+          "plateBoundsXYMm": [
+            [
+              106.131,
+              106.315
+            ],
+            [
+              129.206,
+              129.448
+            ]
+          ],
+          "printStlBoundsXYMm": [
+            [
+              -12.5656,
+              -12.3816
+            ],
+            [
+              -21.6943,
+              -21.4523
+            ]
+          ],
+          "printStlCenterMm": [
+            -12.4736,
+            -21.5733,
+            8.8
+          ],
+          "sourcePrintStl": {
+            "file": "prints/mystery-box-sg92r-c4/mystery-box-sg92r-c4-print-carrier_outer.stl",
+            "sha256": "32ef930418710851a50ae4a5d93b56b5f515ced5266a22e2a81fad1f702d0d2b"
+          },
+          "sourceLayout": {
+            "file": "prints/mystery-box-sg92r-c4/mystery-box-sg92r-c4-layout.3mf",
+            "sha256": "cee9d9677bf093fde4016e0321ea64de5a995f6a928ce159b5018d6bd0662749"
+          },
+          "sourceManifest": {
+            "file": "models/mystery-box-sg92r-c4/build/manifest.json",
+            "sha256": "14917a7739bb8f1acf9c46ba5bb9cd95f38eb9cab8d6319cd21ca42a9b2de232"
+          },
+          "lineWidthsMm": [
+            0.59167,
+            0.63314
+          ],
+          "previousLayerSupportedFraction": 0.0,
+          "noneRuns": [
+            {
+              "lengthMm": 0.3048,
+              "supportedBefore": false,
+              "supportedAfter": false,
+              "support": "none",
+              "startXYmm": [
+                106.315,
+                129.448
+              ],
+              "endXYmm": [
+                106.131,
+                129.206
+              ],
+              "boundsXYmm": [
+                [
+                  106.131,
+                  106.315
+                ],
+                [
+                  129.206,
+                  129.448
+                ]
+              ]
+            }
+          ],
+          "sameLayerEarlierConnections": [
+            {
+              "pathIndex": 179,
+              "feature": "Overhang wall",
+              "earlierLineWidthMm": 0.45,
+              "centerlineOverlapLimitMm": 0.54157,
+              "minimumCenterlineDistanceMm": 0.2333,
+              "targetPathOverlapLengthMm": 0.3048,
+              "targetPathOverlapFraction": 1.0,
+              "targetEndpointCenterlineDistancesMm": [
+                0.49944,
+                0.19785
+              ],
+              "targetEndpointsOverlap": [
+                true,
+                true
+              ],
+              "earlierPathPreviousLayerSupportedFraction": 0.085132,
+              "earlierPathSupportedBridgePass": true,
+              "earlierPathMaximumUnsupportedRunMm": 6.3148,
+              "earlierPathUnsupportedRuns": [
+                {
+                  "lengthMm": 6.3148,
+                  "supportedBefore": true,
+                  "supportedAfter": true,
+                  "support": "both_ends",
+                  "startXYmm": [
+                    104.4219,
+                    131.6936
+                  ],
+                  "endXYmm": [
+                    109.2062,
+                    128.932
+                  ],
+                  "boundsXYmm": [
+                    [
+                      104.4219,
+                      109.2062
+                    ],
+                    [
+                      128.932,
+                      131.6936
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "pathIndex": 285,
+              "feature": "Gap infill",
+              "earlierLineWidthMm": 0.73731,
+              "centerlineOverlapLimitMm": 0.68523,
+              "minimumCenterlineDistanceMm": 0.00763,
+              "targetPathOverlapLengthMm": 0.3048,
+              "targetPathOverlapFraction": 1.0,
+              "targetEndpointCenterlineDistancesMm": [
+                0.0,
+                0.30401
+              ],
+              "targetEndpointsOverlap": [
+                true,
+                true
+              ],
+              "earlierPathPreviousLayerSupportedFraction": 0.53853,
+              "earlierPathSupportedBridgePass": false,
+              "earlierPathMaximumUnsupportedRunMm": 6.2263,
+              "earlierPathUnsupportedRuns": [
+                {
+                  "lengthMm": 6.2263,
+                  "supportedBefore": true,
+                  "supportedAfter": true,
+                  "support": "both_ends",
+                  "startXYmm": [
+                    115.8245,
+                    129.423
+                  ],
+                  "endXYmm": [
+                    118.7,
+                    126.0091
+                  ],
+                  "boundsXYmm": [
+                    [
+                      115.8245,
+                      118.7
+                    ],
+                    [
+                      126.0091,
+                      129.423
+                    ]
+                  ]
+                },
+                {
+                  "lengthMm": 5.9922,
+                  "supportedBefore": true,
+                  "supportedAfter": true,
+                  "support": "both_ends",
+                  "startXYmm": [
+                    101.5731,
+                    164.1904
+                  ],
+                  "endXYmm": [
+                    98.577,
+                    159.0011
+                  ],
+                  "boundsXYmm": [
+                    [
+                      98.577,
+                      101.5731
+                    ],
+                    [
+                      159.0011,
+                      164.1904
+                    ]
+                  ]
+                },
+                {
+                  "lengthMm": 5.9922,
+                  "supportedBefore": true,
+                  "supportedAfter": true,
+                  "support": "both_ends",
+                  "startXYmm": [
+                    98.577,
+                    142.7989
+                  ],
+                  "endXYmm": [
+                    101.5731,
+                    137.6096
+                  ],
+                  "boundsXYmm": [
+                    [
+                      98.577,
+                      101.5731
+                    ],
+                    [
+                      137.6096,
+                      142.7989
+                    ]
+                  ]
+                },
+                {
+                  "lengthMm": 5.8941,
+                  "supportedBefore": true,
+                  "supportedAfter": true,
+                  "support": "both_ends",
+                  "startXYmm": [
+                    95.3812,
+                    153.4657
+                  ],
+                  "endXYmm": [
+                    95.3812,
+                    148.3343
+                  ],
+                  "boundsXYmm": [
+                    [
+                      93.9385,
+                      95.3812
+                    ],
+                    [
+                      148.3343,
+                      153.4657
+                    ]
+                  ]
+                },
+                {
+                  "lengthMm": 5.7924,
+                  "supportedBefore": true,
+                  "supportedAfter": true,
+                  "support": "both_ends",
+                  "startXYmm": [
+                    104.8188,
+                    131.9877
+                  ],
+                  "endXYmm": [
+                    109.1541,
+                    129.423
+                  ],
+                  "boundsXYmm": [
+                    [
+                      104.8188,
+                      109.1541
+                    ],
+                    [
+                      129.423,
+                      131.9877
+                    ]
+                  ]
+                },
+                {
+                  "lengthMm": 2.9505,
+                  "supportedBefore": false,
+                  "supportedAfter": true,
+                  "support": "one_end",
+                  "startXYmm": [
+                    106.315,
+                    172.352
+                  ],
+                  "endXYmm": [
+                    104.8188,
+                    169.8123
+                  ],
+                  "boundsXYmm": [
+                    [
+                      104.8188,
+                      106.315
+                    ],
+                    [
+                      169.8123,
+                      172.352
+                    ]
+                  ]
+                }
+              ]
+            }
+          ],
+          "targetEndpointsHaveEarlierSupportedOverlap": [
+            true,
+            true
+          ],
+          "maximumOverlapFractionFromAnEarlierSupportedPath": 1.0,
+          "decision": "accepted",
+          "basis": "material_width_connection_to_established_earlier_path",
+          "decisionEvidence": {
+            "connectedFraction": 1.0,
+            "startAndEndConnected": [
+              true,
+              true
+            ],
+            "maximumUnconnectedLengthMm": 0.0,
+            "earlierPathIndices": [
+              179
+            ]
+          }
+        },
+        {
+          "objectId": 28,
+          "objectName": "mystery-box-sg92r-c4-print-horn_coupler",
+          "zMm": 5.6,
+          "pathIndex": 22,
+          "feature": "Overhang wall",
+          "pathLengthMm": 5.204,
+          "endpointCenterlineGapMm": 0.06,
+          "plateBoundsXYMm": [
+            [
+              162.51,
+              163.29
+            ],
+            [
+              138.32,
+              140.172
+            ]
+          ],
+          "printStlBoundsXYMm": [
+            [
+              0.2134,
+              0.9934
+            ],
+            [
+              -40.3226,
+              -38.4706
+            ]
+          ],
+          "printStlCenterMm": [
+            0.6034,
+            -39.3966,
+            5.6
+          ],
+          "sourcePrintStl": {
+            "file": "prints/mystery-box-sg92r-c4/mystery-box-sg92r-c4-print-horn_coupler.stl",
+            "sha256": "5156194b8f9ca7a89da2583ed797b56f512ebc9221ccbe95d241d31a13fca8a3"
+          },
+          "sourceLayout": {
+            "file": "prints/mystery-box-sg92r-c4/mystery-box-sg92r-c4-layout.3mf",
+            "sha256": "cee9d9677bf093fde4016e0321ea64de5a995f6a928ce159b5018d6bd0662749"
+          },
+          "sourceManifest": {
+            "file": "models/mystery-box-sg92r-c4/build/manifest.json",
+            "sha256": "14917a7739bb8f1acf9c46ba5bb9cd95f38eb9cab8d6319cd21ca42a9b2de232"
+          },
+          "lineWidthsMm": [
+            0.45
+          ],
+          "previousLayerSupportedFraction": 0.0,
+          "noneRuns": [
+            {
+              "lengthMm": 5.204,
+              "supportedBefore": false,
+              "supportedAfter": false,
+              "support": "none",
+              "startXYmm": [
+                163.29,
+                139.332
+              ],
+              "endXYmm": [
+                163.29,
+                139.272
+              ],
+              "boundsXYmm": [
+                [
+                  162.51,
+                  163.29
+                ],
+                [
+                  138.32,
+                  140.172
+                ]
+              ]
+            }
+          ],
+          "sameLayerEarlierConnections": [],
+          "targetEndpointsHaveEarlierSupportedOverlap": [
+            false,
+            false
+          ],
+          "maximumOverlapFractionFromAnEarlierSupportedPath": 0.0,
+          "externalSupportEvidence": {
+            "supportId": "horn_coupler_loop_support",
+            "geometryEvidenceFile": "models/mystery-box-sg92r-c4/build/print_support_geometry.json",
+            "geometryEvidenceSha256": "b3a6daf30eebe59218d2bb06f1573185ce36958c7461f71e680e823612e735b8",
+            "geometryPass": true,
+            "supportTopGcodeZMm": 5.2,
+            "materialFaceGapMm": 0.2,
+            "supportTopLayerHeightsMm": [
+              0.2
+            ],
+            "productFirstLayerHeightsMm": [
+              0.2
+            ],
+            "productMaterialBottomMm": 5.4,
+            "actualMaterialFaceGapMm": 0.2,
+            "gapMatchesDefinition": true,
+            "pathCoverageFraction": 1.0,
+            "startAndEndCovered": [
+              true,
+              true
+            ],
+            "supportSegmentCount": 6,
+            "supportLineWidthsMm": [
+              0.23086,
+              0.37851,
+              0.42
+            ]
+          },
+          "decision": "accepted",
+          "basis": "removable_support_below_first_product_path",
+          "decisionEvidence": {
+            "connectedFraction": 1.0,
+            "maximumUnconnectedLengthMm": 0.0
+          }
+        }
+      ]
+    },
+    "fit-test-PLA": {
+      "sourceGcode": {
+        "file": "prints/mystery-box-sg92r-c4/mystery-box-sg92r-c4-fit-test-PLA.gcode.3mf",
+        "sha256": "6001f54a92d02402013f68359f84334034ad5f47711889c18d659c7db7422ea3"
+      },
+      "sourceSpanReport": {
+        "file": "models/mystery-box-sg92r-c4/build/print_spans_fit_PLA.json",
+        "sha256": "150da9a7ae397dff225109ef760e8fa5e9d695461c67694841c912ea06501b04"
+      },
+      "summary": {
+        "closedUnsupportedPathCount": 0,
+        "pathsWithNoEarlierSupportedConnection": 0
+      },
+      "closedUnsupportedPaths": []
+    },
+    "fit-test-PETG": {
+      "sourceGcode": {
+        "file": "prints/mystery-box-sg92r-c4/mystery-box-sg92r-c4-fit-test-PETG.gcode.3mf",
+        "sha256": "cc9d03f262fb4aeb1823b507ee0c4103bc49de3db1b39b8c741c9086ec0cb2c8"
+      },
+      "sourceSpanReport": {
+        "file": "models/mystery-box-sg92r-c4/build/print_spans_fit_PETG.json",
+        "sha256": "b50f1e546b8f12782d43274bde049c3e11a719dfca2dc8514b527df285a45009"
+      },
+      "summary": {
+        "closedUnsupportedPathCount": 0,
+        "pathsWithNoEarlierSupportedConnection": 0
+      },
+      "closedUnsupportedPaths": []
+    }
+  }
+}

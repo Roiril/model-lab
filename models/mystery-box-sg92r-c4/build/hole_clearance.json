@@ -1,0 +1,226 @@
+{
+  "schemaVersion": 1,
+  "model": "mystery-box-sg92r-c4",
+  "method": "MANIFOLD Boolean common volume in binary assembly STL coordinates",
+  "common_volume_limit_mm3": 0.001,
+  "dimensions_mm": {
+    "stem_diameter": 3.2,
+    "stem_center_radius": 4.2,
+    "stem_outer_clip_flat": 9.700000000000001,
+    "hole_flat": 6.8,
+    "hole_clear_z": [
+      67.5,
+      76.39999999999999
+    ],
+    "effective_flat_wall": 1.4500000000000006,
+    "faceplate_opening_flat": 11.2,
+    "faceplate_radial_clearance": 0.7499999999999998
+  },
+  "calibration": {
+    "old_unclipped_stem_common_volume_mm3": 16.468798758,
+    "empty_hole_common_volume_mm3": 0.0,
+    "pass": true
+  },
+  "holes": [
+    {
+      "group": 0,
+      "index": 0,
+      "center_mm": [
+        0.0,
+        0.0
+      ],
+      "common_volume_mm3": 8.61e-07,
+      "pass": true
+    },
+    {
+      "group": 1,
+      "index": 0,
+      "center_mm": [
+        -6.2,
+        -10.738715
+      ],
+      "common_volume_mm3": 5.21e-07,
+      "pass": true
+    },
+    {
+      "group": 1,
+      "index": 1,
+      "center_mm": [
+        6.2,
+        -10.738715
+      ],
+      "common_volume_mm3": 2.58e-06,
+      "pass": true
+    },
+    {
+      "group": 1,
+      "index": 2,
+      "center_mm": [
+        12.4,
+        0.0
+      ],
+      "common_volume_mm3": 6.15e-07,
+      "pass": true
+    },
+    {
+      "group": 1,
+      "index": 3,
+      "center_mm": [
+        6.2,
+        10.738715
+      ],
+      "common_volume_mm3": 9.36e-07,
+      "pass": true
+    },
+    {
+      "group": 1,
+      "index": 4,
+      "center_mm": [
+        -6.2,
+        10.738715
+      ],
+      "common_volume_mm3": 1.346e-06,
+      "pass": true
+    },
+    {
+      "group": 1,
+      "index": 5,
+      "center_mm": [
+        -12.4,
+        0.0
+      ],
+      "common_volume_mm3": 1.228e-06,
+      "pass": true
+    },
+    {
+      "group": 2,
+      "index": 0,
+      "center_mm": [
+        -18.6,
+        -10.738715
+      ],
+      "common_volume_mm3": 8.81e-07,
+      "pass": true
+    },
+    {
+      "group": 2,
+      "index": 1,
+      "center_mm": [
+        -12.4,
+        -21.47743
+      ],
+      "common_volume_mm3": 1.1e-06,
+      "pass": true
+    },
+    {
+      "group": 2,
+      "index": 2,
+      "center_mm": [
+        0.0,
+        -21.47743
+      ],
+      "common_volume_mm3": 3.33e-07,
+      "pass": true
+    },
+    {
+      "group": 2,
+      "index": 3,
+      "center_mm": [
+        12.4,
+        -21.47743
+      ],
+      "common_volume_mm3": 1.787e-06,
+      "pass": true
+    },
+    {
+      "group": 2,
+      "index": 4,
+      "center_mm": [
+        18.6,
+        -10.738715
+      ],
+      "common_volume_mm3": 6.577e-06,
+      "pass": true
+    },
+    {
+      "group": 2,
+      "index": 5,
+      "center_mm": [
+        24.8,
+        0.0
+      ],
+      "common_volume_mm3": 1.323e-06,
+      "pass": true
+    },
+    {
+      "group": 2,
+      "index": 6,
+      "center_mm": [
+        18.6,
+        10.738715
+      ],
+      "common_volume_mm3": 8.6e-07,
+      "pass": true
+    },
+    {
+      "group": 2,
+      "index": 7,
+      "center_mm": [
+        12.4,
+        21.47743
+      ],
+      "common_volume_mm3": 6.35e-07,
+      "pass": true
+    },
+    {
+      "group": 2,
+      "index": 8,
+      "center_mm": [
+        0.0,
+        21.47743
+      ],
+      "common_volume_mm3": 2.781e-06,
+      "pass": true
+    },
+    {
+      "group": 2,
+      "index": 9,
+      "center_mm": [
+        -12.4,
+        21.47743
+      ],
+      "common_volume_mm3": 3.02e-06,
+      "pass": true
+    },
+    {
+      "group": 2,
+      "index": 10,
+      "center_mm": [
+        -18.6,
+        10.738715
+      ],
+      "common_volume_mm3": 6.339e-06,
+      "pass": true
+    },
+    {
+      "group": 2,
+      "index": 11,
+      "center_mm": [
+        -24.8,
+        0.0
+      ],
+      "common_volume_mm3": 2.79e-07,
+      "pass": true
+    }
+  ],
+  "maximum_common_volume_mm3": 6.577e-06,
+  "source_sha256": {
+    "tools/lattice_hole_clearance.py": "b291cb497e041f146a9a07d3856324b64aa99c7c35cfd0e5d7587357ea025eff",
+    "models/mystery-box-sg92r-c4/model.py": "e65df9febe2aabdd7163b603d8d022df6d41464bc3acd4f390dbee979ad434e0",
+    "models/mystery-box-sg92r-c4/params.py": "2cc6a3354db8c1aa301f1cec87d43e09afa6d6302051c10fb4bc06d8a8e4872b",
+    "models/mystery-box-sg92r-c4/build/carrier_center.stl": "8bbc77afadb801a33062a8b8a7cbe9f5fb244e13abd6d3c93cc5a05f2c26d388",
+    "models/mystery-box-sg92r-c4/build/carrier_inner.stl": "130fcf3bd0a6aa129abbf9ec7f61678123559634028b14399d9779e42f50274c",
+    "models/mystery-box-sg92r-c4/build/carrier_outer.stl": "d8795f6ac56922a961c67ab8f97680dc95a7e86fdaed7815c3242c5f6cc49d8c"
+  },
+  "pass": true
+}

@@ -1,34 +1,35 @@
 {
   "assembly_sha256": {
-    "build/housing.stl": "dc62b38a0bc8b8f8d1317974a73b499c75e3d86900755678a9dda1fe6078696d",
+    "build/housing.stl": "270b4bca204b0082e11439e186168116024026b43d72235c7821f26d5639acbb",
     "build/faceplate.stl": "e7adf56c7dd9f593a2ca5a744eb037d541cae5eb060fbb4ed9a50b52ae7e2eb5",
-    "build/guide_frame.stl": "b86ef928d268a88f4c72498a86b65483b8771beec0576ff802a69ef93bf45d77",
+    "build/guide_frame.stl": "6247037db5605d65e3e8f068475802b5395ccff6dea2226d994a9ea7c02436ee",
     "build/bottom.stl": "4b3e531e67d26c2e5adc570c6c63589d094fb205a009d1f3639e6eeab2f6fad4",
-    "build/carrier_center.stl": "4a32bb9e1c62ee342bdb8770579d573b69c32742aca8f09f180bc8a871a2be5d",
-    "build/carrier_inner.stl": "77fad60da7459269d6d7262df492787723b4e67149e61650c6409be1ae16a7ee",
-    "build/carrier_outer.stl": "59a4a4e621b836b2a21fc87d40ce21236e58014970a93d45cb1173d070d13d91",
-    "build/camshaft.stl": "03c5f2759cd2adc41e8eecb0dd341b07a71c1be6150f196d79931b91506b8a54",
-    "build/horn_coupler.stl": "15714fadb54f1fd8ec6311a2cd32f520bb159b44915c027de7e0fb4e613b9098",
-    "build/cam_center.stl": "b0c48a7e8c10af68ddfd76e8deaf73bd07de8cb0e109d8043b0e7ff969f2ffdb",
-    "build/cam_inner.stl": "68253d51657e34016347cf1ac80de5aec28f49a4b85241a21b6232f4e3b5011c",
-    "build/cam_outer.stl": "253f6882012b1a249e980755d6fdab48ac696a224a6bf05da2801cce1449789c",
+    "build/carrier_center.stl": "8bbc77afadb801a33062a8b8a7cbe9f5fb244e13abd6d3c93cc5a05f2c26d388",
+    "build/carrier_inner.stl": "130fcf3bd0a6aa129abbf9ec7f61678123559634028b14399d9779e42f50274c",
+    "build/carrier_outer.stl": "d8795f6ac56922a961c67ab8f97680dc95a7e86fdaed7815c3242c5f6cc49d8c",
+    "build/camshaft.stl": "6d75c344ef7dc53c8259595c2ca774c3de8ea7c47e87b6c347a433313f415f77",
+    "build/horn_coupler.stl": "4ca1af668999733702f92b1671128a705cf60d03941b52c3a1fa59d8b34cf818",
+    "build/joint_keeper.stl": "0a2bb37671cdd2423b2b0a0c55a6a16e102d266ea3e0a957b81db4ccb4bda4c4",
+    "build/cam_center.stl": "ea4612cac3ab334ace54e0bb7bd2efe0d10acd2eddb6b52023582d4d3b6590f6",
+    "build/cam_inner.stl": "079aa126411fd2efae37e7c55ff6ac22d6605ab0c5c7570e510bdd58084f8a64",
+    "build/cam_outer.stl": "c174ee48e9a0508ccfbbcbe7bf64101a0c58f896fb8457bffd1bf95638d39ba1",
     "build/bearing_keeper.stl": "d9313bc753158604f1a3a1fa1475ddedeadcb45691a0f3a61e6207180630b150",
-    "build/servo_clip.stl": "f5897b68e65625f44dee89e915a6825951284c27c5df30048fbb6f7999c89299",
-    "build/servo_body.stl": "672f101648914f7dc0045c2cde3bb77e1868c657e178132d87d06bdff9d3c9a8",
-    "build/servo_horn.stl": "d6e7581121fece2f9c80a9bb54882d23ebe1da32e995674e8a70c5c2ab011cda",
-    "build/servo_wire.stl": "52a0af6a6ee4a0eb8fb437a83b9c9e41ea8c3d45c4048f9588c950d92a66429c"
+    "build/servo_clip.stl": "92cdc6bc990de8c65010e4b8c18cd14071c2810c96c3565158e341941c45c3e4",
+    "build/servo_body.stl": "ce26a753214c8bcf77dcda9c1694e071365141af1b03efaa64f28ec06511ff00",
+    "build/servo_horn.stl": "b91fdc5764256ac936ca0a27d85ce4d65f688091fe7e7ac3d8ce74a5113f2114",
+    "build/servo_wire.stl": "bba93998d6da117622f12de7ac3cf8ba472d90dd6cba0cffcbb6f84453f383d9"
   },
   "motion_sha256": "7126be8e2646084727fab90b9e93135aa94c2bfc5edb3c1ac578b592d94abdf2",
   "images": [
     {
       "file": "hero-rest.png",
       "servo_deg": 10,
-      "sha256": "f10398c7e585063a140b409f05d1043301ea2afcd51b2542ff4cf09e7faf1fdf"
+      "sha256": "51b7bf7efc134aa3437b11c39612a28addf823c4fca2993e91127b3f46239a97"
     },
     {
       "file": "hero-raised.png",
       "servo_deg": 170,
-      "sha256": "fc9f61b9fd8e6a79b94837ac30b62b75a2cbb70b613fdb17c735e633718075d5"
+      "sha256": "b89f93fb74324f7bf470e1f32a53e1f9c19a1771524ebecedd5ba9ecb2f4e1c9"
     }
   ]
 }

@@ -17,6 +17,7 @@ sys.path.insert(0, os.path.join(ROOT, "lib"))
 sys.path.insert(0, HERE)
 
 import bpy  # noqa: E402
+import bmesh  # noqa: E402
 from mathutils import Matrix, Vector  # noqa: E402
 
 from blender_utils import EXPORTS_DIR, clear_scene, export_stl  # noqa: E402
@@ -82,6 +83,26 @@ def capsule_xy(a, b, radius, z0, z1, name):
     return prism(poly, "z", z0, z1, name)
 
 
+def cut_collection(target, cutters, name):
+    """重なるカッターを一度のEXACT差分へ渡し、中間面を残さない。"""
+    collection = bpy.data.collections.new(name)
+    bpy.context.scene.collection.children.link(collection)
+    for cutter in cutters:
+        collection.objects.link(cutter)
+    modifier = target.modifiers.new(name, "BOOLEAN")
+    modifier.operation = "DIFFERENCE"
+    modifier.solver = "EXACT"
+    modifier.operand_type = "COLLECTION"
+    modifier.collection = collection
+    bpy.context.view_layer.objects.active = target
+    bpy.ops.object.modifier_apply(modifier=modifier.name)
+    for cutter in cutters:
+        bpy.data.objects.remove(cutter, do_unlink=True)
+    bpy.data.collections.remove(collection)
+    clean(target)
+    return target
+
+
 def rect_yz_between(a, b, width):
     dy, dz = b[0] - a[0], b[1] - a[1]
     length = math.hypot(dy, dz)
@@ -99,6 +120,9 @@ def save_stl(objects, path):
 
 
 def triangulate_for_export(ob):
+    if ob.name.startswith("servo_"):
+        # 正本STLは三角形で水密。通常部品用の距離結合で近接頂点を潰さない。
+        return
     bpy.context.view_layer.objects.active = ob
     modifier = ob.modifiers.new("export_triangulate", "TRIANGULATE")
     modifier.quad_method = "BEAUTY"
@@ -106,6 +130,73 @@ def triangulate_for_export(ob):
     bpy.ops.object.modifier_apply(modifier=modifier.name)
     # 円筒と角柱を結合した保持具だけは、0.1µm量子化で潰れるスリバーを除く。
     clean(ob, dist=1e-3 if ob.name == "bearing_keeper" else 1e-4)
+
+
+def validate_reference_mesh(ob):
+    """正本STLの変換後に重複面と零面積面がないことを確認する。"""
+    bm = bmesh.new()
+    bm.from_mesh(ob.data)
+    bm.verts.ensure_lookup_table()
+    bm.verts.index_update()
+    bm.faces.ensure_lookup_table()
+    seen = set()
+    duplicate_faces = 0
+    zero_area_faces = 0
+    for face in bm.faces:
+        key = tuple(sorted(vertex.index for vertex in face.verts))
+        zero_area_faces += len(set(key)) < 3
+        duplicate_faces += key in seen
+        seen.add(key)
+    bm.free()
+    if duplicate_faces or zero_area_faces:
+        raise RuntimeError(
+            f"{ob.name}: canonical reference has duplicate_faces={duplicate_faces}, "
+            f"zero_area_faces={zero_area_faces} after transform")
+
+
+def cleanup_wire_reference(ob):
+    """配線端面の同一直線上にある中間頂点を溶解し、外形を保ったまま零面積面を除く。"""
+    bm = bmesh.new()
+    bm.from_mesh(ob.data)
+    target_points = (
+        Vector((14.5, 0.5935106873512268, 5.3733062744140625)),
+        Vector((14.5, 0.585004448890686, 5.364799976348877)),
+        Vector((14.5, 0.4624224901199341, 5.242218017578125)),
+    )
+
+    def matches_target(face):
+        return len(face.verts) == 3 and all(
+            any((vertex.co - point).length <= 1e-5 for vertex in face.verts)
+            for point in target_points)
+
+    target_faces = [face for face in bm.faces if matches_target(face)]
+    if len(target_faces) != 1:
+        bm.free()
+        raise RuntimeError(
+            f"{ob.name}: expected one canonical zero-area triangle, found {len(target_faces)}")
+
+    middle = None
+    vertices = list(target_faces[0].verts)
+    for candidate in vertices:
+        endpoints = [vertex for vertex in vertices if vertex is not candidate]
+        segment = endpoints[1].co - endpoints[0].co
+        if segment.length_squared == 0:
+            continue
+        t = (candidate.co - endpoints[0].co).dot(segment) / segment.length_squared
+        closest = endpoints[0].co + t * segment
+        if 1e-6 < t < 1.0 - 1e-6 and (candidate.co - closest).length <= 1e-6:
+            middle = candidate
+            break
+    if middle is None:
+        bm.free()
+        raise RuntimeError(f"{ob.name}: zero-area triangle has no collinear middle vertex")
+
+    bmesh.ops.dissolve_verts(
+        bm, verts=[middle], use_face_split=False, use_boundary_tear=False)
+    bm.normal_update()
+    bm.to_mesh(ob.data)
+    bm.free()
+    ob.data.update()
 
 
 def write_json(path, data):
@@ -130,7 +221,7 @@ def build_guide_sleeve(cx, cy, name):
         "f": box(cx - inner / 2, cx + inner / 2, cy + inner / 2, cy + outer / 2, z0, z1, name + "_f"),
     }
     # 連結腕が上下する内向き面だけ開ける。対向する2個のC案内で残る3方向を拘束する。
-    if abs(cx) < 0.01 and abs(cy) < 10.0:
+    if abs(cx) < 1.0 and abs(cy) < 10.0:
         omit = "r"
     else:
         omit = ("l" if cx > 0 else "r") if abs(cx) > abs(cy) else ("b" if cy > 0 else "f")
@@ -142,7 +233,7 @@ def build_guide_sleeve(cx, cy, name):
 
 
 GUIDES = {
-    0: [(0.0, -5.4), (0.0, 5.4)],
+    0: [(mm(P.CENTER_GUIDE_X), -5.4), (mm(P.CENTER_GUIDE_X), 5.4)],
     1: [(-6.6, 12.0), (6.6, 12.0)],
     2: [(0.0, -30.5), (0.0, 30.5)],
 }
@@ -158,9 +249,14 @@ def build_guide_frame():
           box(-edge, edge, edge - rail, edge, z0, z1, "frame_front"),
           box(-edge, -edge + rail, -edge, edge, z0, z1, "frame_left"),
           box(edge - rail, edge, -edge, edge, z0, z1, "frame_right"))
+    # 天板爪の通路で外周枠を切るため、その内側を2mmの迂回梁で連続させる。
+    for y in (-12.0, 12.0):
+        union(frame,
+              box(-32.0, -30.0, y - 4.3, y + 4.3, z0, z1, "frame_tab_bypass_l"),
+              box(30.0, 32.0, y - 4.3, y + 4.3, z0, z1, "frame_tab_bypass_r"))
     # 中心案内の腕は従動柱のY=±4mm包絡より外を通して左枠へつなぐ。
     for gy in (-8.5, 8.5):
-        union(frame, box(-edge + rail - 0.2, -4.65, gy - rail / 2, gy + rail / 2,
+        union(frame, box(-edge + rail - 0.2, -4.3, gy - rail / 2, gy + rail / 2,
                          z0, z1, "center_guide_arm"))
     # 内環案内は前枠へ、外環案内は前後枠へ最短でつなぐ。
     for gx in (-6.6, 6.6):
@@ -173,9 +269,14 @@ def build_guide_frame():
     # 天板の4本の保持爪が外周枠を通る位置だけ、片側0.3mmを加えて抜く。
     for side in (-1, 1):
         for y in (-12.0, 12.0):
-            x0, x1 = ((32.9, 35.6) if side > 0 else (-35.6, -32.9))
+            x0, x1 = ((32.0, 35.6) if side > 0 else (-35.6, -32.0))
             cut(frame, box(x0, x1, y - 4.3, y + 4.3, z0 - 0.2, z1 + 0.2,
                            "face_tab_clearance"))
+            # 切欠き境界の三角形状の細片を、通路外側の1.2mm角で受ける。
+            rx0, rx1 = ((30.0, 32.6) if side > 0 else (-32.6, -30.0))
+            union(frame,
+                  box(rx0, rx1, y - 5.5, y - 4.3, z0, z1, "face_tab_edge_support"),
+                  box(rx0, rx1, y + 4.3, y + 5.5, z0, z1, "face_tab_edge_support"))
     frame.name = "guide_frame"
     return frame
 
@@ -201,12 +302,14 @@ def build_housing():
         union(top,
               box(xa, xb, sy0 - clr - tray_t, sy0 - clr, sz0 - 0.5, sz0 + 8.0, "servo_rail_b"),
               box(xa, xb, sy1 + clr, sy1 + clr + tray_t, sz0 - 0.5, sz0 + 8.0, "servo_rail_f"))
-        # 本体上面の四隅だけを止める。中央のギアカバーは塞がない。
-        union(top,
-              box(xa, xb, sy0 - clr, sy0 + 2.8, sz0 + mm(P.SG.BODY_W) + clr,
-                  sz0 + mm(P.SG.BODY_W) + clr + tray_t, "servo_stop_b"),
-                box(xa, xb, sy1 - 2.8, sy1 + clr, sz0 + mm(P.SG.BODY_W) + clr,
-                    sz0 + mm(P.SG.BODY_W) + clr + tray_t, "servo_stop_f"))
+        # 長い空中橋を作らず、壁と縦リブの直上にある四隅の短いタブだけで上面を止める。
+        tab_w = 3.0
+        for tx0, tx1 in ((xa, min(xa + tab_w, xb)), (max(xb - tab_w, xa), xb)):
+            union(top,
+                  box(tx0, tx1, sy0 - clr, sy0 + 2.8, sz0 + mm(P.SG.BODY_W) + clr,
+                      sz0 + mm(P.SG.BODY_W) + clr + tray_t, "servo_stop_b"),
+                  box(tx0, tx1, sy1 - 2.8, sy1 + clr, sz0 + mm(P.SG.BODY_W) + clr,
+                      sz0 + mm(P.SG.BODY_W) + clr + tray_t, "servo_stop_f"))
 
     # レール自由端を外壁から立ち上げた縦リブへつなぐ。底から刷っても空中に始まらない。
     support_xs = ((-21.9, -19.5), (sx1 - 1.6, sx1 + 0.8))
@@ -235,6 +338,16 @@ def build_housing():
     support = box(bx - bt / 2, INNER + 0.2, -ro, ro,
                   mm(P.CAM_AXIS_Z) - ro, mm(P.CAM_AXIS_Z) + ro, "bearing_support")
     union(top, support)
+    # 軸受け下面の壁側3.8mmを45度面で受け、片持ちの水平開始を作らない。
+    bearing_z0 = mm(P.CAM_AXIS_Z) - ro
+    gusset = mm(P.BEARING_PRINT_GUSSET)
+    gusset_x1 = INNER + 0.2
+    gusset_poly = [(gusset_x1 - gusset, bearing_z0),
+                    (gusset_x1, bearing_z0 - gusset),
+                    (gusset_x1, bearing_z0)]
+    union(top,
+          prism(gusset_poly, "y", ro - 2.8, ro + 0.2, "bearing_print_gusset_f"),
+          prism(gusset_poly, "y", -ro - 0.2, -ro + 2.8, "bearing_print_gusset_b"))
     cut(top, cyl_x((0, mm(P.CAM_AXIS_Z)), ri, bx - bt, HALF + 0.5, 64, "bearing_bore"))
     # keeper本体の穴、保持爪の全回転包絡、挿入時だけ使う左右のキー溝。
     cut(top,
@@ -322,19 +435,27 @@ def build_carrier(group):
         carrier = prism(circle(centers[0], 4.4, 48), "z", WEB_Z0, WEB_Z1, "carrier_center")
     else:
         carrier = capsule_xy(centers[0], centers[1], web_r, WEB_Z0, WEB_Z1, f"carrier_{group}")
-        for a, b in zip(centers[1:], centers[2:] + centers[:1]):
+        ring_edges = list(zip(centers, centers[1:] + centers[:1]))
+        for a, b in ring_edges[1:]:
             union(carrier, capsule_xy(a, b, web_r, WEB_Z0, WEB_Z1, "ring_web"))
     for i, center in enumerate(centers):
         face = prism(hex_poly(*center, mm(P.HEX_CAP_FLAT)), "z", cap_z0, cap_z1, f"face_{i}")
-        cut(face, prism(hex_poly(*center, mm(P.HEX_HOLE_FLAT)), "z",
-                        cap_z0 - 0.4, cap_z1 + 0.4, f"face_hole_{i}"))
         union(carrier, face)
         # 3本の柱を環の裏へ置き、中央の六角穴を下まで見通せるようにする。
         for k in range(3):
             angle = math.radians(30 + 120 * k)
             stem_center = (center[0] + 4.2 * math.cos(angle), center[1] + 4.2 * math.sin(angle))
-            union(carrier, prism(circle(stem_center, stem_r, 28), "z",
-                                  WEB_Z0 - 0.2, cap_z0 + 0.2, f"stem_{i}_{k}"))
+            stem = prism(circle(stem_center, stem_r, 28), "z",
+                         WEB_Z0 - 0.2, cap_z0 + 0.2, f"stem_{i}_{k}")
+            boolean(stem, prism(hex_poly(*center, mm(P.STEM_OUTER_FLAT)), "z",
+                                WEB_Z0 - 0.4, cap_z0 + 0.4,
+                                f"stem_clip_{i}_{k}"), "INTERSECT")
+            union(carrier, stem)
+    if group == 0:
+        helper = tuple(mm(value) for value in P.CENTER_CAP_PRINT_SUPPORT)
+        union(carrier, prism(circle(helper, mm(P.CENTER_CAP_PRINT_SUPPORT_D) / 2, 24), "z",
+                              WEB_Z0 - 0.2, cap_z0 + 0.2,
+                              "center_cap_print_support"))
 
     # 対向2点の長い角柱案内。片側のパッド荷重でも傾きにくい。
     anchor = centers[0]
@@ -355,19 +476,32 @@ def build_carrier(group):
     cx = mm(P.CAM_X[group])
     low = mm(P.CAM_AXIS_Z + P.CAM_R + P.CAM_E[group] * math.sin(math.radians(P.CAM_THETA_MIN_DEG)))
     pad_top = low + mm(P.FOLLOWER_PAD_T)
-    pad_x0, pad_x1 = ((cx - 2.0, cx + 6.1) if group == 0 else
+    pad_x0, pad_x1 = ((cx - 2.0, mm(P.CENTER_FOLLOWER_PAD_X1)) if group == 0 else
                       (cx - mm(P.FOLLOWER_PAD_X) / 2, cx + mm(P.FOLLOWER_PAD_X) / 2))
     union(carrier, box(pad_x0, pad_x1,
                        -mm(P.FOLLOWER_PAD_Y) / 2, mm(P.FOLLOWER_PAD_Y) / 2,
                        low, pad_top, "follower_pad"))
-    post_xs = (cx + 3.7, cx + 4.7) if group == 0 else (
-        cx - mm(P.FOLLOWER_POST_OFFSET_X),
-        cx + mm(P.FOLLOWER_POST_OFFSET_X),
-    )
-    for px in post_xs:
-        union(carrier, box(px - mm(P.FOLLOWER_POST_T) / 2, px + mm(P.FOLLOWER_POST_T) / 2,
-                           -mm(P.FOLLOWER_PAD_Y) / 2, mm(P.FOLLOWER_PAD_Y) / 2,
-                           pad_top - 0.2, WEB_Z0 + 0.2, "follower_post"))
+    if group == 0:
+        # 中央だけY方向へ二分し、右端を内環webから0.3mm離す。
+        px = cx + mm(P.CENTER_FOLLOWER_POST_OFFSET_X)
+        for py in (-2.5, 2.5):
+            union(carrier, box(px - mm(P.FOLLOWER_POST_T) / 2, px + mm(P.FOLLOWER_POST_T) / 2,
+                               py - mm(P.FOLLOWER_POST_T) / 2, py + mm(P.FOLLOWER_POST_T) / 2,
+                               pad_top - 0.2, WEB_Z0 + 0.2, "follower_post"))
+    else:
+        for px in (cx - mm(P.FOLLOWER_POST_OFFSET_X), cx + mm(P.FOLLOWER_POST_OFFSET_X)):
+            union(carrier, box(px - mm(P.FOLLOWER_POST_T) / 2, px + mm(P.FOLLOWER_POST_T) / 2,
+                               -mm(P.FOLLOWER_PAD_Y) / 2, mm(P.FOLLOWER_PAD_Y) / 2,
+                               pad_top - 0.2, WEB_Z0 + 0.2, "follower_post"))
+
+    # すべての支柱と案内を結合した後に穴を開け直し、連結板の下部だけを残す。
+    hole_cutters = [
+        prism(hex_poly(*center, mm(P.HEX_HOLE_FLAT)), "z",
+              mm(P.HOLE_CLEAR_Z0), mm(P.HOLE_CLEAR_Z1),
+              f"final_hole_clear_{i}")
+        for i, center in enumerate(centers)
+    ]
+    cut_collection(carrier, hole_cutters, f"carrier_{group}_hole_clears")
     carrier.name = ("carrier_center", "carrier_inner", "carrier_outer")[group]
     return carrier
 
@@ -407,38 +541,102 @@ def hex_yz(flat, cy=0.0, cz=0.0):
 
 
 def build_camshaft():
-    # 主軸は横向き印刷する。左端の8mm穴へホーン受けの六角差込を入れる。
+    # 主軸は横向き印刷する。8mm盲穴より右の中実部だけをヨーク用に細くする。
     shaft = prism(hex_yz(mm(P.CAM_SHAFT_FLAT), 0, mm(P.CAM_AXIS_Z)), "x",
                   mm(P.COUPLER_X1),
-                  mm(P.BEARING_X[0]) + 0.8, "camshaft")
+                  mm(P.CAM_SHAFT_X1), "camshaft")
     cut(shaft, prism(hex_yz(mm(P.SHAFT_JOINT_SOCKET_FLAT), 0, mm(P.CAM_AXIS_Z)), "x",
                      mm(P.COUPLER_X1) - 0.5,
                      mm(P.COUPLER_X1 + P.SHAFT_JOINT_L) + 0.2, "shaft_joint_socket"))
+    groove_cutter = box(mm(P.JOINT_SHAFT_GROOVE_X0), mm(P.JOINT_SHAFT_GROOVE_X1),
+                        -6.0, 6.0, mm(P.CAM_AXIS_Z) - 6.0, mm(P.CAM_AXIS_Z) + 6.0,
+                        "joint_keeper_groove_cutter")
+    cut(groove_cutter, cyl_x((0, mm(P.CAM_AXIS_Z)), mm(P.JOINT_SHAFT_GROOVE_D) / 2,
+                             mm(P.JOINT_SHAFT_GROOVE_X0) - 0.2,
+                             mm(P.JOINT_SHAFT_GROOVE_X1) + 0.2, 64,
+                             "joint_keeper_groove_core"))
+    cut(shaft, groove_cutter)
     shaft.name = "camshaft"
     return shaft
 
 
 def build_horn_coupler():
-    # 受け本体を面で置き、対辺3.6mmの8mm差込だけを短く立てて刷る。
+    # 受け本体を面で置く。保持溝の両側へ1.2mmの円形肩を残す。
     wall = 2.4
     outer = horn_shapes(mm(P.HORN_CLEARANCE) + wall)
-    coupler = prism(horn_world_poly(outer[0]), "x", mm(P.COUPLER_X0), mm(P.COUPLER_X1), "horn_coupler")
+    socket_x1 = mm(P.JOINT_COUPLER_GROOVE_X0)
+    coupler = prism(horn_world_poly(outer[0]), "x", mm(P.COUPLER_X0),
+                    socket_x1, "horn_coupler")
     for poly in outer[1:]:
-        union(coupler, prism(horn_world_poly(poly), "x", mm(P.COUPLER_X0), mm(P.COUPLER_X1), "coupler_lobe"))
+        union(coupler, prism(horn_world_poly(poly), "x", mm(P.COUPLER_X0),
+                             socket_x1, "coupler_lobe"))
+    union(coupler, cyl_x((0, mm(P.CAM_AXIS_Z)), mm(P.JOINT_COUPLER_SHOULDER_R),
+                         mm(P.JOINT_COUPLER_SHOULDER_X0),
+                         mm(P.JOINT_COUPLER_SHOULDER_X1), 64,
+                         "coupler_keeper_shoulders"))
     union(coupler, prism(hex_yz(mm(P.SHAFT_JOINT_FLAT), 0, mm(P.CAM_AXIS_Z)), "x",
                          mm(P.COUPLER_X1) - 0.2,
                          mm(P.COUPLER_X1 + P.SHAFT_JOINT_L), "shaft_joint_peg"))
 
-    pocket = horn_shapes(mm(P.HORN_CLEARANCE))
-    for poly in pocket:
-        cut(coupler, prism(horn_world_poly(poly), "x", mm(P.COUPLER_X0) - 0.5,
-                           mm(P.SERVO_X0 + P.SG.HORN_TOP_Z) + mm(P.HORN_POCKET_EXTRA), "horn_pocket"))
+    cutters = []
+    for poly in horn_shapes(mm(P.HORN_CLEARANCE)):
+        cutters.append(prism(horn_world_poly(poly), "x", mm(P.COUPLER_X0) - 0.5,
+                             mm(P.HORN_POCKET_X1), "horn_pocket"))
     mouth = horn_shapes(mm(P.HORN_CLEARANCE + P.HORN_MOUTH_EXTRA))
     for poly in mouth:
-        cut(coupler, prism(horn_world_poly(poly), "x", mm(P.COUPLER_X0) - 0.6,
-                           mm(P.COUPLER_X0) + 0.3, "horn_mouth"))
+        cutters.append(prism(horn_world_poly(poly), "x", mm(P.COUPLER_X0) - 0.6,
+                             mm(P.COUPLER_X0) + 0.3, "horn_mouth"))
+    groove = box(mm(P.JOINT_COUPLER_GROOVE_X0), mm(P.JOINT_COUPLER_GROOVE_X1),
+                 -40.0, 40.0, 0.0, 80.0,
+                 "coupler_keeper_groove")
+    cut(groove, cyl_x((0, mm(P.CAM_AXIS_Z)), mm(P.JOINT_COUPLER_GROOVE_R),
+                      mm(P.JOINT_COUPLER_GROOVE_X0) - 0.2,
+                      mm(P.JOINT_COUPLER_GROOVE_X1) + 0.2, 64,
+                      "coupler_keeper_groove_core"))
+    cutters.append(groove)
+    # 外周短腕の先端だけを削り、横軸印刷で使う2mm以上の壁と接地平面を両立する。
+    outer_bottom = min(point[1] for poly in outer for point in poly)
+    flat_cut = [(-100.0, -100.0), (100.0, -100.0),
+                (100.0, outer_bottom + mm(P.COUPLER_PRINT_FLAT)),
+                (-100.0, outer_bottom + mm(P.COUPLER_PRINT_FLAT))]
+    cutters.append(prism(horn_world_poly(flat_cut), "x", mm(P.COUPLER_X0) - 0.5,
+                         mm(P.COUPLER_X1) + 0.5, "coupler_print_flat"))
+    cut_collection(coupler, cutters, "horn_coupler_voids")
     coupler.name = "horn_coupler"
     return coupler
+
+
+def build_joint_keeper():
+    """底から入れ、ホーン受けの肩と主軸の中実溝を捕える静止二股ヨーク。"""
+    zc = mm(P.CAM_AXIS_Z)
+
+    def fork(x0, x1, slot_r, outer_r, name):
+        part = cyl_x((0, zc), outer_r, x0, x1, 64, name)
+        cut(part,
+            cyl_x((0, zc), slot_r, x0 - 0.2, x1 + 0.2, 64, name + "_round_slot"),
+            box(x0 - 0.2, x1 + 0.2, -slot_r, slot_r,
+                zc, zc + outer_r + 0.2, name + "_open_top"))
+        return part
+
+    left = fork(mm(P.JOINT_KEEPER_LEFT_X0), mm(P.JOINT_KEEPER_LEFT_X1),
+                mm(P.JOINT_COUPLER_GROOVE_R) + 0.3,
+                mm(P.JOINT_COUPLER_GROOVE_R) + 3.3, "joint_keeper_left_fork")
+    right = fork(mm(P.JOINT_KEEPER_RIGHT_X0), mm(P.JOINT_KEEPER_RIGHT_X1),
+                 mm(P.JOINT_KEEPER_RIGHT_SLOT_R),
+                 mm(P.JOINT_KEEPER_RIGHT_SLOT_R) + 3.0, "joint_keeper_right_fork")
+    panel = box(mm(P.JOINT_KEEPER_LEFT_X0), mm(P.JOINT_KEEPER_RIGHT_X1),
+                -3.0, 3.0, mm(P.JOINT_KEEPER_PANEL_Z0), mm(P.JOINT_KEEPER_PANEL_Z1),
+                "joint_keeper_bottom_stop")
+    union(panel,
+          box(mm(P.JOINT_KEEPER_LEFT_X0), mm(P.JOINT_KEEPER_LEFT_X1),
+              -3.0, 3.0, mm(P.JOINT_KEEPER_PANEL_Z1) - 0.2,
+              zc - mm(P.JOINT_KEEPER_LEFT_SLOT_R) + 0.2, "joint_keeper_left_riser"),
+          box(mm(P.JOINT_KEEPER_RIGHT_X0), mm(P.JOINT_KEEPER_RIGHT_X1),
+              -3.0, 3.0, mm(P.JOINT_KEEPER_PANEL_Z1) - 0.2,
+              zc - mm(P.JOINT_KEEPER_RIGHT_SLOT_R) + 0.2, "joint_keeper_right_riser"),
+          left, right)
+    panel.name = "joint_keeper"
+    return panel
 
 
 def build_cam(group):
@@ -447,17 +645,31 @@ def build_cam(group):
     ecc = mm(P.CAM_E[group])
     cy = ecc * math.cos(theta)
     cz = mm(P.CAM_AXIS_Z) + ecc * math.sin(theta)
-    x0, x1 = cx - mm(P.CAM_T) / 2, cx + mm(P.CAM_T) / 2
+    x0 = cx - mm(P.CAM_T) / 2
+    x1 = x0 + mm(P.CENTER_CAM_T if group == 0 else P.CAM_T)
     cam = cyl_x((cy, cz), mm(P.CAM_R), x0, x1, 96, f"cam_{group}")
-    # 右側ハブが次のカム（外環は軸受け）の手前まで伸び、3枚の軸方向位置を固定する。
-    if group < 2:
+    bore_x0 = x0 - 0.5
+    # 中央と内環のハブ間に静止ヨークの右フォークを通す。
+    if group == 0:
+        next_x = mm(P.JOINT_KEEPER_RIGHT_X0) - 0.2
+    elif group < 2:
         next_x = mm(P.CAM_X[group + 1]) - mm(P.CAM_T) / 2 - 0.3
     else:
         next_x = mm(P.BEARING_X[0] - P.BEARING_T / 2) - 0.3
     if next_x > x1 + 0.2:
         union(cam, cyl_x((0, mm(P.CAM_AXIS_Z)), mm(P.CAM_HUB_R), x1 - 0.2, next_x, 64, "cam_hub"))
+    if group == 1:
+        # 円板の左面を最下層にして全面接地させる。0.6mmの軸方向隙間は維持する。
+        left_hub_x0 = x0
+        union(cam, cyl_x((0, mm(P.CAM_AXIS_Z)), mm(P.CAM_HUB_R),
+                         left_hub_x0, x0 + 0.2, 64, "cam_left_hub"))
+        bore_x0 = left_hub_x0 - 0.5
     cut(cam, prism(hex_yz(mm(P.CAM_BORE_FLAT), 0, mm(P.CAM_AXIS_Z)), "x",
-                   x0 - 0.5, next_x + 0.5, "cam_hex_bore"))
+                   bore_x0, next_x + 0.5, "cam_hex_bore"))
+    if group == 0:
+        cut(cam, cyl_x((0, mm(P.CAM_AXIS_Z)), mm(P.CENTER_CAM_RELIEF_R),
+                       x0, mm(P.CENTER_CAM_RELIEF_X1), 64,
+                       "coupler_shoulder_relief"))
     cam.name = ("cam_center", "cam_inner", "cam_outer")[group]
     return cam
 
@@ -572,11 +784,14 @@ def import_servo_ref(part):
     bpy.ops.wm.stl_import(filepath=path)
     ob = next(o for o in bpy.data.objects if o not in before)
     ob.name = f"servo_{part}"
+    if part == "wire":
+        cleanup_wire_reference(ob)
     transform(ob, SERVO_MATRIX)
     if part == "horn":
         a = math.radians(P.HORN_HOME_DEG)
         transform(ob, Matrix.Translation((0, 0, mm(P.CAM_AXIS_Z))) @ Matrix.Rotation(a, 4, "X") @
                   Matrix.Translation((0, 0, -mm(P.CAM_AXIS_Z))))
+    validate_reference_mesh(ob)
     return ob
 
 
@@ -586,11 +801,14 @@ def build_print_tests():
     horn = prism(outer[0], "z", 0, 4.8, "horn_fit_test")
     for poly in outer[1:]:
         union(horn, prism(poly, "z", 0, 4.8, "horn_fit_lobe"))
+    horn_pocket_depth = mm(P.SG.HORN_ARM_T + P.HORN_POCKET_EXTRA)
     for poly in horn_shapes(mm(P.HORN_CLEARANCE)):
-        cut(horn, prism(poly, "z", -0.5, mm(P.SG.HORN_ARM_T + P.HORN_POCKET_EXTRA), "horn_fit_pocket"))
-    # 主軸継手と同じ3.6mm差込。ホーン試片の上面へつなぎ、別体の8mm穴で確認する。
-    union(horn, prism(hex_poly(0, 0, mm(P.SHAFT_JOINT_FLAT)), "z",
-                      4.6, 4.6 + mm(P.SHAFT_JOINT_L), "shaft_joint_fit_peg"))
+        cut(horn, prism(poly, "z", 4.8 - horn_pocket_depth, 5.3, "horn_fit_pocket"))
+    # 主軸継手と同じ3.6mm差込は独立した台へ立て、ホーン穴の上で空中開始させない。
+    peg_center = (21.2, 0.0)
+    peg = box(19.1, 23.3, -2.2, 2.2, 0.0, 1.2, "shaft_joint_fit_peg_base")
+    union(peg, prism(hex_poly(*peg_center, mm(P.SHAFT_JOINT_FLAT)), "z",
+                     1.0, 1.0 + mm(P.SHAFT_JOINT_L), "shaft_joint_fit_peg"))
     rail = box(24, 38, -14, 10, 0, 2.4, "servo_fit_rail")
     union(rail, box(24, 38, -14, -11.15, 2.2, 10.5, "servo_fit_side"),
           box(24, 38, 6.85, 9.7, 2.2, 10.5, "servo_fit_side2"))
@@ -598,9 +816,48 @@ def build_print_tests():
                    "shaft_joint_fit_socket")
     cut(socket, prism(hex_poly(46, 0, mm(P.SHAFT_JOINT_SOCKET_FLAT)), "z",
                       -0.4, mm(P.SHAFT_JOINT_L) + 0.4, "shaft_joint_fit_bore"))
-    # 3試片を同じSTLにする。差込はホーン試片と一体、穴とサーボ保持部は独立して刷れる。
+    # ヨーク右フォークとφ5.4mm中実軸溝を平置き試片で確かめる。
+    fork = box(58.0, 72.0, -8.0, 8.0, 0.0, 1.2, "joint_keeper_fit_fork")
+    cut(fork,
+        prism(circle((65.0, 0.0), mm(P.JOINT_KEEPER_RIGHT_SLOT_R), 64),
+              "z", -0.2, 1.4, "joint_keeper_fit_round_slot"),
+        box(65.0 - mm(P.JOINT_KEEPER_RIGHT_SLOT_R),
+            65.0 + mm(P.JOINT_KEEPER_RIGHT_SLOT_R), 0.0, 8.2,
+            -0.2, 1.4, "joint_keeper_fit_opening"))
+    groove = prism(hex_poly(82.0, 0.0, mm(P.CAM_SHAFT_FLAT)),
+                   "z", 0.0, 6.0, "joint_keeper_fit_groove")
+    groove_cutter = box(76.0, 88.0, -6.0, 6.0, 2.3, 3.7,
+                        "joint_keeper_fit_groove_cutter")
+    cut(groove_cutter,
+        prism(circle((82.0, 0.0), mm(P.JOINT_SHAFT_GROOVE_D) / 2, 64),
+              "z", 2.1, 3.9, "joint_keeper_fit_groove_core"))
+    cut(groove, groove_cutter)
+    # ホーン受け側の円形溝と左フォークも実寸で組み合わせる。
+    left_fork = box(93.0, 107.0, -8.0, 8.0, 0.0, 1.2, "coupler_keeper_fit_fork")
+    left_slot_r = mm(P.JOINT_COUPLER_GROOVE_R) + 0.3
+    cut(left_fork,
+        prism(circle((100.0, 0.0), left_slot_r, 64),
+              "z", -0.2, 1.4, "coupler_keeper_fit_round_slot"),
+        box(100.0 - left_slot_r, 100.0 + left_slot_r, 0.0, 8.2,
+            -0.2, 1.4, "coupler_keeper_fit_opening"))
+    neck = prism(circle((117.0, 0.0), 5.5, 64), "z", 0.0, 6.0,
+                 "coupler_keeper_fit_neck")
+    neck_cutter = box(111.0, 123.0, -6.0, 6.0, 2.3, 3.7,
+                      "coupler_keeper_fit_neck_cutter")
+    cut(neck_cutter,
+        prism(circle((117.0, 0.0), mm(P.JOINT_COUPLER_GROOVE_R), 64),
+              "z", 2.1, 3.9, "coupler_keeper_fit_neck_core"))
+    cut(neck, neck_cutter)
+    # 円形溝は横向きにし、溝から離れた両端の平らな足で接地させる。
+    transform(neck, Matrix.Translation((117.0, 0.0, 5.5)) @
+              Matrix.Rotation(math.radians(90), 4, "Y") @
+              Matrix.Translation((-117.0, 0.0, -3.0)))
+    union(neck,
+          box(114.0, 115.0, -1.2, 1.2, 0.0, 0.8, "neck_print_foot_l"),
+          box(119.0, 120.0, -1.2, 1.2, 0.0, 0.8, "neck_print_foot_r"))
+    # 8試片を同じSTLにする。差込、穴、保持部、左右フォークと各溝を別々に確認する。
     horn.name = "print_test"
-    return [horn, rail, socket]
+    return [horn, peg, rail, socket, fork, groove, left_fork, neck]
 
 
 PRINT_TRANSFORMS = {
@@ -612,7 +869,8 @@ PRINT_TRANSFORMS = {
     "carrier_inner": Matrix.Rotation(math.radians(180), 4, "X"),
     "carrier_outer": Matrix.Rotation(math.radians(180), 4, "X"),
     "camshaft": Matrix.Identity(4),
-    "horn_coupler": Matrix.Rotation(math.radians(-90), 4, "Y"),
+    "horn_coupler": Matrix.Rotation(math.radians(-P.HORN_HOME_DEG), 4, "X"),
+    "joint_keeper": Matrix.Identity(4),
     "cam_center": Matrix.Rotation(math.radians(-90), 4, "Y"),
     "cam_inner": Matrix.Rotation(math.radians(-90), 4, "Y"),
     "cam_outer": Matrix.Rotation(math.radians(-90), 4, "Y"),
@@ -628,6 +886,79 @@ def place_on_bed(ob, matrix):
     placed_lo = min((ob.matrix_world @ vertex.co).z for vertex in ob.data.vertices)
     if abs(placed_lo) > 1e-5:
         raise RuntimeError(f"{ob.name}: print STL bed normalization failed: z={placed_lo:.6f}mm")
+
+
+def build_coupler_print_support():
+    """横向き六角差込の下面だけを支える、ベッドから折り取る印刷用支持。"""
+    thickness = mm(P.COUPLER_PRINT_SUPPORT_T)
+    gap = mm(P.COUPLER_PRINT_SUPPORT_GAP)
+    peg_layer_z = 8.2
+    support_top = peg_layer_z - mm(P.COUPLER_PRINT_LAYER_H) - gap
+    y0 = -39.2 - thickness / 2
+    y1 = -39.2 + thickness / 2
+    base = box(1.8, 9.0, y0 - 0.7, y1 + 0.7, 0.0, 0.4,
+               "coupler_support_base")
+    union(base, box(1.8, 9.0, y0, y1, 0.0, support_top,
+                    "coupler_support_wall"))
+    second_product_z = mm(P.COUPLER_SECOND_PRINT_SUPPORT_PRODUCT_Z)
+    second_top = second_product_z - mm(P.COUPLER_PRINT_LAYER_H) - gap
+    union(base,
+          box(0.0, 2.0, -40.5, -38.3, 0.0, 0.4,
+              "coupler_second_support_base"),
+          box(0.1, 1.1, -40.45, -38.35, 0.2, second_top,
+              "coupler_second_support_wall"))
+    base.name = "coupler_print_support"
+    return base
+
+
+def build_carrier_outer_print_support():
+    """外環裏面の閉曲線だけを受ける、ベッドから折り取る印刷用支持。"""
+    product_z = mm(P.CARRIER_OUTER_PRINT_SUPPORT_PRODUCT_Z)
+    layer_h = mm(P.CARRIER_OUTER_PRINT_SUPPORT_LAYER_H)
+    gap = mm(P.CARRIER_OUTER_PRINT_SUPPORT_GAP)
+    support_top = product_z - layer_h - gap
+    x_half = mm(P.CARRIER_OUTER_PRINT_SUPPORT_X_HALF)
+    y0, y1 = (mm(value) for value in P.CARRIER_OUTER_PRINT_SUPPORT_Y)
+    base_x_half = mm(P.CARRIER_OUTER_PRINT_SUPPORT_BASE_X_HALF)
+    base_y0, base_y1 = (mm(value) for value in P.CARRIER_OUTER_PRINT_SUPPORT_BASE_Y)
+    base_t = mm(P.CARRIER_OUTER_PRINT_SUPPORT_BASE_T)
+    ramp_z0 = mm(P.CARRIER_OUTER_PRINT_SUPPORT_RAMP_Z0)
+    ramp_z1 = ramp_z0 + (y1 - base_y1)
+    base = box(-base_x_half, base_x_half, base_y0, base_y1, 0.0, base_t,
+               "carrier_outer_support_base")
+    tower_profile = [
+        (y0, base_t - 0.2), (base_y1, base_t - 0.2),
+        (base_y1, ramp_z0), (y1, ramp_z1),
+        (y1, support_top), (y0, support_top),
+    ]
+    union(base, prism(tower_profile, "x", -x_half, x_half,
+                      "carrier_outer_support_tower"))
+    base.name = "carrier_outer_print_support"
+    return base
+
+
+def build_carrier_center_print_support():
+    """中央従動柱を受ける、ベッドから45度で寄せる除去式支持。"""
+    product_z = mm(P.CARRIER_CENTER_PRINT_SUPPORT_PRODUCT_Z)
+    support_top = (product_z - mm(P.CARRIER_CENTER_PRINT_SUPPORT_LAYER_H)
+                   - mm(P.CARRIER_CENTER_PRINT_SUPPORT_GAP))
+    base = box(6.2, 7.5, 1.7, 3.3, 0.0, 0.4, "carrier_center_support_base")
+    profile = [(6.2, 0.2), (7.2, 0.2), (7.2, 2.4), (5.9, 3.7),
+               (5.9, support_top), (4.7, support_top), (4.7, 3.9), (6.2, 2.4)]
+    union(base, prism(profile, "y", 1.9, 3.1, "carrier_center_support_tower"))
+    base.name = "carrier_center_print_support"
+    return base
+
+
+def build_housing_detent_print_support():
+    """横穴の内面から板ばね先端を受け、横穴から折り取る印刷用支持。"""
+    product_z = mm(P.HOUSING_DETENT_PRINT_SUPPORT_PRODUCT_Z)
+    support_top = (product_z - mm(P.HOUSING_DETENT_PRINT_SUPPORT_LAYER_H)
+                   - mm(P.HOUSING_DETENT_PRINT_SUPPORT_GAP))
+    support = box(36.05, 37.85, 3.5, 4.0, 35.3, support_top,
+                  "housing_detent_print_support")
+    support.name = "housing_detent_print_support"
+    return support
 
 
 def material(name, color):
@@ -697,6 +1028,7 @@ def main():
         "carrier_outer": build_carrier(2),
         "camshaft": build_camshaft(),
         "horn_coupler": build_horn_coupler(),
+        "joint_keeper": build_joint_keeper(),
         "cam_center": build_cam(0),
         "cam_inner": build_cam(1),
         "cam_outer": build_cam(2),
@@ -726,12 +1058,82 @@ def main():
     save_stl(tests, os.path.join(BUILD, "print_test.stl"))
 
     printed = {}
+    print_supports = []
     for name in ("housing", "faceplate", "guide_frame", "bottom", "carrier_center", "carrier_inner", "carrier_outer",
-                 "camshaft", "horn_coupler", "cam_center", "cam_inner", "cam_outer", "bearing_keeper", "servo_clip"):
+                 "camshaft", "horn_coupler", "joint_keeper", "cam_center", "cam_inner", "cam_outer",
+                 "bearing_keeper", "servo_clip"):
         ob = duplicate(parts[name], f"print_{name}")
         place_on_bed(ob, PRINT_TRANSFORMS[name])
         printed[name] = ob
-        save_stl([ob], os.path.join(BUILD, f"print_{name}.stl"))
+        print_objects = [ob]
+        if name == "horn_coupler":
+            support = build_coupler_print_support()
+            if nonmanifold(support):
+                raise RuntimeError(f"coupler_print_support: non-manifold={nonmanifold(support)}")
+            print_objects.append(support)
+            support_common = {
+                "part_id": name, "support_builder": "build_coupler_print_support",
+                "nonmanifold_edges": nonmanifold(support), "expected_print_components": 2,
+                "attachment_mode": "separate_bed_tower", "bed_contact_required": True,
+                "removal_route": "ベッド側の共通台を折り、+X差込先端側から引き抜く",
+            }
+            print_supports.extend([
+                {**support_common, "support_id": "horn_coupler_peg_support",
+                 "component_bbox_mm": [[1.8, -40.1, 0.0], [9.0, -38.3, 7.8]],
+                 "support_top_z_mm": 7.8, "product_first_z_mm": 8.2,
+                 "material_face_gap_mm": 0.2},
+                {**support_common, "support_id": "horn_coupler_loop_support",
+                 "component_bbox_mm": [[0.0, -40.5, 0.0], [2.0, -38.3, 5.2]],
+                 "support_top_z_mm": 5.2, "product_first_z_mm": 5.6,
+                 "material_face_gap_mm": 0.2},
+            ])
+        elif name == "housing":
+            support = build_housing_detent_print_support()
+            print_supports.append({
+                "support_id": "housing_detent_support", "part_id": name,
+                "support_builder": "build_housing_detent_print_support",
+                "component_bbox_mm": bbox(support), "support_top_z_mm": 44.4,
+                "product_first_z_mm": 44.8, "material_face_gap_mm": 0.2,
+                "nonmanifold_edges": nonmanifold(support), "expected_print_components": 1,
+                "attachment": "breakaway_contact", "attachment_mode": "breakaway_contact",
+                "bed_contact_required": False,
+                "allowed_contact_regions_mm": [
+                    [[36.05, 3.5, 35.3], [37.85, 4.0, 36.3]],
+                    [[36.05, 3.5, 43.4], [37.85, 4.0, 44.4]],
+                ],
+                "removal_route": "+X側の右軸受け開口からつまみ、Y方向へ倒して同じ開口から抜く"})
+            union(ob, support)
+            if nonmanifold(ob):
+                raise RuntimeError(f"print_housing: non-manifold={nonmanifold(ob)}")
+        elif name == "carrier_center":
+            support = build_carrier_center_print_support()
+            if nonmanifold(support):
+                raise RuntimeError(
+                    f"carrier_center_print_support: non-manifold={nonmanifold(support)}")
+            print_objects.append(support)
+            print_supports.append({
+                "support_id": "carrier_center_support", "part_id": name,
+                "support_builder": "build_carrier_center_print_support",
+                "component_bbox_mm": bbox(support), "support_top_z_mm": 11.0,
+                "product_first_z_mm": 11.4, "material_face_gap_mm": 0.2,
+                "nonmanifold_edges": nonmanifold(support), "expected_print_components": 2,
+                "attachment_mode": "separate_bed_tower", "bed_contact_required": True,
+                "removal_route": "ベッド側の台を折り、格子裏面から離す"})
+        elif name == "carrier_outer":
+            support = build_carrier_outer_print_support()
+            if nonmanifold(support):
+                raise RuntimeError(
+                    f"carrier_outer_print_support: non-manifold={nonmanifold(support)}")
+            print_objects.append(support)
+            print_supports.append({
+                "support_id": "carrier_outer_support", "part_id": name,
+                "support_builder": "build_carrier_outer_print_support",
+                "component_bbox_mm": bbox(support), "support_top_z_mm": 8.2,
+                "product_first_z_mm": 8.6, "material_face_gap_mm": 0.2,
+                "nonmanifold_edges": nonmanifold(support), "expected_print_components": 2,
+                "attachment_mode": "separate_bed_tower", "bed_contact_required": True,
+                "removal_route": "ベッド側の台を折り、格子裏面から離す"})
+        save_stl(print_objects, os.path.join(BUILD, f"print_{name}.stl"))
 
     face_mat = material("face", (0.87, 0.88, 0.86))
     mech_mat = material("mechanism", (0.19, 0.21, 0.22))
@@ -764,7 +1166,7 @@ def main():
         "housing": "外装", "faceplate": "六角格子の天板", "guide_frame": "格子の案内枠",
         "bottom": "底板", "carrier_center": "中心の格子",
         "carrier_inner": "内側の格子", "carrier_outer": "外側の格子", "camshaft": "六角カム軸",
-        "horn_coupler": "ホーン受け",
+        "horn_coupler": "ホーン受け", "joint_keeper": "軸継手保持ヨーク",
         "cam_center": "中心用偏心カム", "cam_inner": "内環用偏心カム", "cam_outer": "外環用偏心カム",
         "bearing_keeper": "右軸受け保持具", "servo_clip": "サーボ保持具",
         "servo_body": "SG92R本体", "servo_horn": "付属クロスホーン", "servo_wire": "SG92R配線",
@@ -773,7 +1175,7 @@ def main():
         "housing": "#e5e6e2", "faceplate": "#eeeeeb", "guide_frame": "#4a4e50",
         "bottom": "#d7d9d5", "carrier_center": "#fafafa",
         "carrier_inner": "#f1f1ef", "carrier_outer": "#e7e8e5", "camshaft": "#34383a",
-        "horn_coupler": "#34383a",
+        "horn_coupler": "#34383a", "joint_keeper": "#4a4e50",
         "cam_center": "#34383a", "cam_inner": "#3d4244", "cam_outer": "#474c4e",
         "bearing_keeper": "#4a4e50", "servo_clip": "#4a4e50", "servo_body": "#335d91",
         "servo_horn": "#f5f5f2", "servo_wire": "#756d65",
@@ -782,13 +1184,13 @@ def main():
         "housing": [0, 0, 0], "faceplate": [0, 0, 20], "guide_frame": [0, 0, 12],
         "bottom": [0, 0, -18],
         "carrier_center": [0, 0, 34], "carrier_inner": [0, 0, 26], "carrier_outer": [0, 0, 18],
-        "camshaft": [10, 0, -10], "horn_coupler": [-12, 0, -10],
+        "camshaft": [10, 0, -10], "horn_coupler": [-12, 0, -10], "joint_keeper": [0, 12, -18],
         "cam_center": [0, -14, -10], "cam_inner": [0, -20, -10],
         "cam_outer": [0, -26, -10], "bearing_keeper": [16, 0, -12], "servo_clip": [-18, 0, -12],
         "servo_body": [-18, 0, -18], "servo_horn": [-12, 0, -10], "servo_wire": [-18, 8, -18],
     }
     for name in parts:
-        manifest_parts.append({
+        manifest_part = {
             "id": name,
             "label": labels[name],
             "assembly": f"build/{name}.stl",
@@ -796,10 +1198,13 @@ def main():
             "fit_test": False,
             "color": colors[name],
             "explode": explodes[name],
-        })
-    manifest_parts.append({"id": "print_test", "label": "ホーン受け・軸継手・サーボ保持試片",
+        }
+        if name in ("horn_coupler", "carrier_center", "carrier_outer"):
+            manifest_part["expected_print_components"] = 2
+        manifest_parts.append(manifest_part)
+    manifest_parts.append({"id": "print_test", "label": "ホーン受け・軸継手・ヨーク・サーボ保持試片",
                            "assembly": "build/print_test.stl", "print": "build/print_test.stl",
-                           "fit_test": True, "fit_only": True, "expected_print_components": 3,
+                           "fit_test": True, "fit_only": True, "expected_print_components": 8,
                            "color": "#d9d1bf", "explode": [0, -55, 0]})
     manifest = {
         "meta": {
@@ -808,12 +1213,14 @@ def main():
             "exterior_parts": ["housing", "bottom", "faceplate"],
             "description": "19枚の六角面を3個の偏心円カムで6/4/2mm弱持ち上げる住人の箱C4。",
             "assembly_steps": [
+                "外装、中央格子、外環格子、ホーン受けの印刷用支持をベッド側から折り取り、支持面に残りがないことを確かめる。",
                 "SG92Rを底から保持台へ入れ、正本+X側の配線を箱+Y側の出口へ通す。",
                 "サーボ保持具を底から押し込み、左右の爪を保持台へ掛ける。",
                 "3枚のカムを底から各位置へ入れ、六角穴を同じ向きへ揃える。",
                 "サーボを90度で静止させ、カムの偏心中心を+Yへ向ける。",
                 "非対称ホーン受けの左右を合わせて付属ホーンへ差し、対辺3.6mmの六角差込を+Xへ向ける。",
                 "対辺6.3mmのカム軸を右側から3枚のカムへ通し、左端の穴を六角差込へ8mm入れる。",
+                "軸継手保持ヨークを底から上げ、左フォークをホーン受け盲底の円形溝へ、右フォークを主軸の中実溝へ入れる。",
                 "右軸受け保持具を+X外側のキー溝へ入れ、外面と面一の位置で90度回し、板ばねが凹みへ戻る位置で保持する。",
                 "内側と外側の格子を案内枠へ上から通す。中心の格子は+X側からC形開口へ水平に差す。",
                 "3組の格子を通した案内枠を一体で上から外装の四隅の受けへ載せ、従動パッドを各カムへ載せる。",
@@ -824,18 +1231,22 @@ def main():
             "decisions": [
                 "閉位置は六角面を天面と面一にし、最大時の段差を5.909/3.939/1.970mmとした。",
                 "左端はSG92R出力軸、右端は着脱式受けで支える両持ち構造とした。主軸6.3mm、穴3.9mm、差込3.6mm、長さ8mmで、穴外に1.2mm残す。",
+                "静止二股ヨークがホーン受け盲底の円形溝と盲穴より右の中実軸溝を捕え、底板がヨークの下方脱落を止める。",
                 "カム半径は10mm。最大偏心3mmと穴頂点半径3.839mmを差し引く保守最薄部を3.161mmとした。",
                 "各格子は独立した3mm厚案内枠の対向2点で案内し、片側荷重のこじれを抑える。",
                 "右保持具は自由長8mm、厚さ1.2mmの板ばねと幅2.6mm、深さ0.3mmの凹みで90度位置を保つ。回転中の押し量0.15mm、曲げひずみ0.422%。",
+                "外装、中央格子、外環格子、ホーン受けの印刷STLに、対象面から0.2mm離した除去式支持を同梱する。",
             ],
             "limitations": [
                 "重力復帰のため天面を上にした姿勢専用。",
                 "無通電SG92Rは逆駆動できるとは限らず、停止角度付近に残り得る。復電後に低速で10度へ戻す。",
                 "ホーン寸法、配線出口、摩擦、PLA/PETGの収縮は実物未検証。",
                 "右保持具の板ばね保持力と繰り返し耐久は実物未検証。",
+                "4部品5か所の除去式支持は、実印刷後の癒着と除去性が未確認。",
             ],
         },
         "parts": manifest_parts,
+        "print_supports": print_supports,
     }
     write_json(os.path.join(BUILD, "manifest.json"), manifest)
     motion.write_motion()
@@ -844,6 +1255,7 @@ def main():
                                 "nonmanifold_edges": nonmanifold(ob)}
                         for name, ob in parts.items() if name not in servo_refs},
               "closed_bbox_mm": [[-38.0, -38.0, 0.0], [38.0, 38.0, 76.0]],
+              "print_supports": print_supports,
               "raised_height_mm": round(raised_height_mm, 3),
               "raised_height_source": "実メッシュ上端へservo=170度の運動量を加算"}
     write_json(os.path.join(BUILD, "model_report.json"), report)
@@ -854,7 +1266,8 @@ def main():
         transform(ob, Matrix.Scale(0.001, 4))
     export_stl(P.MODEL_ID, only=export_objects)
     for name in ("housing", "faceplate", "guide_frame", "bottom", "carrier_center", "carrier_inner", "carrier_outer",
-                 "camshaft", "horn_coupler", "cam_center", "cam_inner", "cam_outer", "bearing_keeper", "servo_clip"):
+                 "camshaft", "horn_coupler", "joint_keeper", "cam_center", "cam_inner", "cam_outer",
+                 "bearing_keeper", "servo_clip"):
         ob = duplicate(parts[name], f"export_{name}")
         # 元は既にm。個別の印刷姿勢はbuild/を正本とする。
         export_stl(f"{P.MODEL_ID}-{name}", only=[ob])

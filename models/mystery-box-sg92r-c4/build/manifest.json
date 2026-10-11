@@ -17,12 +17,14 @@
     ],
     "description": "19枚の六角面を3個の偏心円カムで6/4/2mm弱持ち上げる住人の箱C4。",
     "assembly_steps": [
+      "外装、中央格子、外環格子、ホーン受けの印刷用支持をベッド側から折り取り、支持面に残りがないことを確かめる。",
       "SG92Rを底から保持台へ入れ、正本+X側の配線を箱+Y側の出口へ通す。",
       "サーボ保持具を底から押し込み、左右の爪を保持台へ掛ける。",
       "3枚のカムを底から各位置へ入れ、六角穴を同じ向きへ揃える。",
       "サーボを90度で静止させ、カムの偏心中心を+Yへ向ける。",
       "非対称ホーン受けの左右を合わせて付属ホーンへ差し、対辺3.6mmの六角差込を+Xへ向ける。",
       "対辺6.3mmのカム軸を右側から3枚のカムへ通し、左端の穴を六角差込へ8mm入れる。",
+      "軸継手保持ヨークを底から上げ、左フォークをホーン受け盲底の円形溝へ、右フォークを主軸の中実溝へ入れる。",
       "右軸受け保持具を+X外側のキー溝へ入れ、外面と面一の位置で90度回し、板ばねが凹みへ戻る位置で保持する。",
       "内側と外側の格子を案内枠へ上から通す。中心の格子は+X側からC形開口へ水平に差す。",
       "3組の格子を通した案内枠を一体で上から外装の四隅の受けへ載せ、従動パッドを各カムへ載せる。",
@@ -33,15 +35,18 @@
     "decisions": [
       "閉位置は六角面を天面と面一にし、最大時の段差を5.909/3.939/1.970mmとした。",
       "左端はSG92R出力軸、右端は着脱式受けで支える両持ち構造とした。主軸6.3mm、穴3.9mm、差込3.6mm、長さ8mmで、穴外に1.2mm残す。",
+      "静止二股ヨークがホーン受け盲底の円形溝と盲穴より右の中実軸溝を捕え、底板がヨークの下方脱落を止める。",
       "カム半径は10mm。最大偏心3mmと穴頂点半径3.839mmを差し引く保守最薄部を3.161mmとした。",
       "各格子は独立した3mm厚案内枠の対向2点で案内し、片側荷重のこじれを抑える。",
-      "右保持具は自由長8mm、厚さ1.2mmの板ばねと幅2.6mm、深さ0.3mmの凹みで90度位置を保つ。回転中の押し量0.15mm、曲げひずみ0.422%。"
+      "右保持具は自由長8mm、厚さ1.2mmの板ばねと幅2.6mm、深さ0.3mmの凹みで90度位置を保つ。回転中の押し量0.15mm、曲げひずみ0.422%。",
+      "外装、中央格子、外環格子、ホーン受けの印刷STLに、対象面から0.2mm離した除去式支持を同梱する。"
     ],
     "limitations": [
       "重力復帰のため天面を上にした姿勢専用。",
       "無通電SG92Rは逆駆動できるとは限らず、停止角度付近に残り得る。復電後に低速で10度へ戻す。",
       "ホーン寸法、配線出口、摩擦、PLA/PETGの収縮は実物未検証。",
-      "右保持具の板ばね保持力と繰り返し耐久は実物未検証。"
+      "右保持具の板ばね保持力と繰り返し耐久は実物未検証。",
+      "4部品5か所の除去式支持は、実印刷後の癒着と除去性が未確認。"
     ]
   },
   "parts": [
@@ -108,7 +113,8 @@
         0,
         0,
         34
-      ]
+      ],
+      "expected_print_components": 2
     },
     {
       "id": "carrier_inner",
@@ -134,7 +140,8 @@
         0,
         0,
         18
-      ]
+      ],
+      "expected_print_components": 2
     },
     {
       "id": "camshaft",
@@ -160,6 +167,20 @@
         -12,
         0,
         -10
+      ],
+      "expected_print_components": 2
+    },
+    {
+      "id": "joint_keeper",
+      "label": "軸継手保持ヨーク",
+      "assembly": "build/joint_keeper.stl",
+      "print": "build/print_joint_keeper.stl",
+      "fit_test": false,
+      "color": "#4a4e50",
+      "explode": [
+        0,
+        12,
+        -18
       ]
     },
     {
@@ -268,18 +289,172 @@
     },
     {
       "id": "print_test",
-      "label": "ホーン受け・軸継手・サーボ保持試片",
+      "label": "ホーン受け・軸継手・ヨーク・サーボ保持試片",
       "assembly": "build/print_test.stl",
       "print": "build/print_test.stl",
       "fit_test": true,
       "fit_only": true,
-      "expected_print_components": 3,
+      "expected_print_components": 8,
       "color": "#d9d1bf",
       "explode": [
         0,
         -55,
         0
       ]
+    }
+  ],
+  "print_supports": [
+    {
+      "support_id": "housing_detent_support",
+      "part_id": "housing",
+      "support_builder": "build_housing_detent_print_support",
+      "component_bbox_mm": [
+        [
+          36.05,
+          3.5,
+          35.3
+        ],
+        [
+          37.85,
+          4.0,
+          44.4
+        ]
+      ],
+      "support_top_z_mm": 44.4,
+      "product_first_z_mm": 44.8,
+      "material_face_gap_mm": 0.2,
+      "nonmanifold_edges": 0,
+      "expected_print_components": 1,
+      "attachment": "breakaway_contact",
+      "attachment_mode": "breakaway_contact",
+      "bed_contact_required": false,
+      "allowed_contact_regions_mm": [
+        [
+          [
+            36.05,
+            3.5,
+            35.3
+          ],
+          [
+            37.85,
+            4.0,
+            36.3
+          ]
+        ],
+        [
+          [
+            36.05,
+            3.5,
+            43.4
+          ],
+          [
+            37.85,
+            4.0,
+            44.4
+          ]
+        ]
+      ],
+      "removal_route": "+X側の右軸受け開口からつまみ、Y方向へ倒して同じ開口から抜く"
+    },
+    {
+      "support_id": "carrier_center_support",
+      "part_id": "carrier_center",
+      "support_builder": "build_carrier_center_print_support",
+      "component_bbox_mm": [
+        [
+          4.7,
+          1.7,
+          0.0
+        ],
+        [
+          7.5,
+          3.3,
+          11.0
+        ]
+      ],
+      "support_top_z_mm": 11.0,
+      "product_first_z_mm": 11.4,
+      "material_face_gap_mm": 0.2,
+      "nonmanifold_edges": 0,
+      "expected_print_components": 2,
+      "attachment_mode": "separate_bed_tower",
+      "bed_contact_required": true,
+      "removal_route": "ベッド側の台を折り、格子裏面から離す"
+    },
+    {
+      "support_id": "carrier_outer_support",
+      "part_id": "carrier_outer",
+      "support_builder": "build_carrier_outer_print_support",
+      "component_bbox_mm": [
+        [
+          -1.8,
+          -32.2,
+          0.0
+        ],
+        [
+          1.8,
+          -24.65,
+          8.2
+        ]
+      ],
+      "support_top_z_mm": 8.2,
+      "product_first_z_mm": 8.6,
+      "material_face_gap_mm": 0.2,
+      "nonmanifold_edges": 0,
+      "expected_print_components": 2,
+      "attachment_mode": "separate_bed_tower",
+      "bed_contact_required": true,
+      "removal_route": "ベッド側の台を折り、格子裏面から離す"
+    },
+    {
+      "part_id": "horn_coupler",
+      "support_builder": "build_coupler_print_support",
+      "nonmanifold_edges": 0,
+      "expected_print_components": 2,
+      "attachment_mode": "separate_bed_tower",
+      "bed_contact_required": true,
+      "removal_route": "ベッド側の共通台を折り、+X差込先端側から引き抜く",
+      "support_id": "horn_coupler_peg_support",
+      "component_bbox_mm": [
+        [
+          1.8,
+          -40.1,
+          0.0
+        ],
+        [
+          9.0,
+          -38.3,
+          7.8
+        ]
+      ],
+      "support_top_z_mm": 7.8,
+      "product_first_z_mm": 8.2,
+      "material_face_gap_mm": 0.2
+    },
+    {
+      "part_id": "horn_coupler",
+      "support_builder": "build_coupler_print_support",
+      "nonmanifold_edges": 0,
+      "expected_print_components": 2,
+      "attachment_mode": "separate_bed_tower",
+      "bed_contact_required": true,
+      "removal_route": "ベッド側の共通台を折り、+X差込先端側から引き抜く",
+      "support_id": "horn_coupler_loop_support",
+      "component_bbox_mm": [
+        [
+          0.0,
+          -40.5,
+          0.0
+        ],
+        [
+          2.0,
+          -38.3,
+          5.2
+        ]
+      ],
+      "support_top_z_mm": 5.2,
+      "product_first_z_mm": 5.6,
+      "material_face_gap_mm": 0.2
     }
   ]
 }

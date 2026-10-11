@@ -5,40 +5,105 @@
   "delivery_status": "review_required",
   "physical_print_verified": false,
   "basis": {
-    "manifest_sha256": "0070d81e6f3f1ad22dff83f7da48575a5916448d5f6e127a80a094ba05334d16",
-    "delivery_report_sha256": "c409415cd513278a3fec9be6aa89e0710f229e4ae00b0ed493e030df170e1ca4",
+    "manifest_sha256": "14917a7739bb8f1acf9c46ba5bb9cd95f38eb9cab8d6319cd21ca42a9b2de232",
+    "delivery_report_sha256": "b9ee865758eea31dcb9154077a8c464383170c99e99c371877fe3fce5ecc3ac4",
+    "print_geometry_evidence_sha256": "ce3b9209167251dfae46b766b6d27934902a652dba545f8a0c9028202a81ff8f",
+    "print_support_geometry_sha256": "b3a6daf30eebe59218d2bb06f1573185ce36958c7461f71e680e823612e735b8",
+    "closed_loop_support_evidence_sha256": "4bd05bc7e4965044c63456b0d7cd48f3eb38939cdbe270d93f79d73e467bb993",
     "gcode_sha256": {
-      "full_PLA": "d4687e616c4942c3b18cb5fa18b39a70aae2e10032af2e240d6745b1da253f01",
-      "full_PETG": "a1cd9c825e050e1fdbcf5b74aa8f2529679180782ef19aee843e24e37ce6899f",
-      "fit_test_PLA": "61b56dfa1ba8d2c02198aba7b2de5047ea406fbd3785f58bc7fb9e4769217d39",
-      "fit_test_PETG": "8cbb46d7be82d6183eb649bd576fd151bf2471e550cc467552c2b3cc65d6378b"
+      "full_PLA": "b00c022d7ae0a56e00ee18671e923109cb328f0ed757a64fd32012e8828bbc69",
+      "full_PETG": "f19e388e8b2248529c177d1520493c6e42c18929a1d01b85d664a907409ebf1d",
+      "fit_test_PLA": "6001f54a92d02402013f68359f84334034ad5f47711889c18d659c7db7422ea3",
+      "fit_test_PETG": "cc9d03f262fb4aeb1823b507ee0c4103bc49de3db1b39b8c741c9086ec0cb2c8"
     }
   },
+  "closed_loop_check": {
+    "source_evidence_sha256": "4bd05bc7e4965044c63456b0d7cd48f3eb38939cdbe270d93f79d73e467bb993",
+    "calibration_pass": true,
+    "unresolved": [],
+    "decision": "accepted"
+  },
   "fit_test": {
-    "source_stl_sha256": "f12db481d6d8c749850a6253a77e9df53cb03c65255707a4bed63f981755cfc3",
-    "PLA_visible_unsupported_mm": 0.0,
-    "PETG_visible_unsupported_mm": 0.0,
+    "source_stl_sha256": "29c1aac1ea36ad9baf929be38e50d83e785d954ed957b4555f480c8be17d6b2c",
+    "bed_contact_mm2": 1191.1,
+    "max_actual_span_mm": 4.2996,
     "decision": "slice_pass",
-    "note": "軸継手を含む3連結の試片。全要素はベッドへ接地。実機印刷と嵌合は未検証。"
+    "note": "試片を各部品へ分けて接地させた。PLA/PETGの閉じたunsupported経路は0件。実機印刷と嵌合は未検証。"
+  },
+  "wall_check": {
+    "structural_wall_minimum_mm": 1.2,
+    "blind_floor_minimum_mm": 1.25,
+    "sacrificial_support_wall_mm": 0.6,
+    "note": "0.6mm部はhorn_couplerの除去式支持壁。carrier_outerの0.4mm候補は除去式塔の2層bed台。いずれも構造壁ではない。1.2mm未満の他ray候補は稜線、曲面端、薄板端の局所交差で連続壁ではない。"
+  },
+  "support_check": {
+    "source_stl_sha256": "5156194b8f9ca7a89da2583ed797b56f512ebc9221ccbe95d241d31a13fca8a3",
+    "support_geometry_top_mm": 7.8,
+    "peg_geometry_bottom_mm": 8.0,
+    "materials": {
+      "PLA": {
+        "source_gcode_sha256": "b00c022d7ae0a56e00ee18671e923109cb328f0ed757a64fd32012e8828bbc69",
+        "support_last_extrusion_z_mm": 7.8,
+        "support_last_layer_height_mm": 0.2,
+        "peg_first_extrusion_z_mm": 8.2,
+        "peg_first_layer_height_mm": 0.2,
+        "peg_material_bottom_mm": 8.0,
+        "material_gap_mm": 0.2
+      },
+      "PETG": {
+        "source_gcode_sha256": "f19e388e8b2248529c177d1520493c6e42c18929a1d01b85d664a907409ebf1d",
+        "support_last_extrusion_z_mm": 7.8,
+        "support_last_layer_height_mm": 0.2,
+        "peg_first_extrusion_z_mm": 8.2,
+        "peg_first_layer_height_mm": 0.2,
+        "peg_material_bottom_mm": 8.0,
+        "material_gap_mm": 0.2
+      }
+    },
+    "removal_physically_verified": false
+  },
+  "carrier_support_check": {
+    "source_stl_sha256": "32ef930418710851a50ae4a5d93b56b5f515ced5266a22e2a81fad1f702d0d2b",
+    "source_support_evidence_sha256": "dedb0fa6d63d32e92cba30ad4aae6f66e1f2919f3b73ccbb99ec0c15a1ed2c8e",
+    "support_geometry_top_mm": 8.2,
+    "product_geometry_bottom_mm": 8.4,
+    "maximum_centerline_beyond_support_footprint_mm": 0.0,
+    "materials": {
+      "PLA": {
+        "source_gcode_sha256": "b00c022d7ae0a56e00ee18671e923109cb328f0ed757a64fd32012e8828bbc69",
+        "support_last_extrusion_z_mm": 8.2,
+        "product_first_extrusion_z_mm": 8.6,
+        "layer_height_mm": 0.2,
+        "material_gap_mm": 0.2
+      },
+      "PETG": {
+        "source_gcode_sha256": "f19e388e8b2248529c177d1520493c6e42c18929a1d01b85d664a907409ebf1d",
+        "support_last_extrusion_z_mm": 8.2,
+        "product_first_extrusion_z_mm": 8.6,
+        "layer_height_mm": 0.2,
+        "material_gap_mm": 0.2
+      }
+    },
+    "removal_physically_verified": false
   },
   "orientation_checks": [
     {
       "id": "guide_frame",
-      "source_stl_sha256": "76e9208045baba7993333a8d4b9cb2656a62c7a925bd81c6b39cfebe2cb65971",
+      "source_stl_sha256": "9aa49e4e72a4bbaf09ef2e43ff058f18f1731c3d3a9df50e174d007271f8784f",
       "decision": "accepted",
-      "reason": "1連結、minZ 0mm。Z>0に45°を超える下向き面はなく、最大高さ3.95mm。"
+      "reason": "bed接触1348.9mm2。通路外の1.2mm梁を含み、下向きoverhang clusterは0。"
     },
     {
       "id": "horn_coupler",
-      "source_stl_sha256": "db54370456a6e7a763914cd5981d4e71b54ce9f64cbed388ec3306db384df2ef",
+      "source_stl_sha256": "5156194b8f9ca7a89da2583ed797b56f512ebc9221ccbe95d241d31a13fca8a3",
       "decision": "accepted",
-      "reason": "受け面を接地。3.6mm六角差込は高さ8.0mmで、高さ/太さ2.22。"
+      "reason": "長辺を立てて印刷する。差込初層と閉環初層は各除去式支持の0.2mm上。支持除去性は実機未確認。"
     },
     {
-      "id": "housing_detent",
-      "source_stl_sha256": "dc62b38a0bc8b8f8d1317974a73b499c75e3d86900755678a9dda1fe6078696d",
+      "id": "housing",
+      "source_stl_sha256": "68e911d72fe35a466b7bf9fd225a2a193e2fffbec946532738fc1d905ca79d72",
       "decision": "accepted",
-      "reason": "板ばねは自由長8.0mm、厚さ1.2mm、幅2.4mm。底側アンカーから45°で連続する自己支持面で、鉛直の細い柱ではない。"
+      "reason": "bed接触956.6mm2。盲底の実軸厚は5093投影点で最小1.25mm。最大直線7.7026mmは両端支持。"
     }
   ],
   "objects": [
@@ -47,95 +112,121 @@
       "source_stl_sha256": "0876a950877757fd8033a900c963d046eadd58f91b8e012c0d8292614580faaf",
       "warning_z_mm": [13.2],
       "raw_external_unsupported_mm": 15.74,
-      "max_actual_span_mm": 0.7,
-      "supported_both_ends": false,
+      "max_actual_span_mm": 7.58,
+      "supported_both_ends": true,
       "surface": "internal",
       "decision": "accepted",
-      "reason": "厚さ1.8mmの縦タブから外へ出るスナップ爪の片持ちは0.7mm。組立後は外装内に隠れる。"
-    },
-    {
-      "id": "carrier_center",
-      "source_stl_sha256": "cbdce12748ddb9bf9a1f07ea7773c7214a9dff8f3bbb4fc3405ad45cb46b24a3",
-      "warning_z_mm": [2.2, 8.6, 11.4, 26.2],
-      "raw_external_unsupported_mm": 143.78,
-      "max_actual_span_mm": 4.2,
-      "secondary_span_mm": 4.1,
-      "supported_both_ends": false,
-      "surface": "internal",
-      "decision": "accepted",
-      "reason": "最大は従動padの4.2mm片持ち。中央webの柱間4.1mmは両端支持。リングから柱は0.8mm、従動柱は2.5mmの片持ち。"
+      "reason": "累積15.74mmは2本の区間の合計。各直線は7.58mmで両端支持。"
     },
     {
       "id": "carrier_inner",
-      "source_stl_sha256": "7b37e374f5f9155a16329c9c87235ee68a93f3647c4c87dccc4420daf66a8c9a",
-      "warning_z_mm": [2.2, 8.6, 11.4, 25.2],
-      "raw_external_unsupported_mm": 553.2,
-      "max_actual_span_mm": 9.2,
-      "max_cantilever_mm": 2.5,
-      "secondary_span_mm": 6.2,
+      "source_stl_sha256": "2c80af1638416281f3fda58e6efe88c7aea7bd92183613135d29b380887d24ba",
+      "warning_z_mm": [8.6, 8.8, 11.4],
+      "raw_external_unsupported_mm": 540.89,
+      "max_actual_span_mm": 3.9541,
       "supported_both_ends": true,
       "surface": "internal",
       "decision": "accepted",
-      "reason": "環状webの最大空き9.2mmと従動padの柱間6.2mmは両端支持。片持ちは従動柱の2.5mmが最大。"
+      "reason": "最大直線3.9541mmは両端支持。z8.6のGap 3.1747mmは幅0.61752mmで、両端が幅0.45mmの先行両端支持線へ0.2036mmで重なる。"
+    },
+    {
+      "id": "horn_coupler",
+      "source_stl_sha256": "5156194b8f9ca7a89da2583ed797b56f512ebc9221ccbe95d241d31a13fca8a3",
+      "warning_z_mm": [4.2, 4.4, 4.6, 4.8, 5.0, 5.2, 8.2],
+      "raw_external_unsupported_mm": 253.9,
+      "max_actual_span_mm": 7.2917,
+      "supported_both_ends": false,
+      "surface": "internal",
+      "decision": "accepted",
+      "reason": "z8.2差込初層の最大直線7.2917mmとz5.6閉環を別々の除去式支持が全経路で受ける。両材料の実材料面間隔は0.2mm。除去性は実機未確認。"
     },
     {
       "id": "carrier_outer",
-      "source_stl_sha256": "cfb33ab29e6e315c59d7fd4ea58d37d216d77220fc4946dcfbb4bbdf0c08f5d7",
-      "warning_z_mm": [2.2, 8.6, 11.4, 24.2],
-      "raw_external_unsupported_mm": 1069.84,
-      "max_actual_span_mm": 9.2,
-      "max_cantilever_mm": 2.5,
-      "secondary_span_mm": 6.2,
+      "source_stl_sha256": "32ef930418710851a50ae4a5d93b56b5f515ced5266a22e2a81fad1f702d0d2b",
+      "warning_z_mm": [8.6, 8.8, 11.4],
+      "raw_external_unsupported_mm": 1058.33,
+      "max_actual_span_mm": 6.0064,
       "supported_both_ends": true,
       "surface": "internal",
       "decision": "accepted",
-      "reason": "環状webの最大空き9.2mmと従動padの柱間6.2mmは両端支持。片持ちは従動柱の2.5mmが最大。"
+      "reason": "最大直線6.0064mmは両端支持。z8.6の閉曲線3本は拡幅した除去式塔の最上層実押出で全経路と両端を覆う。両材料の実材料面間隔は0.2mm。"
     },
     {
       "id": "camshaft",
-      "source_stl_sha256": "0e7be62d5d41539969df903cfe8ad31297c468dc61dffce50c1434d795c95afd",
-      "warning_z_mm": [5.4],
-      "raw_external_unsupported_mm": 3.33,
-      "max_actual_span_mm": 4.5,
+      "source_stl_sha256": "33f7174c95f8b82b033f1889ec203b5201c8de5fee562a379e8f5e09a17ec4d5",
+      "warning_z_mm": [0.6, 5.4],
+      "raw_external_unsupported_mm": 4.68,
+      "max_actual_span_mm": 1.9947,
       "supported_both_ends": true,
       "surface": "internal",
       "decision": "accepted",
-      "reason": "対辺3.9mmの六角穴屋根。頂点間4.5mmを穴両側の軸壁で支持する。主軸は対辺6.3mmの面を接地して横置きする。"
+      "reason": "最大直線1.9947mmは内部の両端支持区間。"
     },
     {
       "id": "bearing_keeper",
       "source_stl_sha256": "402340113c0da529ab73c3e8ea8e1a034bf8ca1470fa01b6bd803430578a2c90",
       "warning_z_mm": [2.4],
-      "raw_external_unsupported_mm": 11.97,
-      "max_actual_span_mm": 1.2,
-      "supported_both_ends": false,
+      "raw_external_unsupported_mm": 11.65,
+      "max_actual_span_mm": 2.6861,
+      "supported_both_ends": true,
       "surface": "internal",
       "decision": "accepted",
-      "reason": "円筒本体R5.5mmから保持爪外端R6.7mmまでの片持ちは1.2mm。組立後は右壁内の回転空間に入る。"
+      "reason": "最大直線2.6861mmはBridgeとして両端支持。"
+    },
+    {
+      "id": "carrier_center",
+      "source_stl_sha256": "f0add24df27ef5c6ab9c2f257384e1839e10071c333332a19f4e906a698d96d6",
+      "warning_z_mm": [8.6, 11.4, 26.2],
+      "raw_external_unsupported_mm": 147.66,
+      "max_actual_span_mm": 6.5528,
+      "supported_both_ends": true,
+      "surface": "internal",
+      "decision": "accepted",
+      "reason": "最大直線6.5528mmは両端支持。z11.4閉環は除去式支持の最上層実押出が全経路を覆う。z26.2曲線の両端は成立済み先行線へ実線幅で接続する。"
+    },
+    {
+      "id": "cam_center",
+      "source_stl_sha256": "5d2a08198b8c8bf6ca90cca1aff32f36b89d0a949ee7ca6c825edc0917812d23",
+      "warning_z_mm": [0.8],
+      "raw_external_unsupported_mm": 47.61,
+      "max_actual_span_mm": 4.1813,
+      "supported_both_ends": true,
+      "surface": "internal",
+      "decision": "accepted",
+      "reason": "z0.8閉環は直下支持または成立済み先行経路へ実線幅で両端接続する。最大直線4.1813mmは両端支持。"
     },
     {
       "id": "bottom",
       "source_stl_sha256": "4b3e531e67d26c2e5adc570c6c63589d094fb205a009d1f3639e6eeab2f6fad4",
       "warning_z_mm": [2.8, 14.6],
-      "raw_external_unsupported_mm": 21.14,
-      "max_actual_span_mm": 0.7,
-      "supported_both_ends": false,
+      "raw_external_unsupported_mm": 20.18,
+      "max_actual_span_mm": 7.58,
+      "supported_both_ends": true,
       "surface": "internal",
       "decision": "accepted",
-      "reason": "z2.8mmの縦タブは底板へ全幅1.8mmが重なる。実際の片持ちは内側保持爪の0.7mmだけ。"
+      "reason": "最大直線7.58mmは両端支持。内部one_endは2.0866mm。"
     },
     {
       "id": "housing",
-      "source_stl_sha256": "dc62b38a0bc8b8f8d1317974a73b499c75e3d86900755678a9dda1fe6078696d",
+      "source_stl_sha256": "68e911d72fe35a466b7bf9fd225a2a193e2fffbec946532738fc1d905ca79d72",
       "warning_z_mm": [16.8, 33.2, 33.8, 38.2, 42.0],
-      "raw_external_unsupported_mm": 821.74,
-      "max_actual_span_mm": 8.4,
-      "max_cantilever_mm": 4.6,
-      "secondary_spans_mm": [8.0, 7.1, 3.5, 2.2],
+      "raw_external_unsupported_mm": 683.86,
+      "max_actual_span_mm": 7.7026,
       "supported_both_ends": true,
       "surface": "mixed",
       "decision": "accepted",
-      "reason": "最大橋は側面外観の底板凹み屋根8.4mm。配線出口8.0mm、クリップ通路7.1mm、keeperキー溝3.5mm、サーボレール2.2mmも両端支持。最大片持ちは内部の右軸受け下面4.6mm。detent板ばねは45°の連続面。10mm超の橋はない。"
+      "reason": "z33.2 Gapは成立済み先行線へ実線幅で両端接続する。先行直線7.7026mmは両端支持。z44.8閉環は接続式支持の最上層実押出が全経路を覆い、材料面間隔0.2mm。"
+    },
+    {
+      "id": "print_test",
+      "source_stl_sha256": "29c1aac1ea36ad9baf929be38e50d83e785d954ed957b4555f480c8be17d6b2c",
+      "warning_z_mm": [0.4, 2.4, 4.0],
+      "raw_external_unsupported_mm": 14.55,
+      "max_actual_span_mm": 4.2996,
+      "supported_both_ends": true,
+      "surface": "fit_test",
+      "decision": "accepted",
+      "reason": "各試片を独立接地させた。最大直線4.2996mmは両端支持。PLA/PETGとも閉じたunsupported経路は0件。"
     }
   ]
 }

@@ -5,104 +5,147 @@
   "delivery_status": "review_required",
   "physical_print_verified": false,
   "basis": {
-    "manifest_sha256": "262f040cd96d9e7dd558cef81ed969fe37afb979f725a53938f66256be881584",
-    "delivery_report_sha256": "8050cd4eac5f79e4c575479dda040bfc88f50560009b7009508603a0bd3db10d",
+    "manifest_sha256": "33201ea7b6ab57ada8253a9a1ed55222722b8e3b1013621c4bbc2273104b154d",
+    "delivery_report_sha256": "bf0089f06ade2c9d9c20a57e28b54c866f8142b6fbdb674eb2bcd0bcd4b2b4a6",
+    "print_geometry_evidence_sha256": "f885b8152599ee0aae355fb9b601582219bfc0792dbeda018db113017adb070b",
+    "closed_loop_support_evidence_sha256": "d2b37842d4d78d472935d131202fdea77973c1daef2b6105977da98446ac8292",
     "gcode_sha256": {
-      "full_PLA": "b288129263f9abb2014990aca935e5739ed3cadc04f9c8583accd8ffa76205ed",
-      "full_PETG": "c3728574ddebcdb5182450882753cda040d32dbfa5feafd87a6578927a86ceb7",
-      "fit_test_PLA": "2f52f5fdd6f1336dee27468d56f65e5f6c12f91be8e724f4de7a99cec04e72ad",
-      "fit_test_PETG": "ea6a95c1dff008c2aec38e0bb66ce1f278247fb98fc9dff816279cdf68bfcbf0"
+      "full_PLA": "cecc3a8239d015cdb28b3168c5d9a4eb4362d39ebc814dadc0eaa47e14bb2d19",
+      "full_PETG": "808fd5c68bc8fc842b4a200b5ad5146d1140383ea4cff7a31e70df5148c1c9b1",
+      "fit_test_PLA": "3e91ace6506e17172ed863db24fe69e54293fc749c1f7167e1e3d4bd34ccceb2",
+      "fit_test_PETG": "bfc7fa47987fdc6dd5ce010abe3b28458980deedc1ccf8b29f9aca20818ad329"
     }
   },
+  "closed_loop_check": {
+    "source_evidence_sha256": "d2b37842d4d78d472935d131202fdea77973c1daef2b6105977da98446ac8292",
+    "calibration_pass": true,
+    "unresolved": [],
+    "decision": "accepted"
+  },
   "fit_test": {
-    "PLA_visible_unsupported_mm": 0.0,
-    "PETG_visible_unsupported_mm": 0.0,
+    "source_stl_sha256": "2194f83d9f9947eb638b5cff36a9827e3cad38217f49a50ab0b89ad1d94cdb6c",
+    "bed_contact_mm2": 431.4,
+    "thin_under_1_2mm_count": 0,
+    "overhang_cluster_count": 0,
+    "max_one_end_or_none_mm": 0.1915,
     "decision": "slice_pass",
-    "note": "実機印刷と嵌合は未検証。"
+    "note": "盲底外側を受け外形の平底にした試片。実機印刷とホーン嵌合は未検証。"
+  },
+  "wall_check": {
+    "continuous_wall_minimum_mm": 1.2,
+    "gear_tooth_tip_exception_mm": [0.64, 0.95],
+    "note": "1.2mm未満の実三角形ray候補はmodule 1歯先の局所楔と稜線交差。連続壁ではない。"
   },
   "objects": [
     {
       "id": "camshaft",
-      "source_stl_sha256": "92d87da3837e46b82abf04cb167e0a0e9a7d3912cb39ac517dcd57cccd23d16c",
-      "warning_z_mm": [1.4],
-      "raw_external_unsupported_mm": 3.28,
-      "max_actual_span_mm": 0.9,
+      "source_stl_sha256": "5884542f95438c90f43e0da48f1a8430315dac7ca57e89967c8274e75ebac75b",
+      "warning_z_mm": [1.0],
+      "raw_external_unsupported_mm": 3.72,
+      "max_actual_span_mm": 1.1,
       "supported_both_ends": false,
       "surface": "internal",
       "decision": "accepted",
-      "reason": "5mm六角面を接地した軸端から丸端へ移る片側0.9mmの遷移。積算3.28mmは同じ短い遷移の外周線合計。"
+      "reason": "対辺5mmの六角面を接地。丸端R1.8mmへ移る端部肩は半径方向1.09mmで、積算3.72mmは両端外周の合計。"
     },
     {
       "id": "carrier_0",
-      "source_stl_sha256": "cafe5172f310f49a78739bc032ca8ccd4977fe7627a9f6e7e92a10dadc4ea42f",
+      "source_stl_sha256": "518f234bcd01fd30dde1fb4079ef9a816f861a5328d538d5d5c37117e7a67c8a",
       "warning_z_mm": [14.6],
-      "raw_external_unsupported_mm": 211.94,
-      "max_actual_span_mm": 5.6,
-      "secondary_span_mm": 4.4,
-      "supported_both_ends": true,
+      "raw_external_unsupported_mm": 148.93,
+      "max_actual_span_mm": 4.4043,
+      "supported_both_ends": false,
       "surface": "internal",
       "decision": "accepted",
-      "reason": "格子は柱間5.6mm、端の柱から案内舌まで4.4mm。積算値は同じ層にある複数の短橋の外周線合計。"
+      "reason": "直線4.4043mmは外柱から案内舌へ上がる45度gussetの最終輪郭。曲線Bridgeは経路12.994mmだが端点間4.2246mmで同じ斜面に沿う。"
     },
     {
       "id": "carrier_1",
-      "source_stl_sha256": "531869f2ef06b4b40fd60c594c7df4d0b915573bb3906c349dc54b8c9eb0b700",
+      "source_stl_sha256": "48da64161ee99b3efb1297ef38e6ebac5b0d9eb319115ca27a39beb281416097",
       "warning_z_mm": [14.6],
-      "raw_external_unsupported_mm": 211.94,
-      "max_actual_span_mm": 5.6,
-      "secondary_span_mm": 4.4,
-      "supported_both_ends": true,
+      "raw_external_unsupported_mm": 148.93,
+      "max_actual_span_mm": 4.4043,
+      "supported_both_ends": false,
       "surface": "internal",
       "decision": "accepted",
-      "reason": "格子は柱間5.6mm、端の柱から案内舌まで4.4mm。積算値は同じ層にある複数の短橋の外周線合計。"
+      "reason": "直線4.4043mmは外柱から案内舌へ上がる45度gussetの最終輪郭。曲線Bridgeは経路12.994mmだが端点間4.2246mmで同じ斜面に沿う。"
     },
     {
       "id": "carrier_2",
-      "source_stl_sha256": "fd6a44dd8a36161ad80b529bc8138878ed1e64393a90d58acc74bec0cb667da5",
+      "source_stl_sha256": "166c3c86634d4ed5142ed3e1f4ed3f2614985910d5df963e31c45bde543b3d99",
       "warning_z_mm": [14.6],
-      "raw_external_unsupported_mm": 211.94,
-      "max_actual_span_mm": 5.6,
-      "secondary_span_mm": 4.4,
-      "supported_both_ends": true,
+      "raw_external_unsupported_mm": 140.88,
+      "max_actual_span_mm": 4.4043,
+      "supported_both_ends": false,
       "surface": "internal",
       "decision": "accepted",
-      "reason": "格子は柱間5.6mm、端の柱から案内舌まで4.4mm。積算値は同じ層にある複数の短橋の外周線合計。"
+      "reason": "中央キャリア幅5.6mm版。直線4.4043mmは外柱から案内舌へ上がる45度gussetの最終輪郭。薄肉clusterは0。"
     },
     {
       "id": "carrier_3",
-      "source_stl_sha256": "3007edd938393635a30ae2931cf21caa2ba62edc64aab533d93f18a6c401b5d8",
+      "source_stl_sha256": "db21858c3787713b1cca6be8e1a734a361436c47ae3007a280f04b10e7f730d6",
       "warning_z_mm": [14.6],
-      "raw_external_unsupported_mm": 211.94,
-      "max_actual_span_mm": 5.6,
-      "secondary_span_mm": 4.4,
-      "supported_both_ends": true,
+      "raw_external_unsupported_mm": 148.93,
+      "max_actual_span_mm": 4.4043,
+      "supported_both_ends": false,
       "surface": "internal",
       "decision": "accepted",
-      "reason": "格子は柱間5.6mm、端の柱から案内舌まで4.4mm。積算値は同じ層にある複数の短橋の外周線合計。"
+      "reason": "直線4.4043mmは外柱から案内舌へ上がる45度gussetの最終輪郭。曲線Bridgeは経路12.994mmだが端点間4.2246mmで同じ斜面に沿う。"
     },
     {
       "id": "carrier_4",
-      "source_stl_sha256": "4f3033d23540080e4e14474f4e700e38776dec7c3781e6f41c12bbcc16b34031",
+      "source_stl_sha256": "2f645cc8f99afc8264042566f6e0ba20334d14e616d167e5e34660c0c90491e4",
       "warning_z_mm": [14.6],
-      "raw_external_unsupported_mm": 211.79,
-      "max_actual_span_mm": 5.6,
-      "secondary_span_mm": 4.4,
+      "raw_external_unsupported_mm": 148.93,
+      "max_actual_span_mm": 4.4043,
+      "supported_both_ends": false,
+      "surface": "internal",
+      "decision": "accepted",
+      "reason": "直線4.4043mmは外柱から案内舌へ上がる45度gussetの最終輪郭。曲線Bridgeは経路12.994mmだが端点間4.2246mmで同じ斜面に沿う。"
+    },
+    {
+      "id": "drive_gear",
+      "source_stl_sha256": "85fc9fa5d6d12b19ce6af0ef0ae31d30bf3746ed1d5a10861b5c8e34115ad6f3",
+      "warning_z_mm": [22.8, 23.0, 23.2, 23.4, 23.6, 23.8],
+      "raw_external_unsupported_mm": 164.39,
+      "max_actual_span_mm": 4.79,
       "supported_both_ends": true,
       "surface": "internal",
       "decision": "accepted",
-      "reason": "格子は柱間5.6mm、端の柱から案内舌まで4.4mm。積算値は同じ層にある複数の短橋の外周線合計。"
+      "reason": "端肩を接地。歯幅4.6mmの歯形から歯底、その先のジャーナルまで支持loftで連続する。実Bridge最大4.79mmは両端支持。"
+    },
+    {
+      "id": "cap_right",
+      "source_stl_sha256": "c48c420942bbd39e69801e29f328f7f1c094a813873f88ee2f3944f1414faaf1",
+      "warning_z_mm": [3.4],
+      "raw_external_unsupported_mm": 31.27,
+      "max_actual_span_mm": 8.524,
+      "supported_both_ends": true,
+      "surface": "internal",
+      "decision": "accepted",
+      "reason": "z3.4の最大直線8.524mmは両端支持。閉環を含むunsupported経路は直下支持または成立済み先行経路への実線幅接続を両端で確認した。"
+    },
+    {
+      "id": "cap_left",
+      "source_stl_sha256": "694acfa4aa93ebcaab5eb4faa0dd87f9bcf31d45f06ffa205b24119d4a3a5842",
+      "warning_z_mm": [3.4],
+      "raw_external_unsupported_mm": 30.6,
+      "max_actual_span_mm": 8.524,
+      "supported_both_ends": true,
+      "surface": "internal",
+      "decision": "accepted",
+      "reason": "z3.4の最大直線8.524mmは先行経路path2へ両端接続する。端点距離0.4041/0.3920mmは線幅半分和0.45mm以内。path2は直下支持率0.137で、未支持部6.199mmも両端支持。"
     },
     {
       "id": "shell",
-      "source_stl_sha256": "230e95570e71da845c57ea0af4a3a73ae1071421f2a2de29965bb4605b7733f5",
-      "warning_z_mm": [7.2, 57.0, 58.2, 59.0],
-      "raw_external_unsupported_mm": 444.9,
-      "max_actual_span_mm": 8.0,
-      "secondary_span_mm": 6.2,
+      "source_stl_sha256": "bc20801e100c4bed1d3f1efad876796b1c30743e9ca2c298b590ba0795b953b0",
+      "warning_z_mm": [17.4, 21.2, 26.0, 59.0],
+      "raw_external_unsupported_mm": 484.38,
+      "max_actual_span_mm": 7.2,
       "supported_both_ends": true,
-      "surface": "internal",
+      "surface": "mixed",
       "decision": "accepted",
-      "reason": "配線口は8.0mm、軸受けは6.2mmの両端支持。Z57〜59mmの長い検出は床から続く縦リブで支持した前後ガイドの累積外周線で、単一の水平橋ではない。"
+      "reason": "最大直線7.2mmはz26で両端支持。z17.4のone_end最大3.854mm、z59のBridgeは1.397mm。外側ガイドは床直結リブ4本で支持する。"
     }
   ]
 }

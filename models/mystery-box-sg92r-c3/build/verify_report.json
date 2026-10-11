@@ -4,6 +4,13 @@
   "calibration": {
     "topology": {
       "ok": true,
+      "triangle_area": {
+        "pass": true,
+        "normalTwiceAreaMm2": 1.0,
+        "zeroTwiceAreaMm2": 0.0,
+        "smallPositiveTwiceAreaMm2": 1.0000000000000001e-11,
+        "smallExpectedTwiceAreaMm2": 1e-11
+      },
       "closed_nonmanifold_edges": 0,
       "open_nonmanifold_edges": 3
     },
@@ -12,17 +19,22 @@
       "positive_triangle_pairs": 6,
       "negative_triangle_pairs": 0,
       "positive_common_volume_mm3": 0.5,
-      "negative_common_volume_mm3": 0.0
+      "negative_common_volume_mm3": 0.0,
+      "translated_face_contact_mm3": 0.0,
+      "tilted_face_contact_mm3": 0.0,
+      "thin_overlap_expected_mm3": 0.01,
+      "thin_overlap_mm3": 0.01
     }
   },
   "topology": {
     "shell": {
-      "triangles": 1566,
+      "triangles": 3206,
       "duplicate_triangles": 0,
       "degenerate_triangles": 0,
       "nonmanifold_edges": 0,
+      "numerical_slivers": 0,
       "nonmanifold_where": [],
-      "volume_mm3": 101524.38789569824,
+      "volume_mm3": 102793.21931968664,
       "bbox_mm": [
         [
           -40.0,
@@ -41,6 +53,7 @@
       "duplicate_triangles": 0,
       "degenerate_triangles": 0,
       "nonmanifold_edges": 0,
+      "numerical_slivers": 0,
       "nonmanifold_where": [],
       "volume_mm3": 7767.1736653645785,
       "bbox_mm": [
@@ -57,12 +70,13 @@
       ]
     },
     "carrier_0": {
-      "triangles": 248,
+      "triangles": 256,
       "duplicate_triangles": 0,
       "degenerate_triangles": 0,
       "nonmanifold_edges": 0,
+      "numerical_slivers": 0,
       "nonmanifold_where": [],
-      "volume_mm3": 4815.061559677119,
+      "volume_mm3": 5426.283740488674,
       "bbox_mm": [
         [
           -27.6,
@@ -77,12 +91,13 @@
       ]
     },
     "carrier_1": {
-      "triangles": 248,
+      "triangles": 256,
       "duplicate_triangles": 0,
       "degenerate_triangles": 0,
       "nonmanifold_edges": 0,
+      "numerical_slivers": 0,
       "nonmanifold_where": [],
-      "volume_mm3": 4815.054213047018,
+      "volume_mm3": 5426.279003334055,
       "bbox_mm": [
         [
           -16.4,
@@ -97,16 +112,17 @@
       ]
     },
     "carrier_2": {
-      "triangles": 248,
+      "triangles": 282,
       "duplicate_triangles": 0,
       "degenerate_triangles": 0,
       "nonmanifold_edges": 0,
+      "numerical_slivers": 0,
       "nonmanifold_where": [],
-      "volume_mm3": 4815.0551129499845,
+      "volume_mm3": 4879.310472135252,
       "bbox_mm": [
         [
           -5.2,
-          -32.5,
+          -32.45,
           54.7
         ],
         [
@@ -117,12 +133,13 @@
       ]
     },
     "carrier_3": {
-      "triangles": 248,
+      "triangles": 256,
       "duplicate_triangles": 0,
       "degenerate_triangles": 0,
       "nonmanifold_edges": 0,
+      "numerical_slivers": 0,
       "nonmanifold_where": [],
-      "volume_mm3": 4815.053934160874,
+      "volume_mm3": 5426.278562450399,
       "bbox_mm": [
         [
           6.0,
@@ -137,12 +154,13 @@
       ]
     },
     "carrier_4": {
-      "triangles": 248,
+      "triangles": 256,
       "duplicate_triangles": 0,
       "degenerate_triangles": 0,
       "nonmanifold_edges": 0,
+      "numerical_slivers": 0,
       "nonmanifold_where": [],
-      "volume_mm3": 4815.060075759884,
+      "volume_mm3": 5426.284676488251,
       "bbox_mm": [
         [
           17.2,
@@ -161,8 +179,9 @@
       "duplicate_triangles": 0,
       "degenerate_triangles": 0,
       "nonmanifold_edges": 0,
+      "numerical_slivers": 0,
       "nonmanifold_where": [],
-      "volume_mm3": 1698.848918279634,
+      "volume_mm3": 1694.2488906042017,
       "bbox_mm": [
         [
           -39.7,
@@ -176,183 +195,213 @@
         ]
       ]
     },
-    "cam_0": {
-      "triangles": 460,
+    "left_spacer": {
+      "triangles": 468,
       "duplicate_triangles": 0,
       "degenerate_triangles": 0,
       "nonmanifold_edges": 0,
+      "numerical_slivers": 0,
       "nonmanifold_where": [],
-      "volume_mm3": 522.3176491446795,
+      "volume_mm3": 1259.9662593727312,
+      "bbox_mm": [
+        [
+          -36.8,
+          -6.3,
+          47.4
+        ],
+        [
+          -24.1,
+          6.288,
+          60.0
+        ]
+      ]
+    },
+    "cam_0": {
+      "triangles": 852,
+      "duplicate_triangles": 0,
+      "degenerate_triangles": 0,
+      "nonmanifold_edges": 0,
+      "numerical_slivers": 0,
+      "nonmanifold_where": [],
+      "volume_mm3": 1317.2829885755968,
       "bbox_mm": [
         [
           -23.9,
-          -5.9885,
+          -6.3,
           42.37
         ],
         [
-          -20.9,
+          -12.9,
           9.5,
-          59.7
+          60.0
         ]
       ]
     },
     "cam_1": {
-      "triangles": 540,
+      "triangles": 890,
       "duplicate_triangles": 0,
       "degenerate_triangles": 0,
       "nonmanifold_edges": 0,
+      "numerical_slivers": 0,
       "nonmanifold_where": [],
-      "volume_mm3": 522.6489734215041,
+      "volume_mm3": 1317.9905091974263,
       "bbox_mm": [
         [
           -12.7,
-          -5.9885,
+          -6.3,
           44.99
         ],
         [
-          -9.7,
+          -1.7,
           11.698,
-          59.7
+          60.0
         ]
       ]
     },
     "cam_2": {
-      "triangles": 520,
+      "triangles": 886,
       "duplicate_triangles": 0,
       "degenerate_triangles": 0,
       "nonmanifold_edges": 0,
+      "numerical_slivers": 0,
       "nonmanifold_where": [],
-      "volume_mm3": 522.7170336803728,
+      "volume_mm3": 653.3474534731347,
       "bbox_mm": [
         [
           -1.5,
-          -5.9885,
-          47.7
+          -6.3,
+          47.4
         ],
         [
-          1.5,
+          2.8,
           11.698,
           62.41
         ]
       ]
     },
     "cam_3": {
-      "triangles": 540,
+      "triangles": 890,
       "duplicate_triangles": 0,
       "degenerate_triangles": 0,
       "nonmanifold_edges": 0,
+      "numerical_slivers": 0,
       "nonmanifold_where": [],
-      "volume_mm3": 522.6443931696318,
+      "volume_mm3": 1317.8918135377269,
       "bbox_mm": [
         [
           9.7,
-          -5.9885,
+          -6.3,
           44.99
         ],
         [
-          12.7,
+          20.7,
           11.698,
-          59.7
+          60.0
         ]
       ]
     },
     "cam_4": {
-      "triangles": 460,
+      "triangles": 852,
       "duplicate_triangles": 0,
       "degenerate_triangles": 0,
       "nonmanifold_edges": 0,
+      "numerical_slivers": 0,
       "nonmanifold_where": [],
-      "volume_mm3": 522.306293193251,
+      "volume_mm3": 1804.3670585720492,
       "bbox_mm": [
         [
           20.9,
-          -5.9885,
+          -6.3,
           42.37
         ],
         [
-          23.9,
+          36.8,
           9.5,
-          59.7
+          60.0
         ]
       ]
     },
     "cam_gear": {
-      "triangles": 2280,
+      "triangles": 2708,
       "duplicate_triangles": 0,
       "degenerate_triangles": 0,
       "nonmanifold_edges": 0,
+      "numerical_slivers": 0,
       "nonmanifold_where": [],
-      "volume_mm3": 2632.873727062539,
+      "volume_mm3": 3247.31299200376,
       "bbox_mm": [
         [
-          3.6,
-          -15.9977,
-          37.7615
+          3.0,
+          -15.9967,
+          37.7569
         ],
         [
-          7.6,
-          15.9977,
-          69.6385
+          9.5,
+          15.9967,
+          69.6431
         ]
       ]
     },
     "drive_gear": {
-      "triangles": 244,
+      "triangles": 6484,
       "duplicate_triangles": 0,
       "degenerate_triangles": 0,
       "nonmanifold_edges": 0,
+      "numerical_slivers": 0,
       "nonmanifold_where": [],
-      "volume_mm3": 653.0372038880981,
+      "volume_mm3": 8805.70155713713,
       "bbox_mm": [
         [
-          0.0,
-          -21.0,
-          12.8
+          -3.2,
+          -20.2,
+          7.5033
         ],
         [
-          3.0,
+          25.4,
           18.2,
-          34.2
-        ]
-      ]
-    },
-    "cap_left": {
-      "triangles": 414,
-      "duplicate_triangles": 0,
-      "degenerate_triangles": 0,
-      "nonmanifold_edges": 0,
-      "nonmanifold_where": [],
-      "volume_mm3": 44.7471648771316,
-      "bbox_mm": [
-        [
-          -40.0,
-          -4.2,
-          49.5
-        ],
-        [
-          -38.95,
-          4.182,
-          57.9
+          39.4967
         ]
       ]
     },
     "cap_right": {
-      "triangles": 414,
+      "triangles": 2866,
       "duplicate_triangles": 0,
       "degenerate_triangles": 0,
       "nonmanifold_edges": 0,
+      "numerical_slivers": 0,
       "nonmanifold_where": [],
-      "volume_mm3": 44.74849745134507,
+      "volume_mm3": 409.86092837038854,
       "bbox_mm": [
         [
-          38.95,
-          -4.2,
-          49.5
+          35.55,
+          -10.5,
+          45.95
         ],
         [
-          40.0,
-          4.182,
-          57.9
+          39.95,
+          10.5,
+          61.45
+        ]
+      ]
+    },
+    "cap_left": {
+      "triangles": 2866,
+      "duplicate_triangles": 0,
+      "degenerate_triangles": 0,
+      "nonmanifold_edges": 0,
+      "numerical_slivers": 0,
+      "nonmanifold_where": [],
+      "volume_mm3": 409.86092837038854,
+      "bbox_mm": [
+        [
+          -39.95,
+          -10.5,
+          45.95
+        ],
+        [
+          -35.55,
+          10.5,
+          61.45
         ]
       ]
     },
@@ -361,6 +410,7 @@
       "duplicate_triangles": 0,
       "degenerate_triangles": 0,
       "nonmanifold_edges": 0,
+      "numerical_slivers": 0,
       "nonmanifold_where": [],
       "volume_mm3": 968.3992865880332,
       "bbox_mm": [
@@ -376,53 +426,35 @@
         ]
       ]
     },
-    "fit_horn": {
-      "triangles": 224,
+    "drive_bearing_clip": {
+      "triangles": 86,
       "duplicate_triangles": 0,
       "degenerate_triangles": 0,
       "nonmanifold_edges": 0,
+      "numerical_slivers": 0,
       "nonmanifold_where": [],
-      "volume_mm3": 651.5971697767574,
+      "volume_mm3": 196.20027860005706,
       "bbox_mm": [
         [
-          0.0,
-          -20.2,
-          12.8
+          20.75,
+          -7.7,
+          19.6
         ],
         [
-          3.0,
-          18.2,
-          34.2
-        ]
-      ]
-    },
-    "fit_bearing": {
-      "triangles": 236,
-      "duplicate_triangles": 0,
-      "degenerate_triangles": 0,
-      "nonmanifold_edges": 0,
-      "nonmanifold_where": [],
-      "volume_mm3": 1050.5528242886069,
-      "bbox_mm": [
-        [
-          -6.0,
-          -16.0,
-          0.0
-        ],
-        [
-          6.0,
-          10.5,
-          8.0
+          23.75,
+          7.7,
+          29.75
         ]
       ]
     },
     "ref_servo": {
-      "triangles": 64,
+      "triangles": 1150,
       "duplicate_triangles": 0,
       "degenerate_triangles": 0,
       "nonmanifold_edges": 0,
+      "numerical_slivers": 0,
       "nonmanifold_where": [],
-      "volume_mm3": 6287.999735514321,
+      "volume_mm3": 6929.3069486277145,
       "bbox_mm": [
         [
           -30.5,
@@ -430,22 +462,23 @@
           17.5
         ],
         [
-          -8.5,
+          0.0,
           11.0,
           29.5
         ]
       ]
     },
     "ref_horn": {
-      "triangles": 92,
+      "triangles": 4226,
       "duplicate_triangles": 0,
       "degenerate_triangles": 0,
       "nonmanifold_edges": 0,
+      "numerical_slivers": 19,
       "nonmanifold_where": [],
-      "volume_mm3": 360.74999713897705,
+      "volume_mm3": 369.5828505479211,
       "bbox_mm": [
         [
-          0.0,
+          -3.0,
           -18.0,
           15.0
         ],
@@ -457,20 +490,21 @@
       ]
     },
     "ref_wire": {
-      "triangles": 12,
+      "triangles": 846,
       "duplicate_triangles": 0,
       "degenerate_triangles": 0,
       "nonmanifold_edges": 0,
+      "numerical_slivers": 0,
       "nonmanifold_where": [],
-      "volume_mm3": 255.99999999999994,
+      "volume_mm3": 43.5155150436282,
       "bbox_mm": [
         [
-          -26.0,
+          -26.3,
           6.5,
           21.5
         ],
         [
-          -18.0,
+          -24.7,
           14.5,
           25.5
         ]
@@ -479,62 +513,62 @@
   },
   "source_stl_integrity": {
     "start": {
-      "shell": "230e95570e71da845c57ea0af4a3a73ae1071421f2a2de29965bb4605b7733f5",
+      "shell": "bc20801e100c4bed1d3f1efad876796b1c30743e9ca2c298b590ba0795b953b0",
       "top_frame": "21cf70d141d8a5c26d94692b0694600a99df343a7fd5e8059c22b5995e635965",
-      "carrier_0": "d3dc2e0c18e7317823a4c3620873b345c7182c5ecf47fbc0b47e36b479d7f538",
-      "carrier_1": "937d667bd44479df869a6cf3a3a4ef29659b35149aee1fdab2ab4261c7be9e7f",
-      "carrier_2": "9c7ab191b108eb34c1c7f0d28d5ff2d2b0955dbf198210c10d02297dc3e163f5",
-      "carrier_3": "cd10c4d9d76032fd3a04ea00d51bcded341643517850f6209e63ea1e570a79b6",
-      "carrier_4": "1762d2aefe1208814aae67a238e871a9987f303a115391f5446a6a71503003bc",
-      "camshaft": "28856eac092f76ff240f073621099471e4ceb9c39c211965546c4e7afd99e148",
-      "cam_0": "1ae2048ced9b1c84240952ae9bcd3dc3f954e86a6b00d0e2b8e9d1ba5a952df4",
-      "cam_1": "c217d02dbc58b3e96a61f320762f2755d380a437d06f9f4c93b42e2fef3740d3",
-      "cam_2": "efa8437a72b8757721d70f24be810e0480860b49d48d904ad66c5f80acf44b65",
-      "cam_3": "8362d0e65e454f75c1bbe9400c3b808fd2d1a3855402bfecca64ab4278d85221",
-      "cam_4": "8d6691840b4b30e9aa8019268b8f4d2d638f83e7d24070d5308a5b721a3831c9",
-      "cam_gear": "fd340a486fd5bca772ae3c771efccd048fda70f8774a1b07a5e555589675a958",
-      "drive_gear": "c14266abc59aeb618fa9cb20825e66c42271115709437e3b9d44447000a917a5",
-      "cap_left": "fa4d6c41a82a73b822b85e70d2f1bfbc5af041947f900742983b5e15e8060dfc",
-      "cap_right": "54b4047f195978c3e60e9c7dcccf2de9827db05696fd5eaa6d5b5b88b56dd3f1",
+      "carrier_0": "196b1b1ba9bcfe86542b6c9357b8a1e80a2564fa87b3fa9c71e4653ce3d0485e",
+      "carrier_1": "63a703e44959af5aea47ad7b850b00de376fa9476cd2b67268e1038eee1f2cc7",
+      "carrier_2": "fc32edd035e07eef32cb74952a456836018cfc1cfbaf453cc98090d7675c8863",
+      "carrier_3": "3ec5fcc46e2c2ae12485f34da7dccc8cf10f12799aefb264891e147f19794f89",
+      "carrier_4": "c2e094a1523a80ec47e999c1b771687c12992ac83a75b468c99ebdb6888acdd2",
+      "camshaft": "2c8624f84dc007321a330dec414187958085da223d265b4bea23fa440c43b320",
+      "left_spacer": "89d80a014d430bede873fcc15010feacaabf34311d556fdac8cbad436719e69d",
+      "cam_0": "9d776eba6d16ee6834846688637934126adcb9061b9446e52670e02abdce53f4",
+      "cam_1": "f83eaec9320353c941fe2f37ecb6d40733d0e7b7d0e6953c76d97982a024e9a1",
+      "cam_2": "d93c17bc607ceca537bb928500d0491ec1ab01a88f4452d2ed2b0ba5e945a8ff",
+      "cam_3": "41372b490de156c4a1db253eb0ae5329234297938b5e6f46b9d52291d8c24c8a",
+      "cam_4": "ee03f3fb77804e2c3719b433ad03b917d7493393e1c3fbceabc93778b737c59b",
+      "cam_gear": "df20fe8e938339b11d8ff2365e1a116b4ffab2ebc4ac98cce56ef109050fa082",
+      "drive_gear": "9e6ce8fd0a6d6928af52f600352c89feeb4915d6b3997e9b12c94bf25006de7f",
+      "cap_right": "b92d1bf3725d8871499343c9bc5f9201533d0384853967935c8581f2287f9939",
+      "cap_left": "78204dd74bc5a965901ad074b726fe88f24951ff3ac2d9c3cea155ace722298f",
       "servo_clip": "769364c10b75a697faf03c5a876fff15cc33247f5bd2edae517b98b7ceeb7a61",
-      "fit_horn": "79ef682bfaec73b06fd3e9ce3941bd2051d3222eda2b79b0eb707d1bb99fa018",
-      "fit_bearing": "45c0bc3545a5e1bb7f540bc116fe9a6edc1b3a602087edcd665343b50844649f",
-      "ref_servo": "a2023254ebc1fb1725d7dcf56bdf0c162519124cdf4000a34cf22cf23d4ddc37",
-      "ref_horn": "82e9eb138d944078b1932b4f7e2066df4d2ff76647a2926ce9db1f24ea97c69b",
-      "ref_wire": "cf637b63ec9f07c9ddab48a65b7aeb016328d9ef50ab124f22024a32be52d7c0"
+      "drive_bearing_clip": "2723f3f2c8839aeb743f0828c575e9362e30526c2cccbfca0b9a26cfbd47cf2c",
+      "ref_servo": "c8a07a11a04a3ceca741c888a3864fb3cf9c2dc32ef6a13c20abf9a07dcbf413",
+      "ref_horn": "7e178c4aa3a34bdd85657f4046c55a4bcc4540bb422ca3677818c2b7df1aed55",
+      "ref_wire": "776dcb9d37dcf6737c396f0ef9b6f234ac5e0d801992dfebd764f1fe481c18ad"
     },
     "end": {
-      "shell": "230e95570e71da845c57ea0af4a3a73ae1071421f2a2de29965bb4605b7733f5",
+      "shell": "bc20801e100c4bed1d3f1efad876796b1c30743e9ca2c298b590ba0795b953b0",
       "top_frame": "21cf70d141d8a5c26d94692b0694600a99df343a7fd5e8059c22b5995e635965",
-      "carrier_0": "d3dc2e0c18e7317823a4c3620873b345c7182c5ecf47fbc0b47e36b479d7f538",
-      "carrier_1": "937d667bd44479df869a6cf3a3a4ef29659b35149aee1fdab2ab4261c7be9e7f",
-      "carrier_2": "9c7ab191b108eb34c1c7f0d28d5ff2d2b0955dbf198210c10d02297dc3e163f5",
-      "carrier_3": "cd10c4d9d76032fd3a04ea00d51bcded341643517850f6209e63ea1e570a79b6",
-      "carrier_4": "1762d2aefe1208814aae67a238e871a9987f303a115391f5446a6a71503003bc",
-      "camshaft": "28856eac092f76ff240f073621099471e4ceb9c39c211965546c4e7afd99e148",
-      "cam_0": "1ae2048ced9b1c84240952ae9bcd3dc3f954e86a6b00d0e2b8e9d1ba5a952df4",
-      "cam_1": "c217d02dbc58b3e96a61f320762f2755d380a437d06f9f4c93b42e2fef3740d3",
-      "cam_2": "efa8437a72b8757721d70f24be810e0480860b49d48d904ad66c5f80acf44b65",
-      "cam_3": "8362d0e65e454f75c1bbe9400c3b808fd2d1a3855402bfecca64ab4278d85221",
-      "cam_4": "8d6691840b4b30e9aa8019268b8f4d2d638f83e7d24070d5308a5b721a3831c9",
-      "cam_gear": "fd340a486fd5bca772ae3c771efccd048fda70f8774a1b07a5e555589675a958",
-      "drive_gear": "c14266abc59aeb618fa9cb20825e66c42271115709437e3b9d44447000a917a5",
-      "cap_left": "fa4d6c41a82a73b822b85e70d2f1bfbc5af041947f900742983b5e15e8060dfc",
-      "cap_right": "54b4047f195978c3e60e9c7dcccf2de9827db05696fd5eaa6d5b5b88b56dd3f1",
+      "carrier_0": "196b1b1ba9bcfe86542b6c9357b8a1e80a2564fa87b3fa9c71e4653ce3d0485e",
+      "carrier_1": "63a703e44959af5aea47ad7b850b00de376fa9476cd2b67268e1038eee1f2cc7",
+      "carrier_2": "fc32edd035e07eef32cb74952a456836018cfc1cfbaf453cc98090d7675c8863",
+      "carrier_3": "3ec5fcc46e2c2ae12485f34da7dccc8cf10f12799aefb264891e147f19794f89",
+      "carrier_4": "c2e094a1523a80ec47e999c1b771687c12992ac83a75b468c99ebdb6888acdd2",
+      "camshaft": "2c8624f84dc007321a330dec414187958085da223d265b4bea23fa440c43b320",
+      "left_spacer": "89d80a014d430bede873fcc15010feacaabf34311d556fdac8cbad436719e69d",
+      "cam_0": "9d776eba6d16ee6834846688637934126adcb9061b9446e52670e02abdce53f4",
+      "cam_1": "f83eaec9320353c941fe2f37ecb6d40733d0e7b7d0e6953c76d97982a024e9a1",
+      "cam_2": "d93c17bc607ceca537bb928500d0491ec1ab01a88f4452d2ed2b0ba5e945a8ff",
+      "cam_3": "41372b490de156c4a1db253eb0ae5329234297938b5e6f46b9d52291d8c24c8a",
+      "cam_4": "ee03f3fb77804e2c3719b433ad03b917d7493393e1c3fbceabc93778b737c59b",
+      "cam_gear": "df20fe8e938339b11d8ff2365e1a116b4ffab2ebc4ac98cce56ef109050fa082",
+      "drive_gear": "9e6ce8fd0a6d6928af52f600352c89feeb4915d6b3997e9b12c94bf25006de7f",
+      "cap_right": "b92d1bf3725d8871499343c9bc5f9201533d0384853967935c8581f2287f9939",
+      "cap_left": "78204dd74bc5a965901ad074b726fe88f24951ff3ac2d9c3cea155ace722298f",
       "servo_clip": "769364c10b75a697faf03c5a876fff15cc33247f5bd2edae517b98b7ceeb7a61",
-      "fit_horn": "79ef682bfaec73b06fd3e9ce3941bd2051d3222eda2b79b0eb707d1bb99fa018",
-      "fit_bearing": "45c0bc3545a5e1bb7f540bc116fe9a6edc1b3a602087edcd665343b50844649f",
-      "ref_servo": "a2023254ebc1fb1725d7dcf56bdf0c162519124cdf4000a34cf22cf23d4ddc37",
-      "ref_horn": "82e9eb138d944078b1932b4f7e2066df4d2ff76647a2926ce9db1f24ea97c69b",
-      "ref_wire": "cf637b63ec9f07c9ddab48a65b7aeb016328d9ef50ab124f22024a32be52d7c0"
+      "drive_bearing_clip": "2723f3f2c8839aeb743f0828c575e9362e30526c2cccbfca0b9a26cfbd47cf2c",
+      "ref_servo": "c8a07a11a04a3ceca741c888a3864fb3cf9c2dc32ef6a13c20abf9a07dcbf413",
+      "ref_horn": "7e178c4aa3a34bdd85657f4046c55a4bcc4540bb422ca3677818c2b7df1aed55",
+      "ref_wire": "776dcb9d37dcf6737c396f0ef9b6f234ac5e0d801992dfebd764f1fe481c18ad"
     },
     "pass": true
   },
   "exact_scene": {
-    "method": "all pairs; disjoint AABB or Boolean EXACT; bounded clip flex only",
+    "method": "all pairs; disjoint AABB or Boolean MANIFOLD; bounded clip flex only",
     "poses": 61,
     "step_deg": 2.5,
-    "pair_count": 210,
+    "pair_count": 253,
     "limit_mm3": 0.001,
     "pairs": [
       {
@@ -542,9 +576,11 @@
           "shell",
           "top_frame"
         ],
-        "maximum_mm3": 0.0,
+        "maximum_mm3": 0.0005463,
         "ok": true,
-        "samples": 61
+        "samples": 61,
+        "worst_servo_deg": 15.0,
+        "flex": null
       },
       {
         "pair": [
@@ -595,6 +631,15 @@
         "pair": [
           "shell",
           "camshaft"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "shell",
+          "left_spacer"
         ],
         "maximum_mm3": 0.0,
         "ok": true,
@@ -666,15 +711,6 @@
       {
         "pair": [
           "shell",
-          "cap_left"
-        ],
-        "maximum_mm3": 0.0,
-        "ok": true,
-        "samples": 61
-      },
-      {
-        "pair": [
-          "shell",
           "cap_right"
         ],
         "maximum_mm3": 0.0,
@@ -684,7 +720,25 @@
       {
         "pair": [
           "shell",
+          "cap_left"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "shell",
           "servo_clip"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "shell",
+          "drive_bearing_clip"
         ],
         "maximum_mm3": 0.0,
         "ok": true,
@@ -774,6 +828,15 @@
       {
         "pair": [
           "top_frame",
+          "left_spacer"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "top_frame",
           "cam_0"
         ],
         "maximum_mm3": 0.0,
@@ -837,15 +900,6 @@
       {
         "pair": [
           "top_frame",
-          "cap_left"
-        ],
-        "maximum_mm3": 0.0,
-        "ok": true,
-        "samples": 61
-      },
-      {
-        "pair": [
-          "top_frame",
           "cap_right"
         ],
         "maximum_mm3": 0.0,
@@ -855,7 +909,25 @@
       {
         "pair": [
           "top_frame",
+          "cap_left"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "top_frame",
           "servo_clip"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "top_frame",
+          "drive_bearing_clip"
         ],
         "maximum_mm3": 0.0,
         "ok": true,
@@ -928,6 +1000,15 @@
         "pair": [
           "carrier_0",
           "camshaft"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_0",
+          "left_spacer"
         ],
         "maximum_mm3": 0.0,
         "ok": true,
@@ -1001,15 +1082,6 @@
       {
         "pair": [
           "carrier_0",
-          "cap_left"
-        ],
-        "maximum_mm3": 0.0,
-        "ok": true,
-        "samples": 61
-      },
-      {
-        "pair": [
-          "carrier_0",
           "cap_right"
         ],
         "maximum_mm3": 0.0,
@@ -1019,7 +1091,25 @@
       {
         "pair": [
           "carrier_0",
+          "cap_left"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_0",
           "servo_clip"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_0",
+          "drive_bearing_clip"
         ],
         "maximum_mm3": 0.0,
         "ok": true,
@@ -1083,6 +1173,15 @@
         "pair": [
           "carrier_1",
           "camshaft"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_1",
+          "left_spacer"
         ],
         "maximum_mm3": 0.0,
         "ok": true,
@@ -1156,15 +1255,6 @@
       {
         "pair": [
           "carrier_1",
-          "cap_left"
-        ],
-        "maximum_mm3": 0.0,
-        "ok": true,
-        "samples": 61
-      },
-      {
-        "pair": [
-          "carrier_1",
           "cap_right"
         ],
         "maximum_mm3": 0.0,
@@ -1174,7 +1264,25 @@
       {
         "pair": [
           "carrier_1",
+          "cap_left"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_1",
           "servo_clip"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_1",
+          "drive_bearing_clip"
         ],
         "maximum_mm3": 0.0,
         "ok": true,
@@ -1229,6 +1337,15 @@
         "pair": [
           "carrier_2",
           "camshaft"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_2",
+          "left_spacer"
         ],
         "maximum_mm3": 0.0,
         "ok": true,
@@ -1302,15 +1419,6 @@
       {
         "pair": [
           "carrier_2",
-          "cap_left"
-        ],
-        "maximum_mm3": 0.0,
-        "ok": true,
-        "samples": 61
-      },
-      {
-        "pair": [
-          "carrier_2",
           "cap_right"
         ],
         "maximum_mm3": 0.0,
@@ -1320,7 +1428,25 @@
       {
         "pair": [
           "carrier_2",
+          "cap_left"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_2",
           "servo_clip"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_2",
+          "drive_bearing_clip"
         ],
         "maximum_mm3": 0.0,
         "ok": true,
@@ -1366,6 +1492,15 @@
         "pair": [
           "carrier_3",
           "camshaft"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_3",
+          "left_spacer"
         ],
         "maximum_mm3": 0.0,
         "ok": true,
@@ -1439,15 +1574,6 @@
       {
         "pair": [
           "carrier_3",
-          "cap_left"
-        ],
-        "maximum_mm3": 0.0,
-        "ok": true,
-        "samples": 61
-      },
-      {
-        "pair": [
-          "carrier_3",
           "cap_right"
         ],
         "maximum_mm3": 0.0,
@@ -1457,7 +1583,25 @@
       {
         "pair": [
           "carrier_3",
+          "cap_left"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_3",
           "servo_clip"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_3",
+          "drive_bearing_clip"
         ],
         "maximum_mm3": 0.0,
         "ok": true,
@@ -1494,6 +1638,15 @@
         "pair": [
           "carrier_4",
           "camshaft"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_4",
+          "left_spacer"
         ],
         "maximum_mm3": 0.0,
         "ok": true,
@@ -1567,15 +1720,6 @@
       {
         "pair": [
           "carrier_4",
-          "cap_left"
-        ],
-        "maximum_mm3": 0.0,
-        "ok": true,
-        "samples": 61
-      },
-      {
-        "pair": [
-          "carrier_4",
           "cap_right"
         ],
         "maximum_mm3": 0.0,
@@ -1585,7 +1729,25 @@
       {
         "pair": [
           "carrier_4",
+          "cap_left"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_4",
           "servo_clip"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "carrier_4",
+          "drive_bearing_clip"
         ],
         "maximum_mm3": 0.0,
         "ok": true,
@@ -1613,6 +1775,15 @@
         "pair": [
           "carrier_4",
           "ref_wire"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "camshaft",
+          "left_spacer"
         ],
         "maximum_mm3": 0.0,
         "ok": true,
@@ -1684,15 +1855,6 @@
       {
         "pair": [
           "camshaft",
-          "cap_left"
-        ],
-        "maximum_mm3": 0.0,
-        "ok": true,
-        "samples": 61
-      },
-      {
-        "pair": [
-          "camshaft",
           "cap_right"
         ],
         "maximum_mm3": 0.0,
@@ -1702,7 +1864,25 @@
       {
         "pair": [
           "camshaft",
+          "cap_left"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "camshaft",
           "servo_clip"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "camshaft",
+          "drive_bearing_clip"
         ],
         "maximum_mm3": 0.0,
         "ok": true,
@@ -1729,6 +1909,132 @@
       {
         "pair": [
           "camshaft",
+          "ref_wire"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "left_spacer",
+          "cam_0"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "left_spacer",
+          "cam_1"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "left_spacer",
+          "cam_2"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "left_spacer",
+          "cam_3"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "left_spacer",
+          "cam_4"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "left_spacer",
+          "cam_gear"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "left_spacer",
+          "drive_gear"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "left_spacer",
+          "cap_right"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "left_spacer",
+          "cap_left"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "left_spacer",
+          "servo_clip"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "left_spacer",
+          "drive_bearing_clip"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "left_spacer",
+          "ref_servo"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "left_spacer",
+          "ref_horn"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "left_spacer",
           "ref_wire"
         ],
         "maximum_mm3": 0.0,
@@ -1792,15 +2098,6 @@
       {
         "pair": [
           "cam_0",
-          "cap_left"
-        ],
-        "maximum_mm3": 0.0,
-        "ok": true,
-        "samples": 61
-      },
-      {
-        "pair": [
-          "cam_0",
           "cap_right"
         ],
         "maximum_mm3": 0.0,
@@ -1810,7 +2107,25 @@
       {
         "pair": [
           "cam_0",
+          "cap_left"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_0",
           "servo_clip"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_0",
+          "drive_bearing_clip"
         ],
         "maximum_mm3": 0.0,
         "ok": true,
@@ -1891,15 +2206,6 @@
       {
         "pair": [
           "cam_1",
-          "cap_left"
-        ],
-        "maximum_mm3": 0.0,
-        "ok": true,
-        "samples": 61
-      },
-      {
-        "pair": [
-          "cam_1",
           "cap_right"
         ],
         "maximum_mm3": 0.0,
@@ -1909,7 +2215,25 @@
       {
         "pair": [
           "cam_1",
+          "cap_left"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_1",
           "servo_clip"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_1",
+          "drive_bearing_clip"
         ],
         "maximum_mm3": 0.0,
         "ok": true,
@@ -1981,15 +2305,6 @@
       {
         "pair": [
           "cam_2",
-          "cap_left"
-        ],
-        "maximum_mm3": 0.0,
-        "ok": true,
-        "samples": 61
-      },
-      {
-        "pair": [
-          "cam_2",
           "cap_right"
         ],
         "maximum_mm3": 0.0,
@@ -1999,7 +2314,25 @@
       {
         "pair": [
           "cam_2",
+          "cap_left"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_2",
           "servo_clip"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_2",
+          "drive_bearing_clip"
         ],
         "maximum_mm3": 0.0,
         "ok": true,
@@ -2062,15 +2395,6 @@
       {
         "pair": [
           "cam_3",
-          "cap_left"
-        ],
-        "maximum_mm3": 0.0,
-        "ok": true,
-        "samples": 61
-      },
-      {
-        "pair": [
-          "cam_3",
           "cap_right"
         ],
         "maximum_mm3": 0.0,
@@ -2080,7 +2404,25 @@
       {
         "pair": [
           "cam_3",
+          "cap_left"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_3",
           "servo_clip"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_3",
+          "drive_bearing_clip"
         ],
         "maximum_mm3": 0.0,
         "ok": true,
@@ -2134,15 +2476,6 @@
       {
         "pair": [
           "cam_4",
-          "cap_left"
-        ],
-        "maximum_mm3": 0.0,
-        "ok": true,
-        "samples": 61
-      },
-      {
-        "pair": [
-          "cam_4",
           "cap_right"
         ],
         "maximum_mm3": 0.0,
@@ -2152,7 +2485,25 @@
       {
         "pair": [
           "cam_4",
+          "cap_left"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_4",
           "servo_clip"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_4",
+          "drive_bearing_clip"
         ],
         "maximum_mm3": 0.0,
         "ok": true,
@@ -2197,6 +2548,15 @@
       {
         "pair": [
           "cam_gear",
+          "cap_right"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cam_gear",
           "cap_left"
         ],
         "maximum_mm3": 0.0,
@@ -2206,7 +2566,7 @@
       {
         "pair": [
           "cam_gear",
-          "cap_right"
+          "servo_clip"
         ],
         "maximum_mm3": 0.0,
         "ok": true,
@@ -2215,7 +2575,7 @@
       {
         "pair": [
           "cam_gear",
-          "servo_clip"
+          "drive_bearing_clip"
         ],
         "maximum_mm3": 0.0,
         "ok": true,
@@ -2243,6 +2603,15 @@
         "pair": [
           "cam_gear",
           "ref_wire"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "drive_gear",
+          "cap_right"
         ],
         "maximum_mm3": 0.0,
         "ok": true,
@@ -2260,7 +2629,7 @@
       {
         "pair": [
           "drive_gear",
-          "cap_right"
+          "servo_clip"
         ],
         "maximum_mm3": 0.0,
         "ok": true,
@@ -2269,7 +2638,7 @@
       {
         "pair": [
           "drive_gear",
-          "servo_clip"
+          "drive_bearing_clip"
         ],
         "maximum_mm3": 0.0,
         "ok": true,
@@ -2304,8 +2673,53 @@
       },
       {
         "pair": [
-          "cap_left",
-          "cap_right"
+          "cap_right",
+          "cap_left"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cap_right",
+          "servo_clip"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cap_right",
+          "drive_bearing_clip"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cap_right",
+          "ref_servo"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cap_right",
+          "ref_horn"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cap_right",
+          "ref_wire"
         ],
         "maximum_mm3": 0.0,
         "ok": true,
@@ -2315,6 +2729,15 @@
         "pair": [
           "cap_left",
           "servo_clip"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "cap_left",
+          "drive_bearing_clip"
         ],
         "maximum_mm3": 0.0,
         "ok": true,
@@ -2349,35 +2772,8 @@
       },
       {
         "pair": [
-          "cap_right",
-          "servo_clip"
-        ],
-        "maximum_mm3": 0.0,
-        "ok": true,
-        "samples": 61
-      },
-      {
-        "pair": [
-          "cap_right",
-          "ref_servo"
-        ],
-        "maximum_mm3": 0.0,
-        "ok": true,
-        "samples": 61
-      },
-      {
-        "pair": [
-          "cap_right",
-          "ref_horn"
-        ],
-        "maximum_mm3": 0.0,
-        "ok": true,
-        "samples": 61
-      },
-      {
-        "pair": [
-          "cap_right",
-          "ref_wire"
+          "servo_clip",
+          "drive_bearing_clip"
         ],
         "maximum_mm3": 0.0,
         "ok": true,
@@ -2419,12 +2815,46 @@
       },
       {
         "pair": [
-          "ref_servo",
+          "drive_bearing_clip",
+          "ref_servo"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "drive_bearing_clip",
           "ref_horn"
         ],
         "maximum_mm3": 0.0,
         "ok": true,
         "samples": 61
+      },
+      {
+        "pair": [
+          "drive_bearing_clip",
+          "ref_wire"
+        ],
+        "maximum_mm3": 0.0,
+        "ok": true,
+        "samples": 61
+      },
+      {
+        "pair": [
+          "ref_servo",
+          "ref_horn"
+        ],
+        "maximum_mm3": 0.0296319,
+        "ok": true,
+        "samples": 61,
+        "worst_servo_deg": 107.5,
+        "flex": {
+          "reference_polygon_difference": true,
+          "region_bounded": true,
+          "volume_limit_mm3": 0.03,
+          "spline_transmission": "unknown"
+        }
       },
       {
         "pair": [
@@ -2448,102 +2878,49 @@
     "ok": true
   },
   "static_geometry": {
-    "method": "assembled static STL; all fixed-part pairs; BVH surface intersection and solid containment",
+    "method": "assembled static STL; every fixed-part pair; disjoint AABB or calibrated Boolean MANIFOLD",
     "parts": [
       "shell",
       "top_frame",
-      "cap_left",
       "cap_right",
+      "cap_left",
       "servo_clip",
+      "drive_bearing_clip",
       "ref_servo",
       "ref_wire"
     ],
-    "checked_pairs": 21,
-    "checked_noncontact_pairs": 13,
-    "allowed_contact_pairs": [
-      [
-        "cap_left",
-        "shell"
-      ],
-      [
-        "cap_right",
-        "shell"
-      ],
-      [
-        "ref_servo",
-        "ref_wire"
-      ],
-      [
-        "ref_servo",
-        "servo_clip"
-      ],
-      [
-        "ref_servo",
-        "shell"
-      ],
-      [
-        "ref_wire",
-        "shell"
-      ],
-      [
-        "servo_clip",
-        "shell"
-      ],
-      [
-        "shell",
-        "top_frame"
-      ]
-    ],
+    "checked_pairs": 28,
+    "checked_noncontact_pairs": 28,
     "allowed_contacts_observed": [
-      {
-        "pair": [
-          "shell",
-          "top_frame"
-        ],
-        "triangle_pairs": 14,
-        "contained_vertices": 0
-      },
-      {
-        "pair": [
-          "servo_clip",
-          "shell"
-        ],
-        "triangle_pairs": 9,
-        "contained_vertices": 0
-      },
-      {
-        "pair": [
-          "ref_servo",
-          "shell"
-        ],
-        "triangle_pairs": 10,
-        "contained_vertices": 0
-      },
       {
         "pair": [
           "ref_servo",
           "servo_clip"
         ],
-        "triangle_pairs": 35,
-        "contained_vertices": 0,
-        "common_volume_mm3": 9.600014
-      },
-      {
-        "pair": [
-          "ref_servo",
-          "ref_wire"
-        ],
-        "triangle_pairs": 8,
-        "contained_vertices": 0
+        "volume_mm3": 9.6000137,
+        "method": "boolean_exact",
+        "flex": {
+          "region_bounded": true,
+          "interference_per_side_mm": 0.1,
+          "strain": 0.0031250000000000006,
+          "strain_limit": 0.02
+        },
+        "ok": true,
+        "intersection_bounds_mm": [
+          [
+            -30.5,
+            -16.5,
+            17.5
+          ],
+          [
+            -26.5,
+            6.5,
+            29.5
+          ]
+        ]
       }
     ],
     "violations": [],
-    "legacy_clip_regression": {
-      "source": "pre-redesign assembly STL measured with calibrated EXACT Boolean",
-      "clip_shell_common_volume_mm3": 39.371441,
-      "clip_servo_common_volume_mm3": 144.0,
-      "detected": true
-    },
     "ok": true
   },
   "motion": {
@@ -2603,7 +2980,7 @@
           "shell"
         ]
       ],
-      "triangle_pairs_max": 14,
+      "triangle_pairs_max": 27,
       "common_volume_mm3_max": 1.24e-05,
       "carrier_shell_exact": {
         "sample_count": 305,
@@ -2622,7 +2999,7 @@
       "cam_follower_rule": "matching cam/column only; analytic height equality",
       "column_stop_rule": "column/shell only; 0.3mm guide clearance and Z stop contact"
     },
-    "checked_noncontact_pairs": 179,
+    "checked_noncontact_pairs": 215,
     "violations": [],
     "carrier_min_gap_mm": 0.8,
     "guide_radial_clearance_mm": 0.3,
@@ -3364,490 +3741,71 @@
     "ok": true
   },
   "assembly": {
-    "method": "assembly STL; 1mm translation samples; disjoint AABB or Boolean EXACT; bounded clip flex only",
-    "calibration": {
-      "ok": true,
-      "positive_triangle_pairs": 6,
-      "negative_triangle_pairs": 0,
-      "positive_common_volume_mm3": 0.5,
-      "negative_common_volume_mm3": 0.0
-    },
-    "clearances_mm": {
-      "servo_per_side": 0.35,
-      "bearing_at_hex_corner": 0.213,
-      "hex_key_per_side": 0.2,
-      "cap_tip_per_side": 0.2,
-      "shaft_axial_play": 0.3,
-      "guide_per_side": 0.3
-    },
-    "press_fit": {
-      "pair": [
-        "servo_clip",
-        "ref_servo"
-      ],
-      "interference_per_side_mm": 0.1,
-      "estimated_surface_strain": 0.00313,
-      "limit": 0.02
-    },
-    "steps": [
-      {
-        "label": "SG92Rと駆動歯車を90度姿勢で上から入れる",
-        "axis": "Z",
-        "step_mm": 1.0,
-        "sample_count": 66,
-        "moving": [
-          "ref_servo",
-          "ref_horn",
-          "drive_gear"
-        ],
-        "static": [
-          "shell"
-        ],
-        "endpoint_contacts": [],
-        "press_contacts": [],
-        "violations": [],
-        "ok": true
-      },
-      {
-        "label": "サーボ押さえを上から0.1mm圧入する",
-        "axis": "Z",
-        "step_mm": 1.0,
-        "sample_count": 21,
-        "moving": [
-          "servo_clip"
-        ],
-        "static": [
-          "shell",
-          "ref_servo"
-        ],
-        "endpoint_contacts": [],
-        "press_contacts": [
-          {
-            "offset_mm": 11.0,
-            "pair": [
-              "servo_clip",
-              "ref_servo"
-            ],
-            "volume_mm3": 0.8000011,
-            "method": "boolean_exact",
-            "flex": {
-              "region_bounded": true,
-              "interference_per_side_mm": 0.1,
-              "strain": 0.0031250000000000006,
-              "strain_limit": 0.02
-            },
-            "ok": true
-          },
-          {
-            "offset_mm": 10.0,
-            "pair": [
-              "servo_clip",
-              "ref_servo"
-            ],
-            "volume_mm3": 1.6000023,
-            "method": "boolean_exact",
-            "flex": {
-              "region_bounded": true,
-              "interference_per_side_mm": 0.1,
-              "strain": 0.0031250000000000006,
-              "strain_limit": 0.02
-            },
-            "ok": true
-          },
-          {
-            "offset_mm": 9.0,
-            "pair": [
-              "servo_clip",
-              "ref_servo"
-            ],
-            "volume_mm3": 2.4000034,
-            "method": "boolean_exact",
-            "flex": {
-              "region_bounded": true,
-              "interference_per_side_mm": 0.1,
-              "strain": 0.0031250000000000006,
-              "strain_limit": 0.02
-            },
-            "ok": true
-          },
-          {
-            "offset_mm": 8.0,
-            "pair": [
-              "servo_clip",
-              "ref_servo"
-            ],
-            "volume_mm3": 3.2000046,
-            "method": "boolean_exact",
-            "flex": {
-              "region_bounded": true,
-              "interference_per_side_mm": 0.1,
-              "strain": 0.0031250000000000006,
-              "strain_limit": 0.02
-            },
-            "ok": true
-          },
-          {
-            "offset_mm": 7.0,
-            "pair": [
-              "servo_clip",
-              "ref_servo"
-            ],
-            "volume_mm3": 4.0000057,
-            "method": "boolean_exact",
-            "flex": {
-              "region_bounded": true,
-              "interference_per_side_mm": 0.1,
-              "strain": 0.0031250000000000006,
-              "strain_limit": 0.02
-            },
-            "ok": true
-          },
-          {
-            "offset_mm": 6.0,
-            "pair": [
-              "servo_clip",
-              "ref_servo"
-            ],
-            "volume_mm3": 4.8000069,
-            "method": "boolean_exact",
-            "flex": {
-              "region_bounded": true,
-              "interference_per_side_mm": 0.1,
-              "strain": 0.0031250000000000006,
-              "strain_limit": 0.02
-            },
-            "ok": true
-          },
-          {
-            "offset_mm": 5.0,
-            "pair": [
-              "servo_clip",
-              "ref_servo"
-            ],
-            "volume_mm3": 5.600008,
-            "method": "boolean_exact",
-            "flex": {
-              "region_bounded": true,
-              "interference_per_side_mm": 0.1,
-              "strain": 0.0031250000000000006,
-              "strain_limit": 0.02
-            },
-            "ok": true
-          },
-          {
-            "offset_mm": 4.0,
-            "pair": [
-              "servo_clip",
-              "ref_servo"
-            ],
-            "volume_mm3": 6.4000092,
-            "method": "boolean_exact",
-            "flex": {
-              "region_bounded": true,
-              "interference_per_side_mm": 0.1,
-              "strain": 0.0031250000000000006,
-              "strain_limit": 0.02
-            },
-            "ok": true
-          },
-          {
-            "offset_mm": 3.0,
-            "pair": [
-              "servo_clip",
-              "ref_servo"
-            ],
-            "volume_mm3": 7.2000103,
-            "method": "boolean_exact",
-            "flex": {
-              "region_bounded": true,
-              "interference_per_side_mm": 0.1,
-              "strain": 0.0031250000000000006,
-              "strain_limit": 0.02
-            },
-            "ok": true
-          },
-          {
-            "offset_mm": 2.0,
-            "pair": [
-              "servo_clip",
-              "ref_servo"
-            ],
-            "volume_mm3": 8.0000114,
-            "method": "boolean_exact",
-            "flex": {
-              "region_bounded": true,
-              "interference_per_side_mm": 0.1,
-              "strain": 0.0031250000000000006,
-              "strain_limit": 0.02
-            },
-            "ok": true
-          },
-          {
-            "offset_mm": 1.0,
-            "pair": [
-              "servo_clip",
-              "ref_servo"
-            ],
-            "volume_mm3": 8.8000126,
-            "method": "boolean_exact",
-            "flex": {
-              "region_bounded": true,
-              "interference_per_side_mm": 0.1,
-              "strain": 0.0031250000000000006,
-              "strain_limit": 0.02
-            },
-            "ok": true
-          },
-          {
-            "offset_mm": 0.0,
-            "pair": [
-              "servo_clip",
-              "ref_servo"
-            ],
-            "volume_mm3": 9.6000137,
-            "method": "boolean_exact",
-            "flex": {
-              "region_bounded": true,
-              "interference_per_side_mm": 0.1,
-              "strain": 0.0031250000000000006,
-              "strain_limit": 0.02
-            },
-            "ok": true
-          }
-        ],
-        "violations": [],
-        "ok": true
-      },
-      {
-        "label": "カムと従動歯車を90度位相で上から置く",
-        "axis": "Z",
-        "step_mm": 1.0,
-        "sample_count": 36,
-        "moving": [
-          "cam_0",
-          "cam_1",
-          "cam_2",
-          "cam_3",
-          "cam_4",
-          "cam_gear"
-        ],
-        "static": [
-          "shell",
-          "drive_gear"
-        ],
-        "endpoint_contacts": [],
-        "press_contacts": [],
-        "violations": [],
-        "ok": true
-      },
-      {
-        "label": "六角軸を右から軸受けとカムへ通す",
-        "axis": "X",
-        "step_mm": 1.0,
-        "sample_count": 83,
-        "moving": [
-          "camshaft"
-        ],
-        "static": [
-          "shell",
-          "cam_gear",
-          "cam_0",
-          "cam_1",
-          "cam_2",
-          "cam_3",
-          "cam_4"
-        ],
-        "endpoint_contacts": [],
-        "press_contacts": [],
-        "violations": [],
-        "ok": true
-      },
-      {
-        "label": "右キャップを外側から押し込む",
-        "axis": "X",
-        "step_mm": 1.0,
-        "sample_count": 9,
-        "moving": [
-          "cap_right"
-        ],
-        "static": [
-          "shell",
-          "camshaft"
-        ],
-        "endpoint_contacts": [],
-        "press_contacts": [],
-        "violations": [],
-        "ok": true
-      },
-      {
-        "label": "左キャップを外側から押し込む",
-        "axis": "X",
-        "step_mm": 1.0,
-        "sample_count": 9,
-        "moving": [
-          "cap_left"
-        ],
-        "static": [
-          "shell",
-          "camshaft"
-        ],
-        "endpoint_contacts": [],
-        "press_contacts": [],
-        "violations": [],
-        "ok": true
-      },
-      {
-        "label": "格子列1を上からガイドへ入れる",
-        "axis": "Z",
-        "step_mm": 1.0,
-        "sample_count": 13,
-        "moving": [
-          "carrier_0"
-        ],
-        "static": [
-          "shell",
-          "cam_0"
-        ],
-        "endpoint_contacts": [],
-        "press_contacts": [],
-        "violations": [],
-        "ok": true
-      },
-      {
-        "label": "格子列2を上からガイドへ入れる",
-        "axis": "Z",
-        "step_mm": 1.0,
-        "sample_count": 13,
-        "moving": [
-          "carrier_1"
-        ],
-        "static": [
-          "shell",
-          "cam_1",
-          "carrier_0"
-        ],
-        "endpoint_contacts": [],
-        "press_contacts": [],
-        "violations": [],
-        "ok": true
-      },
-      {
-        "label": "格子列3を上からガイドへ入れる",
-        "axis": "Z",
-        "step_mm": 1.0,
-        "sample_count": 13,
-        "moving": [
-          "carrier_2"
-        ],
-        "static": [
-          "shell",
-          "cam_2",
-          "carrier_0",
-          "carrier_1"
-        ],
-        "endpoint_contacts": [],
-        "press_contacts": [],
-        "violations": [],
-        "ok": true
-      },
-      {
-        "label": "格子列4を上からガイドへ入れる",
-        "axis": "Z",
-        "step_mm": 1.0,
-        "sample_count": 13,
-        "moving": [
-          "carrier_3"
-        ],
-        "static": [
-          "shell",
-          "cam_3",
-          "carrier_0",
-          "carrier_1",
-          "carrier_2"
-        ],
-        "endpoint_contacts": [],
-        "press_contacts": [],
-        "violations": [],
-        "ok": true
-      },
-      {
-        "label": "格子列5を上からガイドへ入れる",
-        "axis": "Z",
-        "step_mm": 1.0,
-        "sample_count": 13,
-        "moving": [
-          "carrier_4"
-        ],
-        "static": [
-          "shell",
-          "cam_4",
-          "carrier_0",
-          "carrier_1",
-          "carrier_2",
-          "carrier_3"
-        ],
-        "endpoint_contacts": [],
-        "press_contacts": [],
-        "violations": [],
-        "ok": true
-      },
-      {
-        "label": "天面案内板を格子列の周囲へ下ろして棚へ置く",
-        "axis": "Z",
-        "step_mm": 1.0,
-        "sample_count": 13,
-        "moving": [
-          "top_frame"
-        ],
-        "static": [
-          "shell",
-          "carrier_0",
-          "carrier_1",
-          "carrier_2",
-          "carrier_3",
-          "carrier_4"
-        ],
-        "endpoint_contacts": [],
-        "press_contacts": [],
-        "violations": [],
-        "ok": true
-      }
+    "report": "build/assembly_report.json",
+    "reportPass": true,
+    "sourceHashesPass": true,
+    "stepCount": 19,
+    "sampleCount": 647,
+    "violationCount": 0,
+    "failureSummary": [],
+    "pass": true,
+    "basis": "現行表示と同じ累積組立経路。レポート生成後のSTL変更は不合格。"
+  },
+  "drive": {
+    "report": "build/drive_report.json",
+    "geometryPass": true,
+    "sourceHashesPass": true,
+    "physicalStatus": "conditional",
+    "hardwareUnknown": [
+      "SG92R のスプライン嵌合と軸高さ",
+      "印刷収縮と接触摩擦",
+      "保持具の着脱と荷重試験"
     ],
-    "release": "逆順で格子列、案内板、キャップ、六角軸を外せる。同じ経路の逆再生。",
-    "ok": true
+    "pass": true,
+    "basis": "実 STL の接触と保持を検査。スプライン嵌合と材料は実機未確認。"
   },
   "torque": {
     "carrier_volume_mm3": [
-      4815.06,
-      4815.05,
-      4815.06,
-      4815.05,
-      4815.06
+      5426.28,
+      5426.28,
+      4879.31,
+      5426.28,
+      5426.28
     ],
     "carrier_mass_g": [
-      5.971,
-      5.971,
-      5.971,
-      5.971,
-      5.971
+      6.729,
+      6.729,
+      6.05,
+      6.729,
+      6.729
     ],
-    "gravity_torque_Nm": 0.000864,
-    "friction_torque_Nm": 0.000615,
-    "required_torque_Nm": 0.001479,
+    "gravity_torque_Nm": 0.000966,
+    "friction_torque_Nm": 0.000679,
+    "required_torque_Nm": 0.001645,
     "stall_torque_Nm": 0.245,
-    "stall_ratio": 0.00604,
-    "one_third_stall_ratio": 0.01811,
+    "stall_ratio": 0.00672,
+    "one_third_stall_ratio": 0.02015,
     "max_follower_speed_mm_s": 12.272,
     "command": "2.0s quintic each way; do not step directly across follower engagement",
     "power_off": "cam may remain near its stopped angle; after power returns, command a slow move to home",
-    "ok": true
+    "ok": true,
+    "basis": "接続形状の成立を前提にした1自由度の計算確認。実機のスプライン嵌合、材料強度、摩擦を合格にしない。"
   },
+  "physicalStatus": "conditional",
+  "passBasis": "CAD形状、現行組立経路、駆動接続、条件付き1自由度計算の合否。実機合格ではない。",
+  "hardwareUnknown": [
+    "SG92R のスプライン嵌合と軸高さ",
+    "印刷収縮と接触摩擦",
+    "保持具の着脱と荷重試験"
+  ],
+  "passScope": "cad",
   "limits": [
     "BVHは表面交差と閉立体への包含を検出する。共通体積0の断定には使わない。",
-    "全61姿勢の全剛体ペアと1mm刻みの組立経路を校正済みEXACT Booleanで測定した。AABBが交わらない組だけは幾何学的に0と判定した。",
-    "組立経路は1mm刻みの途中姿勢で検査した。層変形と手で部品を傾ける経路は再現しない。",
+    "全61姿勢の253剛体組を校正済みMANIFOLD Booleanで測定した。AABBが交わらない組だけは幾何学的に0と判定した。",
+    "組立経路は現行assembly_report.jsonを参照する。層変形と手で部品を傾ける経路は再現しない。",
     "サーボ押さえの左右0.1mm圧入帯だけは接触位置と推定ひずみを限定して許容した。カム接触も部品全体を検査した。",
     "Material shrinkage, layer friction and SG92R horn photo-derived dimensions require fit coupons."
   ],
+  "pass": true,
   "ok": true
 }

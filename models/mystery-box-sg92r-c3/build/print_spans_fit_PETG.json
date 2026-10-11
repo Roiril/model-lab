@@ -1,0 +1,5350 @@
+{
+  "version": 1,
+  "source": {
+    "file": "prints/mystery-box-sg92r-c3/mystery-box-sg92r-c3-fit-test-PETG.gcode.3mf",
+    "bytes": 557479,
+    "sha256": "bfc7fa47987fdc6dd5ce010abe3b28458980deedc1ccf8b29f9aca20818ad329"
+  },
+  "method": {
+    "sampleMaximumMm": 0.1,
+    "supportRadiusMm": 0.6,
+    "coverageCellMm": 0.2,
+    "coordinateSystem": "スライス済みプレートのXY座標。単位mm。",
+    "basis": "直下の実押出経路から支持半径0.6mmを超えた連続区間。STL空隙そのものの寸法ではない。",
+    "cumulativeWarningMeaning": "全警告区間の合計であり、単一スパンではない。",
+    "acceptance": "この記録だけでprint_path_reviewをacceptedへ変更しない。"
+  },
+  "calibration": {
+    "pass": true,
+    "cases": [
+      {
+        "id": "known-both-end-bridge",
+        "label": "両端支持の既知長橋",
+        "pass": true,
+        "inputPathMm": 10.0,
+        "measuredMm": 8.0,
+        "expectedMm": 8.0
+      },
+      {
+        "id": "known-one-end",
+        "label": "片側だけを支持した浮き",
+        "pass": true,
+        "inputPathMm": 5.0,
+        "measuredMm": 4.0,
+        "expectedMm": 4.0
+      },
+      {
+        "id": "known-supported",
+        "label": "直下層で支持した経路",
+        "pass": true,
+        "measuredMm": 0.0,
+        "expectedMm": "0"
+      },
+      {
+        "id": "split-chord-continuous",
+        "label": "分割弦の連続",
+        "pass": true,
+        "measuredMm": 8.0,
+        "expectedMm": 8.0
+      },
+      {
+        "id": "split-chord-separated",
+        "label": "離れた線分の非連結",
+        "pass": true,
+        "measuredMm": 3.0,
+        "expectedMm": "4.0未満を2区間"
+      }
+    ]
+  },
+  "objectAssignment": {
+    "complete": true,
+    "method": "配置STLとOuter wall押出経路のXY境界を対応",
+    "detail": {
+      "tolerance_mm": 0.8,
+      "global_offset_mm": [
+        -0.001,
+        2.001
+      ],
+      "matches": {
+        "12": {
+          "name": "mystery-box-sg92r-c3-print-fit_bearing",
+          "candidate_count": 1,
+          "max_endpoint_error_mm": 0.211
+        },
+        "8": {
+          "name": "mystery-box-sg92r-c3-print-fit_horn",
+          "candidate_count": 1,
+          "max_endpoint_error_mm": 0.213
+        }
+      }
+    }
+  },
+  "objects": [
+    {
+      "objectId": 8,
+      "name": "mystery-box-sg92r-c3-print-fit_horn",
+      "legacyCumulativeExternalUnsupportedMm": 0.0,
+      "layersAnalyzed": 34,
+      "layersWithUnsupported": 2,
+      "cumulativeUnsupportedMm": {
+        "external": 0.0,
+        "bridge": 273.5018,
+        "internal": 0.383
+      },
+      "warningCumulativeMm": 0.0,
+      "maximumWarningIntervalMm": 0.0,
+      "maximumIntervalByCategoryMm": {
+        "external": 0.0,
+        "bridge": 4.2855,
+        "internal": 0.1915
+      },
+      "maximumUnsupportedIntervalMm": 4.2855,
+      "layers": [
+        {
+          "zMm": 1.0,
+          "intervals": [
+            {
+              "pathIndex": 6,
+              "feature": "Sparse infill",
+              "category": "internal",
+              "lengthMm": 0.1915,
+              "supportedBefore": false,
+              "supportedAfter": true,
+              "support": "one_end",
+              "startXYmm": [
+                125.592,
+                124.532
+              ],
+              "endXYmm": [
+                125.7835,
+                124.5334
+              ],
+              "boundsXYmm": [
+                [
+                  125.592,
+                  125.7835
+                ],
+                [
+                  124.532,
+                  124.5334
+                ]
+              ]
+            },
+            {
+              "pathIndex": 6,
+              "feature": "Sparse infill",
+              "category": "internal",
+              "lengthMm": 0.1915,
+              "supportedBefore": true,
+              "supportedAfter": false,
+              "support": "one_end",
+              "startXYmm": [
+                116.2165,
+                124.5334
+              ],
+              "endXYmm": [
+                116.408,
+                124.532
+              ],
+              "boundsXYmm": [
+                [
+                  116.2165,
+                  116.408
+                ],
+                [
+                  124.532,
+                  124.5334
+                ]
+              ]
+            }
+          ],
+          "maximumIntervalMm": 0.1915
+        },
+        {
+          "zMm": 1.2,
+          "intervals": [
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 4.2855,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                118.9752,
+                136.5845
+              ],
+              "endXYmm": [
+                122.0053,
+                139.615
+              ],
+              "boundsXYmm": [
+                [
+                  118.9752,
+                  122.0053
+                ],
+                [
+                  136.5845,
+                  139.615
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 4.2814,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                119.0035,
+                121.2075
+              ],
+              "endXYmm": [
+                122.031,
+                124.235
+              ],
+              "boundsXYmm": [
+                [
+                  119.0035,
+                  122.031
+                ],
+                [
+                  121.2075,
+                  124.235
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 4.2771,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                119.5693,
+                128.1919
+              ],
+              "endXYmm": [
+                122.5938,
+                131.2161
+              ],
+              "boundsXYmm": [
+                [
+                  119.5693,
+                  122.5938
+                ],
+                [
+                  128.1919,
+                  131.2161
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 4.1988,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                119.6449,
+                120.5657
+              ],
+              "endXYmm": [
+                122.614,
+                123.5346
+              ],
+              "boundsXYmm": [
+                [
+                  119.6449,
+                  122.614
+                ],
+                [
+                  120.5657,
+                  123.5346
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 4.1988,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                123.4624,
+                124.3828
+              ],
+              "endXYmm": [
+                126.4315,
+                127.3517
+              ],
+              "boundsXYmm": [
+                [
+                  123.4624,
+                  126.4315
+                ],
+                [
+                  124.3828,
+                  127.3517
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 4.192,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                119.6311,
+                112.8491
+              ],
+              "endXYmm": [
+                122.5953,
+                115.8133
+              ],
+              "boundsXYmm": [
+                [
+                  119.6311,
+                  122.5953
+                ],
+                [
+                  112.8491,
+                  115.8133
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 4.1907,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                123.5373,
+                130.2353
+              ],
+              "endXYmm": [
+                120.574,
+                127.272
+              ],
+              "boundsXYmm": [
+                [
+                  120.574,
+                  123.5373
+                ],
+                [
+                  127.272,
+                  130.2353
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 4.1905,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                118.9656,
+                128.8721
+              ],
+              "endXYmm": [
+                121.9288,
+                131.8351
+              ],
+              "boundsXYmm": [
+                [
+                  118.9656,
+                  121.9288
+                ],
+                [
+                  128.8721,
+                  131.8351
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 4.1846,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                117.8352,
+                128.3832
+              ],
+              "endXYmm": [
+                114.8762,
+                125.4242
+              ],
+              "boundsXYmm": [
+                [
+                  114.8762,
+                  117.8352
+                ],
+                [
+                  125.4242,
+                  128.3832
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 4.1834,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                120.2385,
+                112.1718
+              ],
+              "endXYmm": [
+                123.1963,
+                115.1301
+              ],
+              "boundsXYmm": [
+                [
+                  120.2385,
+                  123.1963
+                ],
+                [
+                  112.1718,
+                  115.1301
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 4.1832,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                118.3721,
+                121.8592
+              ],
+              "endXYmm": [
+                121.3299,
+                124.8173
+              ],
+              "boundsXYmm": [
+                [
+                  118.3721,
+                  121.3299
+                ],
+                [
+                  121.8592,
+                  124.8173
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 4.1832,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                122.175,
+                125.6625
+              ],
+              "endXYmm": [
+                125.1328,
+                128.6207
+              ],
+              "boundsXYmm": [
+                [
+                  122.175,
+                  125.1328
+                ],
+                [
+                  125.6625,
+                  128.6207
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 4.182,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                123.5768,
+                122.5713
+              ],
+              "endXYmm": [
+                120.6198,
+                119.6141
+              ],
+              "boundsXYmm": [
+                [
+                  120.6198,
+                  123.5768
+                ],
+                [
+                  119.6141,
+                  122.5713
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 4.1819,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                122.8054,
+                125.0094
+              ],
+              "endXYmm": [
+                125.7625,
+                127.9665
+              ],
+              "boundsXYmm": [
+                [
+                  122.8054,
+                  125.7625
+                ],
+                [
+                  125.0094,
+                  127.9665
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 4.1817,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                120.2231,
+                135.2646
+              ],
+              "endXYmm": [
+                123.1798,
+                138.2217
+              ],
+              "boundsXYmm": [
+                [
+                  120.2231,
+                  123.1798
+                ],
+                [
+                  135.2646,
+                  138.2217
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 4.1623,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                119.6566,
+                135.982
+              ],
+              "endXYmm": [
+                122.5996,
+                138.9254
+              ],
+              "boundsXYmm": [
+                [
+                  119.6566,
+                  122.5996
+                ],
+                [
+                  135.982,
+                  138.9254
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 4.0982,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                126.7116,
+                126.9896
+              ],
+              "endXYmm": [
+                123.8138,
+                124.0918
+              ],
+              "boundsXYmm": [
+                [
+                  123.8138,
+                  126.7116
+                ],
+                [
+                  124.0918,
+                  126.9896
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 4.0982,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                122.8949,
+                123.1729
+              ],
+              "endXYmm": [
+                119.9971,
+                120.2751
+              ],
+              "boundsXYmm": [
+                [
+                  119.9971,
+                  122.8949
+                ],
+                [
+                  120.2751,
+                  123.1729
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 4.097,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                120.9238,
+                126.9788
+              ],
+              "endXYmm": [
+                123.8208,
+                129.8758
+              ],
+              "boundsXYmm": [
+                [
+                  120.9238,
+                  123.8208
+                ],
+                [
+                  126.9788,
+                  129.8758
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 4.0933,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                122.8836,
+                138.5674
+              ],
+              "endXYmm": [
+                119.9894,
+                135.6728
+              ],
+              "boundsXYmm": [
+                [
+                  119.9894,
+                  122.8836
+                ],
+                [
+                  135.6728,
+                  138.5674
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 4.0857,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                125.4178,
+                128.2638
+              ],
+              "endXYmm": [
+                122.5288,
+                125.3747
+              ],
+              "boundsXYmm": [
+                [
+                  122.5288,
+                  125.4178
+                ],
+                [
+                  125.3747,
+                  128.2638
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 4.0857,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                121.6127,
+                124.4587
+              ],
+              "endXYmm": [
+                118.7237,
+                121.5697
+              ],
+              "boundsXYmm": [
+                [
+                  118.7237,
+                  121.6127
+                ],
+                [
+                  121.5697,
+                  124.4587
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 4.085,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                121.5691,
+                132.1171
+              ],
+              "endXYmm": [
+                118.6806,
+                129.2286
+              ],
+              "boundsXYmm": [
+                [
+                  118.6806,
+                  121.5691
+                ],
+                [
+                  129.2286,
+                  132.1171
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 4.0849,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                120.2883,
+                127.6273
+              ],
+              "endXYmm": [
+                123.1768,
+                130.5158
+              ],
+              "boundsXYmm": [
+                [
+                  120.2883,
+                  123.1768
+                ],
+                [
+                  127.6273,
+                  130.5158
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 4.0752,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                122.2325,
+                131.4965
+              ],
+              "endXYmm": [
+                119.3509,
+                128.6149
+              ],
+              "boundsXYmm": [
+                [
+                  119.3509,
+                  122.2325
+                ],
+                [
+                  128.6149,
+                  131.4965
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 4.071,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                118.9929,
+                113.494
+              ],
+              "endXYmm": [
+                121.8713,
+                116.3729
+              ],
+              "boundsXYmm": [
+                [
+                  118.9929,
+                  121.8713
+                ],
+                [
+                  113.494,
+                  116.3729
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 4.064,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                121.5994,
+                139.8504
+              ],
+              "endXYmm": [
+                118.7257,
+                136.9767
+              ],
+              "boundsXYmm": [
+                [
+                  118.7257,
+                  121.5994
+                ],
+                [
+                  136.9767,
+                  139.8504
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 4.06,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                122.2102,
+                116.0702
+              ],
+              "endXYmm": [
+                119.3394,
+                113.1994
+              ],
+              "boundsXYmm": [
+                [
+                  119.3394,
+                  122.2102
+                ],
+                [
+                  113.1994,
+                  116.0702
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 4.0,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                120.3511,
+                119.9871
+              ],
+              "endXYmm": [
+                123.1795,
+                122.8155
+              ],
+              "boundsXYmm": [
+                [
+                  120.3511,
+                  123.1795
+                ],
+                [
+                  119.9871,
+                  122.8155
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 3.9909,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                115.2968,
+                125.2037
+              ],
+              "endXYmm": [
+                118.1189,
+                128.0256
+              ],
+              "boundsXYmm": [
+                [
+                  115.2968,
+                  118.1189
+                ],
+                [
+                  125.2037,
+                  128.0256
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 3.9906,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                114.5698,
+                125.7598
+              ],
+              "endXYmm": [
+                117.3915,
+                128.5815
+              ],
+              "boundsXYmm": [
+                [
+                  114.5698,
+                  117.3915
+                ],
+                [
+                  125.7598,
+                  128.5815
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 3.9906,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                118.3791,
+                129.5691
+              ],
+              "endXYmm": [
+                121.2009,
+                132.3909
+              ],
+              "boundsXYmm": [
+                [
+                  118.3791,
+                  121.2009
+                ],
+                [
+                  129.5691,
+                  132.3909
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 3.9843,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                126.047,
+                127.609
+              ],
+              "endXYmm": [
+                123.2297,
+                124.7917
+              ],
+              "boundsXYmm": [
+                [
+                  123.2297,
+                  126.047
+                ],
+                [
+                  124.7917,
+                  127.609
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 3.9843,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                122.2437,
+                123.8057
+              ],
+              "endXYmm": [
+                119.4264,
+                120.9884
+              ],
+              "boundsXYmm": [
+                [
+                  119.4264,
+                  122.2437
+                ],
+                [
+                  120.9884,
+                  123.8057
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 3.9822,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                122.8146,
+                130.7948
+              ],
+              "endXYmm": [
+                119.9986,
+                127.9792
+              ],
+              "boundsXYmm": [
+                [
+                  119.9986,
+                  122.8146
+                ],
+                [
+                  127.9792,
+                  130.7948
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 3.9815,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                122.7936,
+                115.3693
+              ],
+              "endXYmm": [
+                119.9784,
+                112.5537
+              ],
+              "boundsXYmm": [
+                [
+                  119.9784,
+                  122.7936
+                ],
+                [
+                  112.5537,
+                  115.3693
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 3.975,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                122.2329,
+                139.2007
+              ],
+              "endXYmm": [
+                119.4224,
+                136.3898
+              ],
+              "boundsXYmm": [
+                [
+                  119.4224,
+                  122.2329
+                ],
+                [
+                  136.3898,
+                  139.2007
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 3.8828,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                121.6005,
+                116.744
+              ],
+              "endXYmm": [
+                118.8551,
+                113.9983
+              ],
+              "boundsXYmm": [
+                [
+                  118.8551,
+                  121.6005
+                ],
+                [
+                  113.9983,
+                  116.744
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 3.7972,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                117.3203,
+                123.3753
+              ],
+              "endXYmm": [
+                120.0053,
+                126.0603
+              ],
+              "boundsXYmm": [
+                [
+                  117.3203,
+                  120.0053
+                ],
+                [
+                  123.3753,
+                  126.0603
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 3.6665,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                123.1961,
+                137.5959
+              ],
+              "endXYmm": [
+                120.6036,
+                135.0032
+              ],
+              "boundsXYmm": [
+                [
+                  120.6036,
+                  123.1961
+                ],
+                [
+                  135.0032,
+                  137.5959
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 3.6634,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                123.1848,
+                114.4768
+              ],
+              "endXYmm": [
+                120.5944,
+                111.8864
+              ],
+              "boundsXYmm": [
+                [
+                  120.5944,
+                  123.1848
+                ],
+                [
+                  111.8864,
+                  114.4768
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 3.592,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                119.7274,
+                126.4254
+              ],
+              "endXYmm": [
+                117.1874,
+                123.8854
+              ],
+              "boundsXYmm": [
+                [
+                  117.1874,
+                  119.7274
+                ],
+                [
+                  123.8854,
+                  126.4254
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 3.4789,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                118.3669,
+                127.6309
+              ],
+              "endXYmm": [
+                115.907,
+                125.171
+              ],
+              "boundsXYmm": [
+                [
+                  115.907,
+                  118.3669
+                ],
+                [
+                  125.171,
+                  127.6309
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 3.4639,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                118.8338,
+                137.7266
+              ],
+              "endXYmm": [
+                121.2834,
+                140.1757
+              ],
+              "boundsXYmm": [
+                [
+                  118.8338,
+                  121.2834
+                ],
+                [
+                  137.7266,
+                  140.1757
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 3.3934,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                118.7875,
+                114.5725
+              ],
+              "endXYmm": [
+                121.187,
+                116.972
+              ],
+              "boundsXYmm": [
+                [
+                  118.7875,
+                  121.187
+                ],
+                [
+                  114.5725,
+                  116.972
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 3.183,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                116.5447,
+                125.1676
+              ],
+              "endXYmm": [
+                118.7956,
+                127.4182
+              ],
+              "boundsXYmm": [
+                [
+                  116.5447,
+                  118.7956
+                ],
+                [
+                  125.1676,
+                  127.4182
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 3.0886,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                117.1885,
+                124.5275
+              ],
+              "endXYmm": [
+                119.3725,
+                126.7115
+              ],
+              "boundsXYmm": [
+                [
+                  117.1885,
+                  119.3725
+                ],
+                [
+                  124.5275,
+                  126.7115
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 2.8871,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                119.013,
+                126.9937
+              ],
+              "endXYmm": [
+                116.9714,
+                124.9523
+              ],
+              "boundsXYmm": [
+                [
+                  116.9714,
+                  119.013
+                ],
+                [
+                  124.9523,
+                  126.9937
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 2.8738,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                119.6227,
+                134.0221
+              ],
+              "endXYmm": [
+                117.5908,
+                131.9899
+              ],
+              "boundsXYmm": [
+                [
+                  117.5908,
+                  119.6227
+                ],
+                [
+                  131.9899,
+                  134.0221
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 2.7946,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                122.2456,
+                118.0306
+              ],
+              "endXYmm": [
+                124.2217,
+                120.0067
+              ],
+              "boundsXYmm": [
+                [
+                  122.2456,
+                  124.2217
+                ],
+                [
+                  118.0306,
+                  120.0067
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 2.6849,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                121.1218,
+                111.7718
+              ],
+              "endXYmm": [
+                123.0203,
+                113.6703
+              ],
+              "boundsXYmm": [
+                [
+                  121.1218,
+                  123.0203
+                ],
+                [
+                  111.7718,
+                  113.6703
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 2.5939,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                122.1885,
+                133.3785
+              ],
+              "endXYmm": [
+                124.0226,
+                135.2126
+              ],
+              "boundsXYmm": [
+                [
+                  122.1885,
+                  124.0226
+                ],
+                [
+                  133.3785,
+                  135.2126
+                ]
+              ]
+            },
+            {
+              "pathIndex": 6,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 2.4912,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                114.7754,
+                129.1744
+              ],
+              "endXYmm": [
+                113.0139,
+                127.4129
+              ],
+              "boundsXYmm": [
+                [
+                  113.0139,
+                  114.7754
+                ],
+                [
+                  127.4129,
+                  129.1744
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 2.4891,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                117.6184,
+                132.6595
+              ],
+              "endXYmm": [
+                119.3783,
+                134.4197
+              ],
+              "boundsXYmm": [
+                [
+                  117.6184,
+                  119.3783
+                ],
+                [
+                  132.6595,
+                  134.4197
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 2.2899,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                124.2051,
+                119.349
+              ],
+              "endXYmm": [
+                122.586,
+                117.7297
+              ],
+              "boundsXYmm": [
+                [
+                  122.586,
+                  124.2051
+                ],
+                [
+                  117.7297,
+                  119.349
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 2.1919,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                124.0349,
+                134.5829
+              ],
+              "endXYmm": [
+                122.485,
+                133.033
+              ],
+              "boundsXYmm": [
+                [
+                  122.485,
+                  124.0349
+                ],
+                [
+                  133.033,
+                  134.5829
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 2.0,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                125.5837,
+                125.2197
+              ],
+              "endXYmm": [
+                126.9979,
+                126.6339
+              ],
+              "boundsXYmm": [
+                [
+                  125.5837,
+                  126.9979
+                ],
+                [
+                  125.2197,
+                  126.6339
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 1.9914,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                119.6341,
+                118.6283
+              ],
+              "endXYmm": [
+                118.226,
+                117.2201
+              ],
+              "boundsXYmm": [
+                [
+                  118.226,
+                  119.6341
+                ],
+                [
+                  117.2201,
+                  118.6283
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 1.9,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                118.0177,
+                117.6537
+              ],
+              "endXYmm": [
+                119.3612,
+                118.9972
+              ],
+              "boundsXYmm": [
+                [
+                  118.0177,
+                  119.3612
+                ],
+                [
+                  117.6537,
+                  118.9972
+                ]
+              ]
+            },
+            {
+              "pathIndex": 6,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 1.8617,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                112.6225,
+                127.6638
+              ],
+              "endXYmm": [
+                113.9387,
+                128.9805
+              ],
+              "boundsXYmm": [
+                [
+                  112.6225,
+                  113.9387
+                ],
+                [
+                  127.6638,
+                  128.9805
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 1.7959,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                122.9166,
+                132.8228
+              ],
+              "endXYmm": [
+                124.1866,
+                134.0926
+              ],
+              "boundsXYmm": [
+                [
+                  122.9166,
+                  124.1866
+                ],
+                [
+                  132.8228,
+                  134.0926
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 1.6972,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                119.0011,
+                134.6844
+              ],
+              "endXYmm": [
+                117.8011,
+                133.4842
+              ],
+              "boundsXYmm": [
+                [
+                  117.8011,
+                  119.0011
+                ],
+                [
+                  133.4842,
+                  134.6844
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 1.6927,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                127.3786,
+                126.3735
+              ],
+              "endXYmm": [
+                126.1818,
+                125.1765
+              ],
+              "boundsXYmm": [
+                [
+                  126.1818,
+                  127.3786
+                ],
+                [
+                  125.1765,
+                  126.3735
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 1.5918,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                118.7881,
+                140.2483
+              ],
+              "endXYmm": [
+                119.9135,
+                141.374
+              ],
+              "boundsXYmm": [
+                [
+                  118.7881,
+                  119.9135
+                ],
+                [
+                  140.2483,
+                  141.374
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 1.4894,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                122.9244,
+                117.4262
+              ],
+              "endXYmm": [
+                123.9775,
+                118.4794
+              ],
+              "boundsXYmm": [
+                [
+                  122.9244,
+                  123.9775
+                ],
+                [
+                  117.4262,
+                  118.4794
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 1.4785,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                122.1875,
+                110.2695
+              ],
+              "endXYmm": [
+                123.233,
+                111.315
+              ],
+              "boundsXYmm": [
+                [
+                  122.1875,
+                  123.233
+                ],
+                [
+                  110.2695,
+                  111.315
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 1.4,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                127.9878,
+                127.6238
+              ],
+              "endXYmm": [
+                128.9777,
+                128.6137
+              ],
+              "boundsXYmm": [
+                [
+                  127.9878,
+                  128.9777
+                ],
+                [
+                  127.6238,
+                  128.6137
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 1.3994,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                119.0076,
+                119.2856
+              ],
+              "endXYmm": [
+                118.0181,
+                118.2961
+              ],
+              "boundsXYmm": [
+                [
+                  118.0181,
+                  119.0076
+                ],
+                [
+                  118.2961,
+                  119.2856
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 1.3948,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                120.807,
+                134.565
+              ],
+              "endXYmm": [
+                121.7933,
+                135.5513
+              ],
+              "boundsXYmm": [
+                [
+                  120.807,
+                  121.7933
+                ],
+                [
+                  134.565,
+                  135.5513
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 1.3915,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                124.2004,
+                133.4644
+              ],
+              "endXYmm": [
+                123.2165,
+                132.4805
+              ],
+              "boundsXYmm": [
+                [
+                  123.2165,
+                  124.2004
+                ],
+                [
+                  132.4805,
+                  133.4644
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 1.1995,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                128.5492,
+                128.8272
+              ],
+              "endXYmm": [
+                127.7011,
+                127.9791
+              ],
+              "boundsXYmm": [
+                [
+                  127.7011,
+                  128.5492
+                ],
+                [
+                  127.9791,
+                  128.8272
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 1.1883,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                124.0308,
+                117.8908
+              ],
+              "endXYmm": [
+                123.1905,
+                117.0505
+              ],
+              "boundsXYmm": [
+                [
+                  123.1905,
+                  124.0308
+                ],
+                [
+                  117.0505,
+                  117.8908
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 1.1876,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                122.1932,
+                141.0854
+              ],
+              "endXYmm": [
+                123.0331,
+                141.9251
+              ],
+              "boundsXYmm": [
+                [
+                  122.1932,
+                  123.0331
+                ],
+                [
+                  141.0854,
+                  141.9251
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 1.0959,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                119.2572,
+                133.0152
+              ],
+              "endXYmm": [
+                120.0321,
+                133.7901
+              ],
+              "boundsXYmm": [
+                [
+                  119.2572,
+                  120.0321
+                ],
+                [
+                  133.0152,
+                  133.7901
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 1.0953,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                129.2092,
+                128.2041
+              ],
+              "endXYmm": [
+                128.4347,
+                127.4296
+              ],
+              "boundsXYmm": [
+                [
+                  128.4347,
+                  129.2092
+                ],
+                [
+                  127.4296,
+                  128.2041
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 1.0941,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                123.5786,
+                132.2007
+              ],
+              "endXYmm": [
+                124.3523,
+                132.9744
+              ],
+              "boundsXYmm": [
+                [
+                  123.5786,
+                  124.3523
+                ],
+                [
+                  132.2007,
+                  132.9744
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 1.0886,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                119.5936,
+                141.6956
+              ],
+              "endXYmm": [
+                118.8238,
+                140.9258
+              ],
+              "boundsXYmm": [
+                [
+                  118.8238,
+                  119.5936
+                ],
+                [
+                  140.9258,
+                  141.6956
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.9963,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                113.2691,
+                127.0271
+              ],
+              "endXYmm": [
+                113.9736,
+                127.7316
+              ],
+              "boundsXYmm": [
+                [
+                  113.2691,
+                  113.9736
+                ],
+                [
+                  127.0271,
+                  127.7316
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.9963,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                114.4667,
+                128.2247
+              ],
+              "endXYmm": [
+                115.1712,
+                128.9292
+              ],
+              "boundsXYmm": [
+                [
+                  114.4667,
+                  115.1712
+                ],
+                [
+                  128.2247,
+                  128.9292
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.9963,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                118.2709,
+                132.0289
+              ],
+              "endXYmm": [
+                118.9754,
+                132.7334
+              ],
+              "boundsXYmm": [
+                [
+                  118.2709,
+                  118.9754
+                ],
+                [
+                  132.0289,
+                  132.7334
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.991,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                117.9749,
+                134.3001
+              ],
+              "endXYmm": [
+                118.6756,
+                135.0009
+              ],
+              "boundsXYmm": [
+                [
+                  117.9749,
+                  118.6756
+                ],
+                [
+                  134.3001,
+                  135.0009
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.9901,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                119.6842,
+                110.9762
+              ],
+              "endXYmm": [
+                118.9841,
+                110.2761
+              ],
+              "boundsXYmm": [
+                [
+                  118.9841,
+                  119.6842
+                ],
+                [
+                  110.2761,
+                  110.9762
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.9,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                124.1695,
+                123.8055
+              ],
+              "endXYmm": [
+                124.8058,
+                124.4418
+              ],
+              "boundsXYmm": [
+                [
+                  124.1695,
+                  124.8058
+                ],
+                [
+                  123.8055,
+                  124.4418
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.8997,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                118.0189,
+                118.9399
+              ],
+              "endXYmm": [
+                118.6552,
+                119.5761
+              ],
+              "boundsXYmm": [
+                [
+                  118.0189,
+                  118.6552
+                ],
+                [
+                  118.9399,
+                  119.5761
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.8997,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                127.4212,
+                128.3413
+              ],
+              "endXYmm": [
+                128.0574,
+                128.9775
+              ],
+              "boundsXYmm": [
+                [
+                  127.4212,
+                  128.0574
+                ],
+                [
+                  128.3413,
+                  128.9775
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.896,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                124.4338,
+                132.4139
+              ],
+              "endXYmm": [
+                123.8002,
+                131.7803
+              ],
+              "boundsXYmm": [
+                [
+                  123.8002,
+                  124.4338
+                ],
+                [
+                  131.7803,
+                  132.4139
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.7969,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                127.5965,
+                129.1585
+              ],
+              "endXYmm": [
+                127.0331,
+                128.5951
+              ],
+              "boundsXYmm": [
+                [
+                  127.0331,
+                  127.5965
+                ],
+                [
+                  128.5951,
+                  129.1585
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.7969,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                118.3699,
+                119.9319
+              ],
+              "endXYmm": [
+                117.8065,
+                119.3685
+              ],
+              "boundsXYmm": [
+                [
+                  117.8065,
+                  118.3699
+                ],
+                [
+                  119.3685,
+                  119.9319
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.6974,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                122.0751,
+                135.8331
+              ],
+              "endXYmm": [
+                122.5682,
+                136.3262
+              ],
+              "boundsXYmm": [
+                [
+                  122.0751,
+                  122.5682
+                ],
+                [
+                  135.8331,
+                  136.3262
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.6961,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                119.2786,
+                117.6316
+              ],
+              "endXYmm": [
+                119.7709,
+                118.1239
+              ],
+              "boundsXYmm": [
+                [
+                  119.2786,
+                  119.7709
+                ],
+                [
+                  117.6316,
+                  118.1239
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.6961,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                121.8804,
+                120.2334
+              ],
+              "endXYmm": [
+                122.3726,
+                120.7256
+              ],
+              "boundsXYmm": [
+                [
+                  121.8804,
+                  122.3726
+                ],
+                [
+                  120.2334,
+                  120.7256
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.6961,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                123.0758,
+                121.4288
+              ],
+              "endXYmm": [
+                123.568,
+                121.921
+              ],
+              "boundsXYmm": [
+                [
+                  123.0758,
+                  123.568
+                ],
+                [
+                  121.4288,
+                  121.921
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.6961,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                126.873,
+                125.226
+              ],
+              "endXYmm": [
+                127.3652,
+                125.7182
+              ],
+              "boundsXYmm": [
+                [
+                  126.873,
+                  127.3652
+                ],
+                [
+                  125.226,
+                  125.7182
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.598,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                122.7805,
+                140.3903
+              ],
+              "endXYmm": [
+                123.2033,
+                140.8132
+              ],
+              "boundsXYmm": [
+                [
+                  122.7805,
+                  123.2033
+                ],
+                [
+                  140.3903,
+                  140.8132
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.5976,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                118.9708,
+                110.9039
+              ],
+              "endXYmm": [
+                119.3934,
+                111.3266
+              ],
+              "boundsXYmm": [
+                [
+                  118.9708,
+                  119.3934
+                ],
+                [
+                  110.9039,
+                  111.3266
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.5947,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                123.0012,
+                141.2522
+              ],
+              "endXYmm": [
+                122.5807,
+                140.8317
+              ],
+              "boundsXYmm": [
+                [
+                  122.5807,
+                  123.0012
+                ],
+                [
+                  140.8317,
+                  141.2522
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.5904,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                123.0059,
+                110.4462
+              ],
+              "endXYmm": [
+                122.5884,
+                110.0288
+              ],
+              "boundsXYmm": [
+                [
+                  122.5884,
+                  123.0059
+                ],
+                [
+                  110.0288,
+                  110.4462
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.4979,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                124.7737,
+                123.7683
+              ],
+              "endXYmm": [
+                124.4217,
+                123.4162
+              ],
+              "boundsXYmm": [
+                [
+                  124.4217,
+                  124.7737
+                ],
+                [
+                  123.4162,
+                  123.7683
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.4974,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                120.9686,
+                142.4293
+              ],
+              "endXYmm": [
+                121.3203,
+                142.7811
+              ],
+              "boundsXYmm": [
+                [
+                  120.9686,
+                  121.3203
+                ],
+                [
+                  142.4293,
+                  142.7811
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.4972,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                118.2239,
+                116.5769
+              ],
+              "endXYmm": [
+                118.5755,
+                116.9285
+              ],
+              "boundsXYmm": [
+                [
+                  118.2239,
+                  118.5755
+                ],
+                [
+                  116.5769,
+                  116.9285
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.4969,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                118.3685,
+                135.3357
+              ],
+              "endXYmm": [
+                118.0172,
+                134.9843
+              ],
+              "boundsXYmm": [
+                [
+                  118.0172,
+                  118.3685
+                ],
+                [
+                  134.9843,
+                  135.3357
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.4923,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                122.8177,
+                109.6161
+              ],
+              "endXYmm": [
+                123.1659,
+                109.9641
+              ],
+              "boundsXYmm": [
+                [
+                  122.8177,
+                  123.1659
+                ],
+                [
+                  109.6161,
+                  109.9641
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.2994,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                123.5834,
+                116.8014
+              ],
+              "endXYmm": [
+                123.7951,
+                117.0131
+              ],
+              "boundsXYmm": [
+                [
+                  123.5834,
+                  123.7951
+                ],
+                [
+                  116.8014,
+                  117.0131
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.2994,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                119.0107,
+                141.755
+              ],
+              "endXYmm": [
+                119.2224,
+                141.9668
+              ],
+              "boundsXYmm": [
+                [
+                  119.0107,
+                  119.2224
+                ],
+                [
+                  141.755,
+                  141.9668
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.2987,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                117.8066,
+                120.0106
+              ],
+              "endXYmm": [
+                118.0179,
+                120.2219
+              ],
+              "boundsXYmm": [
+                [
+                  117.8066,
+                  118.0179
+                ],
+                [
+                  120.0106,
+                  120.2219
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.2987,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                126.8185,
+                129.0225
+              ],
+              "endXYmm": [
+                127.0298,
+                129.2338
+              ],
+              "boundsXYmm": [
+                [
+                  126.8185,
+                  127.0298
+                ],
+                [
+                  129.0225,
+                  129.2338
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.2986,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                118.9932,
+                111.5683
+              ],
+              "endXYmm": [
+                118.782,
+                111.3571
+              ],
+              "boundsXYmm": [
+                [
+                  118.782,
+                  118.9932
+                ],
+                [
+                  111.3571,
+                  111.5683
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.2957,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                121.1421,
+                109.2241
+              ],
+              "endXYmm": [
+                121.3512,
+                109.4332
+              ],
+              "boundsXYmm": [
+                [
+                  121.1421,
+                  121.3512
+                ],
+                [
+                  109.2241,
+                  109.4332
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.2944,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                119.0055,
+                142.3915
+              ],
+              "endXYmm": [
+                118.7973,
+                142.1833
+              ],
+              "boundsXYmm": [
+                [
+                  118.7973,
+                  119.0055
+                ],
+                [
+                  142.1833,
+                  142.3915
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.1993,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                114.044,
+                127.802
+              ],
+              "endXYmm": [
+                114.1849,
+                127.9429
+              ],
+              "boundsXYmm": [
+                [
+                  114.044,
+                  114.1849
+                ],
+                [
+                  127.802,
+                  127.9429
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.1993,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                114.2553,
+                128.0133
+              ],
+              "endXYmm": [
+                114.3962,
+                128.1542
+              ],
+              "boundsXYmm": [
+                [
+                  114.2553,
+                  114.3962
+                ],
+                [
+                  128.0133,
+                  128.1542
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.1993,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                115.2416,
+                128.9996
+              ],
+              "endXYmm": [
+                115.3825,
+                129.1405
+              ],
+              "boundsXYmm": [
+                [
+                  115.2416,
+                  115.3825
+                ],
+                [
+                  128.9996,
+                  129.1405
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.1993,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                117.8482,
+                131.6062
+              ],
+              "endXYmm": [
+                117.9891,
+                131.7471
+              ],
+              "boundsXYmm": [
+                [
+                  117.8482,
+                  117.9891
+                ],
+                [
+                  131.6062,
+                  131.7471
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.1993,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                118.0596,
+                131.8176
+              ],
+              "endXYmm": [
+                118.2004,
+                131.9584
+              ],
+              "boundsXYmm": [
+                [
+                  118.0596,
+                  118.2004
+                ],
+                [
+                  131.8176,
+                  131.9584
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.1993,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                119.0458,
+                132.8038
+              ],
+              "endXYmm": [
+                119.1867,
+                132.9447
+              ],
+              "boundsXYmm": [
+                [
+                  119.0458,
+                  119.1867
+                ],
+                [
+                  132.8038,
+                  132.9447
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.1993,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                121.8638,
+                135.6218
+              ],
+              "endXYmm": [
+                122.0047,
+                135.7627
+              ],
+              "boundsXYmm": [
+                [
+                  121.8638,
+                  122.0047
+                ],
+                [
+                  135.6218,
+                  135.7627
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.1993,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                122.6387,
+                136.3967
+              ],
+              "endXYmm": [
+                122.7796,
+                136.5376
+              ],
+              "boundsXYmm": [
+                [
+                  122.6387,
+                  122.7796
+                ],
+                [
+                  136.3967,
+                  136.5376
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.1993,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                122.85,
+                136.608
+              ],
+              "endXYmm": [
+                122.9909,
+                136.7489
+              ],
+              "boundsXYmm": [
+                [
+                  122.85,
+                  122.9909
+                ],
+                [
+                  136.608,
+                  136.7489
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.1993,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                123.0614,
+                136.8194
+              ],
+              "endXYmm": [
+                123.2023,
+                136.9603
+              ],
+              "boundsXYmm": [
+                [
+                  123.0614,
+                  123.2023
+                ],
+                [
+                  136.8194,
+                  136.9603
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.1993,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                123.2727,
+                137.0307
+              ],
+              "endXYmm": [
+                123.4136,
+                137.1716
+              ],
+              "boundsXYmm": [
+                [
+                  123.2727,
+                  123.4136
+                ],
+                [
+                  137.0307,
+                  137.1716
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.1989,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                118.6458,
+                116.9988
+              ],
+              "endXYmm": [
+                118.7864,
+                117.1394
+              ],
+              "boundsXYmm": [
+                [
+                  118.6458,
+                  118.7864
+                ],
+                [
+                  116.9988,
+                  117.1394
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.1989,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                118.8567,
+                117.2097
+              ],
+              "endXYmm": [
+                118.9974,
+                117.3504
+              ],
+              "boundsXYmm": [
+                [
+                  118.8567,
+                  118.9974
+                ],
+                [
+                  117.2097,
+                  117.3504
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.1989,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                119.0677,
+                117.4207
+              ],
+              "endXYmm": [
+                119.2083,
+                117.5613
+              ],
+              "boundsXYmm": [
+                [
+                  119.0677,
+                  119.2083
+                ],
+                [
+                  117.4207,
+                  117.5613
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.1989,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                119.8412,
+                118.1942
+              ],
+              "endXYmm": [
+                119.9818,
+                118.3348
+              ],
+              "boundsXYmm": [
+                [
+                  119.8412,
+                  119.9818
+                ],
+                [
+                  118.1942,
+                  118.3348
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.1989,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                121.0366,
+                119.3896
+              ],
+              "endXYmm": [
+                121.1772,
+                119.5302
+              ],
+              "boundsXYmm": [
+                [
+                  121.0366,
+                  121.1772
+                ],
+                [
+                  119.3896,
+                  119.5302
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.1989,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                121.2475,
+                119.6005
+              ],
+              "endXYmm": [
+                121.3882,
+                119.7412
+              ],
+              "boundsXYmm": [
+                [
+                  121.2475,
+                  121.3882
+                ],
+                [
+                  119.6005,
+                  119.7412
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.1989,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                121.4585,
+                119.8115
+              ],
+              "endXYmm": [
+                121.5991,
+                119.9521
+              ],
+              "boundsXYmm": [
+                [
+                  121.4585,
+                  121.5991
+                ],
+                [
+                  119.8115,
+                  119.9521
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.1989,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                121.6695,
+                120.0225
+              ],
+              "endXYmm": [
+                121.8101,
+                120.1631
+              ],
+              "boundsXYmm": [
+                [
+                  121.6695,
+                  121.8101
+                ],
+                [
+                  120.0225,
+                  120.1631
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.1989,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                122.443,
+                120.796
+              ],
+              "endXYmm": [
+                122.5836,
+                120.9366
+              ],
+              "boundsXYmm": [
+                [
+                  122.443,
+                  122.5836
+                ],
+                [
+                  120.796,
+                  120.9366
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.1989,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                122.6539,
+                121.0069
+              ],
+              "endXYmm": [
+                122.7945,
+                121.1475
+              ],
+              "boundsXYmm": [
+                [
+                  122.6539,
+                  122.7945
+                ],
+                [
+                  121.0069,
+                  121.1475
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.1989,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                122.8649,
+                121.2179
+              ],
+              "endXYmm": [
+                123.0055,
+                121.3585
+              ],
+              "boundsXYmm": [
+                [
+                  122.8649,
+                  123.0055
+                ],
+                [
+                  121.2179,
+                  121.3585
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.1989,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                123.6384,
+                121.9914
+              ],
+              "endXYmm": [
+                123.779,
+                122.132
+              ],
+              "boundsXYmm": [
+                [
+                  123.6384,
+                  123.779
+                ],
+                [
+                  121.9914,
+                  122.132
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.1989,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                127.4355,
+                125.7885
+              ],
+              "endXYmm": [
+                127.5762,
+                125.9292
+              ],
+              "boundsXYmm": [
+                [
+                  127.4355,
+                  127.5762
+                ],
+                [
+                  125.7885,
+                  125.9292
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.1989,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                128.631,
+                126.984
+              ],
+              "endXYmm": [
+                128.7716,
+                127.1246
+              ],
+              "boundsXYmm": [
+                [
+                  128.631,
+                  128.7716
+                ],
+                [
+                  126.984,
+                  127.1246
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.1989,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                128.8419,
+                127.1949
+              ],
+              "endXYmm": [
+                128.9825,
+                127.3355
+              ],
+              "boundsXYmm": [
+                [
+                  128.8419,
+                  128.9825
+                ],
+                [
+                  127.1949,
+                  127.3355
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.1989,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                129.0529,
+                127.4059
+              ],
+              "endXYmm": [
+                129.1935,
+                127.5465
+              ],
+              "boundsXYmm": [
+                [
+                  129.0529,
+                  129.1935
+                ],
+                [
+                  127.4059,
+                  127.5465
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.1989,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                129.2638,
+                127.6168
+              ],
+              "endXYmm": [
+                129.4045,
+                127.7575
+              ],
+              "boundsXYmm": [
+                [
+                  129.2638,
+                  129.4045
+                ],
+                [
+                  127.6168,
+                  127.7575
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.1979,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                120.9232,
+                143.0252
+              ],
+              "endXYmm": [
+                120.7832,
+                142.8852
+              ],
+              "boundsXYmm": [
+                [
+                  120.7832,
+                  120.9232
+                ],
+                [
+                  142.8852,
+                  143.0252
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.1979,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                120.7133,
+                142.8153
+              ],
+              "endXYmm": [
+                120.5733,
+                142.6753
+              ],
+              "boundsXYmm": [
+                [
+                  120.5733,
+                  120.7133
+                ],
+                [
+                  142.6753,
+                  142.8153
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.1969,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                122.9053,
+                111.6293
+              ],
+              "endXYmm": [
+                122.7661,
+                111.4901
+              ],
+              "boundsXYmm": [
+                [
+                  122.7661,
+                  122.9053
+                ],
+                [
+                  111.4901,
+                  111.6293
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.1,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                124.9473,
+                124.5833
+              ],
+              "endXYmm": [
+                125.018,
+                124.654
+              ],
+              "boundsXYmm": [
+                [
+                  124.9473,
+                  125.018
+                ],
+                [
+                  124.5833,
+                  124.654
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.0997,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                120.8585,
+                140.3935
+              ],
+              "endXYmm": [
+                120.7879,
+                140.3229
+              ],
+              "boundsXYmm": [
+                [
+                  120.7879,
+                  120.8585
+                ],
+                [
+                  140.3229,
+                  140.3935
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.0997,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                120.6469,
+                140.1819
+              ],
+              "endXYmm": [
+                120.5763,
+                140.1113
+              ],
+              "boundsXYmm": [
+                [
+                  120.5763,
+                  120.6469
+                ],
+                [
+                  140.1113,
+                  140.1819
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.0997,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                120.4353,
+                139.9703
+              ],
+              "endXYmm": [
+                120.3647,
+                139.8997
+              ],
+              "boundsXYmm": [
+                [
+                  120.3647,
+                  120.4353
+                ],
+                [
+                  139.8997,
+                  139.9703
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.0997,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                120.2942,
+                139.8292
+              ],
+              "endXYmm": [
+                120.2237,
+                139.7587
+              ],
+              "boundsXYmm": [
+                [
+                  120.2237,
+                  120.2942
+                ],
+                [
+                  139.7587,
+                  139.8292
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.0997,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                120.0826,
+                139.6176
+              ],
+              "endXYmm": [
+                120.0121,
+                139.5471
+              ],
+              "boundsXYmm": [
+                [
+                  120.0121,
+                  120.0826
+                ],
+                [
+                  139.5471,
+                  139.6176
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.0997,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                119.871,
+                139.406
+              ],
+              "endXYmm": [
+                119.8005,
+                139.3355
+              ],
+              "boundsXYmm": [
+                [
+                  119.8005,
+                  119.871
+                ],
+                [
+                  139.3355,
+                  139.406
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.0997,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                119.6594,
+                139.1944
+              ],
+              "endXYmm": [
+                119.5889,
+                139.1239
+              ],
+              "boundsXYmm": [
+                [
+                  119.5889,
+                  119.6594
+                ],
+                [
+                  139.1239,
+                  139.1944
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.0997,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                119.4478,
+                138.9828
+              ],
+              "endXYmm": [
+                119.3773,
+                138.9123
+              ],
+              "boundsXYmm": [
+                [
+                  119.3773,
+                  119.4478
+                ],
+                [
+                  138.9123,
+                  138.9828
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.0997,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                119.2362,
+                138.7712
+              ],
+              "endXYmm": [
+                119.1657,
+                138.7007
+              ],
+              "boundsXYmm": [
+                [
+                  119.1657,
+                  119.2362
+                ],
+                [
+                  138.7007,
+                  138.7712
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.0997,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                119.0952,
+                138.6302
+              ],
+              "endXYmm": [
+                119.0246,
+                138.5596
+              ],
+              "boundsXYmm": [
+                [
+                  119.0246,
+                  119.0952
+                ],
+                [
+                  138.5596,
+                  138.6302
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.0997,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                118.8836,
+                138.4186
+              ],
+              "endXYmm": [
+                118.813,
+                138.348
+              ],
+              "boundsXYmm": [
+                [
+                  118.813,
+                  118.8836
+                ],
+                [
+                  138.348,
+                  138.4186
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.0996,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                124.6371,
+                128.767
+              ],
+              "endXYmm": [
+                124.5667,
+                128.6965
+              ],
+              "boundsXYmm": [
+                [
+                  124.5667,
+                  124.6371
+                ],
+                [
+                  128.6965,
+                  128.767
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.0996,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                124.4963,
+                128.6261
+              ],
+              "endXYmm": [
+                124.4259,
+                128.5557
+              ],
+              "boundsXYmm": [
+                [
+                  124.4259,
+                  124.4963
+                ],
+                [
+                  128.5557,
+                  128.6261
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.0996,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                124.2851,
+                128.4149
+              ],
+              "endXYmm": [
+                124.2147,
+                128.3445
+              ],
+              "boundsXYmm": [
+                [
+                  124.2147,
+                  124.2851
+                ],
+                [
+                  128.3445,
+                  128.4149
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.0996,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                124.0739,
+                128.2037
+              ],
+              "endXYmm": [
+                124.0035,
+                128.1333
+              ],
+              "boundsXYmm": [
+                [
+                  124.0035,
+                  124.0739
+                ],
+                [
+                  128.1333,
+                  128.2037
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.0996,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                123.8627,
+                127.9925
+              ],
+              "endXYmm": [
+                123.7923,
+                127.9221
+              ],
+              "boundsXYmm": [
+                [
+                  123.7923,
+                  123.8627
+                ],
+                [
+                  127.9221,
+                  127.9925
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.0996,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                123.6515,
+                127.7813
+              ],
+              "endXYmm": [
+                123.5811,
+                127.7109
+              ],
+              "boundsXYmm": [
+                [
+                  123.5811,
+                  123.6515
+                ],
+                [
+                  127.7109,
+                  127.7813
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.0996,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                123.4404,
+                127.5701
+              ],
+              "endXYmm": [
+                123.37,
+                127.4997
+              ],
+              "boundsXYmm": [
+                [
+                  123.37,
+                  123.4404
+                ],
+                [
+                  127.4997,
+                  127.5701
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.0996,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                123.2996,
+                127.4293
+              ],
+              "endXYmm": [
+                123.2292,
+                127.3589
+              ],
+              "boundsXYmm": [
+                [
+                  123.2292,
+                  123.2996
+                ],
+                [
+                  127.3589,
+                  127.4293
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.0996,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                123.0884,
+                127.2181
+              ],
+              "endXYmm": [
+                123.018,
+                127.1477
+              ],
+              "boundsXYmm": [
+                [
+                  123.018,
+                  123.0884
+                ],
+                [
+                  127.1477,
+                  127.2181
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.0996,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                122.8772,
+                127.0069
+              ],
+              "endXYmm": [
+                122.8068,
+                126.9365
+              ],
+              "boundsXYmm": [
+                [
+                  122.8068,
+                  122.8772
+                ],
+                [
+                  126.9365,
+                  127.0069
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.0996,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                122.666,
+                126.7957
+              ],
+              "endXYmm": [
+                122.5956,
+                126.7253
+              ],
+              "boundsXYmm": [
+                [
+                  122.5956,
+                  122.666
+                ],
+                [
+                  126.7253,
+                  126.7957
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.0996,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                122.4548,
+                126.5845
+              ],
+              "endXYmm": [
+                122.3844,
+                126.514
+              ],
+              "boundsXYmm": [
+                [
+                  122.3844,
+                  122.4548
+                ],
+                [
+                  126.514,
+                  126.5845
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.0996,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                122.2436,
+                126.3732
+              ],
+              "endXYmm": [
+                122.1732,
+                126.3028
+              ],
+              "boundsXYmm": [
+                [
+                  122.1732,
+                  122.2436
+                ],
+                [
+                  126.3028,
+                  126.3732
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.0996,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                122.1028,
+                126.2324
+              ],
+              "endXYmm": [
+                122.0325,
+                126.162
+              ],
+              "boundsXYmm": [
+                [
+                  122.0325,
+                  122.1028
+                ],
+                [
+                  126.162,
+                  126.2324
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.0996,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                120.8357,
+                124.9652
+              ],
+              "endXYmm": [
+                120.7653,
+                124.8948
+              ],
+              "boundsXYmm": [
+                [
+                  120.7653,
+                  120.8357
+                ],
+                [
+                  124.8948,
+                  124.9652
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.0996,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                120.6949,
+                124.8244
+              ],
+              "endXYmm": [
+                120.6245,
+                124.754
+              ],
+              "boundsXYmm": [
+                [
+                  120.6245,
+                  120.6949
+                ],
+                [
+                  124.754,
+                  124.8244
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.0996,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                120.4838,
+                124.6132
+              ],
+              "endXYmm": [
+                120.4134,
+                124.5428
+              ],
+              "boundsXYmm": [
+                [
+                  120.4134,
+                  120.4838
+                ],
+                [
+                  124.5428,
+                  124.6132
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.0996,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                120.2726,
+                124.402
+              ],
+              "endXYmm": [
+                120.2022,
+                124.3315
+              ],
+              "boundsXYmm": [
+                [
+                  120.2022,
+                  120.2726
+                ],
+                [
+                  124.3315,
+                  124.402
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.0996,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                120.0614,
+                124.1907
+              ],
+              "endXYmm": [
+                119.991,
+                124.1203
+              ],
+              "boundsXYmm": [
+                [
+                  119.991,
+                  120.0614
+                ],
+                [
+                  124.1203,
+                  124.1907
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.0996,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                119.8502,
+                123.9795
+              ],
+              "endXYmm": [
+                119.7798,
+                123.9091
+              ],
+              "boundsXYmm": [
+                [
+                  119.7798,
+                  119.8502
+                ],
+                [
+                  123.9091,
+                  123.9795
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.0996,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                119.639,
+                123.7683
+              ],
+              "endXYmm": [
+                119.5686,
+                123.6979
+              ],
+              "boundsXYmm": [
+                [
+                  119.5686,
+                  119.639
+                ],
+                [
+                  123.6979,
+                  123.7683
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.0996,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                119.4982,
+                123.6275
+              ],
+              "endXYmm": [
+                119.4278,
+                123.5571
+              ],
+              "boundsXYmm": [
+                [
+                  119.4278,
+                  119.4982
+                ],
+                [
+                  123.5571,
+                  123.6275
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.0996,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                119.287,
+                123.4163
+              ],
+              "endXYmm": [
+                119.2166,
+                123.3459
+              ],
+              "boundsXYmm": [
+                [
+                  119.2166,
+                  119.287
+                ],
+                [
+                  123.3459,
+                  123.4163
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.0996,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                119.0759,
+                123.2051
+              ],
+              "endXYmm": [
+                119.0055,
+                123.1347
+              ],
+              "boundsXYmm": [
+                [
+                  119.0055,
+                  119.0759
+                ],
+                [
+                  123.1347,
+                  123.2051
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.0996,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                118.8647,
+                122.9939
+              ],
+              "endXYmm": [
+                118.7943,
+                122.9235
+              ],
+              "boundsXYmm": [
+                [
+                  118.7943,
+                  118.8647
+                ],
+                [
+                  122.9235,
+                  122.9939
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.0996,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                118.6535,
+                122.7827
+              ],
+              "endXYmm": [
+                118.5831,
+                122.7123
+              ],
+              "boundsXYmm": [
+                [
+                  118.5831,
+                  118.6535
+                ],
+                [
+                  122.7123,
+                  122.7827
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.0996,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                118.4423,
+                122.5715
+              ],
+              "endXYmm": [
+                118.3719,
+                122.5011
+              ],
+              "boundsXYmm": [
+                [
+                  118.3719,
+                  118.4423
+                ],
+                [
+                  122.5011,
+                  122.5715
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.0996,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                118.3015,
+                122.4307
+              ],
+              "endXYmm": [
+                118.2311,
+                122.3603
+              ],
+              "boundsXYmm": [
+                [
+                  118.2311,
+                  118.3015
+                ],
+                [
+                  122.3603,
+                  122.4307
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.0996,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                116.9772,
+                124.3162
+              ],
+              "endXYmm": [
+                117.0476,
+                124.3866
+              ],
+              "boundsXYmm": [
+                [
+                  116.9772,
+                  117.0476
+                ],
+                [
+                  124.3162,
+                  124.3866
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.0994,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                119.3638,
+                110.0138
+              ],
+              "endXYmm": [
+                119.4342,
+                110.0842
+              ],
+              "boundsXYmm": [
+                [
+                  119.3638,
+                  119.4342
+                ],
+                [
+                  110.0138,
+                  110.0842
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.0994,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                119.7154,
+                110.3654
+              ],
+              "endXYmm": [
+                119.7857,
+                110.4357
+              ],
+              "boundsXYmm": [
+                [
+                  119.7154,
+                  119.7857
+                ],
+                [
+                  110.3654,
+                  110.4357
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.0994,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                119.9264,
+                110.5764
+              ],
+              "endXYmm": [
+                119.9967,
+                110.6467
+              ],
+              "boundsXYmm": [
+                [
+                  119.9264,
+                  119.9967
+                ],
+                [
+                  110.5764,
+                  110.6467
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.0991,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                117.8348,
+                134.1599
+              ],
+              "endXYmm": [
+                117.9049,
+                134.23
+              ],
+              "boundsXYmm": [
+                [
+                  117.8348,
+                  117.9049
+                ],
+                [
+                  134.1599,
+                  134.23
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.0984,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                123.0445,
+                111.7685
+              ],
+              "endXYmm": [
+                122.9749,
+                111.6989
+              ],
+              "boundsXYmm": [
+                [
+                  122.9749,
+                  123.0445
+                ],
+                [
+                  111.6989,
+                  111.7685
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.0984,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                122.6965,
+                111.4205
+              ],
+              "endXYmm": [
+                122.6269,
+                111.3509
+              ],
+              "boundsXYmm": [
+                [
+                  122.6269,
+                  122.6965
+                ],
+                [
+                  111.3509,
+                  111.4205
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.0984,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                122.4877,
+                111.2117
+              ],
+              "endXYmm": [
+                122.418,
+                111.142
+              ],
+              "boundsXYmm": [
+                [
+                  122.418,
+                  122.4877
+                ],
+                [
+                  111.142,
+                  111.2117
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.0984,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                122.2788,
+                111.0028
+              ],
+              "endXYmm": [
+                122.2092,
+                110.9332
+              ],
+              "boundsXYmm": [
+                [
+                  122.2092,
+                  122.2788
+                ],
+                [
+                  110.9332,
+                  111.0028
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.0984,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                122.07,
+                110.794
+              ],
+              "endXYmm": [
+                122.0004,
+                110.7244
+              ],
+              "boundsXYmm": [
+                [
+                  122.0004,
+                  122.07
+                ],
+                [
+                  110.7244,
+                  110.794
+                ]
+              ]
+            },
+            {
+              "pathIndex": 5,
+              "feature": "Bridge",
+              "category": "bridge",
+              "lengthMm": 0.0984,
+              "supportedBefore": true,
+              "supportedAfter": true,
+              "support": "both_ends",
+              "startXYmm": [
+                120.8867,
+                109.6107
+              ],
+              "endXYmm": [
+                120.8171,
+                109.5411
+              ],
+              "boundsXYmm": [
+                [
+                  120.8171,
+                  120.8867
+                ],
+                [
+                  109.5411,
+                  109.6107
+                ]
+              ]
+            }
+          ],
+          "maximumIntervalMm": 4.2855
+        }
+      ]
+    },
+    {
+      "objectId": 12,
+      "name": "mystery-box-sg92r-c3-print-fit_bearing",
+      "legacyCumulativeExternalUnsupportedMm": 0.0,
+      "layersAnalyzed": 59,
+      "layersWithUnsupported": 0,
+      "cumulativeUnsupportedMm": {
+        "external": 0.0,
+        "bridge": 0.0,
+        "internal": 0.0
+      },
+      "warningCumulativeMm": 0.0,
+      "maximumWarningIntervalMm": 0.0,
+      "maximumIntervalByCategoryMm": {
+        "external": 0.0,
+        "bridge": 0.0,
+        "internal": 0.0
+      },
+      "maximumUnsupportedIntervalMm": 0.0,
+      "layers": []
+    }
+  ]
+}

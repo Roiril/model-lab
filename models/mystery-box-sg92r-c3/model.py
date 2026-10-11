@@ -14,7 +14,7 @@ import bpy
 import bmesh
 from mathutils import Matrix
 
-from blender_utils import clear_scene, export_stl
+from blender_utils import EXPORTS_DIR, clear_scene, export_stl
 from printmech.geometry import box, circle, cut, cyl_x, hull, prism, union
 import motion
 import params as P
@@ -86,6 +86,80 @@ def prepare_mesh(ob):
     ob.data.update()
 
 
+def clean_closed_mesh(ob):
+    """座標を保ったまま重複面、零面積面、微小な開境界を除く。"""
+    bm = bmesh.new()
+    bm.from_mesh(ob.data)
+    bmesh.ops.remove_doubles(bm, verts=bm.verts, dist=1e-9)
+    bm.verts.index_update()
+    seen = set()
+    discard = []
+    for face in bm.faces:
+        key = tuple(sorted(vertex.index for vertex in face.verts))
+        if face.calc_area() < 1e-16 or key in seen:
+            discard.append(face)
+        else:
+            seen.add(key)
+    if discard:
+        bmesh.ops.delete(bm, geom=discard, context="FACES_ONLY")
+    boundary = [edge for edge in bm.edges if not edge.is_manifold]
+    if boundary:
+        bmesh.ops.holes_fill(bm, edges=boundary)
+    bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
+    bm.to_mesh(ob.data)
+    bm.free()
+    ob.data.update()
+
+
+def union_precise(target, *others):
+    """0.1mmの接続部を潰さずEXACT unionする。"""
+    for other in others:
+        modifier = target.modifiers.new("union_precise", "BOOLEAN")
+        modifier.operation = "UNION"
+        modifier.solver = "EXACT"
+        modifier.object = other
+        bpy.context.view_layer.objects.active = target
+        bpy.ops.object.modifier_apply(modifier=modifier.name)
+        bpy.data.objects.remove(other, do_unlink=True)
+        bm = bmesh.new()
+        bm.from_mesh(target.data)
+        bmesh.ops.remove_doubles(bm, verts=bm.verts, dist=1e-7)
+        bmesh.ops.dissolve_degenerate(bm, edges=bm.edges, dist=1e-7)
+        bmesh.ops.triangulate(bm, faces=list(bm.faces), quad_method="BEAUTY", ngon_method="BEAUTY")
+        bm.verts.index_update()
+        seen = {}
+        repeated = set()
+        for face in bm.faces:
+            key = tuple(sorted(vertex.index for vertex in face.verts))
+            if key in seen:
+                prior = seen[key]
+                repeated.add(face)
+                if prior.normal.dot(face.normal) < 0:
+                    repeated.add(prior)
+            else:
+                seen[key] = face
+        if repeated:
+            bmesh.ops.delete(bm, geom=list(repeated), context="FACES_ONLY")
+        bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
+        bm.to_mesh(target.data)
+        bm.free()
+        target.data.update()
+    return target
+
+
+def union_closed(target, other):
+    """閉じた歯車とホーン受けをMANIFOLD solverで一体化する。"""
+    modifier = target.modifiers.new("union_closed", "BOOLEAN")
+    modifier.operation = "UNION"
+    modifier.solver = "MANIFOLD"
+    modifier.object = other
+    bpy.context.view_layer.objects.active = target
+    bpy.ops.object.modifier_apply(modifier=modifier.name)
+    bpy.data.objects.remove(other, do_unlink=True)
+    prepare_mesh(target)
+    return target
+
+
 def gear_polygon(cy, cz, rotation_deg=0.0):
     z = P.GEAR_TEETH
     module = P.GEAR_MODULE
@@ -124,36 +198,205 @@ def hex_bore(name):
 
 
 def make_gear(name, axis_z, x0, x1, rotation):
-    ob = prism(gear_polygon(0.0, axis_z, rotation), "x", x0, x1, name)
-    hub = cyl_x((0.0, axis_z), 0.006, x0, x1, 72, name + "_hub")
-    union(ob, hub)
+    return prism(gear_polygon(0.0, axis_z, rotation), "x", x0, x1, name)
+
+
+def horn_shapes(clearance=0.0, hub_radius=None):
+    """正本ホーンの丸端、非対称腕、中心ハブをY-Z断面へ写す。"""
+    tip = P.SG.HORN_TIP_W / 2 + clearance
+    root = P.SG.HORN_ROOT_W / 2 + clearance
+    hub = hub_radius if hub_radius is not None else P.SG.HORN_HUB_DIA / 2 + clearance
+    left = P.SG.HORN_LEFT_X - clearance
+    right = P.SG.HORN_RIGHT_X + clearance
+    root_y = P.SG.HORN_HUB_DIA / 2
+    left_arm = hull(circle((left + tip, 0), tip, 24) +
+                    circle((-root_y, 0), root, 32))
+    right_arm = hull(circle((root_y, 0), root, 32) +
+                     circle((right - tip, 0), tip, 24))
+    root_bridge = hull(circle((-root_y, 0), root, 32) +
+                       circle((root_y, 0), root, 32))
+    short_r = P.SG.HORN_SHORT_W / 2 + clearance
+    short_half = P.SG.HORN_SPAN_Y / 2 + clearance
+    short_arm = hull(circle((0, -short_half + short_r), short_r, 24) +
+                     circle((0, short_half - short_r), short_r, 24))
+    return [left_arm, right_arm, root_bridge, short_arm, circle((0, 0), hub, 48)]
+
+
+def cross2(a, b):
+    return a[0] * b[1] - a[1] * b[0]
+
+
+def ray_exit(poly, direction):
+    distance = 0.0
+    for index, start in enumerate(poly):
+        end = poly[(index + 1) % len(poly)]
+        edge = (end[0] - start[0], end[1] - start[1])
+        denominator = cross2(direction, edge)
+        if abs(denominator) < 1e-12:
+            continue
+        ray_distance = cross2(start, edge) / denominator
+        edge_fraction = cross2(start, direction) / denominator
+        if ray_distance >= 0 and -1e-9 <= edge_fraction <= 1 + 1e-9:
+            distance = max(distance, ray_distance)
+    return distance
+
+
+def horn_profile(clearance=0.0, hub_radius=None, count=256):
+    """重なる丸端断面の外周を、原点からの放射包絡で1本の輪郭にする。"""
+    shapes = horn_shapes(clearance, hub_radius)
+    points = []
+    for index in range(count):
+        angle = 2 * math.pi * index / count
+        direction = (math.cos(angle), math.sin(angle))
+        radius = max(ray_exit(shape, direction) for shape in shapes)
+        points.append((P.SERVO_AXIS_Y + radius * direction[0],
+                       P.SERVO_AXIS_Z + radius * direction[1]))
+    return points
+
+
+def horn_solid(name, x0, x1, clearance=0.0, hub_radius=None):
+    return prism(horn_profile(clearance, hub_radius), "x", x0, x1, name)
+
+
+def make_horn_receiver(name):
+    outer = horn_profile(P.HORN_CLEARANCE + P.HORN_RECEIVER_WALL,
+                         P.HORN_BOSS_D / 2)
+    inner = horn_profile(P.HORN_CLEARANCE)
+    x0 = P.HORN_RECEIVER_OPEN_X
+    x1 = P.HORN_BLIND_X0
+    x2 = x1 + P.HORN_BLIND_T
+    bm = bmesh.new()
+    boss = [(P.SERVO_AXIS_Y + P.HORN_BOSS_D / 2 * math.cos(2 * math.pi * index / len(outer)),
+             P.SERVO_AXIS_Z + P.HORN_BOSS_D / 2 * math.sin(2 * math.pi * index / len(outer)))
+            for index in range(len(outer))]
+    outer_rows = [[bm.verts.new((x, y, z)) for y, z in profile]
+                  for x, profile in ((x0, outer), (x1, outer), (x2, boss))]
+    inner_rows = [[bm.verts.new((x, y, z)) for y, z in inner] for x in (x0, x1)]
+    count = len(outer)
+    for index in range(count):
+        following = (index + 1) % count
+        bm.faces.new((outer_rows[0][index], outer_rows[0][following],
+                      inner_rows[0][following], inner_rows[0][index]))
+        bm.faces.new((outer_rows[0][index], outer_rows[1][index],
+                      outer_rows[1][following], outer_rows[0][following]))
+        bm.faces.new((outer_rows[1][index], outer_rows[2][index],
+                      outer_rows[2][following], outer_rows[1][following]))
+        bm.faces.new((inner_rows[0][index], inner_rows[0][following],
+                      inner_rows[1][following], inner_rows[1][index]))
+    blind_center = bm.verts.new((x1, P.SERVO_AXIS_Y, P.SERVO_AXIS_Z))
+    end_center = bm.verts.new((x2, P.SERVO_AXIS_Y, P.SERVO_AXIS_Z))
+    for index in range(count):
+        following = (index + 1) % count
+        bm.faces.new((inner_rows[1][index], inner_rows[1][following], blind_center))
+        bm.faces.new((outer_rows[2][following], outer_rows[2][index], end_center))
+    bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
+    mesh = bpy.data.meshes.new(name)
+    bm.to_mesh(mesh)
+    bm.free()
+    ob = bpy.data.objects.new(name, mesh)
+    bpy.context.collection.objects.link(ob)
     return ob
 
 
-def horn_profile(clearance=0.0, wall=0.0):
-    left = P.SG.HORN_LEFT_X - clearance - wall
-    right = P.SG.HORN_RIGHT_X + clearance + wall
-    tip = P.SG.HORN_TIP_W / 2 + clearance + wall
-    root = P.SG.HORN_ROOT_W / 2 + clearance + wall
-    root_x = 0.0045
-    return [(left, -tip), (-root_x, -root), (root_x, -root), (right, -tip),
-            (right, tip), (root_x, root), (-root_x, root), (left, tip)]
+def rect_yz_between(a, b, width):
+    dy, dz = b[0] - a[0], b[1] - a[1]
+    length = math.hypot(dy, dz)
+    ny, nz = -dz / length * width / 2, dy / length * width / 2
+    return [(a[0] + ny, a[1] + nz), (b[0] + ny, b[1] + nz),
+            (b[0] - ny, b[1] - nz), (a[0] - ny, a[1] - nz)]
 
 
-def horn_solid(name, x0, x1, clearance=0.0, wall=0.0):
-    long_arm = prism([(P.SERVO_AXIS_Y + y, P.SERVO_AXIS_Z + z)
-                      for y, z in horn_profile(clearance, wall)], "x", x0, x1, name)
-    short_half = P.SG.HORN_SPAN_Y / 2 + clearance + wall
-    short_w = P.SG.HORN_SHORT_W / 2 + clearance + wall
-    short_arm = box(x0, x1, P.SERVO_AXIS_Y - short_w, P.SERVO_AXIS_Y + short_w,
-                    P.SERVO_AXIS_Z - short_half, P.SERVO_AXIS_Z + short_half, name + "_short")
-    union(long_arm, short_arm)
-    return long_arm
+def cut_cap_mount(wall, side):
+    """内側爪をキー溝から入れて90度回す軸端キャップの穴と板ばねを作る。"""
+    half = P.CUBE_W / 2
+    inner = half - P.WALL
+    if side < 0:
+        outer_x = -half - 0.001
+        through_x = -inner + 0.0005
+        body_inner_x = -P.SHAFT_MAIN_X - P.AXIAL_PLAY / 2
+        wall_x0, wall_x1 = -half, -inner
+        detent_x0, detent_x1 = wall_x0, body_inner_x - 0.0003
+    else:
+        outer_x = half + 0.001
+        through_x = inner - 0.0005
+        body_inner_x = P.SHAFT_MAIN_X + P.AXIAL_PLAY / 2
+        wall_x0, wall_x1 = inner, half
+        detent_x0, detent_x1 = body_inner_x + 0.0003, wall_x1
+    bore_r = max(P.CAP_BODY_R + P.CAP_BODY_CLEARANCE,
+                 P.CAP_STEM_R + P.CAP_STEM_W / 2 + P.CAP_BAYONET_CLEARANCE)
+    cut(wall, cyl_x((0, P.CAM_AXIS_Z), bore_r,
+                    min(outer_x, through_x), max(outer_x, through_x), 72,
+                    "cap_body_bore"))
+    key_half = P.CAP_LUG_W / 2 + P.CAP_BAYONET_CLEARANCE
+    for sign in (-1, 1):
+        cut(wall, box(min(outer_x, through_x), max(outer_x, through_x),
+                      -key_half, key_half,
+                      P.CAM_AXIS_Z + sign * P.CAP_LUG_R - key_half,
+                      P.CAM_AXIS_Z + sign * P.CAP_LUG_R + key_half,
+                      "cap_keyway"))
+
+    angle = math.radians(P.CAP_DETENT_ANGLE_DEG)
+    radial = (math.cos(angle), math.sin(angle))
+    tangent = (-radial[1], radial[0])
+    tip_r = P.CAP_BODY_R - P.CAP_DETENT_INTERFERENCE + P.CAP_DETENT_ARM_T / 2
+    tip = (radial[0] * tip_r, P.CAM_AXIS_Z + radial[1] * tip_r)
+    free_anchor = (tip[0] - tangent[0] * P.CAP_DETENT_ARM_L,
+                   tip[1] - tangent[1] * P.CAP_DETENT_ARM_L)
+    beam_anchor = (free_anchor[0] - tangent[0] * 0.0005,
+                   free_anchor[1] - tangent[1] * 0.0005)
+    pocket_tip = (tip[0] + tangent[0] * 0.0004,
+                  tip[1] + tangent[1] * 0.0004)
+    cut(wall, prism(rect_yz_between(free_anchor, pocket_tip,
+                                    P.CAP_DETENT_ARM_T + 0.0006),
+                    "x", detent_x0 - 0.0002, detent_x1 + 0.0002,
+                    "cap_detent_clearance"))
+    union_precise(wall, prism(rect_yz_between(beam_anchor, tip, P.CAP_DETENT_ARM_T),
+                              "x", detent_x0, detent_x1, "cap_detent_spring"))
+
+
+def make_drive_bearing_support():
+    journal_r = P.DRIVE_JOURNAL_D / 2
+    bore_r = journal_r + P.DRIVE_BEARING_RADIAL_CLEARANCE
+    outer_r = bore_r + P.DRIVE_BEARING_WALL
+    x0 = P.DRIVE_JOURNAL_X0 + (P.DRIVE_JOURNAL_SPAN - P.DRIVE_BEARING_W) / 2
+    x1 = x0 + P.DRIVE_BEARING_W
+    top = P.SERVO_AXIS_Z + bore_r
+    support = box(x0, x1, -outer_r, outer_r,
+                  P.SERVO_AXIS_Z - outer_r, top, "drive_bearing_support")
+    cut(support, cyl_x((0, P.SERVO_AXIS_Z), bore_r,
+                       x0 - 0.0005, x1 + 0.0005, 64, "drive_bearing_bore"))
+    cut(support, box(x0 - 0.0005, x1 + 0.0005,
+                     -bore_r - 0.0002, bore_r + 0.0002,
+                     P.SERVO_AXIS_Z, top + 0.0005, "drive_bearing_opening"))
+    notch_z0 = P.SERVO_AXIS_Z - outer_r + 0.0022
+    notch_z1 = notch_z0 + 0.0015
+    cut(support,
+        box(x0 - 0.0002, x1 + 0.0002, -outer_r - 0.0002,
+            -outer_r + P.DRIVE_CLIP_HOOK + 0.0002, notch_z0, notch_z1,
+            "drive_clip_notch_left"),
+        box(x0 - 0.0002, x1 + 0.0002, outer_r - P.DRIVE_CLIP_HOOK - 0.0002,
+            outer_r + 0.0002, notch_z0, notch_z1,
+            "drive_clip_notch_right"))
+    union_precise(
+        support,
+        box(x0, x1, -P.DRIVE_BEARING_WALL / 2, P.DRIVE_BEARING_WALL / 2,
+            P.FLOOR - 0.0001, P.SERVO_AXIS_Z - outer_r + 0.0002,
+            "drive_bearing_center_rib"))
+    for sign in (-1, 1):
+        inner_y = sign * (outer_r - 0.0002)
+        outer_y = sign * (outer_r + 0.005)
+        rib = prism([(inner_y, P.SERVO_AXIS_Z - outer_r + 0.0002),
+                     (outer_y, P.FLOOR - 0.0001),
+                     (inner_y, P.FLOOR - 0.0001)],
+                    "x", x0, x1, f"drive_bearing_rib_{sign}")
+        union_precise(support, rib)
+    return support
 
 
 def make_shell():
     inner = P.CUBE_W / 2 - P.WALL
-    ledge_z0, ledge_z1 = P.CUBE_H - 0.0045, P.CUBE_H - P.TILE_T
+    ledge_z0 = P.CUBE_H - 0.0045
+    ledge_z1 = P.CUBE_H - P.TILE_T - 0.00005
     overlap = 0.0001
     # 底と四枚の壁を個別に作る。軸受けは単純な側壁へ抜いてから一体化する。
     shell = box(-P.CUBE_W / 2, P.CUBE_W / 2, -P.CUBE_D / 2, P.CUBE_D / 2,
@@ -166,39 +409,48 @@ def make_shell():
                P.FLOOR, P.CUBE_H, "left_wall")
     right = box(inner - overlap, P.CUBE_W / 2, -inner, inner,
                 P.FLOOR, P.CUBE_H, "right_wall")
-    bearing_ring = circle((0, P.CAM_AXIS_Z), P.BEARING_D / 2, 48)
-    cap_ring = circle((0, P.CAM_AXIS_Z), 0.0043, 48)
-    cut(left, loft_x([
-        (-P.CUBE_W / 2 - 0.001, cap_ring), (-P.SHAFT_MAIN_X, cap_ring),
-        (-P.SHAFT_MAIN_X + 0.00005, bearing_ring), (-inner + 0.001, bearing_ring),
-    ], "bearing_cut_l"))
-    cut(right, loft_x([
-        (inner - 0.001, bearing_ring), (P.SHAFT_MAIN_X - 0.00005, bearing_ring),
-        (P.SHAFT_MAIN_X, cap_ring), (P.CUBE_W / 2 + 0.001, cap_ring),
-    ], "bearing_cut_r"))
-    # SG92Rの3ピンコネクタが通る前面出口。
-    cut(front, box(-0.020, -0.020 + P.WIRE_EXIT_W,
-                   -P.CUBE_D / 2 - 0.001, -inner + 0.001,
-                   P.FLOOR, P.FLOOR + P.WIRE_EXIT_H, "wire_exit"))
-    union(shell, front, back, left, right)
+    cut_cap_mount(left, -1)
+    cut_cap_mount(right, 1)
+    # 正本配線stubの+Y方向に合わせた背面コネクタ出口。
+    wire_x = -0.0255
+    cut(back, box(wire_x - P.WIRE_EXIT_W / 2, wire_x + P.WIRE_EXIT_W / 2,
+                  inner - 0.001, P.CUBE_D / 2 + 0.001,
+                  P.SERVO_AXIS_Z - P.WIRE_EXIT_H / 2,
+                  P.SERVO_AXIS_Z + P.WIRE_EXIT_H / 2, "wire_exit"))
+    union_precise(shell, front, back, left, right)
     # 別刷り案内板のスカートを受ける2.2mm棚。下面は45度の斜面で壁へつなぐ。
     ledge_inner = inner - 0.0022
     ledge = box(-inner, inner, -inner, inner, ledge_z0 - overlap, ledge_z1, "frame_ledge")
     cut(ledge, box(-ledge_inner, ledge_inner, -ledge_inner, ledge_inner,
                    ledge_z0 - 0.001, ledge_z1 + 0.001, "frame_ledge_opening"))
-    union(shell, ledge)
+    union_precise(shell, ledge)
     slope_bottom = ledge_z0 - 0.0022
-    union(shell,
-          prism([(-inner, slope_bottom), (-inner, ledge_z0 + overlap),
-                 (-ledge_inner, ledge_z0 + overlap)], "x", -inner, inner, "ledge_slope_front"),
-          prism([(ledge_inner, ledge_z0 + overlap), (inner, ledge_z0 + overlap),
-                 (inner, slope_bottom)], "x", -inner, inner, "ledge_slope_back"),
-          prism([(-inner, slope_bottom), (-inner, ledge_z0 + overlap),
-                 (-ledge_inner, ledge_z0 + overlap)], "y", -ledge_inner, ledge_inner,
-                "ledge_slope_left"),
-          prism([(ledge_inner, ledge_z0 + overlap), (inner, ledge_z0 + overlap),
-                 (inner, slope_bottom)], "y", -ledge_inner, ledge_inner,
-                "ledge_slope_right"))
+    union_precise(
+        shell,
+        prism([(-inner, slope_bottom), (-inner, ledge_z0 + overlap),
+               (-ledge_inner, ledge_z0 + overlap)], "x", -inner, inner, "ledge_slope_front"),
+        prism([(ledge_inner, ledge_z0 + overlap), (inner, ledge_z0 + overlap),
+               (inner, slope_bottom)], "x", -inner, inner, "ledge_slope_back"),
+        prism([(-inner, slope_bottom), (-inner, ledge_z0 + overlap),
+               (-ledge_inner, ledge_z0 + overlap)], "y", -ledge_inner, ledge_inner,
+              "ledge_slope_left"),
+        prism([(ledge_inner, ledge_z0 + overlap), (inner, ledge_z0 + overlap),
+               (inner, slope_bottom)], "y", -ledge_inner, ledge_inner,
+              "ledge_slope_right"))
+    # φ12.6mmの端ハブと左スペーサーを90度位相のまま下ろす挿入溝。
+    insert_half_y = P.CAM_SPACER_D / 2 + P.CAM_INSERT_CLEARANCE
+    first_cam_left = -2 * P.PITCH - P.CAM_T / 2
+    left_spacer_x0 = -P.CUBE_W / 2 + P.WALL + P.CAM_SPACER_GAP
+    left_spacer_x1 = first_cam_left - P.CAM_SPACER_GAP
+    last_cam_right = 2 * P.PITCH + P.CAM_T / 2
+    right_hub_x0 = last_cam_right - 0.0002
+    right_hub_x1 = P.CUBE_W / 2 - P.WALL - P.CAM_SPACER_GAP
+    for x0, x1, name in (
+            (left_spacer_x0, left_spacer_x1, "left_spacer_insert_slot"),
+            (right_hub_x0, right_hub_x1, "right_hub_insert_slot")):
+        cut(shell, box(x0 - P.CAM_INSERT_CLEARANCE, x1 + P.CAM_INSERT_CLEARANCE,
+                       -insert_half_y, insert_half_y,
+                       slope_bottom - 0.0002, P.CUBE_H + 0.0005, name))
     # 前後ガイド兼、キャリアの低位置ストップ。
     for sign in (-1, 1):
         y = sign * P.GUIDE_Y
@@ -215,15 +467,17 @@ def make_shell():
                        P.FOLLOWER_STOP_Z - P.GUIDE_BAR_H - 0.0005,
                        P.FOLLOWER_STOP_Z + 0.0005, f"guide_slot_{sign}_{i}")
             cut(bar, slot)
-        for gap in range(P.GRID_N - 1):
-            x = (gap - 1.5) * P.PITCH
+        outer_rib_x = (inner + (P.GRID_N // 2) * P.PITCH) / 2
+        rib_positions = [(gap - 1.5) * P.PITCH for gap in range(P.GRID_N - 1)]
+        rib_positions.extend((-outer_rib_x, outer_rib_x))
+        for rib_index, x in enumerate(rib_positions):
             rib = box(x - P.GUIDE_RIB_W / 2, x + P.GUIDE_RIB_W / 2,
-                      y - P.GUIDE_BAR_D / 2, y + P.GUIDE_BAR_D / 2,
-                      P.FLOOR - overlap,
+                       y - P.GUIDE_BAR_D / 2, y + P.GUIDE_BAR_D / 2,
+                       P.FLOOR - overlap,
                       P.FOLLOWER_STOP_Z - P.GUIDE_BAR_H + overlap,
-                      f"guide_rib_{sign}_{gap}")
-            union(bar, rib)
-        union(shell, bar)
+                       f"guide_rib_{sign}_{rib_index}")
+            union_precise(bar, rib)
+        union_precise(shell, bar)
     # サーボの着座レール。正本外形に片側0.35mmを足す。
     sx0 = -(P.SG.SHAFT_BOTTOM_Z + P.SG.SHAFT_H)
     sx1 = sx0 + P.SG.BODY_H
@@ -234,18 +488,20 @@ def make_shell():
         rail = box(x0, x1, sy0 - 0.001, sy1 + 0.001,
                    P.FLOOR - overlap, P.SERVO_AXIS_Z - P.SG.BODY_W / 2,
                    "servo_rail")
-        union(shell, rail)
+        union_precise(shell, rail)
     for y0, y1 in ((sy0 - 0.002, sy0 - P.SERVO_CLEARANCE),
                    (sy1 + P.SERVO_CLEARANCE, sy1 + 0.002)):
         end = box(sx0 - 0.002, sx1 + 0.002, y0, y1, P.FLOOR - overlap,
                   P.SERVO_AXIS_Z - P.SG.BODY_W / 2, "servo_end")
-        union(shell, end)
+        union_precise(shell, end)
+    union_precise(shell, make_drive_bearing_support())
     return shell
 
 
 def make_carrier(index):
     x = (index - 2) * P.PITCH
-    carrier = box(x - P.CARRIER_BEAM_W / 2, x + P.CARRIER_BEAM_W / 2,
+    beam_x_w = P.CARRIER_BEAM_X_WIDTHS[index]
+    carrier = box(x - beam_x_w / 2, x + beam_x_w / 2,
                   -0.0325, 0.0325, P.CARRIER_BEAM_Z0, P.CARRIER_BEAM_Z1,
                   f"carrier_{index}")
     for sign in (-1, 1):
@@ -254,10 +510,19 @@ def make_carrier(index):
                      x + P.GUIDE_TONGUE_W / 2 - 0.0002,
                      y - P.GUIDE_TONGUE_D / 2, y + P.GUIDE_TONGUE_D / 2,
                      P.FOLLOWER_STOP_Z - 0.008, P.CARRIER_BEAM_Z1, "tongue")
-        union(carrier, tongue)
+        outer_post_y = sign * (2 * P.PITCH + P.CARRIER_BEAM_W / 2 - 0.0002)
+        inner_tongue_y = y - sign * P.GUIDE_TONGUE_D / 2
+        gusset_h = abs(inner_tongue_y - outer_post_y)
+        gusset = prism([(outer_post_y, P.CARRIER_BEAM_Z1 + gusset_h),
+                        (outer_post_y, P.CARRIER_BEAM_Z1),
+                        (inner_tongue_y, P.CARRIER_BEAM_Z1)],
+                       "x", x - P.GUIDE_TONGUE_W / 2 + 0.0002,
+                       x + P.GUIDE_TONGUE_W / 2 - 0.0002,
+                       f"tongue_gusset_{sign}")
+        union(carrier, tongue, gusset)
     for row in range(P.GRID_N):
         y = (row - 2) * P.PITCH
-        post = box(x - P.CARRIER_BEAM_W / 2 + 0.0002, x + P.CARRIER_BEAM_W / 2 - 0.0002,
+        post = box(x - beam_x_w / 2 + 0.0002, x + beam_x_w / 2 - 0.0002,
                    y - P.CARRIER_BEAM_W / 2 + 0.0002, y + P.CARRIER_BEAM_W / 2 - 0.0002,
                    P.CARRIER_BEAM_Z1 - 0.0003, P.TILE_Z0 + 0.0003, "post")
         tile = box(x - P.TILE / 2, x + P.TILE / 2, y - P.TILE / 2, y + P.TILE / 2,
@@ -292,8 +557,28 @@ def make_cam(index):
                     circle((P.CAM_AXIS_Y, P.CAM_AXIS_Z), 0.006, 72))
     x0, x1 = x - P.CAM_T / 2, x + P.CAM_T / 2
     cam = prism(envelope, "x", x0, x1, f"cam_{index}")
+    if index < 2:
+        next_left = (index - 1) * P.PITCH - P.CAM_T / 2
+    elif index == 2:
+        next_left = P.DRIVE_GEAR_X0
+    elif index < P.GRID_N - 1:
+        next_left = (index - 1) * P.PITCH - P.CAM_T / 2
+    else:
+        next_left = P.CUBE_W / 2 - P.WALL
+    hub_x1 = next_left - P.CAM_SPACER_GAP
+    union_precise(cam, cyl_x((P.CAM_AXIS_Y, P.CAM_AXIS_Z), P.CAM_SPACER_D / 2,
+                             x1 - 0.0002, hub_x1, 72, f"cam_{index}_spacer_hub"))
     cut(cam, hex_bore("cam_bore"))
     return cam
+
+
+def make_left_spacer():
+    x0 = -P.CUBE_W / 2 + P.WALL + P.CAM_SPACER_GAP
+    first_cam_left = -2 * P.PITCH - P.CAM_T / 2
+    spacer = cyl_x((P.CAM_AXIS_Y, P.CAM_AXIS_Z), P.CAM_SPACER_D / 2,
+                   x0, first_cam_left - P.CAM_SPACER_GAP, 72, "left_spacer")
+    cut(spacer, hex_bore("left_spacer_bore"))
+    return spacer
 
 
 def make_camshaft():
@@ -312,39 +597,151 @@ def make_camshaft():
 def make_cam_gear():
     gear = prism(gear_polygon(0.0, P.CAM_AXIS_Z, 276.0), "x",
                  P.DRIVE_GEAR_X0, P.DRIVE_GEAR_X1, "cam_gear")
+    next_cam_left = P.PITCH - P.CAM_T / 2
+    union_precise(gear, cyl_x((P.CAM_AXIS_Y, P.CAM_AXIS_Z), P.CAM_SPACER_D / 2,
+                              P.DRIVE_GEAR_X1 - 0.0002,
+                              next_cam_left - P.CAM_SPACER_GAP, 72,
+                              "cam_gear_spacer_hub"))
     cut(gear, hex_bore("gear_bore"))
     return gear
 
 
 def make_drive_gear():
-    gear = make_gear("drive_gear", P.SERVO_AXIS_Z, P.DRIVE_GEAR_X0, P.DRIVE_GEAR_X1, 90.0)
-    bridge = cyl_x((0, P.SERVO_AXIS_Z), 0.006, P.HORN_RECEIVER_X1 - 0.0003,
-                   P.DRIVE_GEAR_X0 + 0.0003, 64, "drive_bridge")
-    union(gear, bridge)
-    outer = horn_solid("horn_receiver_outer", P.HORN_RECEIVER_X0, P.HORN_RECEIVER_X1,
-                       P.HORN_CLEARANCE, P.HORN_RECEIVER_WALL)
-    inner = horn_solid("horn_receiver_inner", P.HORN_RECEIVER_X0 - 0.0005,
-                       P.HORN_RECEIVER_X1 + 0.0005, P.HORN_CLEARANCE, 0.0)
-    cut(outer, inner)
-    union(gear, outer)
-    # 90°位相合わせ用の非対称キー。長腕左端側だけに三角印を置く。
-    mark = prism([(P.SERVO_AXIS_Y + P.SG.HORN_LEFT_X - 0.001, P.SERVO_AXIS_Z - 0.0015),
-                  (P.SERVO_AXIS_Y + P.SG.HORN_LEFT_X - 0.001, P.SERVO_AXIS_Z + 0.0015),
-                  (P.SERVO_AXIS_Y + P.SG.HORN_LEFT_X - 0.003, P.SERVO_AXIS_Z)],
-                 "x", P.HORN_RECEIVER_X0, P.HORN_RECEIVER_X1, "phase_mark")
-    union(gear, mark)
+    gear_profile = gear_polygon(0.0, P.SERVO_AXIS_Z, 90.0)
+    def scaled_profile(radius):
+        result = []
+        for y, z in gear_profile:
+            dy, dz = y - P.SERVO_AXIS_Y, z - P.SERVO_AXIS_Z
+            scale = radius / math.hypot(dy, dz)
+            result.append((P.SERVO_AXIS_Y + dy * scale,
+                           P.SERVO_AXIS_Z + dz * scale))
+        return result
+
+    root_profile = scaled_profile(P.DRIVE_SUPPORT_ROOT_R)
+    journal_profile = scaled_profile(P.DRIVE_JOURNAL_D / 2)
+    shoulder_profile = scaled_profile(P.DRIVE_SHOULDER_D / 2)
+    gear = loft_x([
+        (P.DRIVE_GEAR_X0, gear_profile),
+        (P.DRIVE_GEAR_X1, gear_profile),
+        (P.DRIVE_SUPPORT_ROOT_X, root_profile),
+        (P.DRIVE_JOURNAL_X0, journal_profile),
+        (P.DRIVE_JOURNAL_X1, journal_profile),
+        (P.DRIVE_JOURNAL_X1, shoulder_profile),
+        (P.DRIVE_SHOULDER_X1, shoulder_profile),
+    ], "drive_gear")
+    receiver = make_horn_receiver("horn_receiver")
+    cut(gear, cyl_x((0, P.SERVO_AXIS_Z), P.HORN_BOSS_D / 2 - 0.0005,
+                    P.DRIVE_GEAR_X0 - 0.0002,
+                    P.HORN_BLIND_X0 + P.HORN_BLIND_T,
+                    96, "receiver_boss_recess"))
+    union_precise(gear, receiver)
     return gear
 
 
 def make_cap(name, side):
+    def cap_difference(target, cutter):
+        modifier = target.modifiers.new("cap_difference", "BOOLEAN")
+        modifier.operation = "DIFFERENCE"
+        modifier.solver = "EXACT"
+        modifier.object = cutter
+        bpy.context.view_layer.objects.active = target
+        bpy.ops.object.modifier_apply(modifier=modifier.name)
+        bpy.data.objects.remove(cutter, do_unlink=True)
+        prepare_mesh(target)
+
+    half = P.CUBE_W / 2
     if side < 0:
-        x0, x1 = -P.CUBE_W / 2, -P.SHAFT_MAIN_X - P.AXIAL_PLAY / 2
+        inner_x = -P.SHAFT_MAIN_X - P.AXIAL_PLAY / 2
+        x0, x1 = -half + P.CAP_FACE_INSET, inner_x
+        lug_x0 = -half + P.WALL + P.CAP_BAYONET_CLEARANCE
+        lug_x1 = lug_x0 + P.CAP_LUG_T
+        stem_x0, stem_x1 = lug_x1 - 0.0002, inner_x + 0.0002
     else:
-        x0, x1 = P.SHAFT_MAIN_X + P.AXIAL_PLAY / 2, P.CUBE_W / 2
-    cap = cyl_x((0, P.CAM_AXIS_Z), 0.0042, x0, x1, 48, name)
-    cut(cap, cyl_x((0, P.CAM_AXIS_Z), P.CAP_BORE_D / 2,
-                   min(x0, x1) - 0.0005, max(x0, x1) + 0.0005, 48, "cap_bore"))
+        inner_x = P.SHAFT_MAIN_X + P.AXIAL_PLAY / 2
+        x0, x1 = inner_x, half - P.CAP_FACE_INSET
+        lug_x1 = half - P.WALL - P.CAP_BAYONET_CLEARANCE
+        lug_x0 = lug_x1 - P.CAP_LUG_T
+        stem_x0, stem_x1 = inner_x + 0.0002, lug_x0 + 0.0002
+    cap = cyl_x((0, P.CAM_AXIS_Z), P.CAP_BODY_R, x0, x1, 72, name)
+    cap_difference(cap, cyl_x((0, P.CAM_AXIS_Z), P.CAP_BORE_D / 2,
+                              min(x0, x1) - 0.0005, max(x0, x1) + 0.0005,
+                              48, "cap_bore"))
+    for sign in (-1, 1):
+        union_precise(
+            cap,
+            box(min(lug_x0, lug_x1), max(lug_x0, lug_x1),
+                sign * P.CAP_LUG_R - P.CAP_LUG_W / 2,
+                sign * P.CAP_LUG_R + P.CAP_LUG_W / 2,
+                P.CAM_AXIS_Z - P.CAP_LUG_W / 2,
+                P.CAM_AXIS_Z + P.CAP_LUG_W / 2,
+                "cap_bayonet_lug"),
+            box(min(stem_x0, stem_x1), max(stem_x0, stem_x1),
+                sign * P.CAP_STEM_R - P.CAP_STEM_W / 2,
+                sign * P.CAP_STEM_R + P.CAP_STEM_W / 2,
+                P.CAM_AXIS_Z - P.CAP_STEM_W / 2,
+                P.CAM_AXIS_Z + P.CAP_STEM_W / 2,
+                "cap_bayonet_stem"),
+            box(min(lug_x0, lug_x1), max(lug_x0, lug_x1),
+                min(sign * P.CAP_STEM_R, sign * P.CAP_LUG_R),
+                max(sign * P.CAP_STEM_R, sign * P.CAP_LUG_R),
+                P.CAM_AXIS_Z - P.CAP_STEM_W / 2,
+                P.CAM_AXIS_Z + P.CAP_STEM_W / 2,
+                "cap_bayonet_inner_bridge"))
+    angle = math.radians(P.CAP_DETENT_ANGLE_DEG)
+    radial = (math.cos(angle), math.sin(angle))
+    tangent = (-radial[1], radial[0])
+    inner_r = P.CAP_BODY_R - P.CAP_DETENT_NOTCH_DEPTH
+    outer_r = P.CAP_BODY_R + 0.0002
+    half_w = P.CAP_DETENT_NOTCH_W / 2
+    notch = [
+        (radial[0] * inner_r + tangent[0] * half_w,
+         P.CAM_AXIS_Z + radial[1] * inner_r + tangent[1] * half_w),
+        (radial[0] * outer_r + tangent[0] * half_w,
+         P.CAM_AXIS_Z + radial[1] * outer_r + tangent[1] * half_w),
+        (radial[0] * outer_r - tangent[0] * half_w,
+         P.CAM_AXIS_Z + radial[1] * outer_r - tangent[1] * half_w),
+        (radial[0] * inner_r - tangent[0] * half_w,
+         P.CAM_AXIS_Z + radial[1] * inner_r - tangent[1] * half_w),
+    ]
+    cap_difference(cap, prism(notch, "x", min(x0, x1) - 0.0002,
+                              max(x0, x1) + 0.0002, "cap_detent_notch"))
+    collar_inner = side * P.CAP_THRUST_COLLAR_INNER_X
+    collar_outer = inner_x + side * P.CAP_THRUST_COLLAR_OVERLAP
+    collar = cyl_x((0, P.CAM_AXIS_Z), P.CAP_THRUST_COLLAR_D / 2,
+                   min(collar_inner, collar_outer), max(collar_inner, collar_outer),
+                   72, "cap_thrust_collar")
+    cap_difference(collar, cyl_x(
+        (0, P.CAM_AXIS_Z), P.CAP_THRUST_COLLAR_BORE_D / 2,
+        min(collar_inner, collar_outer) - 0.0002,
+        max(collar_inner, collar_outer) + 0.0002, 72,
+        "cap_thrust_collar_bore"))
+    union_precise(cap, collar)
     return cap
+
+
+def make_drive_bearing_clip():
+    journal_r = P.DRIVE_JOURNAL_D / 2
+    bore_r = journal_r + P.DRIVE_BEARING_RADIAL_CLEARANCE
+    support_r = bore_r + P.DRIVE_BEARING_WALL
+    x0 = P.DRIVE_JOURNAL_X0 + (P.DRIVE_JOURNAL_SPAN - P.DRIVE_BEARING_W) / 2
+    x1 = x0 + P.DRIVE_BEARING_W
+    bridge_z0 = P.SERVO_AXIS_Z + journal_r + P.DRIVE_CLIP_GAP
+    bridge_z1 = bridge_z0 + P.DRIVE_BEARING_WALL
+    inner_y = support_r + P.DRIVE_CLIP_GAP
+    outer_y = inner_y + P.DRIVE_CLIP_T
+    hook_z0 = P.SERVO_AXIS_Z - support_r + 0.00235
+    clip = box(x0, x1, -outer_y, outer_y, bridge_z0, bridge_z1,
+               "drive_bearing_clip")
+    union(clip,
+          box(x0, x1, -outer_y, -inner_y, hook_z0, bridge_z1,
+              "drive_clip_leg_left"),
+          box(x0, x1, inner_y, outer_y, hook_z0, bridge_z1,
+              "drive_clip_leg_right"),
+          box(x0, x1, -inner_y, -support_r + P.DRIVE_CLIP_HOOK,
+              hook_z0, hook_z0 + P.DRIVE_CLIP_T, "drive_clip_hook_left"),
+          box(x0, x1, support_r - P.DRIVE_CLIP_HOOK, inner_y,
+              hook_z0, hook_z0 + P.DRIVE_CLIP_T, "drive_clip_hook_right"))
+    return clip
 
 
 def make_servo_clip():
@@ -368,39 +765,35 @@ def make_servo_clip():
     return clip
 
 
-def make_ref_servo():
-    x0 = -(P.SG.SHAFT_BOTTOM_Z + P.SG.SHAFT_H)
-    body = box(x0, x0 + P.SG.BODY_H,
-               P.SG.BODY_CENTER_X - P.SG.BODY_L / 2,
-               P.SG.BODY_CENTER_X + P.SG.BODY_L / 2,
-               P.SERVO_AXIS_Z - P.SG.BODY_W / 2, P.SERVO_AXIS_Z + P.SG.BODY_W / 2,
-               "ref_servo")
-    flange_x0 = P.SG.FLANGE_BOTTOM_Z - (P.SG.SHAFT_BOTTOM_Z + P.SG.SHAFT_H)
-    flange = box(flange_x0, flange_x0 + P.SG.FLANGE_T,
-                  P.SG.BODY_CENTER_X - P.SG.FLANGE_L / 2,
-                  P.SG.BODY_CENTER_X + P.SG.FLANGE_L / 2,
-                  P.SERVO_AXIS_Z - P.SG.FLANGE_W / 2, P.SERVO_AXIS_Z + P.SG.FLANGE_W / 2,
-                  "ref_flange")
-    union(body, flange)
-    return body
+SERVO_REFERENCE_MATRIX = Matrix((
+    (0, 0, 0.001, -P.SG.HORN_ARM_BOTTOM_Z),
+    (0.001, 0, 0, P.SERVO_AXIS_Y),
+    (0, 0.001, 0, P.SERVO_AXIS_Z),
+    (0, 0, 0, 1),
+))
 
 
-def make_ref_horn():
-    return horn_solid("ref_horn", 0.0, P.SG.HORN_ARM_T)
-
-
-def make_ref_wire():
-    return box(-0.026, -0.018, P.SG.BODY_CENTER_X + P.SG.BODY_L / 2,
-               P.SG.BODY_CENTER_X + P.SG.BODY_L / 2 + P.SG.WIRE_LENGTH,
-               P.SERVO_AXIS_Z - P.SG.WIRE_W / 2, P.SERVO_AXIS_Z + P.SG.WIRE_W / 2,
-               "ref_wire")
+def import_servo_ref(part, name):
+    path = Path(EXPORTS_DIR) / f"sg92r-photo-{part}.stl"
+    if not path.is_file():
+        raise FileNotFoundError(f"SG92R正本STLがありません: {path}")
+    before = set(bpy.data.objects)
+    bpy.ops.wm.stl_import(filepath=str(path))
+    ob = next(item for item in bpy.data.objects if item not in before)
+    ob.data.transform(SERVO_REFERENCE_MATRIX)
+    ob.data.update()
+    ob.name = name
+    return ob
 
 
 def make_fit_horn():
-    outer = horn_solid("fit_horn", 0, 0.003, P.HORN_CLEARANCE, P.HORN_RECEIVER_WALL)
-    inner = horn_solid("fit_horn_inner", -0.0005, 0.0035, P.HORN_CLEARANCE, 0)
-    cut(outer, inner)
-    return outer
+    receiver = make_horn_receiver("fit_horn")
+    outer = horn_profile(P.HORN_CLEARANCE + P.HORN_RECEIVER_WALL,
+                         P.HORN_BOSS_D / 2)
+    backing = prism(outer, "x", P.HORN_BLIND_X0,
+                    P.HORN_BLIND_X0 + P.HORN_BLIND_T, "fit_horn_backing")
+    union_precise(receiver, backing)
+    return receiver
 
 
 def make_fit_bearing():
@@ -419,6 +812,26 @@ def make_fit_bearing():
     return coupon
 
 
+def add_cap_print_supports(cap, name):
+    """印刷時だけ、左右の爪を前層から支える除去式フィンを足す。"""
+    half = P.CUBE_W / 2
+    body_h = half - P.CAP_FACE_INSET - (P.SHAFT_MAIN_X + P.AXIAL_PLAY / 2)
+    lug_z0 = P.WALL + P.CAP_BAYONET_CLEARANCE - P.CAP_FACE_INSET
+    root_z = body_h - P.CAP_PRINT_SUPPORT_ROOT_OVERLAP
+    contact_z = lug_z0 + P.CAP_PRINT_SUPPORT_LUG_OVERLAP
+    axis_x = -P.CAM_AXIS_Z if name == "cap_left" else P.CAM_AXIS_Z
+    x0 = axis_x - P.CAP_PRINT_SUPPORT_FIN_T / 2
+    x1 = axis_x + P.CAP_PRINT_SUPPORT_FIN_T / 2
+    for sign in (-1, 1):
+        fin = prism([
+            (sign * (P.CAP_BODY_R - P.CAP_PRINT_SUPPORT_ROOT_OVERLAP), root_z),
+            (sign * P.CAP_BODY_R, root_z),
+            (sign * (P.CAP_LUG_R + P.CAP_PRINT_SUPPORT_CONTACT_W / 2), contact_z),
+            (sign * (P.CAP_LUG_R - P.CAP_PRINT_SUPPORT_CONTACT_W / 2), contact_z),
+        ], "x", x0, x1, f"cap_print_support_{sign:+d}")
+        union_precise(cap, fin)
+
+
 def export_one(ob, name, print_matrix=None):
     BUILD.mkdir(parents=True, exist_ok=True)
     bpy.ops.object.select_all(action="DESELECT")
@@ -434,6 +847,8 @@ def export_one(ob, name, print_matrix=None):
     duplicate.data.transform(print_matrix)
     minimum_z = min(vertex.co.z for vertex in duplicate.data.vertices)
     duplicate.data.transform(Matrix.Translation((0, 0, -minimum_z)))
+    if name in {"cap_left", "cap_right"}:
+        add_cap_print_supports(duplicate, name)
     bpy.ops.object.select_all(action="DESELECT")
     duplicate.select_set(True)
     bpy.context.view_layer.objects.active = duplicate
@@ -456,26 +871,38 @@ def main():
     for i in range(P.GRID_N):
         parts[f"carrier_{i}"] = make_carrier(i)
     parts["camshaft"] = make_camshaft()
+    parts["left_spacer"] = make_left_spacer()
     for i in range(P.GRID_N):
         parts[f"cam_{i}"] = make_cam(i)
     parts["cam_gear"] = make_cam_gear()
     parts["drive_gear"] = make_drive_gear()
-    parts["cap_left"] = make_cap("cap_left", -1)
     parts["cap_right"] = make_cap("cap_right", 1)
+    parts["cap_left"] = parts["cap_right"].copy()
+    parts["cap_left"].data = parts["cap_right"].data.copy()
+    bpy.context.collection.objects.link(parts["cap_left"])
+    parts["cap_left"].data.transform(Matrix.Diagonal((-1.0, 1.0, 1.0, 1.0)))
+    parts["cap_left"].name = "cap_left"
     parts["servo_clip"] = make_servo_clip()
+    parts["drive_bearing_clip"] = make_drive_bearing_clip()
     parts["fit_horn"] = make_fit_horn()
     parts["fit_bearing"] = make_fit_bearing()
-    parts["ref_servo"] = make_ref_servo()
-    parts["ref_horn"] = make_ref_horn()
-    parts["ref_wire"] = make_ref_wire()
+    parts["ref_servo"] = import_servo_ref("body", "ref_servo")
+    parts["ref_horn"] = import_servo_ref("horn", "ref_horn")
+    parts["ref_wire"] = import_servo_ref("wire", "ref_wire")
 
-    for ob in parts.values():
-        prepare_mesh(ob)
+    for name, ob in parts.items():
+        if name == "ref_horn":
+            clean_closed_mesh(ob)
+        else:
+            prepare_mesh(ob)
+            if name == "shell":
+                clean_closed_mesh(ob)
 
     labels = {
-        "shell": "箱本体", "top_frame": "天面案内板", "camshaft": "六角カム軸", "cam_gear": "従動歯車",
+        "shell": "箱本体", "top_frame": "天面案内板", "camshaft": "六角カム軸", "left_spacer": "左軸方向スペーサー", "cam_gear": "従動歯車",
         "drive_gear": "ホーン受け付き駆動歯車", "cap_left": "左軸端キャップ",
         "cap_right": "右軸端キャップ", "servo_clip": "サーボ押さえ",
+        "drive_bearing_clip": "駆動歯車ジャーナル上クリップ",
         "fit_horn": "ホーン受け試片", "fit_bearing": "軸受け試片",
         "ref_servo": "SG92R本体", "ref_horn": "SG92R付属ホーン", "ref_wire": "SG92R配線",
     }
@@ -486,16 +913,26 @@ def main():
     printable = {name for name in parts if not name.startswith("ref_")}
     flip_carrier = Matrix.Translation((0, 0, P.CARRIER_TOP_Z)) @ Matrix.Rotation(math.pi, 4, "Y")
     flat_x = Matrix.Rotation(math.pi / 2, 4, "Y")
+    flat_x_mirrored = Matrix.Rotation(-math.pi / 2, 4, "Y")
+    flat_hex = Matrix.Rotation(math.pi / 6, 4, "X")
     for name, ob in parts.items():
         if name in printable:
             if name.startswith("carrier_"):
                 matrix = flip_carrier
             elif name == "top_frame":
                 matrix = Matrix.Translation((0, 0, P.CUBE_H)) @ Matrix.Rotation(math.pi, 4, "Y")
-            elif name.startswith("cam_") or name in {"drive_gear", "cap_left", "cap_right",
+            elif name == "cap_left":
+                matrix = flat_x_mirrored
+            elif name.startswith("cam_"):
+                matrix = flat_x_mirrored
+            elif name == "drive_gear":
+                matrix = flat_x
+            elif name == "camshaft":
+                matrix = flat_hex
+            elif name in {"left_spacer", "cap_right",
                           "fit_horn", "fit_bearing"}:
                 matrix = flat_x
-            elif name == "servo_clip":
+            elif name in {"servo_clip", "drive_bearing_clip"}:
                 matrix = Matrix.Rotation(math.pi / 2, 4, "Y")
             else:
                 matrix = Matrix.Identity(4)
@@ -519,6 +956,8 @@ def main():
             explode = [(column - 2) * 7, 0, 30]
         elif name == "camshaft":
             explode = [60, 0, 0]
+        elif name == "left_spacer":
+            explode = [-35, 0, 0]
         elif name.startswith("cam_") and name != "cam_gear":
             column = int(name.rsplit("_", 1)[1])
             explode = [(column - 2) * 6, 0, 0]
@@ -528,7 +967,7 @@ def main():
             explode = [-50, 0, 0]
         elif name == "cap_right":
             explode = [50, 0, 0]
-        elif name == "servo_clip":
+        elif name in {"servo_clip", "drive_bearing_clip"}:
             explode = [0, 0, -20]
         elif is_ref:
             explode = [0, 0, -30]
@@ -552,11 +991,12 @@ def main():
             "dimensions_mm": [80.0, 80.0, 80.0],
             "max_dimensions_mm": [80.0, 80.0, 83.0],
             "assembly_steps": [
-                "SG92Rを上から着座レールへ入れ、配線を前面の8×4mm出口へ通す。",
-                "サーボを90°へ動かし、付属ホーンの長腕左側と駆動歯車の三角印を合わせて押し込む。",
-                "サーボ押さえを上から差し込み、左右の脚を着座レールの外側へ掛ける。",
-                "5個のカムと従動歯車を位相順に箱内へ置き、右側から六角軸を通す。",
-                "軸端キャップを両側から押し込み、0.3mmの軸方向遊びを確認する。",
+                "箱の外でSG92Rを90°へ合わせ、正本形状の付属ホーンを出力軸へ差す。",
+                "駆動歯車の丸端付き非対称受けを付属ホーンへ差し、盲底へ着座させる。",
+                "サーボ、ホーン、駆動歯車を一緒に上からU字座へ下ろす。",
+                "サーボ押さえと駆動歯車ジャーナル上クリップを上から付ける。",
+                "左スペーサー、5個のカム、従動歯車を90°位相で置き、右側から六角軸を通す。",
+                "軸端キャップを両側から入れて90°回し、爪と板ばねで保持する。両端カラーと端ハブの公称隙間は各0.15mm。内部の隙間も含む総遊びは検証表で確認する。",
                 "5本の列キャリアを上から前後ガイドへ落とし、低位置ストップへ着座させる。",
                 "天面案内板を格子列の周囲へ下ろし、内側の4辺の棚へ着座させる。",
                 "15°へ低速移動して全列が面一になることを確認し、90°へ低速で戻して待機する。",
@@ -565,13 +1005,17 @@ def main():
             "decisions": [
                 "ホーン全角度包絡と3mm床を両立するため外形を80mm角にした。",
                 "サーボ軸Z=23.5mm、カム軸Z=53.7mm、中心距離30.2mmとした。",
-                "ホーン受けは歯面よりX負側へ分離し、六角軸と非対称三角印で位相を固定した。",
+                "ホーン受けは片側0.2mm、+X面0.2mm、盲底2mmとし、直径12mmボスから30歯歯車まで一体化した。",
+                "駆動歯車の+X側を直径6mmの3.30mmジャーナルとし、有効幅3mmのU字座と別刷り上クリップで支えた。",
+                "左右キャップは外から差して90°回し、印刷した板ばねのdetentで保持する。",
+                "各カムと従動歯車の右側を直径12.6mmのハブで埋め、隣接面との隙間を0.2mmにした。左端は同寸法の別刷りスペーサーで埋めた。",
                 "カム軸の軸受け区間も対辺5mmの六角とし、平面印刷と0.21mmの頂点隙間を両立した。",
                 "天面案内板は見える面を平面印刷する別部品とし、筐体側の棚を45度斜面で支えた。",
             ],
             "limitations": [
                 "天面を上にした卓上姿勢専用。復帰は重力に依存する。",
-                "SG92Rホーンの長さ配分と穴位置には写真由来の推定値があるため試片を先に刷る。",
+                "SG92Rの参照表示は正本STLを使う。ホーン長さ配分と穴位置は写真由来の推定値なので試片を先に刷る。",
+                "正本ホーンはスプライン歯を再現していない。ホーン受けの回転止めと公称2.5mm以上の差込は実物未確認。",
                 "PLAとPETGの実摩擦、歯面の収縮、キャップの保持力は実物確認が必要。",
                 "停電時はサーボ減速機を重力で逆駆動できず、停止角度付近に残る場合がある。復電後は15°へ低速復帰する。",
             ],

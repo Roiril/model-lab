@@ -42,6 +42,7 @@ def topology(path):
     if len(raw) != 84 + 50 * count:
         raise ValueError(f"STL byte count mismatch: {path}")
     edges, degenerates, signed6 = {}, 0, 0.0
+    numerical_slivers = 0
     parents = {}
 
     def root(vertex):
@@ -65,9 +66,12 @@ def topology(path):
                 lower[axis] = min(lower[axis], point[axis])
                 upper[axis] = max(upper[axis], point[axis])
         a, b, c = (Vector(p) for p in pts)
-        area2 = (b - a).cross(c - a).length
-        if area2 < 1e-8:
+        from solid_volume import triangle_twice_area
+        area2 = triangle_twice_area([xyz[j:j + 3] for j in (0, 3, 6)])
+        if area2 == 0 or len(set(pts)) != 3:
             degenerates += 1
+        elif area2 < 1e-8:
+            numerical_slivers += 1
         signed6 += a.dot(b.cross(c))
         for u, v in ((pts[0], pts[1]), (pts[1], pts[2]), (pts[2], pts[0])):
             edge = tuple(sorted((u, v)))
@@ -76,6 +80,7 @@ def topology(path):
     bad = sum(1 for n in edges.values() if n != 2)
     components = len({root(vertex) for vertex in parents})
     return {"triangles": count, "bad_edges": bad, "degenerate_triangles": degenerates,
+            "numerical_slivers": numerical_slivers,
             "connected_components": components,
             "signed_volume_mm3": round(signed6 / 6.0, 3),
             "bounds_mm": [[round(v, 3) for v in lower], [round(v, 3) for v in upper]],
@@ -107,9 +112,12 @@ def topology_calibration():
         return len({root(value) for value in links})
     one_component = component_count(tris)
     two_components = component_count(tris + [tuple(v + 4 for v in face) for face in tris])
+    from solid_volume import triangle_area_calibration
+    area = triangle_area_calibration()
     return {"closed_bad_edges": closed, "open_bad_edges": opened,
+            "triangle_area": area,
             "one_component_fixture": one_component, "two_component_fixture": two_components,
-            "pass": closed == 0 and opened == 3 and one_component == 1 and two_components == 2}
+            "pass": closed == 0 and opened == 3 and one_component == 1 and two_components == 2 and area['pass']}
 
 
 def cube_mesh(center, size, name):
@@ -135,18 +143,25 @@ def collision_calibration():
 
 
 def exact_common_geometry(a, ma, b, mb, vertex_predicate=None):
-    """EXACT Booleanで2メッシュの共通体積と範囲をmm単位で測る。"""
+    """MANIFOLD Booleanで2メッシュの共通体積と範囲をmm単位で測る。"""
     objects = []
     for source, matrix, name in ((a, ma, "exact_a"), (b, mb, "exact_b")):
         data = bpy.data.meshes.new(name)
         data.from_pydata([tuple(matrix @ vertex) for vertex in source.v], [], source.t)
         data.update()
+        probe = bmesh.new()
+        probe.from_mesh(data)
+        try:
+            if any(not edge.is_manifold for edge in probe.edges):
+                raise ValueError(f'Boolean input is not closed: {name}')
+        finally:
+            probe.free()
         ob = bpy.data.objects.new(name, data)
         bpy.context.collection.objects.link(ob)
         objects.append(ob)
     modifier = objects[0].modifiers.new("intersection", "BOOLEAN")
     modifier.operation = "INTERSECT"
-    modifier.solver = "EXACT"
+    modifier.solver = "MANIFOLD"
     modifier.object = objects[1]
     bpy.context.view_layer.objects.active = objects[0]
     objects[0].select_set(True)
@@ -154,7 +169,8 @@ def exact_common_geometry(a, ma, b, mb, vertex_predicate=None):
         bpy.ops.object.modifier_apply(modifier=modifier.name)
         bm = bmesh.new()
         bm.from_mesh(objects[0].data)
-        volume = abs(bm.calc_volume(signed=True)) if bm.faces else 0.0
+        from solid_volume import closed_boundary_volume
+        volume = closed_boundary_volume(bm)
         if bm.verts:
             lower = [min(vertex.co[axis] for vertex in bm.verts) for axis in range(3)]
             upper = [max(vertex.co[axis] for vertex in bm.verts) for axis in range(3)]
@@ -186,7 +202,10 @@ def exact_common_geometry(a, ma, b, mb, vertex_predicate=None):
         bm.free()
     finally:
         for ob in objects:
+            data = ob.data
             bpy.data.objects.remove(ob, do_unlink=True)
+            if data.users == 0:
+                bpy.data.meshes.remove(data)
     return {"common_volume_mm3": round(volume, 6), "intersection_bounds_mm": bounds,
             "intersection_component_bounds_mm": component_bounds,
             "vertices_in_allowed_zone": vertices_in_allowed_zone}
@@ -201,11 +220,18 @@ def exact_volume_calibration():
     identity = Matrix.Identity(4)
     positive = exact_common_volume(cube, identity, cube, translation(x=0.5))
     negative = exact_common_volume(cube, identity, cube, translation(x=2.0))
+    contact = exact_common_volume(cube, translation(x=14, y=15, z=17), cube, translation(x=15, y=15, z=17))
+    tilted = translation(x=14, y=15, z=17) @ Matrix.Rotation(math.radians(23), 4, 'X')
+    tilted_contact = exact_common_volume(cube, tilted, cube, tilted @ translation(y=1))
+    thin = exact_common_volume(cube, identity, cube, translation(x=.99))
     return {"positive_expected_mm3": 0.5,
             "positive_common_volume_mm3": round(positive, 6),
             "negative_expected_mm3": 0.0,
             "negative_common_volume_mm3": round(negative, 6),
-            "pass": abs(positive - 0.5) <= 0.001 and negative <= 1e-7}
+            "translated_face_contact_mm3": round(contact, 6), "tilted_face_contact_mm3": round(tilted_contact, 6),
+            "thin_overlap_expected_mm3": .01, "thin_overlap_mm3": round(thin, 6),
+            "pass": abs(positive - 0.5) <= 0.001 and negative <= 1e-7
+                    and contact <= 1e-7 and tilted_contact <= 1e-7 and abs(thin - .01) <= .00001}
 
 
 def load(name):
@@ -277,7 +303,7 @@ def max_collision(current, a_name, a, b_name, b, servo_deg):
 
 
 def motion_check(meshes, exact_scene):
-    """全65姿勢のEXACT結果と、カム接点・案内かかり量の解析値をまとめる。"""
+    """全65姿勢のMANIFOLD結果と、カム接点・案内かかり量の解析値をまとめる。"""
     min_pad_margin = 999.0
     for step in range(65):
         degree = P.SERVO_MIN_DEG + 2.5 * step
@@ -318,13 +344,15 @@ def path_collision(moving, fixed, transforms):
 
 
 def static_geometry_check(exact_scene):
-    """固定部品28組をEXACT全候補走査から抽出する。深さ許容は持たない。"""
+    """固定部品の全組をMANIFOLD全候補走査から抽出する。"""
     rows = [row for row in exact_scene["pairs"] if row["pose_samples"] == 1]
     violations = [row for row in rows if not row["pass"]]
-    return {"parts": 8, "checked_pairs": len(rows), "expected_pairs": 28,
+    count = len(exact_scene["static_parts"])
+    expected = count * (count - 1) // 2
+    return {"parts": count, "checked_pairs": len(rows), "expected_pairs": expected,
             "common_volume_limit_mm3": 0.001, "pairs": rows,
             "violations": violations,
-            "pass": len(rows) == 28 and not violations}
+            "pass": len(rows) == expected and not violations}
 
 
 def exact_interface_check(meshes):
@@ -375,17 +403,16 @@ def exact_interface_check(meshes):
             "physical_basis": basis,
             "pass": geometry["common_volume_mm3"] <= 0.001,
         }
-    return {"method": "Blender Boolean EXACT。体積校正後、主要界面の代表姿勢を再測定。",
+    return {"method": "Blender Boolean MANIFOLD。体積校正後、主要界面の代表姿勢を再測定。",
             "interfaces": results,
             "pass": all(item["pass"] for item in results.values())}
 
 
 def exact_scene_check(meshes):
     """全固定・可動候補を全姿勢で測る。AABB共通範囲が0の姿勢だけBooleanを省略する。"""
-    static_ids = ("housing", "faceplate", "guide_frame", "bottom", "bearing_keeper",
-                  "servo_clip", "servo_body", "servo_wire")
     moving_ids = ("camshaft", "horn_coupler", "cam_center", "cam_inner", "cam_outer", "servo_horn",
                   "carrier_center", "carrier_inner", "carrier_outer")
+    static_ids = tuple(name for name in meshes if name not in moving_ids and not name.startswith("print_test"))
     all_ids = static_ids + moving_ids
     reference_ids = {"servo_body", "servo_horn", "servo_wire"}
     identity = Matrix.Identity(4)
@@ -434,18 +461,28 @@ def exact_scene_check(meshes):
     reference_internal = []
     for key in sorted(pairs):
         row = pairs[key]
-        row["limit_mm3"] = None if row["classification"] == "sg_reference_internal" else 0.001
-        row["pass"] = (True if row["classification"] == "sg_reference_internal" else
-                       row["maximum_common_volume_mm3"] <= 0.001)
+        row["limit_mm3"] = 0.001
+        row["pass"] = row["maximum_common_volume_mm3"] <= 0.001
+        if row["classification"] == "sg_reference_internal" and row["maximum_common_volume_mm3"] > .001:
+            bounds = row["intersection_bounds_mm"]
+            x0 = (P.SERVO_X0 + P.SG.HORN_HUB_BOTTOM_Z) * 1000
+            x1 = (P.SERVO_X0 + P.SG.SHAFT_BOTTOM_Z + P.SG.SHAFT_H) * 1000
+            zc = P.CAM_AXIS_Z * 1000
+            bounded = bounds is not None and all(x0 - .003 <= bound[0] <= x1 + .003
+                and abs(bound[1]) <= 2.313 and abs(bound[2] - zc) <= 2.313 for bound in bounds)
+            row["limit_mm3"] = .030
+            row["pass"] = bounded and row["maximum_common_volume_mm3"] <= .030
+            row["spline_transmission"] = "unknown"
         rows.append(row)
         if row["classification"] == "sg_reference_internal":
             reference_internal.append(row)
-        elif not row["pass"]:
+        if not row["pass"]:
             violations.append(row)
     return {
-        "method": ("全17部品候補。固定組は1姿勢、可動部品を含む組は10〜170度を2.5度刻み。"
-                   "AABB共通範囲が0なら数学的に共通体積0、それ以外はBlender Boolean EXACT。"),
+        "method": (f"全{len(all_ids)}部品候補。固定組は1姿勢、可動部品を含む組は10〜170度を2.5度刻み。"
+                   "AABB共通範囲が0なら数学的に共通体積0、それ以外はBlender Boolean MANIFOLD。"),
         "parts": list(all_ids),
+        "static_parts": list(static_ids),
         "unique_pairs": len(rows),
         "expected_unique_pairs": len(all_ids) * (len(all_ids) - 1) // 2,
         "common_volume_limit_mm3": 0.001,
@@ -474,7 +511,7 @@ def point_in_snap_zone(kind, point):
 
 
 def exact_assembly_path(meshes, name, moving_name, fixed_names, offsets, snap=None):
-    """剛体の区分経路をEXACTで測り、指定爪の途中変形だけを限定許可する。"""
+    """剛体の区分経路をMANIFOLDで測り、指定爪の途中変形だけを限定許可する。"""
     identity = Matrix.Identity(4)
     pair_rows = {}
     violations = []
@@ -648,7 +685,7 @@ def assembly_check(meshes):
                          "worst": worst})
     return {
         "method": ("組立STLを1mm刻みで並進し、keeper回転は5度刻みで検査。"
-                   "AABB共通範囲が0なら数学的に体積0、それ以外はBlender Boolean EXACT。"
+                   "AABB共通範囲が0なら数学的に体積0、それ以外はBlender Boolean MANIFOLD。"
                    "最終位置はスナップも体積0。"),
         "paths": paths,
         "failure_summary": failures,
@@ -702,10 +739,9 @@ def physics(meshes):
 
 
 def main():
-    scene_names = ("housing", "faceplate", "guide_frame", "bottom", "carrier_center", "carrier_inner", "carrier_outer",
-                   "camshaft", "horn_coupler", "cam_center", "cam_inner", "cam_outer", "bearing_keeper", "servo_clip",
-                   "servo_body", "servo_horn", "servo_wire")
-    required = scene_names + ("print_test",)
+    manifest = json.loads(open(os.path.join(BUILD, "manifest.json"), encoding="utf-8").read())
+    scene_names = tuple(part["id"] for part in manifest["parts"] if not part.get("fit_only"))
+    required = scene_names
     source_hash_start = source_stl_hashes(scene_names)
     meshes = {name: load(name) for name in required}
     topo_cal = topology_calibration()
@@ -715,27 +751,71 @@ def main():
     stl = {name: topology(os.path.join(BUILD, f"{name}.stl"))
            for name in required if name not in reference_names}
     for name, item in stl.items():
-        item["expected_connected_components"] = 3 if name == "print_test" else 1
+        item["expected_connected_components"] = next(part.get("expected_assembly_components", 1)
+            for part in manifest["parts"] if part["id"] == name)
         item["pass"] = item["pass"] and item["connected_components"] == item["expected_connected_components"]
     reference_stl = {name: topology(os.path.join(BUILD, f"{name}.stl")) for name in reference_names}
-    printed_names = ("housing", "faceplate", "guide_frame", "bottom", "carrier_center", "carrier_inner", "carrier_outer",
-                     "camshaft", "horn_coupler", "cam_center", "cam_inner", "cam_outer", "bearing_keeper", "servo_clip")
+    printed_names = tuple(part["id"] for part in manifest["parts"] if part.get("print") and not part.get("fit_only"))
     print_stl = {name: topology(os.path.join(BUILD, f"print_{name}.stl")) for name in printed_names}
-    for item in print_stl.values():
+    for name, item in print_stl.items():
         item["on_bed"] = abs(item["bounds_mm"][0][2]) <= 0.001
-        item["expected_connected_components"] = 1
-        item["pass"] = item["pass"] and item["on_bed"] and item["connected_components"] == 1
+        item["expected_connected_components"] = next(part.get("expected_print_components", 1)
+            for part in manifest["parts"] if part["id"] == name)
+        item["pass"] = (item["pass"] and item["on_bed"] and
+                        item["connected_components"] == item["expected_connected_components"])
     exact_scene = exact_scene_check(meshes)
     static_geometry = static_geometry_check(exact_scene)
     moving = motion_check(meshes, exact_scene)
     exact_interfaces = exact_interface_check(meshes)
-    assembly = assembly_check(meshes)
     physical = physics(meshes)
+    physical["basis"] = ("接続形状の成立を前提にした1自由度の計算確認。"
+                         "実機のスプライン嵌合、材料強度、摩擦を合格にしない。")
     source_hash_end = source_stl_hashes(scene_names)
     source_stl_integrity = {
         "start": source_hash_start,
         "end": source_hash_end,
         "pass": source_hash_start == source_hash_end,
+    }
+    assembly_path = os.path.join(BUILD, "assembly_report.json")
+    assembly_document = json.loads(open(assembly_path, encoding="utf-8").read())
+    assembly_expected = assembly_document.get("sourceIntegrity", {}).get("end", {})
+    assembly_current = source_hash_end["per_file_sha256"]
+    assembly_hashes_pass = (set(assembly_expected) == set(scene_names)
+                            and assembly_expected == assembly_current)
+    assembly_failures = [step["id"] for step in assembly_document.get("steps", [])
+                         if not step.get("pass", False)]
+    assembly = {
+        "report": "build/assembly_report.json",
+        "reportPass": assembly_document.get("pass") is True,
+        "sourceHashesPass": assembly_hashes_pass,
+        "stepCount": len(assembly_document.get("steps", [])),
+        "sampleCount": sum(step.get("samples", 0) for step in assembly_document.get("steps", [])),
+        "violationCount": len(assembly_document.get("violations", [])),
+        "failureSummary": assembly_failures,
+        "pass": (assembly_document.get("model") == P.MODEL_ID
+                 and assembly_document.get("pass") is True and assembly_hashes_pass),
+        "basis": "現行表示と同じ累積組立経路。レポート生成後のSTL変更は不合格。",
+    }
+    drive_path = os.path.join(BUILD, "drive_report.json")
+    drive_document = json.loads(open(drive_path, encoding="utf-8").read())
+    drive_expected = drive_document.get("sourceHashes", {})
+    drive_hashes_pass = bool(drive_expected) and all(
+        os.path.isfile(os.path.join(ROOT, relative))
+        and hashlib.sha256(open(os.path.join(ROOT, relative), "rb").read()).hexdigest() == digest
+        for relative, digest in drive_expected.items())
+    drive_overall = drive_document.get("overall", {})
+    drive_physical_status = drive_overall.get("physicalStatus", "fail")
+    if drive_physical_status not in {"conditional", "fail"}:
+        drive_physical_status = "fail"
+    drive = {
+        "report": "build/drive_report.json",
+        "geometryPass": drive_overall.get("geometryPass") is True,
+        "sourceHashesPass": drive_hashes_pass,
+        "physicalStatus": drive_physical_status,
+        "hardwareUnknown": drive_document.get("hardwareUnknown", []),
+        "pass": (drive_document.get("model") == P.MODEL_ID
+                 and drive_overall.get("geometryPass") is True and drive_hashes_pass),
+        "basis": drive_overall.get("basis", "駆動接続レポートがないため不成立。"),
     }
     raised_mesh_z = max(
         meshes[name].moved(matrix_from_column_major(motion.transforms(P.SERVO_MAX_DEG)[name])).bounds()[1][2]
@@ -754,10 +834,16 @@ def main():
                and all(x["pass"] for x in stl.values())
                and all(x["pass"] for x in print_stl.values())
                and static_geometry["pass"] and moving["pass"] and exact_interfaces["pass"]
-               and exact_scene["pass"] and assembly["pass"] and physical["pass"]
+               and exact_scene["pass"] and assembly["pass"] and drive["pass"] and physical["pass"]
                and source_stl_integrity["pass"])
     report = {
+        "version": 1,
+        "model": P.MODEL_ID,
         "pass": overall,
+        "passScope": "cad",
+        "passBasis": "CAD形状、現行組立経路、駆動接続、条件付き1自由度計算の合否。実機合格ではない。",
+        "physicalStatus": drive["physicalStatus"] if overall else "fail",
+        "hardwareUnknown": drive["hardwareUnknown"],
         "calibration": {"topology": topo_cal, "collision": collision_cal, "exact_volume": exact_cal},
         "source_stl_integrity": source_stl_integrity,
         "dimensions": dimensions,
@@ -769,10 +855,11 @@ def main():
         "exact_interfaces": exact_interfaces,
         "exact_scene": exact_scene,
         "assembly": assembly,
+        "drive": drive,
         "physics": physical,
         "limitations": [
-            "剛体候補136組はAABB非交差を数学的0とし、それ以外をBoolean EXACTで実体積測定した。対応するカムと従動パッドの接触は解析式でも追跡した。",
-            "組立経路は並進1mm刻み、keeper回転5度刻みの離散検査。指定したスナップ爪とkeeper板ばね以外の共通体積は許容していない。",
+            f"剛体候補{exact_scene['unique_pairs']}組はAABB非交差を数学的0とし、それ以外をBoolean MANIFOLDで実体積測定した。対応するカムと従動パッドの接触は解析式でも追跡した。",
+            "組立経路は現行assembly_report.jsonを参照する。指定したスナップ爪とkeeper板ばね以外の共通体積は許容していない。",
             "SG92R正本の参照STLは形状を改変せず別欄に記録した。印刷部品のトポロジー合否には含めない。",
             "摩擦係数、ホーン嵌め合い、底板スナップ、PLA/PETGの収縮は実物未検証。",
             "電源断では停止角度付近に残り得る。復電後に低速で10度へ戻し、格子の閉鎖を実物確認する。",
@@ -790,10 +877,13 @@ def main():
                       "exact_scene_violations": exact_scene["violations"],
                       "exact_interfaces_pass": exact_interfaces["pass"],
                       "assembly_pass": assembly["pass"],
-                      "assembly_failures": assembly["failure_summary"],
+                      "assembly_failures": assembly["failureSummary"],
+                      "drive_geometry_pass": drive["geometryPass"],
+                      "drive_source_hashes_pass": drive["sourceHashesPass"],
                       "source_stl_integrity_pass": source_stl_integrity["pass"],
                       "source_stl_aggregate_sha256": source_hash_end["aggregate_sha256"],
-                      "physics_pass": physical["pass"]}, ensure_ascii=False))
+                      "physics_pass": physical["pass"],
+                      "physical_status": report["physicalStatus"]}, ensure_ascii=False))
     if not overall:
         raise SystemExit(1)
 

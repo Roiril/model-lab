@@ -46,8 +46,17 @@ def export(model):
     for key in ("verify", "delivery", "print_path_review"):
         report = folder / "build" / ("print_path_review.json" if key == "print_path_review" else f"{key}_report.json")
         data[key] = json.loads(report.read_text(encoding="utf-8")) if report.exists() else None
+    evidence = folder / "build/print_path_evidence.json"
+    data["print_path_evidence"] = json.loads(evidence.read_text(encoding="utf-8")) if evidence.exists() else None
+    data["boolean_evidence"] = json.loads((folder / "build/boolean_evidence.json").read_text(encoding="utf-8"))
+    hole_path = folder / "build/hole_clearance.json"
+    data["hole_clearance"] = json.loads(hole_path.read_text(encoding="utf-8")) if hole_path.exists() else None
+    closed_loop_path = folder / "build/closed_loop_support_evidence.json"
+    data["closed_loop_support_evidence"] = json.loads(closed_loop_path.read_text(encoding="utf-8")) if closed_loop_path.exists() else None
+    support_geometry_path = folder / "build/print_support_geometry.json"
+    data["print_support_geometry"] = json.loads(support_geometry_path.read_text(encoding="utf-8")) if support_geometry_path.exists() else None
     for key, filename in (("simTables", "sim_tables.json"), ("sim", "simulate_report.json"),
-                          ("assembly", "assembly.json")):
+                          ("assembly", "assembly.json"), ("drive", "drive_report.json")):
         report = folder / "build" / filename
         if not report.exists():
             raise FileNotFoundError(f"C1-style workflow requires {report}")

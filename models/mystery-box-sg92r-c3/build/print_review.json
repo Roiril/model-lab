@@ -1,64 +1,14 @@
 {
-  "version": 1,
+  "version": 2,
   "model": "mystery-box-sg92r-c3",
-  "conditions": {
-    "printer": "Bambu Lab X1C",
-    "nozzle_mm": 0.4,
-    "layer_mm": 0.2,
-    "support": false,
-    "note": "最大無支持スパンは形状から測った距離。G-codeの累積押出長とは区別する。"
-  },
-  "parts": [
-    {
-      "id": "shell",
-      "surface": "外装面は垂直。内部の棚と案内リブは外観面ではない。",
-      "max_unsupported_span_mm": 8.0,
-      "supported_both_ends": true,
-      "decision": "配線口の8mm橋渡しが最大。軸受け穴は6.2mm。案内板の棚は45度斜面、前後ガイドは床からの縦リブで支える。10mm以下なのでサポートなし。"
-    },
-    {
-      "id": "top_frame",
-      "surface": "見える天面をプレートへ接地する。",
-      "max_unsupported_span_mm": 0.0,
-      "supported_both_ends": true,
-      "decision": "案内板と位置決めスカートを一体で平面印刷する。"
-    },
-    {
-      "id": "carrier_0..4",
-      "surface": "25枚の見えるタイル面をプレートへ接地する。梁下面は箱内に隠れる。",
-      "max_unsupported_span_mm": 5.6,
-      "supported_both_ends": true,
-      "decision": "タイル支持柱間は5.6mm。端部は支持柱と案内舌の間が4.4mm。スライサーが示す約220mmは外周の累積長で、一本の橋の長さではない。サポートなし。"
-    },
-    {
-      "id": "camshaft",
-      "surface": "機構内に隠れる。対辺5mmの六角面をプレートへ接地する。",
-      "max_unsupported_span_mm": 0.9,
-      "supported_both_ends": false,
-      "decision": "軸受け区間を丸棒から六角角軸へ変更した。両端の丸いキャップ先端への遷移だけが片側0.9mmの短い片持ち。箱内面なのでサポートなし。"
-    },
-    {
-      "id": "servo_clip",
-      "surface": "機構内に隠れる。Y-ZのU字平面をプレートへ接地する。",
-      "max_unsupported_span_mm": 0.0,
-      "supported_both_ends": true,
-      "decision": "サーボのY側を片側0.1mmで挟む。Y軸まわりに90度寝かせ、U字全体を接地する。"
-    },
-    {
-      "id": "fit_bearing",
-      "surface": "試片。丸穴と六角軸を鉛直にする。",
-      "max_unsupported_span_mm": 0.0,
-      "supported_both_ends": true,
-      "decision": "X軸まわりの穴をZ軸へ向けるため、Y軸まわりに90度回して印刷する。"
-    },
-    {
-      "id": "cams_gears_caps_fit_horn",
-      "surface": "機構内または試片。最大面をプレートへ接地する。",
-      "max_unsupported_span_mm": 0.0,
-      "supported_both_ends": true,
-      "decision": "回転部品は軸方向を鉛直にして平面印刷する。"
-    }
+  "status": "superseded",
+  "physical_print_verified": false,
+  "reason": "旧記録は推定寸法だけで判定したため合格根拠にしない。",
+  "current_reports": [
+    "build/print_geometry_evidence.json",
+    "build/print_spans_PLA.json",
+    "build/print_spans_PETG.json",
+    "build/print_path_review.json"
   ],
-  "result": "geometry_review_pass",
-  "slice_report": "build/delivery_report.jsonは最終STL固定後に共通パイプラインで再生成する。"
+  "parts": []
 }

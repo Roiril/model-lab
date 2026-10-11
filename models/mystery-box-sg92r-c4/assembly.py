@@ -25,7 +25,7 @@ def main():
     parts = (
         "housing", "faceplate", "guide_frame", "bottom", "carrier_center", "carrier_inner",
         "carrier_outer", "camshaft", "horn_coupler", "cam_center", "cam_inner", "cam_outer",
-        "bearing_keeper", "servo_clip", "servo_body", "servo_horn", "servo_wire",
+        "joint_keeper", "bearing_keeper", "servo_clip", "servo_body", "servo_horn", "servo_wire",
     )
     plan = AssemblyPlan(P.MODEL_ID, parts)
     plan.seed("housing")
@@ -94,6 +94,13 @@ def main():
         "六角主軸を+X側から右軸受け、3個のカム、ホーン受けへ通す。",
         "主軸が90度位相の全カムと受けを通り、既設部品と干渉しない。",
         ("camshaft",), translated_group({"camshaft": pose_90}, (42, 0, 0), (0, 0, 0)),
+        reference_allowances,
+    )
+    plan.add(
+        "joint-keeper", "軸継手保持ヨークを底から入れる",
+        "静止二股ヨークを底から上げ、左フォークをホーン受け盲底の円形溝へ、右フォークを主軸の中実溝へ入れる。",
+        "左右フォークが各溝を両方向から捕える。底板取付後は下方へ抜けない。",
+        ("joint_keeper",), translated_group({"joint_keeper": IDENTITY}, (0, 0, -38), (0, 0, 0)),
         reference_allowances,
     )
     keeper_pivot = (0.0, P.CAM_AXIS_Z * 1000.0)

@@ -32,13 +32,19 @@ WEB_T = 0.003  # 荷重を受ける連結板3mm
 WEB_Z0 = 0.0647  # 最大ストローク時も天板下面を0.39mm越えない
 WEB_W = 0.003  # 環状連結と案内の幅3mm
 STEM_D = 0.0032  # 六角面を支える柱3.2mm
+STEM_OUTER_FLAT = 0.0097  # 柱を六角面の内側へ切り揃え、開口とは片側0.75mm離す
+HOLE_CLEAR_Z0 = 0.0675  # 連結板の下部2.8mmを残して六角穴を再貫通させる
+HOLE_CLEAR_Z1 = 0.0764  # 可動面上面を0.4mm越えて六角穴を確実に開ける
 CELL_CLEARANCE = 0.00035  # 開口と可動面の片側隙間0.35mm
 
 # 3群と偏心円カム
-CAM_X = (0.0, 0.0124, 0.0248)  # 中心・内環・外環の従動位置
+CAM_X = (0.0030, 0.0139, 0.0263)  # 中央は右保持肩を避け、内環・外環は従来位置を保つ
 CAM_E = (0.003, 0.002, 0.001)  # 偏心3/2/1mm
 CAM_R = 0.010  # 偏心と軸穴を差し引いても荷重部を3mm残す円カム半径10mm
-CAM_T = 0.0042  # 軸方向厚4.2mm
+CAM_T = 0.0042  # 内環・外環の軸方向厚4.2mm
+CENTER_CAM_T = 0.0042  # 中央カムも4.2mm。左側0.6mmだけ保持肩を逃がす
+CENTER_CAM_RELIEF_R = 0.0048  # 半径4.5mmのホーン受け保持肩と0.3mm離す
+CENTER_CAM_RELIEF_X1 = 0.0015  # 逃げ後も連続したカム面を3.6mm残す
 CAM_AXIS_Z = 0.040  # カム軸高さ40mm
 CAM_SHAFT_R = 0.00365  # 対辺6.3mm六角軸の頂点を包む回転半径3.65mm
 CAM_SHAFT_FLAT = 0.0063  # 横向き印刷する主軸の対辺6.3mm
@@ -57,7 +63,28 @@ FOLLOWER_PAD_X = 0.012  # 中央群の片側二本柱も受ける従動パッド
 FOLLOWER_PAD_Y = 0.008  # 偏心3mmでも接点を端から1mm内側に保つ
 FOLLOWER_PAD_T = 0.003  # 荷重を受ける従動パッド3mm
 FOLLOWER_POST_T = 0.003  # 荷重を受ける柱3mm
-FOLLOWER_POST_OFFSET_X = 0.0046  # カム面から外した柱中心
+CENTER_CAP_PRINT_SUPPORT = (0.00175, 0.0041)  # 中央六角面の外周側を受ける1.2mm柱の中心
+CENTER_CAP_PRINT_SUPPORT_D = 0.0012  # 印刷時の短い片持ちだけを分割する最小径
+CARRIER_OUTER_PRINT_SUPPORT_PRODUCT_Z = 0.0086  # 外環裏面の最初の押出高さ
+CARRIER_OUTER_PRINT_SUPPORT_LAYER_H = 0.0002  # delivery設定の層高
+CARRIER_OUTER_PRINT_SUPPORT_GAP = 0.0002  # 支持塔上面と製品下面の材料面間隔
+CARRIER_OUTER_PRINT_SUPPORT_X_HALF = 0.00155  # 3本の閉曲線を線幅ぶん覆う塔半幅
+CARRIER_OUTER_PRINT_SUPPORT_Y = (-0.03205, -0.02465)  # print座標の最外閉曲線と線幅の範囲
+CARRIER_OUTER_PRINT_SUPPORT_BASE_X_HALF = 0.0018  # 拡幅した塔を受けるベッド接地台半幅
+CARRIER_OUTER_PRINT_SUPPORT_BASE_Y = (-0.0322, -0.0278)  # 製品外形を避けるベッド接地台のY範囲
+CARRIER_OUTER_PRINT_SUPPORT_BASE_T = 0.0004  # 2層の折り取り台
+CARRIER_OUTER_PRINT_SUPPORT_RAMP_Z0 = 0.0024  # 製品外形の上0.2mmから45度で広げる
+CARRIER_CENTER_PRINT_SUPPORT_PRODUCT_Z = 0.0114  # 中央従動柱の最初の押出高さ
+CARRIER_CENTER_PRINT_SUPPORT_GAP = 0.0002  # 支持塔と従動柱の材料面間隔
+CARRIER_CENTER_PRINT_SUPPORT_LAYER_H = 0.0002  # delivery設定の層高
+HOUSING_DETENT_PRINT_SUPPORT_PRODUCT_Z = 0.0448  # 板ばね先端の最初の押出高さ
+HOUSING_DETENT_PRINT_SUPPORT_GAP = 0.0002  # 横穴内の折り取り柱との材料面間隔
+HOUSING_DETENT_PRINT_SUPPORT_LAYER_H = 0.0002  # delivery設定の層高
+COUPLER_SECOND_PRINT_SUPPORT_PRODUCT_Z = 0.0056  # ホーン受け閉環の最初の押出高さ
+FOLLOWER_POST_OFFSET_X = 0.0037  # カム面と隣群の柱から外した柱中心
+CENTER_FOLLOWER_POST_OFFSET_X = 0.0023  # 中央柱右端を内環webから0.3mm離す
+CENTER_FOLLOWER_PAD_X1 = 0.0076  # 中央パッド右端も内環webより0.3mm内側
+CENTER_GUIDE_X = 0.0003  # ホーン受け外周から中央案内を0.2mm離す
 
 # 鉛直案内。対向する案内で片側荷重のこじれを抑える
 GUIDE_CLEARANCE = 0.00035  # 片側0.35mm
@@ -85,15 +112,22 @@ WIRE_EXIT_H = 0.0045  # コネクタが通る高さ4.5mm
 HORN_CLEARANCE = 0.00015  # 片側0.15mm、仮値
 HORN_MOUTH_EXTRA = 0.0002  # 入口だけ片側0.2mm追加
 HORN_POCKET_EXTRA = 0.0001  # 腕厚へ0.1mm追加
-COUPLER_X0 = -0.0047  # ホーン腕下面より0.2mm左
-COUPLER_X1 = -0.0024  # 中心カム手前の軸本体との接続端
+COUPLER_X0 = -0.0053  # 最悪の軸方向移動後もホーン腕を1.4mm以上覆う
+HORN_POCKET_X1 = -0.00265  # 保持溝まで1.25mmの連続盲底を残す
+COUPLER_X1 = 0.0012  # 右保持肩の終端。六角pegと主軸ソケットの位置基準
 HORN_HOME_DEG = -80.0
+COUPLER_PRINT_FLAT = 0.0012  # 外周肉厚1.2mmを残して横軸印刷面を広げる
+COUPLER_PRINT_SUPPORT_T = 0.0006  # 六角差込下面へ届く除去式支持の幅0.6mm
+COUPLER_PRINT_SUPPORT_GAP = 0.0002  # 嵌合面へ癒着させないZ間隔0.2mm
+COUPLER_PRINT_LAYER_H = 0.0002  # 配布プレートの積層高さ。支持上面から差込初層下面を求める
 
 # 軸の両持ち。左はSG92R出力軸、右は印刷した受けで支える
 BEARING_X = (0.0332,)
 BEARING_T = 0.0044  # 回転ポケットを除いて主軸を支える有効幅3mm
 BEARING_CLEARANCE = 0.0003  # 回転隙間片側0.3mm
 BEARING_OUT_R = 0.00695  # 回転穴の外側に3mmを残す支持部外半径6.95mm
+BEARING_PRINT_GUSSET = 0.0038  # 右壁から軸受け下面へ伸ばす45度支持の高さと長さ
+CAM_SHAFT_X1 = 0.0350  # keeper内面35.3mmとの軸方向遊び0.3mm
 KEEPER_T = 0.0024  # 下から嵌める保持部2.4mm
 KEEPER_GAP = 0.0002  # 軸受け支持板と保持具本体の軸方向隙間0.2mm
 KEEPER_RAIL_Y = -0.015  # 保持爪の指掛かり位置
@@ -103,6 +137,25 @@ KEEPER_DETENT_ARM_T = 0.0012  # 局所最小厚1.2mm
 KEEPER_DETENT_INTERFERENCE = 0.00015  # 回転中の押し量0.15mm
 KEEPER_DETENT_NOTCH_DEPTH = 0.0003  # 保持具外周の凹み深さ0.3mm
 KEEPER_DETENT_NOTCH_W = 0.0026  # 板ばね先端の角も収める回転方向の凹み幅2.6mm
+
+# ホーン受けと主軸を軸方向に捕える静止二股ヨーク
+JOINT_COUPLER_GROOVE_X0 = -0.0014  # 1.2mm盲底より右の中実部だけに設ける保持溝
+JOINT_COUPLER_GROOVE_X1 = 0.0  # 溝幅1.4mm
+JOINT_COUPLER_GROOVE_R = 0.0033  # 六角peg頂点から1.22mm以上残す
+JOINT_COUPLER_SHOULDER_X0 = -0.0026  # 連続盲底の内側0.05mmで円形肩を重ねる
+JOINT_COUPLER_SHOULDER_X1 = 0.0012  # 溝の右へ1.2mmの保持肩を残す
+JOINT_COUPLER_SHOULDER_R = 0.0045  # 中央カムの局所逃げとの半径方向隙間0.3mm
+JOINT_KEEPER_LEFT_X0 = -0.0013  # 保持溝の左右へ0.1mm軸方向隙間
+JOINT_KEEPER_LEFT_X1 = -0.0001  # 左フォーク厚1.2mm
+JOINT_SHAFT_GROOVE_X0 = 0.0099  # 9.4mm盲穴端より0.5mm右の中実部
+JOINT_SHAFT_GROOVE_X1 = 0.0113  # 軸溝幅1.4mm
+JOINT_SHAFT_GROOVE_D = 0.0054  # 中実軸の円形溝径5.4mm
+JOINT_KEEPER_RIGHT_X0 = 0.0100  # 軸溝と片側0.1mm隙間
+JOINT_KEEPER_RIGHT_X1 = 0.0112  # 右フォーク厚1.2mm
+JOINT_KEEPER_LEFT_SLOT_R = 0.0039  # 回転する6.3mm六角軸の包絡へ0.25mm以上
+JOINT_KEEPER_RIGHT_SLOT_R = 0.0029  # φ5.4mm軸溝へ半径0.2mm隙間
+JOINT_KEEPER_PANEL_Z0 = 0.0027  # 底板上面から0.3mm上。底板で下方を止める
+JOINT_KEEPER_PANEL_Z1 = 0.0204  # ホーン受け腕の下面21.68mmから1.28mm下
 
 # 底板の工具不要スナップ
 BOTTOM_LIP = 0.003  # 周囲の差し込み幅3mm

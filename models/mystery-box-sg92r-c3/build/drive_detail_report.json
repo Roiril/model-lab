@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "image": {
+    "file": "drive-detail.png",
+    "sha256": "384f249269fbd390f26dc981480ee5aea496f88b1b8ef68abd9aaf7516c20980",
+    "width": 1600,
+    "height": 1200
+  },
+  "renderScript": {
+    "file": "render_drive_detail.py",
+    "sha256": "c09baf7a431938ace0a677d81c5cb305fbfd426dd5154c48f4b3c38bbda040a1"
+  },
+  "section": {
+    "part": "shell",
+    "removedSide": "world -X",
+    "cutXmm": -16.0,
+    "internalPartsOpaque": true
+  },
+  "sourceAssemblyStlSha256": {
+    "shell": "bc20801e100c4bed1d3f1efad876796b1c30743e9ca2c298b590ba0795b953b0",
+    "ref_servo": "c8a07a11a04a3ceca741c888a3864fb3cf9c2dc32ef6a13c20abf9a07dcbf413",
+    "ref_horn": "7e178c4aa3a34bdd85657f4046c55a4bcc4540bb422ca3677818c2b7df1aed55",
+    "drive_gear": "9e6ce8fd0a6d6928af52f600352c89feeb4915d6b3997e9b12c94bf25006de7f",
+    "cam_gear": "df20fe8e938339b11d8ff2365e1a116b4ffab2ebc4ac98cce56ef109050fa082",
+    "camshaft": "2c8624f84dc007321a330dec414187958085da223d265b4bea23fa440c43b320",
+    "servo_clip": "769364c10b75a697faf03c5a876fff15cc33247f5bd2edae517b98b7ceeb7a61",
+    "drive_bearing_clip": "2723f3f2c8839aeb743f0828c575e9362e30526c2cccbfca0b9a26cfbd47cf2c"
+  },
+  "omittedParts": [
+    "cam_0",
+    "cam_1",
+    "cam_2",
+    "cam_3",
+    "cam_4",
+    "cap_left",
+    "cap_right",
+    "carrier_0",
+    "carrier_1",
+    "carrier_2",
+    "carrier_3",
+    "carrier_4",
+    "left_spacer",
+    "ref_wire",
+    "top_frame"
+  ]
+}

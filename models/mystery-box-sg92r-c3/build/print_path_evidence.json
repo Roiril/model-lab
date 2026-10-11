@@ -1,0 +1,57 @@
+{
+  "version": 1,
+  "model": "mystery-box-sg92r-c3",
+  "manifest_sha256": "33201ea7b6ab57ada8253a9a1ed55222722b8e3b1013621c4bbc2273104b154d",
+  "delivery_report_sha256": "bf0089f06ade2c9d9c20a57e28b54c866f8142b6fbdb674eb2bcd0bcd4b2b4a6",
+  "print_geometry_evidence_sha256": "f885b8152599ee0aae355fb9b601582219bfc0792dbeda018db113017adb070b",
+  "calibration": {
+    "mesh": true,
+    "full_PLA": true,
+    "full_PETG": true,
+    "fit_PLA": true,
+    "fit_PETG": true,
+    "object_assignment_complete": true
+  },
+  "gcode_sha256": {
+    "full_PLA": "cecc3a8239d015cdb28b3168c5d9a4eb4362d39ebc814dadc0eaa47e14bb2d19",
+    "full_PETG": "808fd5c68bc8fc842b4a200b5ad5146d1140383ea4cff7a31e70df5148c1c9b1",
+    "fit_PLA": "3e91ace6506e17172ed863db24fe69e54293fc749c1f7167e1e3d4bd34ccceb2",
+    "fit_PETG": "bfc7fa47987fdc6dd5ce010abe3b28458980deedc1ccf8b29f9aca20818ad329"
+  },
+  "closed_loop_support": {
+    "file": "models/mystery-box-sg92r-c3/build/closed_loop_support_evidence.json",
+    "sha256": "d2b37842d4d78d472935d131202fdea77973c1daef2b6105977da98446ac8292",
+    "generator_sha256": "0160879b31e9901b0f82f82773e19b74056c3286d4fbfb3aae702f97a0cd4499",
+    "calibration_pass": true,
+    "unresolved_full_PLA_path_count": 0,
+    "unresolved_full_PETG_path_count": 0
+  },
+  "findings": [
+    {
+      "parts": ["carrier_0", "carrier_1", "carrier_2", "carrier_3", "carrier_4"],
+      "z_mm": 14.6,
+      "maximum_one_end_mm": 4.4043,
+      "curved_one_end_path_mm": 12.994,
+      "curved_one_end_chord_mm": 4.2246,
+      "support": "外柱から案内舌まで高さと水平距離が等しい45度gusset。"
+    },
+    {
+      "part": "drive_gear",
+      "maximum_bridge_mm": 4.79,
+      "support": "両端支持。歯側は45度以下の一体loft。"
+    },
+    {
+      "part": "shell",
+      "maximum_straight_mm": 7.2,
+      "support": "両端支持。one_end最大3.8536mm。"
+    },
+    {
+      "part": "fit_horn",
+      "bed_contact_mm2": 431.4,
+      "thin_under_1_2mm_count": 0,
+      "overhang_cluster_count": 0,
+      "maximum_one_end_or_none_mm": 0.1915
+    }
+  ],
+  "physical_print_verified": false
+}

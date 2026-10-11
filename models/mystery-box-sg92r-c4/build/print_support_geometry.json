@@ -1,0 +1,625 @@
+{
+  "model": "mystery-box-sg92r-c4",
+  "primarySolver": "MANIFOLD",
+  "comparisonSolver": "EXACT",
+  "calibration": {
+    "overlapExpectedMm3": 0.5,
+    "overlapMeasuredMm3": 0.5,
+    "absentMeasuredMm3": 0.0,
+    "touchingMeasuredMm3": 0.0,
+    "thinExpectedMm3": 0.01,
+    "thinMeasuredMm3": 0.009998322,
+    "containmentExpectedMm3": 1.0,
+    "containmentMeasuredMm3": 1.0,
+    "positiveContactBoundsMm": [
+      [
+        50.5,
+        50.0,
+        0.0
+      ],
+      [
+        51.0,
+        51.0,
+        1.0
+      ]
+    ],
+    "touchingPositiveContactBoundsMm": null,
+    "pass": true
+  },
+  "sourceSha256": {
+    "tools/lattice_print_support_geometry.py": "4fdef6b6d8dc2e3ce6b62b671bcdf0750a0cc762bbb2a4dd8b95bebacb71932a",
+    "tools/lattice_carrier_outer_support.py": "7e97ac7392dcb714a747d48227e600023183ea99cf0a8a0bcbf72af3d88bc6e3",
+    "lib/solid_volume.py": "e2ef2fed94077267883da61c7b28ca09f321d1263833bcaf6580daa7748b1415",
+    "lib/printmech/geometry.py": "ee63a509ab170052325f4630bd9b0b6a230fe1a7a8231cc9d501ebac273c53a0",
+    "models/mystery-box-sg92r-c4/model.py": "e65df9febe2aabdd7163b603d8d022df6d41464bc3acd4f390dbee979ad434e0",
+    "models/mystery-box-sg92r-c4/params.py": "2cc6a3354db8c1aa301f1cec87d43e09afa6d6302051c10fb4bc06d8a8e4872b",
+    "models/mystery-box-sg92r-c4/build/model_report.json": "48497d6914f48bd09f3ae40621e6ca20d918f99be3d50f9c836e5576f81d3115",
+    "models/mystery-box-sg92r-c4/build/print_housing.stl": "68e911d72fe35a466b7bf9fd225a2a193e2fffbec946532738fc1d905ca79d72",
+    "models/mystery-box-sg92r-c4/build/print_carrier_outer.stl": "32ef930418710851a50ae4a5d93b56b5f515ced5266a22e2a81fad1f702d0d2b",
+    "models/mystery-box-sg92r-c4/build/print_carrier_center.stl": "f0add24df27ef5c6ab9c2f257384e1839e10071c333332a19f4e906a698d96d6",
+    "models/mystery-box-sg92r-c4/build/print_horn_coupler.stl": "5156194b8f9ca7a89da2583ed797b56f512ebc9221ccbe95d241d31a13fca8a3",
+    "models/mystery-box-sg92r-c4/build/housing.stl": "270b4bca204b0082e11439e186168116024026b43d72235c7821f26d5639acbb",
+    "models/mystery-box-sg92r-c4/build/carrier_outer.stl": "d8795f6ac56922a961c67ab8f97680dc95a7e86fdaed7815c3242c5f6cc49d8c",
+    "models/mystery-box-sg92r-c4/build/carrier_center.stl": "8bbc77afadb801a33062a8b8a7cbe9f5fb244e13abd6d3c93cc5a05f2c26d388",
+    "models/mystery-box-sg92r-c4/build/horn_coupler.stl": "4ca1af668999733702f92b1671128a705cf60d03941b52c3a1fa59d8b34cf818"
+  },
+  "sourceIntegrity": {
+    "start": {
+      "tools/lattice_print_support_geometry.py": "4fdef6b6d8dc2e3ce6b62b671bcdf0750a0cc762bbb2a4dd8b95bebacb71932a",
+      "tools/lattice_carrier_outer_support.py": "7e97ac7392dcb714a747d48227e600023183ea99cf0a8a0bcbf72af3d88bc6e3",
+      "lib/solid_volume.py": "e2ef2fed94077267883da61c7b28ca09f321d1263833bcaf6580daa7748b1415",
+      "lib/printmech/geometry.py": "ee63a509ab170052325f4630bd9b0b6a230fe1a7a8231cc9d501ebac273c53a0",
+      "models/mystery-box-sg92r-c4/model.py": "e65df9febe2aabdd7163b603d8d022df6d41464bc3acd4f390dbee979ad434e0",
+      "models/mystery-box-sg92r-c4/params.py": "2cc6a3354db8c1aa301f1cec87d43e09afa6d6302051c10fb4bc06d8a8e4872b",
+      "models/mystery-box-sg92r-c4/build/model_report.json": "48497d6914f48bd09f3ae40621e6ca20d918f99be3d50f9c836e5576f81d3115",
+      "models/mystery-box-sg92r-c4/build/print_housing.stl": "68e911d72fe35a466b7bf9fd225a2a193e2fffbec946532738fc1d905ca79d72",
+      "models/mystery-box-sg92r-c4/build/print_carrier_outer.stl": "32ef930418710851a50ae4a5d93b56b5f515ced5266a22e2a81fad1f702d0d2b",
+      "models/mystery-box-sg92r-c4/build/print_carrier_center.stl": "f0add24df27ef5c6ab9c2f257384e1839e10071c333332a19f4e906a698d96d6",
+      "models/mystery-box-sg92r-c4/build/print_horn_coupler.stl": "5156194b8f9ca7a89da2583ed797b56f512ebc9221ccbe95d241d31a13fca8a3",
+      "models/mystery-box-sg92r-c4/build/housing.stl": "270b4bca204b0082e11439e186168116024026b43d72235c7821f26d5639acbb",
+      "models/mystery-box-sg92r-c4/build/carrier_outer.stl": "d8795f6ac56922a961c67ab8f97680dc95a7e86fdaed7815c3242c5f6cc49d8c",
+      "models/mystery-box-sg92r-c4/build/carrier_center.stl": "8bbc77afadb801a33062a8b8a7cbe9f5fb244e13abd6d3c93cc5a05f2c26d388",
+      "models/mystery-box-sg92r-c4/build/horn_coupler.stl": "4ca1af668999733702f92b1671128a705cf60d03941b52c3a1fa59d8b34cf818"
+    },
+    "end": {
+      "tools/lattice_print_support_geometry.py": "4fdef6b6d8dc2e3ce6b62b671bcdf0750a0cc762bbb2a4dd8b95bebacb71932a",
+      "tools/lattice_carrier_outer_support.py": "7e97ac7392dcb714a747d48227e600023183ea99cf0a8a0bcbf72af3d88bc6e3",
+      "lib/solid_volume.py": "e2ef2fed94077267883da61c7b28ca09f321d1263833bcaf6580daa7748b1415",
+      "lib/printmech/geometry.py": "ee63a509ab170052325f4630bd9b0b6a230fe1a7a8231cc9d501ebac273c53a0",
+      "models/mystery-box-sg92r-c4/model.py": "e65df9febe2aabdd7163b603d8d022df6d41464bc3acd4f390dbee979ad434e0",
+      "models/mystery-box-sg92r-c4/params.py": "2cc6a3354db8c1aa301f1cec87d43e09afa6d6302051c10fb4bc06d8a8e4872b",
+      "models/mystery-box-sg92r-c4/build/model_report.json": "48497d6914f48bd09f3ae40621e6ca20d918f99be3d50f9c836e5576f81d3115",
+      "models/mystery-box-sg92r-c4/build/print_housing.stl": "68e911d72fe35a466b7bf9fd225a2a193e2fffbec946532738fc1d905ca79d72",
+      "models/mystery-box-sg92r-c4/build/print_carrier_outer.stl": "32ef930418710851a50ae4a5d93b56b5f515ced5266a22e2a81fad1f702d0d2b",
+      "models/mystery-box-sg92r-c4/build/print_carrier_center.stl": "f0add24df27ef5c6ab9c2f257384e1839e10071c333332a19f4e906a698d96d6",
+      "models/mystery-box-sg92r-c4/build/print_horn_coupler.stl": "5156194b8f9ca7a89da2583ed797b56f512ebc9221ccbe95d241d31a13fca8a3",
+      "models/mystery-box-sg92r-c4/build/housing.stl": "270b4bca204b0082e11439e186168116024026b43d72235c7821f26d5639acbb",
+      "models/mystery-box-sg92r-c4/build/carrier_outer.stl": "d8795f6ac56922a961c67ab8f97680dc95a7e86fdaed7815c3242c5f6cc49d8c",
+      "models/mystery-box-sg92r-c4/build/carrier_center.stl": "8bbc77afadb801a33062a8b8a7cbe9f5fb244e13abd6d3c93cc5a05f2c26d388",
+      "models/mystery-box-sg92r-c4/build/horn_coupler.stl": "4ca1af668999733702f92b1671128a705cf60d03941b52c3a1fa59d8b34cf818"
+    },
+    "pass": true
+  },
+  "supports": [
+    {
+      "partId": "carrier_center",
+      "supportIds": [
+        "carrier_center_support"
+      ],
+      "attachment": "separate",
+      "supportBoundsMm": [
+        [
+          4.7,
+          1.7,
+          0.0
+        ],
+        [
+          7.5,
+          3.3,
+          11.0
+        ]
+      ],
+      "supportVolumeMm3": 15.280001885890771,
+      "supportPresentInPrintVolumeMm3": 15.280001886,
+      "missingSupportVolumeMm3": 0.0,
+      "supportPresenceVolumeDifferenceMm3": 1.092299584115608e-10,
+      "supportProductCommonVolumeMm3": 0.0,
+      "supportProductExactCommonVolumeMm3": 0.0,
+      "supportProductCommonBoundsMm": null,
+      "supportProductRawBoundaryBoundsMm": null,
+      "allowedContactBoundsMm": null,
+      "allowedContactRegionsMm": [],
+      "regionalContactMeasurements": [],
+      "regionalContactSumMm3": 0,
+      "omittingUpperRegionLeavesContactMm3": null,
+      "contactWithinDeclaredBounds": true,
+      "printComponentMinimumZMm": [
+        0.0,
+        0.0
+      ],
+      "expectedPrintComponents": 2,
+      "heights": [
+        {
+          "support_id": "carrier_center_support",
+          "part_id": "carrier_center",
+          "support_builder": "build_carrier_center_print_support",
+          "component_bbox_mm": [
+            [
+              4.7,
+              1.7,
+              0.0
+            ],
+            [
+              7.5,
+              3.3,
+              11.0
+            ]
+          ],
+          "support_top_z_mm": 11.0,
+          "product_first_z_mm": 11.4,
+          "material_face_gap_mm": 0.2,
+          "nonmanifold_edges": 0,
+          "expected_print_components": 2,
+          "attachment_mode": "separate_bed_tower",
+          "bed_contact_required": true,
+          "removal_route": "ベッド側の台を折り、格子裏面から離す"
+        }
+      ],
+      "removalPhysicallyVerified": false,
+      "pass": true
+    },
+    {
+      "partId": "carrier_outer",
+      "supportIds": [
+        "carrier_outer_support"
+      ],
+      "attachment": "separate",
+      "supportBoundsMm": [
+        [
+          -1.8,
+          -32.2,
+          0.0
+        ],
+        [
+          1.8,
+          -24.65,
+          8.2
+        ]
+      ],
+      "supportVolumeMm3": 150.35811184600064,
+      "supportPresentInPrintVolumeMm3": 150.358111846,
+      "missingSupportVolumeMm3": 6.252776074688882e-13,
+      "supportPresenceVolumeDifferenceMm3": -6.252776074688882e-13,
+      "supportProductCommonVolumeMm3": 0.0,
+      "supportProductExactCommonVolumeMm3": 0.0,
+      "supportProductCommonBoundsMm": null,
+      "supportProductRawBoundaryBoundsMm": null,
+      "allowedContactBoundsMm": null,
+      "allowedContactRegionsMm": [],
+      "regionalContactMeasurements": [],
+      "regionalContactSumMm3": 0,
+      "omittingUpperRegionLeavesContactMm3": null,
+      "contactWithinDeclaredBounds": true,
+      "printComponentMinimumZMm": [
+        0.0,
+        0.0
+      ],
+      "expectedPrintComponents": 2,
+      "heights": [
+        {
+          "support_id": "carrier_outer_support",
+          "part_id": "carrier_outer",
+          "support_builder": "build_carrier_outer_print_support",
+          "component_bbox_mm": [
+            [
+              -1.8,
+              -32.2,
+              0.0
+            ],
+            [
+              1.8,
+              -24.65,
+              8.2
+            ]
+          ],
+          "support_top_z_mm": 8.2,
+          "product_first_z_mm": 8.6,
+          "material_face_gap_mm": 0.2,
+          "nonmanifold_edges": 0,
+          "expected_print_components": 2,
+          "attachment_mode": "separate_bed_tower",
+          "bed_contact_required": true,
+          "removal_route": "ベッド側の台を折り、格子裏面から離す"
+        }
+      ],
+      "removalPhysicallyVerified": false,
+      "pass": true
+    },
+    {
+      "partId": "horn_coupler",
+      "supportIds": [
+        "horn_coupler_peg_support",
+        "horn_coupler_loop_support"
+      ],
+      "attachment": "separate",
+      "supportBoundsMm": [
+        [
+          0.0,
+          -40.5,
+          0.0
+        ],
+        [
+          9.0,
+          -38.2,
+          7.8
+        ]
+      ],
+      "supportVolumeMm3": 49.41593110966403,
+      "supportPresentInPrintVolumeMm3": 49.41593111,
+      "missingSupportVolumeMm3": 0.0,
+      "supportPresenceVolumeDifferenceMm3": 3.3597302717680577e-10,
+      "supportProductCommonVolumeMm3": 0.0,
+      "supportProductExactCommonVolumeMm3": 0.0,
+      "supportProductCommonBoundsMm": null,
+      "supportProductRawBoundaryBoundsMm": null,
+      "allowedContactBoundsMm": null,
+      "allowedContactRegionsMm": [],
+      "regionalContactMeasurements": [],
+      "regionalContactSumMm3": 0,
+      "omittingUpperRegionLeavesContactMm3": null,
+      "contactWithinDeclaredBounds": true,
+      "printComponentMinimumZMm": [
+        0.0,
+        0.0
+      ],
+      "expectedPrintComponents": 2,
+      "heights": [
+        {
+          "part_id": "horn_coupler",
+          "support_builder": "build_coupler_print_support",
+          "nonmanifold_edges": 0,
+          "expected_print_components": 2,
+          "attachment_mode": "separate_bed_tower",
+          "bed_contact_required": true,
+          "removal_route": "ベッド側の共通台を折り、+X差込先端側から引き抜く",
+          "support_id": "horn_coupler_peg_support",
+          "component_bbox_mm": [
+            [
+              1.8,
+              -40.1,
+              0.0
+            ],
+            [
+              9.0,
+              -38.3,
+              7.8
+            ]
+          ],
+          "support_top_z_mm": 7.8,
+          "product_first_z_mm": 8.2,
+          "material_face_gap_mm": 0.2
+        },
+        {
+          "part_id": "horn_coupler",
+          "support_builder": "build_coupler_print_support",
+          "nonmanifold_edges": 0,
+          "expected_print_components": 2,
+          "attachment_mode": "separate_bed_tower",
+          "bed_contact_required": true,
+          "removal_route": "ベッド側の共通台を折り、+X差込先端側から引き抜く",
+          "support_id": "horn_coupler_loop_support",
+          "component_bbox_mm": [
+            [
+              0.0,
+              -40.5,
+              0.0
+            ],
+            [
+              2.0,
+              -38.3,
+              5.2
+            ]
+          ],
+          "support_top_z_mm": 5.2,
+          "product_first_z_mm": 5.6,
+          "material_face_gap_mm": 0.2
+        }
+      ],
+      "removalPhysicallyVerified": false,
+      "pass": true
+    },
+    {
+      "partId": "housing",
+      "supportIds": [
+        "housing_detent_support"
+      ],
+      "attachment": "breakaway_contact",
+      "supportBoundsMm": [
+        [
+          36.05,
+          3.5,
+          35.3
+        ],
+        [
+          37.85,
+          4.0,
+          44.4
+        ]
+      ],
+      "supportVolumeMm3": 8.189998588561139,
+      "supportPresentInPrintVolumeMm3": 8.189998589,
+      "missingSupportVolumeMm3": 0.0,
+      "supportPresenceVolumeDifferenceMm3": 4.388613916717077e-10,
+      "supportProductCommonVolumeMm3": 0.343613687,
+      "supportProductExactCommonVolumeMm3": 0.343613687,
+      "supportProductCommonBoundsMm": [
+        [
+          36.04999923706055,
+          3.5,
+          35.29999923706055
+        ],
+        [
+          37.849998474121094,
+          4.0,
+          44.400001525878906
+        ]
+      ],
+      "supportProductRawBoundaryBoundsMm": [
+        [
+          36.05,
+          3.5,
+          35.3
+        ],
+        [
+          37.85,
+          4.0,
+          44.4
+        ]
+      ],
+      "allowedContactBoundsMm": null,
+      "allowedContactRegionsMm": [
+        [
+          [
+            36.05,
+            3.5,
+            35.3
+          ],
+          [
+            37.85,
+            4.0,
+            36.3
+          ]
+        ],
+        [
+          [
+            36.05,
+            3.5,
+            43.4
+          ],
+          [
+            37.85,
+            4.0,
+            44.4
+          ]
+        ]
+      ],
+      "regionalContactMeasurements": [
+        {
+          "boundsMm": [
+            [
+              36.05,
+              3.5,
+              35.3
+            ],
+            [
+              37.85,
+              4.0,
+              36.3
+            ]
+          ],
+          "commonVolumeMm3": 0.25718465
+        },
+        {
+          "boundsMm": [
+            [
+              36.05,
+              3.5,
+              43.4
+            ],
+            [
+              37.85,
+              4.0,
+              44.4
+            ]
+          ],
+          "commonVolumeMm3": 0.086429037
+        }
+      ],
+      "regionalContactSumMm3": 0.343613687,
+      "omittingUpperRegionLeavesContactMm3": 0.08642903699999999,
+      "contactWithinDeclaredBounds": true,
+      "printComponentMinimumZMm": [
+        0.0
+      ],
+      "expectedPrintComponents": 1,
+      "heights": [
+        {
+          "support_id": "housing_detent_support",
+          "part_id": "housing",
+          "support_builder": "build_housing_detent_print_support",
+          "component_bbox_mm": [
+            [
+              36.05,
+              3.5,
+              35.3
+            ],
+            [
+              37.85,
+              4.0,
+              44.4
+            ]
+          ],
+          "support_top_z_mm": 44.4,
+          "product_first_z_mm": 44.8,
+          "material_face_gap_mm": 0.2,
+          "nonmanifold_edges": 0,
+          "expected_print_components": 1,
+          "attachment": "breakaway_contact",
+          "attachment_mode": "breakaway_contact",
+          "bed_contact_required": false,
+          "allowed_contact_regions_mm": [
+            [
+              [
+                36.05,
+                3.5,
+                35.3
+              ],
+              [
+                37.85,
+                4.0,
+                36.3
+              ]
+            ],
+            [
+              [
+                36.05,
+                3.5,
+                43.4
+              ],
+              [
+                37.85,
+                4.0,
+                44.4
+              ]
+            ]
+          ],
+          "removal_route": "+X側の右軸受け開口からつまみ、Y方向へ倒して同じ開口から抜く"
+        }
+      ],
+      "removalPhysicallyVerified": false,
+      "contactHeightBins": [
+        {
+          "zRangeMm": [
+            35.3,
+            35.77894736842105
+          ],
+          "commonVolumeMm3": 0.256400846
+        },
+        {
+          "zRangeMm": [
+            35.77894736842105,
+            36.257894736842104
+          ],
+          "commonVolumeMm3": 0.000783818
+        },
+        {
+          "zRangeMm": [
+            36.257894736842104,
+            36.73684210526316
+          ],
+          "commonVolumeMm3": 0.0
+        },
+        {
+          "zRangeMm": [
+            36.73684210526316,
+            37.21578947368421
+          ],
+          "commonVolumeMm3": 0.0
+        },
+        {
+          "zRangeMm": [
+            37.21578947368421,
+            37.69473684210526
+          ],
+          "commonVolumeMm3": 0.0
+        },
+        {
+          "zRangeMm": [
+            37.69473684210526,
+            38.17368421052631
+          ],
+          "commonVolumeMm3": 0.0
+        },
+        {
+          "zRangeMm": [
+            38.17368421052631,
+            38.652631578947364
+          ],
+          "commonVolumeMm3": 0.0
+        },
+        {
+          "zRangeMm": [
+            38.652631578947364,
+            39.13157894736842
+          ],
+          "commonVolumeMm3": 0.0
+        },
+        {
+          "zRangeMm": [
+            39.13157894736842,
+            39.61052631578947
+          ],
+          "commonVolumeMm3": 0.0
+        },
+        {
+          "zRangeMm": [
+            39.61052631578947,
+            40.089473684210525
+          ],
+          "commonVolumeMm3": 0.0
+        },
+        {
+          "zRangeMm": [
+            40.089473684210525,
+            40.56842105263158
+          ],
+          "commonVolumeMm3": 0.0
+        },
+        {
+          "zRangeMm": [
+            40.56842105263158,
+            41.04736842105263
+          ],
+          "commonVolumeMm3": 0.0
+        },
+        {
+          "zRangeMm": [
+            41.04736842105263,
+            41.526315789473685
+          ],
+          "commonVolumeMm3": 0.0
+        },
+        {
+          "zRangeMm": [
+            41.526315789473685,
+            42.00526315789473
+          ],
+          "commonVolumeMm3": 0.0
+        },
+        {
+          "zRangeMm": [
+            42.00526315789473,
+            42.48421052631579
+          ],
+          "commonVolumeMm3": 0.0
+        },
+        {
+          "zRangeMm": [
+            42.48421052631579,
+            42.96315789473684
+          ],
+          "commonVolumeMm3": 0.0
+        },
+        {
+          "zRangeMm": [
+            42.96315789473684,
+            43.44210526315789
+          ],
+          "commonVolumeMm3": 0.0
+        },
+        {
+          "zRangeMm": [
+            43.44210526315789,
+            43.921052631578945
+          ],
+          "commonVolumeMm3": 0.079134382
+        },
+        {
+          "zRangeMm": [
+            43.921052631578945,
+            44.4
+          ],
+          "commonVolumeMm3": 0.007294553
+        }
+      ],
+      "contactHeightBinsSumMm3": 0.343613599,
+      "pass": true
+    }
+  ],
+  "limitations": [
+    "Removal force and surface damage are not verified on printed hardware.",
+    "Containment tests support material, not whole-product shape equivalence.",
+    "G-code projection is a separate closed-loop support test."
+  ],
+  "pass": true
+}

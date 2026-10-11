@@ -1,0 +1,47 @@
+{
+  "model": "mystery-box-sg92r-c4",
+  "part": "carrier_outer",
+  "method": "closed inputs and closed-boundary volume; MANIFOLD primary, EXACT comparison; actual binary STL components",
+  "primary_solver": "MANIFOLD",
+  "calibration": {
+    "positive_common_volume_mm3": 1.0,
+    "negative_common_volume_mm3": 0.0,
+    "thin_expected_mm3": 0.01,
+    "thin_common_volume_mm3": 0.010002136,
+    "pass": true
+  },
+  "support_bbox_mm": [
+    [
+      -1.8,
+      -32.2,
+      0.0
+    ],
+    [
+      1.8,
+      -24.65,
+      8.2
+    ]
+  ],
+  "support_volume_mm3": 150.358112,
+  "support_bed_footprint_mm2": 15.84,
+  "support_product_common_volume_mm3": 0.0,
+  "support_product_exact_common_volume_mm3": 0.0,
+  "support_product_common_bbox_mm": null,
+  "designed_product_first_extrusion_z_mm": 8.6,
+  "designed_support_top_z_mm": 8.200000000000001,
+  "designed_material_face_gap_mm": 0.2,
+  "print_stl_component_min_z_mm": [
+    0.0,
+    0.0
+  ],
+  "expected_print_components": 2,
+  "source_sha256": {
+    "tools/lattice_carrier_outer_support.py": "7e97ac7392dcb714a747d48227e600023183ea99cf0a8a0bcbf72af3d88bc6e3",
+    "lib/solid_volume.py": "e2ef2fed94077267883da61c7b28ca09f321d1263833bcaf6580daa7748b1415",
+    "models/mystery-box-sg92r-c4/model.py": "e65df9febe2aabdd7163b603d8d022df6d41464bc3acd4f390dbee979ad434e0",
+    "models/mystery-box-sg92r-c4/params.py": "2cc6a3354db8c1aa301f1cec87d43e09afa6d6302051c10fb4bc06d8a8e4872b",
+    "models/mystery-box-sg92r-c4/build/carrier_outer.stl": "d8795f6ac56922a961c67ab8f97680dc95a7e86fdaed7815c3242c5f6cc49d8c",
+    "models/mystery-box-sg92r-c4/build/print_carrier_outer.stl": "32ef930418710851a50ae4a5d93b56b5f515ced5266a22e2a81fad1f702d0d2b"
+  },
+  "pass": true
+}

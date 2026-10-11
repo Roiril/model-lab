@@ -1,12 +1,19 @@
 {
   "ok": true,
   "checks": {
+    "audit_completed": true,
     "independent_topology_calibration": true,
     "manifest_matches_delivery": true,
     "current_sources_match_delivery": true,
     "delivered_files_match_hashes": true,
     "source_and_delivered_stl_match": true,
     "print_stl_topology": true,
+    "boolean_geometry_calibrated": true,
+    "boolean_geometry_algorithm_fresh": true,
+    "boolean_geometry_all_solids_valid": true,
+    "boolean_geometry_sources_fresh": true,
+    "boolean_geometry_assembly_complete": true,
+    "boolean_geometry_print_complete": true,
     "print_parts_connected": true,
     "print_parts_on_bed": true,
     "frame_angles_increase": true,
@@ -17,26 +24,68 @@
     "web_meshes_match_assembly": true,
     "web_motion_matches": true,
     "web_reports_match": true,
+    "web_solid_evidence_matches": true,
     "web_workflows_match_reports": true,
+    "drive_required_interfaces_present": true,
+    "drive_required_interfaces_pass": true,
+    "drive_interface_statuses_valid": true,
+    "drive_spline_remains_unknown": true,
+    "drive_source_hashes_match": true,
+    "drive_calibration_passes": true,
+    "drive_calibration_schema": true,
+    "drive_negative_calibrations_present": true,
+    "drive_primary_volume_solver": true,
+    "drive_horn_measurements_present": true,
+    "drive_servo_seat_measurements_present": true,
+    "drive_canonical_measurements_present": true,
+    "drive_follower_measurements_present": true,
+    "drive_required_retention_cases_present": true,
+    "drive_required_retention_cases_pass": true,
+    "drive_stack_includes_cap_travel": true,
+    "drive_stack_follower_travel_bounded": true,
+    "drive_end_parts_stop_at_caps": true,
+    "drive_retention_measurements_present": true,
+    "drive_solver_fallbacks_are_closed_measurements": true,
+    "drive_gear_measurements_present": true,
+    "drive_geometry_is_conditional": true,
     "assembly_display_paths_pass": true,
     "assembly_path_calibration": true,
     "assembly_sources_match": true,
+    "assembly_algorithms_match": true,
     "assembly_final_and_reverse_pass": true,
     "assembly_all_frames_covered": true,
     "assembly_between_steps_continuous": true,
     "assembly_transforms_rigid": true,
     "assembly_ends_in_actual_geometry": true,
-    "simulation_passes": true,
+    "simulation_is_conditional_calculation": true,
     "simulation_sources_match": true,
     "simulation_algorithms_match": true,
+    "clearance_envelope_contact_sources_valid": true,
+    "clearance_envelope_matches_measured_contacts": true,
+    "clearance_envelope_covers_all_nominal_angles": true,
     "simulation_time_step_converges": true,
     "simulation_traces_in_verified_range": true,
+    "print_geometry_meter_calibrated": true,
+    "print_geometry_matches_final_files": true,
     "print_review_matches_final_files": true,
     "print_warnings_reviewed": true,
+    "print_review_preserves_hardware_unknown": true,
+    "print_review_actual_spans_bounded": true,
+    "continuous_print_spans_measured": true,
+    "closed_print_paths_calibrated": true,
+    "closed_print_paths_algorithms_fresh": true,
+    "closed_print_paths_sources_fresh": true,
+    "closed_print_paths_supported": true,
+    "closed_print_paths_review_fresh": true,
+    "web_closed_print_paths_match": true,
     "web_print_review_matches": true,
+    "web_print_path_evidence_matches": true,
     "maximum_height_matches_geometry": true,
     "renders_match_final_geometry": true,
     "rendered_images_match_hashes": true,
+    "drive_detail_matches_final_geometry": true,
+    "drive_detail_image_and_script_current": true,
+    "drive_detail_clips_only_shell": true,
     "mechanism_report_passes": true,
     "verification_matches_final_geometry": true,
     "all_pairs_exact_verification_passes": true,
@@ -59,7 +108,7 @@
   "max_height_mm": 83.0,
   "print_parts": {
     "shell": {
-      "triangles": 1566,
+      "triangles": 3206,
       "bad_edges": 0,
       "duplicate_faces": 0,
       "collapsed_faces": 0,
@@ -83,7 +132,7 @@
       "ok": true
     },
     "carrier_0": {
-      "triangles": 248,
+      "triangles": 256,
       "bad_edges": 0,
       "duplicate_faces": 0,
       "collapsed_faces": 0,
@@ -95,7 +144,7 @@
       "ok": true
     },
     "carrier_1": {
-      "triangles": 248,
+      "triangles": 256,
       "bad_edges": 0,
       "duplicate_faces": 0,
       "collapsed_faces": 0,
@@ -107,7 +156,7 @@
       "ok": true
     },
     "carrier_2": {
-      "triangles": 248,
+      "triangles": 282,
       "bad_edges": 0,
       "duplicate_faces": 0,
       "collapsed_faces": 0,
@@ -119,7 +168,7 @@
       "ok": true
     },
     "carrier_3": {
-      "triangles": 248,
+      "triangles": 256,
       "bad_edges": 0,
       "duplicate_faces": 0,
       "collapsed_faces": 0,
@@ -131,7 +180,7 @@
       "ok": true
     },
     "carrier_4": {
-      "triangles": 248,
+      "triangles": 256,
       "bad_edges": 0,
       "duplicate_faces": 0,
       "collapsed_faces": 0,
@@ -154,8 +203,20 @@
       ],
       "ok": true
     },
+    "left_spacer": {
+      "triangles": 468,
+      "bad_edges": 0,
+      "duplicate_faces": 0,
+      "collapsed_faces": 0,
+      "components": 1,
+      "min_z_mm": 0.0,
+      "component_min_z_mm": [
+        0.0
+      ],
+      "ok": true
+    },
     "cam_0": {
-      "triangles": 460,
+      "triangles": 852,
       "bad_edges": 0,
       "duplicate_faces": 0,
       "collapsed_faces": 0,
@@ -167,7 +228,7 @@
       "ok": true
     },
     "cam_1": {
-      "triangles": 540,
+      "triangles": 890,
       "bad_edges": 0,
       "duplicate_faces": 0,
       "collapsed_faces": 0,
@@ -179,7 +240,7 @@
       "ok": true
     },
     "cam_2": {
-      "triangles": 520,
+      "triangles": 886,
       "bad_edges": 0,
       "duplicate_faces": 0,
       "collapsed_faces": 0,
@@ -191,7 +252,7 @@
       "ok": true
     },
     "cam_3": {
-      "triangles": 540,
+      "triangles": 890,
       "bad_edges": 0,
       "duplicate_faces": 0,
       "collapsed_faces": 0,
@@ -203,7 +264,7 @@
       "ok": true
     },
     "cam_4": {
-      "triangles": 460,
+      "triangles": 852,
       "bad_edges": 0,
       "duplicate_faces": 0,
       "collapsed_faces": 0,
@@ -215,7 +276,7 @@
       "ok": true
     },
     "cam_gear": {
-      "triangles": 2280,
+      "triangles": 2708,
       "bad_edges": 0,
       "duplicate_faces": 0,
       "collapsed_faces": 0,
@@ -227,19 +288,7 @@
       "ok": true
     },
     "drive_gear": {
-      "triangles": 244,
-      "bad_edges": 0,
-      "duplicate_faces": 0,
-      "collapsed_faces": 0,
-      "components": 1,
-      "min_z_mm": 0.0,
-      "component_min_z_mm": [
-        0.0
-      ],
-      "ok": true
-    },
-    "cap_left": {
-      "triangles": 414,
+      "triangles": 6484,
       "bad_edges": 0,
       "duplicate_faces": 0,
       "collapsed_faces": 0,
@@ -251,7 +300,19 @@
       "ok": true
     },
     "cap_right": {
-      "triangles": 414,
+      "triangles": 2994,
+      "bad_edges": 0,
+      "duplicate_faces": 0,
+      "collapsed_faces": 0,
+      "components": 1,
+      "min_z_mm": 0.0,
+      "component_min_z_mm": [
+        0.0
+      ],
+      "ok": true
+    },
+    "cap_left": {
+      "triangles": 2994,
       "bad_edges": 0,
       "duplicate_faces": 0,
       "collapsed_faces": 0,
@@ -274,8 +335,20 @@
       ],
       "ok": true
     },
+    "drive_bearing_clip": {
+      "triangles": 86,
+      "bad_edges": 0,
+      "duplicate_faces": 0,
+      "collapsed_faces": 0,
+      "components": 1,
+      "min_z_mm": 0.0,
+      "component_min_z_mm": [
+        0.0
+      ],
+      "ok": true
+    },
     "fit_horn": {
-      "triangles": 224,
+      "triangles": 35228,
       "bad_edges": 0,
       "duplicate_faces": 0,
       "collapsed_faces": 0,

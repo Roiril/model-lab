@@ -1,6 +1,6 @@
 {
   "model": "mystery-box-sg92r-c4",
-  "method": "display transforms and Blender Boolean EXACT are generated from the same column-major millimetre frames",
+  "method": "display transforms and Blender Boolean MANIFOLD are generated from the same column-major millimetre frames",
   "calibration": {
     "positiveCommonVolumeMm3": 0.5,
     "negativeCommonVolumeMm3": 0.0,
@@ -217,8 +217,8 @@
             "servo_horn"
           ],
           "samples": 14,
-          "aabbZeroSamples": 12,
-          "exactSamples": 2,
+          "aabbZeroSamples": 11,
+          "exactSamples": 3,
           "maxCommonVolumeMm3": 0.0,
           "allowedSamples": 0,
           "pass": true
@@ -529,8 +529,8 @@
             "camshaft"
           ],
           "samples": 44,
-          "aabbZeroSamples": 31,
-          "exactSamples": 13,
+          "aabbZeroSamples": 35,
+          "exactSamples": 9,
           "maxCommonVolumeMm3": 0.0,
           "allowedSamples": 0,
           "pass": true
@@ -541,8 +541,8 @@
             "camshaft"
           ],
           "samples": 44,
-          "aabbZeroSamples": 18,
-          "exactSamples": 26,
+          "aabbZeroSamples": 20,
+          "exactSamples": 24,
           "maxCommonVolumeMm3": 0.0,
           "allowedSamples": 0,
           "pass": true
@@ -553,8 +553,8 @@
             "camshaft"
           ],
           "samples": 44,
-          "aabbZeroSamples": 10,
-          "exactSamples": 34,
+          "aabbZeroSamples": 13,
+          "exactSamples": 31,
           "maxCommonVolumeMm3": 0.0,
           "allowedSamples": 0,
           "pass": true
@@ -577,8 +577,8 @@
             "housing"
           ],
           "samples": 44,
-          "aabbZeroSamples": 2,
-          "exactSamples": 42,
+          "aabbZeroSamples": 6,
+          "exactSamples": 38,
           "maxCommonVolumeMm3": 0.0,
           "allowedSamples": 0,
           "pass": true
@@ -636,6 +636,135 @@
       "allowedContacts": []
     },
     {
+      "id": "joint-keeper",
+      "pass": true,
+      "samples": 40,
+      "pairs": [
+        {
+          "parts": [
+            "cam_center",
+            "joint_keeper"
+          ],
+          "samples": 40,
+          "aabbZeroSamples": 24,
+          "exactSamples": 16,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_inner",
+            "joint_keeper"
+          ],
+          "samples": 40,
+          "aabbZeroSamples": 40,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_outer",
+            "joint_keeper"
+          ],
+          "samples": 40,
+          "aabbZeroSamples": 40,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "camshaft",
+            "joint_keeper"
+          ],
+          "samples": 40,
+          "aabbZeroSamples": 30,
+          "exactSamples": 10,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "horn_coupler",
+            "joint_keeper"
+          ],
+          "samples": 40,
+          "aabbZeroSamples": 24,
+          "exactSamples": 16,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "housing",
+            "joint_keeper"
+          ],
+          "samples": 40,
+          "aabbZeroSamples": 0,
+          "exactSamples": 40,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "joint_keeper",
+            "servo_body"
+          ],
+          "samples": 40,
+          "aabbZeroSamples": 40,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "joint_keeper",
+            "servo_clip"
+          ],
+          "samples": 40,
+          "aabbZeroSamples": 40,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "joint_keeper",
+            "servo_horn"
+          ],
+          "samples": 40,
+          "aabbZeroSamples": 40,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "joint_keeper",
+            "servo_wire"
+          ],
+          "samples": 40,
+          "aabbZeroSamples": 40,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        }
+      ],
+      "maxCommonVolumeMm3": 0.0,
+      "allowedContacts": []
+    },
+    {
       "id": "keeper-bayonet",
       "pass": true,
       "samples": 104,
@@ -682,8 +811,8 @@
             "camshaft"
           ],
           "samples": 104,
-          "aabbZeroSamples": 104,
-          "exactSamples": 0,
+          "aabbZeroSamples": 13,
+          "exactSamples": 91,
           "maxCommonVolumeMm3": 0.0,
           "allowedSamples": 0,
           "pass": true
@@ -710,6 +839,18 @@
           "exactSamples": 95,
           "maxCommonVolumeMm3": 0.385936,
           "allowedSamples": 93,
+          "pass": true
+        },
+        {
+          "parts": [
+            "bearing_keeper",
+            "joint_keeper"
+          ],
+          "samples": 104,
+          "aabbZeroSamples": 104,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
           "pass": true
         },
         {
@@ -824,8 +965,8 @@
             "camshaft"
           ],
           "samples": 81,
-          "aabbZeroSamples": 81,
-          "exactSamples": 0,
+          "aabbZeroSamples": 0,
+          "exactSamples": 81,
           "maxCommonVolumeMm3": 0.0,
           "allowedSamples": 0,
           "pass": true
@@ -917,6 +1058,18 @@
         {
           "parts": [
             "cam_center",
+            "joint_keeper"
+          ],
+          "samples": 81,
+          "aabbZeroSamples": 0,
+          "exactSamples": 81,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_center",
             "servo_body"
           ],
           "samples": 81,
@@ -1013,6 +1166,18 @@
         {
           "parts": [
             "cam_inner",
+            "joint_keeper"
+          ],
+          "samples": 81,
+          "aabbZeroSamples": 81,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_inner",
             "servo_body"
           ],
           "samples": 81,
@@ -1097,6 +1262,18 @@
         {
           "parts": [
             "cam_outer",
+            "joint_keeper"
+          ],
+          "samples": 81,
+          "aabbZeroSamples": 81,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "cam_outer",
             "servo_body"
           ],
           "samples": 81,
@@ -1169,6 +1346,18 @@
         {
           "parts": [
             "camshaft",
+            "joint_keeper"
+          ],
+          "samples": 81,
+          "aabbZeroSamples": 0,
+          "exactSamples": 81,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "camshaft",
             "servo_body"
           ],
           "samples": 81,
@@ -1218,6 +1407,18 @@
           "parts": [
             "horn_coupler",
             "housing"
+          ],
+          "samples": 81,
+          "aabbZeroSamples": 0,
+          "exactSamples": 81,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "horn_coupler",
+            "joint_keeper"
           ],
           "samples": 81,
           "aabbZeroSamples": 0,
@@ -1282,6 +1483,18 @@
           "samples": 81,
           "aabbZeroSamples": 0,
           "exactSamples": 81,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "joint_keeper",
+            "servo_horn"
+          ],
+          "samples": 81,
+          "aabbZeroSamples": 81,
+          "exactSamples": 0,
           "maxCommonVolumeMm3": 0.0,
           "allowedSamples": 0,
           "pass": true
@@ -1441,6 +1654,18 @@
         {
           "parts": [
             "guide_frame",
+            "joint_keeper"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "guide_frame",
             "servo_body"
           ],
           "samples": 22,
@@ -1583,6 +1808,18 @@
           "parts": [
             "carrier_center",
             "housing"
+          ],
+          "samples": 14,
+          "aabbZeroSamples": 14,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_center",
+            "joint_keeper"
           ],
           "samples": 14,
           "aabbZeroSamples": 14,
@@ -1748,6 +1985,18 @@
           "parts": [
             "carrier_inner",
             "housing"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_inner",
+            "joint_keeper"
           ],
           "samples": 22,
           "aabbZeroSamples": 22,
@@ -1925,6 +2174,18 @@
           "parts": [
             "carrier_outer",
             "housing"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_outer",
+            "joint_keeper"
           ],
           "samples": 22,
           "aabbZeroSamples": 22,
@@ -2293,6 +2554,18 @@
         {
           "parts": [
             "carrier_center",
+            "joint_keeper"
+          ],
+          "samples": 92,
+          "aabbZeroSamples": 92,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_center",
             "servo_body"
           ],
           "samples": 92,
@@ -2389,6 +2662,18 @@
         {
           "parts": [
             "carrier_inner",
+            "joint_keeper"
+          ],
+          "samples": 92,
+          "aabbZeroSamples": 92,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_inner",
             "servo_body"
           ],
           "samples": 92,
@@ -2473,6 +2758,18 @@
         {
           "parts": [
             "carrier_outer",
+            "joint_keeper"
+          ],
+          "samples": 92,
+          "aabbZeroSamples": 92,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "carrier_outer",
             "servo_body"
           ],
           "samples": 92,
@@ -2538,6 +2835,18 @@
           "samples": 92,
           "aabbZeroSamples": 78,
           "exactSamples": 14,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "guide_frame",
+            "joint_keeper"
+          ],
+          "samples": 92,
+          "aabbZeroSamples": 92,
+          "exactSamples": 0,
           "maxCommonVolumeMm3": 0.0,
           "allowedSamples": 0,
           "pass": true
@@ -2729,6 +3038,18 @@
           "exactSamples": 15,
           "maxCommonVolumeMm3": 25.600098,
           "allowedSamples": 13,
+          "pass": true
+        },
+        {
+          "parts": [
+            "faceplate",
+            "joint_keeper"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 22,
+          "exactSamples": 0,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
           "pass": true
         },
         {
@@ -2948,6 +3269,18 @@
         {
           "parts": [
             "bottom",
+            "joint_keeper"
+          ],
+          "samples": 22,
+          "aabbZeroSamples": 7,
+          "exactSamples": 15,
+          "maxCommonVolumeMm3": 0.0,
+          "allowedSamples": 0,
+          "pass": true
+        },
+        {
+          "parts": [
+            "bottom",
             "servo_body"
           ],
           "samples": 22,
@@ -3014,6 +3347,7 @@
   "violations": [],
   "finalState": {
     "pass": true,
+    "basis": "part completeness and final identity transforms; final collision poses are included in step audits",
     "expectedParts": [
       "housing",
       "faceplate",
@@ -3027,6 +3361,7 @@
       "cam_center",
       "cam_inner",
       "cam_outer",
+      "joint_keeper",
       "bearing_keeper",
       "servo_clip",
       "servo_body",
@@ -3087,6 +3422,11 @@
         "pass": true
       },
       {
+        "id": "joint-keeper",
+        "samples": 40,
+        "pass": true
+      },
+      {
         "id": "camshaft-at-90",
         "samples": 44,
         "pass": true
@@ -3136,44 +3476,54 @@
   "sourceIntegrity": {
     "pass": true,
     "start": {
-      "housing": "dc62b38a0bc8b8f8d1317974a73b499c75e3d86900755678a9dda1fe6078696d",
+      "housing": "270b4bca204b0082e11439e186168116024026b43d72235c7821f26d5639acbb",
       "faceplate": "e7adf56c7dd9f593a2ca5a744eb037d541cae5eb060fbb4ed9a50b52ae7e2eb5",
-      "guide_frame": "b86ef928d268a88f4c72498a86b65483b8771beec0576ff802a69ef93bf45d77",
+      "guide_frame": "6247037db5605d65e3e8f068475802b5395ccff6dea2226d994a9ea7c02436ee",
       "bottom": "4b3e531e67d26c2e5adc570c6c63589d094fb205a009d1f3639e6eeab2f6fad4",
-      "carrier_center": "4a32bb9e1c62ee342bdb8770579d573b69c32742aca8f09f180bc8a871a2be5d",
-      "carrier_inner": "77fad60da7459269d6d7262df492787723b4e67149e61650c6409be1ae16a7ee",
-      "carrier_outer": "59a4a4e621b836b2a21fc87d40ce21236e58014970a93d45cb1173d070d13d91",
-      "camshaft": "03c5f2759cd2adc41e8eecb0dd341b07a71c1be6150f196d79931b91506b8a54",
-      "horn_coupler": "15714fadb54f1fd8ec6311a2cd32f520bb159b44915c027de7e0fb4e613b9098",
-      "cam_center": "b0c48a7e8c10af68ddfd76e8deaf73bd07de8cb0e109d8043b0e7ff969f2ffdb",
-      "cam_inner": "68253d51657e34016347cf1ac80de5aec28f49a4b85241a21b6232f4e3b5011c",
-      "cam_outer": "253f6882012b1a249e980755d6fdab48ac696a224a6bf05da2801cce1449789c",
+      "carrier_center": "8bbc77afadb801a33062a8b8a7cbe9f5fb244e13abd6d3c93cc5a05f2c26d388",
+      "carrier_inner": "130fcf3bd0a6aa129abbf9ec7f61678123559634028b14399d9779e42f50274c",
+      "carrier_outer": "d8795f6ac56922a961c67ab8f97680dc95a7e86fdaed7815c3242c5f6cc49d8c",
+      "camshaft": "6d75c344ef7dc53c8259595c2ca774c3de8ea7c47e87b6c347a433313f415f77",
+      "horn_coupler": "4ca1af668999733702f92b1671128a705cf60d03941b52c3a1fa59d8b34cf818",
+      "cam_center": "ea4612cac3ab334ace54e0bb7bd2efe0d10acd2eddb6b52023582d4d3b6590f6",
+      "cam_inner": "079aa126411fd2efae37e7c55ff6ac22d6605ab0c5c7570e510bdd58084f8a64",
+      "cam_outer": "c174ee48e9a0508ccfbbcbe7bf64101a0c58f896fb8457bffd1bf95638d39ba1",
+      "joint_keeper": "0a2bb37671cdd2423b2b0a0c55a6a16e102d266ea3e0a957b81db4ccb4bda4c4",
       "bearing_keeper": "d9313bc753158604f1a3a1fa1475ddedeadcb45691a0f3a61e6207180630b150",
-      "servo_clip": "f5897b68e65625f44dee89e915a6825951284c27c5df30048fbb6f7999c89299",
-      "servo_body": "672f101648914f7dc0045c2cde3bb77e1868c657e178132d87d06bdff9d3c9a8",
-      "servo_horn": "d6e7581121fece2f9c80a9bb54882d23ebe1da32e995674e8a70c5c2ab011cda",
-      "servo_wire": "52a0af6a6ee4a0eb8fb437a83b9c9e41ea8c3d45c4048f9588c950d92a66429c"
+      "servo_clip": "92cdc6bc990de8c65010e4b8c18cd14071c2810c96c3565158e341941c45c3e4",
+      "servo_body": "ce26a753214c8bcf77dcda9c1694e071365141af1b03efaa64f28ec06511ff00",
+      "servo_horn": "b91fdc5764256ac936ca0a27d85ce4d65f688091fe7e7ac3d8ce74a5113f2114",
+      "servo_wire": "bba93998d6da117622f12de7ac3cf8ba472d90dd6cba0cffcbb6f84453f383d9"
     },
     "end": {
-      "housing": "dc62b38a0bc8b8f8d1317974a73b499c75e3d86900755678a9dda1fe6078696d",
+      "housing": "270b4bca204b0082e11439e186168116024026b43d72235c7821f26d5639acbb",
       "faceplate": "e7adf56c7dd9f593a2ca5a744eb037d541cae5eb060fbb4ed9a50b52ae7e2eb5",
-      "guide_frame": "b86ef928d268a88f4c72498a86b65483b8771beec0576ff802a69ef93bf45d77",
+      "guide_frame": "6247037db5605d65e3e8f068475802b5395ccff6dea2226d994a9ea7c02436ee",
       "bottom": "4b3e531e67d26c2e5adc570c6c63589d094fb205a009d1f3639e6eeab2f6fad4",
-      "carrier_center": "4a32bb9e1c62ee342bdb8770579d573b69c32742aca8f09f180bc8a871a2be5d",
-      "carrier_inner": "77fad60da7459269d6d7262df492787723b4e67149e61650c6409be1ae16a7ee",
-      "carrier_outer": "59a4a4e621b836b2a21fc87d40ce21236e58014970a93d45cb1173d070d13d91",
-      "camshaft": "03c5f2759cd2adc41e8eecb0dd341b07a71c1be6150f196d79931b91506b8a54",
-      "horn_coupler": "15714fadb54f1fd8ec6311a2cd32f520bb159b44915c027de7e0fb4e613b9098",
-      "cam_center": "b0c48a7e8c10af68ddfd76e8deaf73bd07de8cb0e109d8043b0e7ff969f2ffdb",
-      "cam_inner": "68253d51657e34016347cf1ac80de5aec28f49a4b85241a21b6232f4e3b5011c",
-      "cam_outer": "253f6882012b1a249e980755d6fdab48ac696a224a6bf05da2801cce1449789c",
+      "carrier_center": "8bbc77afadb801a33062a8b8a7cbe9f5fb244e13abd6d3c93cc5a05f2c26d388",
+      "carrier_inner": "130fcf3bd0a6aa129abbf9ec7f61678123559634028b14399d9779e42f50274c",
+      "carrier_outer": "d8795f6ac56922a961c67ab8f97680dc95a7e86fdaed7815c3242c5f6cc49d8c",
+      "camshaft": "6d75c344ef7dc53c8259595c2ca774c3de8ea7c47e87b6c347a433313f415f77",
+      "horn_coupler": "4ca1af668999733702f92b1671128a705cf60d03941b52c3a1fa59d8b34cf818",
+      "cam_center": "ea4612cac3ab334ace54e0bb7bd2efe0d10acd2eddb6b52023582d4d3b6590f6",
+      "cam_inner": "079aa126411fd2efae37e7c55ff6ac22d6605ab0c5c7570e510bdd58084f8a64",
+      "cam_outer": "c174ee48e9a0508ccfbbcbe7bf64101a0c58f896fb8457bffd1bf95638d39ba1",
+      "joint_keeper": "0a2bb37671cdd2423b2b0a0c55a6a16e102d266ea3e0a957b81db4ccb4bda4c4",
       "bearing_keeper": "d9313bc753158604f1a3a1fa1475ddedeadcb45691a0f3a61e6207180630b150",
-      "servo_clip": "f5897b68e65625f44dee89e915a6825951284c27c5df30048fbb6f7999c89299",
-      "servo_body": "672f101648914f7dc0045c2cde3bb77e1868c657e178132d87d06bdff9d3c9a8",
-      "servo_horn": "d6e7581121fece2f9c80a9bb54882d23ebe1da32e995674e8a70c5c2ab011cda",
-      "servo_wire": "52a0af6a6ee4a0eb8fb437a83b9c9e41ea8c3d45c4048f9588c950d92a66429c"
+      "servo_clip": "92cdc6bc990de8c65010e4b8c18cd14071c2810c96c3565158e341941c45c3e4",
+      "servo_body": "ce26a753214c8bcf77dcda9c1694e071365141af1b03efaa64f28ec06511ff00",
+      "servo_horn": "b91fdc5764256ac936ca0a27d85ce4d65f688091fe7e7ac3d8ce74a5113f2114",
+      "servo_wire": "bba93998d6da117622f12de7ac3cf8ba472d90dd6cba0cffcbb6f84453f383d9"
     }
   },
+  "algorithm_sha256": {
+    "tools/lattice_assembly.py": "3eeae70105cec85888592c67bd177a13a50e1823d27c42d50564ab16490763fb",
+    "lib/solid_volume.py": "e2ef2fed94077267883da61c7b28ca09f321d1263833bcaf6580daa7748b1415",
+    "models/mystery-box-sg92r-c4/verify.py": "1b3f293647316eb0d9798bb40a49cb36b6cd91ba3cc9b9dc03ba09193d28debd",
+    "models/mystery-box-sg92r-c4/assembly.py": "c79ec4976693aa744a50954066c230d1184398a113166596c4d6143326ae4e1c",
+    "models/mystery-box-sg92r-c4/params.py": "2cc6a3354db8c1aa301f1cec87d43e09afa6d6302051c10fb4bc06d8a8e4872b"
+  },
+  "algorithmIntegrity": true,
   "limitations": [
     "SG92Rホーンの実物装着と電源操作は未検証。",
     "圧入、スナップ、材料収縮、摩擦は実物未検証。",

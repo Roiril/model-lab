@@ -25,12 +25,14 @@ G = 9.80665
 PP_DENSITY = 900.0
 MOTOR_INERTIA = 5.0e-6
 SERVO_FRICTION = 0.004
+CAM_FRICTION_MU = 0.30
 NO_LOAD_SPEED = math.radians(60.0) / 0.1
 CONTROL_BAND = math.radians(4.0)
 DT = 5.0e-5
 RECORD = 0.005
 SETTLE = 0.5
 TABLE_STEP_DEG = 0.25
+CLEARANCE_STEP_DEG = 2.5
 DERIVATIVE_STEP_RAD = math.radians(0.02)
 
 
@@ -242,6 +244,169 @@ def write_json(path: Path, data) -> None:
     os.replace(temporary, path)
 
 
+def assess_drive_report(model_dir: Path, model: str) -> dict:
+    path = model_dir / "build" / "drive_report.json"
+    if not path.exists():
+        return {"geometryPass": False, "sourceHashesFresh": False,
+                "reason": "駆動接続の形状レポートがありません。", "staleSources": []}
+    try:
+        report = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as error:
+        return {"geometryPass": False, "sourceHashesFresh": False,
+                "reason": f"駆動接続の形状レポートを読めません: {error}", "staleSources": []}
+    stale = []
+    for relative, expected in report.get("sourceHashes", {}).items():
+        source = (ROOT / relative).resolve()
+        try:
+            source.relative_to(ROOT)
+        except ValueError:
+            stale.append(relative)
+            continue
+        if not source.is_file() or sha256(source) != expected:
+            stale.append(relative)
+    hashes_fresh = bool(report.get("sourceHashes")) and not stale
+    interfaces_acceptable = bool(report.get("interfaces")) and all(
+        row.get("status") in {"pass", "unknown"} for row in report.get("interfaces", [])
+    )
+    geometry_pass = (report.get("model") == model and hashes_fresh and interfaces_acceptable
+                     and report.get("overall", {}).get("geometryPass") is True)
+    if geometry_pass:
+        reason = "接続形状は確認済み。"
+    elif stale:
+        reason = "駆動接続の形状レポートが現在のソースと一致しません。"
+    else:
+        reason = "駆動接続の形状が未成立です。"
+    return {"geometryPass": geometry_pass, "sourceHashesFresh": hashes_fresh,
+            "reason": reason, "staleSources": stale,
+            "driveReportSha256": sha256(path)}
+
+
+def periodic_trig_range(kind: str, low_deg: float, high_deg: float) -> tuple[float, float]:
+    if low_deg > high_deg:
+        low_deg, high_deg = high_deg, low_deg
+    function = math.sin if kind == "sin" else math.cos if kind == "cos" else None
+    if function is None:
+        raise ValueError(f"unsupported trigonometric function: {kind}")
+    critical_offset = 90.0 if kind == "sin" else 0.0
+    first = math.ceil((low_deg - critical_offset) / 180.0)
+    last = math.floor((high_deg - critical_offset) / 180.0)
+    candidates = [low_deg, high_deg]
+    candidates.extend(critical_offset + 180.0 * turn for turn in range(first, last + 1))
+    values = [function(math.radians(angle)) for angle in candidates]
+    return min(values), max(values)
+
+
+def maximum_contact_angle(interface: dict, *, samples=False) -> float:
+    if interface.get("status") != "pass":
+        raise ValueError(f"contact angle source is not valid: {interface.get('id')}")
+    rows = interface.get("samples", []) if samples else [interface]
+    values = []
+    for row in rows:
+        for value in row.get("contactAnglesDeg", []):
+            if isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(value):
+                values.append(abs(float(value)))
+    if not values:
+        raise ValueError(f"contact angles are missing: {interface.get('id')}")
+    return max(values)
+
+
+def clearance_envelope(model: str, params, motion, drive_report: dict) -> dict:
+    interfaces = {row.get("id"): row for row in drive_report.get("interfaces", [])}
+
+    def source(identifier: str, *, samples=False) -> dict:
+        if identifier not in interfaces:
+            raise ValueError(f"clearance source is missing: {identifier}")
+        return {"id": identifier,
+                "maximumOneSidedContactAngleDeg": rounded(maximum_contact_angle(
+                    interfaces[identifier], samples=samples))}
+
+    common = [source("horn-receiver")]
+    if model.endswith("c3"):
+        common.extend((source("gear-mesh", samples=True), source("shaft-cam_gear")))
+        limits = (params.SERVO_HOME_DEG, params.SERVO_END_DEG)
+        ids = [f"carrier_{index}" for index in range(params.GRID_N)]
+        labels = [f"格子列 {index + 1}" for index in range(params.GRID_N)]
+        phases = list(params.CAM_PHASE_DEG)
+        group_sources = [source(f"shaft-cam_{index}") for index in range(params.GRID_N)]
+
+        def height_range(index: int, servo_deg: float, error_deg: float):
+            angle = motion.cam_theta_deg(servo_deg) - phases[index]
+            low, high = periodic_trig_range("cos", angle - error_deg, angle + error_deg)
+            scale = params.CAM_E * 1000.0
+            height = lambda value: max(0.0, scale * (value - 0.4))
+            return motion.carrier_height(index, servo_deg) * 1000.0, height(low), height(high)
+    elif model.endswith("c4"):
+        common.append(source("coupler-shaft"))
+        limits = (params.SERVO_MIN_DEG, params.SERVO_MAX_DEG)
+        suffixes = ("center", "inner", "outer")
+        ids = [f"carrier_{suffix}" for suffix in suffixes]
+        labels = ["中心の格子", "内側の格子", "外側の格子"]
+        phases = [0.0] * len(ids)
+        group_sources = [source(f"shaft-cam_{suffix}") for suffix in suffixes]
+        baseline = math.sin(math.radians(params.CAM_THETA_MIN_DEG))
+
+        def height_range(index: int, servo_deg: float, error_deg: float):
+            angle = motion.cam_theta_deg(servo_deg)
+            low, high = periodic_trig_range("sin", angle - error_deg, angle + error_deg)
+            scale = params.CAM_E[index] * 1000.0
+            height = lambda value: max(0.0, scale * (value - baseline))
+            return motion.lift_m(index, servo_deg) * 1000.0, height(low), height(high)
+    else:
+        raise ValueError(f"unsupported clearance envelope model: {model}")
+
+    count = math.ceil((limits[1] - limits[0]) / CLEARANCE_STEP_DEG)
+    servo_angles = [limits[0] + (limits[1] - limits[0]) * index / count
+                    for index in range(count + 1)]
+    groups = []
+    for index, (identifier, label, phase, group_source) in enumerate(
+            zip(ids, labels, phases, group_sources)):
+        sources = common + [group_source]
+        error = sum(item["maximumOneSidedContactAngleDeg"] for item in sources)
+        samples = []
+        for servo_deg in servo_angles:
+            nominal, minimum, maximum = height_range(index, servo_deg, error)
+            samples.append({
+                "servoDeg": rounded(servo_deg),
+                "nominalHeightMm": rounded(nominal),
+                "heightRangeMm": [rounded(minimum), rounded(maximum)],
+            })
+        groups.append({
+            "id": identifier,
+            "label": label,
+            "nominalPhaseDeg": rounded(phase),
+            "maximumPhaseDifferenceDeg": rounded(error),
+            "sources": sources,
+            "samples": samples,
+        })
+    summary_groups = [{
+        "id": group["id"],
+        "label": group["label"],
+        "nominalPhaseDeg": group["nominalPhaseDeg"],
+        "maximumPhaseDifferenceDeg": group["maximumPhaseDifferenceDeg"],
+        "start": group["samples"][0],
+        "end": group["samples"][-1],
+    } for group in groups]
+    return {
+        "version": 1,
+        "model": model,
+        "coefficient": 1.0,
+        "symmetricPhaseDifference": True,
+        "sampleStepMaximumDeg": CLEARANCE_STEP_DEG,
+        "groups": groups,
+        "summary": {
+            "startServoDeg": rounded(limits[0]),
+            "endServoDeg": rounded(limits[1]),
+            "maximumPhaseDifferenceDeg": rounded(max(
+                group["maximumPhaseDifferenceDeg"] for group in groups)),
+            "groups": summary_groups,
+        },
+        "limitations": [
+            "位置精度は保証しない。公称位相の条件付き1自由度計算は変更しない。",
+            "スプライン嵌合と材料の変形は含めない。この高さ幅の動的計算と全組み合わせ干渉は未検証。",
+        ],
+    }
+
+
 class TableSim:
     def __init__(self, tables: dict):
         self.tables = tables
@@ -267,6 +432,8 @@ class TableSim:
             "dMGroupsDqKgm2PerRad": mix("dMGroupsDqKgm2PerRad"),
             "gravityRestNm": mix("gravityRestNm"),
             "gravityGroupsNm": mix("gravityGroupsNm"),
+            "contactFrictionGroupsNm": (mix("contactFrictionGroupsNm")
+                                         if "contactFrictionGroupsNm" in a else 0.0),
             "liftsMm": lifts,
             "dLiftDqMPerRad": mix_array("dLiftDqMPerRad"),
             "d2LiftDq2MPerRad2": mix_array("d2LiftDq2MPerRad2"),
@@ -328,7 +495,8 @@ class TableSim:
             effort = clamp((math.radians(cmd) - q) / self.const["controlBandRad"], -1.0, 1.0)
             tau = clamp(stall * effort - stall / self.const["noLoadSpeedRadS"] * velocity, -stall, stall)
             net = tau - gravity - 0.5 * dmass * velocity * velocity
-            friction = self.const["servoFrictionNm"]
+            friction = (self.const["servoFrictionNm"]
+                        + mass_scale * state["contactFrictionGroupsNm"])
             if abs(velocity) > 1.0e-4:
                 net -= math.copysign(friction, velocity)
             elif abs(net) <= friction:
@@ -412,12 +580,12 @@ def boundary_crossing_speed_mm_s(q0_deg: float, q1_deg: float, w0: float, w1: fl
     return maximum
 
 
-def synthetic_tables(gravity_nm=0.0, servo_friction=0.0, record=0.001) -> dict:
+def synthetic_tables(gravity_nm=0.0, servo_friction=0.0, contact_friction=0.0, record=0.001) -> dict:
     row = lambda deg: {
         "servoDeg": deg, "inertiaRestKgm2": 0.0, "inertiaGroupsKgm2": 0.0,
         "dMGroupsDqKgm2PerRad": 0.0, "gravityRestNm": gravity_nm,
         "gravityGroupsNm": 0.0, "liftsMm": [0.0], "dLiftDqMPerRad": [0.0],
-        "d2LiftDq2MPerRad2": [0.0],
+        "d2LiftDq2MPerRad2": [0.0], "contactFrictionGroupsNm": contact_friction,
     }
     return {
         "model": "calibration", "limitsDeg": [0.0, 60.0], "duration_s": 0.2,
@@ -442,6 +610,10 @@ def dynamic_calibration() -> dict:
         from_deg=0.0, to_deg=60.0, kind="step", stall_scale=half_scale, duration=0.4)
     zero = TableSim(synthetic_tables()).run(
         from_deg=0.0, to_deg=60.0, kind="step", stall_scale=0.0, duration=0.2)
+    contact_friction = 0.05
+    friction_half = TableSim(synthetic_tables(contact_friction=contact_friction)).run(
+        from_deg=0.0, to_deg=60.0, kind="step",
+        stall_scale=(contact_friction * 0.5) / 0.245, duration=0.4)
     boundary_speed = boundary_crossing_speed_mm_s(
         20.0, 40.0, 1.0, 3.0, [[{"deg": 30.0, "slopeMPerRad": 0.005}]],
     )
@@ -449,6 +621,7 @@ def dynamic_calibration() -> dict:
         "noLoadNominalSpeed": reached is not None and abs(reached - 0.1) <= 0.02,
         "halfStaticTorqueCannotReach": half["final"]["servoDeg"] < 1.0,
         "zeroTorqueCannotFollowTarget": abs(zero["final"]["servoDeg"]) < 1.0e-9,
+        "camContactFrictionStopsHalfTorque": friction_half["final"]["servoDeg"] < 1.0,
         "syntheticBoundarySpeed": abs(boundary_speed - 10.0) < 1.0e-12,
     }
     return {
@@ -460,6 +633,10 @@ def dynamic_calibration() -> dict:
             "finalServoDeg": half["final"]["servoDeg"],
         },
         "zeroTorque": {"targetDeg": 60.0, "finalServoDeg": zero["final"]["servoDeg"]},
+        "camContactFriction": {
+            "requiredTorqueNm": contact_friction, "availableTorqueNm": contact_friction * 0.5,
+            "finalServoDeg": friction_half["final"]["servoDeg"],
+        },
         "syntheticBoundary": {"expectedMmS": 10.0, "measuredMmS": boundary_speed},
     }
 
@@ -475,10 +652,14 @@ def model_definition(model: str) -> dict:
         rotating = [("drive_gear", -1.0, (params.SERVO_AXIS_Y, params.SERVO_AXIS_Z), params.PLA_DENSITY),
                     ("ref_horn", -1.0, (params.SERVO_AXIS_Y, params.SERVO_AXIS_Z), PP_DENSITY)]
         rotating += [(name, 1.0, (params.CAM_AXIS_Y, params.CAM_AXIS_Z), params.PLA_DENSITY)
-                     for name in ["camshaft", "cam_gear"] + [f"cam_{i}" for i in range(params.GRID_N)]]
+                     for name in ["camshaft", "left_spacer", "cam_gear"]
+                     + [f"cam_{i}" for i in range(params.GRID_N)]]
         limits = (params.SERVO_HOME_DEG, params.SERVO_END_DEG)
         duration = params.MOTION_DURATION_S
         lift = lambda i, deg: motion.carrier_height(i, deg)
+        def contact_height(i, deg):
+            theta = math.radians(motion.cam_theta_deg(deg) - params.CAM_PHASE_DEG[i])
+            return params.CAM_R + params.CAM_E * math.cos(theta) if lift(i, deg) > 1.0e-10 else 0.0
         contact_model = "max_zero_cam_switch"
         boundary_angle = math.degrees(math.acos(0.4))
         contact_boundaries = []
@@ -503,6 +684,9 @@ def model_definition(model: str) -> dict:
         limits = (params.SERVO_MIN_DEG, params.SERVO_MAX_DEG)
         duration = params.MOVE_TIME_S
         lift = lambda i, deg: motion.lift_m(i, deg)
+        def contact_height(i, deg):
+            theta = math.radians(motion.cam_theta_deg(deg))
+            return params.CAM_R + params.CAM_E[i] * math.sin(theta)
         contact_model = "gravity_one_sided"
         contact_boundaries = [[] for _ in carrier_names]
         approximation = "重力でカムへ追従する片側接触の高さ拘束。負の反力後も拘束を維持して計算し、浮き上がり可能として別途不合格にする。"
@@ -512,6 +696,7 @@ def model_definition(model: str) -> dict:
         "dir": model_dir, "params": params, "motion": motion, "assembly": assembly,
         "carrierNames": carrier_names, "labels": labels, "rotating": rotating,
         "limits": limits, "duration": duration, "lift": lift,
+        "contactHeight": contact_height,
         "contactModel": contact_model, "approximation": approximation,
         "contactBoundaries": contact_boundaries,
     }
@@ -527,6 +712,9 @@ def generate_model(model: str, shared_calibration: dict) -> dict:
         "params.py": sha256(model_dir / "params.py"),
         "motion.py": sha256(model_dir / "motion.py"),
     }
+    drive_report_path = model_dir / "build" / "drive_report.json"
+    if drive_report_path.is_file():
+        hashes["build/drive_report.json"] = sha256(drive_report_path)
     algorithm_hashes = {
         "tools/lattice_simulation.py": sha256(ROOT / "tools" / "lattice_simulation.py"),
         "viewer/lattice/sim.mjs": sha256(ROOT / "viewer" / "lattice" / "sim.mjs"),
@@ -567,7 +755,7 @@ def generate_model(model: str, shared_calibration: dict) -> dict:
 
     def terms(q: float):
         delta = q - low
-        lifts, slopes, curvatures = [], [], []
+        lifts, slopes, curvatures, contact_heights = [], [], [], []
         group_inertia = 0.0
         gravity_groups = 0.0
         gravity_rest = 0.0
@@ -580,6 +768,7 @@ def generate_model(model: str, shared_calibration: dict) -> dict:
             lifts.append(height)
             slopes.append(slope)
             curvatures.append(curvature)
+            contact_heights.append(definition["contactHeight"](index, math.degrees(q)))
             group_inertia += carrier_mass * slope * slope
             dmass += 2.0 * carrier_mass * slope * curvature
             gravity_groups += carrier_mass * G * slope
@@ -587,8 +776,10 @@ def generate_model(model: str, shared_calibration: dict) -> dict:
             angle = sign * delta
             dz_dq = sign * (y0 * math.cos(angle) - z0 * math.sin(angle))
             gravity_rest += body_mass * G * dz_dq
+        contact_friction = sum(CAM_FRICTION_MU * carrier_mass * G * height
+                               for carrier_mass, height in zip(carrier_masses, contact_heights))
         return (rotating_inertia, group_inertia, dmass, gravity_rest, gravity_groups,
-                lifts, slopes, curvatures)
+                lifts, slopes, curvatures, contact_heights, contact_friction)
 
     count = int(round((high_deg - low_deg) / TABLE_STEP_DEG))
     rows = []
@@ -605,6 +796,8 @@ def generate_model(model: str, shared_calibration: dict) -> dict:
             "liftsMm": [rounded(v * 1000.0) for v in values[5]],
             "dLiftDqMPerRad": [rounded(v) for v in values[6]],
             "d2LiftDq2MPerRad2": [rounded(v) for v in values[7]],
+            "contactHeightsM": [rounded(v) for v in values[8]],
+            "contactFrictionGroupsNm": rounded(values[9]),
         })
 
     groups = [{"id": name, "label": label, "massKg": rounded(mass[name]["massKg"]),
@@ -627,6 +820,7 @@ def generate_model(model: str, shared_calibration: dict) -> dict:
             "controlBandRad": CONTROL_BAND,
             "motorInertiaKgm2": MOTOR_INERTIA,
             "servoFrictionNm": SERVO_FRICTION,
+            "camFrictionMu": CAM_FRICTION_MU,
             "guideFrictionMu": getattr(params, "GUIDE_FRICTION_MU", getattr(params, "FRICTION_COEFF", 0.30)),
             "gravityMS2": G,
             "dtS": DT,
@@ -637,7 +831,7 @@ def generate_model(model: str, shared_calibration: dict) -> dict:
                 "printedParts": "組立 STL を中実 PLA として積分。massScale は格子キャリアの質量、慣性、重力項だけへ掛ける。回転部は固定。",
                 "servoHorn": "組立 STL を中実 PP 900 kg/m3 として積分。",
                 "motorInertia": "出力軸換算 5e-6 kg m2 の推定値。",
-                "friction": "SG92R ギアの等価クーロン摩擦 0.004 N m を適用。案内の横予圧が不明なため μ=0.30 は記録のみで運動式へ加えない。",
+                "friction": "SG92R ギアの等価クーロン摩擦 0.004 N m に加え、各格子の自重を法線力、回転カム接点の軸からの高さを腕長として μ=0.30 の一般化摩擦トルクを適用。案内の横予圧は不明なため加えない。",
                 "contact": definition["approximation"],
                 "collision": "この計算は motion.py の拘束運動を解く。実メッシュ衝突の動的証明ではない。",
             },
@@ -705,6 +899,13 @@ def generate_model(model: str, shared_calibration: dict) -> dict:
             "detail": f"60° 指令に対し最終 {shared_calibration['dynamic']['zeroTorque']['finalServoDeg']:.3f}°。",
         },
         {
+            "id": "cam-contact-friction",
+            "label": "カム接点の一般化摩擦",
+            "pass": shared_calibration["dynamic"]["checks"]["camContactFrictionStopsHalfTorque"],
+            "detail": (f"0.050 N m の接点摩擦に 0.025 N m だけを与え、最終 "
+                       f"{shared_calibration['dynamic']['camContactFriction']['finalServoDeg']:.3f}°。"),
+        },
+        {
             "id": "contact-boundary-speed",
             "label": "接触境界の横断速度",
             "pass": shared_calibration["dynamic"]["checks"]["syntheticBoundarySpeed"],
@@ -712,15 +913,41 @@ def generate_model(model: str, shared_calibration: dict) -> dict:
                        f"{shared_calibration['dynamic']['syntheticBoundary']['measuredMmS']:.3f} mm/s（期待10.000）。"),
         },
     ]
-    overall_pass = (all(row["pass"] for row in calibration_rows)
-                    and max_static <= params.SERVO_STALL_TORQUE / 3.0
-                    and scenarios["standard"]["contactFeasible"]
-                    and scenarios["reverse"]["contactFeasible"])
+    drive = assess_drive_report(model_dir, model)
+    if drive["geometryPass"]:
+        drive_report = json.loads(drive_report_path.read_text(encoding="utf-8"))
+        envelope = clearance_envelope(model, params, definition["motion"], drive_report)
+        envelope["source"] = {
+            "path": "build/drive_report.json",
+            "sha256": drive["driveReportSha256"],
+        }
+    else:
+        envelope = {
+            "version": 1,
+            "model": model,
+            "available": False,
+            "reason": drive["reason"],
+            "source": {
+                "path": "build/drive_report.json",
+                "sha256": drive.get("driveReportSha256"),
+            },
+        }
+    legacy_calculation_pass = (all(row["pass"] for row in calibration_rows)
+                               and max_static <= params.SERVO_STALL_TORQUE / 3.0
+                               and scenarios["standard"]["contactFeasible"]
+                               and scenarios["reverse"]["contactFeasible"])
+    calculation_pass = legacy_calculation_pass and drive["geometryPass"]
+    if calculation_pass:
+        basis = "接続形状は確認済み。スプライン嵌合と材料は実機未確認"
+    elif not drive["geometryPass"]:
+        basis = drive["reason"]
+    else:
+        basis = "接続形状は確認済みですが、1自由度計算の成立条件を満たしません。"
     report = {
         "version": 1,
         "model": model,
         "method": "SG92R torque-speed limited one-DOF Lagrange simulation",
-        "equation": "M(q) qdd + 0.5 dM/dq qdot^2 + G(q) = servoTorque - coulombFriction",
+        "equation": "M(q) qdd + 0.5 dM/dq qdot^2 + G(q) = servoTorque - servoFriction - camContactFriction",
         "limitsDeg": tables["limitsDeg"],
         "massIntegration": {
             "method": "signed tetrahedral volume integration of assembly STL",
@@ -730,9 +957,15 @@ def generate_model(model: str, shared_calibration: dict) -> dict:
         "dynamicCalibration": shared_calibration["dynamic"],
         "calibration": calibration_rows,
         "overall": {
-            "pass": overall_pass,
-            "basis": "計器校正、1/3停動トルク、標準往復の非負接触反力",
+            "pass": False,
+            "calculationPass": calculation_pass,
+            "status": "conditional" if calculation_pass else "fail",
+            "geometryPass": drive["geometryPass"],
+            "basis": basis,
+            "calculationBasis": "計器校正、1/3停動トルク、標準往復の非負接触反力",
         },
+        "driveGeometry": drive,
+        "clearanceEnvelope": envelope,
         "static": {
             "maxHoldTorqueNm": rounded(max_static),
             "fractionOfStall": rounded(max_static / params.SERVO_STALL_TORQUE),
@@ -753,6 +986,8 @@ def generate_model(model: str, shared_calibration: dict) -> dict:
             definition["approximation"],
             "負の反力が出た後の自由飛行と再衝突は解いていない。contactFeasible=false は浮き上がり可能の判定。",
             "実メッシュの動的衝突は証明しない。形状干渉は verify_report.json の別検査。",
+            "案内の横予圧は不明。付属ホーンのスプライン嵌合と材料特性は実機未確認。",
+            "回転遊びの高さ幅は静的な幾何学包絡。位置精度は保証せず、幅内の動的計算と全組み合わせ干渉は未検証。",
         ],
     }
     write_json(model_dir / "build" / "sim_tables.json", tables)

@@ -7,6 +7,7 @@ import {
 } from '../shared/mechanism-view.mjs';
 import { frameAt, identity4 } from './motion.mjs';
 import { setupPhysics } from './physics-ui.mjs';
+import { drivePresentation } from './sim.mjs';
 import { setupAssembly } from './assembly-ui.mjs';
 
 const $ = id => document.getElementById(id);
@@ -280,10 +281,14 @@ function reportRows(target, report, emptyMessage) {
   }
 }
 
-function verificationSummary(report, assembly) {
+function verificationSummary(report, assembly, driveReport, simulation) {
   if (!report) return null;
   const rows = [];
-  rows.push(['計算上の判定', (report.ok ?? report.pass) === true ? '記録した検査は適合' : '要確認']);
+  const drive = drivePresentation(driveReport, simulation);
+  rows.push(['形状検証の記録', (report.ok ?? report.pass) === true ? '記録した検査は適合' : '要確認']);
+  rows.push(['駆動接続', drive.geometryPass ? '接続形状は適合' : '接続未成立']);
+  for (const connection of drive.interfaceRows) rows.push([connection.label, connection.result]);
+  rows.push(['力学計算', drive.calculationPass ? '計算内成立。実機未確認' : '接続形状が未成立のため不成立']);
   const topology = report.topology || report.stl_direct_parse;
   if (topology) {
     const parts = Object.values(topology);
@@ -347,11 +352,11 @@ async function start() {
     const state = { servoDeg: minimum, cut: true, hidden: new Set(), transforms: null, present: null };
     const canvas = $('gl'), renderer = createRenderer(canvas, data, state), meta = data.meta;
     document.title = `住人の箱 ${profile.label}の${mode === 'assembly' ? '組み立て' : '物理検証'} · model-lab`;
-    $('eyebrow').textContent = mode === 'assembly' ? '工具、ねじ、接着剤なし' : '1 自由度の運動方程式';
+    $('eyebrow').textContent = mode === 'assembly' ? '工具、ねじ、接着剤なし' : '接続形状を前提にした1自由度計算';
     $('pageTitle').textContent = mode === 'assembly' ? '組み立ての手順と検証' : profile.title;
     $('summary').textContent = mode === 'assembly'
       ? '表示する経路で実際のSTLを動かし、据えた部品との共通体積を測ります。実物では未検証です。'
-      : '形状から求めた質量と慣性に、サーボのトルク上限と速度の限界を入れて解きます。実機では未検証です。';
+      : '接続形状の検査を通った場合だけ、質量と慣性にサーボのトルク上限と速度の限界を入れて計算します。スプライン嵌合と材料は実機未確認です。';
     document.querySelector('.workspace-model strong').textContent = `住人の箱 ${profile.label}`;
     document.querySelector('.workspace-model small').textContent = `${dimensionText(meta)} · SG92R 1台 · 印刷 ${data.parts.filter(p => p.printable).length}点`;
     document.querySelector('.workspace-brand').href = `/?model=${model}`;
@@ -364,7 +369,7 @@ async function start() {
       input.addEventListener('change', () => { input.checked ? state.hidden.delete(mesh.id) : state.hidden.add(mesh.id); renderer.draw(); });
       label.append(input, swatch, document.createTextNode(mesh.label || mesh.id)); return label;
     }));
-    reportRows('verifyRows', verificationSummary(data.verify, data.assembly), '検証データなし');
+    reportRows('verifyRows', verificationSummary(data.verify, data.assembly, data.drive, data.sim), '検証データなし');
     reportRows('deliveryRows', deliverySummary(data.delivery, data.print_path_review), '印刷データなし');
     const printLinks = [];
     for (const [kind, plate] of Object.entries(data.delivery?.plates || {})) {
