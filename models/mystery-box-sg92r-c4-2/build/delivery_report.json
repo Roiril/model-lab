@@ -1,0 +1,822 @@
+{
+  "version": 1,
+  "model": "mystery-box-sg92r-c4-2",
+  "created_at": "2026-10-11T09:30:54.534280+00:00",
+  "manifest": {
+    "file": "models/mystery-box-sg92r-c4-2/build/manifest.json",
+    "bytes": 31246,
+    "sha256": "f29e7f1ddbad09da0c6481a8c5f91ad441dc13ff561de93ba2b9c100e75ac28c"
+  },
+  "materials": [
+    "PLA",
+    "PETG"
+  ],
+  "settings": {
+    "machine": "Bambu Lab X1 Carbon 0.4 nozzle",
+    "process": "0.20mm Standard @BBL X1C",
+    "filament": {
+      "PLA": "Bambu PLA Basic @BBL X1C",
+      "PETG": "Bambu PETG Basic @BBL X1C"
+    },
+    "overrides": {
+      "curr_bed_type": "Textured PEI Plate",
+      "layer_height": "0.2",
+      "wall_loops": "3",
+      "exclude_object": "1",
+      "enable_support": "0",
+      "bottom_shell_thickness": "250.0",
+      "brim_object_gap": "0.1",
+      "brim_type": "outer_and_inner",
+      "brim_width": "5",
+      "top_shell_thickness": "250.0"
+    },
+    "solid_fill": {
+      "strategy": "top_bottom_shell_thickness_covers_build_height",
+      "build_height_mm": 250.0,
+      "bottom_shell_thickness_mm": 250.0,
+      "top_shell_thickness_mm": 250.0,
+      "actual_values_recorded_per_plate": false
+    },
+    "resolved_files": {}
+  },
+  "calibration": {
+    "status": "not_run",
+    "pass": null,
+    "reason": "layout_only_user_slices"
+  },
+  "parts": [
+    {
+      "id": "housing",
+      "label": "外装",
+      "fit_test": false,
+      "fit_only": false,
+      "assembly": {
+        "file": "models/mystery-box-sg92r-c4-2/build/housing.stl",
+        "bytes": 212584,
+        "sha256": "f39392a14e0b96952a340e3f1a89d74c28495425e0bc2c8c05f6e379cd98587f"
+      },
+      "status": "printable",
+      "slices": {},
+      "source_print": {
+        "file": "models/mystery-box-sg92r-c4-2/build/print_housing.stl",
+        "bytes": 246484,
+        "sha256": "8e4a96634bcd6e07f1a3518ad85fbf862cf063b365dd0869389c0896e647eda0"
+      },
+      "delivered_print": {
+        "file": "prints/mystery-box-sg92r-c4-2/mystery-box-sg92r-c4-2-print-housing.stl",
+        "bytes": 246484,
+        "sha256": "8e4a96634bcd6e07f1a3518ad85fbf862cf063b365dd0869389c0896e647eda0"
+      },
+      "delivery_status": "user_slices",
+      "verification_source": "user_slices"
+    },
+    {
+      "id": "faceplate",
+      "label": "六角格子の天板",
+      "fit_test": false,
+      "fit_only": false,
+      "assembly": {
+        "file": "models/mystery-box-sg92r-c4-2/build/faceplate.stl",
+        "bytes": 56584,
+        "sha256": "fa73f5e720244c64d063afff8fa35a616e6fdf3111772a498e38798d3f29152d"
+      },
+      "status": "printable",
+      "slices": {},
+      "source_print": {
+        "file": "models/mystery-box-sg92r-c4-2/build/print_faceplate.stl",
+        "bytes": 56584,
+        "sha256": "b4709d172cec92ed26ca73d680871a0d403c6a1858c30302c43384c1833d6378"
+      },
+      "delivered_print": {
+        "file": "prints/mystery-box-sg92r-c4-2/mystery-box-sg92r-c4-2-print-faceplate.stl",
+        "bytes": 56584,
+        "sha256": "b4709d172cec92ed26ca73d680871a0d403c6a1858c30302c43384c1833d6378"
+      },
+      "delivery_status": "user_slices",
+      "verification_source": "user_slices"
+    },
+    {
+      "id": "guide_frame",
+      "label": "格子の案内枠",
+      "fit_test": false,
+      "fit_only": false,
+      "assembly": {
+        "file": "models/mystery-box-sg92r-c4-2/build/guide_frame.stl",
+        "bytes": 252284,
+        "sha256": "4f5e8a4dc9c7784f257c63782e9859270023de4b2a6ec8b4be8bb7b15ffb5c54"
+      },
+      "status": "printable",
+      "slices": {},
+      "source_print": {
+        "file": "models/mystery-box-sg92r-c4-2/build/print_guide_frame.stl",
+        "bytes": 307284,
+        "sha256": "f3da08fa48ac2fd61f9789b757f7bc153c648e208cbabd27d4d6d563cc4eb91f"
+      },
+      "delivered_print": {
+        "file": "prints/mystery-box-sg92r-c4-2/mystery-box-sg92r-c4-2-print-guide_frame.stl",
+        "bytes": 307284,
+        "sha256": "f3da08fa48ac2fd61f9789b757f7bc153c648e208cbabd27d4d6d563cc4eb91f"
+      },
+      "delivery_status": "user_slices",
+      "verification_source": "user_slices"
+    },
+    {
+      "id": "bottom",
+      "label": "底板",
+      "fit_test": false,
+      "fit_only": false,
+      "assembly": {
+        "file": "models/mystery-box-sg92r-c4-2/build/bottom.stl",
+        "bytes": 8084,
+        "sha256": "3e7416ac484f1b94bbf65fadcf757d1a029f2465213cbd89fa7215c3a33607fc"
+      },
+      "status": "printable",
+      "slices": {},
+      "source_print": {
+        "file": "models/mystery-box-sg92r-c4-2/build/print_bottom.stl",
+        "bytes": 8084,
+        "sha256": "3e7416ac484f1b94bbf65fadcf757d1a029f2465213cbd89fa7215c3a33607fc"
+      },
+      "delivered_print": {
+        "file": "prints/mystery-box-sg92r-c4-2/mystery-box-sg92r-c4-2-print-bottom.stl",
+        "bytes": 8084,
+        "sha256": "3e7416ac484f1b94bbf65fadcf757d1a029f2465213cbd89fa7215c3a33607fc"
+      },
+      "delivery_status": "user_slices",
+      "verification_source": "user_slices"
+    },
+    {
+      "id": "carrier_center",
+      "label": "中央",
+      "fit_test": false,
+      "fit_only": false,
+      "assembly": {
+        "file": "models/mystery-box-sg92r-c4-2/build/carrier_center.stl",
+        "bytes": 47284,
+        "sha256": "b6dc8cb79c87de3ac5407289708440690e69ef1832403e3dcdeecdc63ecd7ecb"
+      },
+      "status": "printable",
+      "slices": {},
+      "source_print": {
+        "file": "models/mystery-box-sg92r-c4-2/build/print_carrier_center.stl",
+        "bytes": 60884,
+        "sha256": "8e4f96079d267dd0b27f41208ce38587f8e72c658a8735ae91a74e9d846dad23"
+      },
+      "delivered_print": {
+        "file": "prints/mystery-box-sg92r-c4-2/mystery-box-sg92r-c4-2-print-carrier_center.stl",
+        "bytes": 60884,
+        "sha256": "8e4f96079d267dd0b27f41208ce38587f8e72c658a8735ae91a74e9d846dad23"
+      },
+      "delivery_status": "user_slices",
+      "verification_source": "user_slices"
+    },
+    {
+      "id": "carrier_upper_left",
+      "label": "左上",
+      "fit_test": false,
+      "fit_only": false,
+      "assembly": {
+        "file": "models/mystery-box-sg92r-c4-2/build/carrier_upper_left.stl",
+        "bytes": 62284,
+        "sha256": "d530ddecd3a35a67eb3243e0d9de540b64422ce12aed0f326447b317375dd561"
+      },
+      "status": "printable",
+      "slices": {},
+      "source_print": {
+        "file": "models/mystery-box-sg92r-c4-2/build/print_carrier_upper_left.stl",
+        "bytes": 97984,
+        "sha256": "867e0bcaec1a03396142256cc2096814df562fcee9bf7a34d61b0c3ae2429e1b"
+      },
+      "delivered_print": {
+        "file": "prints/mystery-box-sg92r-c4-2/mystery-box-sg92r-c4-2-print-carrier_upper_left.stl",
+        "bytes": 97984,
+        "sha256": "867e0bcaec1a03396142256cc2096814df562fcee9bf7a34d61b0c3ae2429e1b"
+      },
+      "delivery_status": "user_slices",
+      "verification_source": "user_slices"
+    },
+    {
+      "id": "carrier_upper_right",
+      "label": "右上",
+      "fit_test": false,
+      "fit_only": false,
+      "assembly": {
+        "file": "models/mystery-box-sg92r-c4-2/build/carrier_upper_right.stl",
+        "bytes": 71184,
+        "sha256": "79edd8a0c7b61a577ad78b15a727e89d533a468ad834ac42b09fe63f7b3c4786"
+      },
+      "status": "printable",
+      "slices": {},
+      "source_print": {
+        "file": "models/mystery-box-sg92r-c4-2/build/print_carrier_upper_right.stl",
+        "bytes": 111484,
+        "sha256": "6942ca937a812223dc18c7f8b676d9eff8fcbd0a1139c835cf31dd2c9076104e"
+      },
+      "delivered_print": {
+        "file": "prints/mystery-box-sg92r-c4-2/mystery-box-sg92r-c4-2-print-carrier_upper_right.stl",
+        "bytes": 111484,
+        "sha256": "6942ca937a812223dc18c7f8b676d9eff8fcbd0a1139c835cf31dd2c9076104e"
+      },
+      "delivery_status": "user_slices",
+      "verification_source": "user_slices"
+    },
+    {
+      "id": "carrier_lower_pair",
+      "label": "下側",
+      "fit_test": false,
+      "fit_only": false,
+      "assembly": {
+        "file": "models/mystery-box-sg92r-c4-2/build/carrier_lower_pair.stl",
+        "bytes": 144584,
+        "sha256": "0d6ebac0a86a05f0ae554d78950fb048b8de1d0f7cc270a639ef9364340c0437"
+      },
+      "status": "printable",
+      "slices": {},
+      "source_print": {
+        "file": "models/mystery-box-sg92r-c4-2/build/print_carrier_lower_pair.stl",
+        "bytes": 265684,
+        "sha256": "98ffcfa783543a5f5b880c886290e6dd184b20e18aabd7107a4d4fb03cd2dd5a"
+      },
+      "delivered_print": {
+        "file": "prints/mystery-box-sg92r-c4-2/mystery-box-sg92r-c4-2-print-carrier_lower_pair.stl",
+        "bytes": 265684,
+        "sha256": "98ffcfa783543a5f5b880c886290e6dd184b20e18aabd7107a4d4fb03cd2dd5a"
+      },
+      "delivery_status": "user_slices",
+      "verification_source": "user_slices"
+    },
+    {
+      "id": "cam_disk",
+      "label": "四群円盤カム",
+      "fit_test": false,
+      "fit_only": false,
+      "assembly": {
+        "file": "models/mystery-box-sg92r-c4-2/build/cam_disk.stl",
+        "bytes": 7067684,
+        "sha256": "645975e6be5cc4b12479e7f4ba0a8340827df3f31457cb3d46b6bd8cb4fa96be"
+      },
+      "status": "printable",
+      "slices": {},
+      "source_print": {
+        "file": "models/mystery-box-sg92r-c4-2/build/print_cam_disk.stl",
+        "bytes": 7067684,
+        "sha256": "7680067ab8114318a48f145cd6e57c2c1f698125b9edc72bc347bef7b146469b"
+      },
+      "delivered_print": {
+        "file": "prints/mystery-box-sg92r-c4-2/mystery-box-sg92r-c4-2-print-cam_disk.stl",
+        "bytes": 7067684,
+        "sha256": "7680067ab8114318a48f145cd6e57c2c1f698125b9edc72bc347bef7b146469b"
+      },
+      "delivery_status": "user_slices",
+      "verification_source": "user_slices"
+    },
+    {
+      "id": "horn_coupler",
+      "label": "ホーン受け",
+      "fit_test": false,
+      "fit_only": false,
+      "assembly": {
+        "file": "models/mystery-box-sg92r-c4-2/build/horn_coupler.stl",
+        "bytes": 335584,
+        "sha256": "222831121787c4d30dc80d611a446a53a4e264fb998a2172f85af1bb0552a8b1"
+      },
+      "status": "printable",
+      "slices": {},
+      "source_print": {
+        "file": "models/mystery-box-sg92r-c4-2/build/print_horn_coupler.stl",
+        "bytes": 335584,
+        "sha256": "fb5d8dc1d3e615f460c9f08128d27a01ee7063bdadf40be6d8f3230d4e0e7e76"
+      },
+      "delivered_print": {
+        "file": "prints/mystery-box-sg92r-c4-2/mystery-box-sg92r-c4-2-print-horn_coupler.stl",
+        "bytes": 335584,
+        "sha256": "fb5d8dc1d3e615f460c9f08128d27a01ee7063bdadf40be6d8f3230d4e0e7e76"
+      },
+      "delivery_status": "user_slices",
+      "verification_source": "user_slices"
+    },
+    {
+      "id": "drive_key",
+      "label": "角形駆動キー",
+      "fit_test": false,
+      "fit_only": false,
+      "assembly": {
+        "file": "models/mystery-box-sg92r-c4-2/build/drive_key.stl",
+        "bytes": 32684,
+        "sha256": "15d5bbc95c3756c7cf8e4a38e4f0957c272a27b7ee599115449b505688e8d7d7"
+      },
+      "status": "printable",
+      "slices": {},
+      "source_print": {
+        "file": "models/mystery-box-sg92r-c4-2/build/print_drive_key.stl",
+        "bytes": 32684,
+        "sha256": "e07a9da43fe687ea1c3fd2a5210c758140366c0ddc5e0605ac352aded457b14e"
+      },
+      "delivered_print": {
+        "file": "prints/mystery-box-sg92r-c4-2/mystery-box-sg92r-c4-2-print-drive_key.stl",
+        "bytes": 32684,
+        "sha256": "e07a9da43fe687ea1c3fd2a5210c758140366c0ddc5e0605ac352aded457b14e"
+      },
+      "delivery_status": "user_slices",
+      "verification_source": "user_slices"
+    },
+    {
+      "id": "cam_keeper",
+      "label": "円盤止め輪",
+      "fit_test": false,
+      "fit_only": false,
+      "assembly": {
+        "file": "models/mystery-box-sg92r-c4-2/build/cam_keeper.stl",
+        "bytes": 123384,
+        "sha256": "0ce359fea4adf9e4a4a9038872961f184bc20d7146c748491372949b6c074acf"
+      },
+      "status": "printable",
+      "slices": {},
+      "source_print": {
+        "file": "models/mystery-box-sg92r-c4-2/build/print_cam_keeper.stl",
+        "bytes": 123384,
+        "sha256": "7b5447e800a030389eec578d7cbb059ea5c73327e0e0d902e6336883dffa9bb2"
+      },
+      "delivered_print": {
+        "file": "prints/mystery-box-sg92r-c4-2/mystery-box-sg92r-c4-2-print-cam_keeper.stl",
+        "bytes": 123384,
+        "sha256": "7b5447e800a030389eec578d7cbb059ea5c73327e0e0d902e6336883dffa9bb2"
+      },
+      "delivery_status": "user_slices",
+      "verification_source": "user_slices"
+    },
+    {
+      "id": "servo_body",
+      "label": "SG92R本体",
+      "fit_test": false,
+      "fit_only": false,
+      "assembly": {
+        "file": "models/mystery-box-sg92r-c4-2/build/servo_body.stl",
+        "bytes": 57584,
+        "sha256": "b5dd0d4af1e8f251d9934e8811373d714a6a18761d42cfd66bf18105f276cd68"
+      },
+      "status": "reference",
+      "slices": {},
+      "delivery_status": "not_applicable"
+    },
+    {
+      "id": "servo_horn",
+      "label": "付属クロスホーン",
+      "fit_test": false,
+      "fit_only": false,
+      "assembly": {
+        "file": "models/mystery-box-sg92r-c4-2/build/servo_horn.stl",
+        "bytes": 211384,
+        "sha256": "bf8cb8de5c3d9670041875d9bce20970477a45f1571c0056f1ecac0b5a6e51ce"
+      },
+      "status": "reference",
+      "slices": {},
+      "delivery_status": "not_applicable"
+    },
+    {
+      "id": "servo_wire",
+      "label": "SG92R配線",
+      "fit_test": false,
+      "fit_only": false,
+      "assembly": {
+        "file": "models/mystery-box-sg92r-c4-2/build/servo_wire.stl",
+        "bytes": 42384,
+        "sha256": "c911453e7904595935eb83272b4859a608aa3ae19f7f4bb1096a82aefcba3e58"
+      },
+      "status": "reference",
+      "slices": {},
+      "delivery_status": "not_applicable"
+    },
+    {
+      "id": "print_test",
+      "label": "ホーン受け・角キー・径受け試片",
+      "fit_test": true,
+      "fit_only": true,
+      "assembly": {
+        "file": "models/mystery-box-sg92r-c4-2/build/print_test.stl",
+        "bytes": 446984,
+        "sha256": "6ab12ad73c122e4a523ec9bc619cc7769407ec801413634a3892754b0ff649fa"
+      },
+      "status": "printable",
+      "slices": {},
+      "source_print": {
+        "file": "models/mystery-box-sg92r-c4-2/build/print_test.stl",
+        "bytes": 446984,
+        "sha256": "6ab12ad73c122e4a523ec9bc619cc7769407ec801413634a3892754b0ff649fa"
+      },
+      "delivered_print": {
+        "file": "prints/mystery-box-sg92r-c4-2/mystery-box-sg92r-c4-2-print-print_test.stl",
+        "bytes": 446984,
+        "sha256": "6ab12ad73c122e4a523ec9bc619cc7769407ec801413634a3892754b0ff649fa"
+      },
+      "delivery_status": "user_slices",
+      "verification_source": "user_slices"
+    }
+  ],
+  "plates": {
+    "full": {
+      "parts": [
+        "housing",
+        "bottom"
+      ],
+      "layout": {
+        "file": "prints/mystery-box-sg92r-c4-2/mystery-box-sg92r-c4-2-layout.3mf",
+        "bytes": 46895,
+        "sha256": "26f5a019a913927dd6ba84bae558c96a6e226aa11a49e40b90ab0cea702e21e7"
+      },
+      "placement": {
+        "ok": true,
+        "objects": [
+          {
+            "id": "1",
+            "name": "mystery-box-sg92r-c4-2-print-housing",
+            "min": [
+              15.0,
+              73.0,
+              0.0
+            ],
+            "max": [
+              125.0,
+              183.0,
+              103.6
+            ],
+            "off_bed": false,
+            "excluded": false
+          },
+          {
+            "id": "2",
+            "name": "mystery-box-sg92r-c4-2-print-bottom",
+            "min": [
+              131.0,
+              73.0,
+              0.0
+            ],
+            "max": [
+              241.0,
+              183.0,
+              14.0
+            ],
+            "off_bed": false,
+            "excluded": false
+          }
+        ],
+        "bbox_overlaps": [],
+        "missing": [],
+        "extra": [],
+        "issues": []
+      },
+      "materials": {}
+    },
+    "full_2": {
+      "parts": [
+        "faceplate",
+        "cam_disk",
+        "carrier_upper_right",
+        "carrier_upper_left",
+        "carrier_center"
+      ],
+      "layout": {
+        "file": "prints/mystery-box-sg92r-c4-2/mystery-box-sg92r-c4-2-layout-2.3mf",
+        "bytes": 1347165,
+        "sha256": "4cf8d1b547f1cd69a0c18a99d0cef37a3e1ec6330505621670b4d76df2128c73"
+      },
+      "placement": {
+        "ok": true,
+        "objects": [
+          {
+            "id": "1",
+            "name": "mystery-box-sg92r-c4-2-print-faceplate",
+            "min": [
+              21.0,
+              46.7989,
+              0.0
+            ],
+            "max": [
+              131.0,
+              156.7989,
+              30.5
+            ],
+            "off_bed": false,
+            "excluded": false
+          },
+          {
+            "id": "2",
+            "name": "mystery-box-sg92r-c4-2-print-cam_disk",
+            "min": [
+              137.0,
+              46.7989,
+              0.0
+            ],
+            "max": [
+              235.0,
+              144.7989,
+              7.2
+            ],
+            "off_bed": false,
+            "excluded": false
+          },
+          {
+            "id": "3",
+            "name": "mystery-box-sg92r-c4-2-print-carrier_upper_right",
+            "min": [
+              21.0,
+              162.7988,
+              0.0
+            ],
+            "max": [
+              45.1,
+              209.2011,
+              58.7
+            ],
+            "off_bed": false,
+            "excluded": false
+          },
+          {
+            "id": "4",
+            "name": "mystery-box-sg92r-c4-2-print-carrier_upper_left",
+            "min": [
+              51.1,
+              162.7989,
+              0.0
+            ],
+            "max": [
+              75.2,
+              209.1024,
+              58.7
+            ],
+            "off_bed": false,
+            "excluded": false
+          },
+          {
+            "id": "5",
+            "name": "mystery-box-sg92r-c4-2-print-carrier_center",
+            "min": [
+              81.2,
+              162.7989,
+              0.0
+            ],
+            "max": [
+              123.85,
+              181.3895,
+              58.7
+            ],
+            "off_bed": false,
+            "excluded": false
+          }
+        ],
+        "bbox_overlaps": [],
+        "missing": [],
+        "extra": [],
+        "issues": []
+      },
+      "materials": {}
+    },
+    "full_3": {
+      "parts": [
+        "cam_keeper",
+        "guide_frame",
+        "carrier_lower_pair",
+        "horn_coupler",
+        "drive_key"
+      ],
+      "layout": {
+        "file": "prints/mystery-box-sg92r-c4-2/mystery-box-sg92r-c4-2-layout-3.3mf",
+        "bytes": 206554,
+        "sha256": "573b72b5ef44378bc18644c0eac9bd8efcd2b6d325aff8baa3cddeadb99a6776"
+      },
+      "placement": {
+        "ok": true,
+        "objects": [
+          {
+            "id": "1",
+            "name": "mystery-box-sg92r-c4-2-print-cam_keeper",
+            "min": [
+              23.4,
+              52.7806,
+              0.0
+            ],
+            "max": [
+              125.8,
+              155.1806,
+              11.4
+            ],
+            "off_bed": false,
+            "excluded": false
+          },
+          {
+            "id": "2",
+            "name": "mystery-box-sg92r-c4-2-print-guide_frame",
+            "min": [
+              131.8,
+              52.7805,
+              0.0
+            ],
+            "max": [
+              232.6,
+              154.7805,
+              43.2
+            ],
+            "off_bed": false,
+            "excluded": false
+          },
+          {
+            "id": "3",
+            "name": "mystery-box-sg92r-c4-2-print-carrier_lower_pair",
+            "min": [
+              23.4,
+              161.1806,
+              0.0
+            ],
+            "max": [
+              87.5,
+              203.2195,
+              58.7
+            ],
+            "off_bed": false,
+            "excluded": false
+          },
+          {
+            "id": "4",
+            "name": "mystery-box-sg92r-c4-2-print-horn_coupler",
+            "min": [
+              93.5,
+              161.1805,
+              0.0
+            ],
+            "max": [
+              132.6,
+              183.2805,
+              6.2
+            ],
+            "off_bed": false,
+            "excluded": false
+          },
+          {
+            "id": "5",
+            "name": "mystery-box-sg92r-c4-2-print-drive_key",
+            "min": [
+              138.6,
+              161.1806,
+              0.0
+            ],
+            "max": [
+              155.6,
+              178.1806,
+              14.15
+            ],
+            "off_bed": false,
+            "excluded": false
+          }
+        ],
+        "bbox_overlaps": [],
+        "missing": [],
+        "extra": [],
+        "issues": []
+      },
+      "materials": {}
+    },
+    "fit_test": {
+      "parts": [
+        "print_test"
+      ],
+      "layout": {
+        "file": "prints/mystery-box-sg92r-c4-2/mystery-box-sg92r-c4-2-fit-test-layout.3mf",
+        "bytes": 86879,
+        "sha256": "5d8f1cfa58fd34bb8d4acd792972b71c73101dc5c174bcca588b760a7fa3d611"
+      },
+      "placement": {
+        "ok": true,
+        "objects": [
+          {
+            "id": "1",
+            "name": "mystery-box-sg92r-c4-2-print-print_test",
+            "min": [
+              53.725,
+              105.25,
+              0.0
+            ],
+            "max": [
+              202.275,
+              150.75,
+              14.15
+            ],
+            "off_bed": false,
+            "excluded": false
+          }
+        ],
+        "bbox_overlaps": [],
+        "missing": [],
+        "extra": [],
+        "issues": []
+      },
+      "materials": {}
+    }
+  },
+  "visible_unsupported": [],
+  "deliveryMode": "layout_only",
+  "slicing": {
+    "status": "user_slices",
+    "performed": false,
+    "requestedMaterials": [
+      "PLA",
+      "PETG"
+    ]
+  },
+  "status": "layout_only",
+  "studio": {
+    "status": "served_from_prints",
+    "reason": "編集可能な配置3MFと部品STLを /prints/ から配布する。"
+  },
+  "sourceAlgorithms": {
+    "models/mystery-box-sg92r-c4-2/print_delivery.py": "86f575567a31f02cc548c15d96c139309df4778ea50e47ed100c45550dd5f547",
+    "tools/lattice_delivery.py": "322d7f6f7f698cb4e0140e32e3396f8802fb2f0908c9ebf42616ae6166d6c49d",
+    "tools/plate_3mf.py": "0d7d2167446c1f2881099f8fe268d11e8e4d604afc673c6b6e081647b2cb68cb"
+  },
+  "artifacts": [
+    {
+      "file": "prints/mystery-box-sg92r-c4-2/mystery-box-sg92r-c4-2-print-housing.stl",
+      "bytes": 246484,
+      "sha256": "8e4a96634bcd6e07f1a3518ad85fbf862cf063b365dd0869389c0896e647eda0"
+    },
+    {
+      "file": "prints/mystery-box-sg92r-c4-2/mystery-box-sg92r-c4-2-print-faceplate.stl",
+      "bytes": 56584,
+      "sha256": "b4709d172cec92ed26ca73d680871a0d403c6a1858c30302c43384c1833d6378"
+    },
+    {
+      "file": "prints/mystery-box-sg92r-c4-2/mystery-box-sg92r-c4-2-print-guide_frame.stl",
+      "bytes": 307284,
+      "sha256": "f3da08fa48ac2fd61f9789b757f7bc153c648e208cbabd27d4d6d563cc4eb91f"
+    },
+    {
+      "file": "prints/mystery-box-sg92r-c4-2/mystery-box-sg92r-c4-2-print-bottom.stl",
+      "bytes": 8084,
+      "sha256": "3e7416ac484f1b94bbf65fadcf757d1a029f2465213cbd89fa7215c3a33607fc"
+    },
+    {
+      "file": "prints/mystery-box-sg92r-c4-2/mystery-box-sg92r-c4-2-print-carrier_center.stl",
+      "bytes": 60884,
+      "sha256": "8e4f96079d267dd0b27f41208ce38587f8e72c658a8735ae91a74e9d846dad23"
+    },
+    {
+      "file": "prints/mystery-box-sg92r-c4-2/mystery-box-sg92r-c4-2-print-carrier_upper_left.stl",
+      "bytes": 97984,
+      "sha256": "867e0bcaec1a03396142256cc2096814df562fcee9bf7a34d61b0c3ae2429e1b"
+    },
+    {
+      "file": "prints/mystery-box-sg92r-c4-2/mystery-box-sg92r-c4-2-print-carrier_upper_right.stl",
+      "bytes": 111484,
+      "sha256": "6942ca937a812223dc18c7f8b676d9eff8fcbd0a1139c835cf31dd2c9076104e"
+    },
+    {
+      "file": "prints/mystery-box-sg92r-c4-2/mystery-box-sg92r-c4-2-print-carrier_lower_pair.stl",
+      "bytes": 265684,
+      "sha256": "98ffcfa783543a5f5b880c886290e6dd184b20e18aabd7107a4d4fb03cd2dd5a"
+    },
+    {
+      "file": "prints/mystery-box-sg92r-c4-2/mystery-box-sg92r-c4-2-print-cam_disk.stl",
+      "bytes": 7067684,
+      "sha256": "7680067ab8114318a48f145cd6e57c2c1f698125b9edc72bc347bef7b146469b"
+    },
+    {
+      "file": "prints/mystery-box-sg92r-c4-2/mystery-box-sg92r-c4-2-print-horn_coupler.stl",
+      "bytes": 335584,
+      "sha256": "fb5d8dc1d3e615f460c9f08128d27a01ee7063bdadf40be6d8f3230d4e0e7e76"
+    },
+    {
+      "file": "prints/mystery-box-sg92r-c4-2/mystery-box-sg92r-c4-2-print-drive_key.stl",
+      "bytes": 32684,
+      "sha256": "e07a9da43fe687ea1c3fd2a5210c758140366c0ddc5e0605ac352aded457b14e"
+    },
+    {
+      "file": "prints/mystery-box-sg92r-c4-2/mystery-box-sg92r-c4-2-print-cam_keeper.stl",
+      "bytes": 123384,
+      "sha256": "7b5447e800a030389eec578d7cbb059ea5c73327e0e0d902e6336883dffa9bb2"
+    },
+    {
+      "file": "prints/mystery-box-sg92r-c4-2/mystery-box-sg92r-c4-2-print-print_test.stl",
+      "bytes": 446984,
+      "sha256": "6ab12ad73c122e4a523ec9bc619cc7769407ec801413634a3892754b0ff649fa"
+    },
+    {
+      "file": "prints/mystery-box-sg92r-c4-2/mystery-box-sg92r-c4-2-layout.3mf",
+      "bytes": 46895,
+      "sha256": "26f5a019a913927dd6ba84bae558c96a6e226aa11a49e40b90ab0cea702e21e7"
+    },
+    {
+      "file": "prints/mystery-box-sg92r-c4-2/mystery-box-sg92r-c4-2-layout-2.3mf",
+      "bytes": 1347165,
+      "sha256": "4cf8d1b547f1cd69a0c18a99d0cef37a3e1ec6330505621670b4d76df2128c73"
+    },
+    {
+      "file": "prints/mystery-box-sg92r-c4-2/mystery-box-sg92r-c4-2-layout-3.3mf",
+      "bytes": 206554,
+      "sha256": "573b72b5ef44378bc18644c0eac9bd8efcd2b6d325aff8baa3cddeadb99a6776"
+    },
+    {
+      "file": "prints/mystery-box-sg92r-c4-2/mystery-box-sg92r-c4-2-fit-test-layout.3mf",
+      "bytes": 86879,
+      "sha256": "5d8f1cfa58fd34bb8d4acd792972b71c73101dc5c174bcca588b760a7fa3d611"
+    }
+  ]
+}

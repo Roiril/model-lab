@@ -1,0 +1,91 @@
+{
+  "model": "mystery-box-sg92r-c4-2",
+  "method": "maximum_over_actual_STL_overlap_vertices_and_edge_intersections",
+  "calibration": {
+    "cases": {
+      "shared_edges_expected_2": true,
+      "edge_intersection_expected_1": true,
+      "only_edge_intersections_expected_1_5": true,
+      "displaced_foot_rejected": true,
+      "long_chord_minimum_radius_expected_1": true
+    },
+    "pass": true
+  },
+  "sourceSha256": {
+    "models/mystery-box-sg92r-c4-2/contact_envelope.py": "68d7ca1350a0c3be28c6b219e19fd0e2669db0c24e1e52a21d95be4f7d6ce054",
+    "models/mystery-box-sg92r-c4-2/params.py": "a2203d819b90d97f59b48e22049323d4ec1aa23b2a00cb9611fac1e7f52065f2",
+    "models/mystery-box-sg92r-c4-2/motion.py": "36325429acaab8e3424cc31f412a5fc86f7971acf49c8c7371d70e65f72ebdc4",
+    "models/mystery-box-sg92r-c4-2/build/cam_disk.stl": "645975e6be5cc4b12479e7f4ba0a8340827df3f31457cb3d46b6bd8cb4fa96be",
+    "models/mystery-box-sg92r-c4-2/build/carrier_center.stl": "b6dc8cb79c87de3ac5407289708440690e69ef1832403e3dcdeecdc63ecd7ecb",
+    "models/mystery-box-sg92r-c4-2/build/carrier_upper_left.stl": "d530ddecd3a35a67eb3243e0d9de540b64422ce12aed0f326447b317375dd561",
+    "models/mystery-box-sg92r-c4-2/build/carrier_upper_right.stl": "79edd8a0c7b61a577ad78b15a727e89d533a468ad834ac42b09fe63f7b3c4786",
+    "models/mystery-box-sg92r-c4-2/build/carrier_lower_pair.stl": "0d6ebac0a86a05f0ae554d78950fb048b8de1d0f7cc270a639ef9364340c0437",
+    "models/mystery-box-sg92r-c4-2/contact_envelope_evidence.py": "374b85ec88bc7d396bd281d93b3745a5ad75e9e9745ff88c69afbb273b0723c6",
+    "models/mystery-box-sg92r-c4-2/build/motion.json": "05f7f684ecf5e9af636b5c987a4cd41a5a9318d5b43789baec70c2c629ee8b79"
+  },
+  "interpolationMeterCalibration": {
+    "known_small_errors_accepted": true,
+    "actual_coarse_interval_rejected": true,
+    "coarseIntervalDeg": [
+      40.0,
+      41.0
+    ],
+    "coarseSampleFraction": 0.5,
+    "coarseGroup": "upper_left",
+    "coarseInterpolatedMinusActualMm": 0.00498949089938705,
+    "pass": true
+  },
+  "tableSourcesMatch": true,
+  "interpolation": {
+    "frameStepDeg": 0.05,
+    "sampleFractionsPerInterval": [
+      0.25,
+      0.5,
+      0.75
+    ],
+    "groups": [
+      {
+        "group": "center",
+        "samples": 17790,
+        "minimumInterpolatedMinusActualMm": -1.9974125407884458e-05,
+        "maximumInterpolatedMinusActualMm": 1.9992369223231776e-05,
+        "worstBelowAngleDeg": 106.3375,
+        "worstAboveAngleDeg": 80.58749999999999
+      },
+      {
+        "group": "upper_left",
+        "samples": 17790,
+        "minimumInterpolatedMinusActualMm": -1.999744614167298e-05,
+        "maximumInterpolatedMinusActualMm": 1.9932573870562464e-05,
+        "worstBelowAngleDeg": 66.9625,
+        "worstAboveAngleDeg": 40.3625
+      },
+      {
+        "group": "upper_right",
+        "samples": 17790,
+        "minimumInterpolatedMinusActualMm": -1.9934658691767027e-05,
+        "maximumInterpolatedMinusActualMm": 1.9963883534757088e-05,
+        "worstBelowAngleDeg": 112.93125,
+        "worstAboveAngleDeg": 148.5734375
+      },
+      {
+        "group": "lower_pair",
+        "samples": 17790,
+        "minimumInterpolatedMinusActualMm": -1.9659025539908725e-05,
+        "maximumInterpolatedMinusActualMm": 1.783922631659607e-05,
+        "worstBelowAngleDeg": 140.778125,
+        "worstAboveAngleDeg": 148.89375
+      }
+    ],
+    "totalSamples": 71160,
+    "minimumInterpolatedMinusActualMm": -1.999744614167298e-05,
+    "maximumInterpolatedMinusActualMm": 1.9992369223231776e-05,
+    "limitMm": 0.0001,
+    "pass": true
+  },
+  "limits": [
+    "Finite samples bound the observed interpolation error.",
+    "This is not a continuous collision proof or a physical test."
+  ],
+  "pass": true
+}

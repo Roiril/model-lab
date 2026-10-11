@@ -55,6 +55,13 @@ def export(model):
     data["closed_loop_support_evidence"] = json.loads(closed_loop_path.read_text(encoding="utf-8")) if closed_loop_path.exists() else None
     support_geometry_path = folder / "build/print_support_geometry.json"
     data["print_support_geometry"] = json.loads(support_geometry_path.read_text(encoding="utf-8")) if support_geometry_path.exists() else None
+    for key in ("continuous_path_support_evidence", "first_layer_contact_evidence"):
+        report = folder / "build" / f"{key}.json"
+        data[key] = json.loads(report.read_text(encoding="utf-8")) if report.exists() else None
+    if data.get("delivery", {}).get("status") == "layout_only":
+        for key in ("print_path_review", "print_path_evidence", "closed_loop_support_evidence",
+                    "continuous_path_support_evidence", "first_layer_contact_evidence"):
+            data[key] = None
     for key, filename in (("simTables", "sim_tables.json"), ("sim", "simulate_report.json"),
                           ("assembly", "assembly.json"), ("drive", "drive_report.json")):
         report = folder / "build" / filename
@@ -72,5 +79,5 @@ def export(model):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("model", choices=("mystery-box-sg92r-c3", "mystery-box-sg92r-c4"))
+    parser.add_argument("model", choices=("mystery-box-sg92r-c3", "mystery-box-sg92r-c4", "mystery-box-sg92r-c4-2"))
     export(parser.parse_args().model)

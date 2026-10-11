@@ -12,19 +12,22 @@ import { setupAssembly } from './assembly-ui.mjs';
 
 const $ = id => document.getElementById(id);
 const params = new URLSearchParams(location.search);
-const allowedModels = new Set(['mystery-box-sg92r-c3', 'mystery-box-sg92r-c4']);
+const allowedModels = new Set(['mystery-box-sg92r-c3', 'mystery-box-sg92r-c4', 'mystery-box-sg92r-c4-2']);
 const model = allowedModels.has(params.get('model')) ? params.get('model') : 'mystery-box-sg92r-c3';
 const mode = params.get('mode') === 'assembly' ? 'assembly' : 'physics';
 const assetUrl = `assets/${model}.json`;
-const profile = model.endsWith('-c4')
-  ? { title: '六角格子の呼吸', label: 'C4', fallback: ['外形', '76 × 76 × 76 mm'], pattern: '19個の六角格子。中心は約6mm。内側の環は約4mm。外側の環は約2mm持ち上がります。' }
-  : { title: '立方格子の波', label: 'C3', fallback: ['格子', '5 × 5 / 25枚'], pattern: '25枚の正方形を5列に分けました。中央から外側へ最大3mmの隆起が移ります。' };
+const profiles = {
+  'mystery-box-sg92r-c3': { title: '立方格子の波', label: 'C3', fallback: ['格子', '5 × 5 / 25枚'], pattern: '25枚の正方形を5列に分けました。中央から外側へ最大3mmの隆起が移ります。' },
+  'mystery-box-sg92r-c4': { title: '六角格子の呼吸', label: 'C4-1', fallback: ['外形', '76 × 76 × 76 mm'], pattern: '19個の六角格子。中心は約6mm。内側の環は約4mm。外側の環は約2mm持ち上がります。' },
+  'mystery-box-sg92r-c4-2': { title: '六角格子の凹み', label: 'C4-2', fallback: ['外形', '110 × 110 × 110 mm'], pattern: '左上 / 中央 / 右上 / 下側の二か所。選択した六角格子が4mm沈みます。平面へ戻せます。' },
+};
+const profile = profiles[model];
 
 document.body.dataset.mode = mode;
 const nav = createWorkspaceNav({ active: mode, model });
 $('workspaceNav').replaceWith(nav.element);
 function updateModelLinks() {
-  for (const [id, target] of [['c3Link', 'mystery-box-sg92r-c3'], ['c4Link', 'mystery-box-sg92r-c4']]) {
+  for (const [id, target] of [['c3Link', 'mystery-box-sg92r-c3'], ['c4Link', 'mystery-box-sg92r-c4'], ['c42Link', 'mystery-box-sg92r-c4-2']]) {
     const link = $(id);
     const url = new URL(location.href);
     url.searchParams.set('model', target);
@@ -53,6 +56,10 @@ function technicalColor(id, original) {
   if (/wire/.test(id)) return DEFAULT_COLORS[4];
   if (/^(ref_servo|servo_body)$/.test(id)) return DEFAULT_COLORS[0];
   if (/gear/.test(id)) return DEFAULT_COLORS[1];
+  if (id === 'cam_disk') return DEFAULT_COLORS[1];
+  if (id === 'carrier_upper_left') return DEFAULT_COLORS[1];
+  if (id === 'carrier_upper_right') return DEFAULT_COLORS[2];
+  if (id === 'carrier_lower_pair') return DEFAULT_COLORS[3];
   if (/^(camshaft|horn_coupler|ref_horn|servo_horn)$/.test(id)) return '#4d4d4d';
   return original || '#bdb4a6';
 }
@@ -296,8 +303,12 @@ function verificationSummary(report, assembly, driveReport, simulation) {
     rows.push(['形状の検査', `${parts.length}点中 ${parts.length - bad.length}点が適合`]);
   }
   if ((report.motion?.sample_count ?? report.motion?.frames) !== undefined) rows.push(['動作の検査', `${report.motion.sample_count ?? report.motion.frames}姿勢 / ${report.motion.step_deg}°刻み`]);
+  if (report.exact_scene?.poseSamples !== undefined) rows.push(['動作の検査', `${report.exact_scene.poseSamples}姿勢 / ${report.exact_scene.uniquePairs}組。1°以下の間隔`]);
   if (report.static_geometry) rows.push(['固定部品の干渉', (report.static_geometry.ok ?? report.static_geometry.pass) === true ? '記録した組み合わせは適合' : '要確認']);
   if (report.exact_scene) rows.push(['全体の干渉', (report.exact_scene.ok ?? report.exact_scene.pass) === true ? '全組み合わせの体積を確認。指定した圧入とばねの変形だけを許容' : '要確認']);
+  if (report.holeClearance) rows.push(['六角穴の開口', report.holeClearance.pass === true ? '19セル × 5停止位置。対辺9.3mmの穴を7高さで確認' : '要確認']);
+  if (report.camFollowerActualHeight) rows.push(['円盤と格子の接触', report.camFollowerActualHeight.pass === true ? `${report.camFollowerActualHeight.samples.length}組の実面を確認。面間隔0.03mm以内` : '要確認']);
+  if (simulation?.static?.maximumRequiredTorqueNm !== undefined) rows.push(['摩擦を含む必要静的トルク', `${(simulation.static.maximumRequiredTorqueNm * 1000).toFixed(2)} mN·m。停動トルクの${(simulation.static.fractionOfStall * 100).toFixed(2)}%`]);
   if (report.motion?.column_max_mm) rows.push(['各列の最大上昇', report.motion.column_max_mm.map(n => `${n} mm`).join(' / ')]);
   if (report.physics?.stroke_mm) rows.push(['各環の最大上昇', report.physics.stroke_mm.map(n => `${n} mm`).join(' / ')]);
   const torque = report.torque?.required_torque_Nm ?? report.physics?.required_Nm;
@@ -314,11 +325,14 @@ function verificationSummary(report, assembly, driveReport, simulation) {
 function deliverySummary(report, pathReview) {
   if (!report) return null;
   const rows = [];
-  rows.push(['スライス', report.status === 'ok' ? '記録した検査は適合' : '造形経路に要確認箇所あり']);
+  rows.push(['スライス', report.status === 'layout_only' ? 'Bambu Studioで実施。印刷経路は未検証'
+    : report.status === 'ok' ? '記録した検査は適合' : '造形経路に要確認箇所あり']);
   if (pathReview?.status === 'accepted_with_fit_test') rows.push(['残る造形経路', '短い橋渡し等を寸法で確認。試し刷りは未実施']);
   for (const [name, plate] of Object.entries(report.plates || {})) {
     for (const [material, result] of Object.entries(plate.materials || {})) {
-      rows.push([`${name === 'full' ? '全体' : '試片'} · ${material}`, `${Math.round(result.prediction_s / 60)}分 / ${Number(result.weight_g).toFixed(1)} g`]);
+      const multipleFull = Object.keys(report.plates || {}).filter(key => key.startsWith('full')).length > 1;
+      const label = name === 'fit_test' ? '試片' : name === 'full' ? (multipleFull ? '本体 1' : '全体') : `本体 ${name.replace(/^full_/, '')}`;
+      rows.push([`${label} · ${material}`, `${Math.round(result.prediction_s / 60)}分 / ${Number(result.weight_g).toFixed(1)} g`]);
     }
   }
   rows.push(['プリンター', report.settings?.machine || '未記録']);
@@ -373,12 +387,26 @@ async function start() {
     reportRows('deliveryRows', deliverySummary(data.delivery, data.print_path_review), '印刷データなし');
     const printLinks = [];
     for (const [kind, plate] of Object.entries(data.delivery?.plates || {})) {
+      if (data.delivery.status === 'layout_only' && plate.layout?.file) {
+        const filename = String(plate.layout.file).split('/').at(-1);
+        const li = document.createElement('li'), link = document.createElement('a');
+        link.href = `/prints/${encodeURIComponent(model)}/${encodeURIComponent(filename)}`;
+        link.download = filename;
+        const label = kind === 'fit_test' ? '試片' : kind === 'full' ? '本体 1' : `本体 ${kind.replace(/^full_/, '')}`;
+        link.textContent = `${label}の配置3MFをダウンロード`;
+        li.append(link); printLinks.push(li);
+      }
       for (const [material, result] of Object.entries(plate.materials || {})) {
         const filename = String(result.file?.file || '').split('/').at(-1);
         if (!filename?.startsWith(`${model}-`) || !filename.endsWith('.gcode.3mf')) continue;
         const li = document.createElement('li'), link = document.createElement('a');
-        link.href = `/exports/${encodeURIComponent(filename)}`; link.download = filename;
-        link.textContent = `${kind === 'full' ? '全体' : '試片'} · ${material}をダウンロード`;
+        link.href = model === 'mystery-box-sg92r-c4-2'
+          ? `/prints/${encodeURIComponent(model)}/${encodeURIComponent(filename)}`
+          : `/exports/${encodeURIComponent(filename)}`;
+        link.download = filename;
+        const multipleFull = Object.keys(data.delivery.plates).filter(name => name.startsWith('full')).length > 1;
+        const plateLabel = kind === 'fit_test' ? '試片' : kind === 'full' ? (multipleFull ? '本体 1' : '全体') : `本体 ${kind.replace(/^full_/, '')}`;
+        link.textContent = `${plateLabel} · ${material}をダウンロード`;
         li.append(link); printLinks.push(li);
       }
     }

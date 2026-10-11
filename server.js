@@ -14,6 +14,8 @@ const HTTP_PORT_START = 3000;
 const WS_PORT_START = 3001;
 const ROOT = __dirname;
 const EXPORTS_DIR = path.join(ROOT, "exports");
+const PRINTS_DIR = path.join(ROOT, "prints");
+const REPORTS_DIR = path.join(ROOT, "reports");
 const MODELS_DIR = path.join(ROOT, "models");
 const VIEWER_DIR = path.join(ROOT, "viewer");
 const STUDIO_DIR = path.join(VIEWER_DIR, "studio");
@@ -515,6 +517,9 @@ function resolveStatic(pathname) {
   if (rel === "/legacy" || rel === "/legacy/") return { file: path.join(VIEWER_DIR, "index.html"), legacy: true };
   const table = [
     ["/exports/", EXPORTS_DIR],
+    ["/prints/", PRINTS_DIR],
+    ["/reports/", REPORTS_DIR],
+    ["/models/mystery-box-sg92r-c4-2/", path.join(MODELS_DIR, "mystery-box-sg92r-c4-2")],
     ["/requests/", REQUESTS_DIR],
     ["/preview/", PREVIEW_DIR],
     ["/viewer/", VIEWER_DIR],   // /viewer/studio/* もここ

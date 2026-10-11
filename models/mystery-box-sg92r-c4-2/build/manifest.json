@@ -1,0 +1,1171 @@
+{
+  "meta": {
+    "dimensions_mm": [
+      110,
+      110,
+      110
+    ],
+    "max_dimensions_mm": [
+      110,
+      110,
+      110
+    ],
+    "exterior_parts": [
+      "housing",
+      "bottom",
+      "faceplate"
+    ],
+    "description": "4本の独立した面カムで19枚の穴あき六角面から4群を選んで沈める住人の箱C4-2。",
+    "assembly_steps": [
+      "箱の外で付属ホーンをホーン受けへ入れる。底側の+X寄りから所定高さへ上げて中央へ移す。",
+      "配線の自由端を+X側の出口へ通す。",
+      "箱の外でホーン未装着のSG92Rを起動する。90度で静止させる。",
+      "SG92R本体を下側から案内へ入れる。出力軸を先に入れた付属ホーンへ差す。",
+      "円盤を外周の支持環へ載せる。円盤の角穴を受けの盲穴へ合わせる。",
+      "円盤の上から角キーを入れる。円盤止め輪を押し込む。",
+      "駆動一式を15度へ戻す。",
+      "箱の上で案内枠へ四群の格子を通す。組んだ一式を箱へ下ろす。",
+      "天板を付ける。底板を閉じる。"
+    ],
+    "decisions": [
+      "中央、左上、右上、下側の4群へ半径33/37/41/45mmの独立トラックを割り当てた。",
+      "扇形の平面接点は径方向幅2mm。周方向長さ2.4mm。厚さ4.8mm。",
+      "円盤外周を静止環で受け、SG92R出力軸へ円盤の軸荷重を渡さない。",
+      "円盤中央bossを片側0.2mm隙間の円環で受け、径方向の移動を止めた。",
+      "円盤止め輪は自由長7mm、厚さ1.2mmの4爪で着脱する原型とした。",
+      "各群は2本の角柱を19mm長の静止案内へ通し、両端で8mm以上の係合を残した。",
+      "案内枠は外装四隅の45度リブ付き棚へ載せ、対角L字面と天板四隅柱で六方向を保持する。"
+    ],
+    "limitations": [
+      "重力で面カムへ追従するため天面上向き専用。",
+      "ホーン嵌合、円盤止め輪の保持力、印刷収縮は実物未検証。",
+      "全150度の運動と組立の合否は別の実STL検査記録で確認する。"
+    ],
+    "retention_interfaces": {
+      "servo_body_x_minus": {
+        "contact_bbox_mm": [
+          [
+            -17.05,
+            -6.2,
+            3.8
+          ],
+          [
+            -16.65,
+            6.2,
+            25.75
+          ]
+        ],
+        "nominal_gap_mm": 0.35,
+        "receiver": "bottom"
+      },
+      "servo_body_x_plus": {
+        "contact_bbox_mm": [
+          [
+            6.65,
+            -6.2,
+            3.8
+          ],
+          [
+            7.05,
+            6.2,
+            25.75
+          ]
+        ],
+        "nominal_gap_mm": 0.35,
+        "receiver": "bottom"
+      },
+      "servo_body_y_minus": {
+        "contact_bbox_mm": [
+          [
+            -17.25,
+            -6.55,
+            3.8
+          ],
+          [
+            7.25,
+            -6.15,
+            22.75
+          ]
+        ],
+        "nominal_gap_mm": 0.35,
+        "receiver": "housing"
+      },
+      "servo_body_y_plus": {
+        "contact_bbox_mm": [
+          [
+            -17.25,
+            6.15,
+            3.8
+          ],
+          [
+            7.25,
+            6.55,
+            22.75
+          ]
+        ],
+        "nominal_gap_mm": 0.35,
+        "receiver": "housing"
+      },
+      "servo_body_z_minus": {
+        "contact_bbox_mm": [
+          [
+            -16.5,
+            -6.0,
+            3.45
+          ],
+          [
+            6.5,
+            6.0,
+            3.85
+          ]
+        ],
+        "nominal_gap_mm": 0.35,
+        "receiver": "bottom"
+      },
+      "servo_body_z_plus": {
+        "contact_bbox_mm": [
+          [
+            -21.5,
+            -8.8,
+            22.15
+          ],
+          [
+            11.5,
+            8.8,
+            22.55
+          ]
+        ],
+        "nominal_gap_mm": 0.35,
+        "receiver": "housing"
+      },
+      "guide_frame_x_minus": {
+        "contact_bbox_mm": [
+          [
+            -50.6,
+            -52.8,
+            75.7
+          ],
+          [
+            -50.2,
+            -47.0,
+            80.2
+          ]
+        ],
+        "nominal_gap_mm": 0.2,
+        "receiver": "housing"
+      },
+      "guide_frame_x_plus": {
+        "contact_bbox_mm": [
+          [
+            50.2,
+            47.0,
+            75.7
+          ],
+          [
+            50.6,
+            52.8,
+            80.2
+          ]
+        ],
+        "nominal_gap_mm": 0.2,
+        "receiver": "housing"
+      },
+      "guide_frame_y_minus": {
+        "contact_bbox_mm": [
+          [
+            -52.8,
+            -50.6,
+            75.7
+          ],
+          [
+            -47.0,
+            -50.2,
+            80.2
+          ]
+        ],
+        "nominal_gap_mm": 0.2,
+        "receiver": "housing"
+      },
+      "guide_frame_y_plus": {
+        "contact_bbox_mm": [
+          [
+            47.0,
+            50.2,
+            75.7
+          ],
+          [
+            52.8,
+            50.6,
+            80.2
+          ]
+        ],
+        "nominal_gap_mm": 0.2,
+        "receiver": "housing"
+      },
+      "guide_frame_z_minus": {
+        "contact_bbox_mm": [
+          [
+            -52.8,
+            -52.8,
+            75.8
+          ],
+          [
+            52.8,
+            52.8,
+            76.2
+          ]
+        ],
+        "nominal_gap_mm": 0.0,
+        "receiver": "housing"
+      },
+      "guide_frame_z_plus": {
+        "contact_bbox_mm": [
+          [
+            -50.0,
+            -50.0,
+            79.0
+          ],
+          [
+            50.0,
+            50.0,
+            79.7
+          ]
+        ],
+        "nominal_gap_mm": 0.3,
+        "receiver": "faceplate"
+      },
+      "horn_coupler_drive_key": {
+        "bbox_mm": [
+          [
+            -5.0,
+            -5.0,
+            37.55
+          ],
+          [
+            5.0,
+            5.0,
+            40.5
+          ]
+        ],
+        "insertion": "+Z"
+      },
+      "drive_key_cam_disk": {
+        "bbox_mm": [
+          [
+            -5.0,
+            -5.0,
+            44.1
+          ],
+          [
+            5.0,
+            5.0,
+            50.3
+          ]
+        ],
+        "insertion": "+Z"
+      },
+      "drive_key_head_stop": {
+        "bbox_mm": [
+          [
+            -8.5,
+            -8.5,
+            50.5
+          ],
+          [
+            8.5,
+            8.5,
+            52.0
+          ]
+        ],
+        "axial_play_mm": 0.3,
+        "release": "guide_frameを上へ外す"
+      },
+      "cam_flange_support": {
+        "bbox_mm": [
+          [
+            -49.0,
+            -49.0,
+            44.1
+          ],
+          [
+            49.0,
+            49.0,
+            47.6
+          ]
+        ],
+        "insertion": "+Z"
+      },
+      "cam_radial_bearing": {
+        "bbox_mm": [
+          [
+            -12.0,
+            -12.0,
+            47.8
+          ],
+          [
+            12.0,
+            12.0,
+            52.7
+          ]
+        ],
+        "boss_radius_mm": 10.0,
+        "bearing_inner_radius_mm": 10.2,
+        "radial_clearance_mm": 0.2,
+        "insertion": "+Z"
+      },
+      "cam_keeper_snap": {
+        "local_bbox_mm": [
+          [
+            50.0,
+            -3.2,
+            39.4
+          ],
+          [
+            51.9,
+            3.2,
+            48.0
+          ]
+        ],
+        "deflection_mm": 0.5,
+        "free_length_mm": 7.0,
+        "strain_percent": 1.836735,
+        "angles_deg": [
+          45,
+          135,
+          225,
+          315
+        ],
+        "count": 4
+      },
+      "faceplate_snap": {
+        "local_bbox_mm": [
+          [
+            51.2,
+            -4.0,
+            93.0
+          ],
+          [
+            53.1,
+            4.0,
+            107.0
+          ]
+        ],
+        "deflection_mm": 0.5,
+        "free_length_mm": 8.3,
+        "strain_percent": 1.306431,
+        "angles_deg": [
+          0,
+          180
+        ],
+        "count": 2
+      },
+      "bottom_snap": {
+        "local_bbox_mm": [
+          [
+            51.2,
+            -4.0,
+            3.0
+          ],
+          [
+            53.1,
+            4.0,
+            14.0
+          ]
+        ],
+        "deflection_mm": 0.5,
+        "free_length_mm": 8.0,
+        "strain_percent": 1.40625,
+        "angles_deg": [
+          90,
+          270
+        ],
+        "count": 2
+      }
+    },
+    "follower_dimensions_mm": {
+      "radial_width": 2.0,
+      "arc_length": 2.4,
+      "thickness": 4.8,
+      "lug_bottom_at_full_dent": 51.89999999999999,
+      "cam_outside_valley_top": 51.3
+    }
+  },
+  "parts": [
+    {
+      "id": "housing",
+      "label": "外装",
+      "assembly": "build/housing.stl",
+      "print": "build/print_housing.stl",
+      "fit_test": false,
+      "color": "#ecece8",
+      "explode": [
+        0,
+        0,
+        0
+      ],
+      "expected_assembly_components": 1,
+      "expected_print_components": 4,
+      "print_supports": [
+        {
+          "id": "housing_flange_left_print_support",
+          "attachment": "separate_breakaway_clearance",
+          "bbox_mm": [
+            [
+              -21.675,
+              -4.4,
+              0.0
+            ],
+            [
+              -16.675,
+              4.4,
+              18.55
+            ]
+          ],
+          "support_top_z_mm": 18.55,
+          "product_first_z_mm": 19.15,
+          "geometric_clearance_mm": 0.6,
+          "expected_last_support_gcode_z_mm": 18.6,
+          "expected_first_product_gcode_z_mm": 19.0,
+          "layer_height_mm": 0.2,
+          "material_face_gap_mm": 0.2,
+          "bed_origin_expected": true,
+          "removal": "印刷後に隙間へ薄いへらを入れ、外装内側から折って外す",
+          "physical_removal_verified": false
+        },
+        {
+          "id": "housing_flange_right_print_support",
+          "attachment": "separate_breakaway_clearance",
+          "bbox_mm": [
+            [
+              6.675,
+              -4.4,
+              0.0
+            ],
+            [
+              11.675,
+              4.4,
+              18.55
+            ]
+          ],
+          "support_top_z_mm": 18.55,
+          "product_first_z_mm": 19.15,
+          "geometric_clearance_mm": 0.6,
+          "expected_last_support_gcode_z_mm": 18.6,
+          "expected_first_product_gcode_z_mm": 19.0,
+          "layer_height_mm": 0.2,
+          "material_face_gap_mm": 0.2,
+          "bed_origin_expected": true,
+          "removal": "印刷後に隙間へ薄いへらを入れ、外装内側から折って外す",
+          "physical_removal_verified": false
+        },
+        {
+          "id": "housing_coupler_stop_print_support",
+          "attachment": "separate_breakaway_clearance",
+          "bbox_mm": [
+            [
+              -46.8,
+              -11.0,
+              0.0
+            ],
+            [
+              46.8,
+              11.0,
+              37.3
+            ]
+          ],
+          "support_top_z_mm": 37.3,
+          "product_first_z_mm": 37.6,
+          "geometric_clearance_mm": 0.3,
+          "expected_last_support_gcode_z_mm": 37.2,
+          "expected_first_product_gcode_z_mm": 37.6,
+          "layer_height_mm": 0.2,
+          "material_face_gap_mm": 0.2,
+          "bed_origin_expected": true,
+          "removal": "印刷後に隙間へ薄いへらを入れ、外装内側から折って外す",
+          "physical_removal_verified": false
+        }
+      ]
+    },
+    {
+      "id": "faceplate",
+      "label": "六角格子の天板",
+      "assembly": "build/faceplate.stl",
+      "print": "build/print_faceplate.stl",
+      "fit_test": false,
+      "color": "#ecece8",
+      "explode": [
+        0,
+        0,
+        30
+      ],
+      "expected_assembly_components": 1,
+      "expected_print_components": 1
+    },
+    {
+      "id": "guide_frame",
+      "label": "格子の案内枠",
+      "assembly": "build/guide_frame.stl",
+      "print": "build/print_guide_frame.stl",
+      "fit_test": false,
+      "color": "#ecece8",
+      "explode": [
+        0,
+        0,
+        18
+      ],
+      "expected_assembly_components": 1,
+      "expected_print_components": 11,
+      "print_supports": [
+        {
+          "id": "guide_frame_print_support",
+          "attachment": "separate_breakaway_clearance",
+          "bbox_mm": [
+            [
+              -49.8,
+              -49.9,
+              0.0
+            ],
+            [
+              49.8,
+              49.8,
+              27.7
+            ]
+          ],
+          "support_top_z_mm": 27.7,
+          "product_first_z_mm": 28.2,
+          "geometric_clearance_mm": 0.5,
+          "expected_last_support_gcode_z_mm": 27.8,
+          "expected_first_product_gcode_z_mm": 28.2,
+          "layer_height_mm": 0.2,
+          "material_face_gap_mm": 0.2,
+          "bed_origin_expected": true,
+          "removal": "印刷後に隙間へ薄いへらを入れ、外装内側から折って外す",
+          "physical_removal_verified": false,
+          "support_regions": [
+            {
+              "region": "key_stop_arm",
+              "support_top_z_mm": 3.7,
+              "product_first_z_mm": 4.2,
+              "geometric_clearance_mm": 0.5,
+              "expected_last_support_gcode_z_mm": 3.8,
+              "expected_first_product_gcode_z_mm": 4.2,
+              "material_face_gap_mm": 0.2
+            },
+            {
+              "region": "four_outer_spokes",
+              "support_top_z_mm": 27.5,
+              "product_first_z_mm": 28.0,
+              "geometric_clearance_mm": 0.5,
+              "expected_last_support_gcode_z_mm": 27.6,
+              "expected_first_product_gcode_z_mm": 28.0,
+              "material_face_gap_mm": 0.2
+            },
+            {
+              "region": "outer_frame",
+              "support_top_z_mm": 27.7,
+              "product_first_z_mm": 28.2,
+              "geometric_clearance_mm": 0.5,
+              "expected_last_support_gcode_z_mm": 27.8,
+              "expected_first_product_gcode_z_mm": 28.2,
+              "material_face_gap_mm": 0.2
+            }
+          ]
+        },
+        {
+          "id": "guide_sleeve_print_support",
+          "attachment": "separate_breakaway_clearance",
+          "bbox_mm": [
+            [
+              16.6,
+              -3.4,
+              0.0
+            ],
+            [
+              23.4,
+              3.4,
+              23.9
+            ]
+          ],
+          "support_top_z_mm": 23.9,
+          "product_first_z_mm": 24.2,
+          "geometric_clearance_mm": 0.3,
+          "expected_last_support_gcode_z_mm": 24.0,
+          "expected_first_product_gcode_z_mm": 24.4,
+          "layer_height_mm": 0.2,
+          "material_face_gap_mm": 0.2,
+          "bed_origin_expected": true,
+          "removal": "印刷後に隙間へ薄いへらを入れ、外装内側から折って外す",
+          "physical_removal_verified": false
+        },
+        {
+          "id": "guide_sleeve_print_support.001",
+          "attachment": "separate_breakaway_clearance",
+          "bbox_mm": [
+            [
+              29.6,
+              -3.4,
+              0.0
+            ],
+            [
+              36.4,
+              3.4,
+              23.9
+            ]
+          ],
+          "support_top_z_mm": 23.9,
+          "product_first_z_mm": 24.2,
+          "geometric_clearance_mm": 0.3,
+          "expected_last_support_gcode_z_mm": 24.0,
+          "expected_first_product_gcode_z_mm": 24.4,
+          "layer_height_mm": 0.2,
+          "material_face_gap_mm": 0.2,
+          "bed_origin_expected": true,
+          "removal": "印刷後に隙間へ薄いへらを入れ、外装内側から折って外す",
+          "physical_removal_verified": false
+        },
+        {
+          "id": "guide_sleeve_print_support.002",
+          "attachment": "separate_breakaway_clearance",
+          "bbox_mm": [
+            [
+              -13.4,
+              13.9205,
+              0.0
+            ],
+            [
+              -6.6,
+              20.7205,
+              23.9
+            ]
+          ],
+          "support_top_z_mm": 23.9,
+          "product_first_z_mm": 24.2,
+          "geometric_clearance_mm": 0.3,
+          "expected_last_support_gcode_z_mm": 24.0,
+          "expected_first_product_gcode_z_mm": 24.4,
+          "layer_height_mm": 0.2,
+          "material_face_gap_mm": 0.2,
+          "bed_origin_expected": true,
+          "removal": "印刷後に隙間へ薄いへらを入れ、外装内側から折って外す",
+          "physical_removal_verified": false
+        },
+        {
+          "id": "guide_sleeve_print_support.003",
+          "attachment": "separate_breakaway_clearance",
+          "bbox_mm": [
+            [
+              -21.9,
+              28.6429,
+              0.0
+            ],
+            [
+              -15.1,
+              35.4429,
+              23.9
+            ]
+          ],
+          "support_top_z_mm": 23.9,
+          "product_first_z_mm": 24.2,
+          "geometric_clearance_mm": 0.3,
+          "expected_last_support_gcode_z_mm": 24.0,
+          "expected_first_product_gcode_z_mm": 24.4,
+          "layer_height_mm": 0.2,
+          "material_face_gap_mm": 0.2,
+          "bed_origin_expected": true,
+          "removal": "印刷後に隙間へ薄いへらを入れ、外装内側から折って外す",
+          "physical_removal_verified": false
+        },
+        {
+          "id": "guide_sleeve_print_support.004",
+          "attachment": "separate_breakaway_clearance",
+          "bbox_mm": [
+            [
+              6.6,
+              13.9205,
+              0.0
+            ],
+            [
+              13.4,
+              20.7205,
+              23.9
+            ]
+          ],
+          "support_top_z_mm": 23.9,
+          "product_first_z_mm": 24.2,
+          "geometric_clearance_mm": 0.3,
+          "expected_last_support_gcode_z_mm": 24.0,
+          "expected_first_product_gcode_z_mm": 24.4,
+          "layer_height_mm": 0.2,
+          "material_face_gap_mm": 0.2,
+          "bed_origin_expected": true,
+          "removal": "印刷後に隙間へ薄いへらを入れ、外装内側から折って外す",
+          "physical_removal_verified": false
+        },
+        {
+          "id": "guide_sleeve_print_support.005",
+          "attachment": "separate_breakaway_clearance",
+          "bbox_mm": [
+            [
+              17.1,
+              32.107,
+              0.0
+            ],
+            [
+              23.9,
+              38.907,
+              23.9
+            ]
+          ],
+          "support_top_z_mm": 23.9,
+          "product_first_z_mm": 24.2,
+          "geometric_clearance_mm": 0.3,
+          "expected_last_support_gcode_z_mm": 24.0,
+          "expected_first_product_gcode_z_mm": 24.4,
+          "layer_height_mm": 0.2,
+          "material_face_gap_mm": 0.2,
+          "bed_origin_expected": true,
+          "removal": "印刷後に隙間へ薄いへらを入れ、外装内側から折って外す",
+          "physical_removal_verified": false
+        },
+        {
+          "id": "guide_sleeve_print_support.006",
+          "attachment": "separate_breakaway_clearance",
+          "bbox_mm": [
+            [
+              -3.4,
+              -23.4,
+              0.0
+            ],
+            [
+              3.4,
+              -16.6,
+              23.9
+            ]
+          ],
+          "support_top_z_mm": 23.9,
+          "product_first_z_mm": 24.2,
+          "geometric_clearance_mm": 0.3,
+          "expected_last_support_gcode_z_mm": 24.0,
+          "expected_first_product_gcode_z_mm": 24.4,
+          "layer_height_mm": 0.2,
+          "material_face_gap_mm": 0.2,
+          "bed_origin_expected": true,
+          "removal": "印刷後に隙間へ薄いへらを入れ、外装内側から折って外す",
+          "physical_removal_verified": false
+        },
+        {
+          "id": "guide_sleeve_print_support.007",
+          "attachment": "separate_breakaway_clearance",
+          "bbox_mm": [
+            [
+              -3.4,
+              -48.4,
+              0.0
+            ],
+            [
+              3.4,
+              -41.6,
+              23.7
+            ]
+          ],
+          "support_top_z_mm": 23.7,
+          "product_first_z_mm": 24.2,
+          "geometric_clearance_mm": 0.5,
+          "expected_last_support_gcode_z_mm": 23.8,
+          "expected_first_product_gcode_z_mm": 24.2,
+          "layer_height_mm": 0.2,
+          "material_face_gap_mm": 0.2,
+          "bed_origin_expected": true,
+          "removal": "印刷後に隙間へ薄いへらを入れ、外装内側から折って外す",
+          "physical_removal_verified": false
+        },
+        {
+          "id": "guide_center_stop_print_support",
+          "attachment": "separate_breakaway_clearance",
+          "bbox_mm": [
+            [
+              -9.6,
+              -9.6,
+              0.0
+            ],
+            [
+              9.6,
+              9.6,
+              3.5
+            ]
+          ],
+          "support_top_z_mm": 3.5,
+          "product_first_z_mm": 4.2,
+          "geometric_clearance_mm": 0.7,
+          "expected_last_support_gcode_z_mm": 3.6,
+          "expected_first_product_gcode_z_mm": 4.0,
+          "layer_height_mm": 0.2,
+          "material_face_gap_mm": 0.2,
+          "bed_origin_expected": true,
+          "removal": "印刷後に隙間へ薄いへらを入れ、外装内側から折って外す",
+          "physical_removal_verified": false
+        }
+      ]
+    },
+    {
+      "id": "bottom",
+      "label": "底板",
+      "assembly": "build/bottom.stl",
+      "print": "build/print_bottom.stl",
+      "fit_test": false,
+      "color": "#ecece8",
+      "explode": [
+        0,
+        0,
+        -24
+      ],
+      "expected_assembly_components": 1,
+      "expected_print_components": 1
+    },
+    {
+      "id": "carrier_center",
+      "label": "中央",
+      "assembly": "build/carrier_center.stl",
+      "print": "build/print_carrier_center.stl",
+      "fit_test": false,
+      "color": "#ecece8",
+      "explode": [
+        0,
+        0,
+        42
+      ],
+      "expected_assembly_components": 1,
+      "expected_print_components": 4,
+      "print_supports": [
+        {
+          "id": "carrier_center_arm_print_support",
+          "attachment": "separate_breakaway_clearance",
+          "bbox_mm": [
+            [
+              7.0,
+              -1.2,
+              0.0
+            ],
+            [
+              33.8,
+              1.2,
+              10.5
+            ]
+          ],
+          "support_top_z_mm": 10.5,
+          "product_first_z_mm": 10.7,
+          "geometric_clearance_mm": 0.2,
+          "expected_last_support_gcode_z_mm": 10.4,
+          "expected_first_product_gcode_z_mm": 10.8,
+          "layer_height_mm": 0.2,
+          "material_face_gap_mm": 0.2,
+          "bed_origin_expected": true,
+          "removal": "印刷後に隙間へ薄いへらを入れ、外装内側から折って外す",
+          "physical_removal_verified": false
+        },
+        {
+          "id": "carrier_center_web_inner_print_support",
+          "attachment": "separate_breakaway_clearance",
+          "bbox_mm": [
+            [
+              -4.85,
+              -5.6003,
+              0.0
+            ],
+            [
+              4.85,
+              5.3225,
+              8.3
+            ]
+          ],
+          "support_top_z_mm": 8.3,
+          "product_first_z_mm": 8.8,
+          "geometric_clearance_mm": 0.5,
+          "expected_last_support_gcode_z_mm": 8.4,
+          "expected_first_product_gcode_z_mm": 8.8,
+          "layer_height_mm": 0.2,
+          "material_face_gap_mm": 0.2,
+          "bed_origin_expected": true,
+          "removal": "印刷後に隙間へ薄いへらを入れ、外装内側から折って外す",
+          "physical_removal_verified": false
+        },
+        {
+          "id": "carrier_center_web_outer_print_support",
+          "attachment": "separate_breakaway_clearance",
+          "bbox_mm": [
+            [
+              -8.05,
+              -9.2953,
+              0.0
+            ],
+            [
+              8.05,
+              9.2953,
+              8.3
+            ]
+          ],
+          "support_top_z_mm": 8.3,
+          "product_first_z_mm": 8.8,
+          "geometric_clearance_mm": 0.5,
+          "expected_last_support_gcode_z_mm": 8.4,
+          "expected_first_product_gcode_z_mm": 8.8,
+          "layer_height_mm": 0.2,
+          "material_face_gap_mm": 0.2,
+          "bed_origin_expected": true,
+          "removal": "印刷後に隙間へ薄いへらを入れ、外装内側から折って外す",
+          "physical_removal_verified": false
+        }
+      ]
+    },
+    {
+      "id": "carrier_upper_left",
+      "label": "左上",
+      "assembly": "build/carrier_upper_left.stl",
+      "print": "build/print_carrier_upper_left.stl",
+      "fit_test": false,
+      "color": "#ecece8",
+      "explode": [
+        -18,
+        0,
+        34
+      ],
+      "expected_assembly_components": 1,
+      "expected_print_components": 2,
+      "print_supports": [
+        {
+          "id": "carrier_upper_left_web_outer_print_support_1",
+          "attachment": "separate_breakaway_clearance",
+          "bbox_mm": [
+            [
+              -24.05,
+              -37.0082,
+              0.0
+            ],
+            [
+              0.05,
+              9.2953,
+              2.7
+            ]
+          ],
+          "support_top_z_mm": 2.7,
+          "product_first_z_mm": 3.2,
+          "geometric_clearance_mm": 0.5,
+          "expected_last_support_gcode_z_mm": 2.8,
+          "expected_first_product_gcode_z_mm": 3.2,
+          "layer_height_mm": 0.2,
+          "material_face_gap_mm": 0.2,
+          "bed_origin_expected": true,
+          "removal": "印刷後に隙間へ薄いへらを入れ、外装内側から折って外す",
+          "physical_removal_verified": false
+        }
+      ]
+    },
+    {
+      "id": "carrier_upper_right",
+      "label": "右上",
+      "assembly": "build/carrier_upper_right.stl",
+      "print": "build/print_carrier_upper_right.stl",
+      "fit_test": false,
+      "color": "#ecece8",
+      "explode": [
+        18,
+        0,
+        34
+      ],
+      "expected_assembly_components": 1,
+      "expected_print_components": 2,
+      "print_supports": [
+        {
+          "id": "carrier_upper_right_web_outer_print_support_1",
+          "attachment": "separate_breakaway_clearance",
+          "bbox_mm": [
+            [
+              -0.05,
+              -37.107,
+              0.0
+            ],
+            [
+              24.05,
+              9.2953,
+              2.7
+            ]
+          ],
+          "support_top_z_mm": 2.7,
+          "product_first_z_mm": 3.2,
+          "geometric_clearance_mm": 0.5,
+          "expected_last_support_gcode_z_mm": 2.8,
+          "expected_first_product_gcode_z_mm": 3.2,
+          "layer_height_mm": 0.2,
+          "material_face_gap_mm": 0.2,
+          "bed_origin_expected": true,
+          "removal": "印刷後に隙間へ薄いへらを入れ、外装内側から折って外す",
+          "physical_removal_verified": false
+        }
+      ]
+    },
+    {
+      "id": "carrier_lower_pair",
+      "label": "下側",
+      "assembly": "build/carrier_lower_pair.stl",
+      "print": "build/print_carrier_lower_pair.stl",
+      "fit_test": false,
+      "color": "#ecece8",
+      "explode": [
+        0,
+        -18,
+        28
+      ],
+      "expected_assembly_components": 1,
+      "expected_print_components": 2,
+      "print_supports": [
+        {
+          "id": "carrier_lower_pair_web_outer_print_support_1",
+          "attachment": "separate_breakaway_clearance",
+          "bbox_mm": [
+            [
+              -32.05,
+              4.5611,
+              0.0
+            ],
+            [
+              32.05,
+              46.6,
+              2.7
+            ]
+          ],
+          "support_top_z_mm": 2.7,
+          "product_first_z_mm": 3.2,
+          "geometric_clearance_mm": 0.5,
+          "expected_last_support_gcode_z_mm": 2.8,
+          "expected_first_product_gcode_z_mm": 3.2,
+          "layer_height_mm": 0.2,
+          "material_face_gap_mm": 0.2,
+          "bed_origin_expected": true,
+          "removal": "印刷後に隙間へ薄いへらを入れ、外装内側から折って外す",
+          "physical_removal_verified": false
+        }
+      ]
+    },
+    {
+      "id": "cam_disk",
+      "label": "四群円盤カム",
+      "assembly": "build/cam_disk.stl",
+      "print": "build/print_cam_disk.stl",
+      "fit_test": false,
+      "color": "#34383a",
+      "explode": [
+        0,
+        0,
+        -18
+      ],
+      "expected_assembly_components": 1,
+      "expected_print_components": 1
+    },
+    {
+      "id": "horn_coupler",
+      "label": "ホーン受け",
+      "assembly": "build/horn_coupler.stl",
+      "print": "build/print_horn_coupler.stl",
+      "fit_test": false,
+      "color": "#34383a",
+      "explode": [
+        0,
+        -22,
+        -18
+      ],
+      "expected_assembly_components": 1,
+      "expected_print_components": 1
+    },
+    {
+      "id": "drive_key",
+      "label": "角形駆動キー",
+      "assembly": "build/drive_key.stl",
+      "print": "build/print_drive_key.stl",
+      "fit_test": false,
+      "color": "#34383a",
+      "explode": [
+        0,
+        22,
+        -18
+      ],
+      "expected_assembly_components": 1,
+      "expected_print_components": 1
+    },
+    {
+      "id": "cam_keeper",
+      "label": "円盤止め輪",
+      "assembly": "build/cam_keeper.stl",
+      "print": "build/print_cam_keeper.stl",
+      "fit_test": false,
+      "color": "#34383a",
+      "explode": [
+        0,
+        0,
+        12
+      ],
+      "expected_assembly_components": 1,
+      "expected_print_components": 1
+    },
+    {
+      "id": "servo_body",
+      "label": "SG92R本体",
+      "assembly": "build/servo_body.stl",
+      "print": null,
+      "fit_test": false,
+      "color": "#335d91",
+      "explode": [
+        -25,
+        0,
+        -25
+      ],
+      "expected_assembly_components": 1,
+      "expected_print_components": 1
+    },
+    {
+      "id": "servo_horn",
+      "label": "付属クロスホーン",
+      "assembly": "build/servo_horn.stl",
+      "print": null,
+      "fit_test": false,
+      "color": "#f5f5f2",
+      "explode": [
+        0,
+        -30,
+        -22
+      ],
+      "expected_assembly_components": 1,
+      "expected_print_components": 1
+    },
+    {
+      "id": "servo_wire",
+      "label": "SG92R配線",
+      "assembly": "build/servo_wire.stl",
+      "print": null,
+      "fit_test": false,
+      "color": "#756d65",
+      "explode": [
+        25,
+        0,
+        -25
+      ],
+      "expected_assembly_components": 1,
+      "expected_print_components": 1
+    },
+    {
+      "id": "print_test",
+      "label": "ホーン受け・角キー・径受け試片",
+      "assembly": "build/print_test.stl",
+      "print": "build/print_test.stl",
+      "fit_test": true,
+      "fit_only": true,
+      "expected_assembly_components": 9,
+      "expected_print_components": 9,
+      "color": "#d9d1bf",
+      "explode": [
+        0,
+        -60,
+        0
+      ]
+    }
+  ]
+}

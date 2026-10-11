@@ -1,0 +1,50 @@
+{
+  "model": "mystery-box-sg92r-c4-2",
+  "renderer": "BLENDER_EEVEE",
+  "resolution_px": [
+    768,
+    768
+  ],
+  "cutaway": {
+    "cutPlaneXmm": 22.0,
+    "exteriorParts": [
+      "housing",
+      "faceplate",
+      "bottom"
+    ],
+    "internalPartsOpaque": true
+  },
+  "source_sha256": {
+    "model.py": "a91e0d3bc8b34ec89984776630d72c70271e71319d97bb590ce59d93b1309c5b",
+    "params.py": "a2203d819b90d97f59b48e22049323d4ec1aa23b2a00cb9611fac1e7f52065f2",
+    "motion.py": "36325429acaab8e3424cc31f412a5fc86f7971acf49c8c7371d70e65f72ebdc4",
+    "contact_envelope.py": "68d7ca1350a0c3be28c6b219e19fd0e2669db0c24e1e52a21d95be4f7d6ce054",
+    "render_preview.py": "90f3f49a34676d7e9032beb08a7d034554228bc1669a7c586c5f1d91a762da1b"
+  },
+  "assembly_stl_sha256": {
+    "bottom.stl": "3e7416ac484f1b94bbf65fadcf757d1a029f2465213cbd89fa7215c3a33607fc",
+    "cam_disk.stl": "645975e6be5cc4b12479e7f4ba0a8340827df3f31457cb3d46b6bd8cb4fa96be",
+    "cam_keeper.stl": "0ce359fea4adf9e4a4a9038872961f184bc20d7146c748491372949b6c074acf",
+    "carrier_center.stl": "b6dc8cb79c87de3ac5407289708440690e69ef1832403e3dcdeecdc63ecd7ecb",
+    "carrier_lower_pair.stl": "0d6ebac0a86a05f0ae554d78950fb048b8de1d0f7cc270a639ef9364340c0437",
+    "carrier_upper_left.stl": "d530ddecd3a35a67eb3243e0d9de540b64422ce12aed0f326447b317375dd561",
+    "carrier_upper_right.stl": "79edd8a0c7b61a577ad78b15a727e89d533a468ad834ac42b09fe63f7b3c4786",
+    "drive_key.stl": "15d5bbc95c3756c7cf8e4a38e4f0957c272a27b7ee599115449b505688e8d7d7",
+    "faceplate.stl": "fa73f5e720244c64d063afff8fa35a616e6fdf3111772a498e38798d3f29152d",
+    "guide_frame.stl": "4f5e8a4dc9c7784f257c63782e9859270023de4b2a6ec8b4be8bb7b15ffb5c54",
+    "horn_coupler.stl": "222831121787c4d30dc80d611a446a53a4e264fb998a2172f85af1bb0552a8b1",
+    "housing.stl": "f39392a14e0b96952a340e3f1a89d74c28495425e0bc2c8c05f6e379cd98587f",
+    "servo_body.stl": "b5dd0d4af1e8f251d9934e8811373d714a6a18761d42cfd66bf18105f276cd68",
+    "servo_horn.stl": "bf8cb8de5c3d9670041875d9bce20970477a45f1571c0056f1ecac0b5a6e51ce",
+    "servo_wire.stl": "c911453e7904595935eb83272b4859a608aa3ae19f7f4bb1096a82aefcba3e58"
+  },
+  "outputs": {
+    "preview_flat.png": "1c6555511f94a05b8d7c15b095ee672c838d9c70368b1adbea8dcfdb9e6b09e2",
+    "preview_upper_left.png": "b475402660cd69f1914705c716505a39166fcfea9ac9884795a16e079afcc6a8",
+    "preview_center.png": "4eb7aa05659fe15d219677eef9d7a5d78b956c32e30748e6943b70b6c2ba2015",
+    "preview_upper_right.png": "d44aac1d35f4e6ac79c5664a6620f39ec72b3f349754a338b0cdfdc2812bc9c4",
+    "preview_lower_pair.png": "f6c0a96f20d402bec7cf600568df6189d9a4280ceea74d693f1f2d9cafb97924",
+    "hero.png": "ac71976beae697e543f4ee41b356ab75cc220fb534e6c501cbd77c4358cc95fd",
+    "cutaway.png": "c6d65eba74189cc5359829b98d3cb44db68b0b8c01b76f6eec543a20540453f4"
+  }
+}

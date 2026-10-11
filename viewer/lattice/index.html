@@ -42,8 +42,9 @@
     </section>
     <aside class="lc-aside" aria-label="操作と検証結果">
       <div><span id="eyebrow" class="eyebrow"></span><h1 id="pageTitle"></h1><p id="summary"></p></div>
-      <nav class="model-switch" aria-label="モデル切り替え"><a id="c3Link" href="?model=mystery-box-sg92r-c3">C3 立方格子</a><a id="c4Link" href="?model=mystery-box-sg92r-c4">C4 六角格子</a></nav>
+      <nav class="model-switch" aria-label="モデル切り替え"><a id="c3Link" href="?model=mystery-box-sg92r-c3">C3 立方格子</a><a id="c4Link" href="?model=mystery-box-sg92r-c4">C4-1 六角格子</a><a id="c42Link" href="?model=mystery-box-sg92r-c4-2">C4-2 六角格子</a></nav>
       <div class="actions physics-only" aria-label="格子の操作"><button id="open" class="lc-btn primary" type="button" disabled>進める</button><button id="close" class="lc-btn" type="button" disabled>戻す</button></div>
+      <section id="patternControls" class="physics-only" hidden><h2>凹む場所</h2><div id="patternButtons" class="actions" aria-label="凹みの選択"></div><p id="patternNote" class="small">選択した場所が4mm沈みます。移動中は二つの凹みが滑らかに入れ替わります。</p></section>
       <section class="physics-only">
         <h2>条件</h2>
         <div class="field"><label for="profile">動かし方</label><select id="profile" class="lc-select"><option value="ease">ゆっくり</option><option value="step">全速で切り替え</option></select><span></span></div>

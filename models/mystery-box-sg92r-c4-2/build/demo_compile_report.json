@@ -1,0 +1,217 @@
+{
+  "pass": true,
+  "target": "arduino:avr:uno",
+  "compiledAt": "2026-10-11T07:59:05.445521+00:00",
+  "source": {
+    "file": "models/mystery-box-sg92r-c4-2/demo/demo.ino",
+    "sha256": "5132b0e1dbc0e26ab472f0c40f1f8f7217e4ea3dc43810aa0decf8fa9d2d64ce"
+  },
+  "commands": [
+    {
+      "name": "updateIndex",
+      "command": "arduino-cli --config-file D:\\Projects\\model-lab-c4-2-temp\\arduino\\arduino-cli.yaml core update-index"
+    },
+    {
+      "name": "installCore",
+      "command": "arduino-cli --config-file D:\\Projects\\model-lab-c4-2-temp\\arduino\\arduino-cli.yaml core install arduino:avr"
+    },
+    {
+      "name": "installLibrary",
+      "command": "arduino-cli --config-file D:\\Projects\\model-lab-c4-2-temp\\arduino\\arduino-cli.yaml lib install Servo"
+    },
+    {
+      "name": "compile",
+      "command": "D:\\Projects\\model-lab-c4-2-temp\\arduino\\cli\\arduino-cli.exe --config-file D:\\Projects\\model-lab-c4-2-temp\\arduino\\arduino-cli.yaml compile --fqbn arduino:avr:uno --build-path D:\\Projects\\model-lab-c4-2-temp\\arduino\\phase-calibration\\production_build C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-c4-2\\demo"
+    }
+  ],
+  "results": {
+    "updateIndexExitCode": 0,
+    "installCoreExitCode": 0,
+    "installLibraryExitCode": 0,
+    "compileExitCode": 0,
+    "compileElapsedMs": 3234,
+    "stdoutLog": "models/mystery-box-sg92r-c4-2/build/demo_compile_stdout.txt",
+    "stdoutSha256": "2b5b3fef84bf7555030378ad5d508785b2dd168087e75959747cd3b4b1eb54d3",
+    "stderrLog": "models/mystery-box-sg92r-c4-2/build/demo_compile_stderr.txt",
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderrBytes": 0
+  },
+  "flashBytes": 5128,
+  "flashMaximumBytes": 32256,
+  "flashPercent": 15,
+  "ramBytes": 272,
+  "ramMaximumBytes": 2048,
+  "ramPercent": 13,
+  "ramRemainingBytes": 1776,
+  "cli": {
+    "version": "1.5.1",
+    "commit": "01f3d4f2b",
+    "releaseDate": "2026-06-05T10:22:12Z",
+    "executableSha256": "1017de89179c3167e6b8a38ca6cc4091fa69a3cf97aafa7810f01423003f5571"
+  },
+  "core": {
+    "package": "arduino:avr",
+    "version": "1.8.8"
+  },
+  "library": {
+    "name": "Servo",
+    "version": "1.3.0"
+  },
+  "downloads": {
+    "cli": {
+      "url": "https://github.com/arduino/arduino-cli/releases/download/v1.5.1/arduino-cli_1.5.1_Windows_64bit.zip",
+      "sha256": "fabe42e0eb04d00e776a66178299ff95a46c623dbc260f997e58fd514853dd40",
+      "sizeBytes": 17965819,
+      "checksumSource": "https://github.com/arduino/arduino-cli/releases/download/v1.5.1/1.5.1-checksums.txt"
+    },
+    "core": {
+      "url": "https://downloads.arduino.cc/cores/staging/avr-1.8.8.tar.bz2",
+      "sha256": "a234c2a43dcd01ce54be665806f183b8e6ec4e966d2e3e0c3358b63023d6390c",
+      "sizeBytes": 7162150
+    },
+    "library": {
+      "url": "https://downloads.arduino.cc/libraries/github.com/arduino-libraries/Servo-1.3.0.zip",
+      "sha256": "d25b0d77f10a810d24876c570410f32cc3129f9cc3d0370c861a278b969b4b38",
+      "sizeBytes": 133580
+    }
+  },
+  "configuration": {
+    "configFile": "D:\\Projects\\model-lab-c4-2-temp\\arduino\\arduino-cli.yaml",
+    "data": "D:\\Projects\\model-lab-c4-2-temp\\arduino\\data",
+    "downloads": "D:\\Projects\\model-lab-c4-2-temp\\arduino\\downloads",
+    "user": "D:\\Projects\\model-lab-c4-2-temp\\arduino\\user",
+    "cache": "D:\\Projects\\model-lab-c4-2-temp\\arduino\\cache",
+    "temp": "D:\\Projects\\model-lab-c4-2-temp\\arduino\\phase-calibration",
+    "globalPathModified": false,
+    "registryModified": false,
+    "defaultArduinoDirectoriesUsed": false,
+    "compileWorkDirectory": "D:\\Projects\\model-lab-c4-2-temp\\arduino\\phase-calibration"
+  },
+  "artifact": {
+    "file": "models/mystery-box-sg92r-c4-2/build/demo.ino.hex",
+    "sha256": "45b1e69ac28d496e2bbe9e213598e31451afb6e76f93316049cac5c04cc9a486",
+    "sizeBytes": 14455
+  },
+  "hardwareTested": false,
+  "hardwareLimitation": "Arduino Unoへの書き込み、SG92Rの通電、外部4.8 V電源、GND共有、角度と3秒動作の実測は未実施",
+  "compileOutput": {
+    "stdout": {
+      "file": "models/mystery-box-sg92r-c4-2/build/demo_compile_stdout.txt",
+      "sha256": "2b5b3fef84bf7555030378ad5d508785b2dd168087e75959747cd3b4b1eb54d3"
+    },
+    "stderr": {
+      "file": "models/mystery-box-sg92r-c4-2/build/demo_compile_stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "algorithm": {
+    "file": "models/mystery-box-sg92r-c4-2/compile_demo.py",
+    "sha256": "a3a7ad27d52437eb2f543ac13b43e94a4a4640598cb344edbcb8c1e99f43556c"
+  },
+  "phaseTrim": {
+    "compiledTrimDeg": 0.0,
+    "allowedTrimDeg": [
+      -10,
+      10
+    ],
+    "logicalPatternAnglesDeg": [
+      15,
+      50,
+      90,
+      130,
+      165
+    ],
+    "physicalPhaseMeasured": false,
+    "calibration": [
+      {
+        "trimDeg": -10,
+        "expectedCompile": true,
+        "compileExitCode": 0,
+        "pass": true,
+        "boundaryDiagnosticDetected": false,
+        "sourceSha256": "c9c5657405ea74cd7881d6a83cbd1022a4b576a10aec2f203b747d488e19a822",
+        "elapsedMs": 3203,
+        "source": {
+          "file": "D:\\Projects\\model-lab-c4-2-temp\\arduino\\phase-calibration\\phase_minus_10\\phase_minus_10.ino",
+          "sha256": "c9c5657405ea74cd7881d6a83cbd1022a4b576a10aec2f203b747d488e19a822"
+        },
+        "stdout": {
+          "file": "D:\\Projects\\model-lab-c4-2-temp\\arduino\\phase-calibration\\phase_minus_10\\stdout.txt",
+          "sha256": "5a1a935ea92c25e73bebaeffaee4f05bb537acd7f0b6408f404674e064226c69"
+        },
+        "stderr": {
+          "file": "D:\\Projects\\model-lab-c4-2-temp\\arduino\\phase-calibration\\phase_minus_10\\stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "command": "D:\\Projects\\model-lab-c4-2-temp\\arduino\\cli\\arduino-cli.exe --config-file D:\\Projects\\model-lab-c4-2-temp\\arduino\\arduino-cli.yaml compile --fqbn arduino:avr:uno --build-path D:\\Projects\\model-lab-c4-2-temp\\arduino\\phase-calibration\\phase_minus_10_build D:\\Projects\\model-lab-c4-2-temp\\arduino\\phase-calibration\\phase_minus_10"
+      },
+      {
+        "trimDeg": 10,
+        "expectedCompile": true,
+        "compileExitCode": 0,
+        "pass": true,
+        "boundaryDiagnosticDetected": false,
+        "sourceSha256": "549300c2aa91fe93e237356262aa93ef4ae55f4117a0bfd5303bc1d080cf3783",
+        "elapsedMs": 3250,
+        "source": {
+          "file": "D:\\Projects\\model-lab-c4-2-temp\\arduino\\phase-calibration\\phase_plus_10\\phase_plus_10.ino",
+          "sha256": "549300c2aa91fe93e237356262aa93ef4ae55f4117a0bfd5303bc1d080cf3783"
+        },
+        "stdout": {
+          "file": "D:\\Projects\\model-lab-c4-2-temp\\arduino\\phase-calibration\\phase_plus_10\\stdout.txt",
+          "sha256": "5a1a935ea92c25e73bebaeffaee4f05bb537acd7f0b6408f404674e064226c69"
+        },
+        "stderr": {
+          "file": "D:\\Projects\\model-lab-c4-2-temp\\arduino\\phase-calibration\\phase_plus_10\\stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "command": "D:\\Projects\\model-lab-c4-2-temp\\arduino\\cli\\arduino-cli.exe --config-file D:\\Projects\\model-lab-c4-2-temp\\arduino\\arduino-cli.yaml compile --fqbn arduino:avr:uno --build-path D:\\Projects\\model-lab-c4-2-temp\\arduino\\phase-calibration\\phase_plus_10_build D:\\Projects\\model-lab-c4-2-temp\\arduino\\phase-calibration\\phase_plus_10"
+      },
+      {
+        "trimDeg": -11,
+        "expectedCompile": false,
+        "compileExitCode": 1,
+        "pass": true,
+        "boundaryDiagnosticDetected": true,
+        "sourceSha256": "9e332af302586b97e7b35326ab948712044843a7aad1a9a63271d9399181f486",
+        "elapsedMs": 1703,
+        "source": {
+          "file": "D:\\Projects\\model-lab-c4-2-temp\\arduino\\phase-calibration\\phase_minus_11\\phase_minus_11.ino",
+          "sha256": "9e332af302586b97e7b35326ab948712044843a7aad1a9a63271d9399181f486"
+        },
+        "stdout": {
+          "file": "D:\\Projects\\model-lab-c4-2-temp\\arduino\\phase-calibration\\phase_minus_11\\stdout.txt",
+          "sha256": "39d6661052f03ba794b4504f39b6cd4537c3ea78d7d6df7c86f67429889aa756"
+        },
+        "stderr": {
+          "file": "D:\\Projects\\model-lab-c4-2-temp\\arduino\\phase-calibration\\phase_minus_11\\stderr.txt",
+          "sha256": "bfbc51885e4253c779b79fe0d978ca4b3c21ea04eccc47a86f506a632a3827ad"
+        },
+        "command": "D:\\Projects\\model-lab-c4-2-temp\\arduino\\cli\\arduino-cli.exe --config-file D:\\Projects\\model-lab-c4-2-temp\\arduino\\arduino-cli.yaml compile --fqbn arduino:avr:uno --build-path D:\\Projects\\model-lab-c4-2-temp\\arduino\\phase-calibration\\phase_minus_11_build D:\\Projects\\model-lab-c4-2-temp\\arduino\\phase-calibration\\phase_minus_11"
+      },
+      {
+        "trimDeg": 11,
+        "expectedCompile": false,
+        "compileExitCode": 1,
+        "pass": true,
+        "boundaryDiagnosticDetected": true,
+        "sourceSha256": "656c5834c8963ab41a20ed0a06909d3aad3e5b1906855256bd37ac9ad91ff546",
+        "elapsedMs": 1797,
+        "source": {
+          "file": "D:\\Projects\\model-lab-c4-2-temp\\arduino\\phase-calibration\\phase_plus_11\\phase_plus_11.ino",
+          "sha256": "656c5834c8963ab41a20ed0a06909d3aad3e5b1906855256bd37ac9ad91ff546"
+        },
+        "stdout": {
+          "file": "D:\\Projects\\model-lab-c4-2-temp\\arduino\\phase-calibration\\phase_plus_11\\stdout.txt",
+          "sha256": "39d6661052f03ba794b4504f39b6cd4537c3ea78d7d6df7c86f67429889aa756"
+        },
+        "stderr": {
+          "file": "D:\\Projects\\model-lab-c4-2-temp\\arduino\\phase-calibration\\phase_plus_11\\stderr.txt",
+          "sha256": "87b9873d08bb2faa80648442bbc87e96d309716fac2fc62f727d9da4150edb9e"
+        },
+        "command": "D:\\Projects\\model-lab-c4-2-temp\\arduino\\cli\\arduino-cli.exe --config-file D:\\Projects\\model-lab-c4-2-temp\\arduino\\arduino-cli.yaml compile --fqbn arduino:avr:uno --build-path D:\\Projects\\model-lab-c4-2-temp\\arduino\\phase-calibration\\phase_plus_11_build D:\\Projects\\model-lab-c4-2-temp\\arduino\\phase-calibration\\phase_plus_11"
+      }
+    ],
+    "pass": true
+  }
+}
