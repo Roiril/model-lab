@@ -9,32 +9,30 @@ import { frameAt, identity4 } from './motion.mjs';
 import { setupPhysics } from './physics-ui.mjs';
 import { drivePresentation } from './sim.mjs';
 import { setupAssembly } from './assembly-ui.mjs';
+import { legendEntries, modelEntries, normalizeUi, resolveModel, uiSource } from './ui-config.mjs';
 
 const $ = id => document.getElementById(id);
 const params = new URLSearchParams(location.search);
-const allowedModels = new Set(['mystery-box-sg92r-c3', 'mystery-box-sg92r-c4', 'mystery-box-sg92r-c4-2']);
-const model = allowedModels.has(params.get('model')) ? params.get('model') : 'mystery-box-sg92r-c3';
+const model = resolveModel(params.get('model'));
 const mode = params.get('mode') === 'assembly' ? 'assembly' : 'physics';
 const assetUrl = `assets/${model}.json`;
-const profiles = {
-  'mystery-box-sg92r-c3': { title: '立方格子の波', label: 'C3', fallback: ['格子', '5 × 5 / 25枚'], pattern: '25枚の正方形を5列に分けました。中央から外側へ最大3mmの隆起が移ります。' },
-  'mystery-box-sg92r-c4': { title: '六角格子の呼吸', label: 'C4-1', fallback: ['外形', '76 × 76 × 76 mm'], pattern: '19個の六角格子。中心は約6mm。内側の環は約4mm。外側の環は約2mm持ち上がります。' },
-  'mystery-box-sg92r-c4-2': { title: '六角格子の凹み', label: 'C4-2', fallback: ['外形', '110 × 110 × 110 mm'], pattern: '左上 / 中央 / 右上 / 下側の二か所。選択した六角格子が4mm沈みます。平面へ戻せます。' },
-};
-const profile = profiles[model];
 
 document.body.dataset.mode = mode;
 const nav = createWorkspaceNav({ active: mode, model });
 $('workspaceNav').replaceWith(nav.element);
+// モデル切り替えの一覧。旧 3 モデルに、assets/index.json（tools/lattice_web.py が書く新モデルの一覧）を足す。
+let modelList = modelEntries(null, model);
 function updateModelLinks() {
-  for (const [id, target] of [['c3Link', 'mystery-box-sg92r-c3'], ['c4Link', 'mystery-box-sg92r-c4'], ['c42Link', 'mystery-box-sg92r-c4-2']]) {
-    const link = $(id);
-    const url = new URL(location.href);
-    url.searchParams.set('model', target);
+  const links = modelList.map(entry => {
+    const link = document.createElement('a'), url = new URL(location.href);
+    url.searchParams.set('model', entry.id);
     url.searchParams.set('mode', mode);
     link.href = url.pathname + url.search;
-    if (target === model) link.setAttribute('aria-current', 'page');
-  }
+    link.textContent = entry.navLabel;
+    if (entry.id === model) link.setAttribute('aria-current', 'page');
+    return link;
+  });
+  document.querySelector('.model-switch').replaceChildren(...links);
 }
 updateModelLinks();
 const disposeModelTheme = watchTheme(updateModelLinks);
@@ -114,7 +112,7 @@ function meshBounds(vertices) {
   return box;
 }
 
-function createRenderer(canvas, data, state) {
+function createRenderer(canvas, data, state, colorOverrides = {}) {
   const gl = canvas.getContext('webgl2', { antialias: true, alpha: false });
   if (!gl) throw new Error('WebGL2を利用できません');
   const program = gl.createProgram();
@@ -141,7 +139,7 @@ function createRenderer(canvas, data, state) {
     const indices = gl.createBuffer(); gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indices); gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, triangles, gl.STATIC_DRAW);
     const exterior = part.exterior ?? (exteriorIds.size ? exteriorIds.has(part.id) : !/^(servo|ref)_/.test(part.id) && EXTERIOR_WORDS.test(part.id));
     return { ...part, vertices, vao, bounds: meshBounds(sourceVertices), count: triangles.length, exterior,
-      color: rgb(technicalColor(part.id, part.color)) };
+      color: rgb(colorOverrides[part.id] ?? technicalColor(part.id, part.color)) };
   });
   const bounds = data.parts.flatMap(part => part.mesh?.vertices || []).reduce((box, value, index) => {
     const axis = index % 3; box.min[axis] = Math.min(box.min[axis], value); box.max[axis] = Math.max(box.max[axis], value); return box;
@@ -345,12 +343,12 @@ function metric(label, value) {
   dt.textContent = label; dd.textContent = value; wrap.append(dt, dd); return wrap;
 }
 
-function dimensionText(meta) {
+function dimensionText(meta, fallback) {
   const source = meta.dimensions_mm ?? meta.outer_dimensions_mm ?? meta.size_mm;
   if (Array.isArray(source)) return `${source.join(' × ')} mm`;
   if (source && typeof source === 'object') return `${source.width ?? source.w ?? '?'} × ${source.depth ?? source.d ?? '?'} × ${source.height ?? source.h ?? '?'} mm`;
   if (typeof source === 'string') return source;
-  return model.endsWith('-c4') ? '76 × 76 mm（設計値）' : '76〜80 mm（生成値を優先）';
+  return fallback;
 }
 
 async function start() {
@@ -360,28 +358,31 @@ async function start() {
     if (!response.ok) throw new Error(`表示データを読めません（${response.status}）`);
     const data = await response.json();
     if (!Array.isArray(data.parts) || !data.parts.length) throw new Error('表示できる部品がありません');
+    const ui = normalizeUi(uiSource(data, model), { model, partIds: data.parts.map(part => part.id), groupIds: (data.simTables?.groups || []).map(group => group.id) });
+    data.ui = ui;
     const frames = [...data.motion.frames].sort((a, b) => a.servo_deg - b.servo_deg);
     data.motion.frames = frames;
     const minimum = frames[0].servo_deg;
     const state = { servoDeg: minimum, cut: true, hidden: new Set(), transforms: null, present: null };
-    const canvas = $('gl'), renderer = createRenderer(canvas, data, state), meta = data.meta;
-    document.title = `住人の箱 ${profile.label}の${mode === 'assembly' ? '組み立て' : '物理検証'} · model-lab`;
+    const canvas = $('gl'), renderer = createRenderer(canvas, data, state, ui.colors), meta = data.meta;
+    document.title = `${ui.displayName}の${mode === 'assembly' ? '組み立て' : '物理検証'} · model-lab`;
     $('eyebrow').textContent = mode === 'assembly' ? '工具、ねじ、接着剤なし' : '接続形状を前提にした1自由度計算';
-    $('pageTitle').textContent = mode === 'assembly' ? '組み立ての手順と検証' : profile.title;
+    $('pageTitle').textContent = mode === 'assembly' ? '組み立ての手順と検証' : ui.physics.title;
     $('summary').textContent = mode === 'assembly'
       ? '表示する経路で実際のSTLを動かし、据えた部品との共通体積を測ります。実物では未検証です。'
       : '接続形状の検査を通った場合だけ、質量と慣性にサーボのトルク上限と速度の限界を入れて計算します。スプライン嵌合と材料は実機未確認です。';
-    document.querySelector('.workspace-model strong').textContent = `住人の箱 ${profile.label}`;
-    document.querySelector('.workspace-model small').textContent = `${dimensionText(meta)} · SG92R 1台 · 印刷 ${data.parts.filter(p => p.printable).length}点`;
+    document.querySelector('.workspace-model strong').textContent = ui.displayName;
+    document.querySelector('.workspace-model small').textContent = `${dimensionText(meta, ui.dimensionsFallback)} · SG92R 1台 · 印刷 ${data.parts.filter(p => p.printable).length}点`;
     document.querySelector('.workspace-brand').href = `/?model=${model}`;
     $('cut').addEventListener('change', event => { state.cut = event.currentTarget.checked; renderer.draw(); });
     $('home').addEventListener('click', () => renderer.setCamera('iso'));
-    $('legend').replaceChildren(...renderer.meshes.map(mesh => {
+    const meshById = new Map(renderer.meshes.map(mesh => [mesh.id, mesh]));
+    $('legend').replaceChildren(...legendEntries(ui, renderer.meshes).map(entry => {
       const label = document.createElement('label'), input = document.createElement('input'), swatch = document.createElement('i');
-      label.dataset.part = mesh.id; input.type = 'checkbox'; input.checked = true;
-      swatch.style.background = `rgb(${mesh.color.map(v => Math.round(v * 255)).join(' ')})`;
-      input.addEventListener('change', () => { input.checked ? state.hidden.delete(mesh.id) : state.hidden.add(mesh.id); renderer.draw(); });
-      label.append(input, swatch, document.createTextNode(mesh.label || mesh.id)); return label;
+      label.dataset.part = entry.ids.join(','); input.type = 'checkbox'; input.checked = true;
+      swatch.style.background = `rgb(${meshById.get(entry.ids[0]).color.map(v => Math.round(v * 255)).join(' ')})`;
+      input.addEventListener('change', () => { for (const id of entry.ids) input.checked ? state.hidden.delete(id) : state.hidden.add(id); renderer.draw(); });
+      label.append(input, swatch, document.createTextNode(entry.label)); return label;
     }));
     reportRows('verifyRows', verificationSummary(data.verify, data.assembly, data.drive, data.sim), '検証データなし');
     reportRows('deliveryRows', deliverySummary(data.delivery, data.print_path_review), '印刷データなし');
@@ -400,7 +401,7 @@ async function start() {
         const filename = String(result.file?.file || '').split('/').at(-1);
         if (!filename?.startsWith(`${model}-`) || !filename.endsWith('.gcode.3mf')) continue;
         const li = document.createElement('li'), link = document.createElement('a');
-        link.href = model === 'mystery-box-sg92r-c4-2'
+        link.href = ui.print.downloadBase === 'prints'
           ? `/prints/${encodeURIComponent(model)}/${encodeURIComponent(filename)}`
           : `/exports/${encodeURIComponent(filename)}`;
         link.download = filename;
@@ -423,4 +424,7 @@ async function start() {
   }
 }
 $('retry').addEventListener('click', () => location.reload());
+fetch('assets/index.json', { cache: 'no-store' }).then(response => response.ok ? response.json() : null).then(list => {
+  if (Array.isArray(list)) { modelList = modelEntries(list, model); updateModelLinks(); }
+}).catch(() => {});
 start();

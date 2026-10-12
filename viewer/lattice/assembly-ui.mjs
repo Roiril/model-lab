@@ -1,4 +1,5 @@
 import { transformsAt, quintic } from './motion.mjs';
+import { calibrationLimitText } from './ui-config.mjs';
 
 const $ = id => document.getElementById(id);
 
@@ -31,7 +32,7 @@ export function setupAssembly({ data, state, renderer }) {
     $('steps').querySelectorAll('button').forEach((button, i) => {
       if (i === index) button.setAttribute('aria-current', 'step'); else button.removeAttribute('aria-current');
     });
-    for (const label of $('legend').querySelectorAll('label')) label.classList.toggle('active', step.moving.includes(label.dataset.part));
+    for (const label of $('legend').querySelectorAll('label')) label.classList.toggle('active', label.dataset.part.split(',').some(id => step.moving.includes(id)));
     renderer.fit(step.frames);
     const url = new URL(location.href); url.searchParams.set('step', String(index + 1)); history.replaceState(null, '', url);
     draw(end ? 1 : 0);
@@ -69,13 +70,9 @@ export function setupAssembly({ data, state, renderer }) {
     return tr;
   }));
   $('assemblyCalibration').textContent = assembly.calibration?.pass || assembly.calibration?.ok
-    ? `検査前に、既知の重なりを検出することと、離した部品を通すことを確認しました。表示と検査は同じ部品位置を使います。1mm以下の並進と${data.model === 'mystery-box-sg92r-c4-2' ? '1' : '5'}°以下の回転で検査しています。`
+    ? `検査前に、既知の重なりを検出することと、離した部品を通すことを確認しました。表示と検査は同じ部品位置を使います。${calibrationLimitText(data.ui.assembly)}`
     : '干渉検査の校正結果を確認できません。判定は未確認です。';
-  $('servoSetup').textContent = data.model === 'mystery-box-sg92r-c4-2'
-    ? '箱の外で付属ホーンをホーン受けへ入れます。この一式を底側から先に入れます。配線を通します。SG92Rをcで90°にして底側からホーンへ差します。円盤と角キーと止め輪を組みます。格子を入れる前にhで15°へ3秒かけて戻します。その後に格子と天板を留めます。最後に底板を閉じます。1で左上50°、2で中央90°、3で右上130°、4で下側165°を選びます。gで五つの形を順に動かします。分解は工程の逆順です。格子を外した後にcで90°へ戻します。'
-    : data.model.endsWith('c4')
-    ? 'SG92Rを90°にして付属ホーンを付けます。ホーン受けとカムを90°の位相で組みます。右の保持具を留めたらhで10°へ戻して停止します。格子はその後に入れます。gで10〜170°を片道1.5秒で動かします。分解時は格子を外した後にcで90°へ戻します。'
-    : '箱の外でSG92Rを90°にして付属ホーンと駆動歯車を付けます。カムと軸を90°の位相で入れます。格子を入れる前にhで15°へ戻して停止します。gで15〜165°を片道2秒で動かします。分解時は格子を外した後にcで90°へ戻します。';
+  $('servoSetup').textContent = data.ui.assembly.servoSetup;
   select(index); play();
   addEventListener('pagehide', stop, { once: true });
 }

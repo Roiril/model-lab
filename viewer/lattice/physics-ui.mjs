@@ -1,5 +1,5 @@
 import { createSim, drivePresentation } from './sim.mjs';
-import { frameAt } from './motion.mjs';
+import { physicsSeries, physicsText, posedTransforms } from './ui-config.mjs';
 import { lineChart } from '../lid-cube/lidcube.mjs';
 
 const $ = id => document.getElementById(id);
@@ -305,34 +305,37 @@ export function setupPhysics({ data, state, renderer }) {
   if (!data.simTables || !data.sim) throw new Error('物理計算データがありません');
   const tables = data.simTables, sim = createSim(tables), [minimum, maximum] = tables.limitsDeg;
   const groups = tables.groups;
-  const hasPatterns = Array.isArray(data.motion.patterns) && data.motion.patterns.length > 0;
+  const ui = data.ui, hasPatterns = Array.isArray(data.motion.patterns) && data.motion.patterns.length > 0;
+  const text = physicsText(ui, hasPatterns), term = text.term;
+  // 折れ線・凡例・「格子の上下」の欄に出す群。sim_tables.groups の中での位置。
+  const series = physicsSeries(ui, groups.map(group => group.id));
   const patternButtons = [];
   const drive = drivePresentation(data.drive, data.sim);
   let last = null, animation = 0, paused = false, time = 0, previous = 0;
   const opts = () => ({ stallScale: Number($('torque').value) / 100, massScale: Number($('mass').value), kind: $('profile').value });
   $('profile').querySelector('[value="ease"]').textContent = `${tables.duration_s} 秒でゆっくり`;
-  $('open').textContent = hasPatterns ? '次の場所へ' : data.model.endsWith('c4') ? '持ち上げる' : '波を進める';
-  $('close').textContent = '戻す';
-  $('massNote').textContent = `トルク100%は停動トルク ${fmt(tables.const.stallTorqueNm * 1000, 0)} mN·m（4.8V）。重さ1×は中実PLAの格子合計 ${fmt(groups.reduce((n, g) => n + g.massKg, 0) * 1000)} g。カム接点の摩擦係数は0.30です。`;
+  $('open').textContent = text.openLabel;
+  $('close').textContent = text.closeLabel;
+  $('massLabel').textContent = `${term}の重さ`;
+  $('actions').setAttribute('aria-label', `${term}の操作`);
+  if (ui.physics.patternNote) $('patternNote').textContent = ui.physics.patternNote;
+  $('massNote').textContent = `トルク100%は停動トルク ${fmt(tables.const.stallTorqueNm * 1000, 0)} mN·m（4.8V）。重さ1×は中実PLAの${term}合計 ${fmt(groups.reduce((n, g) => n + g.massKg, 0) * 1000)} g。カム接点の摩擦係数は0.30です。`;
   if (hasPatterns) $('massNote').textContent += ' 円盤外周の支持面と格子の案内にも摩擦を見込みます。中央の円形案内が受ける横荷重も計算に含めます。';
-  const fields = [['mCmd', '指令角'], ['mServo', 'サーボ角'], ['mLift', hasPatterns ? '格子の上下（凹みは−）' : '格子の上昇'], ['mTau', 'トルク / 上限'], ['mImpact', '再接触の速さ'], ['mPeak', 'この動作の最大トルク']];
+  const fields = [['mCmd', '指令角'], ['mServo', 'サーボ角'], ['mLift', text.liftLabel], ['mTau', 'トルク / 上限'], ['mImpact', '再接触の速さ'], ['mPeak', 'この動作の最大トルク']];
   $('metrics').replaceChildren(...fields.map(([id, label]) => {
     const div = document.createElement('div'), span = document.createElement('span'), output = document.createElement('output');
     span.textContent = label; output.id = id; div.append(span, output); return div;
   }));
-  $('liftLegend').replaceChildren(...groups.map((group, index) => {
-    const span = document.createElement('span'); span.style.color = `var(${SERIES[index]})`; span.textContent = group.label; return span;
+  $('liftLegend').replaceChildren(...series.map((groupIndex, position) => {
+    const span = document.createElement('span'); span.style.color = `var(${SERIES[position]})`; span.textContent = groups[groupIndex].label; return span;
   }));
 
   function show(row) {
     state.servoDeg = row.servoDeg;
-    state.transforms = frameAt(data.motion.frames, row.servoDeg).transforms;
-    groups.forEach((group, index) => {
-      if (state.transforms[group.id]) { state.transforms[group.id] = [...state.transforms[group.id]]; state.transforms[group.id][14] = row.liftsMm[index]; }
-    });
+    state.transforms = posedTransforms(data.motion.frames, row, ui, groups);
     $('mCmd').textContent = `${fmt(row.commandDeg)}°`;
     $('mServo').textContent = `${fmt(row.servoDeg)}°`;
-    $('mLift').textContent = row.liftsMm.map(v => fmt(v, 2)).join(' / ') + ' mm';
+    $('mLift').textContent = series.map(index => fmt(row.liftsMm[index], 2)).join(' / ') + ' mm';
     $('mTau').textContent = `${fmt(row.torqueNm * 1000, 0)} / ${fmt((last?.stallScale ?? 1) * tables.const.stallTorqueNm * 1000, 0)} mN·m`;
     $('mImpact').textContent = last ? `${fmt(last.maxContactSpeedMmS, 2)} mm/s` : '—';
     $('mPeak').textContent = last ? `${fmt(last.peakTorqueNm * 1000, 1)} mN·m` : '—';
@@ -344,12 +347,14 @@ export function setupPhysics({ data, state, renderer }) {
   function charts(cursor = null) {
     const trace = last?.trace || [], end = trace.at(-1)?.t || tables.duration_s;
     const x = [0, end], xt = [0, +(end / 2).toFixed(2), +end.toFixed(2)];
-    const allLifts = data.motion.frames.flatMap(f => groups.map(g => f.transforms[g.id]?.[14] || 0));
+    const allLifts = ui.physics.playback === 'group-lift'
+      ? data.motion.frames.flatMap(f => series.map(index => f.transforms[groups[index].id]?.[14] || 0))
+      : tables.rows.flatMap(row => series.map(index => row.liftsMm[index]));
     const peakLift = Math.max(1, ...allLifts);
     const liftTop = Math.ceil(peakLift);
     const liftBottom = Math.min(0, Math.floor(Math.min(...allLifts)));
-    lineChart($('chartLift'), { label: hasPatterns ? '各格子の凹みの時間変化' : '各格子の上昇の時間変化', x, xt, y: [liftBottom, liftTop], yt: [liftBottom, (liftBottom + liftTop) / 2, liftTop], xl: '時間 (s)', yl: hasPatterns ? '上下 (mm)' : '上昇 (mm)', cursor,
-      series: groups.map((g, i) => ({ color: SERIES[i], pts: trace.map(row => [row.t, row.liftsMm[i]]) })) });
+    lineChart($('chartLift'), { label: text.chartLabel, x, xt, y: [liftBottom, liftTop], yt: [liftBottom, (liftBottom + liftTop) / 2, liftTop], xl: '時間 (s)', yl: text.chartAxis, cursor,
+      series: series.map((groupIndex, position) => ({ color: SERIES[position], pts: trace.map(row => [row.t, row.liftsMm[groupIndex]]) })) });
     const limit = Math.max(1, Math.round(tables.const.stallTorqueNm * (last?.stallScale ?? 1) * 1000));
     lineChart($('chartTau'), { label: 'サーボのトルクの時間変化', x, xt, y: [-limit, limit], yt: [-limit, 0, limit], xl: '時間 (s)', yl: 'トルク (mN·m)', cursor,
       series: [{ color: '--series-orange', pts: trace.map(row => [row.t, row.torqueNm * 1000]) }] });
@@ -363,7 +368,7 @@ export function setupPhysics({ data, state, renderer }) {
     }
     const top = Math.max(1, Math.ceil(maximumTorque));
     lineChart($('chartHold'), { label: 'サーボ角度ごとの重力保持トルク', x: [minimum, maximum], xt: [minimum, (minimum + maximum) / 2, maximum], y: [-top, top], yt: [-top, 0, top], xl: 'サーボ角 (°)', yl: 'mN·m', series: [{ color: '--series-blue', pts }] });
-    $('holdText').textContent = `最大 ${fmt(maximumTorque, 2)} mN·m（${at}°）。停動トルクの ${fmt(maximumTorque / (tables.const.stallTorqueNm * 1000) * 100, 2)}%。格子の重さ ${fmt(massScale, 2)}×。静止中の摩擦方向は決まらないため、この図には含めません。`;
+    $('holdText').textContent = `最大 ${fmt(maximumTorque, 2)} mN·m（${at}°）。停動トルクの ${fmt(maximumTorque / (tables.const.stallTorqueNm * 1000) * 100, 2)}%。${term}の重さ ${fmt(massScale, 2)}×。静止中の摩擦方向は決まらないため、この図には含めません。`;
   }
   function stop() { cancelAnimationFrame(animation); animation = 0; }
   function tick(now) {
@@ -383,8 +388,8 @@ export function setupPhysics({ data, state, renderer }) {
     const options = opts();
     last = { ...sim.run({ from: state.servoDeg, to: target, ...options, duration: tables.duration_s }), ...options };
     const reached = Math.abs(last.final.servoDeg - target) < 1;
-    const contact = last.contactFeasible ? '計算上の接触反力は非負です。接触時の衝撃は未計算です。' : '格子がカムから離れる可能性があります。表示は接触を仮定した形です。';
-    $('status').textContent = `条件付き計算。${reached ? '計算上は目標に到達' : '計算上も目標に届かない'}（${fmt(last.final.servoDeg)}°）。トルク上限 ${fmt(options.stallScale * 100, 0)}%。格子の重さ ${fmt(options.massScale, 2)}×。${contact} スプライン嵌合と材料は実機未確認です。`;
+    const contact = last.contactFeasible ? '計算上の接触反力は非負です。接触時の衝撃は未計算です。' : `${term}がカムから離れる可能性があります。表示は接触を仮定した形です。`;
+    $('status').textContent = `条件付き計算。${reached ? '計算上は目標に到達' : '計算上も目標に届かない'}（${fmt(last.final.servoDeg)}°）。トルク上限 ${fmt(options.stallScale * 100, 0)}%。${term}の重さ ${fmt(options.massScale, 2)}×。${contact} スプライン嵌合と材料は実機未確認です。`;
     $('gl').dataset.driveStatus = 'conditional';
     $('gl').dataset.contactFeasible = String(last.contactFeasible);
     $('gl').dataset.targetDeg = String(target);
@@ -471,8 +476,8 @@ export function setupPhysics({ data, state, renderer }) {
     const li = document.createElement('li'), chip = document.createElement('span'), text = document.createElement('span');
     chip.className = `chip ${row.pass ? 'ok' : 'warn'}`; chip.textContent = row.chip; text.textContent = row.label + (row.detail ? `。${row.detail}` : ''); li.append(chip, text); return li;
   }));
-  $('simLimits').textContent = '接続形状の検査を前提にした条件付きの1自由度計算です。計算と表示する動作形状は公称位相のままです。回転遊びは実STLの接触角を1:1で足した保守的な±位相差と、その範囲の幾何学的高さ幅だけを示します。位置精度は保証しません。スプライン嵌合と材料は含めません。この高さ幅の動的計算と全組み合わせ干渉は未検証です。格子の自重によるカム接点摩擦を含めます。案内の横予圧は不明です。追従の可否は鉛直加速度から判定します。浮き上がり後の飛行や衝撃は解きません。剛体のたわみ、破損、熱は扱いません。Pythonとブラウザの同じ条件の計算を数値で照合しています。';
-  if (hasPatterns) $('simLimits').textContent = '接続形状の検査を前提にした条件付きの計算です。実STLから質量と慣性を求めています。摩擦係数0.30を仮定します。格子の接点摩擦と案内の横荷重を含めます。円盤外周の支持面にも摩擦を見込みます。天面上向きで自重により追従する設計です。負の接触反力が必要な動作は不成立とします。回転遊びによる高さ幅は幾何学的な値です。その全組み合わせの動的干渉は未検証です。スプライン嵌合と保持力は実物で確かめる必要があります。';
+  $('simLimits').textContent = ui.physics.simLimits ?? '接続形状の検査を前提にした条件付きの1自由度計算です。計算と表示する動作形状は公称位相のままです。回転遊びは実STLの接触角を1:1で足した保守的な±位相差と、その範囲の幾何学的高さ幅だけを示します。位置精度は保証しません。スプライン嵌合と材料は含めません。この高さ幅の動的計算と全組み合わせ干渉は未検証です。格子の自重によるカム接点摩擦を含めます。案内の横予圧は不明です。追従の可否は鉛直加速度から判定します。浮き上がり後の飛行や衝撃は解きません。剛体のたわみ、破損、熱は扱いません。Pythonとブラウザの同じ条件の計算を数値で照合しています。';
+  if (hasPatterns) $('simLimits').textContent = ui.physics.simLimits ?? '接続形状の検査を前提にした条件付きの計算です。実STLから質量と慣性を求めています。摩擦係数0.30を仮定します。格子の接点摩擦と案内の横荷重を含めます。円盤外周の支持面にも摩擦を見込みます。天面上向きで自重により追従する設計です。負の接触反力が必要な動作は不成立とします。回転遊びによる高さ幅は幾何学的な値です。その全組み合わせの動的干渉は未検証です。スプライン嵌合と保持力は実物で確かめる必要があります。';
   for (const id of ['open', 'close', 'profile', 'torque', 'mass']) $(id).disabled = !drive.calculationPass;
   holdChart(); charts();
   if (drive.calculationPass && !hasPatterns) start(maximum);
