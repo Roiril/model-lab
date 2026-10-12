@@ -106,6 +106,9 @@
 - Studio を `http://localhost:3000/?model=<name>` で開いた状態で渡す（CLAUDE.md「ユーザーへの見せ方」）
 - 動く部品か組み立て工程があるモデルは、Studio の「物理検証」「組み立て」タブに登録し、検証結果をそこから見られるようにする
   （`viewer/shared/workspace.mjs` の `WORKSPACE_PAGES`。実例は `viewer/lid-cube/`）
+- 軸・歯車・カムなど部品が多い機構は、共通の `viewer/lattice/` に載せる。`viewer/lattice/CONTRACT.md` の build/ のファイルと `build/ui.json` を用意し、
+  `py -3.11 tools/lattice_web.py <name>` で書き出す（実例は `models/tangible-pixel-cube/`）。共通の表示を直すとき、過去モデルの
+  `viewer/lattice/assets/*.json` は書き換えない（C4-2 の監査が HEAD とのバイト一致を見る）
 
 ## 8. 渡すもの
 
