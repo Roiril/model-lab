@@ -1,0 +1,921 @@
+{
+ "meta": {
+  "model": "tangible-pixel-cube",
+  "dimensions_mm": [
+   96.0,
+   96.0,
+   99.0
+  ],
+  "exterior_parts": [
+   "housing",
+   "bezel"
+  ],
+  "description": "SG92R 1 台で、5x5 の画素が天面で上下する立方体。画素は重力でカムに載り、高さの表（patterns.py）がカムの形で決まる",
+  "decisions": [
+   "外形 96mm の立方体。画素の出っ張り +3mm で 99mm（10cm 以下）",
+   "外の稜は 1.0mm の 45 度面取りにそろえ、外装とベゼルの継ぎ目だけ面取りせず 1 本の水平線にした",
+   "ベゼルは見える上面を下にして刷る。縁の爪（食い込み 0.25mm）が壁の内側の窪みに嵌まり、壁のたわみ（ひずみ 0.2% 未満）で着脱する",
+   "SG92R は取付耳を 2 枚の柵で挟んで落とし込む（潰しリブで保持、奥の壁で前後を止める）。ねじ・接着なし"
+  ],
+  "limitations": [
+   "寸法の仮値（潰しリブの潰し代・柵の隙間・爪の食い込み）は実物で合わせる"
+  ],
+  "n_parts": 74,
+  "n_print": 72
+ },
+ "parts": [
+  {
+   "id": "housing",
+   "label": "外装（底と四方の壁）",
+   "assembly": "build/housing.stl",
+   "print": "build/print_housing.stl",
+   "color": "#d8d4cc",
+   "explode": [
+    0,
+    0,
+    0
+   ],
+   "exterior": true
+  },
+  {
+   "id": "bezel",
+   "label": "ベゼル（天面の格子）",
+   "assembly": "build/bezel.stl",
+   "print": "build/print_bezel.stl",
+   "color": "#bfc9d0",
+   "explode": [
+    0,
+    0,
+    110
+   ],
+   "exterior": true
+  },
+  {
+   "id": "guide_plate",
+   "label": "案内板",
+   "assembly": "build/guide_plate.stl",
+   "print": "build/print_guide_plate.stl",
+   "color": "#9fb3bf",
+   "explode": [
+    0,
+    0,
+    45
+   ]
+  },
+  {
+   "id": "shaft_0",
+   "label": "カム軸 0",
+   "assembly": "build/shaft_0.stl",
+   "print": "build/print_shaft_0.stl",
+   "color": "#5c6bc0",
+   "explode": [
+    0,
+    0,
+    20
+   ]
+  },
+  {
+   "id": "shaft_1",
+   "label": "カム軸 1",
+   "assembly": "build/shaft_1.stl",
+   "print": "build/print_shaft_1.stl",
+   "color": "#5c6bc0",
+   "explode": [
+    0,
+    0,
+    20
+   ]
+  },
+  {
+   "id": "shaft_2",
+   "label": "カム軸 2",
+   "assembly": "build/shaft_2.stl",
+   "print": "build/print_shaft_2.stl",
+   "color": "#5c6bc0",
+   "explode": [
+    0,
+    0,
+    20
+   ]
+  },
+  {
+   "id": "shaft_3",
+   "label": "カム軸 3",
+   "assembly": "build/shaft_3.stl",
+   "print": "build/print_shaft_3.stl",
+   "color": "#5c6bc0",
+   "explode": [
+    0,
+    0,
+    20
+   ]
+  },
+  {
+   "id": "shaft_4",
+   "label": "カム軸 4",
+   "assembly": "build/shaft_4.stl",
+   "print": "build/print_shaft_4.stl",
+   "color": "#5c6bc0",
+   "explode": [
+    0,
+    0,
+    20
+   ]
+  },
+  {
+   "id": "gear_0",
+   "label": "歯車 0",
+   "assembly": "build/gear_0.stl",
+   "print": "build/print_gear_0.stl",
+   "color": "#26a69a",
+   "explode": [
+    0,
+    0,
+    20
+   ]
+  },
+  {
+   "id": "gear_1",
+   "label": "歯車 1",
+   "assembly": "build/gear_1.stl",
+   "print": "build/print_gear_1.stl",
+   "color": "#26a69a",
+   "explode": [
+    0,
+    0,
+    20
+   ]
+  },
+  {
+   "id": "gear_2",
+   "label": "歯車 2",
+   "assembly": "build/gear_2.stl",
+   "print": "build/print_gear_2.stl",
+   "color": "#26a69a",
+   "explode": [
+    0,
+    0,
+    20
+   ]
+  },
+  {
+   "id": "gear_3",
+   "label": "歯車 3",
+   "assembly": "build/gear_3.stl",
+   "print": "build/print_gear_3.stl",
+   "color": "#26a69a",
+   "explode": [
+    0,
+    0,
+    20
+   ]
+  },
+  {
+   "id": "gear_4",
+   "label": "歯車 4",
+   "assembly": "build/gear_4.stl",
+   "print": "build/print_gear_4.stl",
+   "color": "#26a69a",
+   "explode": [
+    0,
+    0,
+    20
+   ]
+  },
+  {
+   "id": "cam_0_0",
+   "label": "カム 列0 行0",
+   "assembly": "build/cam_0_0.stl",
+   "print": "build/print_cam_0_0.stl",
+   "color": "#ef5350",
+   "explode": [
+    0,
+    0,
+    20
+   ]
+  },
+  {
+   "id": "cam_1_0",
+   "label": "カム 列1 行0",
+   "assembly": "build/cam_1_0.stl",
+   "print": "build/print_cam_1_0.stl",
+   "color": "#ef5350",
+   "explode": [
+    0,
+    0,
+    20
+   ]
+  },
+  {
+   "id": "cam_2_0",
+   "label": "カム 列2 行0",
+   "assembly": "build/cam_2_0.stl",
+   "print": "build/print_cam_2_0.stl",
+   "color": "#ef5350",
+   "explode": [
+    0,
+    0,
+    20
+   ]
+  },
+  {
+   "id": "cam_3_0",
+   "label": "カム 列3 行0",
+   "assembly": "build/cam_3_0.stl",
+   "print": "build/print_cam_3_0.stl",
+   "color": "#ef5350",
+   "explode": [
+    0,
+    0,
+    20
+   ]
+  },
+  {
+   "id": "cam_4_0",
+   "label": "カム 列4 行0",
+   "assembly": "build/cam_4_0.stl",
+   "print": "build/print_cam_4_0.stl",
+   "color": "#ef5350",
+   "explode": [
+    0,
+    0,
+    20
+   ]
+  },
+  {
+   "id": "cam_0_1",
+   "label": "カム 列0 行1",
+   "assembly": "build/cam_0_1.stl",
+   "print": "build/print_cam_0_1.stl",
+   "color": "#ef5350",
+   "explode": [
+    0,
+    0,
+    20
+   ]
+  },
+  {
+   "id": "cam_1_1",
+   "label": "カム 列1 行1",
+   "assembly": "build/cam_1_1.stl",
+   "print": "build/print_cam_1_1.stl",
+   "color": "#ef5350",
+   "explode": [
+    0,
+    0,
+    20
+   ]
+  },
+  {
+   "id": "cam_2_1",
+   "label": "カム 列2 行1",
+   "assembly": "build/cam_2_1.stl",
+   "print": "build/print_cam_2_1.stl",
+   "color": "#ef5350",
+   "explode": [
+    0,
+    0,
+    20
+   ]
+  },
+  {
+   "id": "cam_3_1",
+   "label": "カム 列3 行1",
+   "assembly": "build/cam_3_1.stl",
+   "print": "build/print_cam_3_1.stl",
+   "color": "#ef5350",
+   "explode": [
+    0,
+    0,
+    20
+   ]
+  },
+  {
+   "id": "cam_4_1",
+   "label": "カム 列4 行1",
+   "assembly": "build/cam_4_1.stl",
+   "print": "build/print_cam_4_1.stl",
+   "color": "#ef5350",
+   "explode": [
+    0,
+    0,
+    20
+   ]
+  },
+  {
+   "id": "cam_0_2",
+   "label": "カム 列0 行2",
+   "assembly": "build/cam_0_2.stl",
+   "print": "build/print_cam_0_2.stl",
+   "color": "#ef5350",
+   "explode": [
+    0,
+    0,
+    20
+   ]
+  },
+  {
+   "id": "cam_1_2",
+   "label": "カム 列1 行2",
+   "assembly": "build/cam_1_2.stl",
+   "print": "build/print_cam_1_2.stl",
+   "color": "#ef5350",
+   "explode": [
+    0,
+    0,
+    20
+   ]
+  },
+  {
+   "id": "cam_2_2",
+   "label": "カム 列2 行2",
+   "assembly": "build/cam_2_2.stl",
+   "print": "build/print_cam_2_2.stl",
+   "color": "#ef5350",
+   "explode": [
+    0,
+    0,
+    20
+   ]
+  },
+  {
+   "id": "cam_3_2",
+   "label": "カム 列3 行2",
+   "assembly": "build/cam_3_2.stl",
+   "print": "build/print_cam_3_2.stl",
+   "color": "#ef5350",
+   "explode": [
+    0,
+    0,
+    20
+   ]
+  },
+  {
+   "id": "cam_4_2",
+   "label": "カム 列4 行2",
+   "assembly": "build/cam_4_2.stl",
+   "print": "build/print_cam_4_2.stl",
+   "color": "#ef5350",
+   "explode": [
+    0,
+    0,
+    20
+   ]
+  },
+  {
+   "id": "cam_0_3",
+   "label": "カム 列0 行3",
+   "assembly": "build/cam_0_3.stl",
+   "print": "build/print_cam_0_3.stl",
+   "color": "#ef5350",
+   "explode": [
+    0,
+    0,
+    20
+   ]
+  },
+  {
+   "id": "cam_1_3",
+   "label": "カム 列1 行3",
+   "assembly": "build/cam_1_3.stl",
+   "print": "build/print_cam_1_3.stl",
+   "color": "#ef5350",
+   "explode": [
+    0,
+    0,
+    20
+   ]
+  },
+  {
+   "id": "cam_2_3",
+   "label": "カム 列2 行3",
+   "assembly": "build/cam_2_3.stl",
+   "print": "build/print_cam_2_3.stl",
+   "color": "#ef5350",
+   "explode": [
+    0,
+    0,
+    20
+   ]
+  },
+  {
+   "id": "cam_3_3",
+   "label": "カム 列3 行3",
+   "assembly": "build/cam_3_3.stl",
+   "print": "build/print_cam_3_3.stl",
+   "color": "#ef5350",
+   "explode": [
+    0,
+    0,
+    20
+   ]
+  },
+  {
+   "id": "cam_4_3",
+   "label": "カム 列4 行3",
+   "assembly": "build/cam_4_3.stl",
+   "print": "build/print_cam_4_3.stl",
+   "color": "#ef5350",
+   "explode": [
+    0,
+    0,
+    20
+   ]
+  },
+  {
+   "id": "cam_0_4",
+   "label": "カム 列0 行4",
+   "assembly": "build/cam_0_4.stl",
+   "print": "build/print_cam_0_4.stl",
+   "color": "#ef5350",
+   "explode": [
+    0,
+    0,
+    20
+   ]
+  },
+  {
+   "id": "cam_1_4",
+   "label": "カム 列1 行4",
+   "assembly": "build/cam_1_4.stl",
+   "print": "build/print_cam_1_4.stl",
+   "color": "#ef5350",
+   "explode": [
+    0,
+    0,
+    20
+   ]
+  },
+  {
+   "id": "cam_2_4",
+   "label": "カム 列2 行4",
+   "assembly": "build/cam_2_4.stl",
+   "print": "build/print_cam_2_4.stl",
+   "color": "#ef5350",
+   "explode": [
+    0,
+    0,
+    20
+   ]
+  },
+  {
+   "id": "cam_3_4",
+   "label": "カム 列3 行4",
+   "assembly": "build/cam_3_4.stl",
+   "print": "build/print_cam_3_4.stl",
+   "color": "#ef5350",
+   "explode": [
+    0,
+    0,
+    20
+   ]
+  },
+  {
+   "id": "cam_4_4",
+   "label": "カム 列4 行4",
+   "assembly": "build/cam_4_4.stl",
+   "print": "build/print_cam_4_4.stl",
+   "color": "#ef5350",
+   "explode": [
+    0,
+    0,
+    20
+   ]
+  },
+  {
+   "id": "pixel_0_0",
+   "label": "画素 列0 行0",
+   "assembly": "build/pixel_0_0.stl",
+   "print": "build/print_pixel_0_0.stl",
+   "color": "#e69f00",
+   "explode": [
+    0,
+    0,
+    70
+   ]
+  },
+  {
+   "id": "pixel_1_0",
+   "label": "画素 列1 行0",
+   "assembly": "build/pixel_1_0.stl",
+   "print": "build/print_pixel_1_0.stl",
+   "color": "#e69f00",
+   "explode": [
+    0,
+    0,
+    70
+   ]
+  },
+  {
+   "id": "pixel_2_0",
+   "label": "画素 列2 行0",
+   "assembly": "build/pixel_2_0.stl",
+   "print": "build/print_pixel_2_0.stl",
+   "color": "#e69f00",
+   "explode": [
+    0,
+    0,
+    70
+   ]
+  },
+  {
+   "id": "pixel_3_0",
+   "label": "画素 列3 行0",
+   "assembly": "build/pixel_3_0.stl",
+   "print": "build/print_pixel_3_0.stl",
+   "color": "#e69f00",
+   "explode": [
+    0,
+    0,
+    70
+   ]
+  },
+  {
+   "id": "pixel_4_0",
+   "label": "画素 列4 行0",
+   "assembly": "build/pixel_4_0.stl",
+   "print": "build/print_pixel_4_0.stl",
+   "color": "#e69f00",
+   "explode": [
+    0,
+    0,
+    70
+   ]
+  },
+  {
+   "id": "pixel_0_1",
+   "label": "画素 列0 行1",
+   "assembly": "build/pixel_0_1.stl",
+   "print": "build/print_pixel_0_1.stl",
+   "color": "#e69f00",
+   "explode": [
+    0,
+    0,
+    70
+   ]
+  },
+  {
+   "id": "pixel_1_1",
+   "label": "画素 列1 行1",
+   "assembly": "build/pixel_1_1.stl",
+   "print": "build/print_pixel_1_1.stl",
+   "color": "#e69f00",
+   "explode": [
+    0,
+    0,
+    70
+   ]
+  },
+  {
+   "id": "pixel_2_1",
+   "label": "画素 列2 行1",
+   "assembly": "build/pixel_2_1.stl",
+   "print": "build/print_pixel_2_1.stl",
+   "color": "#e69f00",
+   "explode": [
+    0,
+    0,
+    70
+   ]
+  },
+  {
+   "id": "pixel_3_1",
+   "label": "画素 列3 行1",
+   "assembly": "build/pixel_3_1.stl",
+   "print": "build/print_pixel_3_1.stl",
+   "color": "#e69f00",
+   "explode": [
+    0,
+    0,
+    70
+   ]
+  },
+  {
+   "id": "pixel_4_1",
+   "label": "画素 列4 行1",
+   "assembly": "build/pixel_4_1.stl",
+   "print": "build/print_pixel_4_1.stl",
+   "color": "#e69f00",
+   "explode": [
+    0,
+    0,
+    70
+   ]
+  },
+  {
+   "id": "pixel_0_2",
+   "label": "画素 列0 行2",
+   "assembly": "build/pixel_0_2.stl",
+   "print": "build/print_pixel_0_2.stl",
+   "color": "#e69f00",
+   "explode": [
+    0,
+    0,
+    70
+   ]
+  },
+  {
+   "id": "pixel_1_2",
+   "label": "画素 列1 行2",
+   "assembly": "build/pixel_1_2.stl",
+   "print": "build/print_pixel_1_2.stl",
+   "color": "#e69f00",
+   "explode": [
+    0,
+    0,
+    70
+   ]
+  },
+  {
+   "id": "pixel_2_2",
+   "label": "画素 列2 行2",
+   "assembly": "build/pixel_2_2.stl",
+   "print": "build/print_pixel_2_2.stl",
+   "color": "#e69f00",
+   "explode": [
+    0,
+    0,
+    70
+   ]
+  },
+  {
+   "id": "pixel_3_2",
+   "label": "画素 列3 行2",
+   "assembly": "build/pixel_3_2.stl",
+   "print": "build/print_pixel_3_2.stl",
+   "color": "#e69f00",
+   "explode": [
+    0,
+    0,
+    70
+   ]
+  },
+  {
+   "id": "pixel_4_2",
+   "label": "画素 列4 行2",
+   "assembly": "build/pixel_4_2.stl",
+   "print": "build/print_pixel_4_2.stl",
+   "color": "#e69f00",
+   "explode": [
+    0,
+    0,
+    70
+   ]
+  },
+  {
+   "id": "pixel_0_3",
+   "label": "画素 列0 行3",
+   "assembly": "build/pixel_0_3.stl",
+   "print": "build/print_pixel_0_3.stl",
+   "color": "#e69f00",
+   "explode": [
+    0,
+    0,
+    70
+   ]
+  },
+  {
+   "id": "pixel_1_3",
+   "label": "画素 列1 行3",
+   "assembly": "build/pixel_1_3.stl",
+   "print": "build/print_pixel_1_3.stl",
+   "color": "#e69f00",
+   "explode": [
+    0,
+    0,
+    70
+   ]
+  },
+  {
+   "id": "pixel_2_3",
+   "label": "画素 列2 行3",
+   "assembly": "build/pixel_2_3.stl",
+   "print": "build/print_pixel_2_3.stl",
+   "color": "#e69f00",
+   "explode": [
+    0,
+    0,
+    70
+   ]
+  },
+  {
+   "id": "pixel_3_3",
+   "label": "画素 列3 行3",
+   "assembly": "build/pixel_3_3.stl",
+   "print": "build/print_pixel_3_3.stl",
+   "color": "#e69f00",
+   "explode": [
+    0,
+    0,
+    70
+   ]
+  },
+  {
+   "id": "pixel_4_3",
+   "label": "画素 列4 行3",
+   "assembly": "build/pixel_4_3.stl",
+   "print": "build/print_pixel_4_3.stl",
+   "color": "#e69f00",
+   "explode": [
+    0,
+    0,
+    70
+   ]
+  },
+  {
+   "id": "pixel_0_4",
+   "label": "画素 列0 行4",
+   "assembly": "build/pixel_0_4.stl",
+   "print": "build/print_pixel_0_4.stl",
+   "color": "#e69f00",
+   "explode": [
+    0,
+    0,
+    70
+   ]
+  },
+  {
+   "id": "pixel_1_4",
+   "label": "画素 列1 行4",
+   "assembly": "build/pixel_1_4.stl",
+   "print": "build/print_pixel_1_4.stl",
+   "color": "#e69f00",
+   "explode": [
+    0,
+    0,
+    70
+   ]
+  },
+  {
+   "id": "pixel_2_4",
+   "label": "画素 列2 行4",
+   "assembly": "build/pixel_2_4.stl",
+   "print": "build/print_pixel_2_4.stl",
+   "color": "#e69f00",
+   "explode": [
+    0,
+    0,
+    70
+   ]
+  },
+  {
+   "id": "pixel_3_4",
+   "label": "画素 列3 行4",
+   "assembly": "build/pixel_3_4.stl",
+   "print": "build/print_pixel_3_4.stl",
+   "color": "#e69f00",
+   "explode": [
+    0,
+    0,
+    70
+   ]
+  },
+  {
+   "id": "pixel_4_4",
+   "label": "画素 列4 行4",
+   "assembly": "build/pixel_4_4.stl",
+   "print": "build/print_pixel_4_4.stl",
+   "color": "#e69f00",
+   "explode": [
+    0,
+    0,
+    70
+   ]
+  },
+  {
+   "id": "horn_coupler",
+   "label": "受け（ホーンを包む半円歯車）",
+   "assembly": "build/horn_coupler.stl",
+   "print": "build/print_horn_coupler.stl",
+   "color": "#a1887f",
+   "explode": [
+    30,
+    0,
+    0
+   ]
+  },
+  {
+   "id": "phase_comb",
+   "label": "位相合わせ治具（組立のみ）",
+   "assembly": "build/phase_comb.stl",
+   "print": "build/print_phase_comb.stl",
+   "color": "#ffd54f",
+   "explode": [
+    0,
+    0,
+    30
+   ],
+   "jig": true
+  },
+  {
+   "id": "sg92r",
+   "label": "SG92R（本体と配線）",
+   "assembly": "build/sg92r.stl",
+   "print": null,
+   "color": "#37474f",
+   "explode": [
+    0,
+    0,
+    0
+   ],
+   "stock": true
+  },
+  {
+   "id": "sg92r_horn",
+   "label": "SG92R ホーン",
+   "assembly": "build/sg92r_horn.stl",
+   "print": null,
+   "color": "#f4f4f4",
+   "explode": [
+    60,
+    0,
+    0
+   ],
+   "stock": true
+  },
+  {
+   "id": "shaft_clip_0",
+   "label": "C クリップ 0",
+   "assembly": "build/shaft_clip_0.stl",
+   "print": "build/print_shaft_clip_0.stl",
+   "color": "#ab47bc",
+   "explode": [
+    0,
+    0,
+    20
+   ]
+  },
+  {
+   "id": "shaft_clip_1",
+   "label": "C クリップ 1",
+   "assembly": "build/shaft_clip_1.stl",
+   "print": "build/print_shaft_clip_1.stl",
+   "color": "#ab47bc",
+   "explode": [
+    0,
+    0,
+    20
+   ]
+  },
+  {
+   "id": "shaft_clip_2",
+   "label": "C クリップ 2",
+   "assembly": "build/shaft_clip_2.stl",
+   "print": "build/print_shaft_clip_2.stl",
+   "color": "#ab47bc",
+   "explode": [
+    0,
+    0,
+    20
+   ]
+  },
+  {
+   "id": "shaft_clip_3",
+   "label": "C クリップ 3",
+   "assembly": "build/shaft_clip_3.stl",
+   "print": "build/print_shaft_clip_3.stl",
+   "color": "#ab47bc",
+   "explode": [
+    0,
+    0,
+    20
+   ]
+  },
+  {
+   "id": "shaft_clip_4",
+   "label": "C クリップ 4",
+   "assembly": "build/shaft_clip_4.stl",
+   "print": "build/print_shaft_clip_4.stl",
+   "color": "#ab47bc",
+   "explode": [
+    0,
+    0,
+    20
+   ]
+  },
+  {
+   "id": "servo_clip_0",
+   "label": "サーボの押さえクリップ 0",
+   "assembly": "build/servo_clip_0.stl",
+   "print": "build/print_servo_clip_0.stl",
+   "color": "#f06292",
+   "explode": [
+    0,
+    0,
+    40
+   ]
+  },
+  {
+   "id": "servo_clip_1",
+   "label": "サーボの押さえクリップ 1",
+   "assembly": "build/servo_clip_1.stl",
+   "print": "build/print_servo_clip_1.stl",
+   "color": "#f06292",
+   "explode": [
+    0,
+    0,
+    40
+   ]
+  }
+ ]
+}

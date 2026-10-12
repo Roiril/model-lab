@@ -1,0 +1,31 @@
+{
+  "label": "画素キューブ",
+  "displayName": "タンジブル画素キューブ",
+  "navLabel": "画素キューブ 5×5",
+  "navOrder": 50,
+  "dimensionsFallback": "96 × 96 × 96mm",
+  "physics": {
+    "title": "画素の上下",
+    "playback": "motion-frames",
+    "term": "画素",
+    "chartSeries": ["pixel_2_2", "pixel_1_2", "pixel_0_2", "pixel_0_0", "pixel_4_4"],
+    "openLabel": "次の表へ",
+    "closeLabel": "前の表へ",
+    "chartLabel": "画素の高さ",
+    "chartAxis": "高さ（mm）",
+    "massNote": "質量は実 STL の体積に PLA 密度の 85%（1054 kg/m³）を掛けて求めました。足と板カムの摩擦係数は 0.35 です（感度 0.45）。案内のこじれと軸受けの摩擦、歯車効率 0.9/噛合もサーボ軸へ換算して入れます。",
+    "patternNote": "表は patterns.py に 5×5 の高さで書き、カム 25 枚をそこから生成する。サーボ角で表を選ぶ",
+    "simLimits": "天面を上にした卓上での 1 自由度の計算。画素は重力でカムに載る。サーボは C1 と同じ比例＋速度の模型。足とカムの滑り、案内のこじれ、軸受け、歯車効率 0.9/噛合の摩擦を入れる。摩擦係数は 0.35（感度 0.45）で未実測。画素がカムから浮いた後の自由落下と着地の衝撃は解かない"
+  },
+  "assembly": {
+    "servoSetup": "箱の外でサーボを 90° に止めてから、付属ホーンを正しい向きで受けに入れる。90° はすべての画素が面一になる角度"
+  },
+  "print": { "downloadBase": "prints" },
+  "legendGroups": [
+    { "label": "画素", "prefix": "pixel_", "color": "#e69f00" },
+    { "label": "クリップ", "parts": ["shaft_clip_0", "shaft_clip_1", "shaft_clip_2", "shaft_clip_3", "shaft_clip_4", "servo_clip_0", "servo_clip_1"], "color": "#999999" },
+    { "label": "板カム", "prefix": "cam_", "color": "#56b4e9" },
+    { "label": "カム軸", "prefix": "shaft_", "color": "#009e73" },
+    { "label": "歯車", "prefix": "gear_", "color": "#cc79a7" }
+  ]
+}

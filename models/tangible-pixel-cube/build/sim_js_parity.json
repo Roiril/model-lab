@@ -1,0 +1,183 @@
+{
+ "pass": true,
+ "node": "v24.11.1",
+ "tolerance": {
+  "t": 1e-9,
+  "servoDeg": 0.000001,
+  "commandDeg": 0.000001,
+  "torqueNm": 1e-9,
+  "liftsMm": 0.000001,
+  "scalar": 0.000001
+ },
+ "tablesSha256Matches": true,
+ "runs": [
+  {
+   "name": "standard",
+   "points": 701,
+   "jsPoints": 701,
+   "ok": true,
+   "problems": [],
+   "scalarDiffs": {
+    "finalServoDeg": 4.324647306930274e-10,
+    "finalTorqueNm": 1.3600232051658168e-14,
+    "peakTorqueNm": 3.6241842860107454e-14,
+    "maxContactSpeedMmS": 0,
+    "minNormalForceN": 4.291705879566621e-14
+   },
+   "maxima": {
+    "t": 2.008171406941983e-12,
+    "servoDeg": 4.987725787941599e-10,
+    "commandDeg": 4.969251676811837e-10,
+    "torqueNm": 4.996697500203595e-14,
+    "liftsMm": 4.995337476998429e-12
+   }
+  },
+  {
+   "name": "reverse",
+   "points": 701,
+   "jsPoints": 701,
+   "ok": true,
+   "problems": [],
+   "scalarDiffs": {
+    "finalServoDeg": 3.182698549153429e-11,
+    "finalTorqueNm": 1.8225004838612335e-14,
+    "peakTorqueNm": 7.216449660063518e-16,
+    "maxContactSpeedMmS": 0,
+    "minNormalForceN": 3.785860513971784e-14
+   },
+   "maxima": {
+    "t": 2.008171406941983e-12,
+    "servoDeg": 4.989573199054576e-10,
+    "commandDeg": 4.998241820430849e-10,
+    "torqueNm": 4.992881108556446e-14,
+    "liftsMm": 4.9897863618753036e-12
+   }
+  },
+  {
+   "name": "fullSpeed",
+   "points": 701,
+   "jsPoints": 701,
+   "ok": true,
+   "problems": [],
+   "scalarDiffs": {
+    "finalServoDeg": 4.324647306930274e-10,
+    "finalTorqueNm": 1.3111040031432708e-14,
+    "peakTorqueNm": 0,
+    "maxContactSpeedMmS": 0,
+    "minNormalForceN": 2.4447111002245947e-13
+   },
+   "maxima": {
+    "t": 2.008171406941983e-12,
+    "servoDeg": 4.983746748621343e-10,
+    "commandDeg": 0,
+    "torqueNm": 4.964778588245622e-14,
+    "liftsMm": 4.976019596369952e-12
+   }
+  },
+  {
+   "name": "heavy",
+   "points": 701,
+   "jsPoints": 701,
+   "ok": true,
+   "problems": [],
+   "scalarDiffs": {
+    "finalServoDeg": 4.8402171159978025e-11,
+    "finalTorqueNm": 1.1934897514720433e-14,
+    "peakTorqueNm": 3.8097303090012247e-13,
+    "maxContactSpeedMmS": 0,
+    "minNormalForceN": 4.5102810375396984e-14
+   },
+   "maxima": {
+    "t": 2.008171406941983e-12,
+    "servoDeg": 4.961293598171324e-10,
+    "commandDeg": 4.969251676811837e-10,
+    "torqueNm": 4.746203430272544e-13,
+    "liftsMm": 4.99977836909693e-12
+   }
+  },
+  {
+   "name": "halfRequired",
+   "points": 701,
+   "jsPoints": 701,
+   "ok": true,
+   "problems": [],
+   "scalarDiffs": {
+    "finalServoDeg": 0,
+    "finalTorqueNm": 3.300137940698278e-14,
+    "peakTorqueNm": 3.300137940698278e-14,
+    "maxContactSpeedMmS": 0,
+    "minNormalForceN": 6.4254157550180935e-15
+   },
+   "maxima": {
+    "t": 2.008171406941983e-12,
+    "servoDeg": 0,
+    "commandDeg": 4.969251676811837e-10,
+    "torqueNm": 4.281644483405955e-14,
+    "liftsMm": 0
+   }
+  },
+  {
+   "name": "pair_1_to_3",
+   "points": 701,
+   "jsPoints": 701,
+   "ok": true,
+   "problems": [],
+   "scalarDiffs": {
+    "finalServoDeg": 4.997957603336545e-10,
+    "finalTorqueNm": 3.251565683370927e-14,
+    "peakTorqueNm": 5.703770789011742e-15,
+    "maxContactSpeedMmS": 0,
+    "minNormalForceN": 1.2698175844150228e-14
+   },
+   "maxima": {
+    "t": 2.008171406941983e-12,
+    "servoDeg": 4.997957603336545e-10,
+    "commandDeg": 4.97863084092387e-10,
+    "torqueNm": 4.99184027447086e-14,
+    "liftsMm": 4.992228852529479e-12
+   }
+  },
+  {
+   "name": "pairstep_2_to_3",
+   "points": 701,
+   "jsPoints": 701,
+   "ok": true,
+   "problems": [],
+   "scalarDiffs": {
+    "finalServoDeg": 4.997957603336545e-10,
+    "finalTorqueNm": 3.3726493819941084e-14,
+    "peakTorqueNm": 0,
+    "maxContactSpeedMmS": 0,
+    "minNormalForceN": 4.460667946126762e-14
+   },
+   "maxima": {
+    "t": 2.008171406941983e-12,
+    "servoDeg": 4.997957603336545e-10,
+    "commandDeg": 0,
+    "torqueNm": 4.9172471650038574e-14,
+    "liftsMm": 4.879652237832488e-12
+   }
+  },
+  {
+   "name": "stop_10_to_1",
+   "points": 701,
+   "jsPoints": 701,
+   "ok": true,
+   "problems": [],
+   "scalarDiffs": {
+    "finalServoDeg": 4.941114184475737e-11,
+    "finalTorqueNm": 2.6395552410463097e-14,
+    "peakTorqueNm": 1.379452108096757e-14,
+    "maxContactSpeedMmS": 0,
+    "minNormalForceN": 4.238276396506535e-14
+   },
+   "maxima": {
+    "t": 2.008171406941983e-12,
+    "servoDeg": 4.9890758191395435e-11,
+    "commandDeg": 4.970956979377661e-11,
+    "torqueNm": 4.998432223679572e-14,
+    "liftsMm": 4.998224056862455e-12
+   }
+  }
+ ]
+}

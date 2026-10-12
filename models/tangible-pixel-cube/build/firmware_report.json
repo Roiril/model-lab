@@ -1,0 +1,416 @@
+{
+  "version": 1,
+  "model": "tangible-pixel-cube",
+  "generator": "models/tangible-pixel-cube/firmware.py",
+  "source": {
+    "file": "models/tangible-pixel-cube/demo/demo.ino",
+    "sha256": "355901c913567e1589dcaaaea6702089c96377740f099fcdf76d6df936fe731f"
+  },
+  "inputs": [
+    {
+      "file": "models/tangible-pixel-cube/patterns.py",
+      "sha256": "c91d560ab93641d34294f80ed2ee9fb6ae227110dcf05927b29fad96aee8974a"
+    },
+    {
+      "file": "models/tangible-pixel-cube/params.py",
+      "sha256": "6cd1db746f347becb77f904622ef9e53be96c7002c169873cc4d52b40f116542"
+    },
+    {
+      "file": "models/tangible-pixel-cube/firmware.py",
+      "sha256": "c40f01c318617af1ee507eaad1dc465f7a32da1c4761bbf92cbcd8d3ed1dbdd8"
+    }
+  ],
+  "simulateReportSourceHashesMatch": {
+    "models/tangible-pixel-cube/patterns.py": true,
+    "models/tangible-pixel-cube/params.py": true
+  },
+  "angles": {
+    "assemblyDeg": 90.0,
+    "flatIndex": 2,
+    "tableStepDeg": 34.0,
+    "servoRangeDeg": [
+      10.0,
+      170.0
+    ],
+    "phaseTrimDeg": 0.0,
+    "phaseTrimAllowedDeg": [
+      -10.0,
+      10.0
+    ]
+  },
+  "phaseTrim": {
+    "compileDefaultDeg": 0.0,
+    "runtimeStepDeg": 0.25,
+    "allowedDeg": [
+      -10.0,
+      10.0
+    ],
+    "eeprom": {
+      "address": 0,
+      "layout": "[magic 0xA7][int8 quarter-degrees][bitwise complement]",
+      "unitDeg": 0.25,
+      "writtenBy": "w only (EEPROM.update)",
+      "invalidFallback": "compile-time PHASE_TRIM_DEG"
+    }
+  },
+  "tables": [
+    {
+      "index": 0,
+      "name": "wave",
+      "labelJa": "波",
+      "servoDeg": 22.0,
+      "heightsMm": [
+        [
+          0.0,
+          0.0,
+          -1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -1.0,
+          -0.5,
+          0.5,
+          0.0
+        ],
+        [
+          -0.5,
+          -1.0,
+          0.0,
+          1.0,
+          0.5
+        ],
+        [
+          0.0,
+          -0.5,
+          0.5,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ]
+      ]
+    },
+    {
+      "index": 1,
+      "name": "dip",
+      "labelJa": "中央が凹む",
+      "servoDeg": 56.0,
+      "heightsMm": [
+        [
+          -0.5,
+          -0.5,
+          -0.5,
+          -0.5,
+          -0.5
+        ],
+        [
+          -0.5,
+          -1.0,
+          -1.5,
+          -1.0,
+          -0.5
+        ],
+        [
+          -0.5,
+          -1.5,
+          -3.0,
+          -1.5,
+          -0.5
+        ],
+        [
+          -0.5,
+          -1.0,
+          -1.5,
+          -1.0,
+          -0.5
+        ],
+        [
+          -0.5,
+          -0.5,
+          -0.5,
+          -0.5,
+          -0.5
+        ]
+      ]
+    },
+    {
+      "index": 2,
+      "name": "flat",
+      "labelJa": "平ら",
+      "servoDeg": 90.0,
+      "heightsMm": [
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      ]
+    },
+    {
+      "index": 3,
+      "name": "bump",
+      "labelJa": "中央がぼこっと出る",
+      "servoDeg": 124.0,
+      "heightsMm": [
+        [
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        [
+          0.5,
+          1.0,
+          1.5,
+          1.0,
+          0.5
+        ],
+        [
+          0.5,
+          1.5,
+          3.0,
+          1.5,
+          0.5
+        ],
+        [
+          0.5,
+          1.0,
+          1.5,
+          1.0,
+          0.5
+        ],
+        [
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ]
+      ]
+    },
+    {
+      "index": 4,
+      "name": "corners",
+      "labelJa": "四隅が出る",
+      "servoDeg": 158.0,
+      "heightsMm": [
+        [
+          1.5,
+          0.5,
+          0.0,
+          0.5,
+          1.5
+        ],
+        [
+          0.5,
+          0.0,
+          0.0,
+          0.0,
+          0.5
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.5,
+          0.0,
+          0.0,
+          0.0,
+          0.5
+        ],
+        [
+          1.5,
+          0.5,
+          0.0,
+          0.5,
+          1.5
+        ]
+      ]
+    }
+  ],
+  "shows": {
+    "push": {
+      "command": "p",
+      "tableIndex": 1,
+      "basis": "name 'dip' (center -3.0 mm)",
+      "sequence": [
+        2,
+        1,
+        2
+      ]
+    },
+    "bump": {
+      "command": "b",
+      "tableIndex": 3,
+      "basis": "name 'bump' (center +3.0 mm)",
+      "sequence": [
+        2,
+        3,
+        2
+      ]
+    },
+    "all": {
+      "command": "g",
+      "sequence": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        2
+      ]
+    },
+    "dwellMs": 1500
+  },
+  "moveTiming": {
+    "safeKeysSearched": [
+      "minNoLiftMoveS",
+      "safeMinTableMoveS",
+      "minSafeTableMoveS",
+      "liftOffFreeMinTableMoveS",
+      "safeMinimumTableMoveS"
+    ],
+    "simulateReport": {
+      "file": "models/tangible-pixel-cube/build/simulate_report.json",
+      "sha256": "1bd2c87aeb8452220db248bd46e5ce04dcbeeed3ed180776f94503f3d1251ccc"
+    },
+    "marginFactor": 1.3,
+    "verifiedInSimulation": {
+      "tablePairsDurationS": 3.0,
+      "tablePairsAllContactFeasible": true,
+      "fastestLiftOffRuns": [
+        "fullSpeed",
+        "fullSpeedReverse"
+      ]
+    },
+    "source": "simulate_report.json",
+    "key": "motion.minNoLiftMoveS.max",
+    "safeSecondsPerTableStep": 0.05,
+    "noLiftFloorMs": 65,
+    "demoMoveMs": 600,
+    "defaultUsed": false,
+    "minMoveMs": 600
+  },
+  "commands": {
+    "0-4": "move to table",
+    "p": "push-in show",
+    "b": "push-out show",
+    "g": "all tables then flat",
+    "s": "hold",
+    "c": "assembly angle",
+    "?": "list",
+    "+": "trim +0.25 deg",
+    "-": "trim -0.25 deg",
+    "z": "trim 0",
+    "w": "save trim to EEPROM"
+  },
+  "compile": {
+    "sourceSha256": "355901c913567e1589dcaaaea6702089c96377740f099fcdf76d6df936fe731f",
+    "target": "arduino:avr:uno",
+    "status": "compiled",
+    "pass": true,
+    "compiledAt": "2026-10-12T20:20:18.025591+00:00",
+    "cli": {
+      "file": "D:\\Projects\\model-lab-c4-2-temp\\arduino\\cli\\arduino-cli.exe",
+      "executableSha256": "1017de89179c3167e6b8a38ca6cc4091fa69a3cf97aafa7810f01423003f5571"
+    },
+    "config": "D:\\Projects\\model-lab-c4-2-temp\\arduino\\arduino-cli.yaml",
+    "workDirectory": "D:\\Projects\\model-lab-c4-2-temp\\arduino\\tangible-pixel-cube-compile",
+    "command": "D:\\Projects\\model-lab-c4-2-temp\\arduino\\cli\\arduino-cli.exe --config-file D:\\Projects\\model-lab-c4-2-temp\\arduino\\arduino-cli.yaml compile --fqbn arduino:avr:uno --build-path D:\\Projects\\model-lab-c4-2-temp\\arduino\\tangible-pixel-cube-compile\\production_build C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\tangible-pixel-cube\\demo",
+    "compileExitCode": 0,
+    "compileElapsedMs": 1953,
+    "stderrBytes": 0,
+    "flashBytes": 7166,
+    "flashMaximumBytes": 32256,
+    "flashPercent": 22,
+    "ramBytes": 312,
+    "ramRemainingBytes": 1736,
+    "ramMaximumBytes": 2048,
+    "ramPercent": 15,
+    "hex": {
+      "file": "D:\\Projects\\model-lab-c4-2-temp\\arduino\\tangible-pixel-cube-compile\\production_build\\demo.ino.hex",
+      "sha256": "286e7c6c21077741349be99b8be5a16fa17a1e2315ad15079033efc70e453481",
+      "sizeBytes": 20169
+    },
+    "phaseTrimBoundary": [
+      {
+        "trimDeg": -10,
+        "expectedCompile": true,
+        "compileExitCode": 0,
+        "boundaryDiagnosticDetected": false,
+        "pass": true,
+        "elapsedMs": 1953
+      },
+      {
+        "trimDeg": 10,
+        "expectedCompile": true,
+        "compileExitCode": 0,
+        "boundaryDiagnosticDetected": false,
+        "pass": true,
+        "elapsedMs": 2047
+      },
+      {
+        "trimDeg": -11,
+        "expectedCompile": false,
+        "compileExitCode": 1,
+        "boundaryDiagnosticDetected": true,
+        "pass": true,
+        "elapsedMs": 609
+      },
+      {
+        "trimDeg": 11,
+        "expectedCompile": false,
+        "compileExitCode": 1,
+        "boundaryDiagnosticDetected": true,
+        "pass": true,
+        "elapsedMs": 625
+      }
+    ],
+    "globalPathModified": false,
+    "hardwareTested": false
+  },
+  "hardwareTested": false,
+  "hardwareLimitation": "マイコンへの書き込みと SG92R の通電は未実施。位相補正 PHASE_TRIM_DEG は実物で決める。"
+}

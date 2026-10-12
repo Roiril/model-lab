@@ -121,6 +121,7 @@ export function normalizeUi(raw, { model, partIds = [], groupIds = [] } = {}) {
       chartAxis: text(physics.chartAxis, 'physics.chartAxis', null),
       patternNote: text(physics.patternNote, 'physics.patternNote', null),
       simLimits: text(physics.simLimits, 'physics.simLimits', null),
+      massNote: text(physics.massNote, 'physics.massNote', null),
       chartSeries,
     },
     assembly: {

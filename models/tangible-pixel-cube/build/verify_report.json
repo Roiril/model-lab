@@ -1,0 +1,5228 @@
+{
+ "version": 1,
+ "model": "tangible-pixel-cube",
+ "calibration": {
+  "overlapHalf": {
+   "measured": 0.5,
+   "expected": 0.5,
+   "tolerance": 0.0001,
+   "pass": true
+  },
+  "thinOverlap0.01": {
+   "measured": 0.009999990463256836,
+   "expected": 0.01,
+   "tolerance": 0.0001,
+   "pass": true
+  },
+  "thinOverlap0.002": {
+   "measured": 0.0020000040531158447,
+   "expected": 0.002,
+   "tolerance": 0.0001,
+   "pass": true
+  },
+  "separated": {
+   "measured": 0.0,
+   "expected": 0.0,
+   "tolerance": 1e-09,
+   "pass": true
+  },
+  "faceContact": {
+   "measured": 0.0,
+   "expected": 0.0,
+   "tolerance": 1e-07,
+   "pass": true
+  },
+  "edgeContact": {
+   "measured": 0.0,
+   "expected": 0.0,
+   "tolerance": 1e-07,
+   "pass": true
+  },
+  "nestedInside": {
+   "measured": 1.0,
+   "expected": 1.0,
+   "tolerance": 1e-06,
+   "pass": true
+  },
+  "nestedInsideReversed": {
+   "measured": 1.0,
+   "expected": 1.0,
+   "tolerance": 1e-06,
+   "pass": true
+  },
+  "tiltedFaceContactAtScale": {
+   "measured": 0.0,
+   "expected": 0.0,
+   "tolerance": 0.0001,
+   "pass": true
+  },
+  "tiltedThinOverlapAtScale": {
+   "measured": 4.000433860168268,
+   "expected": 4.0,
+   "tolerance": 0.01,
+   "pass": true
+  },
+  "prefilterAgreement": {
+   "cases": [
+    {
+     "case": "separated",
+     "fast": 0.0,
+     "full": 0.0,
+     "pass": true
+    },
+    {
+     "case": "overlap",
+     "fast": 0.7000000029802322,
+     "full": 0.7000000029802322,
+     "pass": true
+    },
+    {
+     "case": "nested",
+     "fast": 1.0,
+     "full": 1.0,
+     "pass": true
+    }
+   ],
+   "pass": true
+  },
+  "floorSeparatesNoiseFromOverlap": {
+   "floorMm3": 0.001,
+   "pass": true,
+   "note": "実寸 20mm 立方体の傾けた面接触が床の 1/10 以下、厚み 0.002mm（体積 0.002mm3）の重なりが床を超える"
+  },
+  "firstContactLinear": {
+   "measured": 0.501001,
+   "expected": 0.501,
+   "tolerance": 0.0001,
+   "note": "隙間 0.5mm + 床 / 面積（1mm2）",
+   "pass": true
+  },
+  "firstContactAngular": {
+   "measured": 14.255127,
+   "expected": 14.255098890306314,
+   "tolerance": 0.01,
+   "contactWithoutFloorDeg": 13.051940568669934,
+   "note": "角の接触は侵入が浅いうちは体積が小さく、床を超える角が幾何の接触角より 1 度ほど先になる。その解析値と比べる",
+   "pass": true
+  },
+  "firstContactIgnoresDesignedRib": {
+   "plainTravel": 0.302778,
+   "plainExpected": 0.30277777777777776,
+   "maskedTravel": 1.001001,
+   "maskedExpected": 1.001,
+   "pass": true
+  },
+  "rotationConvention": {
+   "measured": [
+    1.0,
+    18.0,
+    24.2
+   ],
+   "expected": [
+    1.0,
+    18.0,
+    24.2
+   ],
+   "pass": true
+  },
+  "topHeight": {
+   "flatTopMm": 1.0,
+   "outsideIsMinusInf": true,
+   "rectRidgeMm": 1.3660254037844386,
+   "rectClippedMm": 1.0773502691896257,
+   "rectClippedExpectedMm": 1.0773502691896257,
+   "rectEmptyIsMinusInf": true,
+   "tiltedCentreMm": 1.1547005383792515,
+   "tiltedCentreExpectedMm": 1.1547005383792515,
+   "tiltedRidgeMm": 1.3660254037844386,
+   "tiltedRidgeExpectedMm": 1.3660254037844386,
+   "pass": true
+  },
+  "pass": true,
+  "realPartDetection": {
+   "pixelInsideClearance0.1mmMm3": 0.0,
+   "pixelPastClearance0.3mmMm3": 15.533996960239973,
+   "undesignedOverlapFlagged": true,
+   "designedOverlapAccepted": true,
+   "designedOverlapOutsideRegionFlagged": true,
+   "designedOverlapOverLimitFlagged": true,
+   "pass": true
+  }
+ },
+ "inputIntegrity": {
+  "booleanEvidence": "build/boolean_evidence.json",
+  "summary": {
+   "calibrationPass": true,
+   "filesChecked": 146,
+   "missingFiles": 0,
+   "invalidClosedSolids": 2,
+   "properNonadjacentIntersections": 104
+  },
+  "classification": {
+   "hardFailures": [],
+   "realSelfIntersectionsInOurParts": [],
+   "realSelfIntersectionsInStockReference": [
+    {
+     "part": "組立:sg92r",
+     "pairs": 104,
+     "realPairs": 104,
+     "maximumLengthMm": 0.10472741020359962,
+     "maximumCoplanarOverlapMm2": 0.0,
+     "examplePointsMm": [
+      [
+       15.0,
+       6.5,
+       26.0928
+      ],
+      [
+       15.4,
+       6.5,
+       25.4
+      ]
+     ]
+    }
+   ],
+   "touchingOnlyIntersections": [],
+   "zeroAreaTriangleParts": [
+    {
+     "part": "組立:sg92r_horn",
+     "zeroAreaTriangles": 8
+    }
+   ],
+   "rule": "全辺が 2 面で共有され向きが外向きであること（MANIFOLD の入力条件）と、実体のある自己交差が無いこと。零面積の三角形は体積に寄与しないので数えるが、不合格にはしない",
+   "pass": true
+  },
+  "pass": true
+ },
+ "motionConsistency": {
+  "matricesCompared": 11753,
+  "maxRotationElementDiff": 0.0,
+  "maxTranslationDiffMm": 0.0,
+  "pixelMaxXYTranslationMm": 0.0,
+  "frames": 161,
+  "pass": true
+ },
+ "interference": {
+  "servoDegs": [
+   10.0,
+   170.0
+  ],
+  "stepDeg": 1.0,
+  "poseCount": 161,
+  "parts": 73,
+  "excludedJigs": [
+   "phase_comb"
+  ],
+  "uniquePairs": 2628,
+  "expectedUniquePairs": 2628,
+  "pairPoseEvaluations": 398148,
+  "aabbZeroEvaluations": 356573,
+  "topologyZeroEvaluations": 41114,
+  "booleanEvaluations": 461,
+  "pairsWithConstantRelativePose": 156,
+  "volumeFloorMm3": 0.001,
+  "designedOverlaps": [
+   {
+    "parts": [
+     "cam_0_0",
+     "shaft_0"
+    ],
+    "constantRelativePose": true,
+    "poses": 1,
+    "aabbZero": 0,
+    "topologyZero": 0,
+    "boolean": 1,
+    "maximumCommonVolumeMm3": 1.1987913078836534,
+    "maximumAtServoDeg": 90.0,
+    "maximumComponentsMm": [
+     [
+      [
+       -32.750003814697266,
+       -34.30000305175781,
+       48.45000457763672
+      ],
+      [
+       -29.049999237060547,
+       -33.70000076293945,
+       48.630001068115234
+      ]
+     ],
+     [
+      [
+       -32.750003814697266,
+       -31.491302490234375,
+       52.975196838378906
+      ],
+      [
+       -29.049999237060547,
+       -31.035419464111328,
+       53.58481216430664
+      ]
+     ],
+     [
+      [
+       -32.750003814697266,
+       -36.96458435058594,
+       52.975196838378906
+      ],
+      [
+       -29.049999237060547,
+       -36.50870132446289,
+       53.58481216430664
+      ]
+     ]
+    ],
+    "posesOverFloor": 1,
+    "kind": "hex-crush-ribs",
+    "basis": "潰しリブ 3 本 x 幅 0.6 x 潰し代 0.18 x（カム厚 4.0 - 穴の面取り 0.3）",
+    "theoryMm3": 1.1987999999999999,
+    "allowedMinMm3": 1.1748239999999999,
+    "allowedMaxMm3": 1.2227759999999999,
+    "locatedInDesignedRegion": true,
+    "componentCountMatches": true,
+    "componentCount": 3,
+    "amountWithinLimits": true,
+    "pass": true
+   },
+   {
+    "parts": [
+     "cam_0_1",
+     "shaft_1"
+    ],
+    "constantRelativePose": true,
+    "poses": 1,
+    "aabbZero": 0,
+    "topologyZero": 0,
+    "boolean": 1,
+    "maximumCommonVolumeMm3": 1.1987901895468767,
+    "maximumAtServoDeg": 90.0,
+    "maximumComponentsMm": [
+     [
+      [
+       -38.650001525878906,
+       -14.491302490234375,
+       52.975196838378906
+      ],
+      [
+       -34.95000457763672,
+       -14.035417556762695,
+       53.58481216430664
+      ]
+     ],
+     [
+      [
+       -38.650001525878906,
+       -17.30000114440918,
+       48.45000457763672
+      ],
+      [
+       -34.95000457763672,
+       -16.700000762939453,
+       48.630001068115234
+      ]
+     ],
+     [
+      [
+       -38.650001525878906,
+       -19.964584350585938,
+       52.975196838378906
+      ],
+      [
+       -34.95000457763672,
+       -19.508699417114258,
+       53.58481216430664
+      ]
+     ]
+    ],
+    "posesOverFloor": 1,
+    "kind": "hex-crush-ribs",
+    "basis": "潰しリブ 3 本 x 幅 0.6 x 潰し代 0.18 x（カム厚 4.0 - 穴の面取り 0.3）",
+    "theoryMm3": 1.1987999999999999,
+    "allowedMinMm3": 1.1748239999999999,
+    "allowedMaxMm3": 1.2227759999999999,
+    "locatedInDesignedRegion": true,
+    "componentCountMatches": true,
+    "componentCount": 3,
+    "amountWithinLimits": true,
+    "pass": true
+   },
+   {
+    "parts": [
+     "cam_0_2",
+     "shaft_2"
+    ],
+    "constantRelativePose": true,
+    "poses": 1,
+    "aabbZero": 0,
+    "topologyZero": 0,
+    "boolean": 1,
+    "maximumCommonVolumeMm3": 1.1987915644532878,
+    "maximumAtServoDeg": 90.0,
+    "maximumComponentsMm": [
+     [
+      [
+       -32.750003814697266,
+       2.508697986602783,
+       52.975196838378906
+      ],
+      [
+       -29.049999237060547,
+       2.9645817279815674,
+       53.58481216430664
+      ]
+     ],
+     [
+      [
+       -32.750003814697266,
+       -0.30000001192092896,
+       48.45000457763672
+      ],
+      [
+       -29.049999237060547,
+       0.30000001192092896,
+       48.630001068115234
+      ]
+     ],
+     [
+      [
+       -32.750003814697266,
+       -2.9645824432373047,
+       52.975196838378906
+      ],
+      [
+       -29.049999237060547,
+       -2.508697986602783,
+       53.58481216430664
+      ]
+     ]
+    ],
+    "posesOverFloor": 1,
+    "kind": "hex-crush-ribs",
+    "basis": "潰しリブ 3 本 x 幅 0.6 x 潰し代 0.18 x（カム厚 4.0 - 穴の面取り 0.3）",
+    "theoryMm3": 1.1987999999999999,
+    "allowedMinMm3": 1.1748239999999999,
+    "allowedMaxMm3": 1.2227759999999999,
+    "locatedInDesignedRegion": true,
+    "componentCountMatches": true,
+    "componentCount": 3,
+    "amountWithinLimits": true,
+    "pass": true
+   },
+   {
+    "parts": [
+     "cam_0_3",
+     "shaft_3"
+    ],
+    "constantRelativePose": true,
+    "poses": 1,
+    "aabbZero": 0,
+    "topologyZero": 0,
+    "boolean": 1,
+    "maximumCommonVolumeMm3": 1.1987885671075036,
+    "maximumAtServoDeg": 90.0,
+    "maximumComponentsMm": [
+     [
+      [
+       -38.650001525878906,
+       14.035418510437012,
+       52.975196838378906
+      ],
+      [
+       -34.95000457763672,
+       14.491302490234375,
+       53.58481216430664
+      ]
+     ],
+     [
+      [
+       -38.650001525878906,
+       16.700000762939453,
+       48.45000457763672
+      ],
+      [
+       -34.95000457763672,
+       17.30000114440918,
+       48.630001068115234
+      ]
+     ],
+     [
+      [
+       -38.650001525878906,
+       19.508699417114258,
+       52.975196838378906
+      ],
+      [
+       -34.95000457763672,
+       19.964584350585938,
+       53.58481216430664
+      ]
+     ]
+    ],
+    "posesOverFloor": 1,
+    "kind": "hex-crush-ribs",
+    "basis": "潰しリブ 3 本 x 幅 0.6 x 潰し代 0.18 x（カム厚 4.0 - 穴の面取り 0.3）",
+    "theoryMm3": 1.1987999999999999,
+    "allowedMinMm3": 1.1748239999999999,
+    "allowedMaxMm3": 1.2227759999999999,
+    "locatedInDesignedRegion": true,
+    "componentCountMatches": true,
+    "componentCount": 3,
+    "amountWithinLimits": true,
+    "pass": true
+   },
+   {
+    "parts": [
+     "cam_0_4",
+     "shaft_4"
+    ],
+    "constantRelativePose": true,
+    "poses": 1,
+    "aabbZero": 0,
+    "topologyZero": 0,
+    "boolean": 1,
+    "maximumCommonVolumeMm3": 1.1987921419715137,
+    "maximumAtServoDeg": 90.0,
+    "maximumComponentsMm": [
+     [
+      [
+       -32.750003814697266,
+       33.70000076293945,
+       48.45000457763672
+      ],
+      [
+       -29.049999237060547,
+       34.30000305175781,
+       48.630001068115234
+      ]
+     ],
+     [
+      [
+       -32.750003814697266,
+       31.035419464111328,
+       52.975196838378906
+      ],
+      [
+       -29.049999237060547,
+       31.491302490234375,
+       53.58481216430664
+      ]
+     ],
+     [
+      [
+       -32.750003814697266,
+       36.50870132446289,
+       52.975196838378906
+      ],
+      [
+       -29.049999237060547,
+       36.96458435058594,
+       53.58481216430664
+      ]
+     ]
+    ],
+    "posesOverFloor": 1,
+    "kind": "hex-crush-ribs",
+    "basis": "潰しリブ 3 本 x 幅 0.6 x 潰し代 0.18 x（カム厚 4.0 - 穴の面取り 0.3）",
+    "theoryMm3": 1.1987999999999999,
+    "allowedMinMm3": 1.1748239999999999,
+    "allowedMaxMm3": 1.2227759999999999,
+    "locatedInDesignedRegion": true,
+    "componentCountMatches": true,
+    "componentCount": 3,
+    "amountWithinLimits": true,
+    "pass": true
+   },
+   {
+    "parts": [
+     "cam_1_0",
+     "shaft_0"
+    ],
+    "constantRelativePose": true,
+    "poses": 1,
+    "aabbZero": 0,
+    "topologyZero": 0,
+    "boolean": 1,
+    "maximumCommonVolumeMm3": 1.1987859976634958,
+    "maximumAtServoDeg": 90.0,
+    "maximumComponentsMm": [
+     [
+      [
+       -15.75,
+       -31.491302490234375,
+       52.975196838378906
+      ],
+      [
+       -12.05000114440918,
+       -31.035419464111328,
+       53.58481216430664
+      ]
+     ],
+     [
+      [
+       -15.75,
+       -34.30000305175781,
+       48.45000457763672
+      ],
+      [
+       -12.05000114440918,
+       -33.70000076293945,
+       48.630001068115234
+      ]
+     ],
+     [
+      [
+       -15.75,
+       -36.96458435058594,
+       52.975196838378906
+      ],
+      [
+       -12.05000114440918,
+       -36.50870132446289,
+       53.584808349609375
+      ]
+     ]
+    ],
+    "posesOverFloor": 1,
+    "kind": "hex-crush-ribs",
+    "basis": "潰しリブ 3 本 x 幅 0.6 x 潰し代 0.18 x（カム厚 4.0 - 穴の面取り 0.3）",
+    "theoryMm3": 1.1987999999999999,
+    "allowedMinMm3": 1.1748239999999999,
+    "allowedMaxMm3": 1.2227759999999999,
+    "locatedInDesignedRegion": true,
+    "componentCountMatches": true,
+    "componentCount": 3,
+    "amountWithinLimits": true,
+    "pass": true
+   },
+   {
+    "parts": [
+     "cam_1_1",
+     "shaft_1"
+    ],
+    "constantRelativePose": true,
+    "poses": 1,
+    "aabbZero": 0,
+    "topologyZero": 0,
+    "boolean": 1,
+    "maximumCommonVolumeMm3": 1.198791630883178,
+    "maximumAtServoDeg": 90.0,
+    "maximumComponentsMm": [
+     [
+      [
+       -21.650001525878906,
+       -17.30000114440918,
+       48.45000457763672
+      ],
+      [
+       -17.950002670288086,
+       -16.700000762939453,
+       48.630001068115234
+      ]
+     ],
+     [
+      [
+       -21.650001525878906,
+       -14.491302490234375,
+       52.975196838378906
+      ],
+      [
+       -17.950002670288086,
+       -14.035417556762695,
+       53.58481216430664
+      ]
+     ],
+     [
+      [
+       -21.650001525878906,
+       -19.964582443237305,
+       52.975196838378906
+      ],
+      [
+       -17.950002670288086,
+       -19.508699417114258,
+       53.58481216430664
+      ]
+     ]
+    ],
+    "posesOverFloor": 1,
+    "kind": "hex-crush-ribs",
+    "basis": "潰しリブ 3 本 x 幅 0.6 x 潰し代 0.18 x（カム厚 4.0 - 穴の面取り 0.3）",
+    "theoryMm3": 1.1987999999999999,
+    "allowedMinMm3": 1.1748239999999999,
+    "allowedMaxMm3": 1.2227759999999999,
+    "locatedInDesignedRegion": true,
+    "componentCountMatches": true,
+    "componentCount": 3,
+    "amountWithinLimits": true,
+    "pass": true
+   },
+   {
+    "parts": [
+     "cam_1_2",
+     "shaft_2"
+    ],
+    "constantRelativePose": true,
+    "poses": 1,
+    "aabbZero": 0,
+    "topologyZero": 0,
+    "boolean": 1,
+    "maximumCommonVolumeMm3": 1.1987897965155079,
+    "maximumAtServoDeg": 90.0,
+    "maximumComponentsMm": [
+     [
+      [
+       -15.75,
+       2.508697986602783,
+       52.975196838378906
+      ],
+      [
+       -12.05000114440918,
+       2.9645824432373047,
+       53.58481216430664
+      ]
+     ],
+     [
+      [
+       -15.75,
+       -0.30000001192092896,
+       48.45000457763672
+      ],
+      [
+       -12.05000114440918,
+       0.30000001192092896,
+       48.630001068115234
+      ]
+     ],
+     [
+      [
+       -15.75,
+       -2.9645822048187256,
+       52.975196838378906
+      ],
+      [
+       -12.05000114440918,
+       -2.508697986602783,
+       53.58481216430664
+      ]
+     ]
+    ],
+    "posesOverFloor": 1,
+    "kind": "hex-crush-ribs",
+    "basis": "潰しリブ 3 本 x 幅 0.6 x 潰し代 0.18 x（カム厚 4.0 - 穴の面取り 0.3）",
+    "theoryMm3": 1.1987999999999999,
+    "allowedMinMm3": 1.1748239999999999,
+    "allowedMaxMm3": 1.2227759999999999,
+    "locatedInDesignedRegion": true,
+    "componentCountMatches": true,
+    "componentCount": 3,
+    "amountWithinLimits": true,
+    "pass": true
+   },
+   {
+    "parts": [
+     "cam_1_3",
+     "shaft_3"
+    ],
+    "constantRelativePose": true,
+    "poses": 1,
+    "aabbZero": 0,
+    "topologyZero": 0,
+    "boolean": 1,
+    "maximumCommonVolumeMm3": 1.1987910119876943,
+    "maximumAtServoDeg": 90.0,
+    "maximumComponentsMm": [
+     [
+      [
+       -21.650001525878906,
+       14.035418510437012,
+       52.975196838378906
+      ],
+      [
+       -17.950002670288086,
+       14.491302490234375,
+       53.58481216430664
+      ]
+     ],
+     [
+      [
+       -21.650001525878906,
+       16.700000762939453,
+       48.45000457763672
+      ],
+      [
+       -17.950002670288086,
+       17.30000114440918,
+       48.630001068115234
+      ]
+     ],
+     [
+      [
+       -21.650001525878906,
+       19.508699417114258,
+       52.975196838378906
+      ],
+      [
+       -17.950002670288086,
+       19.964582443237305,
+       53.58481216430664
+      ]
+     ]
+    ],
+    "posesOverFloor": 1,
+    "kind": "hex-crush-ribs",
+    "basis": "潰しリブ 3 本 x 幅 0.6 x 潰し代 0.18 x（カム厚 4.0 - 穴の面取り 0.3）",
+    "theoryMm3": 1.1987999999999999,
+    "allowedMinMm3": 1.1748239999999999,
+    "allowedMaxMm3": 1.2227759999999999,
+    "locatedInDesignedRegion": true,
+    "componentCountMatches": true,
+    "componentCount": 3,
+    "amountWithinLimits": true,
+    "pass": true
+   },
+   {
+    "parts": [
+     "cam_1_4",
+     "shaft_4"
+    ],
+    "constantRelativePose": true,
+    "poses": 1,
+    "aabbZero": 0,
+    "topologyZero": 0,
+    "boolean": 1,
+    "maximumCommonVolumeMm3": 1.1987893688778342,
+    "maximumAtServoDeg": 90.0,
+    "maximumComponentsMm": [
+     [
+      [
+       -15.75,
+       33.70000076293945,
+       48.45000457763672
+      ],
+      [
+       -12.05000114440918,
+       34.30000305175781,
+       48.630001068115234
+      ]
+     ],
+     [
+      [
+       -15.75,
+       31.035419464111328,
+       52.975196838378906
+      ],
+      [
+       -12.05000114440918,
+       31.491302490234375,
+       53.58481216430664
+      ]
+     ],
+     [
+      [
+       -15.75,
+       36.50870132446289,
+       52.975196838378906
+      ],
+      [
+       -12.05000114440918,
+       36.96458435058594,
+       53.58481216430664
+      ]
+     ]
+    ],
+    "posesOverFloor": 1,
+    "kind": "hex-crush-ribs",
+    "basis": "潰しリブ 3 本 x 幅 0.6 x 潰し代 0.18 x（カム厚 4.0 - 穴の面取り 0.3）",
+    "theoryMm3": 1.1987999999999999,
+    "allowedMinMm3": 1.1748239999999999,
+    "allowedMaxMm3": 1.2227759999999999,
+    "locatedInDesignedRegion": true,
+    "componentCountMatches": true,
+    "componentCount": 3,
+    "amountWithinLimits": true,
+    "pass": true
+   },
+   {
+    "parts": [
+     "cam_2_0",
+     "shaft_0"
+    ],
+    "constantRelativePose": true,
+    "poses": 1,
+    "aabbZero": 0,
+    "topologyZero": 0,
+    "boolean": 1,
+    "maximumCommonVolumeMm3": 1.1987870463410455,
+    "maximumAtServoDeg": 90.0,
+    "maximumComponentsMm": [
+     [
+      [
+       1.2500001192092896,
+       -31.491302490234375,
+       52.975196838378906
+      ],
+      [
+       4.949999809265137,
+       -31.035419464111328,
+       53.58481216430664
+      ]
+     ],
+     [
+      [
+       1.2500001192092896,
+       -34.30000305175781,
+       48.45000457763672
+      ],
+      [
+       4.949999809265137,
+       -33.70000076293945,
+       48.630001068115234
+      ]
+     ],
+     [
+      [
+       1.2500001192092896,
+       -36.96458435058594,
+       52.975196838378906
+      ],
+      [
+       4.949999809265137,
+       -36.50870132446289,
+       53.584808349609375
+      ]
+     ]
+    ],
+    "posesOverFloor": 1,
+    "kind": "hex-crush-ribs",
+    "basis": "潰しリブ 3 本 x 幅 0.6 x 潰し代 0.18 x（カム厚 4.0 - 穴の面取り 0.3）",
+    "theoryMm3": 1.1987999999999999,
+    "allowedMinMm3": 1.1748239999999999,
+    "allowedMaxMm3": 1.2227759999999999,
+    "locatedInDesignedRegion": true,
+    "componentCountMatches": true,
+    "componentCount": 3,
+    "amountWithinLimits": true,
+    "pass": true
+   },
+   {
+    "parts": [
+     "cam_2_1",
+     "shaft_1"
+    ],
+    "constantRelativePose": true,
+    "poses": 1,
+    "aabbZero": 0,
+    "topologyZero": 0,
+    "boolean": 1,
+    "maximumCommonVolumeMm3": 1.1987942041323192,
+    "maximumAtServoDeg": 90.0,
+    "maximumComponentsMm": [
+     [
+      [
+       -4.65000057220459,
+       -17.30000114440918,
+       48.45000457763672
+      ],
+      [
+       -0.949999988079071,
+       -16.700000762939453,
+       48.630001068115234
+      ]
+     ],
+     [
+      [
+       -4.65000057220459,
+       -19.964584350585938,
+       52.975196838378906
+      ],
+      [
+       -0.949999988079071,
+       -19.508699417114258,
+       53.58481216430664
+      ]
+     ],
+     [
+      [
+       -4.65000057220459,
+       -14.491302490234375,
+       52.975196838378906
+      ],
+      [
+       -0.949999988079071,
+       -14.035418510437012,
+       53.58481216430664
+      ]
+     ]
+    ],
+    "posesOverFloor": 1,
+    "kind": "hex-crush-ribs",
+    "basis": "潰しリブ 3 本 x 幅 0.6 x 潰し代 0.18 x（カム厚 4.0 - 穴の面取り 0.3）",
+    "theoryMm3": 1.1987999999999999,
+    "allowedMinMm3": 1.1748239999999999,
+    "allowedMaxMm3": 1.2227759999999999,
+    "locatedInDesignedRegion": true,
+    "componentCountMatches": true,
+    "componentCount": 3,
+    "amountWithinLimits": true,
+    "pass": true
+   },
+   {
+    "parts": [
+     "cam_2_2",
+     "shaft_2"
+    ],
+    "constantRelativePose": true,
+    "poses": 1,
+    "aabbZero": 0,
+    "topologyZero": 0,
+    "boolean": 1,
+    "maximumCommonVolumeMm3": 1.1987890229054448,
+    "maximumAtServoDeg": 90.0,
+    "maximumComponentsMm": [
+     [
+      [
+       1.2500001192092896,
+       -0.30000001192092896,
+       48.45000457763672
+      ],
+      [
+       4.949999809265137,
+       0.30000001192092896,
+       48.630001068115234
+      ]
+     ],
+     [
+      [
+       1.2500001192092896,
+       -2.9645814895629883,
+       52.975196838378906
+      ],
+      [
+       4.949999809265137,
+       -2.508697986602783,
+       53.58481216430664
+      ]
+     ],
+     [
+      [
+       1.2500001192092896,
+       2.508697986602783,
+       52.975196838378906
+      ],
+      [
+       4.949999809265137,
+       2.9645817279815674,
+       53.58481216430664
+      ]
+     ]
+    ],
+    "posesOverFloor": 1,
+    "kind": "hex-crush-ribs",
+    "basis": "潰しリブ 3 本 x 幅 0.6 x 潰し代 0.18 x（カム厚 4.0 - 穴の面取り 0.3）",
+    "theoryMm3": 1.1987999999999999,
+    "allowedMinMm3": 1.1748239999999999,
+    "allowedMaxMm3": 1.2227759999999999,
+    "locatedInDesignedRegion": true,
+    "componentCountMatches": true,
+    "componentCount": 3,
+    "amountWithinLimits": true,
+    "pass": true
+   },
+   {
+    "parts": [
+     "cam_2_3",
+     "shaft_3"
+    ],
+    "constantRelativePose": true,
+    "poses": 1,
+    "aabbZero": 0,
+    "topologyZero": 0,
+    "boolean": 1,
+    "maximumCommonVolumeMm3": 1.19879052820728,
+    "maximumAtServoDeg": 90.0,
+    "maximumComponentsMm": [
+     [
+      [
+       -4.65000057220459,
+       14.035417556762695,
+       52.975196838378906
+      ],
+      [
+       -0.949999988079071,
+       14.491302490234375,
+       53.58481216430664
+      ]
+     ],
+     [
+      [
+       -4.65000057220459,
+       16.700000762939453,
+       48.45000457763672
+      ],
+      [
+       -0.949999988079071,
+       17.30000114440918,
+       48.630001068115234
+      ]
+     ],
+     [
+      [
+       -4.65000057220459,
+       19.508699417114258,
+       52.975196838378906
+      ],
+      [
+       -0.949999988079071,
+       19.964582443237305,
+       53.58481216430664
+      ]
+     ]
+    ],
+    "posesOverFloor": 1,
+    "kind": "hex-crush-ribs",
+    "basis": "潰しリブ 3 本 x 幅 0.6 x 潰し代 0.18 x（カム厚 4.0 - 穴の面取り 0.3）",
+    "theoryMm3": 1.1987999999999999,
+    "allowedMinMm3": 1.1748239999999999,
+    "allowedMaxMm3": 1.2227759999999999,
+    "locatedInDesignedRegion": true,
+    "componentCountMatches": true,
+    "componentCount": 3,
+    "amountWithinLimits": true,
+    "pass": true
+   },
+   {
+    "parts": [
+     "cam_2_4",
+     "shaft_4"
+    ],
+    "constantRelativePose": true,
+    "poses": 1,
+    "aabbZero": 0,
+    "topologyZero": 0,
+    "boolean": 1,
+    "maximumCommonVolumeMm3": 1.1987894920876636,
+    "maximumAtServoDeg": 90.0,
+    "maximumComponentsMm": [
+     [
+      [
+       1.2500001192092896,
+       33.70000076293945,
+       48.45000457763672
+      ],
+      [
+       4.949999809265137,
+       34.30000305175781,
+       48.630001068115234
+      ]
+     ],
+     [
+      [
+       1.2500001192092896,
+       31.035419464111328,
+       52.975196838378906
+      ],
+      [
+       4.949999809265137,
+       31.491302490234375,
+       53.58481216430664
+      ]
+     ],
+     [
+      [
+       1.2500001192092896,
+       36.50870132446289,
+       52.975196838378906
+      ],
+      [
+       4.949999809265137,
+       36.96458435058594,
+       53.58481216430664
+      ]
+     ]
+    ],
+    "posesOverFloor": 1,
+    "kind": "hex-crush-ribs",
+    "basis": "潰しリブ 3 本 x 幅 0.6 x 潰し代 0.18 x（カム厚 4.0 - 穴の面取り 0.3）",
+    "theoryMm3": 1.1987999999999999,
+    "allowedMinMm3": 1.1748239999999999,
+    "allowedMaxMm3": 1.2227759999999999,
+    "locatedInDesignedRegion": true,
+    "componentCountMatches": true,
+    "componentCount": 3,
+    "amountWithinLimits": true,
+    "pass": true
+   },
+   {
+    "parts": [
+     "cam_3_0",
+     "shaft_0"
+    ],
+    "constantRelativePose": true,
+    "poses": 1,
+    "aabbZero": 0,
+    "topologyZero": 0,
+    "boolean": 1,
+    "maximumCommonVolumeMm3": 1.1987857591320845,
+    "maximumAtServoDeg": 90.0,
+    "maximumComponentsMm": [
+     [
+      [
+       18.250001907348633,
+       -31.491302490234375,
+       52.975196838378906
+      ],
+      [
+       21.950000762939453,
+       -31.03542137145996,
+       53.58481216430664
+      ]
+     ],
+     [
+      [
+       18.250001907348633,
+       -34.30000305175781,
+       48.45000457763672
+      ],
+      [
+       21.950000762939453,
+       -33.70000076293945,
+       48.630001068115234
+      ]
+     ],
+     [
+      [
+       18.250001907348633,
+       -36.96458435058594,
+       52.975196838378906
+      ],
+      [
+       21.950000762939453,
+       -36.50870132446289,
+       53.584808349609375
+      ]
+     ]
+    ],
+    "posesOverFloor": 1,
+    "kind": "hex-crush-ribs",
+    "basis": "潰しリブ 3 本 x 幅 0.6 x 潰し代 0.18 x（カム厚 4.0 - 穴の面取り 0.3）",
+    "theoryMm3": 1.1987999999999999,
+    "allowedMinMm3": 1.1748239999999999,
+    "allowedMaxMm3": 1.2227759999999999,
+    "locatedInDesignedRegion": true,
+    "componentCountMatches": true,
+    "componentCount": 3,
+    "amountWithinLimits": true,
+    "pass": true
+   },
+   {
+    "parts": [
+     "cam_3_1",
+     "shaft_1"
+    ],
+    "constantRelativePose": true,
+    "poses": 1,
+    "aabbZero": 0,
+    "topologyZero": 0,
+    "boolean": 1,
+    "maximumCommonVolumeMm3": 1.1987908865827734,
+    "maximumAtServoDeg": 90.0,
+    "maximumComponentsMm": [
+     [
+      [
+       12.350001335144043,
+       -17.30000114440918,
+       48.45000457763672
+      ],
+      [
+       16.049999237060547,
+       -16.700000762939453,
+       48.630001068115234
+      ]
+     ],
+     [
+      [
+       12.350001335144043,
+       -19.964584350585938,
+       52.975196838378906
+      ],
+      [
+       16.049999237060547,
+       -19.508699417114258,
+       53.58481216430664
+      ]
+     ],
+     [
+      [
+       12.350001335144043,
+       -14.491302490234375,
+       52.975196838378906
+      ],
+      [
+       16.049999237060547,
+       -14.035419464111328,
+       53.58481216430664
+      ]
+     ]
+    ],
+    "posesOverFloor": 1,
+    "kind": "hex-crush-ribs",
+    "basis": "潰しリブ 3 本 x 幅 0.6 x 潰し代 0.18 x（カム厚 4.0 - 穴の面取り 0.3）",
+    "theoryMm3": 1.1987999999999999,
+    "allowedMinMm3": 1.1748239999999999,
+    "allowedMaxMm3": 1.2227759999999999,
+    "locatedInDesignedRegion": true,
+    "componentCountMatches": true,
+    "componentCount": 3,
+    "amountWithinLimits": true,
+    "pass": true
+   },
+   {
+    "parts": [
+     "cam_3_2",
+     "shaft_2"
+    ],
+    "constantRelativePose": true,
+    "poses": 1,
+    "aabbZero": 0,
+    "topologyZero": 0,
+    "boolean": 1,
+    "maximumCommonVolumeMm3": 1.1987902585034618,
+    "maximumAtServoDeg": 90.0,
+    "maximumComponentsMm": [
+     [
+      [
+       18.250001907348633,
+       -0.30000001192092896,
+       48.45000457763672
+      ],
+      [
+       21.950000762939453,
+       0.30000001192092896,
+       48.630001068115234
+      ]
+     ],
+     [
+      [
+       18.250001907348633,
+       -2.9645822048187256,
+       52.975196838378906
+      ],
+      [
+       21.950000762939453,
+       -2.508697986602783,
+       53.58481216430664
+      ]
+     ],
+     [
+      [
+       18.250001907348633,
+       2.508697986602783,
+       52.975196838378906
+      ],
+      [
+       21.950000762939453,
+       2.9645817279815674,
+       53.58481216430664
+      ]
+     ]
+    ],
+    "posesOverFloor": 1,
+    "kind": "hex-crush-ribs",
+    "basis": "潰しリブ 3 本 x 幅 0.6 x 潰し代 0.18 x（カム厚 4.0 - 穴の面取り 0.3）",
+    "theoryMm3": 1.1987999999999999,
+    "allowedMinMm3": 1.1748239999999999,
+    "allowedMaxMm3": 1.2227759999999999,
+    "locatedInDesignedRegion": true,
+    "componentCountMatches": true,
+    "componentCount": 3,
+    "amountWithinLimits": true,
+    "pass": true
+   },
+   {
+    "parts": [
+     "cam_3_3",
+     "shaft_3"
+    ],
+    "constantRelativePose": true,
+    "poses": 1,
+    "aabbZero": 0,
+    "topologyZero": 0,
+    "boolean": 1,
+    "maximumCommonVolumeMm3": 1.1987907961895456,
+    "maximumAtServoDeg": 90.0,
+    "maximumComponentsMm": [
+     [
+      [
+       12.350001335144043,
+       14.035418510437012,
+       52.975196838378906
+      ],
+      [
+       16.049999237060547,
+       14.491302490234375,
+       53.58481216430664
+      ]
+     ],
+     [
+      [
+       12.350001335144043,
+       16.700000762939453,
+       48.45000457763672
+      ],
+      [
+       16.049999237060547,
+       17.30000114440918,
+       48.630001068115234
+      ]
+     ],
+     [
+      [
+       12.350001335144043,
+       19.508699417114258,
+       52.975196838378906
+      ],
+      [
+       16.049999237060547,
+       19.964582443237305,
+       53.58481216430664
+      ]
+     ]
+    ],
+    "posesOverFloor": 1,
+    "kind": "hex-crush-ribs",
+    "basis": "潰しリブ 3 本 x 幅 0.6 x 潰し代 0.18 x（カム厚 4.0 - 穴の面取り 0.3）",
+    "theoryMm3": 1.1987999999999999,
+    "allowedMinMm3": 1.1748239999999999,
+    "allowedMaxMm3": 1.2227759999999999,
+    "locatedInDesignedRegion": true,
+    "componentCountMatches": true,
+    "componentCount": 3,
+    "amountWithinLimits": true,
+    "pass": true
+   },
+   {
+    "parts": [
+     "cam_3_4",
+     "shaft_4"
+    ],
+    "constantRelativePose": true,
+    "poses": 1,
+    "aabbZero": 0,
+    "topologyZero": 0,
+    "boolean": 1,
+    "maximumCommonVolumeMm3": 1.1987897262181737,
+    "maximumAtServoDeg": 90.0,
+    "maximumComponentsMm": [
+     [
+      [
+       18.250001907348633,
+       33.70000076293945,
+       48.45000457763672
+      ],
+      [
+       21.950000762939453,
+       34.30000305175781,
+       48.630001068115234
+      ]
+     ],
+     [
+      [
+       18.250001907348633,
+       31.035419464111328,
+       52.975196838378906
+      ],
+      [
+       21.950000762939453,
+       31.491302490234375,
+       53.58481216430664
+      ]
+     ],
+     [
+      [
+       18.250001907348633,
+       36.50870132446289,
+       52.975196838378906
+      ],
+      [
+       21.950000762939453,
+       36.96458435058594,
+       53.58481216430664
+      ]
+     ]
+    ],
+    "posesOverFloor": 1,
+    "kind": "hex-crush-ribs",
+    "basis": "潰しリブ 3 本 x 幅 0.6 x 潰し代 0.18 x（カム厚 4.0 - 穴の面取り 0.3）",
+    "theoryMm3": 1.1987999999999999,
+    "allowedMinMm3": 1.1748239999999999,
+    "allowedMaxMm3": 1.2227759999999999,
+    "locatedInDesignedRegion": true,
+    "componentCountMatches": true,
+    "componentCount": 3,
+    "amountWithinLimits": true,
+    "pass": true
+   },
+   {
+    "parts": [
+     "cam_4_0",
+     "shaft_0"
+    ],
+    "constantRelativePose": true,
+    "poses": 1,
+    "aabbZero": 0,
+    "topologyZero": 0,
+    "boolean": 1,
+    "maximumCommonVolumeMm3": 1.198784619759106,
+    "maximumAtServoDeg": 90.0,
+    "maximumComponentsMm": [
+     [
+      [
+       35.25,
+       -31.491302490234375,
+       52.975196838378906
+      ],
+      [
+       38.95000457763672,
+       -31.035419464111328,
+       53.58481216430664
+      ]
+     ],
+     [
+      [
+       35.25,
+       -34.30000305175781,
+       48.45000457763672
+      ],
+      [
+       38.95000457763672,
+       -33.70000076293945,
+       48.630001068115234
+      ]
+     ],
+     [
+      [
+       35.25,
+       -36.96458435058594,
+       52.975196838378906
+      ],
+      [
+       38.95000457763672,
+       -36.50870132446289,
+       53.584808349609375
+      ]
+     ]
+    ],
+    "posesOverFloor": 1,
+    "kind": "hex-crush-ribs",
+    "basis": "潰しリブ 3 本 x 幅 0.6 x 潰し代 0.18 x（カム厚 4.0 - 穴の面取り 0.3）",
+    "theoryMm3": 1.1987999999999999,
+    "allowedMinMm3": 1.1748239999999999,
+    "allowedMaxMm3": 1.2227759999999999,
+    "locatedInDesignedRegion": true,
+    "componentCountMatches": true,
+    "componentCount": 3,
+    "amountWithinLimits": true,
+    "pass": true
+   },
+   {
+    "parts": [
+     "cam_4_1",
+     "shaft_1"
+    ],
+    "constantRelativePose": true,
+    "poses": 1,
+    "aabbZero": 0,
+    "topologyZero": 0,
+    "boolean": 1,
+    "maximumCommonVolumeMm3": 1.1987898863986157,
+    "maximumAtServoDeg": 90.0,
+    "maximumComponentsMm": [
+     [
+      [
+       29.35000228881836,
+       -14.491302490234375,
+       52.975196838378906
+      ],
+      [
+       33.04999923706055,
+       -14.035417556762695,
+       53.58481216430664
+      ]
+     ],
+     [
+      [
+       29.35000228881836,
+       -17.30000114440918,
+       48.45000457763672
+      ],
+      [
+       33.04999923706055,
+       -16.700000762939453,
+       48.630001068115234
+      ]
+     ],
+     [
+      [
+       29.35000228881836,
+       -19.964584350585938,
+       52.975196838378906
+      ],
+      [
+       33.04999923706055,
+       -19.508699417114258,
+       53.58481216430664
+      ]
+     ]
+    ],
+    "posesOverFloor": 1,
+    "kind": "hex-crush-ribs",
+    "basis": "潰しリブ 3 本 x 幅 0.6 x 潰し代 0.18 x（カム厚 4.0 - 穴の面取り 0.3）",
+    "theoryMm3": 1.1987999999999999,
+    "allowedMinMm3": 1.1748239999999999,
+    "allowedMaxMm3": 1.2227759999999999,
+    "locatedInDesignedRegion": true,
+    "componentCountMatches": true,
+    "componentCount": 3,
+    "amountWithinLimits": true,
+    "pass": true
+   },
+   {
+    "parts": [
+     "cam_4_2",
+     "shaft_2"
+    ],
+    "constantRelativePose": true,
+    "poses": 1,
+    "aabbZero": 0,
+    "topologyZero": 0,
+    "boolean": 1,
+    "maximumCommonVolumeMm3": 1.198790736211487,
+    "maximumAtServoDeg": 90.0,
+    "maximumComponentsMm": [
+     [
+      [
+       35.25,
+       -0.30000001192092896,
+       48.45000457763672
+      ],
+      [
+       38.95000457763672,
+       0.30000001192092896,
+       48.630001068115234
+      ]
+     ],
+     [
+      [
+       35.25,
+       -2.9645819664001465,
+       52.975196838378906
+      ],
+      [
+       38.95000457763672,
+       -2.508697986602783,
+       53.58481216430664
+      ]
+     ],
+     [
+      [
+       35.25,
+       2.508697986602783,
+       52.975196838378906
+      ],
+      [
+       38.95000457763672,
+       2.964581251144409,
+       53.58481216430664
+      ]
+     ]
+    ],
+    "posesOverFloor": 1,
+    "kind": "hex-crush-ribs",
+    "basis": "潰しリブ 3 本 x 幅 0.6 x 潰し代 0.18 x（カム厚 4.0 - 穴の面取り 0.3）",
+    "theoryMm3": 1.1987999999999999,
+    "allowedMinMm3": 1.1748239999999999,
+    "allowedMaxMm3": 1.2227759999999999,
+    "locatedInDesignedRegion": true,
+    "componentCountMatches": true,
+    "componentCount": 3,
+    "amountWithinLimits": true,
+    "pass": true
+   },
+   {
+    "parts": [
+     "cam_4_3",
+     "shaft_3"
+    ],
+    "constantRelativePose": true,
+    "poses": 1,
+    "aabbZero": 0,
+    "topologyZero": 0,
+    "boolean": 1,
+    "maximumCommonVolumeMm3": 1.1987891852460377,
+    "maximumAtServoDeg": 90.0,
+    "maximumComponentsMm": [
+     [
+      [
+       29.35000228881836,
+       14.035418510437012,
+       52.975196838378906
+      ],
+      [
+       33.04999923706055,
+       14.491302490234375,
+       53.58481216430664
+      ]
+     ],
+     [
+      [
+       29.35000228881836,
+       16.700000762939453,
+       48.45000457763672
+      ],
+      [
+       33.04999923706055,
+       17.30000114440918,
+       48.630001068115234
+      ]
+     ],
+     [
+      [
+       29.35000228881836,
+       19.508699417114258,
+       52.975196838378906
+      ],
+      [
+       33.04999923706055,
+       19.964584350585938,
+       53.58481216430664
+      ]
+     ]
+    ],
+    "posesOverFloor": 1,
+    "kind": "hex-crush-ribs",
+    "basis": "潰しリブ 3 本 x 幅 0.6 x 潰し代 0.18 x（カム厚 4.0 - 穴の面取り 0.3）",
+    "theoryMm3": 1.1987999999999999,
+    "allowedMinMm3": 1.1748239999999999,
+    "allowedMaxMm3": 1.2227759999999999,
+    "locatedInDesignedRegion": true,
+    "componentCountMatches": true,
+    "componentCount": 3,
+    "amountWithinLimits": true,
+    "pass": true
+   },
+   {
+    "parts": [
+     "cam_4_4",
+     "shaft_4"
+    ],
+    "constantRelativePose": true,
+    "poses": 1,
+    "aabbZero": 0,
+    "topologyZero": 0,
+    "boolean": 1,
+    "maximumCommonVolumeMm3": 1.1987907162203375,
+    "maximumAtServoDeg": 90.0,
+    "maximumComponentsMm": [
+     [
+      [
+       35.25,
+       33.70000076293945,
+       48.45000457763672
+      ],
+      [
+       38.95000457763672,
+       34.30000305175781,
+       48.630001068115234
+      ]
+     ],
+     [
+      [
+       35.25,
+       31.03542137145996,
+       52.975196838378906
+      ],
+      [
+       38.95000457763672,
+       31.491302490234375,
+       53.58481216430664
+      ]
+     ],
+     [
+      [
+       35.25,
+       36.50870132446289,
+       52.975196838378906
+      ],
+      [
+       38.95000457763672,
+       36.96458435058594,
+       53.58481216430664
+      ]
+     ]
+    ],
+    "posesOverFloor": 1,
+    "kind": "hex-crush-ribs",
+    "basis": "潰しリブ 3 本 x 幅 0.6 x 潰し代 0.18 x（カム厚 4.0 - 穴の面取り 0.3）",
+    "theoryMm3": 1.1987999999999999,
+    "allowedMinMm3": 1.1748239999999999,
+    "allowedMaxMm3": 1.2227759999999999,
+    "locatedInDesignedRegion": true,
+    "componentCountMatches": true,
+    "componentCount": 3,
+    "amountWithinLimits": true,
+    "pass": true
+   },
+   {
+    "parts": [
+     "gear_0",
+     "shaft_0"
+    ],
+    "constantRelativePose": true,
+    "poses": 1,
+    "aabbZero": 0,
+    "topologyZero": 0,
+    "boolean": 1,
+    "maximumCommonVolumeMm3": 0.6803910363499386,
+    "maximumAtServoDeg": 90.0,
+    "maximumComponentsMm": [
+     [
+      [
+       40.29999923706055,
+       -31.491302490234375,
+       52.975196838378906
+      ],
+      [
+       42.400001525878906,
+       -31.035419464111328,
+       53.58481216430664
+      ]
+     ],
+     [
+      [
+       40.29999923706055,
+       -34.30000305175781,
+       48.45000457763672
+      ],
+      [
+       42.400001525878906,
+       -33.70000076293945,
+       48.630001068115234
+      ]
+     ],
+     [
+      [
+       40.29999923706055,
+       -36.96458435058594,
+       52.975196838378906
+      ],
+      [
+       42.400001525878906,
+       -36.50870132446289,
+       53.584808349609375
+      ]
+     ]
+    ],
+    "posesOverFloor": 1,
+    "kind": "hex-crush-ribs",
+    "basis": "潰しリブ 3 本 x 幅 0.6 x 潰し代 0.18 x（歯幅 2.4 - 穴の面取り 0.3）",
+    "theoryMm3": 0.6803999999999999,
+    "allowedMinMm3": 0.6667919999999998,
+    "allowedMaxMm3": 0.694008,
+    "locatedInDesignedRegion": true,
+    "componentCountMatches": true,
+    "componentCount": 3,
+    "amountWithinLimits": true,
+    "pass": true
+   },
+   {
+    "parts": [
+     "gear_1",
+     "shaft_1"
+    ],
+    "constantRelativePose": true,
+    "poses": 1,
+    "aabbZero": 0,
+    "topologyZero": 0,
+    "boolean": 1,
+    "maximumCommonVolumeMm3": 0.6803944015600956,
+    "maximumAtServoDeg": 90.0,
+    "maximumComponentsMm": [
+     [
+      [
+       40.29999923706055,
+       -19.964582443237305,
+       52.975196838378906
+      ],
+      [
+       42.400001525878906,
+       -19.508699417114258,
+       53.58481216430664
+      ]
+     ],
+     [
+      [
+       40.29999923706055,
+       -17.30000114440918,
+       48.45000457763672
+      ],
+      [
+       42.400001525878906,
+       -16.700000762939453,
+       48.630001068115234
+      ]
+     ],
+     [
+      [
+       40.29999923706055,
+       -14.491302490234375,
+       52.975196838378906
+      ],
+      [
+       42.400001525878906,
+       -14.035417556762695,
+       53.58481216430664
+      ]
+     ]
+    ],
+    "posesOverFloor": 1,
+    "kind": "hex-crush-ribs",
+    "basis": "潰しリブ 3 本 x 幅 0.6 x 潰し代 0.18 x（歯幅 2.4 - 穴の面取り 0.3）",
+    "theoryMm3": 0.6803999999999999,
+    "allowedMinMm3": 0.6667919999999998,
+    "allowedMaxMm3": 0.694008,
+    "locatedInDesignedRegion": true,
+    "componentCountMatches": true,
+    "componentCount": 3,
+    "amountWithinLimits": true,
+    "pass": true
+   },
+   {
+    "parts": [
+     "gear_2",
+     "shaft_2"
+    ],
+    "constantRelativePose": true,
+    "poses": 1,
+    "aabbZero": 0,
+    "topologyZero": 0,
+    "boolean": 1,
+    "maximumCommonVolumeMm3": 0.6803949930818063,
+    "maximumAtServoDeg": 90.0,
+    "maximumComponentsMm": [
+     [
+      [
+       40.29999923706055,
+       -0.30000001192092896,
+       48.45000457763672
+      ],
+      [
+       42.400001525878906,
+       0.30000001192092896,
+       48.630001068115234
+      ]
+     ],
+     [
+      [
+       40.29999923706055,
+       -2.9645822048187256,
+       52.975196838378906
+      ],
+      [
+       42.400001525878906,
+       -2.508697986602783,
+       53.58481216430664
+      ]
+     ],
+     [
+      [
+       40.29999923706055,
+       2.508697986602783,
+       52.975196838378906
+      ],
+      [
+       42.400001525878906,
+       2.964582920074463,
+       53.58481216430664
+      ]
+     ]
+    ],
+    "posesOverFloor": 1,
+    "kind": "hex-crush-ribs",
+    "basis": "潰しリブ 3 本 x 幅 0.6 x 潰し代 0.18 x（歯幅 2.4 - 穴の面取り 0.3）",
+    "theoryMm3": 0.6803999999999999,
+    "allowedMinMm3": 0.6667919999999998,
+    "allowedMaxMm3": 0.694008,
+    "locatedInDesignedRegion": true,
+    "componentCountMatches": true,
+    "componentCount": 3,
+    "amountWithinLimits": true,
+    "pass": true
+   },
+   {
+    "parts": [
+     "gear_3",
+     "shaft_3"
+    ],
+    "constantRelativePose": true,
+    "poses": 1,
+    "aabbZero": 0,
+    "topologyZero": 0,
+    "boolean": 1,
+    "maximumCommonVolumeMm3": 0.680394788906962,
+    "maximumAtServoDeg": 90.0,
+    "maximumComponentsMm": [
+     [
+      [
+       40.29999923706055,
+       19.508699417114258,
+       52.975196838378906
+      ],
+      [
+       42.400001525878906,
+       19.964584350585938,
+       53.58481216430664
+      ]
+     ],
+     [
+      [
+       40.29999923706055,
+       16.700000762939453,
+       48.45000457763672
+      ],
+      [
+       42.400001525878906,
+       17.30000114440918,
+       48.630001068115234
+      ]
+     ],
+     [
+      [
+       40.29999923706055,
+       14.035418510437012,
+       52.975196838378906
+      ],
+      [
+       42.400001525878906,
+       14.491302490234375,
+       53.58481216430664
+      ]
+     ]
+    ],
+    "posesOverFloor": 1,
+    "kind": "hex-crush-ribs",
+    "basis": "潰しリブ 3 本 x 幅 0.6 x 潰し代 0.18 x（歯幅 2.4 - 穴の面取り 0.3）",
+    "theoryMm3": 0.6803999999999999,
+    "allowedMinMm3": 0.6667919999999998,
+    "allowedMaxMm3": 0.694008,
+    "locatedInDesignedRegion": true,
+    "componentCountMatches": true,
+    "componentCount": 3,
+    "amountWithinLimits": true,
+    "pass": true
+   },
+   {
+    "parts": [
+     "gear_4",
+     "shaft_4"
+    ],
+    "constantRelativePose": true,
+    "poses": 1,
+    "aabbZero": 0,
+    "topologyZero": 0,
+    "boolean": 1,
+    "maximumCommonVolumeMm3": 0.6803959659428243,
+    "maximumAtServoDeg": 90.0,
+    "maximumComponentsMm": [
+     [
+      [
+       40.29999923706055,
+       33.70000076293945,
+       48.45000457763672
+      ],
+      [
+       42.400001525878906,
+       34.30000305175781,
+       48.630001068115234
+      ]
+     ],
+     [
+      [
+       40.29999923706055,
+       31.035419464111328,
+       52.975196838378906
+      ],
+      [
+       42.400001525878906,
+       31.491302490234375,
+       53.58481216430664
+      ]
+     ],
+     [
+      [
+       40.29999923706055,
+       36.50870132446289,
+       52.975196838378906
+      ],
+      [
+       42.400001525878906,
+       36.96458435058594,
+       53.58481216430664
+      ]
+     ]
+    ],
+    "posesOverFloor": 1,
+    "kind": "hex-crush-ribs",
+    "basis": "潰しリブ 3 本 x 幅 0.6 x 潰し代 0.18 x（歯幅 2.4 - 穴の面取り 0.3）",
+    "theoryMm3": 0.6803999999999999,
+    "allowedMinMm3": 0.6667919999999998,
+    "allowedMaxMm3": 0.694008,
+    "locatedInDesignedRegion": true,
+    "componentCountMatches": true,
+    "componentCount": 3,
+    "amountWithinLimits": true,
+    "pass": true
+   },
+   {
+    "parts": [
+     "housing",
+     "sg92r"
+    ],
+    "constantRelativePose": true,
+    "poses": 1,
+    "aabbZero": 0,
+    "topologyZero": 0,
+    "boolean": 1,
+    "maximumCommonVolumeMm3": 2.788274373730305,
+    "maximumAtServoDeg": 90.0,
+    "maximumComponentsMm": [
+     [
+      [
+       27.500001907348633,
+       -18.650001525878906,
+       18.200000762939453
+      ],
+      [
+       27.60000228881836,
+       -18.049999237060547,
+       24.700000762939453
+      ]
+     ],
+     [
+      [
+       27.500001907348633,
+       8.050000190734863,
+       18.200000762939453
+      ],
+      [
+       27.60000228881836,
+       8.65000057220459,
+       24.700000762939453
+      ]
+     ],
+     [
+      [
+       27.500001907348633,
+       10.15000057220459,
+       18.200000762939453
+      ],
+      [
+       27.60000228881836,
+       10.75,
+       23.700002670288086
+      ]
+     ],
+     [
+      [
+       25.600000381469727,
+       -20.750001907348633,
+       18.200000762939453
+      ],
+      [
+       25.700002670288086,
+       -20.149999618530273,
+       23.700002670288086
+      ]
+     ],
+     [
+      [
+       25.600000381469727,
+       -18.650001525878906,
+       18.200000762939453
+      ],
+      [
+       25.700002670288086,
+       -18.049999237060547,
+       24.700002670288086
+      ]
+     ],
+     [
+      [
+       25.600000381469727,
+       8.050000190734863,
+       18.200000762939453
+      ],
+      [
+       25.700002670288086,
+       8.65000057220459,
+       24.700002670288086
+      ]
+     ],
+     [
+      [
+       25.600000381469727,
+       10.15000057220459,
+       18.200000762939453
+      ],
+      [
+       25.700002670288086,
+       10.75,
+       23.700002670288086
+      ]
+     ],
+     [
+      [
+       27.500001907348633,
+       -20.750001907348633,
+       18.200000762939453
+      ],
+      [
+       27.60000228881836,
+       -20.149999618530273,
+       23.700002670288086
+      ]
+     ]
+    ],
+    "posesOverFloor": 1,
+    "kind": "ear-crush-ribs",
+    "basis": "柵の潰しリブ 8 本 x 幅 0.6 x 潰し代 0.1 x 長さ（耳の下端 18.2 からリブの上端 24.7 まで 6.5 以下）。上限は全部が 6.5 のとき",
+    "theoryMm3": 3.12,
+    "allowedMinMm3": 1.6,
+    "allowedMaxMm3": 3.1824000000000003,
+    "locatedInDesignedRegion": true,
+    "componentCountMatches": true,
+    "componentCount": 8,
+    "amountWithinLimits": true,
+    "pass": true
+   },
+   {
+    "parts": [
+     "sg92r",
+     "sg92r_horn"
+    ],
+    "constantRelativePose": false,
+    "poses": 161,
+    "aabbZero": 0,
+    "topologyZero": 0,
+    "boolean": 161,
+    "maximumCommonVolumeMm3": 0.029990057766647815,
+    "maximumAtServoDeg": 149.0,
+    "maximumComponentsMm": [
+     [
+      [
+       37.099998474121094,
+       -2.264416456222534,
+       23.696596145629883
+      ],
+      [
+       40.10000228881836,
+       -2.2421114444732666,
+       23.809263229370117
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       -2.2917141914367676,
+       23.91983985900879
+      ],
+      [
+       40.10000228881836,
+       -2.28079891204834,
+       24.03174591064453
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       -2.299999952316284,
+       24.14507293701172
+      ],
+      [
+       40.10000228881836,
+       -2.297153949737549,
+       24.257795333862305
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       -2.052868366241455,
+       23.068483352661133
+      ],
+      [
+       40.10000228881836,
+       -2.000047445297241,
+       23.16752815246582
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       -2.2154488563537598,
+       23.479135513305664
+      ],
+      [
+       40.10000228881836,
+       -2.181960344314575,
+       23.590044021606445
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       -2.144490957260132,
+       23.270198822021484
+      ],
+      [
+       40.10000228881836,
+       -2.101436138153076,
+       23.3745059967041
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       -1.133569598197937,
+       22.14800262451172
+      ],
+      [
+       40.10000228881836,
+       -1.0343093872070312,
+       22.201183319091797
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       -0.9325371980667114,
+       22.056377410888672
+      ],
+      [
+       40.10000228881836,
+       -0.827913761138916,
+       22.0998592376709
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       -0.7225486040115356,
+       21.985593795776367
+      ],
+      [
+       40.10000228881836,
+       -0.6141237020492554,
+       22.01864242553711
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       -0.5040886998176575,
+       21.9361629486084
+      ],
+      [
+       40.10000228881836,
+       -0.3944685757160187,
+       21.95806121826172
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       -0.2822273075580597,
+       21.908390045166016
+      ],
+      [
+       40.10000228881836,
+       -0.17032572627067566,
+       21.919525146484375
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       -0.05782204866409302,
+       21.899999618530273
+      ],
+      [
+       40.10000228881836,
+       0.054958317428827286,
+       21.902847290039062
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       -1.9422619342803955,
+       22.877660751342773
+      ],
+      [
+       40.10000228881836,
+       -1.8793569803237915,
+       22.9720401763916
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       -1.8120487928390503,
+       22.701000213623047
+      ],
+      [
+       40.10000228881836,
+       -1.7417237758636475,
+       22.78693199157715
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       -1.501537561416626,
+       22.389097213745117
+      ],
+      [
+       40.10000228881836,
+       -1.414612054824829,
+       22.46057891845703
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       -1.3245137929916382,
+       22.259138107299805
+      ],
+      [
+       40.10000228881836,
+       -1.23029625415802,
+       22.322256088256836
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       -1.6638498306274414,
+       22.537429809570312
+      ],
+      [
+       40.10000228881836,
+       -1.5862977504730225,
+       22.615114212036133
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       -2.2916128635406494,
+       24.370315551757812
+      ],
+      [
+       40.10000228881836,
+       -2.2804720401763916,
+       24.482257843017578
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       -2.2638449668884277,
+       24.594430923461914
+      ],
+      [
+       40.10000228881836,
+       -2.2419326305389404,
+       24.70412254333496
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       -2.214409112930298,
+       24.814115524291992
+      ],
+      [
+       40.10000228881836,
+       -2.181356191635132,
+       24.922555923461914
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       -2.1436355113983154,
+       25.02788543701172
+      ],
+      [
+       40.10000228881836,
+       -2.1001150608062744,
+       25.132598876953125
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       -2.052027940750122,
+       25.2342529296875
+      ],
+      [
+       40.10000228881836,
+       -1.9988102912902832,
+       25.333587646484375
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       -1.940865397453308,
+       25.430294036865234
+      ],
+      [
+       40.10000228881836,
+       -1.87771737575531,
+       25.524553298950195
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       -1.8109432458877563,
+       25.614561080932617
+      ],
+      [
+       40.10000228881836,
+       -1.7394005060195923,
+       25.701562881469727
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       -1.6625779867172241,
+       25.786291122436523
+      ],
+      [
+       40.10000228881836,
+       -1.5848774909973145,
+       25.863859176635742
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       -1.4990062713623047,
+       25.94171714782715
+      ],
+      [
+       40.10000228881836,
+       -1.4130555391311646,
+       26.01205825805664
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       -1.322380781173706,
+       26.079328536987305
+      ],
+      [
+       40.10000228881836,
+       -1.2279021739959717,
+       26.14229965209961
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       -1.131558895111084,
+       26.200023651123047
+      ],
+      [
+       40.10000228881836,
+       -1.0324594974517822,
+       26.25287437438965
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       -0.9298238754272461,
+       26.301427841186523
+      ],
+      [
+       40.10000228881836,
+       -0.8254551887512207,
+       26.344507217407227
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       -0.7209067940711975,
+       26.381946563720703
+      ],
+      [
+       40.10000228881836,
+       -0.6099211573600769,
+       26.41545867919922
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       -0.5034297108650208,
+       26.442106246948242
+      ],
+      [
+       40.10000228881836,
+       -0.39123350381851196,
+       26.464319229125977
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       -0.27981477975845337,
+       26.480833053588867
+      ],
+      [
+       40.10000228881836,
+       -0.16826504468917847,
+       26.491714477539062
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       -0.05494913086295128,
+       26.497154235839844
+      ],
+      [
+       40.10000228881836,
+       0.05779256299138069,
+       26.500001907348633
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       0.16825994849205017,
+       21.908287048339844
+      ],
+      [
+       40.10000228881836,
+       0.279808908700943,
+       21.919166564941406
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       0.39126649498939514,
+       21.935688018798828
+      ],
+      [
+       40.10000228881836,
+       0.5033795237541199,
+       21.957883834838867
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       0.6099510192871094,
+       21.98455047607422
+      ],
+      [
+       40.10000228881836,
+       0.7208972573280334,
+       22.018051147460938
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       0.8254711627960205,
+       22.05550193786621
+      ],
+      [
+       40.10000228881836,
+       0.9298089146614075,
+       22.098567962646484
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       1.0324559211730957,
+       22.147125244140625
+      ],
+      [
+       40.10000228881836,
+       1.131569504737854,
+       22.199983596801758
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       1.2278850078582764,
+       22.257692337036133
+      ],
+      [
+       40.10000228881836,
+       1.3224035501480103,
+       22.320690155029297
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       1.4130346775054932,
+       22.387928009033203
+      ],
+      [
+       40.10000228881836,
+       1.4990060329437256,
+       22.458284378051758
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       1.5848681926727295,
+       22.536134719848633
+      ],
+      [
+       40.10000228881836,
+       1.662611484527588,
+       22.61374855041504
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       1.7393649816513062,
+       22.698400497436523
+      ],
+      [
+       40.10000228881836,
+       1.810948133468628,
+       22.78544807434082
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       1.8777267932891846,
+       22.875463485717773
+      ],
+      [
+       40.10000228881836,
+       1.9408522844314575,
+       22.96968650817871
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       1.9988216161727905,
+       23.066436767578125
+      ],
+      [
+       40.10000228881836,
+       2.05202317237854,
+       23.165740966796875
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       2.1001083850860596,
+       23.267391204833984
+      ],
+      [
+       40.10000228881836,
+       2.143646240234375,
+       23.372146606445312
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       2.1813435554504395,
+       23.477413177490234
+      ],
+      [
+       40.10000228881836,
+       2.214413642883301,
+       23.585906982421875
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       2.2419261932373047,
+       23.69585609436035
+      ],
+      [
+       40.10000228881836,
+       2.2638516426086426,
+       23.805618286132812
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       2.2804641723632812,
+       23.91769027709961
+      ],
+      [
+       40.10000228881836,
+       2.291614294052124,
+       24.02971839904785
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       2.297152519226074,
+       24.142179489135742
+      ],
+      [
+       40.10000228881836,
+       2.299999952316284,
+       24.254959106445312
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       0.17034611105918884,
+       26.4804744720459
+      ],
+      [
+       40.10000228881836,
+       0.2822341024875641,
+       26.49161148071289
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       0.39442914724349976,
+       26.441930770874023
+      ],
+      [
+       40.10000228881836,
+       0.5041285753250122,
+       26.463844299316406
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       0.614098846912384,
+       26.381349563598633
+      ],
+      [
+       40.10000228881836,
+       0.7225745320320129,
+       26.414413452148438
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       0.8278623819351196,
+       26.300113677978516
+      ],
+      [
+       40.10000228881836,
+       0.9325990676879883,
+       26.343645095825195
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       1.0342682600021362,
+       26.198808670043945
+      ],
+      [
+       40.10000228881836,
+       1.1335870027542114,
+       26.25201988220215
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       2.2808260917663574,
+       24.36822509765625
+      ],
+      [
+       40.10000228881836,
+       2.291715621948242,
+       24.479869842529297
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       2.242102861404419,
+       24.591196060180664
+      ],
+      [
+       40.10000228881836,
+       2.264324426651001,
+       24.703441619873047
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       1.9999992847442627,
+       25.232393264770508
+      ],
+      [
+       40.10000228881836,
+       2.052907705307007,
+       25.331602096557617
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       2.181948661804199,
+       24.80992317199707
+      ],
+      [
+       40.10000228881836,
+       2.2154581546783447,
+       24.920900344848633
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       2.101407766342163,
+       25.025453567504883
+      ],
+      [
+       40.10000228881836,
+       2.1445069313049316,
+       25.129865646362305
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       1.5862672328948975,
+       25.784854888916016
+      ],
+      [
+       40.10000228881836,
+       1.6638790369033813,
+       25.862598419189453
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       1.230273723602295,
+       26.077720642089844
+      ],
+      [
+       40.10000228881836,
+       1.3245469331741333,
+       26.140878677368164
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       1.4145768880844116,
+       25.939393997192383
+      ],
+      [
+       40.10000228881836,
+       1.5015674829483032,
+       26.01093101501465
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       1.879317283630371,
+       25.42789077758789
+      ],
+      [
+       40.10000228881836,
+       1.942305326461792,
+       25.522396087646484
+      ]
+     ],
+     [
+      [
+       37.099998474121094,
+       1.741693139076233,
+       25.613025665283203
+      ],
+      [
+       40.10000228881836,
+       1.8120815753936768,
+       25.699033737182617
+      ]
+     ]
+    ],
+    "posesOverFloor": 158,
+    "kind": "canonical-servo-output-shaft",
+    "basis": "出力軸（径 4.6）とホーンの穴の正本どうしの重なり。軸と穴の円は 64 角形で、相対的に回ると頂点が相手の辺へ入る（体積の上限は頂点の入り込み 64 個 x 弦 0.226 x 矢高 0.011 / 2 x 長さ 3.0 = 0.24mm3、測定は 0.03）。スプライン歯は正本に無い",
+    "theoryMm3": null,
+    "allowedMinMm3": 0.0,
+    "allowedMaxMm3": 0.05,
+    "locatedInDesignedRegion": true,
+    "componentCountMatches": true,
+    "componentCount": 64,
+    "amountWithinLimits": true,
+    "pass": true
+   }
+  ],
+  "belowFloorContacts": [
+   {
+    "parts": [
+     "cam_2_0",
+     "pixel_2_0"
+    ],
+    "maximumCommonVolumeMm3": 8.64572618647826e-09,
+    "atServoDeg": 113.0,
+    "posesOverFloor": 0,
+    "componentsMm": [
+     [
+      [
+       0.949999988079071,
+       -33.97773361206055,
+       60.400054931640625
+      ],
+      [
+       4.949999809265137,
+       -33.974910736083984,
+       60.40005874633789
+      ]
+     ]
+    ]
+   },
+   {
+    "parts": [
+     "cam_1_0",
+     "pixel_1_0"
+    ],
+    "maximumCommonVolumeMm3": 8.645720250832769e-09,
+    "atServoDeg": 113.0,
+    "posesOverFloor": 0,
+    "componentsMm": [
+     [
+      [
+       -16.049999237060547,
+       -33.97773361206055,
+       60.400054931640625
+      ],
+      [
+       -12.05000114440918,
+       -33.974910736083984,
+       60.40005874633789
+      ]
+     ]
+    ]
+   },
+   {
+    "parts": [
+     "cam_3_0",
+     "pixel_3_0"
+    ],
+    "maximumCommonVolumeMm3": 8.645720250832769e-09,
+    "atServoDeg": 113.0,
+    "posesOverFloor": 0,
+    "componentsMm": [
+     [
+      [
+       17.950002670288086,
+       -33.97773361206055,
+       60.400054931640625
+      ],
+      [
+       21.950000762939453,
+       -33.974910736083984,
+       60.40005874633789
+      ]
+     ]
+    ]
+   },
+   {
+    "parts": [
+     "cam_0_0",
+     "pixel_0_0"
+    ],
+    "maximumCommonVolumeMm3": 8.645710628899886e-09,
+    "atServoDeg": 113.0,
+    "posesOverFloor": 0,
+    "componentsMm": [
+     [
+      [
+       -33.04999923706055,
+       -33.97773361206055,
+       60.400054931640625
+      ],
+      [
+       -29.049999237060547,
+       -33.974910736083984,
+       60.40005874633789
+      ]
+     ]
+    ]
+   },
+   {
+    "parts": [
+     "cam_4_0",
+     "pixel_4_0"
+    ],
+    "maximumCommonVolumeMm3": 8.645710628899886e-09,
+    "atServoDeg": 113.0,
+    "posesOverFloor": 0,
+    "componentsMm": [
+     [
+      [
+       34.95000457763672,
+       -33.97773361206055,
+       60.400054931640625
+      ],
+      [
+       38.95000457763672,
+       -33.974910736083984,
+       60.40005874633789
+      ]
+     ]
+    ]
+   }
+  ],
+  "maximumNonDesignedCommonVolumeMm3": 8.64572618647826e-09,
+  "violations": [],
+  "prefilterAgreement": {
+   "servoDegs": [
+    10.0,
+    30.0,
+    50.0,
+    70.0,
+    90.0,
+    110.0,
+    130.0,
+    150.0,
+    170.0
+   ],
+   "comparedPairPoses": 2475,
+   "mismatches": [],
+   "pass": true
+  },
+  "method": "全部品（治具を除く）の全組を、サーボ 10〜170 度の 1 度刻み（161 姿勢）で測る。同じ軸・同じ静止群の部品どうしは相対姿勢が変わらないので 1 姿勢。外接箱が離れた組は共通体積 0。重なる組は BVH で表面の交差を調べ、交差も入れ子も無ければ 0、それ以外は Blender Boolean MANIFOLD で共通体積を測る。許すのは設計した潰しリブ（場所・個数・量を限定）と、正本 SG92R 本体とホーンの重なりだけ。",
+  "pass": true
+ },
+ "camFoot": {
+  "pixels": 25,
+  "servoDegs": 161,
+  "sampling": "足の下面の矩形（X 4.6 x Y 20）の真上から見た最高点。上向きの三角形の頂点・矩形の辺との交点・矩形の角の 3 種類の候補から厳密に求める（格子の刻みによる取りこぼし無し）",
+  "flushFootBottomZMm": 59.89999999999999,
+  "footBottomZMm": [
+   59.9
+  ],
+  "footprintsAreRectangles": true,
+  "worstPenetrationMm": 2e-06,
+  "penetrationLimitMm": 0.01,
+  "worstFloatMm": 1.2e-05,
+  "floatLimitMm": 0.05,
+  "posesNotOnOwnCam": 0,
+  "notOnOwnCamExamples": [],
+  "tableHeightWorstErrorMm": 1e-05,
+  "tableHeightLimitMm": 0.1,
+  "dwellWorstErrorMm": 0.000257,
+  "shaftVerticalPlay": {
+   "settledShiftMm": -0.03000000000000025,
+   "floatedToPlugShiftMm": 0.1,
+   "floatedPushingPlateShiftMm": 0.17,
+   "tableToleranceMm": 0.1,
+   "settledWithinTolerance": true,
+   "plugWithinTolerance": true,
+   "pushingPlateWithinTolerance": false,
+   "note": "軸が溝の底に載っていれば画素は表より 0.03 低い、栓まで浮くと 0.10 高い（どちらも許容 ±0.1 の内）。軸が案内板を押し上げる分まで入れると 0.17 高く、許容を超える。浮くのは歯車の分離力が画素と軸の重さを超えるときで、実機で確かめる。+Z 側の停止の余裕 0.6（斜面で 1.2）は十分",
+   "limit": "公称 STL の幾何。実際の軸の位置は摩擦と荷重で決まるので実機未確認"
+  },
+  "tableHeights": [
+   {
+    "pixel": "pixel_0_0",
+    "table": 0,
+    "servoDeg": 22.0,
+    "expectedMm": 0.0,
+    "measuredMm": -0.0,
+    "errorMm": -0.0
+   },
+   {
+    "pixel": "pixel_0_0",
+    "table": 1,
+    "servoDeg": 56.0,
+    "expectedMm": -0.5,
+    "measuredMm": -0.5,
+    "errorMm": 0.0
+   },
+   {
+    "pixel": "pixel_0_0",
+    "table": 2,
+    "servoDeg": 90.0,
+    "expectedMm": 0.0,
+    "measuredMm": 1e-05,
+    "errorMm": 1e-05
+   },
+   {
+    "pixel": "pixel_0_0",
+    "table": 3,
+    "servoDeg": 124.0,
+    "expectedMm": 0.5,
+    "measuredMm": 0.50001,
+    "errorMm": 1e-05
+   },
+   {
+    "pixel": "pixel_0_0",
+    "table": 4,
+    "servoDeg": 158.0,
+    "expectedMm": 1.5,
+    "measuredMm": 1.5,
+    "errorMm": -0.0
+   },
+   {
+    "pixel": "pixel_1_0",
+    "table": 0,
+    "servoDeg": 22.0,
+    "expectedMm": 0.0,
+    "measuredMm": -0.0,
+    "errorMm": -0.0
+   },
+   {
+    "pixel": "pixel_1_0",
+    "table": 1,
+    "servoDeg": 56.0,
+    "expectedMm": -0.5,
+    "measuredMm": -0.5,
+    "errorMm": 0.0
+   },
+   {
+    "pixel": "pixel_1_0",
+    "table": 2,
+    "servoDeg": 90.0,
+    "expectedMm": 0.0,
+    "measuredMm": 1e-05,
+    "errorMm": 1e-05
+   },
+   {
+    "pixel": "pixel_1_0",
+    "table": 3,
+    "servoDeg": 124.0,
+    "expectedMm": 0.5,
+    "measuredMm": 0.50001,
+    "errorMm": 1e-05
+   },
+   {
+    "pixel": "pixel_1_0",
+    "table": 4,
+    "servoDeg": 158.0,
+    "expectedMm": 0.5,
+    "measuredMm": 0.5,
+    "errorMm": -0.0
+   },
+   {
+    "pixel": "pixel_2_0",
+    "table": 0,
+    "servoDeg": 22.0,
+    "expectedMm": -1.0,
+    "measuredMm": -1.0,
+    "errorMm": -0.0
+   },
+   {
+    "pixel": "pixel_2_0",
+    "table": 1,
+    "servoDeg": 56.0,
+    "expectedMm": -0.5,
+    "measuredMm": -0.5,
+    "errorMm": 0.0
+   },
+   {
+    "pixel": "pixel_2_0",
+    "table": 2,
+    "servoDeg": 90.0,
+    "expectedMm": 0.0,
+    "measuredMm": 1e-05,
+    "errorMm": 1e-05
+   },
+   {
+    "pixel": "pixel_2_0",
+    "table": 3,
+    "servoDeg": 124.0,
+    "expectedMm": 0.5,
+    "measuredMm": 0.50001,
+    "errorMm": 1e-05
+   },
+   {
+    "pixel": "pixel_2_0",
+    "table": 4,
+    "servoDeg": 158.0,
+    "expectedMm": 0.0,
+    "measuredMm": 0.0,
+    "errorMm": 0.0
+   },
+   {
+    "pixel": "pixel_3_0",
+    "table": 0,
+    "servoDeg": 22.0,
+    "expectedMm": 0.0,
+    "measuredMm": -0.0,
+    "errorMm": -0.0
+   },
+   {
+    "pixel": "pixel_3_0",
+    "table": 1,
+    "servoDeg": 56.0,
+    "expectedMm": -0.5,
+    "measuredMm": -0.5,
+    "errorMm": 0.0
+   },
+   {
+    "pixel": "pixel_3_0",
+    "table": 2,
+    "servoDeg": 90.0,
+    "expectedMm": 0.0,
+    "measuredMm": 1e-05,
+    "errorMm": 1e-05
+   },
+   {
+    "pixel": "pixel_3_0",
+    "table": 3,
+    "servoDeg": 124.0,
+    "expectedMm": 0.5,
+    "measuredMm": 0.50001,
+    "errorMm": 1e-05
+   },
+   {
+    "pixel": "pixel_3_0",
+    "table": 4,
+    "servoDeg": 158.0,
+    "expectedMm": 0.5,
+    "measuredMm": 0.5,
+    "errorMm": -0.0
+   },
+   {
+    "pixel": "pixel_4_0",
+    "table": 0,
+    "servoDeg": 22.0,
+    "expectedMm": 0.0,
+    "measuredMm": -0.0,
+    "errorMm": -0.0
+   },
+   {
+    "pixel": "pixel_4_0",
+    "table": 1,
+    "servoDeg": 56.0,
+    "expectedMm": -0.5,
+    "measuredMm": -0.5,
+    "errorMm": 0.0
+   },
+   {
+    "pixel": "pixel_4_0",
+    "table": 2,
+    "servoDeg": 90.0,
+    "expectedMm": 0.0,
+    "measuredMm": 1e-05,
+    "errorMm": 1e-05
+   },
+   {
+    "pixel": "pixel_4_0",
+    "table": 3,
+    "servoDeg": 124.0,
+    "expectedMm": 0.5,
+    "measuredMm": 0.50001,
+    "errorMm": 1e-05
+   },
+   {
+    "pixel": "pixel_4_0",
+    "table": 4,
+    "servoDeg": 158.0,
+    "expectedMm": 1.5,
+    "measuredMm": 1.5,
+    "errorMm": -0.0
+   },
+   {
+    "pixel": "pixel_0_1",
+    "table": 0,
+    "servoDeg": 22.0,
+    "expectedMm": 0.0,
+    "measuredMm": 0.0,
+    "errorMm": 0.0
+   },
+   {
+    "pixel": "pixel_0_1",
+    "table": 1,
+    "servoDeg": 56.0,
+    "expectedMm": -0.5,
+    "measuredMm": -0.49999,
+    "errorMm": 1e-05
+   },
+   {
+    "pixel": "pixel_0_1",
+    "table": 2,
+    "servoDeg": 90.0,
+    "expectedMm": 0.0,
+    "measuredMm": 1e-05,
+    "errorMm": 1e-05
+   },
+   {
+    "pixel": "pixel_0_1",
+    "table": 3,
+    "servoDeg": 124.0,
+    "expectedMm": 0.5,
+    "measuredMm": 0.50001,
+    "errorMm": 1e-05
+   },
+   {
+    "pixel": "pixel_0_1",
+    "table": 4,
+    "servoDeg": 158.0,
+    "expectedMm": 0.5,
+    "measuredMm": 0.5,
+    "errorMm": -0.0
+   },
+   {
+    "pixel": "pixel_1_1",
+    "table": 0,
+    "servoDeg": 22.0,
+    "expectedMm": -1.0,
+    "measuredMm": -1.0,
+    "errorMm": -0.0
+   },
+   {
+    "pixel": "pixel_1_1",
+    "table": 1,
+    "servoDeg": 56.0,
+    "expectedMm": -1.0,
+    "measuredMm": -1.0,
+    "errorMm": 0.0
+   },
+   {
+    "pixel": "pixel_1_1",
+    "table": 2,
+    "servoDeg": 90.0,
+    "expectedMm": 0.0,
+    "measuredMm": 1e-05,
+    "errorMm": 1e-05
+   },
+   {
+    "pixel": "pixel_1_1",
+    "table": 3,
+    "servoDeg": 124.0,
+    "expectedMm": 1.0,
+    "measuredMm": 1.0,
+    "errorMm": 0.0
+   },
+   {
+    "pixel": "pixel_1_1",
+    "table": 4,
+    "servoDeg": 158.0,
+    "expectedMm": 0.0,
+    "measuredMm": -0.0,
+    "errorMm": -0.0
+   },
+   {
+    "pixel": "pixel_2_1",
+    "table": 0,
+    "servoDeg": 22.0,
+    "expectedMm": -0.5,
+    "measuredMm": -0.5,
+    "errorMm": -0.0
+   },
+   {
+    "pixel": "pixel_2_1",
+    "table": 1,
+    "servoDeg": 56.0,
+    "expectedMm": -1.5,
+    "measuredMm": -1.5,
+    "errorMm": 0.0
+   },
+   {
+    "pixel": "pixel_2_1",
+    "table": 2,
+    "servoDeg": 90.0,
+    "expectedMm": 0.0,
+    "measuredMm": 1e-05,
+    "errorMm": 1e-05
+   },
+   {
+    "pixel": "pixel_2_1",
+    "table": 3,
+    "servoDeg": 124.0,
+    "expectedMm": 1.5,
+    "measuredMm": 1.5,
+    "errorMm": 0.0
+   },
+   {
+    "pixel": "pixel_2_1",
+    "table": 4,
+    "servoDeg": 158.0,
+    "expectedMm": 0.0,
+    "measuredMm": -0.0,
+    "errorMm": -0.0
+   },
+   {
+    "pixel": "pixel_3_1",
+    "table": 0,
+    "servoDeg": 22.0,
+    "expectedMm": 0.5,
+    "measuredMm": 0.5,
+    "errorMm": -0.0
+   },
+   {
+    "pixel": "pixel_3_1",
+    "table": 1,
+    "servoDeg": 56.0,
+    "expectedMm": -1.0,
+    "measuredMm": -1.0,
+    "errorMm": 0.0
+   },
+   {
+    "pixel": "pixel_3_1",
+    "table": 2,
+    "servoDeg": 90.0,
+    "expectedMm": 0.0,
+    "measuredMm": 1e-05,
+    "errorMm": 1e-05
+   },
+   {
+    "pixel": "pixel_3_1",
+    "table": 3,
+    "servoDeg": 124.0,
+    "expectedMm": 1.0,
+    "measuredMm": 1.0,
+    "errorMm": 0.0
+   },
+   {
+    "pixel": "pixel_3_1",
+    "table": 4,
+    "servoDeg": 158.0,
+    "expectedMm": 0.0,
+    "measuredMm": -0.0,
+    "errorMm": -0.0
+   },
+   {
+    "pixel": "pixel_4_1",
+    "table": 0,
+    "servoDeg": 22.0,
+    "expectedMm": 0.0,
+    "measuredMm": 0.0,
+    "errorMm": 0.0
+   },
+   {
+    "pixel": "pixel_4_1",
+    "table": 1,
+    "servoDeg": 56.0,
+    "expectedMm": -0.5,
+    "measuredMm": -0.49999,
+    "errorMm": 1e-05
+   },
+   {
+    "pixel": "pixel_4_1",
+    "table": 2,
+    "servoDeg": 90.0,
+    "expectedMm": 0.0,
+    "measuredMm": 1e-05,
+    "errorMm": 1e-05
+   },
+   {
+    "pixel": "pixel_4_1",
+    "table": 3,
+    "servoDeg": 124.0,
+    "expectedMm": 0.5,
+    "measuredMm": 0.50001,
+    "errorMm": 1e-05
+   },
+   {
+    "pixel": "pixel_4_1",
+    "table": 4,
+    "servoDeg": 158.0,
+    "expectedMm": 0.5,
+    "measuredMm": 0.5,
+    "errorMm": -0.0
+   },
+   {
+    "pixel": "pixel_0_2",
+    "table": 0,
+    "servoDeg": 22.0,
+    "expectedMm": -0.5,
+    "measuredMm": -0.5,
+    "errorMm": -0.0
+   },
+   {
+    "pixel": "pixel_0_2",
+    "table": 1,
+    "servoDeg": 56.0,
+    "expectedMm": -0.5,
+    "measuredMm": -0.49999,
+    "errorMm": 1e-05
+   },
+   {
+    "pixel": "pixel_0_2",
+    "table": 2,
+    "servoDeg": 90.0,
+    "expectedMm": 0.0,
+    "measuredMm": 1e-05,
+    "errorMm": 1e-05
+   },
+   {
+    "pixel": "pixel_0_2",
+    "table": 3,
+    "servoDeg": 124.0,
+    "expectedMm": 0.5,
+    "measuredMm": 0.50001,
+    "errorMm": 1e-05
+   },
+   {
+    "pixel": "pixel_0_2",
+    "table": 4,
+    "servoDeg": 158.0,
+    "expectedMm": 0.0,
+    "measuredMm": -0.0,
+    "errorMm": -0.0
+   },
+   {
+    "pixel": "pixel_1_2",
+    "table": 0,
+    "servoDeg": 22.0,
+    "expectedMm": -1.0,
+    "measuredMm": -1.0,
+    "errorMm": -0.0
+   },
+   {
+    "pixel": "pixel_1_2",
+    "table": 1,
+    "servoDeg": 56.0,
+    "expectedMm": -1.5,
+    "measuredMm": -1.5,
+    "errorMm": 0.0
+   },
+   {
+    "pixel": "pixel_1_2",
+    "table": 2,
+    "servoDeg": 90.0,
+    "expectedMm": 0.0,
+    "measuredMm": 1e-05,
+    "errorMm": 1e-05
+   },
+   {
+    "pixel": "pixel_1_2",
+    "table": 3,
+    "servoDeg": 124.0,
+    "expectedMm": 1.5,
+    "measuredMm": 1.5,
+    "errorMm": 0.0
+   },
+   {
+    "pixel": "pixel_1_2",
+    "table": 4,
+    "servoDeg": 158.0,
+    "expectedMm": 0.0,
+    "measuredMm": -0.0,
+    "errorMm": -0.0
+   },
+   {
+    "pixel": "pixel_2_2",
+    "table": 0,
+    "servoDeg": 22.0,
+    "expectedMm": 0.0,
+    "measuredMm": -0.0,
+    "errorMm": -0.0
+   },
+   {
+    "pixel": "pixel_2_2",
+    "table": 1,
+    "servoDeg": 56.0,
+    "expectedMm": -3.0,
+    "measuredMm": -3.0,
+    "errorMm": 0.0
+   },
+   {
+    "pixel": "pixel_2_2",
+    "table": 2,
+    "servoDeg": 90.0,
+    "expectedMm": 0.0,
+    "measuredMm": 1e-05,
+    "errorMm": 1e-05
+   },
+   {
+    "pixel": "pixel_2_2",
+    "table": 3,
+    "servoDeg": 124.0,
+    "expectedMm": 3.0,
+    "measuredMm": 3.0,
+    "errorMm": 0.0
+   },
+   {
+    "pixel": "pixel_2_2",
+    "table": 4,
+    "servoDeg": 158.0,
+    "expectedMm": 0.0,
+    "measuredMm": -0.0,
+    "errorMm": -0.0
+   },
+   {
+    "pixel": "pixel_3_2",
+    "table": 0,
+    "servoDeg": 22.0,
+    "expectedMm": 1.0,
+    "measuredMm": 1.0,
+    "errorMm": -0.0
+   },
+   {
+    "pixel": "pixel_3_2",
+    "table": 1,
+    "servoDeg": 56.0,
+    "expectedMm": -1.5,
+    "measuredMm": -1.5,
+    "errorMm": 0.0
+   },
+   {
+    "pixel": "pixel_3_2",
+    "table": 2,
+    "servoDeg": 90.0,
+    "expectedMm": 0.0,
+    "measuredMm": 1e-05,
+    "errorMm": 1e-05
+   },
+   {
+    "pixel": "pixel_3_2",
+    "table": 3,
+    "servoDeg": 124.0,
+    "expectedMm": 1.5,
+    "measuredMm": 1.5,
+    "errorMm": 0.0
+   },
+   {
+    "pixel": "pixel_3_2",
+    "table": 4,
+    "servoDeg": 158.0,
+    "expectedMm": 0.0,
+    "measuredMm": -0.0,
+    "errorMm": -0.0
+   },
+   {
+    "pixel": "pixel_4_2",
+    "table": 0,
+    "servoDeg": 22.0,
+    "expectedMm": 0.5,
+    "measuredMm": 0.5,
+    "errorMm": -0.0
+   },
+   {
+    "pixel": "pixel_4_2",
+    "table": 1,
+    "servoDeg": 56.0,
+    "expectedMm": -0.5,
+    "measuredMm": -0.49999,
+    "errorMm": 1e-05
+   },
+   {
+    "pixel": "pixel_4_2",
+    "table": 2,
+    "servoDeg": 90.0,
+    "expectedMm": 0.0,
+    "measuredMm": 1e-05,
+    "errorMm": 1e-05
+   },
+   {
+    "pixel": "pixel_4_2",
+    "table": 3,
+    "servoDeg": 124.0,
+    "expectedMm": 0.5,
+    "measuredMm": 0.50001,
+    "errorMm": 1e-05
+   },
+   {
+    "pixel": "pixel_4_2",
+    "table": 4,
+    "servoDeg": 158.0,
+    "expectedMm": 0.0,
+    "measuredMm": -0.0,
+    "errorMm": -0.0
+   },
+   {
+    "pixel": "pixel_0_3",
+    "table": 0,
+    "servoDeg": 22.0,
+    "expectedMm": 0.0,
+    "measuredMm": -0.0,
+    "errorMm": -0.0
+   },
+   {
+    "pixel": "pixel_0_3",
+    "table": 1,
+    "servoDeg": 56.0,
+    "expectedMm": -0.5,
+    "measuredMm": -0.49999,
+    "errorMm": 1e-05
+   },
+   {
+    "pixel": "pixel_0_3",
+    "table": 2,
+    "servoDeg": 90.0,
+    "expectedMm": 0.0,
+    "measuredMm": 1e-05,
+    "errorMm": 1e-05
+   },
+   {
+    "pixel": "pixel_0_3",
+    "table": 3,
+    "servoDeg": 124.0,
+    "expectedMm": 0.5,
+    "measuredMm": 0.50001,
+    "errorMm": 1e-05
+   },
+   {
+    "pixel": "pixel_0_3",
+    "table": 4,
+    "servoDeg": 158.0,
+    "expectedMm": 0.5,
+    "measuredMm": 0.5,
+    "errorMm": -0.0
+   },
+   {
+    "pixel": "pixel_1_3",
+    "table": 0,
+    "servoDeg": 22.0,
+    "expectedMm": -0.5,
+    "measuredMm": -0.5,
+    "errorMm": -0.0
+   },
+   {
+    "pixel": "pixel_1_3",
+    "table": 1,
+    "servoDeg": 56.0,
+    "expectedMm": -1.0,
+    "measuredMm": -1.0,
+    "errorMm": 0.0
+   },
+   {
+    "pixel": "pixel_1_3",
+    "table": 2,
+    "servoDeg": 90.0,
+    "expectedMm": 0.0,
+    "measuredMm": 1e-05,
+    "errorMm": 1e-05
+   },
+   {
+    "pixel": "pixel_1_3",
+    "table": 3,
+    "servoDeg": 124.0,
+    "expectedMm": 1.0,
+    "measuredMm": 1.0,
+    "errorMm": 0.0
+   },
+   {
+    "pixel": "pixel_1_3",
+    "table": 4,
+    "servoDeg": 158.0,
+    "expectedMm": 0.0,
+    "measuredMm": 0.0,
+    "errorMm": 0.0
+   },
+   {
+    "pixel": "pixel_2_3",
+    "table": 0,
+    "servoDeg": 22.0,
+    "expectedMm": 0.5,
+    "measuredMm": 0.5,
+    "errorMm": -0.0
+   },
+   {
+    "pixel": "pixel_2_3",
+    "table": 1,
+    "servoDeg": 56.0,
+    "expectedMm": -1.5,
+    "measuredMm": -1.5,
+    "errorMm": 0.0
+   },
+   {
+    "pixel": "pixel_2_3",
+    "table": 2,
+    "servoDeg": 90.0,
+    "expectedMm": 0.0,
+    "measuredMm": 1e-05,
+    "errorMm": 1e-05
+   },
+   {
+    "pixel": "pixel_2_3",
+    "table": 3,
+    "servoDeg": 124.0,
+    "expectedMm": 1.5,
+    "measuredMm": 1.50001,
+    "errorMm": 1e-05
+   },
+   {
+    "pixel": "pixel_2_3",
+    "table": 4,
+    "servoDeg": 158.0,
+    "expectedMm": 0.0,
+    "measuredMm": 0.0,
+    "errorMm": 0.0
+   },
+   {
+    "pixel": "pixel_3_3",
+    "table": 0,
+    "servoDeg": 22.0,
+    "expectedMm": 1.0,
+    "measuredMm": 1.0,
+    "errorMm": -0.0
+   },
+   {
+    "pixel": "pixel_3_3",
+    "table": 1,
+    "servoDeg": 56.0,
+    "expectedMm": -1.0,
+    "measuredMm": -1.0,
+    "errorMm": 0.0
+   },
+   {
+    "pixel": "pixel_3_3",
+    "table": 2,
+    "servoDeg": 90.0,
+    "expectedMm": 0.0,
+    "measuredMm": 1e-05,
+    "errorMm": 1e-05
+   },
+   {
+    "pixel": "pixel_3_3",
+    "table": 3,
+    "servoDeg": 124.0,
+    "expectedMm": 1.0,
+    "measuredMm": 1.0,
+    "errorMm": 0.0
+   },
+   {
+    "pixel": "pixel_3_3",
+    "table": 4,
+    "servoDeg": 158.0,
+    "expectedMm": 0.0,
+    "measuredMm": 0.0,
+    "errorMm": 0.0
+   },
+   {
+    "pixel": "pixel_4_3",
+    "table": 0,
+    "servoDeg": 22.0,
+    "expectedMm": 0.0,
+    "measuredMm": -0.0,
+    "errorMm": -0.0
+   },
+   {
+    "pixel": "pixel_4_3",
+    "table": 1,
+    "servoDeg": 56.0,
+    "expectedMm": -0.5,
+    "measuredMm": -0.49999,
+    "errorMm": 1e-05
+   },
+   {
+    "pixel": "pixel_4_3",
+    "table": 2,
+    "servoDeg": 90.0,
+    "expectedMm": 0.0,
+    "measuredMm": 1e-05,
+    "errorMm": 1e-05
+   },
+   {
+    "pixel": "pixel_4_3",
+    "table": 3,
+    "servoDeg": 124.0,
+    "expectedMm": 0.5,
+    "measuredMm": 0.50001,
+    "errorMm": 1e-05
+   },
+   {
+    "pixel": "pixel_4_3",
+    "table": 4,
+    "servoDeg": 158.0,
+    "expectedMm": 0.5,
+    "measuredMm": 0.5,
+    "errorMm": -0.0
+   },
+   {
+    "pixel": "pixel_0_4",
+    "table": 0,
+    "servoDeg": 22.0,
+    "expectedMm": 0.0,
+    "measuredMm": 0.0,
+    "errorMm": 0.0
+   },
+   {
+    "pixel": "pixel_0_4",
+    "table": 1,
+    "servoDeg": 56.0,
+    "expectedMm": -0.5,
+    "measuredMm": -0.49999,
+    "errorMm": 1e-05
+   },
+   {
+    "pixel": "pixel_0_4",
+    "table": 2,
+    "servoDeg": 90.0,
+    "expectedMm": 0.0,
+    "measuredMm": 1e-05,
+    "errorMm": 1e-05
+   },
+   {
+    "pixel": "pixel_0_4",
+    "table": 3,
+    "servoDeg": 124.0,
+    "expectedMm": 0.5,
+    "measuredMm": 0.50001,
+    "errorMm": 1e-05
+   },
+   {
+    "pixel": "pixel_0_4",
+    "table": 4,
+    "servoDeg": 158.0,
+    "expectedMm": 1.5,
+    "measuredMm": 1.5,
+    "errorMm": -0.0
+   },
+   {
+    "pixel": "pixel_1_4",
+    "table": 0,
+    "servoDeg": 22.0,
+    "expectedMm": 0.0,
+    "measuredMm": 0.0,
+    "errorMm": 0.0
+   },
+   {
+    "pixel": "pixel_1_4",
+    "table": 1,
+    "servoDeg": 56.0,
+    "expectedMm": -0.5,
+    "measuredMm": -0.49999,
+    "errorMm": 1e-05
+   },
+   {
+    "pixel": "pixel_1_4",
+    "table": 2,
+    "servoDeg": 90.0,
+    "expectedMm": 0.0,
+    "measuredMm": 1e-05,
+    "errorMm": 1e-05
+   },
+   {
+    "pixel": "pixel_1_4",
+    "table": 3,
+    "servoDeg": 124.0,
+    "expectedMm": 0.5,
+    "measuredMm": 0.50001,
+    "errorMm": 1e-05
+   },
+   {
+    "pixel": "pixel_1_4",
+    "table": 4,
+    "servoDeg": 158.0,
+    "expectedMm": 0.5,
+    "measuredMm": 0.5,
+    "errorMm": -0.0
+   },
+   {
+    "pixel": "pixel_2_4",
+    "table": 0,
+    "servoDeg": 22.0,
+    "expectedMm": 1.0,
+    "measuredMm": 1.0,
+    "errorMm": -0.0
+   },
+   {
+    "pixel": "pixel_2_4",
+    "table": 1,
+    "servoDeg": 56.0,
+    "expectedMm": -0.5,
+    "measuredMm": -0.49999,
+    "errorMm": 1e-05
+   },
+   {
+    "pixel": "pixel_2_4",
+    "table": 2,
+    "servoDeg": 90.0,
+    "expectedMm": 0.0,
+    "measuredMm": 1e-05,
+    "errorMm": 1e-05
+   },
+   {
+    "pixel": "pixel_2_4",
+    "table": 3,
+    "servoDeg": 124.0,
+    "expectedMm": 0.5,
+    "measuredMm": 0.50001,
+    "errorMm": 1e-05
+   },
+   {
+    "pixel": "pixel_2_4",
+    "table": 4,
+    "servoDeg": 158.0,
+    "expectedMm": 0.0,
+    "measuredMm": -0.0,
+    "errorMm": -0.0
+   },
+   {
+    "pixel": "pixel_3_4",
+    "table": 0,
+    "servoDeg": 22.0,
+    "expectedMm": 0.0,
+    "measuredMm": 0.0,
+    "errorMm": 0.0
+   },
+   {
+    "pixel": "pixel_3_4",
+    "table": 1,
+    "servoDeg": 56.0,
+    "expectedMm": -0.5,
+    "measuredMm": -0.49999,
+    "errorMm": 1e-05
+   },
+   {
+    "pixel": "pixel_3_4",
+    "table": 2,
+    "servoDeg": 90.0,
+    "expectedMm": 0.0,
+    "measuredMm": 1e-05,
+    "errorMm": 1e-05
+   },
+   {
+    "pixel": "pixel_3_4",
+    "table": 3,
+    "servoDeg": 124.0,
+    "expectedMm": 0.5,
+    "measuredMm": 0.50001,
+    "errorMm": 1e-05
+   },
+   {
+    "pixel": "pixel_3_4",
+    "table": 4,
+    "servoDeg": 158.0,
+    "expectedMm": 0.5,
+    "measuredMm": 0.5,
+    "errorMm": -0.0
+   },
+   {
+    "pixel": "pixel_4_4",
+    "table": 0,
+    "servoDeg": 22.0,
+    "expectedMm": 0.0,
+    "measuredMm": 0.0,
+    "errorMm": 0.0
+   },
+   {
+    "pixel": "pixel_4_4",
+    "table": 1,
+    "servoDeg": 56.0,
+    "expectedMm": -0.5,
+    "measuredMm": -0.49999,
+    "errorMm": 1e-05
+   },
+   {
+    "pixel": "pixel_4_4",
+    "table": 2,
+    "servoDeg": 90.0,
+    "expectedMm": 0.0,
+    "measuredMm": 1e-05,
+    "errorMm": 1e-05
+   },
+   {
+    "pixel": "pixel_4_4",
+    "table": 3,
+    "servoDeg": 124.0,
+    "expectedMm": 0.5,
+    "measuredMm": 0.50001,
+    "errorMm": 1e-05
+   },
+   {
+    "pixel": "pixel_4_4",
+    "table": 4,
+    "servoDeg": 158.0,
+    "expectedMm": 1.5,
+    "measuredMm": 1.5,
+    "errorMm": -0.0
+   }
+  ],
+  "perPixel": [
+   {
+    "pixel": "pixel_0_0",
+    "foot": {
+     "zMm": 59.90000534057617,
+     "x": [
+      -33.20000457763672,
+      -28.900001525878906
+     ],
+     "y": [
+      -44.000003814697266,
+      -24.0
+     ],
+     "areaMm2": 86.00007743836613,
+     "rectangleAreaMm2": 86.00007743836613
+    },
+    "minimumGapMm": -2e-06,
+    "minimumGapAtServoDeg": 95.0,
+    "maximumGapMm": 1.1e-05,
+    "maximumGapAtServoDeg": 26.0,
+    "supportingPartsByPoseCount": {
+     "cam_0_0": 161
+    },
+    "posesNotOnOwnCam": 0,
+    "tableErrorMaxMm": 1e-05
+   },
+   {
+    "pixel": "pixel_1_0",
+    "foot": {
+     "zMm": 59.90000534057617,
+     "x": [
+      -16.200000762939453,
+      -11.90000057220459
+     ],
+     "y": [
+      -44.000003814697266,
+      -24.0
+     ],
+     "areaMm2": 86.00002021789624,
+     "rectangleAreaMm2": 86.00002021789624
+    },
+    "minimumGapMm": -2e-06,
+    "minimumGapAtServoDeg": 95.0,
+    "maximumGapMm": 1.1e-05,
+    "maximumGapAtServoDeg": 26.0,
+    "supportingPartsByPoseCount": {
+     "cam_1_0": 161
+    },
+    "posesNotOnOwnCam": 0,
+    "tableErrorMaxMm": 1e-05
+   },
+   {
+    "pixel": "pixel_2_0",
+    "foot": {
+     "zMm": 59.90000534057617,
+     "x": [
+      0.800000011920929,
+      5.100000381469727
+     ],
+     "y": [
+      -44.000003814697266,
+      -24.0
+     ],
+     "areaMm2": 86.0000237941756,
+     "rectangleAreaMm2": 86.0000237941756
+    },
+    "minimumGapMm": -2e-06,
+    "minimumGapAtServoDeg": 95.0,
+    "maximumGapMm": 1.2e-05,
+    "maximumGapAtServoDeg": 169.0,
+    "supportingPartsByPoseCount": {
+     "cam_2_0": 161
+    },
+    "posesNotOnOwnCam": 0,
+    "tableErrorMaxMm": 1e-05
+   },
+   {
+    "pixel": "pixel_3_0",
+    "foot": {
+     "zMm": 59.90000534057617,
+     "x": [
+      17.80000114440918,
+      22.10000228881836
+     ],
+     "y": [
+      -44.000003814697266,
+      -24.0
+     ],
+     "areaMm2": 86.0000392913862,
+     "rectangleAreaMm2": 86.0000392913862
+    },
+    "minimumGapMm": -2e-06,
+    "minimumGapAtServoDeg": 95.0,
+    "maximumGapMm": 1.1e-05,
+    "maximumGapAtServoDeg": 26.0,
+    "supportingPartsByPoseCount": {
+     "cam_3_0": 161
+    },
+    "posesNotOnOwnCam": 0,
+    "tableErrorMaxMm": 1e-05
+   },
+   {
+    "pixel": "pixel_4_0",
+    "foot": {
+     "zMm": 59.90000534057617,
+     "x": [
+      34.79999923706055,
+      39.10000228881836
+     ],
+     "y": [
+      -44.000003814697266,
+      -24.0
+     ],
+     "areaMm2": 86.00007743836613,
+     "rectangleAreaMm2": 86.00007743836613
+    },
+    "minimumGapMm": -2e-06,
+    "minimumGapAtServoDeg": 95.0,
+    "maximumGapMm": 1.1e-05,
+    "maximumGapAtServoDeg": 26.0,
+    "supportingPartsByPoseCount": {
+     "cam_4_0": 161
+    },
+    "posesNotOnOwnCam": 0,
+    "tableErrorMaxMm": 1e-05
+   },
+   {
+    "pixel": "pixel_0_1",
+    "foot": {
+     "zMm": 59.90000534057617,
+     "x": [
+      -39.10000228881836,
+      -34.79999923706055
+     ],
+     "y": [
+      -27.000001907348633,
+      -7.0
+     ],
+     "areaMm2": 86.00006923676119,
+     "rectangleAreaMm2": 86.00006923676119
+    },
+    "minimumGapMm": -2e-06,
+    "minimumGapAtServoDeg": 85.0,
+    "maximumGapMm": 1.2e-05,
+    "maximumGapAtServoDeg": 163.0,
+    "supportingPartsByPoseCount": {
+     "cam_0_1": 161
+    },
+    "posesNotOnOwnCam": 0,
+    "tableErrorMaxMm": 1e-05
+   },
+   {
+    "pixel": "pixel_1_1",
+    "foot": {
+     "zMm": 59.90000534057617,
+     "x": [
+      -22.10000228881836,
+      -17.80000114440918
+     ],
+     "y": [
+      -27.000001907348633,
+      -7.0
+     ],
+     "areaMm2": 86.0000310897849,
+     "rectangleAreaMm2": 86.0000310897849
+    },
+    "minimumGapMm": -2e-06,
+    "minimumGapAtServoDeg": 85.0,
+    "maximumGapMm": 1.2e-05,
+    "maximumGapAtServoDeg": 165.0,
+    "supportingPartsByPoseCount": {
+     "cam_1_1": 161
+    },
+    "posesNotOnOwnCam": 0,
+    "tableErrorMaxMm": 1e-05
+   },
+   {
+    "pixel": "pixel_2_1",
+    "foot": {
+     "zMm": 59.90000534057617,
+     "x": [
+      -5.100000381469727,
+      -0.800000011920929
+     ],
+     "y": [
+      -27.000001907348633,
+      -7.0
+     ],
+     "areaMm2": 86.00001559257578,
+     "rectangleAreaMm2": 86.00001559257578
+    },
+    "minimumGapMm": -2e-06,
+    "minimumGapAtServoDeg": 85.0,
+    "maximumGapMm": 1.1e-05,
+    "maximumGapAtServoDeg": 22.0,
+    "supportingPartsByPoseCount": {
+     "cam_2_1": 161
+    },
+    "posesNotOnOwnCam": 0,
+    "tableErrorMaxMm": 1e-05
+   },
+   {
+    "pixel": "pixel_3_1",
+    "foot": {
+     "zMm": 59.90000534057617,
+     "x": [
+      11.90000057220459,
+      16.200000762939453
+     ],
+     "y": [
+      -27.000001907348633,
+      -7.0
+     ],
+     "areaMm2": 86.00001201629675,
+     "rectangleAreaMm2": 86.00001201629675
+    },
+    "minimumGapMm": -2e-06,
+    "minimumGapAtServoDeg": 85.0,
+    "maximumGapMm": 1.1e-05,
+    "maximumGapAtServoDeg": 17.0,
+    "supportingPartsByPoseCount": {
+     "cam_3_1": 161
+    },
+    "posesNotOnOwnCam": 0,
+    "tableErrorMaxMm": 1e-05
+   },
+   {
+    "pixel": "pixel_4_1",
+    "foot": {
+     "zMm": 59.90000534057617,
+     "x": [
+      28.900001525878906,
+      33.20000457763672
+     ],
+     "y": [
+      -27.000001907348633,
+      -7.0
+     ],
+     "areaMm2": 86.00006923676119,
+     "rectangleAreaMm2": 86.00006923676119
+    },
+    "minimumGapMm": -2e-06,
+    "minimumGapAtServoDeg": 85.0,
+    "maximumGapMm": 1.2e-05,
+    "maximumGapAtServoDeg": 163.0,
+    "supportingPartsByPoseCount": {
+     "cam_4_1": 161
+    },
+    "posesNotOnOwnCam": 0,
+    "tableErrorMaxMm": 1e-05
+   },
+   {
+    "pixel": "pixel_0_2",
+    "foot": {
+     "zMm": 59.90000534057617,
+     "x": [
+      -33.20000457763672,
+      -28.900001525878906
+     ],
+     "y": [
+      -10.000000953674316,
+      10.000000953674316
+     ],
+     "areaMm2": 86.00006923676119,
+     "rectangleAreaMm2": 86.00006923676119
+    },
+    "minimumGapMm": -2e-06,
+    "minimumGapAtServoDeg": 85.0,
+    "maximumGapMm": 1.1e-05,
+    "maximumGapAtServoDeg": 22.0,
+    "supportingPartsByPoseCount": {
+     "cam_0_2": 161
+    },
+    "posesNotOnOwnCam": 0,
+    "tableErrorMaxMm": 1e-05
+   },
+   {
+    "pixel": "pixel_1_2",
+    "foot": {
+     "zMm": 59.90000534057617,
+     "x": [
+      -16.200000762939453,
+      -11.90000057220459
+     ],
+     "y": [
+      -10.000000953674316,
+      10.000000953674316
+     ],
+     "areaMm2": 86.00001201629675,
+     "rectangleAreaMm2": 86.00001201629675
+    },
+    "minimumGapMm": -2e-06,
+    "minimumGapAtServoDeg": 85.0,
+    "maximumGapMm": 1.2e-05,
+    "maximumGapAtServoDeg": 10.0,
+    "supportingPartsByPoseCount": {
+     "cam_1_2": 161
+    },
+    "posesNotOnOwnCam": 0,
+    "tableErrorMaxMm": 1e-05
+   },
+   {
+    "pixel": "pixel_2_2",
+    "foot": {
+     "zMm": 59.90000534057617,
+     "x": [
+      0.800000011920929,
+      5.100000381469727
+     ],
+     "y": [
+      -10.000000953674316,
+      10.000000953674316
+     ],
+     "areaMm2": 86.00001559257578,
+     "rectangleAreaMm2": 86.00001559257578
+    },
+    "minimumGapMm": -2e-06,
+    "minimumGapAtServoDeg": 85.0,
+    "maximumGapMm": 1.1e-05,
+    "maximumGapAtServoDeg": 13.0,
+    "supportingPartsByPoseCount": {
+     "cam_2_2": 161
+    },
+    "posesNotOnOwnCam": 0,
+    "tableErrorMaxMm": 1e-05
+   },
+   {
+    "pixel": "pixel_3_2",
+    "foot": {
+     "zMm": 59.90000534057617,
+     "x": [
+      17.80000114440918,
+      22.10000228881836
+     ],
+     "y": [
+      -10.000000953674316,
+      10.000000953674316
+     ],
+     "areaMm2": 86.0000310897849,
+     "rectangleAreaMm2": 86.0000310897849
+    },
+    "minimumGapMm": -2e-06,
+    "minimumGapAtServoDeg": 85.0,
+    "maximumGapMm": 1e-05,
+    "maximumGapAtServoDeg": 21.0,
+    "supportingPartsByPoseCount": {
+     "cam_3_2": 161
+    },
+    "posesNotOnOwnCam": 0,
+    "tableErrorMaxMm": 1e-05
+   },
+   {
+    "pixel": "pixel_4_2",
+    "foot": {
+     "zMm": 59.90000534057617,
+     "x": [
+      34.79999923706055,
+      39.10000228881836
+     ],
+     "y": [
+      -10.000000953674316,
+      10.000000953674316
+     ],
+     "areaMm2": 86.00006923676119,
+     "rectangleAreaMm2": 86.00006923676119
+    },
+    "minimumGapMm": -2e-06,
+    "minimumGapAtServoDeg": 85.0,
+    "maximumGapMm": 1.2e-05,
+    "maximumGapAtServoDeg": 17.0,
+    "supportingPartsByPoseCount": {
+     "cam_4_2": 161
+    },
+    "posesNotOnOwnCam": 0,
+    "tableErrorMaxMm": 1e-05
+   },
+   {
+    "pixel": "pixel_0_3",
+    "foot": {
+     "zMm": 59.90000534057617,
+     "x": [
+      -39.10000228881836,
+      -34.79999923706055
+     ],
+     "y": [
+      7.0,
+      27.000001907348633
+     ],
+     "areaMm2": 86.00006923676119,
+     "rectangleAreaMm2": 86.00006923676119
+    },
+    "minimumGapMm": -2e-06,
+    "minimumGapAtServoDeg": 95.0,
+    "maximumGapMm": 1.1e-05,
+    "maximumGapAtServoDeg": 163.0,
+    "supportingPartsByPoseCount": {
+     "cam_0_3": 161
+    },
+    "posesNotOnOwnCam": 0,
+    "tableErrorMaxMm": 1e-05
+   },
+   {
+    "pixel": "pixel_1_3",
+    "foot": {
+     "zMm": 59.90000534057617,
+     "x": [
+      -22.10000228881836,
+      -17.80000114440918
+     ],
+     "y": [
+      7.0,
+      27.000001907348633
+     ],
+     "areaMm2": 86.0000310897849,
+     "rectangleAreaMm2": 86.0000310897849
+    },
+    "minimumGapMm": -2e-06,
+    "minimumGapAtServoDeg": 95.0,
+    "maximumGapMm": 1.1e-05,
+    "maximumGapAtServoDeg": 22.0,
+    "supportingPartsByPoseCount": {
+     "cam_1_3": 161
+    },
+    "posesNotOnOwnCam": 0,
+    "tableErrorMaxMm": 1e-05
+   },
+   {
+    "pixel": "pixel_2_3",
+    "foot": {
+     "zMm": 59.90000534057617,
+     "x": [
+      -5.100000381469727,
+      -0.800000011920929
+     ],
+     "y": [
+      7.0,
+      27.000001907348633
+     ],
+     "areaMm2": 86.00001559257578,
+     "rectangleAreaMm2": 86.00001559257578
+    },
+    "minimumGapMm": -2e-06,
+    "minimumGapAtServoDeg": 95.0,
+    "maximumGapMm": 1.2e-05,
+    "maximumGapAtServoDeg": 17.0,
+    "supportingPartsByPoseCount": {
+     "cam_2_3": 161
+    },
+    "posesNotOnOwnCam": 0,
+    "tableErrorMaxMm": 1e-05
+   },
+   {
+    "pixel": "pixel_3_3",
+    "foot": {
+     "zMm": 59.90000534057617,
+     "x": [
+      11.90000057220459,
+      16.200000762939453
+     ],
+     "y": [
+      7.0,
+      27.000001907348633
+     ],
+     "areaMm2": 86.00001201629675,
+     "rectangleAreaMm2": 86.00001201629675
+    },
+    "minimumGapMm": -2e-06,
+    "minimumGapAtServoDeg": 95.0,
+    "maximumGapMm": 1.1e-05,
+    "maximumGapAtServoDeg": 21.0,
+    "supportingPartsByPoseCount": {
+     "cam_3_3": 161
+    },
+    "posesNotOnOwnCam": 0,
+    "tableErrorMaxMm": 1e-05
+   },
+   {
+    "pixel": "pixel_4_3",
+    "foot": {
+     "zMm": 59.90000534057617,
+     "x": [
+      28.900001525878906,
+      33.20000457763672
+     ],
+     "y": [
+      7.0,
+      27.000001907348633
+     ],
+     "areaMm2": 86.00006923676119,
+     "rectangleAreaMm2": 86.00006923676119
+    },
+    "minimumGapMm": -2e-06,
+    "minimumGapAtServoDeg": 95.0,
+    "maximumGapMm": 1.1e-05,
+    "maximumGapAtServoDeg": 163.0,
+    "supportingPartsByPoseCount": {
+     "cam_4_3": 161
+    },
+    "posesNotOnOwnCam": 0,
+    "tableErrorMaxMm": 1e-05
+   },
+   {
+    "pixel": "pixel_0_4",
+    "foot": {
+     "zMm": 59.90000534057617,
+     "x": [
+      -33.20000457763672,
+      -28.900001525878906
+     ],
+     "y": [
+      24.0,
+      44.000003814697266
+     ],
+     "areaMm2": 86.00007743836613,
+     "rectangleAreaMm2": 86.00007743836613
+    },
+    "minimumGapMm": -2e-06,
+    "minimumGapAtServoDeg": 84.0,
+    "maximumGapMm": 1.1e-05,
+    "maximumGapAtServoDeg": 146.0,
+    "supportingPartsByPoseCount": {
+     "cam_0_4": 161
+    },
+    "posesNotOnOwnCam": 0,
+    "tableErrorMaxMm": 1e-05
+   },
+   {
+    "pixel": "pixel_1_4",
+    "foot": {
+     "zMm": 59.90000534057617,
+     "x": [
+      -16.200000762939453,
+      -11.90000057220459
+     ],
+     "y": [
+      24.0,
+      44.000003814697266
+     ],
+     "areaMm2": 86.00002021789624,
+     "rectangleAreaMm2": 86.00002021789624
+    },
+    "minimumGapMm": -2e-06,
+    "minimumGapAtServoDeg": 84.0,
+    "maximumGapMm": 1.2e-05,
+    "maximumGapAtServoDeg": 163.0,
+    "supportingPartsByPoseCount": {
+     "cam_1_4": 161
+    },
+    "posesNotOnOwnCam": 0,
+    "tableErrorMaxMm": 1e-05
+   },
+   {
+    "pixel": "pixel_2_4",
+    "foot": {
+     "zMm": 59.90000534057617,
+     "x": [
+      0.800000011920929,
+      5.100000381469727
+     ],
+     "y": [
+      24.0,
+      44.000003814697266
+     ],
+     "areaMm2": 86.0000237941756,
+     "rectangleAreaMm2": 86.0000237941756
+    },
+    "minimumGapMm": -2e-06,
+    "minimumGapAtServoDeg": 84.0,
+    "maximumGapMm": 1.1e-05,
+    "maximumGapAtServoDeg": 154.0,
+    "supportingPartsByPoseCount": {
+     "cam_2_4": 161
+    },
+    "posesNotOnOwnCam": 0,
+    "tableErrorMaxMm": 1e-05
+   },
+   {
+    "pixel": "pixel_3_4",
+    "foot": {
+     "zMm": 59.90000534057617,
+     "x": [
+      17.80000114440918,
+      22.10000228881836
+     ],
+     "y": [
+      24.0,
+      44.000003814697266
+     ],
+     "areaMm2": 86.0000392913862,
+     "rectangleAreaMm2": 86.0000392913862
+    },
+    "minimumGapMm": -2e-06,
+    "minimumGapAtServoDeg": 84.0,
+    "maximumGapMm": 1.2e-05,
+    "maximumGapAtServoDeg": 163.0,
+    "supportingPartsByPoseCount": {
+     "cam_3_4": 161
+    },
+    "posesNotOnOwnCam": 0,
+    "tableErrorMaxMm": 1e-05
+   },
+   {
+    "pixel": "pixel_4_4",
+    "foot": {
+     "zMm": 59.90000534057617,
+     "x": [
+      34.79999923706055,
+      39.10000228881836
+     ],
+     "y": [
+      24.0,
+      44.000003814697266
+     ],
+     "areaMm2": 86.00007743836613,
+     "rectangleAreaMm2": 86.00007743836613
+    },
+    "minimumGapMm": -2e-06,
+    "minimumGapAtServoDeg": 84.0,
+    "maximumGapMm": 1.1e-05,
+    "maximumGapAtServoDeg": 146.0,
+    "supportingPartsByPoseCount": {
+     "cam_4_4": 161
+    },
+    "posesNotOnOwnCam": 0,
+    "tableErrorMaxMm": 1e-05
+   }
+  ],
+  "pass": true
+ },
+ "pixelLimits": {
+  "pixels": [
+   {
+    "pixel": "pixel_0_0",
+    "upFromPlus3Mm": 1.20004,
+    "upFromFlushMm": 4.200043,
+    "downFromMinus3Mm": 0.600018,
+    "designUpFromPlus3Mm": 0.6,
+    "slopeGeometryUpFromPlus3Mm": 1.200000000000017,
+    "designUpFromFlushMm": 3.6,
+    "expectedDownFromMinus3Mm": 0.6000000000000033,
+    "bezelRemovedNegativeTravelMm": null,
+    "pass": true
+   },
+   {
+    "pixel": "pixel_1_0",
+    "upFromPlus3Mm": 1.20004,
+    "upFromFlushMm": 4.200043,
+    "downFromMinus3Mm": 0.600018,
+    "designUpFromPlus3Mm": 0.6,
+    "slopeGeometryUpFromPlus3Mm": 1.200000000000017,
+    "designUpFromFlushMm": 3.6,
+    "expectedDownFromMinus3Mm": 0.6000000000000033,
+    "bezelRemovedNegativeTravelMm": null,
+    "pass": true
+   },
+   {
+    "pixel": "pixel_2_0",
+    "upFromPlus3Mm": 1.20004,
+    "upFromFlushMm": 4.200043,
+    "downFromMinus3Mm": 0.600018,
+    "designUpFromPlus3Mm": 0.6,
+    "slopeGeometryUpFromPlus3Mm": 1.200000000000017,
+    "designUpFromFlushMm": 3.6,
+    "expectedDownFromMinus3Mm": 0.6000000000000033,
+    "bezelRemovedNegativeTravelMm": null,
+    "pass": true
+   },
+   {
+    "pixel": "pixel_3_0",
+    "upFromPlus3Mm": 1.20004,
+    "upFromFlushMm": 4.200043,
+    "downFromMinus3Mm": 0.600018,
+    "designUpFromPlus3Mm": 0.6,
+    "slopeGeometryUpFromPlus3Mm": 1.200000000000017,
+    "designUpFromFlushMm": 3.6,
+    "expectedDownFromMinus3Mm": 0.6000000000000033,
+    "bezelRemovedNegativeTravelMm": null,
+    "pass": true
+   },
+   {
+    "pixel": "pixel_4_0",
+    "upFromPlus3Mm": 1.20004,
+    "upFromFlushMm": 4.200043,
+    "downFromMinus3Mm": 0.600018,
+    "designUpFromPlus3Mm": 0.6,
+    "slopeGeometryUpFromPlus3Mm": 1.200000000000017,
+    "designUpFromFlushMm": 3.6,
+    "expectedDownFromMinus3Mm": 0.6000000000000033,
+    "bezelRemovedNegativeTravelMm": null,
+    "pass": true
+   },
+   {
+    "pixel": "pixel_0_1",
+    "upFromPlus3Mm": 1.20004,
+    "upFromFlushMm": 4.200043,
+    "downFromMinus3Mm": 0.600018,
+    "designUpFromPlus3Mm": 0.6,
+    "slopeGeometryUpFromPlus3Mm": 1.200000000000017,
+    "designUpFromFlushMm": 3.6,
+    "expectedDownFromMinus3Mm": 0.6000000000000033,
+    "bezelRemovedNegativeTravelMm": null,
+    "pass": true
+   },
+   {
+    "pixel": "pixel_1_1",
+    "upFromPlus3Mm": 1.20004,
+    "upFromFlushMm": 4.200043,
+    "downFromMinus3Mm": 0.600018,
+    "designUpFromPlus3Mm": 0.6,
+    "slopeGeometryUpFromPlus3Mm": 1.200000000000017,
+    "designUpFromFlushMm": 3.6,
+    "expectedDownFromMinus3Mm": 0.6000000000000033,
+    "bezelRemovedNegativeTravelMm": null,
+    "pass": true
+   },
+   {
+    "pixel": "pixel_2_1",
+    "upFromPlus3Mm": 1.20004,
+    "upFromFlushMm": 4.200043,
+    "downFromMinus3Mm": 0.600018,
+    "designUpFromPlus3Mm": 0.6,
+    "slopeGeometryUpFromPlus3Mm": 1.200000000000017,
+    "designUpFromFlushMm": 3.6,
+    "expectedDownFromMinus3Mm": 0.6000000000000033,
+    "bezelRemovedNegativeTravelMm": null,
+    "pass": true
+   },
+   {
+    "pixel": "pixel_3_1",
+    "upFromPlus3Mm": 1.20004,
+    "upFromFlushMm": 4.200043,
+    "downFromMinus3Mm": 0.600018,
+    "designUpFromPlus3Mm": 0.6,
+    "slopeGeometryUpFromPlus3Mm": 1.200000000000017,
+    "designUpFromFlushMm": 3.6,
+    "expectedDownFromMinus3Mm": 0.6000000000000033,
+    "bezelRemovedNegativeTravelMm": null,
+    "pass": true
+   },
+   {
+    "pixel": "pixel_4_1",
+    "upFromPlus3Mm": 1.20004,
+    "upFromFlushMm": 4.200043,
+    "downFromMinus3Mm": 0.600018,
+    "designUpFromPlus3Mm": 0.6,
+    "slopeGeometryUpFromPlus3Mm": 1.200000000000017,
+    "designUpFromFlushMm": 3.6,
+    "expectedDownFromMinus3Mm": 0.6000000000000033,
+    "bezelRemovedNegativeTravelMm": null,
+    "pass": true
+   },
+   {
+    "pixel": "pixel_0_2",
+    "upFromPlus3Mm": 1.20004,
+    "upFromFlushMm": 4.200043,
+    "downFromMinus3Mm": 0.600018,
+    "designUpFromPlus3Mm": 0.6,
+    "slopeGeometryUpFromPlus3Mm": 1.200000000000017,
+    "designUpFromFlushMm": 3.6,
+    "expectedDownFromMinus3Mm": 0.6000000000000033,
+    "bezelRemovedNegativeTravelMm": null,
+    "pass": true
+   },
+   {
+    "pixel": "pixel_1_2",
+    "upFromPlus3Mm": 1.20004,
+    "upFromFlushMm": 4.200043,
+    "downFromMinus3Mm": 0.600018,
+    "designUpFromPlus3Mm": 0.6,
+    "slopeGeometryUpFromPlus3Mm": 1.200000000000017,
+    "designUpFromFlushMm": 3.6,
+    "expectedDownFromMinus3Mm": 0.6000000000000033,
+    "bezelRemovedNegativeTravelMm": null,
+    "pass": true
+   },
+   {
+    "pixel": "pixel_2_2",
+    "upFromPlus3Mm": 1.20004,
+    "upFromFlushMm": 4.200043,
+    "downFromMinus3Mm": 0.600018,
+    "designUpFromPlus3Mm": 0.6,
+    "slopeGeometryUpFromPlus3Mm": 1.200000000000017,
+    "designUpFromFlushMm": 3.6,
+    "expectedDownFromMinus3Mm": 0.6000000000000033,
+    "bezelRemovedNegativeTravelMm": null,
+    "pass": true
+   },
+   {
+    "pixel": "pixel_3_2",
+    "upFromPlus3Mm": 1.20004,
+    "upFromFlushMm": 4.200043,
+    "downFromMinus3Mm": 0.600018,
+    "designUpFromPlus3Mm": 0.6,
+    "slopeGeometryUpFromPlus3Mm": 1.200000000000017,
+    "designUpFromFlushMm": 3.6,
+    "expectedDownFromMinus3Mm": 0.6000000000000033,
+    "bezelRemovedNegativeTravelMm": null,
+    "pass": true
+   },
+   {
+    "pixel": "pixel_4_2",
+    "upFromPlus3Mm": 1.20004,
+    "upFromFlushMm": 4.200043,
+    "downFromMinus3Mm": 0.600018,
+    "designUpFromPlus3Mm": 0.6,
+    "slopeGeometryUpFromPlus3Mm": 1.200000000000017,
+    "designUpFromFlushMm": 3.6,
+    "expectedDownFromMinus3Mm": 0.6000000000000033,
+    "bezelRemovedNegativeTravelMm": null,
+    "pass": true
+   },
+   {
+    "pixel": "pixel_0_3",
+    "upFromPlus3Mm": 1.20004,
+    "upFromFlushMm": 4.200043,
+    "downFromMinus3Mm": 0.600018,
+    "designUpFromPlus3Mm": 0.6,
+    "slopeGeometryUpFromPlus3Mm": 1.200000000000017,
+    "designUpFromFlushMm": 3.6,
+    "expectedDownFromMinus3Mm": 0.6000000000000033,
+    "bezelRemovedNegativeTravelMm": null,
+    "pass": true
+   },
+   {
+    "pixel": "pixel_1_3",
+    "upFromPlus3Mm": 1.20004,
+    "upFromFlushMm": 4.200043,
+    "downFromMinus3Mm": 0.600018,
+    "designUpFromPlus3Mm": 0.6,
+    "slopeGeometryUpFromPlus3Mm": 1.200000000000017,
+    "designUpFromFlushMm": 3.6,
+    "expectedDownFromMinus3Mm": 0.6000000000000033,
+    "bezelRemovedNegativeTravelMm": null,
+    "pass": true
+   },
+   {
+    "pixel": "pixel_2_3",
+    "upFromPlus3Mm": 1.20004,
+    "upFromFlushMm": 4.200043,
+    "downFromMinus3Mm": 0.600018,
+    "designUpFromPlus3Mm": 0.6,
+    "slopeGeometryUpFromPlus3Mm": 1.200000000000017,
+    "designUpFromFlushMm": 3.6,
+    "expectedDownFromMinus3Mm": 0.6000000000000033,
+    "bezelRemovedNegativeTravelMm": null,
+    "pass": true
+   },
+   {
+    "pixel": "pixel_3_3",
+    "upFromPlus3Mm": 1.20004,
+    "upFromFlushMm": 4.200043,
+    "downFromMinus3Mm": 0.600018,
+    "designUpFromPlus3Mm": 0.6,
+    "slopeGeometryUpFromPlus3Mm": 1.200000000000017,
+    "designUpFromFlushMm": 3.6,
+    "expectedDownFromMinus3Mm": 0.6000000000000033,
+    "bezelRemovedNegativeTravelMm": null,
+    "pass": true
+   },
+   {
+    "pixel": "pixel_4_3",
+    "upFromPlus3Mm": 1.20004,
+    "upFromFlushMm": 4.200043,
+    "downFromMinus3Mm": 0.600018,
+    "designUpFromPlus3Mm": 0.6,
+    "slopeGeometryUpFromPlus3Mm": 1.200000000000017,
+    "designUpFromFlushMm": 3.6,
+    "expectedDownFromMinus3Mm": 0.6000000000000033,
+    "bezelRemovedNegativeTravelMm": null,
+    "pass": true
+   },
+   {
+    "pixel": "pixel_0_4",
+    "upFromPlus3Mm": 1.20004,
+    "upFromFlushMm": 4.200043,
+    "downFromMinus3Mm": 0.600018,
+    "designUpFromPlus3Mm": 0.6,
+    "slopeGeometryUpFromPlus3Mm": 1.200000000000017,
+    "designUpFromFlushMm": 3.6,
+    "expectedDownFromMinus3Mm": 0.6000000000000033,
+    "bezelRemovedNegativeTravelMm": null,
+    "pass": true
+   },
+   {
+    "pixel": "pixel_1_4",
+    "upFromPlus3Mm": 1.20004,
+    "upFromFlushMm": 4.200043,
+    "downFromMinus3Mm": 0.600018,
+    "designUpFromPlus3Mm": 0.6,
+    "slopeGeometryUpFromPlus3Mm": 1.200000000000017,
+    "designUpFromFlushMm": 3.6,
+    "expectedDownFromMinus3Mm": 0.6000000000000033,
+    "bezelRemovedNegativeTravelMm": null,
+    "pass": true
+   },
+   {
+    "pixel": "pixel_2_4",
+    "upFromPlus3Mm": 1.20004,
+    "upFromFlushMm": 4.200043,
+    "downFromMinus3Mm": 0.600018,
+    "designUpFromPlus3Mm": 0.6,
+    "slopeGeometryUpFromPlus3Mm": 1.200000000000017,
+    "designUpFromFlushMm": 3.6,
+    "expectedDownFromMinus3Mm": 0.6000000000000033,
+    "bezelRemovedNegativeTravelMm": null,
+    "pass": true
+   },
+   {
+    "pixel": "pixel_3_4",
+    "upFromPlus3Mm": 1.20004,
+    "upFromFlushMm": 4.200043,
+    "downFromMinus3Mm": 0.600018,
+    "designUpFromPlus3Mm": 0.6,
+    "slopeGeometryUpFromPlus3Mm": 1.200000000000017,
+    "designUpFromFlushMm": 3.6,
+    "expectedDownFromMinus3Mm": 0.6000000000000033,
+    "bezelRemovedNegativeTravelMm": null,
+    "pass": true
+   },
+   {
+    "pixel": "pixel_4_4",
+    "upFromPlus3Mm": 1.20004,
+    "upFromFlushMm": 4.200043,
+    "downFromMinus3Mm": 0.600018,
+    "designUpFromPlus3Mm": 0.6,
+    "slopeGeometryUpFromPlus3Mm": 1.200000000000017,
+    "designUpFromFlushMm": 3.6,
+    "expectedDownFromMinus3Mm": 0.6000000000000033,
+    "bezelRemovedNegativeTravelMm": null,
+    "pass": true
+   }
+  ],
+  "upGapMm": [
+   1.20004,
+   1.20004
+  ],
+  "downGapMm": [
+   0.600018,
+   0.600018
+  ],
+  "designUpGapMm": 0.6,
+  "slopeGeometryUpGapMm": 1.200000000000017,
+  "note": "+3 での上向きの最初の接触は、平らな面どうしの設計値 0.6 ではなく、つばの上面の 45 度の面取りとベゼルの窓の下縁の 45 度の面取りが平行に向き合う位置（1.2mm）。設計値より広く、画素が +3 を超えて浮く余裕が大きい（隙間が詰まる側ではない）",
+  "tableHeightRangeMm": [
+   -3.0,
+   3.0
+  ],
+  "method": "画素 1 つだけを +Z（+3 の姿勢）と -Z（-3 の姿勢）へ動かし、ベゼル・案内板との共通体積が床を超える最初の移動量を二分探索。ベゼルを 200mm 退避した負例で接触が消えること。",
+  "pass": true
+ },
+ "sourceIntegrity": {
+  "startHashes": 73,
+  "endHashes": 73,
+  "pass": true
+ },
+ "overall": {
+  "pass": true,
+  "failures": [],
+  "elapsedSeconds": 111.0,
+  "booleanCalls": 4422
+ },
+ "computedByGeometry": [
+  "全部品の組 x サーボ 10〜170 度の共通体積（設計した潰しリブ以外は床 0.001mm3 以下）",
+  "画素の足の下面と、実カム STL の最高点の差（食い込み・浮き）と、載っている部品の特定",
+  "停止角での画素の高さが表どおりか",
+  "画素の上限・下限の隙間（ベゼル・案内板）"
+ ],
+ "hardwareUnknown": [
+  "潰しリブの実際の潰れ代と回転ガタ（印刷公差・クリープ）",
+  "PLA/PETG の摩擦係数と足がカムを滑るときの実際の力",
+  "SG92R の出力スプラインとホーンの嵌合（正本に歯が無い）",
+  "印刷収縮による隙間の増減"
+ ],
+ "sourceHashes": {
+  "models/tangible-pixel-cube/params.py": "6cd1db746f347becb77f904622ef9e53be96c7002c169873cc4d52b40f116542",
+  "models/tangible-pixel-cube/kinematics.py": "8d514eb998f8cdb4006e054c850f4ac1b27c5901642c2141af3e32bca90d5445",
+  "models/tangible-pixel-cube/patterns.py": "c91d560ab93641d34294f80ed2ee9fb6ae227110dcf05927b29fad96aee8974a",
+  "models/tangible-pixel-cube/verify.py": "377d4739f27b2170b20a880808fdc7a63ea16e7958a9fded65a94a97c2236bc1",
+  "models/tangible-pixel-cube/build/manifest.json": "5771579b190ae876b4ea42af1622c8077d3af2333c871b8fee5dfc4fc9c271b5",
+  "models/tangible-pixel-cube/build/motion.json": "e30c126d6754e1c24f78c0489b9c6b7753bd8821664993c58adba0b72ef716e5",
+  "lib/solid_volume.py": "e2ef2fed94077267883da61c7b28ca09f321d1263833bcaf6580daa7748b1415",
+  "tools/lattice_boolean_evidence.py": "2711a46d31fd860e1809c53bb95bbebdd9d8f158ddb482d3c2d5e21ef110aed0",
+  "models/sg92r-photo/params.py": "99535f8e4df8362e3f5511bb891495ad41f70d069b0108dfedfe1cab615fd835",
+  "models/tangible-pixel-cube/build/housing.stl": "2cc36bde95ac55b2313a5f467a03d9d964398bccaecd58ace923a14b1c290a8e",
+  "models/tangible-pixel-cube/build/bezel.stl": "8d63d1a4e9aa7faaa62cb28ae9188e9c9c860bd6100c75c9fc383879c76190bc",
+  "models/tangible-pixel-cube/build/guide_plate.stl": "04362f3efc63ffb5cf41f27066fe5bc1b62cdbaaa56ac58090c847abcd2a34c0",
+  "models/tangible-pixel-cube/build/shaft_0.stl": "ad3bc6f80e39451a3f5e8a297ac06ec3b65a3570a854d155d0e8397d0c5bf9d6",
+  "models/tangible-pixel-cube/build/shaft_1.stl": "e19f76e7012dd611f4c57eea17a0e1668c896fb2f328d1a45725cc796e265265",
+  "models/tangible-pixel-cube/build/shaft_2.stl": "73ce5be2417f805ac68118f432604d561e3b9543adc3d14b145d120ce7e4c020",
+  "models/tangible-pixel-cube/build/shaft_3.stl": "3c8778da12507fc837787413236a815ca3234d891e1dedfd3c847514e2452760",
+  "models/tangible-pixel-cube/build/shaft_4.stl": "cdaa97f19aff71fa931d5b40f01a2ff65cca0048762554abe62cf33f94e13a6d",
+  "models/tangible-pixel-cube/build/gear_0.stl": "94ce7c5daba9353d1f7c503229edf36ca6c47e4120272c02efc5392cb4e5de21",
+  "models/tangible-pixel-cube/build/gear_1.stl": "02dbca01024ea5c201b0571209468773f52d7fa2cda446c2cac4a2f22f2531c0",
+  "models/tangible-pixel-cube/build/gear_2.stl": "dbdf6688ce44b1ff9fee04b307225dcf8d567c07f27ff6ca1c19473f9d6c1cb0",
+  "models/tangible-pixel-cube/build/gear_3.stl": "066aa1c1adc63e90046dff0fbe4e0c542dd61e3466f01429438be0b945681efc",
+  "models/tangible-pixel-cube/build/gear_4.stl": "bcad57d96b13778874e9920bd0a95d6f2bb69d7f94520ada549e588c4c0c401b",
+  "models/tangible-pixel-cube/build/cam_0_0.stl": "dd604ffd0f81d68f7638067716e9307a839d92399c3fd09d5165719336eadb2f",
+  "models/tangible-pixel-cube/build/cam_1_0.stl": "b64a5f9f30f3b8fc5a0b3e438f24c5ede3237f69ec14630dea2f3719005d15e3",
+  "models/tangible-pixel-cube/build/cam_2_0.stl": "6e16bf6759a4f5db6c10416d450c3a61cd71045aa92cddb5b7a5d78066f65b74",
+  "models/tangible-pixel-cube/build/cam_3_0.stl": "698e55a9084143e27b8d3f161b5bde7783c16794ec1cebf1c8effc31dd71d402",
+  "models/tangible-pixel-cube/build/cam_4_0.stl": "af1b12768e32b38861281a0a35286f45e9c5e13e4a6d7478699ead6352f7a429",
+  "models/tangible-pixel-cube/build/cam_0_1.stl": "7a58389ca2961c1308f830f8758247d411576720d24ca959e0c2b03bf3f327ad",
+  "models/tangible-pixel-cube/build/cam_1_1.stl": "b0889166341d86e0f987ff75dcacb1ec19e033ae58db4b7a472f02f5e654fa21",
+  "models/tangible-pixel-cube/build/cam_2_1.stl": "4792d314b7391843b60d83fd182a1e47ed02c770a744d2d981af5c43c81a8c18",
+  "models/tangible-pixel-cube/build/cam_3_1.stl": "72effa0b28a4f6c2ae18a30ff2e1aef5fbf31ba777d8686b58ff7ed9f9bbf3e8",
+  "models/tangible-pixel-cube/build/cam_4_1.stl": "db0663357d541fc951dc582efdbaf428c5d1dc00035f910e3cbbbfcd8aedf21a",
+  "models/tangible-pixel-cube/build/cam_0_2.stl": "d5771a7f8be38edf439b34ad0732c83d1be775851f743df2ec2a949f4bf2a869",
+  "models/tangible-pixel-cube/build/cam_1_2.stl": "e939dee531d7adfff354f441416d33dcdf844871e6689b6087124c64e7877af1",
+  "models/tangible-pixel-cube/build/cam_2_2.stl": "cfdc85cbec898cf29e9b50907a08491052b77043408ce7ce01a8cbb9f7d4578c",
+  "models/tangible-pixel-cube/build/cam_3_2.stl": "2db3fbe5a9c861174f250284960cb891ae51d4d6b0727bd68b3e4440449d123f",
+  "models/tangible-pixel-cube/build/cam_4_2.stl": "6572c33e9f8164a8638e6075726b9017152a34531823f301dd0de208ae0c8ffb",
+  "models/tangible-pixel-cube/build/cam_0_3.stl": "c94aae918f03f9013dbcacc10e12a42a2b4bf41dbe5c7aa6166f440508cad971",
+  "models/tangible-pixel-cube/build/cam_1_3.stl": "7449880d412de6ee9d48449e779edd11e1fad2d3645bd12d1e57a86637e5e1c9",
+  "models/tangible-pixel-cube/build/cam_2_3.stl": "8c8be521649001e504f778ae23810895cb7a24a156f169fe50f0f6593f4ab3bf",
+  "models/tangible-pixel-cube/build/cam_3_3.stl": "5d037aef61e48a6fe4ed972557529169c693553d9fecdb734fe526c2463f598f",
+  "models/tangible-pixel-cube/build/cam_4_3.stl": "0cb6c1fd2f80e02f5c9cf556564536f17c6ed5093f5f29a127aed30cdcf4b488",
+  "models/tangible-pixel-cube/build/cam_0_4.stl": "2b26ed7ca1b832f644f671a391d3f50d1e623f97fb1de2b3ea21ff4f8ced71b3",
+  "models/tangible-pixel-cube/build/cam_1_4.stl": "0f36340822c407d85f266a5f8cd3f82d04705f129f43221b1a7c65ecf8050ec1",
+  "models/tangible-pixel-cube/build/cam_2_4.stl": "0f384c76e2520bd3f9042b6ae343b4a9c8e4ee0cc4397abcb3cf7e9de70e489e",
+  "models/tangible-pixel-cube/build/cam_3_4.stl": "37d8834f031572be1440b992d261e98edab73cbec2bcdd7512be20fb84ce2ac4",
+  "models/tangible-pixel-cube/build/cam_4_4.stl": "d9f157d6a65f81879b3f49e321973d5fe5b99ea007abaa635c1d76497dd4fd55",
+  "models/tangible-pixel-cube/build/pixel_0_0.stl": "5a266deece5f7c6cf505e125790f31bd294f2a1e40ce8e7b496980af3c79e2b9",
+  "models/tangible-pixel-cube/build/pixel_1_0.stl": "c23469aac7517957881db44a5606ae08c70e4263897af663dc663b0de14a3dd8",
+  "models/tangible-pixel-cube/build/pixel_2_0.stl": "eabd9569a49017ade71922386aec478ec6bf6e57e01bbdb852011c8197c969c0",
+  "models/tangible-pixel-cube/build/pixel_3_0.stl": "c4ebad53faba8fe0c4a8779b4173d98c2143ddf9df323e004d8a2958948a316e",
+  "models/tangible-pixel-cube/build/pixel_4_0.stl": "07a0508e682e0d47775f02744d18bae21a0e5c76ad231230cdc209d1f6749c15",
+  "models/tangible-pixel-cube/build/pixel_0_1.stl": "504d0270c351ba3376177cbb85e95f14384765f1ea9efbc0bc967a2380bd9e69",
+  "models/tangible-pixel-cube/build/pixel_1_1.stl": "533a20c570ca073c9f9b968d9bff47799e237ff39e5a33c4c6e22715f86a99ee",
+  "models/tangible-pixel-cube/build/pixel_2_1.stl": "cff07a9290e28798bdb9ecf7a2a52549eedd0f843a083c129c3ce9f4634d6b0e",
+  "models/tangible-pixel-cube/build/pixel_3_1.stl": "8f720a5a5b468a87f25b317f3abbe66433d8a4efed95afb5179e9c24b54e9ede",
+  "models/tangible-pixel-cube/build/pixel_4_1.stl": "5b4414e9c55e6bcc4976bcc44f205514d950e1f28134ba0d0c9f8a59e2d6e4d8",
+  "models/tangible-pixel-cube/build/pixel_0_2.stl": "cc4b1465185696df6ca980bdf21d3d1d0e890f9f4ad15f6ce46540e3e1391cca",
+  "models/tangible-pixel-cube/build/pixel_1_2.stl": "9c8cb2b60a02f181e45f9b9214f44a9a54c86916f8a3b62f2e5ffd57b40123d3",
+  "models/tangible-pixel-cube/build/pixel_2_2.stl": "ed800ba000e08a2f14504deefb1ab65a5691e03583293885f5168dff1c66f2d1",
+  "models/tangible-pixel-cube/build/pixel_3_2.stl": "a153e53d338bd6929950f683af666de6a408c231e8fd4f4759c7f8d58fbfc067",
+  "models/tangible-pixel-cube/build/pixel_4_2.stl": "6b8cede66d464b66afdff79b0fe0df5366e2eb8ad47f2be50878145d4355999d",
+  "models/tangible-pixel-cube/build/pixel_0_3.stl": "282dbead57c99dbf00ef22d99470057ac6fa36ff9412daa2c41318917502fc4a",
+  "models/tangible-pixel-cube/build/pixel_1_3.stl": "f6d9138ee58ca05302504e42a173a6cd232690a09d45ba4766102c9a3622ffba",
+  "models/tangible-pixel-cube/build/pixel_2_3.stl": "c25e6ac2322b960409f63d45a8218d8b1f7dade050689a498acc79a81d1a9ad0",
+  "models/tangible-pixel-cube/build/pixel_3_3.stl": "3248cb2612e0dcd03fcfb61a4f065cdbfbddcc1c1a47b6d8cf53333edc9ff965",
+  "models/tangible-pixel-cube/build/pixel_4_3.stl": "4ece6d8046ce93c65e47c1e5b027d98ef52fecbc137b567d1dc233ea778555bc",
+  "models/tangible-pixel-cube/build/pixel_0_4.stl": "5f566fb37ad2de24e894895d165f10e8307665559296af709673345503fce09a",
+  "models/tangible-pixel-cube/build/pixel_1_4.stl": "be005f9f3117bc5a4491b0c2f93bc145e50ca45c83f5acf8cc50aa550629919c",
+  "models/tangible-pixel-cube/build/pixel_2_4.stl": "78adac19526cc7df00e068a82911838ef477a000bb132fb3911904261eed5ef4",
+  "models/tangible-pixel-cube/build/pixel_3_4.stl": "3079f4e46d6a25e0ffa2da793808ef1b2edd4ea614c9eaf0706ea706a705f7e2",
+  "models/tangible-pixel-cube/build/pixel_4_4.stl": "dd5b3b89250792f257f5e0cdfd35abb7f07d392a8355a664f67934e7bae98b03",
+  "models/tangible-pixel-cube/build/horn_coupler.stl": "b97409aa7a699efb340d7f1858384d63a416ede470a4db1a708023001a0465fb",
+  "models/tangible-pixel-cube/build/sg92r.stl": "fa1be513c7fa90bad991be893307450b839a424457064cffe2b8fa11fcb31366",
+  "models/tangible-pixel-cube/build/sg92r_horn.stl": "cc587bc8ec9fb91f4a64cded910bdaf0a950e5e5b9417bdc0caf12a9e00211f9",
+  "models/tangible-pixel-cube/build/shaft_clip_0.stl": "904b84be2645dddc93b0204d1bf635db50361ea20dd3abe582e2047d2bd41a76",
+  "models/tangible-pixel-cube/build/shaft_clip_1.stl": "96a42cd92f58f8eeb8aedb85b12a90d3254dbb492ecb02e1004e2f749cccb7f6",
+  "models/tangible-pixel-cube/build/shaft_clip_2.stl": "0b669b446a7c0016724f5a04d84a1e6cf7cc5b67c23bd33a1a6708916b2ba203",
+  "models/tangible-pixel-cube/build/shaft_clip_3.stl": "78288e60803decba856ae91f6038a4ee9072b6a5ed6936f251e86f6e0ca79757",
+  "models/tangible-pixel-cube/build/shaft_clip_4.stl": "9066cf826a1283565336fd4b932e795d3f15bedd75ea5c83eb1da67a327228ae",
+  "models/tangible-pixel-cube/build/servo_clip_0.stl": "7876cbf82d4623a054e5a7b5dbf1cbe2f30261eb61a9d26af2446921d8b97031",
+  "models/tangible-pixel-cube/build/servo_clip_1.stl": "e06793eb9e6885b3b600564113e972a05ae9fb4be029aee7d67d2bf540a1fc84"
+ }
+}

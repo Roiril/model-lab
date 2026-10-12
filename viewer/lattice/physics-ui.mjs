@@ -319,8 +319,14 @@ export function setupPhysics({ data, state, renderer }) {
   $('massLabel').textContent = `${term}の重さ`;
   $('actions').setAttribute('aria-label', `${term}の操作`);
   if (ui.physics.patternNote) $('patternNote').textContent = ui.physics.patternNote;
-  $('massNote').textContent = `トルク100%は停動トルク ${fmt(tables.const.stallTorqueNm * 1000, 0)} mN·m（4.8V）。重さ1×は中実PLAの${term}合計 ${fmt(groups.reduce((n, g) => n + g.massKg, 0) * 1000)} g。カム接点の摩擦係数は0.30です。`;
-  if (hasPatterns) $('massNote').textContent += ' 円盤外周の支持面と格子の案内にも摩擦を見込みます。中央の円形案内が受ける横荷重も計算に含めます。';
+  const massTotal = fmt(groups.reduce((n, g) => n + g.massKg, 0) * 1000);
+  if (ui.physics.massNote) {
+    // 新モデルは質量と摩擦の前提を ui.physics.massNote で書く。旧 3 モデルは下の固定文のまま
+    $('massNote').textContent = `トルク100%は停動トルク ${fmt(tables.const.stallTorqueNm * 1000, 0)} mN·m（4.8V）。重さ1×は${term}合計 ${massTotal} g。${ui.physics.massNote}`;
+  } else {
+    $('massNote').textContent = `トルク100%は停動トルク ${fmt(tables.const.stallTorqueNm * 1000, 0)} mN·m（4.8V）。重さ1×は中実PLAの${term}合計 ${massTotal} g。カム接点の摩擦係数は0.30です。`;
+    if (hasPatterns) $('massNote').textContent += ' 円盤外周の支持面と格子の案内にも摩擦を見込みます。中央の円形案内が受ける横荷重も計算に含めます。';
+  }
   const fields = [['mCmd', '指令角'], ['mServo', 'サーボ角'], ['mLift', text.liftLabel], ['mTau', 'トルク / 上限'], ['mImpact', '再接触の速さ'], ['mPeak', 'この動作の最大トルク']];
   $('metrics').replaceChildren(...fields.map(([id, label]) => {
     const div = document.createElement('div'), span = document.createElement('span'), output = document.createElement('output');

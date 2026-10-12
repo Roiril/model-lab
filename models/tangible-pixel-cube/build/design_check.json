@@ -1,0 +1,2431 @@
+{
+ "summary": {
+  "n_items": 177,
+  "n_fail": 0,
+  "key": {
+   "cube_mm": 96.0,
+   "zc_mm": 51.699999999999996,
+   "zs_mm": 24.2,
+   "g": 2.235294117647059,
+   "rb_mm": 8.2,
+   "rmax_actual_mm": 11.2,
+   "lateral_max_mm": 7.628903456961401,
+   "kappa_B_035": 0.36694560154506917,
+   "kappa_B_045": 0.5639722171390067,
+   "kappa_A_035": 0.5170137697569526,
+   "kappa_A_045": 0.7829080710528532,
+   "torque_035_mNm": 32.71084435756199,
+   "torque_045_mNm": 45.0243089663594,
+   "phase_sum_deg": 11.697763592638612,
+   "dwell_half_deg": 13.0,
+   "hex_slack_if_ribs_fail_deg": 6.826766577494364,
+   "phase_margin_deg": 1.302236407361388
+  }
+ },
+ "items": [
+  {
+   "section": "A X方向",
+   "name": "隣の行のカムどうし（回転円が重なるので X で離す）",
+   "value": 1.5,
+   "limit": 0.6,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.9,
+   "pass": true,
+   "note": "行のずれ ±2.95 -> 中心 5.9、カム厚 4.0、軸の遊び 片側 0.2 x 2"
+  },
+  {
+   "section": "A X方向",
+   "name": "足（溝の中で動く）と隣の行のカム",
+   "value": 1.35,
+   "limit": 0.6,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.75,
+   "pass": true,
+   "note": "足は Z が -3 のとき隣の軸のカムの回転円の高さにある"
+  },
+  {
+   "section": "A X方向",
+   "name": "最も +X の足と歯車の -X 面（遊び込み。足は X に動かない）",
+   "value": 0.5,
+   "limit": 0.5,
+   "kind": "min",
+   "unit": "mm",
+   "margin": -0.0,
+   "pass": true,
+   "note": "歯車の歯先 Zc+9.5 は足の下面（-3 で Zc+5.3）より高いので Z も重なる"
+  },
+  {
+   "section": "A X方向",
+   "name": "最も +X のカム面（遊び込み）と歯車の -X 面（遊び込み）",
+   "value": 0.65,
+   "limit": 0.6,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.05,
+   "pass": true,
+   "note": "カム面 39.15、歯車 39.80"
+  },
+  {
+   "section": "A X方向",
+   "name": "歯車（遊び込み）と +X パッドの内面",
+   "value": 1.2,
+   "limit": 0.6,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.6,
+   "pass": true,
+   "note": "パッドは Z >= Zc-5。歯車は Zc±9.5 なので Z も重なる"
+  },
+  {
+   "section": "A X方向",
+   "name": "受けの +X 面と +X 端壁の内面",
+   "value": 1.8,
+   "limit": 0.6,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 1.2,
+   "pass": true,
+   "note": "支えのピンが壁の止まり穴へ入る"
+  },
+  {
+   "section": "A X方向",
+   "name": "止まり穴の底から壁の外面までの肉（外装壁）",
+   "value": 2.0,
+   "limit": 2.0,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.0,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "A X方向",
+   "name": "支えのピンと穴の隙間（片側）",
+   "value": 0.5,
+   "limit": 0.2,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.3,
+   "pass": true,
+   "note": "支えだけ。位置ずれ 0.5mm まで許す"
+  },
+  {
+   "section": "A X方向",
+   "name": "ピンの先と穴の底",
+   "value": 0.7,
+   "limit": 0.5,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.2,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "A X方向",
+   "name": "軸の端（遊び込み）と端壁の内面",
+   "value": 0.2,
+   "limit": 0.2,
+   "kind": "min",
+   "unit": "mm",
+   "margin": -0.0,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "A X方向",
+   "name": "軸の肩とパッドの内面（片側の軸方向の遊び）",
+   "value": 0.2,
+   "limit": 0.2,
+   "kind": "min",
+   "unit": "mm",
+   "margin": -0.0,
+   "pass": true,
+   "note": "これが AXIAL_DRIFT そのもの"
+  },
+  {
+   "section": "A X方向",
+   "name": "パッドの厚み（壁の上の出っ張り。壁本体は 3mm）",
+   "value": 1.2,
+   "limit": 1.2,
+   "kind": "min",
+   "unit": "mm",
+   "margin": -0.0,
+   "pass": true,
+   "note": "停動でも軸受けの力は 15N 未満。壁本体 3mm が支える"
+  },
+  {
+   "section": "A X方向",
+   "name": "U 溝の下の肉（溝の底からパッドの下端まで）",
+   "value": 2.4,
+   "limit": 1.2,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 1.2,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "A X方向",
+   "name": "端壁の厚み（力を受ける壁）",
+   "value": 3.0,
+   "limit": 3.0,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.0,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "A X方向",
+   "name": "歯車の噛み合う幅（歯幅 - 遊び 0.2 x 2）",
+   "value": 2.0,
+   "limit": 2.0,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.0,
+   "pass": true,
+   "note": "隣の軸の歯車どうしは両方動く"
+  },
+  {
+   "section": "A X方向",
+   "name": "カム最小半径と六角穴の外接円（穴の周りの肉）",
+   "value": 1.2163,
+   "limit": 1.2,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.0163,
+   "pass": true,
+   "note": "穴の外接 R3.984"
+  },
+  {
+   "section": "A X方向",
+   "name": "スリーブ半径と六角穴の外接円（肉）",
+   "value": 1.2163,
+   "limit": 1.2,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.0163,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "A X方向",
+   "name": "歯車の歯底半径と六角穴の外接円（歯車は軸と別部品）",
+   "value": 3.2663,
+   "limit": 1.2,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 2.0663,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "A X方向",
+   "name": "C クリップの溝の底の半径（軸の強さ）",
+   "value": 2.9,
+   "limit": 2.5,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.4,
+   "pass": true,
+   "note": "六角の面までの距離 3.25 に対し、溝の底 R2.9"
+  },
+  {
+   "section": "A X方向",
+   "name": "軸の鍔（六角 AF9.5）の外接円と隣の軸の鍔・歯車の歯先との隙間",
+   "value": 6.0303,
+   "limit": 0.6,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 5.4303,
+   "pass": true,
+   "note": "鍔は X 43.0..43.6、歯車の歯は 40.6..43.0。鍔どうしは同じ X"
+  },
+  {
+   "section": "A X方向",
+   "name": "鍔の +X 面（遊び込み）と +X パッドの内面",
+   "value": -0.0,
+   "limit": 0.0,
+   "kind": "min",
+   "unit": "mm",
+   "margin": -0.0,
+   "pass": true,
+   "note": "軸の肩の遊び 0.2 そのもの"
+  },
+  {
+   "section": "B Y方向",
+   "name": "カムの回転円（実際の最大）と隣の軸のスリーブ",
+   "value": 0.6,
+   "limit": 0.6,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.0,
+   "pass": true,
+   "note": "カム Rmax 11.200、スリーブ R5.2、軸の間 17.0"
+  },
+  {
+   "section": "B Y方向",
+   "name": "外側の軸のカム回転円と ±Y 側壁の内面",
+   "value": 0.8,
+   "limit": 0.6,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.2,
+   "pass": true,
+   "note": "側壁 2.0、内面 46.0"
+  },
+  {
+   "section": "B Y方向",
+   "name": "外側の軸の歯車の歯先と ±Y 側壁の内面",
+   "value": 2.5,
+   "limit": 0.6,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 1.9,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "B Y方向",
+   "name": "歯車の噛み合い: 歯先と相手の歯底の隙間（標準 0.25）",
+   "value": 0.25,
+   "limit": 0.2,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.05,
+   "pass": true,
+   "note": "中心距離 17 = PD 17"
+  },
+  {
+   "section": "B Y方向",
+   "name": "外側の画素の足（Y ±10）と側壁の内面",
+   "value": 2.0,
+   "limit": 0.6,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 1.4,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "B Y方向",
+   "name": "外側の画素のつばと側壁の内面",
+   "value": 3.8,
+   "limit": 0.6,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 3.2,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "B Y方向",
+   "name": "外側の画素のつばと端壁の内面（X）",
+   "value": 2.8,
+   "limit": 0.6,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 2.2,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "B Y方向",
+   "name": "受けの長腕の先の回転円と側壁の内面",
+   "value": 25.4,
+   "limit": 0.6,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 24.8,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "B Y方向",
+   "name": "受けの長腕の回転円（R20.6）と軸 1・3 の歯車の歯先円（同じ X の面）",
+   "value": 2.2303,
+   "limit": 0.6,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 1.6303,
+   "pass": true,
+   "note": "軸 1/3 の歯車は Y ±17、Zc。受けは Y 0、Zs。中心距離 32.3"
+  },
+  {
+   "section": "B Y方向",
+   "name": "サーボの耳の -Y 端と -Y 側壁の内面",
+   "value": 25.0,
+   "limit": 0.6,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 24.4,
+   "pass": true,
+   "note": "耳 -21.0..11.0"
+  },
+  {
+   "section": "B Y方向",
+   "name": "案内板: 隣の行の十字溝どうしの桟（X）",
+   "value": 1.2,
+   "limit": 1.2,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.0,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "B Y方向",
+   "name": "案内板: 十字溝の端と隣の行の角穴の桟（Y）",
+   "value": 1.9,
+   "limit": 1.2,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.7,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "B Y方向",
+   "name": "案内板: 同じ行の角穴どうしの桟",
+   "value": 7.6,
+   "limit": 1.2,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 6.4,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "B Y方向",
+   "name": "ベゼル: 窓と窓の桟",
+   "value": 1.6,
+   "limit": 1.2,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.4,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "C Z方向",
+   "name": "受けの長腕の先（最下）と底の上面",
+   "value": 0.6,
+   "limit": 0.6,
+   "kind": "min",
+   "unit": "mm",
+   "margin": -0.0,
+   "pass": true,
+   "note": "Zs 24.20"
+  },
+  {
+   "section": "C Z方向",
+   "name": "サーボ本体の上面（Zs+6）とカムの回転円の下端",
+   "value": 10.3,
+   "limit": 0.6,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 9.7,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "C Z方向",
+   "name": "受けの長腕の先（最上）と +X パッドの下端（受け X 40.5..43.7 とパッド X 43.6.. が 0.1 重なる）",
+   "value": 1.9,
+   "limit": 0.6,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 1.3,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "C Z方向",
+   "name": "端の歯車の下端（歯先）と半円歯車（噛み合い）の中心距離のずれ",
+   "value": 0.0,
+   "limit": 0.001,
+   "kind": "max",
+   "unit": "mm",
+   "margin": 0.001,
+   "pass": true,
+   "note": "Zc - Zs = (38+17)/2 = 27.5"
+  },
+  {
+   "section": "C Z方向",
+   "name": "カムの回転円の上端（実際）と案内板の下面",
+   "value": 0.6,
+   "limit": 0.6,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.0,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "C Z方向",
+   "name": "歯車の歯先の上端（Zc+9.5）と案内板の下面",
+   "value": 2.3,
+   "limit": 0.6,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 1.7,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "C Z方向",
+   "name": "案内板の上面と、-3 のときのつばの下面",
+   "value": 0.6,
+   "limit": 0.6,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.0,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "C Z方向",
+   "name": "+3 のときのつばの上面とベゼルの下面（先にカムが止める）",
+   "value": 0.6,
+   "limit": 0.6,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.0,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "C Z方向",
+   "name": "足の下面（面一）とカム最大半径の和: 足の下面 = Zc + Rb",
+   "value": 0.0,
+   "limit": 0.001,
+   "kind": "max",
+   "unit": "mm",
+   "margin": 0.001,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "C Z方向",
+   "name": "外形の最大（画素 +3）",
+   "value": 99.0,
+   "limit": 100.0,
+   "kind": "max",
+   "unit": "mm",
+   "margin": 1.0,
+   "pass": true,
+   "note": "外見の一辺 10cm 以下"
+  },
+  {
+   "section": "C Z方向",
+   "name": "頭と窓の隙間（片側）",
+   "value": 0.2,
+   "limit": 0.2,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.0,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "C Z方向",
+   "name": "-3 のときの頭の上面とベゼルの下面（窓の深さ 3 = 凹みどおり）",
+   "value": 93.0,
+   "limit": 93.0,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.0,
+   "pass": true,
+   "note": "頭の上面が窓の底（ベゼルの下面）まで下がり、深さ 3mm の穴に見える"
+  },
+  {
+   "section": "C Z方向",
+   "name": "案内板の厚み（案内の長さ）",
+   "value": 19.9,
+   "limit": 10.0,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 9.9,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "C Z方向",
+   "name": "足が +3 で十字溝へ入る高さ（足の上端と案内板の上面）",
+   "value": 13.4,
+   "limit": 0.0,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 13.4,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "C Z方向",
+   "name": "ベゼルの厚み（凹み 3mm の窓の深さを覆う）",
+   "value": 3.0,
+   "limit": 3.0,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.0,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "C Z方向",
+   "name": "床の厚み",
+   "value": 3.0,
+   "limit": 3.0,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.0,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "C Z方向",
+   "name": "Y 側壁（外装）",
+   "value": 2.0,
+   "limit": 2.0,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.0,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "A2 軸の並び",
+   "name": "同じ軸の部材（カム・歯車・鍔）が X で重ならない",
+   "value": true,
+   "limit": true,
+   "kind": "bool",
+   "unit": "",
+   "margin": null,
+   "pass": true,
+   "note": "最小のすき間 0.00mm（ここはカムのハブが埋める）"
+  },
+  {
+   "section": "A2 軸の並び",
+   "name": "カムのハブの最長（刷るとき板の上に立てる円筒 Ø10.4）の高さ / 径",
+   "value": 1.25,
+   "limit": 5.0,
+   "kind": "max",
+   "unit": "倍",
+   "margin": 3.75,
+   "pass": true,
+   "note": "最長 13.0mm。ハブは +X 側だけ。-X 側にはハブも別のスリーブも無い"
+  },
+  {
+   "section": "A2 軸の並び",
+   "name": "束が連続（クリップ -> カム -> ハブ -> ... -> 歯車）で、ハブの最短が 0 以上",
+   "value": 1.05,
+   "limit": 0.0,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 1.05,
+   "pass": true,
+   "note": "最短は偶数行の最後のカムと歯車の間の 1.3mm"
+  },
+  {
+   "section": "A2 軸の並び",
+   "name": "軸 2（偶数行）の並び（X mm）",
+   "value": "cam_0_2[-33.0,-29.1] cam_1_2[-16.1,-12.1] cam_2_2[0.9,5.0] cam_3_2[17.9,21.9] cam_4_2[35.0,39.0] gear_2[40.0,42.4] shaft_2_collar[42.4,43.6] クリップ[-34.55, -33.05]",
+   "limit": null,
+   "kind": "info",
+   "unit": "",
+   "margin": null,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "A2 軸の並び",
+   "name": "軸 0（偶数行）の並び（X mm）",
+   "value": "cam_0_0[-33.0,-29.1] cam_1_0[-16.1,-12.1] cam_2_0[0.9,5.0] cam_3_0[17.9,21.9] cam_4_0[35.0,39.0] gear_0[40.0,42.4] shaft_0_collar[42.4,43.6] クリップ[-34.55, -33.05]",
+   "limit": null,
+   "kind": "info",
+   "unit": "",
+   "margin": null,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "A2 軸の並び",
+   "name": "軸 1（奇数行）の並び（X mm）",
+   "value": "cam_0_1[-39.0,-35.0] cam_1_1[-21.9,-17.9] cam_2_1[-5.0,-0.9] cam_3_1[12.1,16.1] cam_4_1[29.1,33.0] gear_1[40.0,42.4] shaft_1_collar[42.4,43.6] クリップ[-40.45, -38.95]",
+   "limit": null,
+   "kind": "info",
+   "unit": "",
+   "margin": null,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "A2 軸の並び",
+   "name": "組立の通し順（各軸）",
+   "value": "gear_j を -X 端から通して +X の鍔に当てる -> cam を +X 側から順に（cam_4, cam_3, ... cam_0）-X 端から通す -> shaft_clip_j を溝に嵌める",
+   "limit": null,
+   "kind": "info",
+   "unit": "",
+   "margin": null,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "C2 サーボ・配線・鍵",
+   "name": "サーボ本体の下面（Zs-6）の台の高さ（底から。台で支える）",
+   "value": 15.2,
+   "limit": 0.0,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 15.2,
+   "pass": true,
+   "note": "台は底から立つ柵（取付耳を 1.6mm の柵で挟む）"
+  },
+  {
+   "section": "C2 サーボ・配線・鍵",
+   "name": "サーボ本体の X の範囲（底面〜ギアカバー上面）",
+   "value": 36.6,
+   "limit": 40.0,
+   "kind": "max",
+   "unit": "mm",
+   "margin": 3.4,
+   "pass": true,
+   "note": "本体 X 9.6..36.6、受けの -X 面（ハブの口）40.0"
+  },
+  {
+   "section": "C2 サーボ・配線・鍵",
+   "name": "ホーンの腕の下面と受けの -X 面（ポケットの深さ 1.6 に腕 1.5）",
+   "value": 0.1,
+   "limit": 0.05,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.05,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "C2 サーボ・配線・鍵",
+   "name": "ホーンの腕の下面の X と受けの -X 面の差（ポケットの口。腕の下 0.1）",
+   "value": 0.1,
+   "limit": -0.1,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.2,
+   "pass": true,
+   "note": "腕の下面は受けの面より 0.1 内側（受けの面の上）。= +0.1 のとき腕が受けの面から出ない"
+  },
+  {
+   "section": "C2 サーボ・配線・鍵",
+   "name": "配線の窓（+Y 壁、幅）",
+   "value": 9.0,
+   "limit": 7.92,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 1.08,
+   "pass": true,
+   "note": "3 ピンのコネクタ 7.62 + 0.3"
+  },
+  {
+   "section": "C2 サーボ・配線・鍵",
+   "name": "配線の窓（高さ）",
+   "value": 4.5,
+   "limit": 3.5,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 1.0,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "C2 サーボ・配線・鍵",
+   "name": "配線の窓の下端と底の上面",
+   "value": 18.95,
+   "limit": 1.2,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 17.75,
+   "pass": true,
+   "note": "窓 X=14.6±4、Z=24.2±2.25、+Y 壁 Y=46..48。コネクタは窓から外へ"
+  },
+  {
+   "section": "C2 サーボ・配線・鍵",
+   "name": "サーボの配線の出口の Y（本体の +Y 端）と +Y 壁の内面",
+   "value": 39.5,
+   "limit": 10.0,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 29.5,
+   "pass": true,
+   "note": "配線は +Y 端から壁の窓まで曲げて通す"
+  },
+  {
+   "section": "C3 切り落とし・潰しリブ・治具",
+   "name": "切り落とし: 正しい向きの軸が穴に入る（食い込み = 隙間の符号を反転）",
+   "value": 0.2,
+   "limit": 0.2,
+   "kind": "min",
+   "unit": "mm",
+   "margin": -0.0,
+   "pass": true,
+   "note": "軸の全頂点が穴の六角と出っ張り面から 0.2mm 以上内側"
+  },
+  {
+   "section": "C3 切り落とし・潰しリブ・治具",
+   "name": "切り落とし: 鏡像・60° おきの回しの軸（11 通り）が穴に食い込む深さの最小",
+   "value": 0.3429,
+   "limit": 0.3,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.0429,
+   "pass": true,
+   "note": "切り落とし面の法線 74°、角 60° から 14° 傾け、深さ 0.9。通らない"
+  },
+  {
+   "section": "C3 切り落とし・潰しリブ・治具",
+   "name": "切り落とし: 同じ 11 通りが櫛の切り欠き（上半分）の出っ張りに食い込む深さの最小",
+   "value": 0.3429,
+   "limit": 0.3,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.0429,
+   "pass": true,
+   "note": "櫛は出っ張り面だけで向きを読む。向き違いの軸を入れると櫛が浮いて耳が座らない"
+  },
+  {
+   "section": "C3 切り落とし・潰しリブ・治具",
+   "name": "切り落とし: 軸の切り落とし面までの距離（軸の最小の太さ）",
+   "value": 2.7413,
+   "limit": 2.5,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.2413,
+   "pass": true,
+   "note": "六角の面までの距離 3.25、角まで 3.75。切り落とし面 2.74。肉は削るだけで穴の外側は変わらない"
+  },
+  {
+   "section": "C3 切り落とし・潰しリブ・治具",
+   "name": "切り落とし: 隣の角（120°）に切り落とし面がかからない余裕",
+   "value": 0.1344,
+   "limit": 0.1,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.0344,
+   "pass": true,
+   "note": "かかると切り落としが 2 つの角に広がる"
+  },
+  {
+   "section": "C3 切り落とし・潰しリブ・治具",
+   "name": "切り落とし: 面（法線 30°）に食い込む長さと、その面の中央の潰しリブ（幅 0.6）の間",
+   "value": 0.2808,
+   "limit": 0.2,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.0808,
+   "pass": true,
+   "note": "切り落としが面に掛かる長さ 1.30mm。面の長さの半分 1.88"
+  },
+  {
+   "section": "C3 切り落とし・潰しリブ・治具",
+   "name": "カム番号の刻み深さと残る厚み",
+   "value": 3.6,
+   "limit": 3.0,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.6,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "C3 切り落とし・潰しリブ・治具",
+   "name": "潰しリブ: 潰し代（0.15〜0.20）",
+   "value": 0.18,
+   "limit": 0.15,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.03,
+   "pass": true,
+   "note": "リブの高さ 0.38 = 穴の隙間 0.2 + 潰し代 0.18"
+  },
+  {
+   "section": "C3 切り落とし・潰しリブ・治具",
+   "name": "潰しリブ: 潰し代の上限",
+   "value": 0.18,
+   "limit": 0.2,
+   "kind": "max",
+   "unit": "mm",
+   "margin": 0.02,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "C3 切り落とし・潰しリブ・治具",
+   "name": "潰しリブ: 穴の面の隙間（リブの無い面）",
+   "value": 0.2,
+   "limit": 0.2,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.0,
+   "pass": true,
+   "note": "1 面おき（法線 30°, 150°, 270°）の 3 面にだけリブ。残り 3 面は隙間 0.2 のまま"
+  },
+  {
+   "section": "C3 切り落とし・潰しリブ・治具",
+   "name": "潰しリブ: カムの押し込み力の見積り（リブ 3 本 x 面圧 15MPa x 幅 0.6 x 長さ 4 x μ0.35）",
+   "value": 37.8,
+   "limit": 40.0,
+   "kind": "max",
+   "unit": "N",
+   "margin": 2.2,
+   "pass": true,
+   "note": "手で押せる範囲。面圧 15MPa は仮定。実測で潰し代を 0.15〜0.20 の中で調整"
+  },
+  {
+   "section": "C3 切り落とし・潰しリブ・治具",
+   "name": "潰しリブ: 歯車の押し込み力の見積り（長さ 2.4）",
+   "value": 22.68,
+   "limit": 40.0,
+   "kind": "max",
+   "unit": "N",
+   "margin": 17.32,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "C3 切り落とし・潰しリブ・治具",
+   "name": "治具: 櫛の -X 面と -X パッドの内面",
+   "value": 0.6,
+   "limit": 0.6,
+   "kind": "min",
+   "unit": "mm",
+   "margin": -0.0,
+   "pass": true,
+   "note": "櫛 X -43.2..-41.7、パッド内面 -43.8"
+  },
+  {
+   "section": "C3 切り落とし・潰しリブ・治具",
+   "name": "治具: 櫛が軸の裸の六角の上にある（遊び -0.2 込み。-X の肩の内側）",
+   "value": 0.2,
+   "limit": 0.0,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.2,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "C3 切り落とし・潰しリブ・治具",
+   "name": "治具: 櫛の +X 面と最も -X のクリップの溝の間",
+   "value": 1.25,
+   "limit": 0.6,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.65,
+   "pass": true,
+   "note": "奇数行のクリップは -40.8..-39.3。クリップは櫛を抜いてから嵌める"
+  },
+  {
+   "section": "C3 切り落とし・潰しリブ・治具",
+   "name": "治具: 切り欠きの角の隙間（水平、片側）",
+   "value": 0.2309,
+   "limit": 0.2,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.0309,
+   "pass": true,
+   "note": "切り欠きは六角（AF6.9、平らな面が上）の上半分 + 角から下へ垂直 2mm"
+  },
+  {
+   "section": "C3 切り落とし・潰しリブ・治具",
+   "name": "治具: 切り欠きの天井と軸の上の面の隙間",
+   "value": 0.2,
+   "limit": 0.2,
+   "kind": "min",
+   "unit": "mm",
+   "margin": -0.0,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "C3 切り落とし・潰しリブ・治具",
+   "name": "治具: 向きが違う軸のとき櫛が浮く量（軸の角が出っ張りに食い込む深さの最小）",
+   "value": 0.3429,
+   "limit": 0.3,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.0429,
+   "pass": true,
+   "note": "正しい向きでは耳がパッドに座る。浮けば向き違い"
+  },
+  {
+   "section": "C3 切り落とし・潰しリブ・治具",
+   "name": "治具: 切り欠きの間の板の幅",
+   "value": 9.0326,
+   "limit": 1.2,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 7.8326,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "C3 切り落とし・潰しリブ・治具",
+   "name": "治具: 切り欠きの上の板の高さ",
+   "value": 4.0,
+   "limit": 1.2,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 2.8,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "C3 切り落とし・潰しリブ・治具",
+   "name": "治具: 櫛の厚み",
+   "value": 1.5,
+   "limit": 1.2,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.3,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "C3 切り落とし・潰しリブ・治具",
+   "name": "治具: 櫛の Y 端と側壁の内面",
+   "value": 3.0,
+   "limit": 0.6,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 2.4,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "C3 切り落とし・潰しリブ・治具",
+   "name": "治具: 耳（Y 幅 6、軸の間に 4 つ）と U 溝の端の間",
+   "value": 2.9,
+   "limit": 1.2,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 1.7,
+   "pass": true,
+   "note": "耳は -X パッドの上面（軸の中心 +3.45）に座る"
+  },
+  {
+   "section": "C3 切り落とし・潰しリブ・治具",
+   "name": "治具: 耳とパッドの X の重なり",
+   "value": 0.8,
+   "limit": 0.5,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.3,
+   "pass": true,
+   "note": "耳 X -44.6..-41.7、パッド -45..-43.8"
+  },
+  {
+   "section": "C3 切り落とし・潰しリブ・治具",
+   "name": "治具の使い方",
+   "value": "5 本の軸（カム・歯車付き、クリップ無し）の -X の裸の六角に上から被せる -> 耳がパッドに座るまで下ろす -> 5 本が切り落とし面の向き（φ0）で U 溝に収まる -> 受けと歯車が噛んだことを確かめて上へ抜く -> shaft_clip_j を嵌める。最終形には残さない",
+   "limit": null,
+   "kind": "info",
+   "unit": "",
+   "margin": null,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "C3 切り落とし・潰しリブ・治具",
+   "name": "歯の位相（φ=0、サーボ 90 度）",
+   "value": "全軸の 17T: +Y の向きに歯の中心（0.0°、21.176° ごと。奇数歯なので -Y は谷）。歯車の枠では切り落とし面の法線から歯の中心まで 10.706°（法線 74°）。受けの 38T: 歯の中心が 7.105°（+Y から +Z へ、9.474° ごと）",
+   "limit": null,
+   "kind": "info",
+   "unit": "",
+   "margin": null,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "C3 切り落とし・潰しリブ・治具",
+   "name": "歯車の位相: 隣の軸どうしの歯の中心が相手の谷の中心に合う（φ0 と各表の角度）",
+   "value": 0.0,
+   "limit": 0.05,
+   "kind": "max",
+   "unit": "mm",
+   "margin": 0.05,
+   "pass": true,
+   "note": "歯の中心と谷の中心のずれの最大。最悪 サーボ90° 軸0-1。バックラッシュ 0.1 の半分以下"
+  },
+  {
+   "section": "C3 切り落とし・潰しリブ・治具",
+   "name": "歯車の位相: 受けの半円歯車と中央の軸の歯車（サーボ 90 度ほか）",
+   "value": 0.0,
+   "limit": 0.05,
+   "kind": "max",
+   "unit": "mm",
+   "margin": 0.05,
+   "pass": true,
+   "note": "同上。受けの歯の位相 7.105°"
+  },
+  {
+   "section": "C3 切り落とし・潰しリブ・治具",
+   "name": "受けの半円歯車の歯の範囲の余裕（±92° - サーボの ±80°）",
+   "value": 12.0,
+   "limit": 10.0,
+   "kind": "min",
+   "unit": "度",
+   "margin": 2.0,
+   "pass": true,
+   "note": "噛み合い点の前後 10° の歯が要る"
+  },
+  {
+   "section": "D カム",
+   "name": "接点の横ずれの最大（全 25 カム、使う角度すべて）",
+   "value": 7.6289,
+   "limit": 9.0,
+   "kind": "max",
+   "unit": "mm",
+   "margin": 1.3711,
+   "pass": true,
+   "note": "足の Y 幅 20.0 の半分 - 1mm = 9.0"
+  },
+  {
+   "section": "D カム",
+   "name": "カムの最小半径（全 25）",
+   "value": 5.2,
+   "limit": 5.199,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.001,
+   "pass": true,
+   "note": "-3 の弧 = 5.3"
+  },
+  {
+   "section": "D カム",
+   "name": "カムの最大半径（全 25）",
+   "value": 11.2,
+   "limit": 11.201,
+   "kind": "max",
+   "unit": "mm",
+   "margin": 0.001,
+   "pass": true,
+   "note": "+3 の弧 = 11.3。壁・隣のスリーブから決めた上限"
+  },
+  {
+   "section": "D カム",
+   "name": "全 25 カムが凸（輪郭の外積が全部 >= 0。最小曲率半径 > 0）",
+   "value": true,
+   "limit": true,
+   "kind": "bool",
+   "unit": "",
+   "margin": null,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "D カム",
+   "name": "停止区間での高さ誤差の最大（全 25、全 5 表）",
+   "value": 0.0077,
+   "limit": 0.01,
+   "kind": "max",
+   "unit": "mm",
+   "margin": 0.0023,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "D カム",
+   "name": "表 0(wave) と表 1(dip): 軸の角度差 / 目安の必要角（保守的な下限 = 2w + acos(r低/r高)）",
+   "value": "76.0 度 / 76.6 度（真の可否は幾何で決まり、下の誤差 0.002mm で確認済み）",
+   "limit": null,
+   "kind": "info",
+   "unit": "",
+   "margin": null,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "D カム",
+   "name": "表 1(dip) と表 2(flat): 軸の角度差 / 目安の必要角（保守的な下限 = 2w + acos(r低/r高)）",
+   "value": "76.0 度 / 76.6 度（真の可否は幾何で決まり、下の誤差 0.002mm で確認済み）",
+   "limit": null,
+   "kind": "info",
+   "unit": "",
+   "margin": null,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "D カム",
+   "name": "表 2(flat) と表 3(bump): 軸の角度差 / 目安の必要角（保守的な下限 = 2w + acos(r低/r高)）",
+   "value": "76.0 度 / 68.9 度（真の可否は幾何で決まり、下の誤差 0.002mm で確認済み）",
+   "limit": null,
+   "kind": "info",
+   "unit": "",
+   "margin": null,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "D カム",
+   "name": "表 3(bump) と表 4(corners): 軸の角度差 / 目安の必要角（保守的な下限 = 2w + acos(r低/r高)）",
+   "value": "76.0 度 / 68.9 度（真の可否は幾何で決まり、下の誤差 0.002mm で確認済み）",
+   "limit": null,
+   "kind": "info",
+   "unit": "",
+   "margin": null,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "D カム",
+   "name": "表 4(corners) と表 0(wave): 軸の角度差 / 目安の必要角（保守的な下限 = 2w + acos(r低/r高)）",
+   "value": "56.0 度 / 58.3 度（真の可否は幾何で決まり、下の誤差 0.002mm で確認済み）",
+   "limit": null,
+   "kind": "info",
+   "unit": "",
+   "margin": null,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "D カム",
+   "name": "全 25 カム x 5 表で停止区間が表どおり（幾何）。足りない表は cams.py が CamError で拒否する",
+   "value": true,
+   "limit": true,
+   "kind": "bool",
+   "unit": "",
+   "margin": null,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "D カム",
+   "name": "表の間隔（サーボ角）",
+   "value": 34.0,
+   "limit": 11.6316,
+   "kind": "min",
+   "unit": "度",
+   "margin": 22.3684,
+   "pass": true,
+   "note": "軸で 2w 以上（停止区間が重ならない）"
+  },
+  {
+   "section": "D カム",
+   "name": "端の表（0 と 4）が一周で隣り合う角度",
+   "value": 56.0,
+   "limit": 26.0,
+   "kind": "min",
+   "unit": "度",
+   "margin": 30.0,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "E こじれ",
+   "name": "κ 最大 μc=μg=0.35（頭の窓 + 板の案内の剛体）",
+   "value": 0.3669,
+   "limit": 0.6,
+   "kind": "max",
+   "unit": "",
+   "margin": 0.2331,
+   "pass": true,
+   "note": "画素(2,2) φ=62.9° 高さ-3.00 横ずれ-6.34"
+  },
+  {
+   "section": "E こじれ",
+   "name": "κ 最大 μc=μg=0.45（同）",
+   "value": 0.564,
+   "limit": 0.999,
+   "kind": "max",
+   "unit": "",
+   "margin": 0.435,
+   "pass": true,
+   "note": "1 未満なら詰まらない。1 以上は自己ロック"
+  },
+  {
+   "section": "E こじれ",
+   "name": "κ 最大 μ=0.35、板だけの案内（窓を使わない保守的な見方）",
+   "value": 0.517,
+   "limit": 0.999,
+   "kind": "max",
+   "unit": "",
+   "margin": 0.482,
+   "pass": true,
+   "note": "画素(2,2) φ=-139.1° 高さ+0.00 横ずれ7.63"
+  },
+  {
+   "section": "E こじれ",
+   "name": "κ 最大 μ=0.45、板だけの案内",
+   "value": 0.7829,
+   "limit": 0.999,
+   "kind": "max",
+   "unit": "",
+   "margin": 0.2161,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "E こじれ",
+   "name": "案内の隙間による傾き（板の厚みで、片側 0.2mm）",
+   "value": 1.1515,
+   "limit": 3.0,
+   "kind": "max",
+   "unit": "度",
+   "margin": 1.8485,
+   "pass": true,
+   "note": "頭の上面の横ぶれ ≈ 傾き x 頭までの距離（約 30mm）= 0.5mm 以下"
+  },
+  {
+   "section": "F トルク",
+   "name": "サーボ軸の最大トルク μ=0.35（全画素・全サーボ角、横ずれと摩擦の符号は最悪にそろえる）",
+   "value": 32.7108,
+   "limit": 81.6667,
+   "kind": "max",
+   "unit": "mNm",
+   "margin": 48.9558,
+   "pass": true,
+   "note": "サーボ 96.0° で最大。停動 245mNm の 1/3 = 81.7。画素 4.5g、歯車効率 0.9/噛合"
+  },
+  {
+   "section": "F トルク",
+   "name": "サーボ軸の最大トルク μ=0.45",
+   "value": 45.0243,
+   "limit": 81.6667,
+   "kind": "max",
+   "unit": "mNm",
+   "margin": 36.6424,
+   "pass": true,
+   "note": "サーボ 96.0°"
+  },
+  {
+   "section": "F トルク",
+   "name": "最大トルクの停動に対する割合 μ=0.35",
+   "value": 13.3514,
+   "limit": 33.3333,
+   "kind": "max",
+   "unit": "%",
+   "margin": 19.982,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "G 歯車",
+   "name": "モジュール m（mm）",
+   "value": 1.0,
+   "limit": 1.0,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.0,
+   "pass": true,
+   "note": "m1、圧力角 20°、歯先 +1.0m、歯底 -1.25m"
+  },
+  {
+   "section": "G 歯車",
+   "name": "隣の軸の歯車 17T-17T の中心距離とピッチの差",
+   "value": 0.0,
+   "limit": 0.001,
+   "kind": "max",
+   "unit": "mm",
+   "margin": 0.001,
+   "pass": true,
+   "note": "PD17 = 軸の間 17。中心距離は固定なので歯を細らせてバックラッシュを取る"
+  },
+  {
+   "section": "G 歯車",
+   "name": "サーボ側 38T-17T の中心距離とサーボ軸 - カム軸の差",
+   "value": 0.0,
+   "limit": 0.001,
+   "kind": "max",
+   "unit": "mm",
+   "margin": 0.001,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "G 歯車",
+   "name": "歯数 17T（理論最小 17.1 = 2/sin²20°）",
+   "value": 17.0,
+   "limit": 16.0,
+   "kind": "min",
+   "unit": "枚",
+   "margin": 1.0,
+   "pass": true,
+   "note": "歯元のわずかな削れ（0.02mm 未満）。転位なしで許容"
+  },
+  {
+   "section": "G 歯車",
+   "name": "噛み合い率 17T-17T",
+   "value": 1.5148,
+   "limit": 1.2,
+   "kind": "min",
+   "unit": "",
+   "margin": 0.3148,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "G 歯車",
+   "name": "噛み合い率 38T-17T",
+   "value": 1.6091,
+   "limit": 1.2,
+   "kind": "min",
+   "unit": "",
+   "margin": 0.4091,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "G 歯車",
+   "name": "歯幅",
+   "value": 2.4,
+   "limit": 2.0,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.4,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "G 歯車",
+   "name": "歯先円直径 17T",
+   "value": 19.0,
+   "limit": 19.0,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.0,
+   "pass": true,
+   "note": "PD17 + 2 = 19"
+  },
+  {
+   "section": "G 歯車",
+   "name": "歯元円直径 17T",
+   "value": 14.5,
+   "limit": 14.5,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.0,
+   "pass": true,
+   "note": "PD17 - 2.5 = 14.5"
+  },
+  {
+   "section": "G 歯車",
+   "name": "歯先円直径 38T（受けの半円歯車）",
+   "value": 40.0,
+   "limit": 40.0,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.0,
+   "pass": true,
+   "note": "PD38 + 2 = 40。受けの長腕 R20.6 は歯の範囲の外に出る"
+  },
+  {
+   "section": "G 歯車",
+   "name": "バックラッシュ（1 噛合）",
+   "value": 0.1,
+   "limit": 0.1,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.0,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "G 歯車",
+   "name": "歯面力 停動 = 0.245Nm / 19mm",
+   "value": 12.8947,
+   "limit": 20.0,
+   "kind": "max",
+   "unit": "N",
+   "margin": 7.1053,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "G 歯車",
+   "name": "歯の曲げ応力（17T、噛み合う幅 2.0、Lewis Y=0.30、停動で全負荷が通る）",
+   "value": 21.4912,
+   "limit": 25.0,
+   "kind": "max",
+   "unit": "MPa",
+   "margin": 3.5088,
+   "pass": true,
+   "note": "PLA の許容 25MPa 程度（降伏の半分以下）。実使用の負荷は停動の 1/10"
+  },
+  {
+   "section": "H 位相",
+   "name": "潰しリブ: 歯車が滑り始めるトルク / 運転の最大トルク（軸 2、μ0.45）",
+   "value": 4.066,
+   "limit": 3.0,
+   "kind": "min",
+   "unit": "倍",
+   "margin": 1.066,
+   "pass": true,
+   "note": "滑り始め 74N mm、運転 18.1N mm。停動（0.245Nm x g）では滑って歯車を守る"
+  },
+  {
+   "section": "H 位相",
+   "name": "潰しリブ: カムが滑り始めるトルク / 運転の最大トルク（軸 2 全体を 1 枚で受けた場合）",
+   "value": 6.7767,
+   "limit": 3.0,
+   "kind": "min",
+   "unit": "倍",
+   "margin": 3.7767,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "H 位相",
+   "name": "潰しリブ: 運転の最大トルクでのたわみ（リブのせん断）",
+   "value": 0.004,
+   "limit": 0.2,
+   "kind": "max",
+   "unit": "度",
+   "margin": 0.196,
+   "pass": true,
+   "note": "せん断剛性 G=1150MPa から。FIT_ERR 1.0 度の内訳: たわみ 0.0x + 潰し代・リブ位置・穴寸法の公差 0.5 + クリープ 0.5"
+  },
+  {
+   "section": "H 位相",
+   "name": "潰しリブ嵌めの回転ガタ + たわみの見積り（FIT_ERR）",
+   "value": 1.0,
+   "limit": 0.904,
+   "kind": "min",
+   "unit": "度",
+   "margin": 0.096,
+   "pass": true,
+   "note": "目安 ±1° 以内。根拠: 3 本が潰れて軸を挟み、運転トルクの 3 倍以上の摩擦で滑らない。ガタは潰し代・リブ位置・穴寸法の公差 0.5° とクリープ 0.4° で 0.9° 以内と置く（仮定。要実測）"
+  },
+  {
+   "section": "H 位相",
+   "name": "参考: 潰しリブが全部効かなかった場合の六角ガタ",
+   "value": "±6.83° x（カムと歯車で 2 箇所）。これだと合計 19.0° で停止区間を超える。リブは必須",
+   "limit": null,
+   "kind": "info",
+   "unit": "",
+   "margin": null,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "H 位相",
+   "name": "サーボの位置誤差 ±1° x g",
+   "value": 2.2353,
+   "limit": 2.5,
+   "kind": "max",
+   "unit": "度",
+   "margin": 0.2647,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "H 位相",
+   "name": "受けの向きの残り（位相補正の後）±0.474° x g",
+   "value": 1.0588,
+   "limit": 1.2,
+   "kind": "max",
+   "unit": "度",
+   "margin": 0.1412,
+   "pass": true,
+   "note": "ホーンの付け方は設計に近い 1 通りで最大 ±9° ずれる。全軸に同じだけ乗るので位相補正（0.25° 刻み）で消す。残り ±0.474°（サーボ角）を軸で 2.235 倍"
+  },
+  {
+   "section": "H 位相",
+   "name": "歯車のバックラッシュ（軸 0/4、3 噛合 x 0.674°）",
+   "value": 2.0222,
+   "limit": 2.1,
+   "kind": "max",
+   "unit": "度",
+   "margin": 0.0778,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "H 位相",
+   "name": "(a) 隣り合う軸の高さの差 δ = 床 0.05 + 栓 0.1 + 案内板 0.05（mm）",
+   "value": 0.2,
+   "limit": 0.25,
+   "kind": "max",
+   "unit": "mm",
+   "margin": 0.05,
+   "pass": true,
+   "note": "1 噛合あたり 1.35°（= 2δ/CD）。外側の軸は 2 噛合ぶん足す"
+  },
+  {
+   "section": "H 位相",
+   "name": "(b)+(c) 中央軸と受けの Y のずれ = U 溝の Y 隙間 0.1 + ホーンとの隙間 0.15（mm）",
+   "value": 0.25,
+   "limit": 0.3,
+   "kind": "max",
+   "unit": "mm",
+   "margin": 0.05,
+   "pass": true,
+   "note": "軸 2 の位相のずれ 1.69°（接線のずれ / 歯車 17T のピッチ半径 8.5）"
+  },
+  {
+   "section": "H 位相",
+   "name": "位相誤差の内訳（最悪の軸 0/4、絶対値の線形和）",
+   "value": "サーボ 2.24 + ホーン合わせ 1.06 + カム嵌め 1.00 + 歯車嵌め 1.00 + バックラッシュ 2.02 + (b)(c) 1.69 + (a) 1.35 x 2 = 11.70°",
+   "limit": null,
+   "kind": "info",
+   "unit": "",
+   "margin": null,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "H 位相",
+   "name": "位相誤差の合計（最悪の軸 0/4、絶対値の線形和）",
+   "value": 11.6978,
+   "limit": 13.0,
+   "kind": "max",
+   "unit": "度",
+   "margin": 1.3022,
+   "pass": true,
+   "note": "停止区間の半幅 13.0 度が覆う。二乗和の平方根は 4.7 度"
+  },
+  {
+   "section": "H 位相",
+   "name": "停止区間の半幅と位相誤差の合計の差（余裕）",
+   "value": 1.3022,
+   "limit": 1.0,
+   "kind": "min",
+   "unit": "度",
+   "margin": 0.3022,
+   "pass": true,
+   "note": "合格条件: 最悪の線形和で 1.0 度以上"
+  },
+  {
+   "section": "H 位相",
+   "name": "サーボ 1 度あたりのカム軸の角度 g（下限 2.0）",
+   "value": 2.2353,
+   "limit": 2.0,
+   "kind": "min",
+   "unit": "",
+   "margin": 0.2353,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "H 位相",
+   "name": "サーボ 1 度あたりのカム軸の角度 g（上限 2.3）",
+   "value": 2.2353,
+   "limit": 2.3,
+   "kind": "max",
+   "unit": "",
+   "margin": 0.0647,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "H 位相",
+   "name": "向きの決め方",
+   "value": "六角の 1 つの角の非対称な切り落とし（キラル）。向きだけを決め、駆動は潰しリブの摩擦。溝・突起が無いので鍵の遊びは無い",
+   "limit": null,
+   "kind": "info",
+   "unit": "",
+   "margin": null,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "H 位相",
+   "name": "サーボ使用範囲での軸の角度の幅（±g x 80）",
+   "value": 357.6471,
+   "limit": 360.0,
+   "kind": "max",
+   "unit": "度",
+   "margin": 2.3529,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "H 位相",
+   "name": "最も外の表のサーボ角と使用範囲の端の余裕（較正の残り込み）",
+   "value": 11.5,
+   "limit": 5.0,
+   "kind": "min",
+   "unit": "度",
+   "margin": 6.5,
+   "pass": true,
+   "note": "表 0 = 22°、表 4 = 158°"
+  },
+  {
+   "section": "I 印刷",
+   "name": "画素: 立てた茎（角筒 9x9）の高さ / 最小太さ",
+   "value": 2.2222,
+   "limit": 5.0,
+   "kind": "max",
+   "unit": "倍",
+   "margin": 2.7778,
+   "pass": true,
+   "note": "茎の高さ 20.0、太さ 9.0。頭を下にして刷る"
+  },
+  {
+   "section": "I 印刷",
+   "name": "画素: 茎の角筒の肉",
+   "value": 1.6,
+   "limit": 1.2,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.4,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "I 印刷",
+   "name": "画素: 足の面取りの角度（刷る向きで上端が広がる）",
+   "value": 45.0,
+   "limit": 45.0,
+   "kind": "max",
+   "unit": "度",
+   "margin": 0.0,
+   "pass": true,
+   "note": "9 から 20.0 へ片側 5.500000000000001 を 45°で広げる"
+  },
+  {
+   "section": "I 印刷",
+   "name": "画素: 角筒の中の空洞の天井（橋）",
+   "value": 5.8,
+   "limit": 10.0,
+   "kind": "max",
+   "unit": "mm",
+   "margin": 4.2,
+   "pass": true,
+   "note": "足の側で閉じるときの橋の幅"
+  },
+  {
+   "section": "I 印刷",
+   "name": "画素: つばの張り出し（頭から片側）",
+   "value": 0.7,
+   "limit": 1.0,
+   "kind": "max",
+   "unit": "mm",
+   "margin": 0.3,
+   "pass": true,
+   "note": "45° の面取りで逃がす（bpy 側）"
+  },
+  {
+   "section": "I 印刷",
+   "name": "画素: 足の X 幅（カム厚 + 片側 0.15）",
+   "value": 4.3,
+   "limit": 4.3,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.0,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "I 印刷",
+   "name": "画素: 足の板の厚み",
+   "value": 1.6,
+   "limit": 1.2,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.4,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "I 印刷",
+   "name": "カム: 厚み（平置き）",
+   "value": 4.0,
+   "limit": 3.0,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 1.0,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "I 印刷",
+   "name": "案内板: 十字溝の桟の最小",
+   "value": 1.2,
+   "limit": 1.2,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.0,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "I 印刷",
+   "name": "軸: 寝かせて刷る長さ",
+   "value": 87.2,
+   "limit": 100.0,
+   "kind": "max",
+   "unit": "mm",
+   "margin": 12.8,
+   "pass": true,
+   "note": "六角面を下に。両端の丸は径が二面幅より小さい。歯車は別部品なので軸に円盤は付かない"
+  },
+  {
+   "section": "I 印刷",
+   "name": "軸: 鍔（六角 AF9.5、寝かせて刷る）の張り出し角（鉛直から）",
+   "value": 30.0,
+   "limit": 45.0,
+   "kind": "max",
+   "unit": "度",
+   "margin": 15.0,
+   "pass": true,
+   "note": "六角の面が上向き斜め 60° 傾き = 鉛直から 30°"
+  },
+  {
+   "section": "I 印刷",
+   "name": "歯車 gear_j: 平置き（軸を縦、歯の輪郭が XY 面）で歯の張り出し",
+   "value": 0.0,
+   "limit": 0.0,
+   "kind": "max",
+   "unit": "度",
+   "margin": 0.0,
+   "pass": true,
+   "note": "歯の側面は鉛直。穴は六角 + 鍵の突起 + リブ（鉛直）"
+  },
+  {
+   "section": "I 印刷",
+   "name": "horn_coupler: ポケットの橋（-X 面を下にして刷る）の最大幅",
+   "value": 7.3,
+   "limit": 10.0,
+   "kind": "max",
+   "unit": "mm",
+   "margin": 2.7,
+   "pass": true,
+   "note": "ホーンの長腕の付け根 7.3 とハブ 7.3"
+  },
+  {
+   "section": "I 印刷",
+   "name": "phase_comb: 平置き（YZ 面を下）、切り欠きは上から抜ける形で橋は無い",
+   "value": 1.5,
+   "limit": 1.2,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.3,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "I2 保持と経路",
+   "name": "各軸の上向きの隙間の最小（案内板の栓の下端 - 軸の丸の上端。溝の底に載った状態）",
+   "value": 0.13,
+   "limit": 0.05,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.08,
+   "pass": true,
+   "note": "build/guide_plate.stl の実形状。栓は軸ごとに両端（U 溝の上）にある"
+  },
+  {
+   "section": "I2 保持と経路",
+   "name": "各軸の上向きの隙間の最大",
+   "value": 0.13,
+   "limit": 0.15,
+   "kind": "max",
+   "unit": "mm",
+   "margin": 0.02,
+   "pass": true,
+   "note": "中央軸は半円歯車の噛み合いの分離力（運転トルク 18.8N mm / PD17 の接線力 2.2N x tan20 度 = 約 0.8N）で上へ押される。下向きの重さは約 0.34N"
+  },
+  {
+   "section": "I2 保持と経路",
+   "name": "軸ごとの上向きの隙間（mm）",
+   "value": "軸0=0.130 軸1=0.130 軸2=0.130 軸3=0.130 軸4=0.130",
+   "limit": null,
+   "kind": "info",
+   "unit": "",
+   "margin": null,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "I2 保持と経路",
+   "name": "中央軸の歯車の噛み合いが外れるまでの余裕（歯先の重なり - 最大の上向きの隙間）",
+   "value": 0.87,
+   "limit": 0.6,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.27,
+   "pass": true,
+   "note": "歯先の重なり = 歯先高さ 1.00。受けの半円歯車との噛み合い（歯丈 2.25）が浮きで外れて歯が飛ぶのを防ぐ"
+  },
+  {
+   "section": "I2 保持と経路",
+   "name": "軸の浮きの鎖の合計（溝の底 0.05 + 栓 0.10 + 案内板の遊び 0.05。軸 -> 栓 -> 案内板 -> 外装の縁 -> 外装）",
+   "value": 0.2,
+   "limit": 0.2,
+   "kind": "max",
+   "unit": "mm",
+   "margin": 0.0,
+   "pass": true,
+   "note": "案内板は外装へ直接留める（ベゼル経由にしない）。板の遊び 0.1 以下: 0.05"
+  },
+  {
+   "section": "I2 保持と経路",
+   "name": "案内板の上下の遊び（外装の出っ張りの上面から縁の下端まで - 板の厚み）",
+   "value": 0.07,
+   "limit": 0.1,
+   "kind": "max",
+   "unit": "mm",
+   "margin": 0.03,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "I2 保持と経路",
+   "name": "歯先の重なりの残り: 受け-中央軸（浮き + 案内板の遊び + 受けのホーンの遊び）",
+   "value": 0.68,
+   "limit": 0.6,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.08,
+   "pass": true,
+   "note": "中心距離の増え 0.32"
+  },
+  {
+   "section": "I2 保持と経路",
+   "name": "歯先の重なりの残り: 隣の軸どうし（Y に壁まで離れ、高さもずれる）",
+   "value": 0.7988,
+   "limit": 0.6,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.1988,
+   "pass": true,
+   "note": "中心距離の増え 0.201"
+  },
+  {
+   "section": "I2 保持と経路",
+   "name": "軸が浮いた分の画素の高さの変化（設計値を可動域の中央に置いたときの片側）",
+   "value": 0.1,
+   "limit": 0.1,
+   "kind": "max",
+   "unit": "mm",
+   "margin": 0.0,
+   "pass": true,
+   "note": "軸の中心は Zc-0.03（溝の底）から Zc+0.17 まで。全幅 0.20。許容 ±0.1"
+  },
+  {
+   "section": "I2 保持と経路",
+   "name": "軸の丸と U 溝の底の隙間（軸が載って中心が Zc からずれる量）",
+   "value": 0.03,
+   "limit": 0.1,
+   "kind": "max",
+   "unit": "mm",
+   "margin": 0.07,
+   "pass": true,
+   "note": "歯車の中心距離は全軸いっしょにこれだけ縮む。0 だと軸が溝の底に擦る"
+  },
+  {
+   "section": "I2 保持と経路",
+   "name": "最大に浮いた軸の丸の下端と、U 溝の細い部分の上端（入口の面取り 0.6 の下）の差",
+   "value": 5.19,
+   "limit": 2.0,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 3.19,
+   "pass": true,
+   "note": "壁が軸の Y 方向の動きを止める高さが、浮いても残る"
+  },
+  {
+   "section": "I2 保持と経路",
+   "name": "受けが降りる経路: +X のパッドの帯の内面と受けの +X 面の X の隙間",
+   "value": 0.6,
+   "limit": 0.5,
+   "kind": "min",
+   "unit": "mm",
+   "margin": 0.1,
+   "pass": true,
+   "note": "受けはホーンごとサーボと上から降りる。パッドの帯（Z 46.7..55.15）を通る。ピンは U 溝（Y ±3.4）を通る"
+  },
+  {
+   "section": "J 部品 id",
+   "name": "PART_IDS に重複が無い",
+   "value": true,
+   "limit": true,
+   "kind": "bool",
+   "unit": "",
+   "margin": null,
+   "pass": true,
+   "note": ""
+  },
+  {
+   "section": "J 部品 id",
+   "name": "親が決めた id がすべて入っている",
+   "value": true,
+   "limit": true,
+   "kind": "bool",
+   "unit": "",
+   "margin": null,
+   "pass": true,
+   "note": "67 個。追加: shaft_clip_0, shaft_clip_1, shaft_clip_2, shaft_clip_3, shaft_clip_4, servo_clip_0, servo_clip_1"
+  },
+  {
+   "section": "J 部品 id",
+   "name": "LAYOUT の部材がすべて PART_IDS にある",
+   "value": true,
+   "limit": true,
+   "kind": "bool",
+   "unit": "",
+   "margin": null,
+   "pass": true,
+   "note": ""
+  }
+ ],
+ "layout_x": {
+  "0": {
+   "y_mm": -34.0,
+   "z_mm": 51.699999999999996,
+   "members": [
+    [
+     "cam",
+     "cam_0_0",
+     -33.05,
+     -29.05
+    ],
+    [
+     "cam",
+     "cam_1_0",
+     -16.05,
+     -12.05
+    ],
+    [
+     "cam",
+     "cam_2_0",
+     0.95,
+     4.95
+    ],
+    [
+     "cam",
+     "cam_3_0",
+     17.95,
+     21.95
+    ],
+    [
+     "cam",
+     "cam_4_0",
+     34.95,
+     38.95
+    ],
+    [
+     "gear",
+     "gear_0",
+     40.0,
+     42.4
+    ],
+    [
+     "collar",
+     "shaft_0_collar",
+     42.4,
+     43.6
+    ]
+   ],
+   "hubs": [
+    [
+     "cam_0_0",
+     -29.05,
+     -16.05
+    ],
+    [
+     "cam_1_0",
+     -12.05,
+     0.95
+    ],
+    [
+     "cam_2_0",
+     4.95,
+     17.95
+    ],
+    [
+     "cam_3_0",
+     21.95,
+     34.95
+    ],
+    [
+     "cam_4_0",
+     38.95,
+     40.0
+    ]
+   ],
+   "clip_x": [
+    -34.55,
+    -33.05
+   ],
+   "bare_hex_x": [
+    -43.6,
+    -34.55
+   ],
+   "shaft_hex_x": [
+    -43.6,
+    43.6
+   ],
+   "journal_x": [
+    -44.6,
+    44.6
+   ]
+  },
+  "1": {
+   "y_mm": -17.0,
+   "z_mm": 51.699999999999996,
+   "members": [
+    [
+     "cam",
+     "cam_0_1",
+     -38.95,
+     -34.95
+    ],
+    [
+     "cam",
+     "cam_1_1",
+     -21.95,
+     -17.95
+    ],
+    [
+     "cam",
+     "cam_2_1",
+     -4.95,
+     -0.95
+    ],
+    [
+     "cam",
+     "cam_3_1",
+     12.05,
+     16.05
+    ],
+    [
+     "cam",
+     "cam_4_1",
+     29.05,
+     33.05
+    ],
+    [
+     "gear",
+     "gear_1",
+     40.0,
+     42.4
+    ],
+    [
+     "collar",
+     "shaft_1_collar",
+     42.4,
+     43.6
+    ]
+   ],
+   "hubs": [
+    [
+     "cam_0_1",
+     -34.95,
+     -21.95
+    ],
+    [
+     "cam_1_1",
+     -17.95,
+     -4.95
+    ],
+    [
+     "cam_2_1",
+     -0.95,
+     12.05
+    ],
+    [
+     "cam_3_1",
+     16.05,
+     29.05
+    ],
+    [
+     "cam_4_1",
+     33.05,
+     40.0
+    ]
+   ],
+   "clip_x": [
+    -40.45,
+    -38.95
+   ],
+   "bare_hex_x": [
+    -43.6,
+    -40.45
+   ],
+   "shaft_hex_x": [
+    -43.6,
+    43.6
+   ],
+   "journal_x": [
+    -44.6,
+    44.6
+   ]
+  },
+  "2": {
+   "y_mm": 0.0,
+   "z_mm": 51.699999999999996,
+   "members": [
+    [
+     "cam",
+     "cam_0_2",
+     -33.05,
+     -29.05
+    ],
+    [
+     "cam",
+     "cam_1_2",
+     -16.05,
+     -12.05
+    ],
+    [
+     "cam",
+     "cam_2_2",
+     0.95,
+     4.95
+    ],
+    [
+     "cam",
+     "cam_3_2",
+     17.95,
+     21.95
+    ],
+    [
+     "cam",
+     "cam_4_2",
+     34.95,
+     38.95
+    ],
+    [
+     "gear",
+     "gear_2",
+     40.0,
+     42.4
+    ],
+    [
+     "collar",
+     "shaft_2_collar",
+     42.4,
+     43.6
+    ]
+   ],
+   "hubs": [
+    [
+     "cam_0_2",
+     -29.05,
+     -16.05
+    ],
+    [
+     "cam_1_2",
+     -12.05,
+     0.95
+    ],
+    [
+     "cam_2_2",
+     4.95,
+     17.95
+    ],
+    [
+     "cam_3_2",
+     21.95,
+     34.95
+    ],
+    [
+     "cam_4_2",
+     38.95,
+     40.0
+    ]
+   ],
+   "clip_x": [
+    -34.55,
+    -33.05
+   ],
+   "bare_hex_x": [
+    -43.6,
+    -34.55
+   ],
+   "shaft_hex_x": [
+    -43.6,
+    43.6
+   ],
+   "journal_x": [
+    -44.6,
+    44.6
+   ]
+  },
+  "3": {
+   "y_mm": 17.0,
+   "z_mm": 51.699999999999996,
+   "members": [
+    [
+     "cam",
+     "cam_0_3",
+     -38.95,
+     -34.95
+    ],
+    [
+     "cam",
+     "cam_1_3",
+     -21.95,
+     -17.95
+    ],
+    [
+     "cam",
+     "cam_2_3",
+     -4.95,
+     -0.95
+    ],
+    [
+     "cam",
+     "cam_3_3",
+     12.05,
+     16.05
+    ],
+    [
+     "cam",
+     "cam_4_3",
+     29.05,
+     33.05
+    ],
+    [
+     "gear",
+     "gear_3",
+     40.0,
+     42.4
+    ],
+    [
+     "collar",
+     "shaft_3_collar",
+     42.4,
+     43.6
+    ]
+   ],
+   "hubs": [
+    [
+     "cam_0_3",
+     -34.95,
+     -21.95
+    ],
+    [
+     "cam_1_3",
+     -17.95,
+     -4.95
+    ],
+    [
+     "cam_2_3",
+     -0.95,
+     12.05
+    ],
+    [
+     "cam_3_3",
+     16.05,
+     29.05
+    ],
+    [
+     "cam_4_3",
+     33.05,
+     40.0
+    ]
+   ],
+   "clip_x": [
+    -40.45,
+    -38.95
+   ],
+   "bare_hex_x": [
+    -43.6,
+    -40.45
+   ],
+   "shaft_hex_x": [
+    -43.6,
+    43.6
+   ],
+   "journal_x": [
+    -44.6,
+    44.6
+   ]
+  },
+  "4": {
+   "y_mm": 34.0,
+   "z_mm": 51.699999999999996,
+   "members": [
+    [
+     "cam",
+     "cam_0_4",
+     -33.05,
+     -29.05
+    ],
+    [
+     "cam",
+     "cam_1_4",
+     -16.05,
+     -12.05
+    ],
+    [
+     "cam",
+     "cam_2_4",
+     0.95,
+     4.95
+    ],
+    [
+     "cam",
+     "cam_3_4",
+     17.95,
+     21.95
+    ],
+    [
+     "cam",
+     "cam_4_4",
+     34.95,
+     38.95
+    ],
+    [
+     "gear",
+     "gear_4",
+     40.0,
+     42.4
+    ],
+    [
+     "collar",
+     "shaft_4_collar",
+     42.4,
+     43.6
+    ]
+   ],
+   "hubs": [
+    [
+     "cam_0_4",
+     -29.05,
+     -16.05
+    ],
+    [
+     "cam_1_4",
+     -12.05,
+     0.95
+    ],
+    [
+     "cam_2_4",
+     4.95,
+     17.95
+    ],
+    [
+     "cam_3_4",
+     21.95,
+     34.95
+    ],
+    [
+     "cam_4_4",
+     38.95,
+     40.0
+    ]
+   ],
+   "clip_x": [
+    -34.55,
+    -33.05
+   ],
+   "bare_hex_x": [
+    -43.6,
+    -34.55
+   ],
+   "shaft_hex_x": [
+    -43.6,
+    43.6
+   ],
+   "journal_x": [
+    -44.6,
+    44.6
+   ]
+  }
+ }
+}
