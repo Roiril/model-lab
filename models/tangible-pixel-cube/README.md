@@ -82,6 +82,8 @@ SG92Rの寸法は `models/sg92r-photo/params.py` を読み込んで使います�
 | `plate2-pixels` | 画素25個 | 78.9g |
 | `plate3-mechanism` | カム25、軸5、歯車5、Cクリップ5、押さえクリップ2 | 53.8g |
 
+H2D では全72部品が1枚に載ります。`prints/tangible-pixel-cube/tangible-pixel-cube-h2d-layout.3mf`（配置だけ。スライスなし。使う範囲 287 × 314mm、部品の間隔4mm）は `py -3.11 models/tangible-pixel-cube/plate_h2d.py` で作り、同時にStudioの「印刷プレート」へ載せます。
+
 本体の合計は330.6gです（壁2周、上5層、下3層、充填15%で見込んだ値）。中実なら470.6gが上限です。分けた理由は `prints/tangible-pixel-cube/plates.json` に書いてあります。
 
 ## 試し刷り
