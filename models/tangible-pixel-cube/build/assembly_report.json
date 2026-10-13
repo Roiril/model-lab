@@ -167,38 +167,38 @@
       },
       {
         "id": "connector-window",
-        "label": "配線の窓: コネクタの箱 7.8 x 2.5 は通り、幅 9.5 の箱は当たる（同じ経路・同じ計器）",
+        "label": "配線の窓: コネクタの箱 8.2 x 4.4 は通り、窓より 1mm 広い箱は当たる（同じ経路・同じ計器）",
         "pass": true,
         "detail": {
           "pass": true,
           "connectorBoxMm": {
-            "widthX": 7.8,
-            "thicknessZ": 2.5,
-            "lengthY": 12.0
+            "widthX": 8.2,
+            "thicknessZ": 4.4,
+            "lengthY": 14.0
           },
           "windowMm": {
-            "width": 9.0,
-            "height": 4.5,
-            "verticalSide": 3.0,
+            "width": 11.0,
+            "height": 7.0,
+            "verticalSide": 7.0,
             "centerX": 14.6,
             "centerZ": 24.2
           },
           "maxCommonVolumeMm3": 0.0,
           "freeMarginMm": {
-            "xEitherSide": 0.0,
-            "zUp": 0.0,
-            "zDown": 1.0
+            "xEitherSide": 1.4,
+            "zUp": 2.6,
+            "zDown": 1.2
           },
           "oversize": {
-            "widthX": 9.5,
-            "maxCommonVolumeMm3": 3.0
+            "widthX": 12.0,
+            "maxCommonVolumeMm3": 8.8
           },
           "pathYmm": [
             38.0,
             58.0
           ],
           "stepMm": 0.5,
-          "note": "コネクタの寸法は正本に無い仮定（7.8 x 2.5 の箱）。配線の自由端の曲がり・ほどけ方は見ていない。"
+          "note": "コネクタの寸法は正本に無い仮定（8.2 x 4.4 の箱。params.CONNECTOR_*）。配線の自由端の曲がり・ほどけ方は見ていない。"
         }
       },
       {
@@ -8428,33 +8428,33 @@
   "wireWindow": {
     "pass": true,
     "connectorBoxMm": {
-      "widthX": 7.8,
-      "thicknessZ": 2.5,
-      "lengthY": 12.0
+      "widthX": 8.2,
+      "thicknessZ": 4.4,
+      "lengthY": 14.0
     },
     "windowMm": {
-      "width": 9.0,
-      "height": 4.5,
-      "verticalSide": 3.0,
+      "width": 11.0,
+      "height": 7.0,
+      "verticalSide": 7.0,
       "centerX": 14.6,
       "centerZ": 24.2
     },
     "maxCommonVolumeMm3": 0.0,
     "freeMarginMm": {
-      "xEitherSide": 0.0,
-      "zUp": 0.0,
-      "zDown": 1.0
+      "xEitherSide": 1.4,
+      "zUp": 2.6,
+      "zDown": 1.2
     },
     "oversize": {
-      "widthX": 9.5,
-      "maxCommonVolumeMm3": 3.0
+      "widthX": 12.0,
+      "maxCommonVolumeMm3": 8.8
     },
     "pathYmm": [
       38.0,
       58.0
     ],
     "stepMm": 0.5,
-    "note": "コネクタの寸法は正本に無い仮定（7.8 x 2.5 の箱）。配線の自由端の曲がり・ほどけ方は見ていない。"
+    "note": "コネクタの寸法は正本に無い仮定（8.2 x 4.4 の箱。params.CONNECTOR_*）。配線の自由端の曲がり・ほどけ方は見ていない。"
   },
   "worstCase": {
     "pass": true,
@@ -8787,7 +8787,7 @@
   "sourceIntegrity": {
     "pass": true,
     "start": {
-      "housing": "2cc36bde95ac55b2313a5f467a03d9d964398bccaecd58ace923a14b1c290a8e",
+      "housing": "ec806acbe00c0fbd3b31b7c6a07f0a16e1d509d402b2677b1b48c723d5a6dd5a",
       "bezel": "8d63d1a4e9aa7faaa62cb28ae9188e9c9c860bd6100c75c9fc383879c76190bc",
       "guide_plate": "04362f3efc63ffb5cf41f27066fe5bc1b62cdbaaa56ac58090c847abcd2a34c0",
       "horn_coupler": "b97409aa7a699efb340d7f1858384d63a416ede470a4db1a708023001a0465fb",
@@ -8863,7 +8863,7 @@
       "pixel_4_4": "dd5b3b89250792f257f5e0cdfd35abb7f07d392a8355a664f67934e7bae98b03"
     },
     "end": {
-      "housing": "2cc36bde95ac55b2313a5f467a03d9d964398bccaecd58ace923a14b1c290a8e",
+      "housing": "ec806acbe00c0fbd3b31b7c6a07f0a16e1d509d402b2677b1b48c723d5a6dd5a",
       "bezel": "8d63d1a4e9aa7faaa62cb28ae9188e9c9c860bd6100c75c9fc383879c76190bc",
       "guide_plate": "04362f3efc63ffb5cf41f27066fe5bc1b62cdbaaa56ac58090c847abcd2a34c0",
       "horn_coupler": "b97409aa7a699efb340d7f1858384d63a416ede470a4db1a708023001a0465fb",
@@ -8943,8 +8943,8 @@
     "tools/lattice_assembly.py": "3eeae70105cec85888592c67bd177a13a50e1823d27c42d50564ab16490763fb",
     "lib/solid_volume.py": "e2ef2fed94077267883da61c7b28ca09f321d1263833bcaf6580daa7748b1415",
     "models/mystery-box-sg92r-c4/verify.py": "1b3f293647316eb0d9798bb40a49cb36b6cd91ba3cc9b9dc03ba09193d28debd",
-    "models/tangible-pixel-cube/assembly.py": "1675742eb372e7d93293b3a8586149c499f82447d6d5449832434e30aa81ffaf",
-    "models/tangible-pixel-cube/params.py": "6cd1db746f347becb77f904622ef9e53be96c7002c169873cc4d52b40f116542",
+    "models/tangible-pixel-cube/assembly.py": "e217cc3e8bbfb55650bda1448cdf6b57148a63e260acf1d0123f26cfb2d39833",
+    "models/tangible-pixel-cube/params.py": "412e11df5e9212b42062e92cb92fea9362f8c18d4adc744d442c836ee8285070",
     "models/tangible-pixel-cube/build/manifest.json": "5771579b190ae876b4ea42af1622c8077d3af2333c871b8fee5dfc4fc9c271b5"
   },
   "algorithmIntegrity": true,

@@ -1059,10 +1059,10 @@ def run_calibration(adapter, meshes, rolls, plan):
                    "pass": high["nominal"]["zoneOk"] is True and high["push+0.2"]["zoneOk"] is True and high["push+0.6"]["zoneOk"] is False,
                    "detail": {"seated": zone_rows, "sixMmAbove": high}})
 
-    # 4c 配線の窓を通るコネクタの箱: 7.8 x 2.5 は通り、9.5 幅は当たる
+    # 4c 配線の窓を通るコネクタの箱: params.CONNECTOR_* は通り、窓より 1mm 広い箱は当たる
     connector = connector_check(adapter)
     checks.append({"id": "connector-window",
-                   "label": "配線の窓: コネクタの箱 7.8 x 2.5 は通り、幅 9.5 の箱は当たる（同じ経路・同じ計器）",
+                   "label": f"配線の窓: コネクタの箱 {CONNECTOR_W:g} x {CONNECTOR_T:g} は通り、窓より 1mm 広い箱は当たる（同じ経路・同じ計器）",
                    "pass": connector["pass"] and connector["oversize"]["maxCommonVolumeMm3"] > VOLUME_LIMIT,
                    "detail": connector})
 
@@ -1159,7 +1159,7 @@ def summarize_step(step):
     }
 
 
-CONNECTOR_W, CONNECTOR_T, CONNECTOR_L = 7.8, 2.5, 12.0     # コネクタの箱（幅 X・厚み Z・長さ Y）。SG92R の 3 線コネクタの一般的な外形（仮定。実物未確認）
+CONNECTOR_W, CONNECTOR_T, CONNECTOR_L = (P.CONNECTOR_W * 1000.0, P.CONNECTOR_T * 1000.0, P.CONNECTOR_L * 1000.0)   # コネクタの箱（幅 X・厚み Z・長さ Y）。params の仮定（実物未計測）
 
 
 def box_mesh(width, length, thickness, name):
@@ -1199,16 +1199,16 @@ def connector_check(adapter):
                 break
             passed = round(step, 1)
         margins[axis] = passed
-    oversize = box_mesh(CONNECTOR_W + 1.7, CONNECTOR_L, CONNECTOR_T, "connector_oversize")
+    oversize = box_mesh(S.WIN_W + 1.0, CONNECTOR_L, CONNECTOR_T, "connector_oversize")
     adapter.connector_result = {"pass": worst_nominal <= VOLUME_LIMIT,
             "connectorBoxMm": {"widthX": CONNECTOR_W, "thicknessZ": CONNECTOR_T, "lengthY": CONNECTOR_L},
             "windowMm": {"width": S.WIN_W, "height": S.WIN_H, "verticalSide": S.WIN_SIDE_H,
                          "centerX": round(S.WIN_X, 3), "centerZ": round(ZS, 3)},
             "maxCommonVolumeMm3": worst_nominal,
             "freeMarginMm": {"xEitherSide": margins["dx"], "zUp": margins["dz+"], "zDown": margins["dz-"]},
-            "oversize": {"widthX": CONNECTOR_W + 1.7, "maxCommonVolumeMm3": round(pass_through_window(adapter, oversize, 0.0, 0.0), 4)},
+            "oversize": {"widthX": S.WIN_W + 1.0, "maxCommonVolumeMm3": round(pass_through_window(adapter, oversize, 0.0, 0.0), 4)},
             "pathYmm": [38.0, 58.0], "stepMm": 0.5,
-            "note": "コネクタの寸法は正本に無い仮定（7.8 x 2.5 の箱）。配線の自由端の曲がり・ほどけ方は見ていない。"}
+            "note": f"コネクタの寸法は正本に無い仮定（{CONNECTOR_W:g} x {CONNECTOR_T:g} の箱。params.CONNECTOR_*）。配線の自由端の曲がり・ほどけ方は見ていない。"}
     return adapter.connector_result
 
 

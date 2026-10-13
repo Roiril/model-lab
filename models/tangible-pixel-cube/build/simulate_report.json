@@ -483,7 +483,7 @@
     "pending": false,
     "reason": "接続形状は確認済み。",
     "staleSources": [],
-    "driveReportSha256": "8ee23dc7652d80cdd5717fbb9f08401b4f705ef6aaba1bdcb60bde93baaa56fb"
+    "driveReportSha256": "7bf10430381935482dcf36b91571d2440870068dfd9ed0bcdb04fde9fb76bcb5"
   },
   "overall": {
     "pass": false,
@@ -1206,7 +1206,7 @@
     },
     "designCheckCrossCheck": {
       "available": true,
-      "designCheckSha256": "37690c2b9c402832b1e7757cec2a9b052f5aa6dfa3318918700b8a9a35d169ea",
+      "designCheckSha256": "c812a08954def10e8ee848e6760794713bda94470663b8cbc5ddf8cc3da26aec",
       "mine": {
         "kappa_A_035": 0.5170137697569526,
         "kappa_A_045": 0.7829080710528532,
@@ -4083,7 +4083,7 @@
     "polygonCam": "カムは 0.5 度刻みの凸多角形。d2z は 0.25 度（サーボ）の差分で頂点の切り替わりを平滑化している。"
   },
   "sourceHashes": {
-    "models/tangible-pixel-cube/params.py": "6cd1db746f347becb77f904622ef9e53be96c7002c169873cc4d52b40f116542",
+    "models/tangible-pixel-cube/params.py": "412e11df5e9212b42062e92cb92fea9362f8c18d4adc744d442c836ee8285070",
     "models/tangible-pixel-cube/kinematics.py": "8d514eb998f8cdb4006e054c850f4ac1b27c5901642c2141af3e32bca90d5445",
     "models/tangible-pixel-cube/cams.py": "023f6e6eef3915cb2121ca638043af4326da7aa04c75153a6bd1f535589e0919",
     "models/tangible-pixel-cube/patterns.py": "c91d560ab93641d34294f80ed2ee9fb6ae227110dcf05927b29fad96aee8974a",
@@ -4160,7 +4160,7 @@
     "models/tangible-pixel-cube/build/shaft_clip_2.stl": "0b669b446a7c0016724f5a04d84a1e6cf7cc5b67c23bd33a1a6708916b2ba203",
     "models/tangible-pixel-cube/build/shaft_clip_3.stl": "78288e60803decba856ae91f6038a4ee9072b6a5ed6936f251e86f6e0ca79757",
     "models/tangible-pixel-cube/build/shaft_clip_4.stl": "9066cf826a1283565336fd4b932e795d3f15bedd75ea5c83eb1da67a327228ae",
-    "models/tangible-pixel-cube/build/motion.json": "e30c126d6754e1c24f78c0489b9c6b7753bd8821664993c58adba0b72ef716e5"
+    "models/tangible-pixel-cube/build/motion.json": "1822ec31f7cf3f93124effff65771d377b11e81cd4779cd46c7c68191684839c"
   },
   "algorithmHashes": {
     "models/tangible-pixel-cube/simulate.py": "01676d2e7dac87c9efb388158996c1aadf6c3c3009b477832486cc13ab529b4c",

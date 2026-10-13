@@ -26,8 +26,8 @@
   "note": "スライスはしていない（G-code なし）。Bambu Studio で開いて切る。時間は Bambu Studio で確認"
  },
  "mass_formula": "スライスせずに PLA の質量を見込む（Bambu Studio「0.20mm Standard @BBL X1C」の既定: 壁 2 周、上 5 層、下 3 層、充填 15%）。\n\n    殻の体積 V_s = min(V, sum_i A_i t_i)。面 i の殻の厚み t_i = t_side |n_xy| + t_cap |n_z|\n    （t_side = 壁の線幅の和 0.42 + 0.45 = 0.87、t_cap = 上向きなら 5 x 0.2 = 1.0、下向きなら 3 x 0.2 = 0.6）。\n    質量 m = density (V_s + infill (V - V_s)) / 1000 [g]（density は Bambu PLA Basic の 1.26 g/cm3、V は mm3）。\n    薄い部品は殻が重なって数えすぎるので V で頭打ちにしている（上側の見込み）。solid_g は全部中実の上限。",
- "mass_total_pla_g": 330.6,
- "mass_total_solid_upper_g": 470.6,
+ "mass_total_pla_g": 330.5,
+ "mass_total_solid_upper_g": 470.4,
  "plates": [
   {
    "kind": "main",
@@ -54,7 +54,7 @@
     "[plate] phase_comb: 13.2 x 86.0 x 2.9mm / 三角形 298",
     "[plate] 重なり なし / はみ出し なし / 除外域 なし",
     "[plate] 占める広さ 198 x 194mm / 最大高さ 93.0mm → 入る（x1c 256 x 256 x 250）",
-    "[plate] C:\\Users\\kouga\\Projects\\Web\\model-lab\\exports\\tpc-plate1-shell.3mf (108,254 バイト / 5 部品 / フィラメント 1)"
+    "[plate] C:\\Users\\kouga\\Projects\\Web\\model-lab\\exports\\tpc-plate1-shell.3mf (108,247 バイト / 5 部品 / フィラメント 1)"
    ],
    "verify": {
     "PLA": {
@@ -126,8 +126,8 @@
      "has_gcode": false
     }
    },
-   "mass_pla_g": 198.0,
-   "mass_solid_upper_g": 297.7,
+   "mass_pla_g": 197.9,
+   "mass_solid_upper_g": 297.5,
    "tallest_part_mm": 93.0
   },
   {
@@ -663,10 +663,10 @@
  ],
  "mass_by_part": {
   "housing": {
-   "volume_cm3": 123.522,
-   "shell_cm3": 82.593,
-   "mass_g": 111.8,
-   "solid_g": 155.64
+   "volume_cm3": 123.402,
+   "shell_cm3": 82.513,
+   "mass_g": 111.69,
+   "solid_g": 155.49
   },
   "bezel": {
    "volume_cm3": 16.178,

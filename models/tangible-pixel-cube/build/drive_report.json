@@ -423,18 +423,6 @@
      "components": [
       [
        [
-        40.29289245605469,
-        -1.9782742261886597,
-        7.765646934509277
-       ],
-       [
-        41.599998474121094,
-        -1.9482080936431885,
-        7.97923469543457
-       ]
-      ],
-      [
-       [
         40.299598693847656,
         -1.8488887548446655,
         7.430642127990723
@@ -443,6 +431,18 @@
         41.599998474121094,
         -1.845683217048645,
         7.4381890296936035
+       ]
+      ],
+      [
+       [
+        40.29289245605469,
+        -1.9782742261886597,
+        7.765646934509277
+       ],
+       [
+        41.599998474121094,
+        -1.9482080936431885,
+        7.97923469543457
        ]
       ]
      ]
@@ -457,18 +457,6 @@
      "components": [
       [
        [
-        40.29289245605469,
-        1.9482080936431885,
-        7.765646934509277
-       ],
-       [
-        41.599998474121094,
-        1.9782742261886597,
-        7.97923469543457
-       ]
-      ],
-      [
-       [
         40.299598693847656,
         1.845683217048645,
         7.430642127990723
@@ -477,6 +465,18 @@
         41.599998474121094,
         1.8488887548446655,
         7.4381890296936035
+       ]
+      ],
+      [
+       [
+        40.29289245605469,
+        1.9482080936431885,
+        7.765646934509277
+       ],
+       [
+        41.599998474121094,
+        1.9782742261886597,
+        7.97923469543457
        ]
       ]
      ]
@@ -7374,30 +7374,6 @@
      "components": [
       [
        [
-        45.0,
-        -12.800000190734863,
-        83.36282348632812
-       ],
-       [
-        45.20000076293945,
-        -10.399999618530273,
-        83.41693878173828
-       ]
-      ],
-      [
-       [
-        -45.20000076293945,
-        -12.800000190734863,
-        83.36282348632812
-       ],
-       [
-        -45.0,
-        -10.399999618530273,
-        83.41693878173828
-       ]
-      ],
-      [
-       [
         -45.20000076293945,
         10.399999618530273,
         83.36282348632812
@@ -7417,6 +7393,30 @@
        [
         45.20000076293945,
         12.800000190734863,
+        83.41693878173828
+       ]
+      ],
+      [
+       [
+        45.0,
+        -12.800000190734863,
+        83.36282348632812
+       ],
+       [
+        45.20000076293945,
+        -10.399999618530273,
+        83.41693878173828
+       ]
+      ],
+      [
+       [
+        -45.20000076293945,
+        -12.800000190734863,
+        83.36282348632812
+       ],
+       [
+        -45.0,
+        -10.399999618530273,
         83.41693878173828
        ]
       ]
@@ -14074,62 +14074,62 @@
   },
   {
    "id": "wire-exit",
-   "label": "配線の出口（3 ピンコネクタの箱 7.62 x 2.5mm が窓を通る）",
+   "label": "配線の出口（3 ピンコネクタの箱 8.2 x 4.4mm が窓を通る）",
    "status": "pass",
-   "detail": "コネクタ近似の箱（幅 7.62・厚み 2.5・長さ 6.0）を配線の先（Y 14.5）から外へ 0.25mm 刻みで通すと、外装・サーボ・クリップに当たらない。通る最大の幅は 9.00mm（窓 9.0）、最大の厚みは 3.00mm（垂直な辺 3.0）。幅 9.4 と厚み 3.3 の負例は窓に当たる。",
+   "detail": "コネクタ近似の箱（幅 8.2・厚み 4.4・長さ 14）を配線の先（Y 14.5）から外へ 0.25mm 刻みで通すと、外装・サーボ・クリップに当たらない。通る最大の幅は 11.00mm（窓 11.0）、最大の厚みは 7.00mm（垂直な辺 7.0）。幅 11.4 と厚み 7.3 の負例は窓に当たる。",
    "connectorPathBlocked": [],
    "widerNegative": [
     {
-     "yStartMm": 40.25,
+     "yStartMm": 32.25,
      "parts": [
       "housing"
      ],
-     "volumeMm3": 0.24999594688779325,
+     "volumeMm3": 0.43999282837616194,
      "componentsMm": [
       [
-       9.9,
+       8.9,
        46.0,
-       22.2
+       22.0
       ],
       [
-       19.3,
+       20.3,
        46.25,
-       24.7
+       26.4
       ]
      ]
     }
    ],
    "thickerNegative": [
     {
-     "yStartMm": 40.25,
+     "yStartMm": 32.25,
      "parts": [
       "housing"
      ],
-     "volumeMm3": 0.28574854226447494,
+     "volumeMm3": 0.30750237454187296,
      "componentsMm": [
       [
-       10.79,
+       10.5,
        46.0,
-       21.8
+       20.55
       ],
       [
-       18.41,
+       18.7,
        46.25,
-       21.95
+       20.7
       ]
      ]
     }
    ],
-   "maximumPassingWidthMm": 9.000004882812501,
-   "maximumPassingThicknessMm": 2.9998779296875,
+   "maximumPassingWidthMm": 10.999902343750001,
+   "maximumPassingThicknessMm": 6.9998046875,
    "probe": {
-    "widthMm": 7.62,
-    "thicknessMm": 2.5,
-    "lengthMm": 6.0,
+    "widthMm": 8.2,
+    "thicknessMm": 4.4,
+    "lengthMm": 14.0,
     "centreXMm": 14.600000000000001,
-    "centreZMm": 23.45
+    "centreZMm": 24.2
    },
-   "note": "コネクタの寸法 7.62x2.5 は 3 ピン 2.54 ピッチのハウジングの近似。長さ 6mm は仮定。配線の曲げ・被覆の剛性は未確認"
+   "note": "コネクタの寸法 8.2x4.4x14 は params.CONNECTOR_*（JR / Futaba 形 3 ピンの大きめの近似。実物未計測）。配線の曲げ・被覆の剛性は未確認"
   },
   {
    "id": "horn-spline",
@@ -14143,8 +14143,8 @@
   "physicalStatus": "conditional",
   "basis": "実 STL の MANIFOLD 共通体積（床 0.001mm3）による初接触と保持。実機合格ではない。",
   "failedInterfaces": [],
-  "elapsedSeconds": 1165.0,
-  "booleanCalls": 61310
+  "elapsedSeconds": 1007.4,
+  "booleanCalls": 61271
  },
  "phaseBudget": {
   "terms": {
@@ -14820,14 +14820,14 @@
   "files": 73
  },
  "sourceHashes": {
-  "models/tangible-pixel-cube/params.py": "6cd1db746f347becb77f904622ef9e53be96c7002c169873cc4d52b40f116542",
+  "models/tangible-pixel-cube/params.py": "412e11df5e9212b42062e92cb92fea9362f8c18d4adc744d442c836ee8285070",
   "models/tangible-pixel-cube/kinematics.py": "8d514eb998f8cdb4006e054c850f4ac1b27c5901642c2141af3e32bca90d5445",
-  "models/tangible-pixel-cube/drive.py": "f26fb75f924b9db342d4819578bbbafaabc054eb45e59fbe28077f018591779a",
+  "models/tangible-pixel-cube/drive.py": "39661e4eb58fbf91328caf6ac2ff89ce413b3eda39a2f443e3bd5db885996b8d",
   "models/tangible-pixel-cube/verify.py": "377d4739f27b2170b20a880808fdc7a63ea16e7958a9fded65a94a97c2236bc1",
   "models/tangible-pixel-cube/build/manifest.json": "5771579b190ae876b4ea42af1622c8077d3af2333c871b8fee5dfc4fc9c271b5",
-  "models/tangible-pixel-cube/build/motion.json": "e30c126d6754e1c24f78c0489b9c6b7753bd8821664993c58adba0b72ef716e5",
+  "models/tangible-pixel-cube/build/motion.json": "1822ec31f7cf3f93124effff65771d377b11e81cd4779cd46c7c68191684839c",
   "models/sg92r-photo/params.py": "99535f8e4df8362e3f5511bb891495ad41f70d069b0108dfedfe1cab615fd835",
-  "models/tangible-pixel-cube/build/housing.stl": "2cc36bde95ac55b2313a5f467a03d9d964398bccaecd58ace923a14b1c290a8e",
+  "models/tangible-pixel-cube/build/housing.stl": "ec806acbe00c0fbd3b31b7c6a07f0a16e1d509d402b2677b1b48c723d5a6dd5a",
   "models/tangible-pixel-cube/build/bezel.stl": "8d63d1a4e9aa7faaa62cb28ae9188e9c9c860bd6100c75c9fc383879c76190bc",
   "models/tangible-pixel-cube/build/guide_plate.stl": "04362f3efc63ffb5cf41f27066fe5bc1b62cdbaaa56ac58090c847abcd2a34c0",
   "models/tangible-pixel-cube/build/shaft_0.stl": "ad3bc6f80e39451a3f5e8a297ac06ec3b65a3570a854d155d0e8397d0c5bf9d6",

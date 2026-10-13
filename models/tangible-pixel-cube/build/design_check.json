@@ -719,35 +719,35 @@
   {
    "section": "C2 サーボ・配線・鍵",
    "name": "配線の窓（+Y 壁、幅）",
-   "value": 9.0,
-   "limit": 7.92,
+   "value": 11.0,
+   "limit": 10.2,
    "kind": "min",
    "unit": "mm",
-   "margin": 1.08,
+   "margin": 0.8,
    "pass": true,
-   "note": "3 ピンのコネクタ 7.62 + 0.3"
+   "note": "コネクタ 8.2 + 片側 1.0"
   },
   {
    "section": "C2 サーボ・配線・鍵",
-   "name": "配線の窓（高さ）",
-   "value": 4.5,
-   "limit": 3.5,
+   "name": "配線の窓（垂直な辺の高さ）",
+   "value": 7.0,
+   "limit": 6.4,
    "kind": "min",
    "unit": "mm",
-   "margin": 1.0,
+   "margin": 0.6,
    "pass": true,
-   "note": ""
+   "note": "コネクタ 4.4 + 片側 1.0"
   },
   {
    "section": "C2 サーボ・配線・鍵",
    "name": "配線の窓の下端と底の上面",
-   "value": 18.95,
+   "value": 17.7,
    "limit": 1.2,
    "kind": "min",
    "unit": "mm",
-   "margin": 17.75,
+   "margin": 16.5,
    "pass": true,
-   "note": "窓 X=14.6±4、Z=24.2±2.25、+Y 壁 Y=46..48。コネクタは窓から外へ"
+   "note": "窓 X=14.6±4、Z=24.2±3.5（上は 45° の尖り屋根）、+Y 壁 Y=46..48。コネクタは窓から外へ"
   },
   {
    "section": "C2 サーボ・配線・鍵",

@@ -1133,14 +1133,16 @@ def wire_exit(ctx):
     window_x = P.SERVO_BODY_X0 * 1000.0 + P.SG.WIRE_EXIT_Z * 1000.0
     window_width = P.WIRE_WIN_W * 1000.0
     window_height = P.WIRE_WIN_H * 1000.0
-    straight = 3.0                                     # 窓の垂直な辺の高さ（parts_static.WIN_SIDE_H）。その上は 45 度の尖り屋根
+    straight = window_height                           # 窓の垂直な辺の高さ（parts_static.WIN_SIDE_H = WIRE_WIN_H）。その上は 45 度の尖り屋根
+    cw, ct, cl = P.CONNECTOR_W * 1000.0, P.CONNECTOR_T * 1000.0, P.CONNECTOR_L * 1000.0
     z_low = ZS - window_height / 2.0
     centre_z = z_low + straight / 2.0
     wire_end_y = 14.5                                  # 正本 SG92R の配線の先
     fixed = ctx.at("housing", "sg92r", "servo_clip_0", "servo_clip_1")
     y_starts = np.arange(wire_end_y, 56.0, 0.25)
 
-    def path_clear(width, thickness, length=6.0, stop_at_first=True):
+    def path_clear(width, thickness, length=None, stop_at_first=True):
+        length = cl if length is None else length
         solid = V.box_solid("connector_probe", (window_x - width / 2, 0.0, centre_z - thickness / 2),
                             (window_x + width / 2, length, centre_z + thickness / 2))
         blocked = []
@@ -1152,9 +1154,9 @@ def wire_exit(ctx):
                 if stop_at_first:
                     break
         return blocked
-    connector = path_clear(7.62, 2.5)
-    wide = path_clear(window_width + 0.4, 2.5)
-    thick = path_clear(7.62, straight + 0.3)
+    connector = path_clear(cw, ct)
+    wide = path_clear(window_width + 0.4, ct)
+    thick = path_clear(cw, straight + 0.3)
 
     def largest(measure, lower, upper):
         low, high = lower, upper
@@ -1165,18 +1167,18 @@ def wire_exit(ctx):
             else:
                 low = middle
         return low
-    max_width = largest(lambda w: (w, 2.5), 7.62, window_width + 1.0)
-    max_thickness = largest(lambda t: (7.62, t), 2.5, straight + 1.0)
-    passed = bool(not connector and wide and thick and max_width >= 7.62 + 0.1 and max_thickness >= 2.5 + 0.1)
+    max_width = largest(lambda w: (w, ct), cw, window_width + 1.0)
+    max_thickness = largest(lambda t: (cw, t), ct, straight + 1.0)
+    passed = bool(not connector and wide and thick and max_width >= cw + 0.1 and max_thickness >= ct + 0.1)
     return interface(
-        "wire-exit", "配線の出口（3 ピンコネクタの箱 7.62 x 2.5mm が窓を通る）", passed,
-        (f"コネクタ近似の箱（幅 7.62・厚み 2.5・長さ 6.0）を配線の先（Y {wire_end_y}）から外へ 0.25mm 刻みで通すと、外装・サーボ・クリップに当たらない。"
+        "wire-exit", f"配線の出口（3 ピンコネクタの箱 {cw:g} x {ct:g}mm が窓を通る）", passed,
+        (f"コネクタ近似の箱（幅 {cw:g}・厚み {ct:g}・長さ {cl:g}）を配線の先（Y {wire_end_y}）から外へ 0.25mm 刻みで通すと、外装・サーボ・クリップに当たらない。"
          f"通る最大の幅は {max_width:.2f}mm（窓 {window_width:.1f}）、最大の厚みは {max_thickness:.2f}mm（垂直な辺 {straight:.1f}）。"
          f"幅 {window_width + 0.4:.1f} と厚み {straight + 0.3:.1f} の負例は窓に当たる。"),
         connectorPathBlocked=connector, widerNegative=wide[:1], thickerNegative=thick[:1],
         maximumPassingWidthMm=max_width, maximumPassingThicknessMm=max_thickness,
-        probe={"widthMm": 7.62, "thicknessMm": 2.5, "lengthMm": 6.0, "centreXMm": window_x, "centreZMm": centre_z},
-        note="コネクタの寸法 7.62x2.5 は 3 ピン 2.54 ピッチのハウジングの近似。長さ 6mm は仮定。配線の曲げ・被覆の剛性は未確認")
+        probe={"widthMm": cw, "thicknessMm": ct, "lengthMm": cl, "centreXMm": window_x, "centreZMm": centre_z},
+        note=f"コネクタの寸法 {cw:g}x{ct:g}x{cl:g} は params.CONNECTOR_*（JR / Futaba 形 3 ピンの大きめの近似。実物未計測）。配線の曲げ・被覆の剛性は未確認")
 
 
 # =============================================================================================

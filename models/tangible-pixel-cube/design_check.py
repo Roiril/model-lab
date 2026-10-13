@@ -213,9 +213,9 @@ add(SEC, "サーボ本体の X の範囲（底面〜ギアカバー上面）", m
 add(SEC, "ホーンの腕の下面と受けの -X 面（ポケットの深さ 1.6 に腕 1.5）", mm(P.RECV_POCKET) - mm(P.SG.HORN_ARM_T), 0.05, "min")
 horn_arm_x0 = mm(P.SERVO_BODY_X0) + mm(P.SG.HORN_ARM_BOTTOM_Z)
 add(SEC, "ホーンの腕の下面の X と受けの -X 面の差（ポケットの口。腕の下 0.1）", horn_arm_x0 - mm(P.RECV_HUB_X0), -0.1, "min", note="腕の下面は受けの面より 0.1 内側（受けの面の上）。= +0.1 のとき腕が受けの面から出ない")
-add(SEC, "配線の窓（+Y 壁、幅）", mm(P.WIRE_WIN_W), 7.62 + 0.3, "min", note="3 ピンのコネクタ 7.62 + 0.3")
-add(SEC, "配線の窓（高さ）", mm(P.WIRE_WIN_H), 2.5 + 1.0, "min")
-add(SEC, "配線の窓の下端と底の上面", ZS - mm(P.WIRE_WIN_H) / 2 - mm(P.FLOOR), 1.2, "min", note=f"窓 X={mm(P.SERVO_BODY_X0) + mm(P.SG.WIRE_EXIT_Z):.1f}±4、Z={ZS:.1f}±2.25、+Y 壁 Y=46..48。コネクタは窓から外へ")
+add(SEC, "配線の窓（+Y 壁、幅）", mm(P.WIRE_WIN_W), mm(P.CONNECTOR_W) + 2.0, "min", note=f"コネクタ {mm(P.CONNECTOR_W):g} + 片側 1.0")
+add(SEC, "配線の窓（垂直な辺の高さ）", mm(P.WIRE_WIN_H), mm(P.CONNECTOR_T) + 2.0, "min", note=f"コネクタ {mm(P.CONNECTOR_T):g} + 片側 1.0")
+add(SEC, "配線の窓の下端と底の上面", ZS - mm(P.WIRE_WIN_H) / 2 - mm(P.FLOOR), 1.2, "min", note=f"窓 X={mm(P.SERVO_BODY_X0) + mm(P.SG.WIRE_EXIT_Z):.1f}±4、Z={ZS:.1f}±{mm(P.WIRE_WIN_H) / 2:g}（上は 45° の尖り屋根）、+Y 壁 Y=46..48。コネクタは窓から外へ")
 add(SEC, "サーボの配線の出口の Y（本体の +Y 端）と +Y 壁の内面", inner_y - (mm(P.SG.BODY_CENTER_X) + mm(P.SG.BODY_L) / 2), 10.0, "min", note="配線は +Y 端から壁の窓まで曲げて通す")
 
 # 鍵の代わりの、六角の 1 つの角の非対称な切り落とし（キラル）と、位相合わせ治具 phase_comb

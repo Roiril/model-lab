@@ -1160,7 +1160,7 @@
     "degenerate_faces": 0,
     "collapsed_faces": 0
    },
-   "volume_cm3": 123.522,
+   "volume_cm3": 123.402,
    "size_mm": [
     96.0,
     96.0,
@@ -1169,17 +1169,17 @@
    "components": [
     {
      "faces": 3000,
-     "volume_cm3": 123.5215,
+     "volume_cm3": 123.4015,
      "z_min_mm": 0.0,
      "bed_contact_mm2": 8836.0,
      "grounded": true
     }
    ],
    "mass_pla": {
-    "volume_cm3": 123.522,
-    "shell_cm3": 82.593,
-    "mass_g": 111.8,
-    "solid_g": 155.64
+    "volume_cm3": 123.402,
+    "shell_cm3": 82.513,
+    "mass_g": 111.69,
+    "solid_g": 155.49
    },
    "overhang": {
     "clusters": [
@@ -1473,7 +1473,7 @@
    "terrace_visible": [],
    "wall": {
     "min_mm": 0.6,
-    "samples": 66507,
+    "samples": 66601,
     "under_1_2": [],
     "exterior_under_2_0": [],
     "exterior_min_mm": 2.0,
@@ -2180,7 +2180,7 @@
     "com_over_footprint": true,
     "com_xy_mm": [
      0.9,
-     -0.2
+     -0.3
     ],
     "footprint_bbox_mm": [
      94.0,
@@ -2218,7 +2218,7 @@
      "chamfer_mm": 0.892
     }
    ],
-   "visible_area_mm2": 44865.37,
+   "visible_area_mm2": 44818.2,
    "visible_faces": 105,
    "family": "housing",
    "role": "exterior",
