@@ -859,8 +859,8 @@ td .chip{margin-left:0}
     sections.append(para(comp_text + "マイコンへの書き込みと SG92R の通電は未実施です。", "note"))
 
     doc = (f'<!doctype html><html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
-           f"<title>タンジブル画素キューブ</title><style>{css}{extra}</style>"
-           f'<div class="wrap"><p class="eyebrow">model-lab · 2026-10-13</p><h1>タンジブル画素キューブ</h1>'
+           f"<title>住人の箱 C4-3・タンジブル画素キューブ</title><style>{css}{extra}</style>"
+           f'<div class="wrap"><p class="eyebrow">model-lab · 2026-10-13</p><h1>住人の箱 C4-3・タンジブル画素キューブ</h1>'
            f'<p class="sub">{CUBE_MM:g} × {CUBE_MM:g} × {CUBE_MM:g}mm。SG92R 1台で {P.N} × {P.N} の画素を上下させます。</p>'
            f"{lead_html}{''.join(esc(s) for s in sections)}</div></html>")
     return doc, counts
