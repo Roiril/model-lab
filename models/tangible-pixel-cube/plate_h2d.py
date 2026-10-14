@@ -1,4 +1,4 @@
-"""全 72 部品を Bambu Lab H2D の 1 枚のプレートに刷る向きで並べ、配置だけの 3mf を書く（スライスしない）。
+"""全部品（shaft_clip は廃止。部品表は build/manifest.json）を Bambu Lab H2D の 1 枚のプレートに刷る向きで並べ、配置だけの 3mf を書く（スライスしない）。
 
     py -3.11 models/tangible-pixel-cube/plate_h2d.py
 
@@ -35,8 +35,7 @@ RIGHT_GROUPS = [
     [f"pixel_{i}_{j}" for j in range(5) for i in range(5)],
     [f"cam_{i}_{j}" for j in range(5) for i in range(5)],
     ["horn_coupler", "gear_0", "gear_1", "gear_2", "gear_3", "gear_4"],
-    ["servo_clip_0", "servo_clip_1",
-     "shaft_clip_0", "shaft_clip_1", "shaft_clip_2", "shaft_clip_3", "shaft_clip_4"],
+    ["servo_clip_0", "servo_clip_1"],
 ]
 
 
@@ -97,7 +96,7 @@ def main():
     print(f"[h2d] {len(placed)} 部品 / 使う範囲 {used[0]:.1f} x {used[1]:.1f}mm（プレート {BED_X:.0f} x {BED_Y:.0f}、余白 {MARGIN:g}）")
     print(f"[h2d] 間隔 {GAP:g}mm 未満の組 {overlaps if overlaps else 'なし'} / はみ出し {off_bed if off_bed else 'なし'} / "
           f"高さ超え {tall if tall else 'なし'} / 最大高さ {max(b[5] for b in boxes):.1f}mm")
-    if overlaps or off_bed or tall or len(placed) != 72:
+    if overlaps or off_bed or tall or len(placed) != len(every):
         raise SystemExit("[h2d] プレートに入らない")
 
     out = os.path.join(P3.EXPORTS, NAME + ".3mf")

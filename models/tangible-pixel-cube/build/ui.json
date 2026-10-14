@@ -23,9 +23,9 @@
   "print": { "downloadBase": "prints" },
   "legendGroups": [
     { "label": "画素", "prefix": "pixel_", "color": "#e69f00" },
-    { "label": "クリップ", "parts": ["shaft_clip_0", "shaft_clip_1", "shaft_clip_2", "shaft_clip_3", "shaft_clip_4", "servo_clip_0", "servo_clip_1"], "color": "#999999" },
+    { "label": "押さえクリップ", "parts": ["servo_clip_0", "servo_clip_1"], "color": "#999999" },
     { "label": "板カム", "prefix": "cam_", "color": "#56b4e9" },
-    { "label": "カム軸", "prefix": "shaft_", "color": "#009e73" },
+    { "label": "軸の端の部品", "prefix": "shaft_", "color": "#009e73" },
     { "label": "歯車", "prefix": "gear_", "color": "#cc79a7" }
   ]
 }

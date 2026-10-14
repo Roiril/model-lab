@@ -13,7 +13,7 @@
     },
     {
       "file": "models/tangible-pixel-cube/params.py",
-      "sha256": "412e11df5e9212b42062e92cb92fea9362f8c18d4adc744d442c836ee8285070"
+      "sha256": "ee52c39ee13203ea7fcc022ae1eae270079e204b31ba31931a82a95143a54dfa"
     },
     {
       "file": "models/tangible-pixel-cube/firmware.py",
@@ -314,7 +314,7 @@
     ],
     "simulateReport": {
       "file": "models/tangible-pixel-cube/build/simulate_report.json",
-      "sha256": "acf4d7d802d5964a541de1d62c19fd545b19ebd1e536ee56a8d3387e877b1374"
+      "sha256": "471e0371324c08da251e745660336ca57c5d3ece585bdf346e69e53fee9109b0"
     },
     "marginFactor": 1.3,
     "verifiedInSimulation": {
@@ -351,7 +351,7 @@
     "target": "arduino:avr:uno",
     "status": "compiled",
     "pass": true,
-    "compiledAt": "2026-10-13T11:25:13.168693+00:00",
+    "compiledAt": "2026-10-14T09:56:02.933790+00:00",
     "cli": {
       "file": "D:\\Projects\\model-lab-c4-2-temp\\arduino\\cli\\arduino-cli.exe",
       "executableSha256": "1017de89179c3167e6b8a38ca6cc4091fa69a3cf97aafa7810f01423003f5571"
@@ -360,7 +360,7 @@
     "workDirectory": "D:\\Projects\\model-lab-c4-2-temp\\arduino\\tangible-pixel-cube-compile",
     "command": "D:\\Projects\\model-lab-c4-2-temp\\arduino\\cli\\arduino-cli.exe --config-file D:\\Projects\\model-lab-c4-2-temp\\arduino\\arduino-cli.yaml compile --fqbn arduino:avr:uno --build-path D:\\Projects\\model-lab-c4-2-temp\\arduino\\tangible-pixel-cube-compile\\production_build C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\tangible-pixel-cube\\demo",
     "compileExitCode": 0,
-    "compileElapsedMs": 2453,
+    "compileElapsedMs": 2515,
     "stderrBytes": 0,
     "flashBytes": 7166,
     "flashMaximumBytes": 32256,
@@ -381,7 +381,7 @@
         "compileExitCode": 0,
         "boundaryDiagnosticDetected": false,
         "pass": true,
-        "elapsedMs": 9312
+        "elapsedMs": 10625
       },
       {
         "trimDeg": 10,
@@ -389,7 +389,7 @@
         "compileExitCode": 0,
         "boundaryDiagnosticDetected": false,
         "pass": true,
-        "elapsedMs": 2359
+        "elapsedMs": 6547
       },
       {
         "trimDeg": -11,
@@ -397,7 +397,7 @@
         "compileExitCode": 1,
         "boundaryDiagnosticDetected": true,
         "pass": true,
-        "elapsedMs": 1938
+        "elapsedMs": 2140
       },
       {
         "trimDeg": 11,
@@ -405,7 +405,7 @@
         "compileExitCode": 1,
         "boundaryDiagnosticDetected": true,
         "pass": true,
-        "elapsedMs": 734
+        "elapsedMs": 844
       }
     ],
     "globalPathModified": false,

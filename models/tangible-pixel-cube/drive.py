@@ -54,6 +54,7 @@ class Ctx:
         self.scene = V.Scene()
         self.pose = self.scene.poses(90.0)
         self.rib_theory = {}
+        self.specs = {}
 
     def solid(self, name):
         return self.scene.solids[name]
@@ -459,42 +460,35 @@ def pin_interface(ctx):
 # 3. 鍵（カム・歯車が鏡像・60° 回しで軸へ入らない）
 # =============================================================================================
 def key_interface(ctx):
+    """数珠つなぎの継ぎ目ごとに、雄のスタブ（雄の部品を軸まわりに回す・鏡像にする）が雌穴へ入らないことを測る。
+    正しい向きの共通体積は設計した潰しリブの量（場所は verify の joint-crush-ribs と同じ）。雄の部品は +X 向きのスタブしか穴へ入らないので、裏返しは測らない"""
     meter = ctx.meter
     rows = []
-    names = [f"cam_{i}_{j}" for j in range(P.N) for i in range(P.N)] + [f"gear_{j}" for j in range(P.N)]
-    for name in names:
-        j = int(name.split("_")[-1])
-        shaft = f"shaft_{j}"
+    for j in range(P.N):
         y0 = K.axis_y(j) * 1000.0
-        solid, shaft_solid = ctx.solid(name), ctx.solid(shaft)
-        base = ctx.pose[name]
-        nominal = meter.common(solid, base, shaft_solid, ctx.pose[shaft])[0]
-        if name.startswith("cam_"):
-            i = int(name.split("_")[1])
-            x_center = K.cam_x(i, j) * 1000.0
-        else:
-            x_center = (P.GEAR_X0 + P.GEAR_X1) * 500.0
-        wrong = {}
-        for k in range(1, 6):
-            wrong[f"rotate{60 * k}"] = meter.common(solid, V.rot_x_np(60.0 * k, y0, ZC) @ base, shaft_solid, ctx.pose[shaft])[0]
-        mirrored = mirror_y(solid, y0, name + "_mirror")
-        wrong["mirror"] = meter.common(mirrored, base, shaft_solid, ctx.pose[shaft])[0]
-        wrong["flipEndForEnd"] = meter.common(solid, V.rot_z_np(180.0, x_center, y0) @ base, shaft_solid, ctx.pose[shaft])[0]
-        theory = ctx.rib_theory[name]
-        accepted = abs(nominal - theory) <= theory * 0.02
-        margin = min(wrong.values()) - nominal
-        rejected = margin > 0.5
-        rows.append({"part": name, "shaft": shaft, "correctOrientationCommonMm3": nominal, "designedRibMm3": theory,
-                     "correctAccepted": bool(accepted), "wrongOrientationCommonMm3": wrong,
-                     "wrongMinimumExcessOverCorrectMm3": margin, "wrongRejected": bool(rejected),
-                     "pass": bool(accepted and rejected)})
+        for female, male in V.joint_seams(j):
+            spec = ctx.specs[tuple(sorted((female, male)))]
+            f_solid, m_solid = ctx.solid(female), ctx.solid(male)
+            nominal = meter.common(m_solid, ctx.pose[male], f_solid, ctx.pose[female])[0]
+            wrong = {}
+            for k in range(1, 6):
+                wrong[f"rotate{60 * k}"] = meter.common(m_solid, V.rot_x_np(60.0 * k, y0, ZC) @ ctx.pose[male], f_solid, ctx.pose[female])[0]
+            mirrored = mirror_y(m_solid, y0, male + "_mirror")
+            wrong["mirror"] = meter.common(mirrored, ctx.pose[male], f_solid, ctx.pose[female])[0]
+            accepted = spec["minMm3"] <= nominal <= spec["maxMm3"]
+            margin = min(wrong.values()) - nominal
+            rejected = margin > 0.5
+            rows.append({"axis": j, "female": female, "male": male, "correctOrientationCommonMm3": nominal,
+                         "designedRibMm3": [spec["minMm3"], spec["maxMm3"]], "correctAccepted": bool(accepted),
+                         "wrongOrientationCommonMm3": wrong, "wrongMinimumExcessOverCorrectMm3": margin,
+                         "wrongRejected": bool(rejected), "pass": bool(accepted and rejected)})
     worst = min(row["wrongMinimumExcessOverCorrectMm3"] for row in rows)
     return interface(
-        "hex-key", "カム・歯車の鍵（鏡像・60° おきの回し・裏返しは軸へ入らない）", rows,
-        (f"カム 25 枚と歯車 5 枚で、正しい向きの共通体積は設計した潰しリブの量（±2%）。60°〜300° の回し・鏡像・裏返しの 7 通りは"
-         f"正しい向きより最小で {worst:.2f}mm3 多く干渉する（鍵の突起が軸の六角の面へ当たる）。"),
+        "hex-key", "継ぎ目の鍵（雄スタブの鏡像・60° おきの回しは雌穴へ入らない）", rows,
+        (f"数珠つなぎの継ぎ目 {len(rows)} 個（5 軸 x 6）で、正しい向きの共通体積は設計した潰しリブの量の範囲に入る。"
+         f"60°〜300° の回し・鏡像の 6 通りは正しい向きより最小で {worst:.2f}mm3 多く干渉する（スタブの切り落とし面の向きが穴の出っ張りに当たる）。"),
         parts=rows,
-        note="共通体積は穴が軸に重なる断面が全長にわたるので、最終位置の 1 姿勢で全長の干渉を代表する")
+        note="共通体積は雄のスタブが雌穴へ入る長さの全部を含む。雄の部品の板どうしは面で接するだけなので、回しても板は干渉しない")
 
 
 # =============================================================================================
@@ -639,7 +633,8 @@ def design_terms():
     servo = P.SERVO_ERR_DEG * G
     vernier_step = 360.0 / (20 * 38 / math.gcd(20, 38))
     vernier = vernier_step / 2.0 * G
-    fit_cam, fit_gear = P.FIT_ERR_DEG, P.FIT_ERR_DEG
+    joint_each, joints = P.JOINT_ERR_DEG, P.N          # 継ぎ目 1 つの遊び x 歯車からカム 0 までの継ぎ目の数（5）
+    joint_total = joint_each * joints
     lash_one = math.degrees(P.GEAR_LASH * 1000.0 / (P.CHAIN_GEAR_PD * 500.0))
     meshes = [3, 2, 1, 2, 3]
     chain_meshes = [2, 1, 0, 1, 2]
@@ -648,10 +643,10 @@ def design_terms():
     ph_a = math.degrees(delta_a / (P.CHAIN_GEAR_PD * 500.0))
     # (b)+(c) 中央軸と受けの Y のずれ = U 溝の Y 隙間 + ホーンとの隙間
     ph_sector = math.degrees((P.U_SLOT_Y_CLR + P.HORN_CLR) * 1000.0 / (P.CHAIN_GEAR_PD * 500.0))
-    linear = [servo + vernier + fit_cam + fit_gear + lash_one * meshes[j] + ph_sector + ph_a * chain_meshes[j] for j in range(P.N)]
-    return {"servo": servo, "vernier": vernier, "fitCam": fit_cam, "fitGear": fit_gear, "lashOneMesh": lash_one,
+    linear = [servo + vernier + joint_total + lash_one * meshes[j] + ph_sector + ph_a * chain_meshes[j] for j in range(P.N)]
+    return {"servo": servo, "vernier": vernier, "jointEach": joint_each, "joints": joints, "jointTotal": joint_total, "lashOneMesh": lash_one,
             "meshes": meshes, "phA": ph_a, "phSector": ph_sector,
-            "designTotals": [servo + vernier + fit_cam + fit_gear + lash_one * m for m in meshes],
+            "designTotals": [servo + vernier + joint_total + lash_one * m for m in meshes],
             "designLinearTotals": linear}
 
 
@@ -683,7 +678,7 @@ def phase_budget(link_results, horn_half_play_deg):
     歯車列の項は design_check の「バックラッシュ x 噛合数」を、実 STL で測った窓の伝播に置き換える。
     判定は最大の遊び（噛み合える位置の組み合わせすべて）。重力で溝の底に沈む前提の場合を併記する"""
     terms = design_terms()
-    base = terms["servo"] + terms["vernier"] + terms["fitCam"] + terms["fitGear"] + horn_half_play_deg * G
+    base = terms["servo"] + terms["vernier"] + terms["jointTotal"] + horn_half_play_deg * G
     names = list(POSITIONS)
     coupler_all = list(COUPLER_POSITIONS)
 
@@ -714,7 +709,6 @@ def phase_budget(link_results, horn_half_play_deg):
         scenarios[key] = {"label": label, "feasiblePositionTuples": feasible, "infeasiblePositionTuples": infeasible,
                           "perAxis": rows, "minimumMarginDeg": min(row["marginDeg"] for row in rows)}
     verdict = scenarios["maximumPlay"]
-    strict = [row["totalDeg"] + terms["fitGear"] * (terms["meshes"][row["axis"]] - 1) for row in verdict["perAxis"]]
     return {"terms": terms, "hornHalfPlayDeg": horn_half_play_deg, "baseDeg": base, "dwellHalfDeg": P.DWELL_HALF_DEG,
             "designTotalsDeg": terms["designTotals"], "designLinearTotalsDeg": terms["designLinearTotals"],
             "differenceFromDesignLinearDeg": [row["totalDeg"] - terms["designLinearTotals"][row["axis"]] for row in verdict["perAxis"]],
@@ -723,27 +717,59 @@ def phase_budget(link_results, horn_half_play_deg):
             "infeasiblePositionTuples": verdict["infeasiblePositionTuples"],
             "minimumMarginDeg": verdict["minimumMarginDeg"],
             "minimumMarginGravitySettledDeg": scenarios["gravitySettled"]["minimumMarginDeg"],
-            "strictMarginDeg": [P.DWELL_HALF_DEG - value for value in strict],
-            "strictNote": "歯車と軸の嵌め（FIT_ERR）を噛み合う歯車の数だけ足した場合の余裕。design_check は 1 回だけ足している"}
+            "jointNote": "継ぎ目の遊び = JOINT_ERR_DEG x 5（歯車からカム 0 までの継ぎ目の数。最悪のカム 0 に合わせ、全軸に同じ値を足す）"}
 
 
 # =============================================================================================
 # 5. 軸の保持
 # =============================================================================================
 def axis_members(ctx, j):
-    names = [f"shaft_{j}", f"gear_{j}", f"shaft_clip_{j}"] + [f"cam_{i}_{j}" for i in range(P.N)]
+    names = [f"shaft_{j}", f"gear_{j}"] + [f"cam_{i}_{j}" for i in range(P.N)]
     return [(name, ctx.solid(name), ctx.pose[name]) for name in names]
 
 
+def shaft_chain_engagement(ctx, j):
+    """数珠つなぎの軸 j の軸方向。両端のパッドの間（肩から肩 87.2、パッド間 87.6）で、継ぎ目が開ける量の合計（余り）と、
+    その余りが 1 つの継ぎ目に全部集まったときの差し込み長さの残り（基準 2.0mm 以上）を測る。
+    余り = 歯車の部品を +X へ動かして +X のパッドに当たるまで + -X の端の部品を -X へ動かして -X のパッドに当たるまで（外装だけが相手）"""
+    meter = ctx.meter
+    housing = ctx.at("housing")
+    gear, end = f"gear_{j}", f"shaft_{j}"
+    t_g = V.first_contact(meter, ctx.solid(gear), V.linear_step(ctx.pose[gear], (1, 0, 0)), housing, maximum=1.0, coarse=0.025)["travel"]
+    t_s = V.first_contact(meter, ctx.solid(end), V.linear_step(ctx.pose[end], (-1, 0, 0)), housing, maximum=1.0, coarse=0.025)["travel"]
+    slack = None if t_g is None or t_s is None else t_g + t_s
+
+    def shoulder(name, sign):
+        # 肩の位置: 丸い軸受け（半径 JOURNAL_D/2）より外側の頂点の X の端
+        pts = ctx.solid(name).verts
+        radial = np.hypot(pts[:, 1] - K.axis_y(j) * 1000.0, pts[:, 2] - ZC)
+        far = pts[radial > P.JOURNAL_D * 500.0 + 0.1]
+        return float(far[:, 0].max() if sign > 0 else far[:, 0].min())
+    chain_length = shoulder(gear, +1) - shoulder(end, -1)
+    seams = []
+    for female, male in V.joint_seams(j):
+        f_solid, m_solid = ctx.solid(female), ctx.solid(male)
+        depth = float(m_solid.verts[:, 0].max() - f_solid.verts[:, 0].min())     # 雄の +X 端（スタブの先）- 雌の -X 面 = 差し込み長さ
+        remaining = None if slack is None else depth - slack
+        nominal = meter.common(m_solid, ctx.pose[male], f_solid, ctx.pose[female])[0]
+        opened = meter.common(m_solid, V.translation_np(-(slack or 0.0), 0, 0) @ ctx.pose[male], f_solid, ctx.pose[female])[0]
+        pulled = meter.common(m_solid, V.translation_np(-(depth + 0.5), 0, 0) @ ctx.pose[male], f_solid, ctx.pose[female])[0]
+        seams.append({"female": female, "male": male, "insertionMm": depth, "remainingAtFullSlackMm": remaining,
+                      "ribOverlapSeatedMm3": nominal, "ribOverlapAtFullSlackMm3": opened, "ribOverlapPulledOutMm3": pulled,
+                      "pass": bool(remaining is not None and round(remaining, 3) >= 2.0 and opened > FLOOR and pulled <= FLOOR)})
+    return {"gearToPadMm": t_g, "endToPadMm": t_s, "slackMm": slack, "shoulderToShoulderMm": chain_length,
+            "padToPadMm": None if slack is None else chain_length + slack, "seams": seams,
+            "pass": bool(slack is not None and all(row["pass"] for row in seams))}
+
+
 def shaft_retention(ctx):
-    """カム軸 j（軸・歯車・クリップ・カム 5 枚を 1 つの剛体として）を ±X/±Y/±Z へ動かし、外装と案内板との初接触を測る。
-    動かす前の姿勢は図面の位置（軸の中心 = Zc、サーボ 90 度で鍵の面が上）"""
+    """カム軸 j（歯車・カム 5 枚・端の部品を 1 つの剛体として）を ±X/±Y/±Z へ動かし、外装と案内板との初接触を測る。
+    動かす前の姿勢は図面の位置（軸の中心 = Zc、サーボ 90 度）。軸方向は継ぎ目ごとの差し込み長さの残りも測る"""
     drift = P.AXIAL_DRIFT * 1000.0
     slot_r, journal_r, arc_up = P.U_SLOT_W * 500.0, P.JOURNAL_D * 500.0, P.U_SLOT_UP * 1000.0
-    # 図面の位置では軸の中心が丸い溝の底の中心より arc_up 下にあるので、左右の初接触は壁の隙間 0.2 ではなく円弧の隙間
+    # 図面の位置では軸の中心が丸い溝の底の中心より arc_up 下にあるので、左右の初接触は壁の隙間ではなく円弧の隙間
     side = math.sqrt((slot_r - journal_r) ** 2 - arc_up ** 2)
-    flat = 0.0                                         # 丸に鍵の面の出っ張りは無い（丸 Ø5.0 は六角の内側）
-    up = P.HOLD_GAP * 1000.0 - flat                    # 図面の位置（軸の中心 = Zc）からの栓の隙間
+    up = P.HOLD_GAP * 1000.0                           # 図面の位置（軸の中心 = Zc）からの栓の隙間
     down = P.U_FLOOR_CLR * 1000.0
     results = []
     for j in range(P.N):
@@ -756,29 +782,25 @@ def shaft_retention(ctx):
             {"+X": ["housing"], "-X": ["housing"], "+Y": ["housing"], "-Y": ["housing"], "+Z": ["guide_plate"], "-Z": ["housing"]},
             maximum=1.0, coarse=0.025, tolerance=0.03,
             locations={"+X": [ends[0]], "-X": [ends[1]], "+Y": ends, "-Y": ends, "+Z": ends, "-Z": ends})
-        # カム 5 枚の束の軸方向: 束だけを軸に沿って動かす。-X は C クリップ、+X は歯車（ハブの先）で止まる。
-        # カムと軸の潰しリブの重なり（設計）は束が動いても軸に沿って同じ断面なので、リブの領域は許す
-        stack_members = [(f"cam_{i}_{j}", ctx.solid(f"cam_{i}_{j}"), ctx.pose[f"cam_{i}_{j}"]) for i in range(P.N)]
-        stack = six_directions(
-            ctx, stack_members, ctx.at(f"shaft_{j}", f"gear_{j}", f"shaft_clip_{j}"),
-            {"+X": 0.0, "-X": 0.0}, {"+X": [f"gear_{j}"], "-X": [f"shaft_clip_{j}"]},
-            maximum=3.0, coarse=0.05, allowed=V.hex_rib_regions(j, -46.0, 46.0), tolerance=0.05, only=("+X", "-X"))
-        results.append({"axis": j, "directions": rows, "camStackAxial": stack,
-                        "pass": all(row["pass"] for row in rows) and all(row["pass"] for row in stack)})
+        chain = shaft_chain_engagement(ctx, j)
+        results.append({"axis": j, "directions": rows, "chainAxial": chain,
+                        "pass": all(row["pass"] for row in rows) and chain["pass"]})
     worst = {name: [row["travelMm"] for result in results for row in result["directions"] if row["direction"] == name]
              for name in DIRS}
-    stack_travels = [row["travelMm"] for result in results for row in result["camStackAxial"]]
+    remaining = [seam["remainingAtFullSlackMm"] for result in results for seam in result["chainAxial"]["seams"]]
+    slacks = [result["chainAxial"]["slackMm"] for result in results]
     play = {"upMm": up, "downMm": down, "totalVerticalPlayMm": up + down}
     return interface(
-        "shaft-retention", "カム軸の保持（軸方向・U 溝の左右・栓と溝の底）", all(result["pass"] for result in results),
-        ("5 本の軸を、軸・歯車・C クリップ・カムの剛体として動かした初接触（mm）: " +
+        "shaft-retention", "カム軸の保持（両端のパッド・継ぎ目の差し込み・U 溝の左右・栓と溝の底）", all(result["pass"] for result in results),
+        ("5 本の軸を、歯車・カム 5 枚・端の部品の剛体として動かした初接触（mm）: " +
          "、".join(f"{name} {min(values):.3f}〜{max(values):.3f}" for name, values in worst.items()) +
-         f"。図面の位置からの設計値は軸方向 {drift:.2f}（肩とパッド）・左右 {side:.3f}（溝の丸い底の円弧）・上 {up:.2f}（栓。鍵の面の出っ張り {flat:.2f} を引く）・下 {down:.2f}（溝の底）。"
-         f"上下の遊びの合計 {up + down:.2f}mm。接触は軸の両端の軸受け（X 43.5〜45.1）に限る。"
-         f"カム 5 枚の束は軸方向に C クリップと歯車の間で止まり、遊び {min(stack_travels):.3f}〜{max(stack_travels):.3f}mm（±X）。"),
+         f"。図面の位置からの設計値は軸方向 {drift:.2f}（肩とパッド）・左右 {side:.3f}（溝の丸い底の円弧）・上 {up:.2f}（栓）・下 {down:.2f}（溝の底）。"
+         f"上下の遊びの合計 {up + down:.2f}mm。"
+         f"軸方向は両端のパッドで挟まれ、継ぎ目が開ける量の合計は {min(slacks):.3f}〜{max(slacks):.3f}mm。それが 1 つの継ぎ目に集まっても"
+         f"差し込み長さは {min(remaining):.2f}mm 残る（基準 2.0 以上、30 継ぎ目）。"),
         axes=results, directions=results[2]["directions"], verticalPlay=play,
-        note=("保持相手は外装と案内板。回転部品（歯車・カム）どうしや画素は数えない。負例: 方向ごとの保持相手だけを退避させると接触が消える"
-              "（+X/-X は外装を外しても案内板の栓が 0.2mm 先で受ける）"))
+        note=("保持相手は外装と案内板。回転部品（歯車・カム）どうしや画素は数えない。負例: 方向ごとの保持相手だけを退避させると接触が消える。"
+              "継ぎ目は雌穴の潰しリブの重なりが開き量の最大でも残ること、引き抜くと消えることで確かめた。潰しリブの引き抜き力は実物未確認"))
 
 
 # =============================================================================================
@@ -984,29 +1006,9 @@ def upward_chain(ctx):
 # =============================================================================================
 # 6. サーボ本体の保持（柵・奥の壁・受け台・クリップ）
 # =============================================================================================
-def ear_rib_extents():
-    """柵の潰しリブ 8 本が占める直方体（リブ自体の外接箱）。耳との重なりは必ずこの中に入る"""
-    SG = P.SG
-    ear_x0 = P.SERVO_BODY_X0 * 1000.0 + SG.FLANGE_BOTTOM_Z * 1000.0
-    ear_x1 = ear_x0 + SG.FLANGE_T * 1000.0
-    ear_z0 = ZS - SG.BODY_W * 500.0
-    fence_top = ear_z0 + 8.0
-    clr = P.SERVO_CLR * 1000.0
-    y_body0 = (SG.BODY_CENTER_X - SG.BODY_L / 2) * 1000.0
-    y_body1 = (SG.BODY_CENTER_X + SG.BODY_L / 2) * 1000.0
-    y_ear0 = (SG.BODY_CENTER_X - SG.FLANGE_L / 2) * 1000.0
-    y_ear1 = (SG.BODY_CENTER_X + SG.FLANGE_L / 2) * 1000.0
-    rib_y = [y_ear0 - clr + 0.9, y_body0 - clr - 1.5, y_body1 + clr + 1.5, y_ear1 + clr - 0.9]
-    regions = []
-    for y in rib_y:
-        regions.append([[ear_x0 - 0.6, y - 0.3, ear_z0 - 0.2], [ear_x0 + 0.1, y + 0.3, fence_top - 1.6 + 0.7]])
-        regions.append([[ear_x1 - 0.1, y - 0.3, ear_z0 - 0.2], [ear_x1 + 0.6, y + 0.3, fence_top - 1.6 + 0.7]])
-    return regions
-
-
 def servo_retention(ctx):
     clip_up = 0.2          # クリップの上の板と耳の上端の隙間（parts_static.CLIP_CLR）
-    fence_gap = 0.2        # 耳と柵の隙間（parts_static.EAR_GAP。潰しリブが 0.1 食い込む）
+    fence_gap = 0.25       # 耳と柵の片側の隙間（parts_static.EAR_GAP。C1 と同じ。潰しリブは無い）
     wall_gap = P.SERVO_CLR * 1000.0
     members = [("sg92r", ctx.solid("sg92r"), ctx.pose["sg92r"])]
     fixed = ctx.at("housing", "servo_clip_0", "servo_clip_1")
@@ -1015,16 +1017,16 @@ def servo_retention(ctx):
         {"+X": fence_gap, "-X": fence_gap, "+Y": wall_gap, "-Y": wall_gap, "+Z": clip_up, "-Z": 0.0},
         {"+X": ["housing"], "-X": ["housing"], "+Y": ["housing"], "-Y": ["housing"],
          "+Z": ["servo_clip_0", "servo_clip_1"], "-Z": ["housing"]},
-        maximum=1.0, coarse=0.025, allowed=ear_rib_extents(), tolerance=0.05,
+        maximum=1.0, coarse=0.025, allowed=None, tolerance=0.05,
         locations={"+Z": [[[21.9, -23.2, 30.0], [31.3, 13.2, 32.6]]]})
     travels = {row["direction"]: row["travelMm"] for row in rows}
     return interface(
         "servo-body-retention", "SG92R 本体の六方向保持（柵・奥の壁・受け台・クリップ）", rows,
         ("本体を ±X/±Y/±Z へ動かした初接触（mm）: " + "、".join(f"{k} {v}" for k, v in travels.items()) +
-         f"。設計値は ±X {fence_gap}（耳と柵。潰しリブの重なりは除く）・±Y {wall_gap}（奥の壁）・+Z {clip_up}（クリップ）・-Z 0（受け台に座る）。"
+         f"。設計値は ±X {fence_gap}（耳と柵。リブ無し）・±Y {wall_gap}（奥の壁）・+Z {clip_up}（クリップ）・-Z 0（受け台に座る）。"
          "回転部（受け・ホーン）の衝突は保持に数えない。クリップ自身の保持は servo-clip-retention。"),
-        directions=rows, ribExtentsMm=ear_rib_extents(),
-        note=("保持相手は外装とクリップ。潰しリブ 8 本の重なりは設計どおりなので、リブの外接箱に収まる接触は数えない（箱の外にも成分があれば接触）。"
+        directions=rows,
+        note=("保持相手は外装とクリップ。耳の溝は C1 と同じ片側 0.25 で、重なりは無い。"
               "負例: 方向ごとの保持相手を外すと接触が消える（±Y は外装を外してもクリップが 0.8mm 先で受ける）"))
 
 
@@ -1188,11 +1190,7 @@ def main():
     started = time.time()
     ctx = Ctx()
     specs = V.designed_overlaps(ctx.scene)
-    ctx.rib_theory = {}
-    for (a, b), spec in specs.items():
-        for name in (a, b):
-            if name.startswith("cam_") or name.startswith("gear_"):
-                ctx.rib_theory[name] = spec["theoryMm3"]
+    ctx.specs = specs
     log("校正")
     calibration = calibration_rows(ctx)
     if not all(row["pass"] for row in calibration):
@@ -1323,14 +1321,16 @@ def stop_height_error(ctx, budget, shift_up, shift_down, factor=1.0, scenario="m
     """各画素・各表の停止角で、位相誤差 ±(factor x Δ_j)（軸 j ごと、度）の範囲に実カム STL を回したときの、足の全幅での最大の高さと表との差。
     shift_up / shift_down は軸の上下の遊びによる高さのずれ（mm、図面の位置から）。誤差の最大 = max(|差の最小| + down, |差の最大| + up)
     戻り: {perPixel[...], maximumErrorMm, phaseOnlyMaximumMm, ...}"""
-    delta = {row["axis"]: row["totalDeg"] * factor for row in budget["scenarios"][scenario]["perAxis"]}
+    total_by_axis = {row["axis"]: row["totalDeg"] for row in budget["scenarios"][scenario]["perAxis"]}
     flush_z = P.CAM_TOP_FLUSH * 1000.0
     rows, worst = [], {"errorMm": 0.0}
     phase_only = 0.0
     for j in range(P.N):
         y0 = K.axis_y(j) * 1000.0
-        offsets = np.unique(np.concatenate([np.arange(-delta[j], delta[j], 0.25), [delta[j]], [-delta[j]], [0.0]]))
         for i in range(P.N):
+            # カム i は歯車から (5 - i) 個の継ぎ目。予算の合計は最悪のカム 0（5 継ぎ目）なので、カム i は継ぎ目 i 個ぶん（JOINT_ERR_DEG x i）小さい
+            dj = factor * max(0.0, total_by_axis[j] - P.JOINT_ERR_DEG * i)
+            offsets = np.unique(np.concatenate([np.arange(-dj, dj, 0.25), [dj], [-dj], [0.0]]))
             cam = ctx.solid(f"cam_{i}_{j}")
             foot = V.foot_footprint(ctx.solid(f"pixel_{i}_{j}"))
             rect = (foot["x"][0], foot["x"][1], foot["y"][0], foot["y"][1])
@@ -1346,11 +1346,11 @@ def stop_height_error(ctx, budget, shift_up, shift_down, factor=1.0, scenario="m
                 phase = max(abs(lo), abs(hi))
                 phase_only = max(phase_only, phase)
                 row = {"pixel": f"pixel_{i}_{j}", "table": k, "servoDeg": theta, "expectedMm": expected,
-                       "phaseDeltaDeg": delta[j], "heightErrorRangeMm": [lo, hi], "phaseOnlyMm": phase, "totalMm": total}
+                       "phaseDeltaDeg": dj, "heightErrorRangeMm": [lo, hi], "phaseOnlyMm": phase, "totalMm": total}
                 rows.append(row)
                 if total > worst["errorMm"]:
                     worst = {"errorMm": total, **row}
-    return {"factor": factor, "scenario": scenario, "phaseDeltaDegByAxis": delta, "shiftUpMm": shift_up, "shiftDownMm": shift_down,
+    return {"factor": factor, "scenario": scenario, "phaseDeltaDegByAxis": total_by_axis, "shiftUpMm": shift_up, "shiftDownMm": shift_down,
             "maximumErrorMm": worst["errorMm"], "worst": worst, "phaseOnlyMaximumMm": phase_only, "limitMm": HEIGHT_LIMIT_MM,
             "pass": bool(worst["errorMm"] <= HEIGHT_LIMIT_MM), "rows": rows}
 

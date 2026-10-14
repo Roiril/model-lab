@@ -57,7 +57,6 @@ pixels = [f"pixel_{i}_{j}" for j in range(5) for i in range(5)]
 cams = [f"cam_{i}_{j}" for j in range(5) for i in range(5)]
 shafts = [f"shaft_{j}" for j in range(5)]
 gears = [f"gear_{j}" for j in range(5)]
-shaft_clips = [f"shaft_clip_{j}" for j in range(5)]
 servo_clips = ["servo_clip_0", "servo_clip_1"]
 
 PLATES = [
@@ -69,16 +68,16 @@ PLATES = [
     {"id": "plate2-pixels", "title": "画素 25 個", "parts": pixels,
      "reason": "画素は 36mm の高さで 25 個。1 層ごとに 25 個を順に積むので時間の大半を占める。物体ごとに止められる設定"
                "（exclude_object）で、失敗した 1 個だけ外して続けられる。足の向きがそろうので配置も単純"},
-    {"id": "plate3-mechanism", "title": "カム 25・軸 5・歯車 5・クリップ 7",
-     "parts": cams + shafts + gears + shaft_clips + servo_clips,
-     "reason": "カム・軸・歯車・クリップは高さ 17mm 以下の低い部品で、かたまりで刷れる。画素と外装を合わせた 1 枚には、"
-               "全部品の外接面積は合計およそ 5.2 万 mm2、部品間 6mm の間隔を足すと約 7.4 万 mm2 で、プレートの実効面積（余白 10mm を除いて約 5.4 万 mm2）の 1.4 倍。1 枚には入らない"},
+    {"id": "plate3-mechanism", "title": "カム 25・軸の端 5・歯車の部品 5・押さえクリップ 2",
+     "parts": cams + shafts + gears + servo_clips,
+     "reason": "@AREA@"},
 ]
 
 TRIAL_PLATES = [
     {"id": "trial1-rotating", "title": "試し刷り 1: 回す・噛み合わせる部分",
-     "parts": ["horn_coupler", "shaft_2_plusX_end", "shaft_2_minusX_end", "cam_4_2", "gear_2", "shaft_clip_2"],
-     "reason": "受けとホーン、軸とカム・歯車（潰しリブ）、C クリップ。実物（SG92R とホーン）が要るのは受けだけ"},
+     "parts": ["horn_coupler", "shaft_2", "cam_0_2", "cam_4_2", "gear_2"],
+     "reason": "受けとホーン、数珠つなぎの継ぎ目（軸の端 shaft_2 の雄スタブ → カム 0_2 の雌穴、カム 0_2 のスタブ → カム 4_2 の雌穴、"
+               "カム 4_2 のスタブ → 歯車の部品の雌穴）。実物（SG92R とホーン）が要るのは受けだけ"},
     {"id": "trial2-shell-guide-pixel", "title": "試し刷り 2: 外装・案内・画素・ベゼル",
      "parts": ["housing_Uslot_shaft1_plusX", "housing_servo_block_minusY", "servo_clip_0", "guide_plate_cell_2_2",
                "guide_plate_tongue_plusX", "pixel_2_2_top", "pixel_2_2_foot", "bezel_window_2_2", "bezel_barb_plusX",
@@ -220,12 +219,23 @@ def run():
         raise SystemExit("build/print_review.json が校正に失敗した状態。先に print_review.py を通す")
     manifest = json.load(open(os.path.join(BUILD, "manifest.json"), encoding="utf-8"))
     print_ids = [p["id"] for p in manifest["parts"] if p.get("print")]
+    for f in os.listdir(PARTS_DIR):                 # 廃止した部品の古い STL を片付ける
+        if f.endswith(".stl") and f[:-4] not in print_ids:
+            os.remove(os.path.join(PARTS_DIR, f))
     for pid in print_ids:
         shutil.copyfile(os.path.join(BUILD, f"print_{pid}.stl"), os.path.join(PARTS_DIR, f"{pid}.stl"))
     trial_names = sorted(review.get("trial_pieces", {}))
     for name in trial_names:
         if not os.path.exists(os.path.join(TRIAL_DIR, f"{name}.stl")):
             raise SystemExit(f"試し刷りの小片がない: {name}（print_trials.py を先に流す）")
+
+    # 1 枚に入らない理由の数字（部品の外接面積。部間 6mm の間隔を足す）
+    area = sum(review["parts"][i]["size_mm"][0] * review["parts"][i]["size_mm"][1] for i in print_ids)
+    area_gap = sum((review["parts"][i]["size_mm"][0] + 6.0) * (review["parts"][i]["size_mm"][1] + 6.0) for i in print_ids)
+    usable = (BED[0] - 20.0) * (BED[1] - 20.0 - EXCLUDE[1])
+    PLATES[2]["reason"] = (f"カム・軸の端・歯車の部品・クリップは低い部品で、かたまりで刷れる。全部品の外接面積は合計およそ {area / 1e4:.1f} 万 mm2、"
+                           f"部品間 6mm の間隔を足すと約 {area_gap / 1e4:.1f} 万 mm2 で、プレートの実効面積（余白 10mm と除外域を除いて約 {usable / 1e4:.1f} 万 mm2）の"
+                           f"{area_gap / usable:.1f} 倍。1 枚には入らない")
 
     # プロファイル（継承を解いて平らにする）
     m = resolve("machine", MACHINE)

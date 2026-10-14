@@ -3,7 +3,7 @@
     py -3.11 models/tangible-pixel-cube/motion.py [--step 1.0]
 
 寸法と運動学は params.py / kinematics.py / cams.py / patterns.py を読む（値を書き写さない）。
-- 軸 j（行 j）の shaft_j / gear_j / shaft_clip_j / cam_i_j は 1 つの剛体。Y=axis_y(j), Z=Zc を通る X 軸まわりに axis_angle 度回る
+- 軸 j（行 j）の gear_j / cam_i_j（5 枚）/ shaft_j（-X 端の部品）は数珠つなぎで 1 つの剛体。Y=axis_y(j), Z=Zc を通る X 軸まわりに axis_angle 度回る
 - horn_coupler と sg92r_horn はサーボ軸（Y=0, Z=Zs）の X 軸まわりに servo_delta 度回る
 - pixel_i_j は Z だけ動く。高さは cams.py のカムの支持関数 h*（接点の高さ。表どおりの高さを作る実カム）
 - housing / bezel / guide_plate / sg92r は動かない（単位行列）。phase_comb（組立治具）は運動表に入れない
@@ -58,8 +58,6 @@ def classify(pid):
     parts = pid.split("_")
     if parts[0] in ("shaft", "gear") and len(parts) == 2 and parts[1].isdigit():
         return ("axis", int(parts[1]))
-    if parts[0] == "shaft" and len(parts) == 3 and parts[1] == "clip" and parts[2].isdigit():
-        return ("axis", int(parts[2]))
     if parts[0] == "cam" and len(parts) == 3 and parts[1].isdigit() and parts[2].isdigit():
         return ("axis", int(parts[2]))
     if parts[0] == "pixel" and len(parts) == 3 and parts[1].isdigit() and parts[2].isdigit():
@@ -96,7 +94,7 @@ def build_cams():
 
 
 def axis_of_part(pid):
-    """軸まわりに回る部品（shaft_j / gear_j / shaft_clip_j / cam_i_j）の j。それ以外は None"""
+    """軸まわりに回る部品（shaft_j / gear_j / cam_i_j）の j。それ以外は None"""
     kind = classify(pid)
     return kind[1] if kind[0] == "axis" else None
 

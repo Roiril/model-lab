@@ -80,7 +80,7 @@ def pixel_heights(cams, theta_deg, theta_flat=None):
 def part_transforms(theta_deg, cams=None, theta_flat=None):
     """部品 id（params.PART_IDS）-> 変換の辞書。motion.json を作る担当向け。
     - horn_coupler と sg92r_horn: サーボ軸（Y=0, Z=Zs）まわりに servo_delta 度。sg92r（本体）は動かない
-    - shaft_j, gear_j, cam_i_j, shaft_clip_j（j=行）: カム軸 j（Y=axis_y(j), Z=Zc）まわりに axis_angle 度。1 つの剛体
+    - shaft_j（-X の端の部品）, gear_j（+X の歯車の部品）, cam_i_j（j=行）: カム軸 j（Y=axis_y(j), Z=Zc）まわりに axis_angle 度。数珠つなぎで 1 つの剛体として回る
     - pixel_i_j: z に高さ dz（m）。cams が None なら省く
     歯車の噛み合いの位相は params の CHAIN/SECTOR の歯の位相で決まる（kinematics は角だけを返す）。
     """
@@ -92,7 +92,6 @@ def part_transforms(theta_deg, cams=None, theta_flat=None):
         ax = {"kind": "rot_x", "y0": axis_y(j), "z0": P.CAM_AXIS_Z, "angle_deg": axis_angle(theta_deg, j, theta_flat)}
         out[f"shaft_{j}"] = dict(ax)
         out[f"gear_{j}"] = dict(ax)
-        out[f"shaft_clip_{j}"] = dict(ax)
         for i in range(P.N):
             out[f"cam_{i}_{j}"] = dict(ax)
     if cams is not None:
@@ -107,3 +106,27 @@ def servo_theta_for_table(k, theta_flat=None):
     """表 k を表示するサーボ角（度）。較正で THETA_FLAT がずれたら表全体を同じだけずらす"""
     off = 0.0 if theta_flat is None else theta_flat - P.THETA_FLAT
     return P.TABLE_THETA[k] + off
+
+
+# --- 数珠つなぎのカム軸（params の STUB_AF / JOINT_ENGAGE_*）---------------------------------------
+def cam_x_range(i, j):
+    """カム板の X の範囲（m）"""
+    x = cam_x(i, j)
+    return (x - P.CAM_T / 2, x + P.CAM_T / 2)
+
+
+def next_face_x(i, j):
+    """カム i の次の部品（+X 側）の -X 面の X（m）。カム 4 の次は歯車の部品、それ以外は同じ行の次のカム"""
+    return P.GEAR_X0 if i == P.N - 1 else cam_x_range(i + 1, j)[0]
+
+
+def stub_length(i, j):
+    """カム i の雄スタブの長さ（m）: カム板の +X 面から、次の部品の穴の底まで = 面どうしの間 + 穴の深さ"""
+    depth = P.JOINT_ENGAGE_GEAR if i == P.N - 1 else P.JOINT_ENGAGE_CAM
+    return next_face_x(i, j) - cam_x_range(i, j)[1] + depth
+
+
+def end_part_hex_x(j):
+    """端の部品 shaft_j の六角部の X の範囲（m）: -X の肩（-SHAFT_HALF_L）から、最も -X のカムの穴の底まで。治具はこの -X 寄りに掛かる"""
+    x0 = cam_x_range(0, j)[0]
+    return (-P.SHAFT_HALF_L, x0 + P.JOINT_ENGAGE_CAM)

@@ -127,21 +127,16 @@ def estimated_properties(pid, cams):
     if pid.startswith("pixel_"):
         return {"massKg": P.PIXEL_MASS_G / 1000.0 * FILL_FACTOR, "comM": [0.0, 0.0, 0.0],
                 "inertiaComKgm2": [0.0] * 6, "source": "estimate"}
-    if pid.startswith("shaft_clip_"):
-        # -X 端の C クリップ: 外半径 = スリーブ半径、内半径 = 溝の底。C の切り欠きは無視（中実の輪）
-        j = int(pid.split("_")[2])
-        ro, ri, t = P.SLEEVE_R * MM, P.CLIP_GROOVE_R * MM, P.CLIP_T * MM
-        vol = math.pi * (ro ** 2 - ri ** 2) * t * 1e-9
-        i_axis = rho * math.pi * (ro ** 4 - ri ** 4) / 2.0 * t * 1e-15
-        return estimate_row(rho * vol, (0.0, K.axis_y(j), zc), i_axis, (K.axis_y(j), zc))
     if pid.startswith("shaft_"):
+        # -X 端の部品（数珠つなぎ）: 六角 X -43.6 .. 最も -X のカム面、と -X の丸い軸受け Ø、雄スタブは六角に含める。STL が無いときの見積もり
         j = int(pid.split("_")[1])
         area, jh = hex_bore(P.SHAFT_AF * MM)
-        length = 2.0 * P.SHAFT_HALF_L * MM
+        cam_face = min(K.cam_x(i, j) for i in range(N)) - P.CAM_T / 2.0
+        length = max(abs(cam_face) - P.SHAFT_HALF_L, 0.0) * MM + 4.0          # 六角部 + カムへ入るスタブ（4mm）
         jl = (P.JOURNAL_END - P.SHAFT_HALF_L) * MM
         ra = P.JOURNAL_D * MM / 2.0
-        vol = (area * length + 2.0 * math.pi * ra ** 2 * jl) * 1e-9
-        i_axis = rho * (jh * length + 2.0 * math.pi * ra ** 4 / 2.0 * jl) * 1e-15
+        vol = (area * length + math.pi * ra ** 2 * jl) * 1e-9
+        i_axis = rho * (jh * length + math.pi * ra ** 4 / 2.0 * jl) * 1e-15
         return estimate_row(rho * vol, (0.0, K.axis_y(j), zc), i_axis, (K.axis_y(j), zc))
     if pid.startswith("gear_"):
         j = int(pid.split("_")[1])

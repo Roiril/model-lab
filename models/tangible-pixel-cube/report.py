@@ -314,7 +314,7 @@ def requirement_rows():
         "params.py、models/sg92r-photo/README.md")
     add("依頼", "③ 組み立ては印刷部品だけ", "ok",
         f"印刷部品 {len(PARTS_PRINT)} 個と、SG92R・付属ホーンだけです（既製部品 {len(PARTS_STOCK)} 点）。ねじ、接着剤、結束バンドは使いません。"
-        "保持は潰しリブ、スナップ、Cクリップ、落とし込みで作ります。",
+        "保持は継ぎ目の潰しリブ、スナップ、落とし込みで作ります。",
         "manifest.json")
     kinds_n = [EXC_COUNT[k] for k in ("crush_rib_0.6", "gear_tooth_tip_1.1", "cam_label_engraving", "bezel_bar_1.6")]
     add("依頼", "④ 薄いと揺れる。PLA・PETGで刷る", "ok",
@@ -381,7 +381,7 @@ def requirement_rows():
         f"軸と穴の隙間は片側 {P.SHAFT_BORE_CLR * MM:g}mm です。面取りが欠けた部品は {len(NO_CHAMFER)} 個です（対象は画素の頭の縁、カム・歯車の穴の縁、受けのポケットの口）。",
         "print_review.json、params.py")
     add("§3 印刷", "スナップ・圧入は層に沿ってしなる向きで刷る", "ok",
-        "ベゼルの爪は端壁のたわみで、案内板の爪は舌の面内で、押さえクリップとCクリップは脚の面内でしなります。刷る向きの理由は model_report.json に書きました。層に沿う向きは設計の確認で、実物の割れは未確認です。",
+        "ベゼルの爪は端壁のたわみで、案内板の爪は舌の面内で、押さえクリップは脚の面内でしなります。刷る向きの理由は model_report.json に書きました。層に沿う向きは設計の確認で、実物の割れは未確認です。",
         "model_report.json")
     add("§3 印刷", "非多様体エッジ0。一体の部品は連結成分1。空中に離れた部品がない", "ok" if (MESH_OK and not MULTI_COMP and not UNGROUNDED) else "ng",
         f"{MR['totals']['n_parts']} 部品で非多様体エッジは {MR['totals']['non_manifold_edges']} です。印刷部品 {PS['n_parts_reviewed']} 個のうち、連結成分が1でない部品は {len(MULTI_COMP)} 個、接地しない部品は {len(UNGROUNDED)} 個です。"
@@ -398,7 +398,7 @@ def requirement_rows():
         f"逆順の分解が通ります。スナップのひずみは最大 {STRAIN_MAX:.2f}% です（{STRAIN_ZONE}。PLAで2%以下）。着脱力は実物で確かめます。",
         "assembly_report.json（reverseDisassembly、designedContacts）")
     add("§4 組み立て", "後から入れる部品の通り道と、指の入る隙間が残る", "cond",
-        "通り道は、各工程の全姿勢で検査しました。軸は落とす向きを決め、サーボ一式は -X へ 1.8mm 寄せます。指の隙間は未検査です。",
+        "通り道は、各工程の全姿勢で検査しました。軸は箱の外で7部品をつないでから、落とす向きを決めて下ろします。サーボ一式は -X へ 1.8mm 寄せます。指の隙間は未検査です。",
         "assembly_report.json（steps、rolling）")
     retention = ["shaft-retention", "axis-upward-chain", "servo-body-retention", "servo-clip-retention",
                  "guide-plate-retention", "bezel-retention", "pixel-guides"]
@@ -534,9 +534,17 @@ def decisions_table():
         (f"歯車 モジュール{P.GEAR_M * MM:g}、{P.CHAIN_Z}歯、歯幅 {P.GEAR_T * MM:g}mm",
          f"噛み合い率は {dci('噛み合い率 17T-17T')['value']:.2f} です。停動での歯の曲げ応力は {dci('歯の曲げ応力')['value']:.1f}MPa です（上限 {dci('歯の曲げ応力')['limit']:g}）。",
          join(code("GEAR_M"), "　", code("CHAIN_Z"), "　", code("GEAR_T"))),
-        (f"軸は六角（二面幅 {P.SHAFT_AF * MM:g}mm）。切り落とし面で向きを1通りに。穴に潰しリブ{P.HEX_RIB_FACES}本",
-         f"潰しリブが無いと、六角のガタがカムと歯車の2箇所でそれぞれ ±{key['hex_slack_if_ribs_fail_deg']:.2f}° になり、合計が停止区間を超えます。潰し代は {P.HEX_RIB_CRUSH * MM:g}mm です。",
-         join(code("SHAFT_AF"), "　", code("HEX_RIB_CRUSH"))),
+        (f"軸は数珠つなぎの7部品（歯車の部品、カム4〜0、端の部品）。継ぎ目は雄の六角スタブ（二面幅 {P.STUB_AF * MM:g}mm）と雌穴で、差し込む長さはカムが {P.JOINT_ENGAGE_CAM * MM:g}mm、歯車が {P.JOINT_ENGAGE_GEAR * MM:g}mm。潰しリブ{P.HEX_RIB_FACES}本は雌穴にだけ付ける",
+         f"長い六角軸に潰しリブのカムを通す方式は、実物を刷ると板カムが引っかかって通りませんでした。継ぎ目では、差し込みの最後の {P.JOINT_ENGAGE_GEAR * MM:g}〜{P.JOINT_ENGAGE_CAM * MM:g}mm だけがリブに擦れます。"
+         f"継ぎ目1つの引き抜き力は {dci('継ぎ目 1 つの引き抜き力')['value']:.0f}N です。鎖の全長はパッドの内面の間より {dci('鎖の全長')['value']:.1f}mm 短いだけなので、継ぎ目は抜けません。"
+         f"リブが無いと、継ぎ目の六角のガタが ±{key['hex_slack_if_ribs_fail_deg']:.2f}° ずつになり、5つ分で停止区間を超えます。潰し代は {P.HEX_RIB_CRUSH * MM:g}mm、継ぎ目1つの遊びは ±{P.JOINT_ERR_DEG:g}° と仮定しました。",
+         join(code("HEX_RIB_CRUSH"), "　", code("JOINT_ENGAGE_CAM"), "　", code("JOINT_ENGAGE_GEAR"), "　", code("STUB_AF"), "　", code("JOINT_ERR_DEG"))),
+        ("サーボの取付耳の溝は、耳の厚み + 片側 0.25mm。潰しリブは無し",
+         "実物を刷ると、前の寸法（片側 0.2mm と潰しリブ 0.3mm）では耳がきつくて入りませんでした。実物で入った C1 と同じ寸法にしました。",
+         code("parts_static.py の EAR_GAP")),
+        (f"配線の窓は {P.WIRE_WIN_W * MM:g} × {P.WIRE_WIN_H * MM:g}mm（上は 45° の尖り屋根）",
+         f"先端のコネクタを {P.CONNECTOR_W * MM:g} × {P.CONNECTOR_T * MM:g}mm と想定し、片側 1.4mm と 1.3mm の余裕を足しました。コネクタの実寸は正本にないので、実物で確かめます。",
+         join(code("CONNECTOR_W"), "　", code("CONNECTOR_T"))),
         (f"案内板の厚み {P.PLATE_T * MM:.1f}mm", f"案内を長くして、画素のこじれを抑えます。こじれ係数の最大は {key['kappa_B_035']:.2f} です（上限 {P.KAPPA_LIMIT_LO}）。",
          code("PLATE_Z0")),
         ("画素は1部品。頭を下にして刷る", "見える頭の面が最初の層になり、サポートが要りません。", "（構造）"),
@@ -582,17 +590,19 @@ def hardware_list():
     items = [
         join(tag("strong", "試し刷り1（回す部分）。"), H(esc(f"{trial1['n_parts']} 片です。付属ホーンと実物のSG92Rを、受け（horn_coupler）に入れます。きつければ HORN_CLR を 0.05mm ずつ増やします。"
                                                     "ホーンが押し込めて、抜けず、がたつかなければ合格です。"))),
-        join(tag("strong", "潰しリブ。"), H(esc(f"cam_4_2 と gear_2 を、軸の端の小片に通します。手で押し込める力で入り、回してもガタが見えなければ合格です。"
-                                           f"位相誤差の予算は、潰し代 {P.HEX_RIB_CRUSH * MM:g}mm のリブが効く前提です（ガタの見積りは ±{P.FIT_ERR_DEG:g}°）。"))),
+        join(tag("strong", "軸の継ぎ目。"), H(esc(f"試し刷り1の shaft_2、cam_0_2、cam_4_2、gear_2 を順にさしてつなぎます。手で押し込める力で入り、回してもガタが見えず、持ち上げても抜けなければ合格です。"
+                                           f"位相誤差の予算は、潰し代 {P.HEX_RIB_CRUSH * MM:g}mm のリブが効く前提です（継ぎ目1つの遊びは ±{P.JOINT_ERR_DEG:g}° と仮定）。"))),
+        join(tag("strong", "取付耳の溝。"), H(esc("試し刷り2の housing_servo_block_minusY に、実物のSG92Rの耳を入れます。がたつかず、抜けやすくなければ合格です。"
+                                            "合わなければ parts_static.py の EAR_GAP（0.25mm）を 0.05mm ずつ変えます。"))),
         join(tag("strong", "スプライン。"), H(esc("付属ホーンをSG92Rの出力軸に付けます。正本にスプラインの歯がないので、嵌合と回転の伝わりを実物で確かめます。18° 刻みで付け直せるかも見ます。"))),
         join(tag("strong", "摩擦。"), H(esc(f"全部組んだら、サーボをつながずに軸を手で回します。画素がなめらかに上下し、止まらなければ合格です。計算は摩擦係数 {P.MU_CAM} と {P.MU_CAM_HI} の仮値を使っています。"))),
-        join(tag("strong", "爪の着脱力。"), H(esc("試し刷り2のベゼルの爪、案内板の舌、押さえクリップと、Cクリップを着脱します。割れや白化が出ないかを見ます。"
+        join(tag("strong", "爪の着脱力。"), H(esc("試し刷り2のベゼルの爪、案内板の舌、押さえクリップを着脱します。割れや白化が出ないかを見ます。"
                                             f"計算上のひずみは最大 {STRAIN_MAX:.2f}% です（{STRAIN_ZONE}）。"))),
         join(tag("strong", "画素の重力での落ち。"), H(esc(f"画素を指で持ち上げて離すと、カムまで落ちて止まります。引っかかれば不合格です。軸が案内板を押し上げる場合、画素は表より {vp['floatedPushingPlateShiftMm']:g}mm 高くなります"
                                                f"（許容 {vp['tableToleranceMm']:g}mm を超えます）。浮くのは歯車の分離力が画素と軸の重さを超えるときです。実機で確かめます。"))),
         join(tag("strong", "位相合わせ。"), H(esc(f"組み立てたら、位相合わせ治具が5本とも座るかを見ます。5本とも浮くときは、デモの + と − で 0.25° ずつ回して座る位置を探します。1本だけ浮く軸は 1 歯ずれているので置き直します。座ったら w で保存します。仕上げに、表1の中央（−3mm）と表3の中央（+3mm）が表どおりになる幅の中央へ、同じ + と − で合わせます。"
                                            f"許容は ±{FW['angles']['phaseTrimAllowedDeg'][1]:g}° です。"))),
-        join(tag("strong", "組み立て。"), H(esc(f"{len(AR['steps'])} 工程を実際に組みます。指が入る隙間と、サーボ一式を -X へ 1.8mm 寄せて下ろす動作を確かめます。"))),
+        join(tag("strong", "組み立て。"), H(esc(f"{len(AR['steps'])} 工程を実際に組みます。箱の外で軸を7部品つなぐ工程と、指が入る隙間と、サーボ一式を -X へ 1.8mm 寄せて下ろす動作を確かめます。"))),
         join(tag("strong", "通電。"), H(esc("4.8V の安定化電源で、表0から4まで順に動かします。各表で画素が表どおりに揃うか、擦れや引っかかりがないかを見ます。"))),
         join(tag("strong", "電源を切ったとき。"), H(esc("画素の位置が保たれるか、軸が回って画素が落ちるかを見ます。"))),
         join(tag("strong", "PETG。"), H(esc("PETGで刷った部品の嵌め合いが、固くならないかを見ます。"))),
@@ -607,17 +617,15 @@ def exception_name(key):
 
 
 def overlap_name(kind):
-    return {"hex-crush-ribs": "潰しリブ（カムと歯車の穴）", "ear-crush-ribs": "潰しリブ（サーボの取付耳）",
+    return {"joint-crush-ribs": "潰しリブ（継ぎ目の雌穴）", "hex-crush-ribs": "潰しリブ（カムと歯車の穴）", "ear-crush-ribs": "潰しリブ（サーボの取付耳）",
             "canonical-servo-output-shaft": "SG92R の出力軸とホーン（正本の形）"}.get(kind, kind)
 
 
 def zone_name(zone):
-    if zone.startswith("rib:"):
-        return "潰しリブ（カム・歯車の穴）"
+    if zone == "seam" or zone.startswith("rib:"):
+        return "潰しリブ（継ぎ目の雌穴）"
     if zone.startswith("servo_clip"):
         return "押さえクリップの爪"
-    if zone.startswith("shaft_clip"):
-        return "Cクリップの口"
     return {"bezel_barbs": "ベゼルの爪", "plate_hooks": "案内板の舌の爪", "ear_ribs": "柵の潰しリブ（取付耳）"}.get(zone, zone)
 
 
@@ -663,7 +671,7 @@ def verify_sections():
     # 遊びの鎖
     out.append(tag("h3", "遊びの鎖"))
     key = DC["summary"]["key"]
-    out.append(para(f"位相誤差は、サーボの位置、ホーンの合わせ、潰しリブの嵌め、バックラッシュ、軸の上下のずれを足して、最悪の軸（0と4）で {key['phase_sum_deg']:.2f}° です。"
+    out.append(para(f"位相誤差は、サーボの位置、ホーンの合わせ、継ぎ目の遊び（5つ）、バックラッシュ、軸の上下のずれを足して、最悪の軸（0と4）で {key['phase_sum_deg']:.2f}° です。"
                     f"停止区間の半幅 {key['dwell_half_deg']:g}° に対して、余裕は {key['phase_margin_deg']:.2f}° です（設計検査の基準は 1° 以上）。"))
     out.append(para(dci("位相誤差の内訳")["value"]))
     chain = (("各軸の上向きの隙間の最大", "軸の上向きの隙間（栓の下端と軸の丸の上端）の最大"),
@@ -730,6 +738,26 @@ def verify_sections():
     return H("".join(esc(x) for x in out))
 
 
+def h2d_layout():
+    """H2D の1枚プレート（配置だけの3mf）の部品数と、部品が占める最大座標（mm）。無ければ None"""
+    path = PRINTS / "tangible-pixel-cube-h2d-layout.3mf"
+    if not path.is_file():
+        return None
+    import zipfile
+    import xml.etree.ElementTree as ET
+    import numpy as np
+    root = ET.fromstring(zipfile.ZipFile(path).read("3D/3dmodel.model").decode("utf-8"))
+    objects = {o.get("id"): o for o in root.iter() if o.tag.endswith("}object")}
+    points = []
+    items = [i for i in root.iter() if i.tag.endswith("}item")]
+    for item in items:
+        verts = np.array([[float(v.get(k)) for k in "xyz"] for v in objects[item.get("objectid")].iter() if v.tag.endswith("}vertex")])
+        m = np.array([float(x) for x in item.get("transform").split()]).reshape(4, 3)
+        points.append(verts @ m[:3] + m[3])
+    pts = np.vstack(points)
+    return len(items), float(pts[:, 0].max()), float(pts[:, 1].max()), float(pts[:, 2].max()), path.name
+
+
 def plates_section():
     rows = []
     for plate in PL["plates"]:
@@ -740,6 +768,9 @@ def plates_section():
     out = [table(("プレート", "種類", "部品数", "PLAの質量（見込み）", "最も高い部品", "3mf"), rows)]
     out.append(para(f"本体の合計は {PL['mass_total_pla_g']:g}g です（中実なら上限 {PL['mass_total_solid_upper_g']:g}g）。スライスしていないので、印刷時間は未算出です。"
                     "質量は、壁2周、上5層、下3層、充填15%、PLA 1.26g/cm³ で見込みました。"))
+    h2d = h2d_layout()
+    if h2d is not None:
+        out.append(para(f"H2D では全 {h2d[0]} 部品が1枚に載ります（{h2d[4]}。配置だけで、スライスはしていません）。部品が占める最大座標は X {h2d[1]:.0f}、Y {h2d[2]:.0f}、高さ {h2d[3]:.0f}mm です。"))
     out.append(para(f"試し刷りの小片は {len(TR)} 個です。小片は prints/{MODEL}/trial/、全部品は prints/{MODEL}/parts/ にあります。"))
     return H("".join(esc(x) for x in out))
 

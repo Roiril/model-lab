@@ -20,8 +20,8 @@
   "limitations": [
    "寸法の仮値（潰しリブの潰し代・柵の隙間・爪の食い込み）は実物で合わせる"
   ],
-  "n_parts": 74,
-  "n_print": 72
+  "n_parts": 69,
+  "n_print": 67
  },
  "parts": [
   {
@@ -832,66 +832,6 @@
     0
    ],
    "stock": true
-  },
-  {
-   "id": "shaft_clip_0",
-   "label": "C クリップ 0",
-   "assembly": "build/shaft_clip_0.stl",
-   "print": "build/print_shaft_clip_0.stl",
-   "color": "#ab47bc",
-   "explode": [
-    0,
-    0,
-    20
-   ]
-  },
-  {
-   "id": "shaft_clip_1",
-   "label": "C クリップ 1",
-   "assembly": "build/shaft_clip_1.stl",
-   "print": "build/print_shaft_clip_1.stl",
-   "color": "#ab47bc",
-   "explode": [
-    0,
-    0,
-    20
-   ]
-  },
-  {
-   "id": "shaft_clip_2",
-   "label": "C クリップ 2",
-   "assembly": "build/shaft_clip_2.stl",
-   "print": "build/print_shaft_clip_2.stl",
-   "color": "#ab47bc",
-   "explode": [
-    0,
-    0,
-    20
-   ]
-  },
-  {
-   "id": "shaft_clip_3",
-   "label": "C クリップ 3",
-   "assembly": "build/shaft_clip_3.stl",
-   "print": "build/print_shaft_clip_3.stl",
-   "color": "#ab47bc",
-   "explode": [
-    0,
-    0,
-    20
-   ]
-  },
-  {
-   "id": "shaft_clip_4",
-   "label": "C クリップ 4",
-   "assembly": "build/shaft_clip_4.stl",
-   "print": "build/print_shaft_clip_4.stl",
-   "color": "#ab47bc",
-   "explode": [
-    0,
-    0,
-    20
-   ]
   },
   {
    "id": "servo_clip_0",

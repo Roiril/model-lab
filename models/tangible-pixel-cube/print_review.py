@@ -81,22 +81,22 @@ VISIBLE = {"housing": vis_housing, "bezel": vis_bezel}
 
 # 部品の役割（肉厚の基準を選ぶ）。load = 力・トルクを伝える。flex = しなって使う（薄くてよい）。
 ROLE = {"housing": "exterior", "bezel": "exterior", "guide_plate": "guide", "shaft": "load", "gear": "load",
-        "cam": "load", "pixel": "guide", "horn_coupler": "load", "shaft_clip": "flex", "servo_clip": "flex",
+        "cam": "load", "pixel": "guide", "horn_coupler": "load", "servo_clip": "flex",
         "phase_comb": "jig"}
 
 
 # 力を受ける部位（組立姿勢の座標）。外装は大半が外装の壁だが、次は荷重が掛かる
 LOAD_REGIONS = {
     "housing": {
-        "サーボ取付耳の受け（-Y 側の柵と奥の壁）": lambda a: (a[:, 0] > 23.5) & (a[:, 0] < 30.5) & (a[:, 1] > -23.5) & (a[:, 1] < -16.5) & (a[:, 2] < 28),
-        "サーボ取付耳の受け（+Y 側の柵と奥の壁）": lambda a: (a[:, 0] > 23.5) & (a[:, 0] < 30.5) & (a[:, 1] > 6.5) & (a[:, 1] < 13.5) & (a[:, 2] < 28),
+        "サーボ取付耳の受け（-Y 側の柵と奥の壁）": lambda a: (a[:, 0] > 21.0) & (a[:, 0] < 32.0) & (a[:, 1] > -25.0) & (a[:, 1] < -16.5) & (a[:, 2] < 28),
+        "サーボ取付耳の受け（+Y 側の柵と奥の壁）": lambda a: (a[:, 0] > 21.0) & (a[:, 0] < 32.0) & (a[:, 1] > 6.5) & (a[:, 1] < 15.0) & (a[:, 2] < 28),
         "軸受け（±X 端壁と帯の U 溝まわり）": lambda a: (np.abs(a[:, 0]) > 43.7) & (np.abs(a[:, 1]) < 45.5) & (a[:, 2] > 44.0) & (a[:, 2] < 58.0),
     },
 }
 
 
 def family(pid):
-    for key in ("shaft_clip", "servo_clip", "guide_plate", "horn_coupler", "phase_comb"):
+    for key in ("servo_clip", "guide_plate", "horn_coupler", "phase_comb"):
         if pid.startswith(key) or pid == key:
             return key
     return pid.split("_")[0]
@@ -511,8 +511,9 @@ def main():
     design = json.load(open(os.path.join(BUILD, "design_check.json"), encoding="utf-8"))
     judged, judge_names = L.judgement(P_, design)
     # 肉厚 3.0mm 未満の部品ごとの応力判定の割り当て（部品に当たる項目が全部通ったときだけ許可）
-    judge_for = {"gear": [judge_names["gear"]], "horn_coupler": [judge_names["horn_coupler"], "受けのホーンのポケットの壁（厚み 1.6）"],
-                 "cam": [judge_names["cam"], "カムのハブ筒（軸方向）"], "shaft": [judge_names["shaft"]]}
+    judge_for = {"gear": [judge_names["gear"], judge_names["stub"], judge_names["boss"]],
+                 "horn_coupler": [judge_names["horn_coupler"], "受けのホーンのポケットの壁（厚み 1.6）"],
+                 "cam": [judge_names["cam"], judge_names["stub"]], "shaft": [judge_names["stub"], judge_names["boss"]]}
     REGION_JUDGE = {"軸受け（±X 端壁と帯の U 溝まわり）": judge_names["housing_bearing"],
                     "サーボ取付耳の受け（-Y 側の柵と奥の壁）": judge_names["housing_fence"],
                     "サーボ取付耳の受け（+Y 側の柵と奥の壁）": judge_names["housing_fence"]}

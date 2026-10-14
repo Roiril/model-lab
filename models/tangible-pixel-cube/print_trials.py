@@ -54,21 +54,19 @@ TRIALS = [
     {"name": "horn_coupler", "src": "horn_coupler", "box": None, "plate": 1, "targets": [],
      "checks": f"ホーン（SG92R 付属）が受けのポケットに嵌まるか（ホーンとの隙間 片側 {mm1(P.HORN_CLR)}mm、口の面取り {mm1(P.FIRST_LAYER_CHAMFER)}mm）。"
                f"半円歯車（{P.SERVO_Z} 歯）と中央の軸の歯車（{P.CHAIN_Z} 歯）の噛み合い。支えのピン Ø{mm1(P.RECV_PIN_D)}"},
-    {"name": "shaft_2_plusX_end", "src": "shaft_2", "box": (29.0, 44.7, -6.0, 6.0, 44.0, 60.0), "plate": 1,
-     "targets": [("鍔・丸・歯車の座", (P.GEAR_X0 * 1000, P.JOURNAL_END * 1000, -5.5, 5.5, _ZC - 5.5, _ZC + 5.5))],
-     "checks": f"軸の +X 端（六角 AF{mm1(P.SHAFT_AF)} の切り落とし面（鍵）、鍔、丸 Ø{mm1(P.JOURNAL_D)}）。歯車（穴の二面幅 {mm1(P.SHAFT_BORE_AF)}、"
-               f"潰しリブ 幅{mm1(P.HEX_RIB_W)}・潰し代{mm1(P.HEX_RIB_CRUSH)}）が鍔まで入るか、カムが通るか、丸が外装の U 溝（幅 {mm1(P.U_SLOT_W)}）へ落ちるか"},
-    {"name": "shaft_2_minusX_end", "src": "shaft_2", "box": (-44.7, -30.0, -6.0, 6.0, 44.0, 60.0), "plate": 1,
-     "targets": [("C クリップの溝と丸", (-P.JOURNAL_END * 1000, -33.0, -3.9, 3.9, _ZC - 3.9, _ZC + 3.9))],
-     "checks": f"軸の -X 端（裸の六角・C クリップの溝（底の半径 {mm1(P.CLIP_GROOVE_R)}）・丸 Ø{mm1(P.JOURNAL_D)}）。"
-               f"C クリップ（厚み {mm1(P.CLIP_T)}）が溝へ嵌まるか"},
+    # 数珠つなぎの継ぎ目（雄の六角スタブ → 次の部品の雌の六角穴）。部品そのものが小さいので切らずに全部を刷る
+    {"name": "shaft_2", "src": "shaft_2", "box": None, "plate": 1, "targets": [],
+     "checks": f"軸の -X 端の部品。雄スタブ（六角 AF{mm1(P.STUB_AF)}、切り落とし面 = 向きを決める）の先が、次のカム（cam_0_2）の雌穴（二面幅 {mm1(P.SHAFT_BORE_AF)}）へ "
+               f"{mm1(P.JOINT_ENGAGE_CAM)}mm 入るか。-X の丸い軸受け Ø{mm1(P.JOURNAL_D)}（外装の U 溝 幅 {mm1(P.U_SLOT_W)} へ落ちるか）。位相合わせ治具の六角部"},
+    {"name": "cam_0_2", "src": "cam_0_2", "box": None, "plate": 1, "targets": [],
+     "checks": f"カム 1 枚（板 {mm1(P.CAM_T)}）。-X 側の雌穴（二面幅 {mm1(P.SHAFT_BORE_AF)}、深さ {mm1(P.JOINT_ENGAGE_CAM)}、潰しリブ 幅{mm1(P.HEX_RIB_W)}・潰し代{mm1(P.HEX_RIB_CRUSH)}、"
+               f"穴の口の面取り {mm1(P.FIRST_LAYER_CHAMFER)}）に shaft_2 のスタブが入る固さ（潰しリブが擦る長さ 2.4〜2.8mm）。+X のスタブは cam_4_2 の雌穴へ。回転ガタ"},
     {"name": "cam_4_2", "src": "cam_4_2", "box": None, "plate": 1, "targets": [],
-     "checks": f"カムの六角穴（二面幅 {mm1(P.SHAFT_BORE_AF)}、潰しリブ 幅{mm1(P.HEX_RIB_W)}・潰し代{mm1(P.HEX_RIB_CRUSH)}、"
-               f"穴の口の面取り {mm1(P.FIRST_LAYER_CHAMFER)}）が軸の六角へ入るか。回転ガタ。軸の切り落とし面（鍵）に穴の出っ張りが当たる向きだけ入るか"},
+     "checks": f"カム 1 枚（端のカム）。雌穴に cam_0_2 のスタブが入る固さ。+X のスタブ（六角 AF{mm1(P.STUB_AF)}）は gear_2 の雌穴（深さ {mm1(P.JOINT_ENGAGE_GEAR)}）へ。"
+               "切り落とし面の向きが違うと入らないこと（鏡像・60° おきの回しで弾く）"},
     {"name": "gear_2", "src": "gear_2", "box": None, "plate": 1, "targets": [],
-     "checks": f"歯車（{P.CHAIN_Z} 歯、歯幅 {mm1(P.GEAR_T)}）の六角穴（潰しリブ）と鍵の向き。歯車どうしの噛み合い（2 枚並べて回す）"},
-    {"name": "shaft_clip_2", "src": "shaft_clip_2", "box": None, "plate": 1, "targets": [],
-     "checks": f"C クリップ（厚み {mm1(P.CLIP_T)}）の嵌め外しの固さ。脚のしなり"},
+     "checks": f"歯車の部品（{P.CHAIN_Z} 歯、歯幅 {mm1(P.GEAR_T)}、ボス Ø{mm1(P.GEAR_BOSS_D)} 厚み {mm1(P.GEAR_BOSS_T)}、+X の丸い軸受け Ø{mm1(P.JOURNAL_D)}）。"
+               f"-X 向きの雌穴（二面幅 {mm1(P.SHAFT_BORE_AF)}、深さ {mm1(P.JOINT_ENGAGE_GEAR)}、潰しリブ）に cam_4_2 のスタブが入る固さ。歯車どうしの噛み合い（2 枚並べて回す）"},
     # --- 試し刷り 2: 外装・案内・画素
     {"name": "housing_Uslot_shaft1_plusX", "src": "housing", "box": (43.0, 48.1, -25.5, -8.5, 44.5, 58.5), "plate": 2,
      "targets": [("U 溝・帯・栓の縦溝", (P.PAD_X0 * 1000, S.IX + S.U_RECESS_D, -17.0 - 2.9, -17.0 + 2.9, _ZC - 5.0, S.U_RECESS_TOP_Z))],
@@ -76,8 +74,8 @@ TRIALS = [
                f"案内板の栓（隙間 {mm1(P.HOLD_GAP)}）が入る縦溝（深さ {S.U_RECESS_D}、壁は {S.HALF - S.IX - S.U_RECESS_D:.1f}mm 残る）"},
     {"name": "housing_servo_block_minusY", "src": "housing", "box": (21.4, 32.4, -25.0, -16.4, 0.0, 28.0), "plate": 2,
      "targets": [("耳の受け（柵・奥の壁）", (S.BLOCK_X0, S.BLOCK_X1, S._servo_block_y(-1)[0], S._servo_block_y(-1)[1], S.FLOOR, S.FENCE_TOP))],
-     "checks": f"サーボの取付耳（-Y 側）を挟む柵（厚み {S.EAR_FENCE_T}、耳との隙間 {S.EAR_GAP}、潰しリブ 高さ{S.EAR_RIB_H}・幅{S.EAR_RIB_W}）。"
-               f"実物の SG92R の耳が入るか、保持の固さ。押さえクリップ用の側面の窪み（深さ {S.CLIP_GROOVE_D}）"},
+     "checks": f"サーボの取付耳（-Y 側）を挟む溝（柵の厚み {S.EAR_FENCE_T}、耳との隙間 片側 {S.EAR_GAP}、リブは{'あり' if getattr(S, 'EAR_RIB_H', 0) else '無し'}）。"
+               f"実物の SG92R の耳が入るか、がたつきと抜けやすさ。押さえクリップ用の側面の窪み（深さ {S.CLIP_GROOVE_D}）"},
     {"name": "servo_clip_0", "src": "servo_clip_0", "box": None, "plate": 2, "targets": [],
      "checks": f"押さえクリップ（幅 {S.CLIP_W}）の爪（出 {S.CLIP_BARB_H}、平らな頂 {S.CLIP_BARB_FLAT}）が受けの側面の窪み（深さ {S.CLIP_GROOVE_D}）へ嵌まるか。上から押し込む力"},
     {"name": "guide_plate_cell_2_2", "src": "guide_plate", "box": (-11.5, 11.5, -13.0, 13.0, 75.4, 83.6), "plate": 2,
@@ -186,6 +184,10 @@ def box_cut(tris, box):
 
 def main():
     os.makedirs(OUT, exist_ok=True)
+    keep = {f"{t['name']}.stl" for t in TRIALS} | {"trial_pieces.json"}
+    for f in os.listdir(OUT):                       # 目録から消えた小片（廃止した部品など）の古い STL を片付ける
+        if f not in keep:
+            os.remove(os.path.join(OUT, f))
     report = {}
     for spec in TRIALS:
         src = spec["src"]

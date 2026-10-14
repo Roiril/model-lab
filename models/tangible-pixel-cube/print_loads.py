@@ -16,7 +16,6 @@ FACTOR_OP = 3.0          # 運転時は降伏の 1/3 以下
 FACTOR_STALL = 1.5       # 停動でも降伏の 1/1.5 以下
 MIN_JUDGED_MM = 1.0      # これ未満の薄さは応力で許可しない
 
-HEX_WALL_MIN = 1.22      # カムの六角穴の角と最小半径 CAM_RMIN の間の肉（params: CAM_RMIN 5.2 - 六角穴の外接半径 3.98）
 HORN_ARM_MM = 18.0       # SG92R ホーンの長腕
 COUPLER_WALL_MM = 1.6    # 受けのポケットの壁
 COUPLER_WALL_W = 7.3     # 同 橋の最大幅
@@ -52,23 +51,28 @@ def judgement(P, design):
                    f"運転 {fo:.1f}N、停動 {fs:.1f}N", fo / (b * y), fs / (b * y), SIGMA_Y, "歯は層に沿って曲がる向き（平置き）")
         names[key] = label
     t_shaft_op, t_shaft_st = t_op / g, stall / g                      # 軸のトルク（増速 g 倍なので 1/g）
-    arm = P.SHAFT_AF * 1000.0 / 2
+    af = P.SHAFT_AF * 1000.0                                          # 雄スタブの六角の二面幅（= params.STUB_AF）
+    arm = af / 2
     f_op, f_st = t_shaft_op / arm, t_shaft_st / arm
     cam_l = P.CAM_T * 1000
-    label = "カムの六角穴まわりの環（最小の肉 1.22）"
+    wall = P.CAM_RMIN * 1000 - P.SHAFT_BORE_AF * 1000 / math.sqrt(3)  # 雌穴の六角の角とカムの最小半径の間の肉
+    label = f"カムの雌穴まわりの環（最小の肉 {wall:.2f}）"
     add(label, f"軸のトルク = サーボ/{g:.2f}（運転 {t_shaft_op:.0f}、停動 {t_shaft_st:.0f} N·mm）を 1 枚のカムが全部受ける最悪。"
-               f"六角の面（腕 {arm:.2f}mm）に {f_op:.1f}N / {f_st:.1f}N、せん断面 = 肉 {HEX_WALL_MIN} x カム厚 {cam_l:.0f}",
-        f_op / (HEX_WALL_MIN * cam_l), f_st / (HEX_WALL_MIN * cam_l), TAU_Y, "せん断。実際は 5 枚で分担")
+               f"六角の面（腕 {arm:.2f}mm）に {f_op:.1f}N / {f_st:.1f}N、せん断面 = 肉 {wall:.2f} x カム厚 {cam_l:.0f}",
+        f_op / (wall * cam_l), f_st / (wall * cam_l), TAU_Y, "せん断。実際は 5 枚で分担")
     names["cam"] = label
-    area = math.pi * (P.SLEEVE_R * 1000) ** 2 - 0.866 * (P.SHAFT_BORE_AF * 1000) ** 2
-    add("カムのハブ筒（軸方向）", f"軸方向の押し付けを 10N と仮定。断面 {area:.0f}mm2", 10.0 / area, 10.0 / area, SIGMA_Y,
-        "ハブは次の部材との間隔を保つだけ（トルクは板が受ける）")
-    d = 2 * P.CLIP_GROOVE_R * 1000
-    tau = 16 * t_shaft_st / (math.pi * d ** 3)
-    label = "軸の C クリップ溝の首（Ø%.1f）と鍔" % d
-    add(label, f"軸のトルク（停動 {t_shaft_st:.0f} N·mm）のねじり τ = 16T/(πd³)。鍔は軸方向 10N、厚み 1.2 x 円周 {math.pi * 6.5:.0f}mm のせん断は {10 / (1.2 * math.pi * 6.5):.2f}MPa",
-        tau * t_shaft_op / t_shaft_st, tau, TAU_Y, "ねじり")
-    names["shaft"] = label
+    tau = 16 * t_shaft_st / (math.pi * af ** 3)
+    label = f"雄スタブの根元（六角 AF{af:.1f}）"
+    add(label, f"継ぎ目 1 つが軸のトルク全部（停動 {t_shaft_st:.0f} N·mm）を伝える最悪。ねじり τ = 16T/(πd³)、d = 二面幅 {af:.1f}",
+        tau * t_shaft_op / t_shaft_st, tau, TAU_Y, "ねじり。潰しリブの摩擦ではなく六角の面で伝える")
+    names["stub"] = label
+    dj, lj = P.JOURNAL_D * 1000.0, (P.JOURNAL_END - P.SHAFT_HALF_L) * 1000.0
+    f_r_st = stall / r_sector * math.tan(math.radians(20.0)) + 0.5     # 歯の分離力 + 重さ（N）
+    f_r_op = t_op / r_sector * math.tan(math.radians(20.0)) + 0.5
+    label = f"丸い軸受け Ø{dj:.1f}（歯車の部品のボスの先、−X の端の部品）の根元"
+    add(label, f"径方向の力 {f_r_op:.1f}N / {f_r_st:.1f}N が先端の腕 {lj:.1f}mm に掛かる曲げ σ = 32Fl/(πd³)",
+        32 * f_r_op * lj / (math.pi * dj ** 3), 32 * f_r_st * lj / (math.pi * dj ** 3), SIGMA_Y, "片持ち")
+    names["boss"] = label
     f_h_st, f_h_op = stall / HORN_ARM_MM, t_op / HORN_ARM_MM
     lever = COUPLER_WALL_MM
     label = "受けのホーンのポケットの壁（厚み 1.6）"

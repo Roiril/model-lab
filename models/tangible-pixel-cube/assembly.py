@@ -96,13 +96,14 @@ PIXEL_STAGE_Z = 30.0
 PLATE_STAGE_Z = 30.0
 BEZEL_STAGE_Z = 20.0
 COMB_STAGE_Z = 25.0
-CLIP_STAGE_Z = 22.0
+CLIP_STAGE_Z = 22.0                         # 押さえクリップ（サーボ）の台の高さ
+JOINT_APPROACH_MM = 1.5                     # 継ぎ目の差し込み前、雄のスタブの先が雌穴の口の手前に空ける距離
 FREE_H = 9.0                                # この高さ（軸の中心が最終より上）で歯車が隣の歯車から離れる（中心距離 19.2 > 外径の和 19）
 
 PART_FILE = {name: BUILD / f"{name}.stl" for name in
              ["housing", "bezel", "guide_plate", "horn_coupler", "phase_comb", "sg92r", "sg92r_horn",
               *(f"shaft_{j}" for j in range(5)), *(f"gear_{j}" for j in range(5)),
-              *(f"shaft_clip_{j}" for j in range(5)), "servo_clip_0", "servo_clip_1",
+              "servo_clip_0", "servo_clip_1",
               *(f"cam_{i}_{j}" for j in range(5) for i in range(5)),
               *(f"pixel_{i}_{j}" for j in range(5) for i in range(5))]}
 
@@ -117,8 +118,8 @@ def rot_about_axis(degrees, j):
 
 
 def group_parts(j):
-    """軸 j に載る部品。軸・歯車・カム 5 枚・C クリップ"""
-    return [f"shaft_{j}", f"gear_{j}", *(f"cam_{i}_{j}" for i in range(P.N)), f"shaft_clip_{j}"]
+    """軸 j の数珠つなぎ。+X から歯車の部品、カム 4→0、-X の端の部品 shaft_j の 7 個（隣どうしは雄スタブ（+X 向き）⇔ 雌穴）"""
+    return [f"gear_{j}", *(f"cam_{i}_{j}" for i in reversed(range(P.N))), f"shaft_{j}"]
 
 
 # =============================================================================================
@@ -129,6 +130,7 @@ class SpecAllowance(Allowance):
     """設計した接触。交差の頂点が決まった場所に収まり、深さと体積が上限以内であることを測って許す"""
     label: str = ""
     point_test: Callable | None = None      # (point_world, left, right, lm, rm) -> (場所に収まるか, 深さ mm)
+    gate_fn: Callable | None = None         # (left, right, lm, rm) -> 差し込みの残り mm。記録用（許可の可否は point_test が見る）
     max_depth_mm: float | None = None
     frame_part: str | None = None           # 場所の座標をこの部品の組立姿勢（最終姿勢）の座標へ戻して記録する
     nominal: dict | None = None
@@ -145,28 +147,52 @@ class SpecAllowance(Allowance):
 
 def hex_rib_faces():
     """潰しリブがある 3 面の法線の極角。形を作る parts_moving の値を読む（切り落とし面を避けた 1 面おき）"""
-    return list(M.RIB_NORMALS)
+    return list(getattr(M, "RIB_NORMALS", (30, 150, 270)))
 
 
-def rib_allowance(part, shaft, length_mm):
-    """カム・歯車の穴の潰しリブが、軸の六角の面を 0.18mm 押す。リブの範囲だけを許す"""
-    j = int(shaft.split("_")[1])
-    face = mm(P.SHAFT_AF) / 2                       # 軸の面までの距離 3.25
-    inner = mm(P.SHAFT_BORE_AF) / 2 - mm(P.HEX_RIB_H)   # リブの先端 3.07
+def seam_engage_mm(female):
+    """継ぎ目の雄スタブが雌穴へ入る長さ。歯車の部品の穴は歯幅 2.4、カムの穴は 2.8"""
+    return mm(P.JOINT_ENGAGE_GEAR if female.startswith("gear_") else P.JOINT_ENGAGE_CAM)
+
+
+def seam_allowance(female, male, mouth_x, window_mm=None):
+    """数珠つなぎの継ぎ目 1 つ。雌穴（female）の潰しリブが雄スタブ（male、-X 側の部品）の六角の面を 0.18mm 押す。
+    許すのは差し込みの最後の window_mm（既定は穴の深さ = 2.8 / 2.4）だけ。残り距離 r = 雄が座りから -X へ離れている量が
+    0 <= r <= window_mm のときに限り、リブの範囲（穴の面の 3 面の中央、深さ方向は穴の口から engage まで）の接触を許す。
+    それより手前（r > window_mm）の接触、整列していない（ずれ・傾き）接触、隣でない部品との接触は許さない（許可を持たない）"""
+    j = int(female.split("_")[-1])
+    engage = seam_engage_mm(female) if window_mm is None else window_mm
+    depth_hole = seam_engage_mm(female)
+    face = mm(P.STUB_AF) / 2                              # スタブの面までの距離 2.75
+    inner = mm(P.SHAFT_BORE_AF) / 2 - mm(P.HEX_RIB_H)     # リブの先端 2.57
     half_w = mm(P.HEX_RIB_W) / 2
     normals = [(math.cos(math.radians(a)), math.sin(math.radians(a))) for a in hex_rib_faces()]
+    bottom_x = mouth_x + depth_hole
+    corner_r = mm(P.SHAFT_BORE_AF) / math.sqrt(3.0) + 0.01
     tol = 0.03
 
-    collar_x = mm(P.COLLAR_X0)
-    collar_r = mm(P.COLLAR_AF) / math.sqrt(3.0) + 0.01
+    def relative(left, lm, rm):
+        female_matrix, male_matrix = (lm, rm) if left == female else (rm, lm)
+        return female_matrix, female_matrix.inverted_safe() @ male_matrix
+
+    def remaining(left, right, lm, rm):
+        _, rel = relative(left, lm, rm)
+        return -rel.translation.x
 
     def test(point, left, right, lm, rm):
-        shaft_matrix = lm if left == shaft else rm
-        local = shaft_matrix.inverted_safe() @ Vector(point)
+        female_matrix, rel = relative(left, lm, rm)
+        r = -rel.translation.x
+        aligned = (abs(rel.translation.y) <= 0.01 and abs(rel.translation.z) <= 0.01
+                   and math.degrees(rel.to_quaternion().angle) <= 0.05)
+        if not aligned or not (-tol <= r <= engage + tol):
+            return False, 0.0
+        local = female_matrix.inverted_safe() @ Vector(point)
         u, v = local[1] - AXIS_Y[j], local[2] - ZC
-        # 歯車が座るとき、歯車の +X 面は軸の鍔の -X 面（X = COLLAR_X0）と同一平面で接する。その面上の頂点は体積を持たない接触の面
-        if abs(local[0] - collar_x) <= 0.002 and math.hypot(u, v) <= collar_r:
+        # スタブの先が穴の底（X = 口 + 深さ）に座るとき、先の面と底の面は同一平面で接する。その面上の頂点は体積を持たない接触の面
+        if abs(local[0] - bottom_x) <= 0.002 and math.hypot(u, v) <= corner_r:
             return True, 0.0
+        if not (mouth_x - tol <= local[0] <= bottom_x + tol):
+            return False, 0.0
         for nu, nv in normals:
             along = u * nu + v * nv
             across = -u * nv + v * nu
@@ -175,51 +201,23 @@ def rib_allowance(part, shaft, length_mm):
         return False, 0.0
 
     crush = face - inner
-    rib_volume = P.HEX_RIB_FACES * mm(P.HEX_RIB_W) * crush * length_mm
-    return SpecAllowance((part, shaft), "press_fit", zone=f"rib:{part}",
+    rib_volume = P.HEX_RIB_FACES * mm(P.HEX_RIB_W) * crush * depth_hole
+    return SpecAllowance((female, male), "press_fit", zone=f"seam:{male}>{female}",
                          allow_at_final=True, maximum_common_volume_mm3=rib_volume * 1.1,
-                         label="潰しリブ（穴の 1 面おき 3 面）が軸の六角の面を押す",
-                         point_test=test, max_depth_mm=crush + 0.02, frame_part=shaft,
+                         label=f"継ぎ目: 雌穴（{female}）の潰しリブが雄スタブ（{male}）の六角の面を押す（差し込みの最後の {engage:g}mm だけ）",
+                         point_test=test, gate_fn=remaining, max_depth_mm=crush + 0.02, frame_part=female,
                          nominal={"crushMm": round(crush, 4), "ribVolumeMm3": round(rib_volume, 4),
-                                  "ribLengthMm": length_mm, "ribs": P.HEX_RIB_FACES})
+                                  "ribDepthMm": depth_hole, "allowedInsertionWindowMm": engage, "ribs": P.HEX_RIB_FACES})
 
 
-def ear_rib_allowance():
-    """サーボの取付耳を柵の潰しリブが 0.1mm ずつ挟む"""
-    ear_x0, ear_x1 = S.EAR_X0, S.EAR_X1
-    depth = S.EAR_RIB_H - S.EAR_GAP
-    ribs_y = []
-    for side in (-1, +1):
-        if side < 0:
-            y_in, y_end = S.BODY_Y0 - S.SERVO_CLR, S.EAR_Y0 - S.SERVO_CLR
-            ys = (y_end + 0.9, y_in - 1.5)
-        else:
-            y_in, y_end = S.BODY_Y1 + S.SERVO_CLR, S.EAR_Y1 + S.SERVO_CLR
-            ys = (y_in + 1.5, y_end - 0.9)
-        ribs_y.extend(ys)
-    z_lo, z_hi = S.EAR_Z0 - 0.3, S.FENCE_TOP + 0.1
-    tol = 0.02
-
-    def test(point, left, right, lm, rm):
-        x, y, z = point
-        if not (z_lo <= z <= z_hi):
-            return False, 0.0
-        if not any(abs(y - ry) <= S.EAR_RIB_W / 2 + tol for ry in ribs_y):
-            return False, 0.0
-        near_a = ear_x0 - tol <= x <= ear_x0 + depth + tol
-        near_b = ear_x1 - depth - tol <= x <= ear_x1 + tol
-        if not (near_a or near_b):
-            return False, 0.0
-        return True, (x - ear_x0) if near_a else (ear_x1 - x)
-
-    length = (S.FENCE_TOP - 1.6) - S.EAR_Z0
-    nominal_volume = len(ribs_y) * 2 * S.EAR_RIB_W * depth * length
-    return SpecAllowance(("housing", "sg92r"), "press_fit", zone="ear_ribs", allow_at_final=True,
-                         maximum_common_volume_mm3=nominal_volume * 1.2,
-                         label="柵の縦の潰しリブが取付耳を両側から 0.1mm ずつ挟む",
-                         point_test=test, max_depth_mm=depth + 0.02, frame_part="housing",
-                         nominal={"ribs": len(ribs_y) * 2, "interferenceMm": round(depth, 4),
-                                  "ribVolumeMm3": round(nominal_volume, 4)})
+def seam_allowances(meshes, window_mm=None):
+    """全 5 軸の継ぎ目（各軸 6 個）。{j: [seam_allowance ...]}（+X の継ぎ目から）"""
+    result = {}
+    for j in range(P.N):
+        names = group_parts(j)
+        result[j] = [seam_allowance(names[k], names[k + 1], meshes[names[k]].bounds()[0][0], window_mm)
+                     for k in range(len(names) - 1)]
+    return result
 
 
 def servo_clip_allowance(side):
@@ -305,41 +303,6 @@ def plate_allowance():
         S.PLATE_Z1 - 3.0, S.Z_SEAM + 0.1, strain, None,
         {"tongueThicknessMm": S.TONGUE_T, "tongueReachMm": round(reach, 3), "nominalDepthMm": round(depth, 3),
          "worstDepthMm": round(worst, 3), "claws": 2 * len(S.TONGUE_YC)})
-
-
-def shaft_clip_allowance(j):
-    """C クリップの口（5.0mm）が軸の首（径 5.8mm）を通るために口が広がる"""
-    part = f"shaft_clip_{j}"
-    info = M.clip_strain()
-    c0, c1 = M.clip_x(j)
-    tol = 0.03
-    spread = info["spread_effective_mm"]
-    mouth_half = info["mouth_effective_mm"] / 2
-
-    def test(point, left, right, lm, rm):
-        # クリップ自身の組立姿勢の座標で、口のある下半分（v <= -0.5）の唇の範囲だけを許す。上から下ろす間、首の赤道が唇を押し広げる
-        clip_matrix = lm if left == part else rm
-        local = clip_matrix.inverted_safe() @ Vector(point)
-        x, u, v = local[0], local[1] - AXIS_Y[j], local[2] - ZC
-        if not (c0 - tol <= x <= c1 + tol) or v > -0.5:
-            return False, 0.0
-        return True, max(0.0, abs(u) - mouth_half)
-
-    return SpecAllowance((part, f"shaft_{j}"), "snap", zone=f"{part}_neck", deflection_mm=spread,
-                         strain_percent=info["strain_effective_pct"], allow_at_final=False,
-                         label="C クリップの口が軸の首を通るため左右へ広がる",
-                         point_test=test, max_depth_mm=spread / 2 + 0.03, frame_part=part,
-                         nominal={"mouthMm": round(info["mouth_effective_mm"], 3),
-                                  "neckDiameterMm": info["neck_diameter_mm"]})
-
-
-def all_rib_allowances():
-    rows = []
-    for j in range(P.N):
-        rows.append(rib_allowance(f"gear_{j}", f"shaft_{j}", mm(P.HEX_RIB_L_GEAR)))
-        for i in range(P.N):
-            rows.append(rib_allowance(f"cam_{i}_{j}", f"shaft_{j}", mm(P.HEX_RIB_L_CAM)))
-    return rows
 
 
 # =============================================================================================
@@ -440,10 +403,14 @@ class Adapter(ExactAdapter):
                 entry = self.stats.setdefault((self.current_step, spec.zone), {
                     "parts": list(spec.parts), "label": spec.label, "frame": spec.frame_part,
                     "maxVolumeMm3": 0.0, "maxDepthMm": 0.0, "lo": [1e9] * 3, "hi": [-1e9] * 3,
-                    "samples": 0, "limitVolumeMm3": spec.maximum_common_volume_mm3,
+                    "samples": 0, "insertLo": 1e9, "insertHi": -1e9, "limitVolumeMm3": spec.maximum_common_volume_mm3,
                     "limitDepthMm": spec.max_depth_mm, "strainPercent": spec.strain_percent,
                     "declaredDeflectionMm": spec.deflection_mm})
                 entry["samples"] += 1
+                if spec.gate_fn is not None:
+                    r_now = spec.gate_fn(left, right, left_matrix, right_matrix)
+                    entry["insertLo"] = min(entry["insertLo"], r_now)
+                    entry["insertHi"] = max(entry["insertHi"], r_now)
                 entry["maxVolumeMm3"] = max(entry["maxVolumeMm3"], volume)
                 entry["maxDepthMm"] = max(entry["maxDepthMm"], record["depth"])
                 for axis in range(3):
@@ -782,9 +749,7 @@ def shaft_roll(j, rolls):
 def build_plan(rolls, meshes, gear):
     parts, labels = manifest_targets()
     plan = AssemblyPlan(MODEL, parts)
-    ear = ear_rib_allowance()
-    ribs = all_rib_allowances()
-    ribs_of = {j: [a for a in ribs if a.parts[1] == f"shaft_{j}"] for j in range(P.N)}
+    seams = seam_allowances(meshes)
     plan.labels = labels
 
     # --- 1 外装 ----------------------------------------------------------------------------------
@@ -816,8 +781,8 @@ def build_plan(rolls, meshes, gear):
         lerp_points((0, 0, UNIT_RETURN_Z), (0, 0, 0)))
     plan.add("unit-lower", "サーボ一式を柵へ落とす",
              f"受けごとサーボを箱の上から下ろす。ピンが +X の軸受けの帯に当たるので {abs(UNIT_SHIFT_X):.1f}mm だけ -X へ寄せて通し、帯の下で戻して、取付耳を柵へ・ピンを縦溝へ落とす。",
-             "柵の潰しリブが取付耳を挟む分（0.1mm ずつ）だけ許し、場所と量を測る。ほかの共通体積は 0.001mm3 以下。",
-             unit, [{name: T(*p) for name in unit} for p in path], (ear,))
+             "取付耳の溝は片側 0.25mm でリブが無いので、許す接触は無い。全姿勢で共通体積 0.001mm3 以下を要求する。",
+             unit, [{name: T(*p) for name in unit} for p in path])
 
     # --- 4 押さえクリップ ---------------------------------------------------------------------------------
     clip_names = ("servo_clip_0", "servo_clip_1")
@@ -827,47 +792,35 @@ def build_plan(rolls, meshes, gear):
              clip_names, translated_frames(clip_names, [(0, 0, CLIP_STAGE_Z), (0, 0, 0)]),
              (servo_clip_allowance(0), servo_clip_allowance(1)))
 
-    # --- 5 軸を組む（箱の上の台。5 本を並べて同じ手順で）---------------------------------------------------------
-    starts = {}                                    # j -> 落とし始めの角度
-    for j in range(P.N):
-        starts[j] = shaft_roll(j, rolls)[1]
+    # --- 5 軸ごとに 7 部品を順に差して 1 本につなぐ（箱の上の台。5 本を並べて同じ手順で）------------------------------
+    starts = {j: shaft_roll(j, rolls)[1] for j in range(P.N)}      # j -> 落とし始めの角度
     stage = {j: stage_matrix(j) @ rot_about_axis(starts[j], j) for j in range(P.N)}
-    queue = {}                                     # j -> [(部品, 開始のずれ)]
-    travel_max = 0.0
-    for j in range(P.N):
-        names = [f"gear_{j}", *(f"cam_{i}_{j}" for i in reversed(range(P.N)))]
-        front = -mm(P.JOURNAL_END) - 1.5
-        rows = []
-        for name in names:
-            x0, x1 = meshes[name].bounds()[0][0], meshes[name].bounds()[1][0]
-            rows.append((name, front - x1))
-            front -= (x1 - x0) + 1.0
-            travel_max = max(travel_max, -rows[-1][1])
-        queue[j] = rows
-    count = int(math.ceil(travel_max / TRANSLATION_STEP_MM))
-    train_frames = []
-    for k in range(count + 1):
-        t = min(travel_max, k * TRANSLATION_STEP_MM)
+    chain = {j: group_parts(j) for j in range(P.N)}
+    # 部品 k（1..6）は、雌穴（部品 k-1）の口の手前 JOINT_APPROACH_MM にスタブの先が来る位置から、座りまで +X へ差す。
+    # 待つ部品は -X 側に並べる（待つ距離は手前の部品の差し込み分だけ累積）。差し込みの途中で擦るのは最後の engage（2.8 / 2.4）だけ
+    gaps = [seam_engage_mm(chain[0][k - 1]) + JOINT_APPROACH_MM for k in range(1, len(chain[0]))]
+    waiting = [0.0] + [sum(gaps[:k]) for k in range(1, len(gaps) + 1)]
+
+    def chain_frame(offsets):
         frame = {}
         for j in range(P.N):
-            frame[f"shaft_{j}"] = stage[j].copy()
-            for name, offset in queue[j]:
-                frame[name] = stage[j] @ T(min(0.0, offset + t), 0, 0)
-        train_frames.append(frame)
-    train_parts = tuple(train_frames[0])
-    plan.add("shafts-thread", "軸へ歯車とカムを通す",
-             "5 本の軸それぞれに、-X の端から歯車、カム 4→3→2→1→0 の順に通す（番号はカムの +X 面に刻んである。鍵があり向きは 1 通り）。",
-             "穴の潰しリブが軸の六角の面を押す分（0.18mm）だけ許し、場所と量を測る。ほかの共通体積は 0.001mm3 以下。",
-             train_parts, train_frames, tuple(ribs))
+            for k, name in enumerate(chain[j]):
+                frame[name] = stage[j] @ T(-offsets[k], 0, 0)
+        return frame
 
-    # --- 6 C クリップ ---------------------------------------------------------------------------------------
-    clips = tuple(f"shaft_clip_{j}" for j in range(P.N))
-    approach = [T(0, 0, p.z) for p in reversed(lerp_points((0, 0, 0), (0, 0, 10.0)))]
-    clip_frames = [{f"shaft_clip_{j}": stage[j] @ m for j in range(P.N)} for m in approach]
-    plan.add("shaft-clips", "C クリップを軸の首へ嵌める",
-             "各軸の -X 側の首へ、C クリップを口を下にして上から嵌める。",
-             "口が軸の首を通る間の広がりの場所と量とひずみを測る。嵌まった位置の食い込みは 0 を要求する。",
-             clips, clip_frames, tuple(shaft_clip_allowance(j) for j in range(P.N)))
+    offsets = list(waiting)
+    join_frames = [chain_frame(offsets)]
+    for k in range(1, len(chain[0])):
+        for point in lerp_points((0, 0, 0), (waiting[k], 0, 0))[1:]:
+            offsets[k] = waiting[k] - point.x
+            join_frames.append(chain_frame(offsets))
+    join_parts = tuple(join_frames[0])
+    plan.add("shafts-join", "各軸の 7 部品を順に差して 1 本にする",
+             "5 本とも、歯車の部品を台に置き、カム 4→3→2→1→0、最後に端の部品（shaft）の順に、雄の六角のスタブを次の雌穴へ差してつなぐ"
+             f"（差し込むのは最後の {mm(P.JOINT_ENGAGE_CAM):g}mm、歯車の穴は {mm(P.JOINT_ENGAGE_GEAR):g}mm だけ。カムの番号は +X 面）。",
+             "雌穴の潰しリブがスタブを押すのは差し込みの最後の 2.8mm（歯車は 2.4mm）だけ許し、場所・量・差し込み位置を測る。"
+             "それより手前の接触や隣でない部品との接触、ほかの共通体積 0.001mm3 超は不合格。",
+             join_parts, join_frames, tuple(a for j in range(P.N) for a in seams[j]))
 
     # --- 7 軸を 1 本ずつ箱へ落とす --------------------------------------------------------------------------
     rolling_info = {}
@@ -896,7 +849,7 @@ def build_plan(rolls, meshes, gear):
                                               if round(h, 6) in (0.0, 0.5, 1.0, 2.0, 4.0, 6.0, 8.0, 9.0)}
         plan.add(f"lower-shaft-{j}", f"軸 {j} を U 溝へ落とす", text,
                  f"歯車が{neighbor}と噛む間も含めて、既設の全部品との共通体積 0.001mm3 以下を要求する。潰しリブの押しは許可済みの範囲だけ。",
-                 group, group_frames(group, matrices), tuple(ribs_of[j]))
+                 group, group_frames(group, matrices), tuple(seams[j]))
     plan.rolling_info = rolling_info
 
     # --- 8 位相合わせ治具 ----------------------------------------------------------------------------------
@@ -988,7 +941,8 @@ def run_calibration(adapter, meshes, rolls, plan):
 
     # 1 軸 1 を、歯車が隣から離れた高さの並進で（当たらない）／転がさずに鉛直に最終位置まで（当たる）
     group1 = tuple(group_parts(1))
-    rib1 = tuple(a for a in all_rib_allowances() if a.parts[1] == "shaft_1")
+    seams_all = seam_allowances(meshes)
+    rib1 = tuple(seams_all[1])
     seeds = ("housing", *group_parts(2))
     free = [T(0, 0, p.z) @ rot_about_axis(shaft_roll(1, rolls)[1], 1)
             for p in lerp_points((0, 0, 20.0), (0, 0, FREE_H + 0.5))]
@@ -1008,7 +962,7 @@ def run_calibration(adapter, meshes, rolls, plan):
     unit = ("sg92r", "sg92r_horn", "horn_coupler")
     raw = [T(0, 0, p.z) for p in lerp_points((0, 0, 40.0), (0, 0, 0))]
     unit_report, unit_hit = audit_named("unit-straight", scratch_step(
-        "unit-straight", ("housing",), unit, raw, (ear_rib_allowance(),)))
+        "unit-straight", ("housing",), unit, raw))
     pin_hit = [v for v in unit_hit if set(v["parts"]) == {"horn_coupler", "housing"}]
     checks.append({"id": "unit-straight", "label": "サーボ一式を寄せずに真下へ落とすと、受けのピンが +X の軸受けの帯に当たって不合格",
                    "pass": (not unit_report["pass"]) and bool(pin_hit),
@@ -1017,8 +971,7 @@ def run_calibration(adapter, meshes, rolls, plan):
                               "firstBoundsMm": pin_hit[0]["intersectionBoundsMm"] if pin_hit else None}})
 
     # 3 画素: 案内板の十字溝は足に片側 0.2mm。0.15mm ずらしても通る／0.35mm ずらすと当たる
-    pixel_seeds = ("housing", *(f"shaft_{j}" for j in range(P.N)),
-                   *(f"cam_{i}_{j}" for j in range(P.N) for i in range(P.N)), "guide_plate")
+    pixel_seeds = ("housing", *(name for j in range(P.N) for name in group_parts(j)), "guide_plate")
     descent = lerp_points((0, 0, PIXEL_STAGE_Z), (0, 0, 0))
     pixel_rows = {}
     slot_clearance = (P.SLOT_X - P.FOOT_X) * 1000.0 / 2           # 足と十字溝の片側の隙間（0.35）
@@ -1032,15 +985,46 @@ def run_calibration(adapter, meshes, rolls, plan):
                    "label": f"画素の足が案内板の十字溝を通る（片側の隙間 {slot_clearance:.2f}mm）: X へ {shifts[0]}mm ずらしても通る／{shifts[1]}mm ずらすと当たる",
                    "pass": pixel_rows[shifts[0]]["pass"] and not pixel_rows[shifts[1]]["pass"], "detail": pixel_rows})
 
-    # 4 許可の場所判定: 設計位置は場所内、0.5mm ずらすと場所外
-    allowance = rib_allowance("cam_2_2", "shaft_2", mm(P.HEX_RIB_L_CAM))
+    # 4 継ぎ目の許可の場所判定: 設計位置は場所内、0.5mm ずらすと場所外
+    chain2 = group_parts(2)
+    allowance = seams_all[2][3]                                   # 雌 cam_2_2、雄 cam_1_2
     adapter.current_step = "calibration-rib"
-    ok = adapter.measure("cam_2_2", "shaft_2", IDENTITY, IDENTITY, allowance)
-    shifted = adapter.measure("cam_2_2", "shaft_2", T(0, 0.5, 0), IDENTITY, allowance)
-    checks.append({"id": "allowance-zone", "label": "潰しリブの許可: 設計位置は場所内、Y へ 0.5mm ずらすと場所外",
+    ok = adapter.measure(chain2[3], chain2[4], IDENTITY, IDENTITY, allowance)
+    shifted = adapter.measure(chain2[3], chain2[4], IDENTITY, T(0, 0.5, 0), allowance)
+    checks.append({"id": "allowance-zone", "label": "継ぎ目の潰しリブの許可: 設計位置は場所内、雄を Y へ 0.5mm ずらすと場所外",
                    "pass": ok["zone_ok"] is True and shifted["zone_ok"] is False,
                    "detail": {"designVolumeMm3": ok["common_volume_mm3"], "designZoneOk": ok["zone_ok"],
                               "shiftedVolumeMm3": shifted["common_volume_mm3"], "shiftedZoneOk": shifted["zone_ok"]}})
+
+    # 4a 潰しリブの許可は最後の差し込み長さだけ（旧: 六角の軸の上を約 80mm 擦ったのに全行程で許していた）
+    female, male = chain2[5], chain2[6]                           # cam_0_2 の穴へ shaft_2 のスタブを差す
+    mouth = meshes[female].bounds()[0][0]
+    engage = seam_engage_mm(female)
+    approach = [T(-p.x, 0, 0) for p in reversed(lerp_points((0, 0, 0), (engage + 6.0, 0, 0)))]   # 口の手前 6mm から座りまで
+    good_report, _ = audit_named("seam-ok", scratch_step("seam-ok", (female,), (male,), approach, (seams_all[2][5],)))
+    contact = next((entry for key, entry in adapter.stats.items() if key == ("calibration-seam-ok", f"seam:{male}>{female}")), None)
+    narrow = seam_allowance(female, male, mouth, window_mm=1.0)
+    narrow_report, narrow_hit = audit_named("seam-window", scratch_step("seam-window", (female,), (male,), approach, (narrow,)))
+    other = "cam_3_2"                                             # 隣でない雌穴（3 つ手前のカム）へ同じスタブを差す
+    shift_x = meshes[other].bounds()[0][0] - mouth
+    wrong_path = [T(shift_x, 0, 0) @ m for m in approach]
+    wrong_report, wrong_hit = audit_named("seam-wrong", scratch_step("seam-wrong", (other,), (male,), wrong_path, ()))
+    checks.append({
+        "id": "rib-window",
+        "label": "潰しリブの許可は最後の差し込みだけ: 正しい継ぎ目の最後の差し込みは合格、許可の幅を 1mm に絞ると手前の接触で不合格、隣でない雌穴へ差すと不合格",
+        "pass": (good_report["pass"] and contact is not None and 0.0 <= contact["insertLo"] and contact["insertHi"] <= engage + 0.03
+                 and contact["maxVolumeMm3"] > VOLUME_LIMIT
+                 and (not narrow_report["pass"]) and any(set(v["parts"]) == {female, male} for v in narrow_hit)
+                 and (not wrong_report["pass"]) and any(set(v["parts"]) == {other, male} for v in wrong_hit)),
+        "detail": {
+            "engageMm": engage,
+            "seamOk": {"pass": good_report["pass"], "ribContactInsertionRemainingMm":
+                       [round(contact["insertLo"], 3), round(contact["insertHi"], 3)] if contact else None,
+                       "maxCommonVolumeMm3": good_report["maxCommonVolumeMm3"]},
+            "windowNarrowedTo1mm": {"pass": narrow_report["pass"], "violations": len(narrow_hit),
+                                    "firstProgress": narrow_hit[0]["progress"] if narrow_hit else None},
+            "wrongNeighbor": {"socket": other, "pass": wrong_report["pass"], "violations": len(wrong_hit),
+                              "maxCommonVolumeMm3": wrong_report["maxCommonVolumeMm3"]}}})
 
     # 4b 案内板の爪の許可: 公称の位置では場所内、板を X へ 0.6mm 寄せた姿勢（食い込み 0.8mm）では上限を超えて不許可
     hook = plate_allowance()
@@ -1278,8 +1262,10 @@ def finalize(plan, meshes, adapter, calibration, mesh_checks, only=None):
     passed = bool(calibration["pass"] and inputs_ok and frame_validation["pass"] and frame_contract["pass"] and step_pass
                   and worst_case["pass"] is not False and final_state["pass"] and reverse["pass"] and source_integrity["pass"] and algorithm_integrity)
     designed = [{"step": step_id, "zone": zone, **{k: (round(v, 4) if isinstance(v, float) else v)
-                                                     for k, v in entry.items() if k not in ("lo", "hi")},
-                 "boundsInPartFrameMm": [[round(v, 3) for v in entry["lo"]], [round(v, 3) for v in entry["hi"]]]}
+                                                     for k, v in entry.items() if k not in ("lo", "hi", "insertLo", "insertHi")},
+                 "boundsInPartFrameMm": [[round(v, 3) for v in entry["lo"]], [round(v, 3) for v in entry["hi"]]],
+                 **({"insertionRemainingMm": [round(entry["insertLo"], 3), round(entry["insertHi"], 3)]}
+                    if entry["insertHi"] >= entry["insertLo"] else {})}
                 for (step_id, zone), entry in sorted(adapter.stats.items()) if not step_id.startswith("calibration")]
     output_steps = []
     for step in plan.steps:

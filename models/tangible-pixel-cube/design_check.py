@@ -57,6 +57,7 @@ ZS = mm(P.SERVO_AXIS_Z)
 T_CAM = mm(P.CAM_T)
 DRIFT = mm(P.AXIAL_DRIFT)
 GAP = mm(P.GEAR_GAP)
+DRIFT_M = 0.4                               # 数珠つなぎで継ぎ目が最大まで開いたとき、カムが -X へずれる量（鎖の全長の余り 0.4）
 GAPS = 0.5                                  # 動かない部品との隙間の下限（足は X に動かない）
 RMAX_ACT = round(max(c["rmax_mm"] for row in cams for c in row), 3)      # 実際に作られたカムの最大半径（多角形は円に外接するので 0.0001mm 大きい。3 桁に丸める）
 RMIN_ACT = round(min(c["rmin_mm"] for row in cams for c in row), 3)
@@ -68,9 +69,9 @@ SEC = "A X方向"
 shift = mm(P.ROW_SHIFT)
 foot_ext = mm(P.SLOT_X) / 2             # 足の X 方向の最大の張り出し（十字溝の中で片側 0.2 動く位置）
 
-add(SEC, "隣の行のカムどうし（回転円が重なるので X で離す）", 2 * shift - T_CAM - 2 * DRIFT, GAP, "min",
+add(SEC, "隣の行のカムどうし（回転円が重なるので X で離す。-X へ 0.4 + +X へ 0.2 ずれる）", 2 * shift - T_CAM - (DRIFT + DRIFT_M), GAP, "min",
     note=f"行のずれ ±{shift} -> 中心 {2 * shift}、カム厚 {T_CAM}、軸の遊び 片側 {DRIFT} x 2")
-add(SEC, "足（溝の中で動く）と隣の行のカム", 2 * shift - foot_ext - T_CAM / 2 - DRIFT, GAP, "min",
+add(SEC, "足（溝の中で動く）と隣の行のカム（カムは -X へ最大 0.4 ずれる）", 2 * shift - foot_ext - T_CAM / 2 - DRIFT_M, GAP, "min",
     note="足は Z が -3 のとき隣の軸のカムの回転円の高さにある")
 
 col_x = [mm(K.col_x(i)) for i in range(P.N)]
@@ -101,19 +102,24 @@ add(SEC, "端壁の厚み（力を受ける壁）", mm(P.WALL_END), 3.0, "min")
 add(SEC, "歯車の噛み合う幅（歯幅 - 遊び 0.2 x 2）", mm(P.GEAR_T) - 2 * DRIFT, 2.0, "min", note="隣の軸の歯車どうしは両方動く")
 bore_R = mm(P.SHAFT_BORE_AF) / math.sqrt(3)
 add(SEC, "カム最小半径と六角穴の外接円（穴の周りの肉）", RMIN_ACT - bore_R, 1.2, "min", note=f"穴の外接 R{bore_R:.3f}")
-add(SEC, "スリーブ半径と六角穴の外接円（肉）", mm(P.SLEEVE_R) - bore_R, 1.2, "min")
-add(SEC, "歯車の歯底半径と六角穴の外接円（歯車は軸と別部品）", mm(P.CHAIN_GEAR_ROOT_R) - bore_R, 1.2, "min")
-add(SEC, "C クリップの溝の底の半径（軸の強さ）", mm(P.CLIP_GROOVE_R), 2.5, "min", note="六角の面までの距離 3.25 に対し、溝の底 R2.9")
-add(SEC, "軸の鍔（六角 AF9.5）の外接円と隣の軸の鍔・歯車の歯先との隙間", mm(P.PITCH) - mm(P.COLLAR_AF) / math.sqrt(3) - mm(P.COLLAR_AF) / math.sqrt(3), GAP, "min", note="鍔は X 43.0..43.6、歯車の歯は 40.6..43.0。鍔どうしは同じ X")
-add(SEC, "鍔の +X 面（遊び込み）と +X パッドの内面", mm(P.PAD_X0) - (mm(P.SHAFT_HALF_L) + DRIFT), 0.0, "min", note="軸の肩の遊び 0.2 そのもの")
+add(SEC, "歯車の歯底半径と六角穴の外接円（歯車の部品の雌穴）", mm(P.CHAIN_GEAR_ROOT_R) - bore_R, 1.2, "min")
+add(SEC, "カムの雌穴の底の肉（カム板 4 - 穴の深さ 2.8）", T_CAM - mm(P.JOINT_ENGAGE_CAM), 1.2, "min", note="雌穴は -X 側から。底に雄スタブの根元が立つ")
+add(SEC, "歯車の部品の雌穴の底の肉（歯車 2.4 + ボス 1.2 - 穴の深さ 2.4）", mm(P.GEAR_T) + mm(P.GEAR_BOSS_T) - mm(P.JOINT_ENGAGE_GEAR), 1.2, "min")
+add(SEC, "歯車の部品のボスの +X 面（遊び込み）と +X パッドの内面（肩 = 軸方向の遊びそのもの）", mm(P.PAD_X0) - (mm(P.SHAFT_HALF_L) + DRIFT), 0.0, "min", note="ボスは X 42.4..43.6。パッドの内面 43.8")
+chain_len = 2 * mm(P.SHAFT_HALF_L)
+add(SEC, "鎖の全長（肩から肩）と、パッドの内面の間の余り", 2 * mm(P.PAD_X0) - chain_len, 2 * DRIFT, "min", note=f"全長 {chain_len:.1f} と パッドの間 {2 * mm(P.PAD_X0):.1f}。継ぎ目が開ける量は合計この余りだけ = 継ぎ目の抜け止め（両端のパッドで挟む）")
+add(SEC, "歯車の部品のボス（Ø9.5）と隣の軸のボスとの隙間", mm(P.PITCH) - mm(P.GEAR_BOSS_D), GAP, "min")
 
 # ---------------------------------------------------------------------------------------------
 # B. Y 方向
 # ---------------------------------------------------------------------------------------------
 SEC = "B Y方向"
 P_ = mm(P.PITCH)
-add(SEC, "カムの回転円（実際の最大）と隣の軸のスリーブ", P_ - RMAX_ACT - mm(P.SLEEVE_R), GAP, "min",
-    note=f"カム Rmax {RMAX_ACT:.3f}、スリーブ R{mm(P.SLEEVE_R)}、軸の間 {P_}")
+stub_R = mm(P.STUB_AF) / math.sqrt(3)
+add(SEC, "カムの回転円（実際の最大）と隣の軸の雄スタブ（外接円）", P_ - RMAX_ACT - stub_R, GAP, "min",
+    note=f"カム Rmax {RMAX_ACT:.3f}、スタブ R{stub_R:.3f}、軸の間 {P_}。スタブは数珠つなぎの継ぎ目の外側の露出部")
+add(SEC, "雄スタブの上端（Zc + R）と、画素の足の最低の下面（-3 で Zc+5.2）", (RB + mm(P.H_MIN)) - stub_R, GAP, "min", note="スタブは足の下を通る。足は Z にだけ動く")
+add(SEC, "雄スタブ（外接円）と隣の軸の歯車の歯先（歯車は X 40.0..42.4。カム 4 のスタブの先が同じ X に届く）", P_ - stub_R - mm(P.CHAIN_GEAR_TIP_R), GAP, "min")
 inner_y = mm(P.INNER_Y) / 2
 add(SEC, "外側の軸のカム回転円と ±Y 側壁の内面", inner_y - (2 * P_ + RMAX_ACT), GAP, "min",
     note=f"側壁 {mm(P.WALL_Y)}、内面 {inner_y}")
@@ -168,40 +174,42 @@ SEC = "A2 軸の並び"
 LAYOUT = {}
 ok_nov = True
 min_gap_axis = 1e9
-clip_pos = {}
+stub_ratio_max = 0.0
+stub_len_max = 0.0
+end_hex_ratio_max = 0.0
 for j in range(P.N):
-    cx = sorted((mm(K.cam_x(i, j)) - T_CAM / 2, mm(K.cam_x(i, j)) + T_CAM / 2, i) for i in range(P.N))
     members = []
-    hubs = []
-    for n, (x0, x1, i) in enumerate(cx):
+    stubs = []
+    for i in range(P.N):
+        x0, x1 = (mm(v) for v in K.cam_x_range(i, j))
         members.append(("cam", f"cam_{i}_{j}", x0, x1))
-        nxt = cx[n + 1][0] if n + 1 < len(cx) else mm(P.GEAR_X0)
-        hubs.append((f"cam_{i}_{j}", x1, nxt))              # ハブ = カム板の +X 面から次の部材の -X 面まで（R5.2 の円筒）
-    members.append(("gear", f"gear_{j}", mm(P.GEAR_X0), mm(P.GEAR_X1)))
-    members.append(("collar", f"shaft_{j}_collar", mm(P.COLLAR_X0), mm(P.SHAFT_HALF_L)))
-    clip_x1 = cx[0][0]
-    clip_pos[j] = (clip_x1 - mm(P.CLIP_T), clip_x1)
+        sl = mm(K.stub_length(i, j))
+        stubs.append((f"cam_{i}_{j}", round(x1, 3), round(x1 + sl, 3)))        # 雄スタブ: カム板の +X 面から次の部品の穴の底まで
+        stub_ratio_max = max(stub_ratio_max, sl / mm(P.STUB_AF))
+        stub_len_max = max(stub_len_max, sl)
+    members.append(("gear_part", f"gear_{j}", mm(P.GEAR_X0), mm(P.SHAFT_HALF_L)))      # 歯車 + ボス（〜肩 43.6）。+X に Ø5 の軸受け
+    hx0, hx1 = (mm(v) for v in K.end_part_hex_x(j))
+    members.append(("end_part", f"shaft_{j}", -mm(P.SHAFT_HALF_L), hx1))               # 端の部品: 六角部 + 雄スタブ（-X の丸い軸受けはさらに -X）
+    end_hex_ratio_max = max(end_hex_ratio_max, (hx1 - hx0) / mm(P.STUB_AF))
     LAYOUT[j] = {"y_mm": mm(K.axis_y(j)), "z_mm": ZC,
                  "members": [(k, n, round(a, 3), round(b, 3)) for k, n, a, b in members],
-                 "hubs": [(n, round(a, 3), round(b, 3)) for n, a, b in hubs],
-                 "clip_x": [round(clip_pos[j][0], 3), round(clip_pos[j][1], 3)],
-                 "bare_hex_x": [-mm(P.SHAFT_HALF_L), round(clip_pos[j][0], 3)],
-                 "shaft_hex_x": [-mm(P.SHAFT_HALF_L), mm(P.SHAFT_HALF_L)],
-                 "journal_x": [-mm(P.JOURNAL_END), mm(P.JOURNAL_END)]}
-    ms = sorted(members, key=lambda m: m[2])
-    for a, b in zip(ms, ms[1:]):
+                 "stubs": stubs,
+                 "end_part_hex_x": [round(hx0, 3), round(hx1, 3)],
+                 "journal_x": [[-mm(P.JOURNAL_END), -mm(P.SHAFT_HALF_L)], [mm(P.SHAFT_HALF_L), mm(P.JOURNAL_END)]]}
+    # 重なり: カムの板どうし、歯車の部品とカム 4 の板（スタブは相手の穴の中なので数えない）
+    plates = sorted([m for m in members if m[0] == "cam"] + [("gear_part", f"gear_{j}", mm(P.GEAR_X0), mm(P.SHAFT_HALF_L))], key=lambda m: m[2])
+    for a, b in zip(plates, plates[1:]):
         g = b[2] - a[3]
         min_gap_axis = min(min_gap_axis, g)
         if g < -1e-6:
             ok_nov = False
-add_bool(SEC, "同じ軸の部材（カム・歯車・鍔）が X で重ならない", ok_nov, note=f"最小のすき間 {min_gap_axis:.2f}mm（ここはカムのハブが埋める）")
-hub_max = max(b - a for L in LAYOUT.values() for n, a, b in L["hubs"])
-add(SEC, "カムのハブの最長（刷るとき板の上に立てる円筒 Ø10.4）の高さ / 径", hub_max / (2 * mm(P.SLEEVE_R)), 5.0, "max", unit="倍", note=f"最長 {hub_max:.1f}mm。ハブは +X 側だけ。-X 側にはハブも別のスリーブも無い")
-add(SEC, "束が連続（クリップ -> カム -> ハブ -> ... -> 歯車）で、ハブの最短が 0 以上", min(b - a for L in LAYOUT.values() for n, a, b in L["hubs"]), 0.0, "min", note="最短は偶数行の最後のカムと歯車の間の 1.3mm")
-add_info(SEC, "軸 2（偶数行）の並び（X mm）", " ".join(f"{n}[{a:.1f},{b:.1f}]" for k, n, a, b in LAYOUT[2]["members"]) + f" クリップ{LAYOUT[2]['clip_x']}")
-add_info(SEC, "軸 0（偶数行）の並び（X mm）", " ".join(f"{n}[{a:.1f},{b:.1f}]" for k, n, a, b in LAYOUT[0]["members"]) + f" クリップ{LAYOUT[0]['clip_x']}")
-add_info(SEC, "軸 1（奇数行）の並び（X mm）", " ".join(f"{n}[{a:.1f},{b:.1f}]" for k, n, a, b in LAYOUT[1]["members"]) + f" クリップ{LAYOUT[1]['clip_x']}")
-add_info(SEC, "組立の通し順（各軸）", "gear_j を -X 端から通して +X の鍔に当てる -> cam を +X 側から順に（cam_4, cam_3, ... cam_0）-X 端から通す -> shaft_clip_j を溝に嵌める")
+add_bool(SEC, "同じ軸の部品（カム板・歯車の部品）が X で重ならない", ok_nov, note=f"最小のすき間 {min_gap_axis:.2f}mm（ここを雄スタブがまたぐ）")
+add(SEC, "雄スタブの高さ / 太さ（カムを平置きで刷るとき、板の上へ立てる）の最大", stub_ratio_max, 5.0, "max", unit="倍", note=f"最長 {stub_len_max:.2f}mm（面の間 13 + 穴の深さ 2.8）、太さ AF{mm(P.STUB_AF)}")
+add(SEC, "端の部品の六角部（-X の肩から雄スタブの先まで）の高さ / 太さの最大", end_hex_ratio_max, 5.0, "max", unit="倍", note="端の部品は -X の丸い軸受けを下にして立てて刷る")
+add_info(SEC, "軸 2（偶数行）の並び（X mm）", " ".join(f"{n}[{a:.1f},{b:.1f}]" for k, n, a, b in LAYOUT[2]["members"]))
+add_info(SEC, "軸 1（奇数行）の並び（X mm）", " ".join(f"{n}[{a:.1f},{b:.1f}]" for k, n, a, b in LAYOUT[1]["members"]))
+add_info(SEC, "軸 2 の雄スタブ（X mm）", " ".join(f"{n}[{a:.1f},{b:.1f}]" for n, a, b in LAYOUT[2]["stubs"]))
+add_info(SEC, "組立の通し順（各軸）", "shaft_j の雄スタブを cam_0 の雌穴へ -> cam_0 のスタブを cam_1 の穴へ -> ... -> cam_4 のスタブを gear_j の雌穴へ（各 2.4〜2.8mm だけ潰しリブが擦る）-> 出来た鎖を U 溝へ（治具で 5 本の向きをそろえる）")
 
 # ---------------------------------------------------------------------------------------------
 # C2. サーボ・配線・鍵
@@ -274,22 +282,24 @@ for r_ in range(6):
         worst_all = min(worst_all, penetration(S_))
         worst_cut = min(worst_cut, cut_only_penetration(S_))
 add(SEC, "切り落とし: 正しい向きの軸が穴に入る（食い込み = 隙間の符号を反転）", -ident, 0.2, "min", note="軸の全頂点が穴の六角と出っ張り面から 0.2mm 以上内側")
-add(SEC, "切り落とし: 鏡像・60° おきの回しの軸（11 通り）が穴に食い込む深さの最小", worst_all, 0.3, "min",
+add(SEC, "切り落とし: 鏡像・60° おきの回しのスタブ（11 通り）が穴に食い込む深さの最小", worst_all, 0.25, "min",
     note=f"切り落とし面の法線 {P.HEX_KEY_NORMAL_DEG:.0f}°、角 {P.HEX_CUT_CORNER_DEG:.0f}° から {P.HEX_CUT_TILT_DEG:.0f}° 傾け、深さ {mm(P.HEX_CUT_DEPTH)}。通らない")
-add(SEC, "切り落とし: 同じ 11 通りが櫛の切り欠き（上半分）の出っ張りに食い込む深さの最小", worst_cut, 0.3, "min", note="櫛は出っ張り面だけで向きを読む。向き違いの軸を入れると櫛が浮いて耳が座らない")
-add(SEC, "切り落とし: 軸の切り落とし面までの距離（軸の最小の太さ）", cut_d, 2.5, "min", note="六角の面までの距離 3.25、角まで 3.75。切り落とし面 2.74。肉は削るだけで穴の外側は変わらない")
+add(SEC, "切り落とし: 同じ 11 通りが櫛の切り欠き（上半分）の出っ張りに食い込む深さの最小", worst_cut, 0.25, "min", note="櫛は出っ張り面だけで向きを読む。向き違いの軸を入れると櫛が浮いて耳が座らない")
+add(SEC, "切り落とし: スタブの切り落とし面までの距離（スタブの最小の太さ）", cut_d, 2.0, "min", note="スタブの面までの距離 2.75、角まで 3.18。切り落とし面 2.27。肉は削るだけで穴の外側（カムの外形）は変わらない")
 v120 = hex_vertices(Ac)[2]
-add(SEC, "切り落とし: 隣の角（120°）に切り落とし面がかからない余裕", cut_d - float(v120 @ cut_n), 0.1, "min", note="かかると切り落としが 2 つの角に広がる")
+add(SEC, "切り落とし: 隣の角（120°）に切り落とし面がかからない余裕", cut_d - float(v120 @ cut_n), 0.05, "min", note="かかると切り落としが 2 つの角に広がる")
 V60, V0 = hex_vertices(Ac)[1], hex_vertices(Ac)[0]
 t_end = (V60 @ cut_n - cut_d) / (cut_n @ (V60 - V0))
 cut_len_on_flat = t_end * float(np.linalg.norm(V60 - V0))
-add(SEC, "切り落とし: 面（法線 30°）に食い込む長さと、その面の中央の潰しリブ（幅 0.6）の間", Ac / math.sqrt(3) / 2 - mm(P.HEX_RIB_W) / 2 - cut_len_on_flat, 0.2, "min",
+add(SEC, "切り落とし: 面（法線 30°）に食い込む長さと、その面の中央の潰しリブ（幅 0.6）の間", Ac / math.sqrt(3) / 2 - mm(P.HEX_RIB_W) / 2 - cut_len_on_flat, 0.15, "min",
     note=f"切り落としが面に掛かる長さ {cut_len_on_flat:.2f}mm。面の長さの半分 1.88")
 add(SEC, "カム番号の刻み深さと残る厚み", T_CAM - mm(P.CAM_LABEL_DEPTH), 3.0, "min")
 
 # 潰しリブ
 sig_c = 15.0                               # リブの先の押し潰し応力（MPa）。仮定（PLA の降伏 50〜60 の約 1/4）。要実測
 crush = mm(P.HEX_RIB_CRUSH)
+add(SEC, "挿入で潰しリブが擦る長さ（カムの雌穴の深さ）", mm(P.HEX_RIB_L_CAM), 4.0, "max", note="旧: 長い軸の上を最大 80mm 擦って通らなかった。今はスタブが入る長さだけ")
+add(SEC, "挿入で潰しリブが擦る長さ（歯車の部品の雌穴の深さ）", mm(P.HEX_RIB_L_GEAR), 4.0, "max")
 add(SEC, "潰しリブ: 潰し代（0.15〜0.20）", crush, 0.15, "min", note="リブの高さ 0.38 = 穴の隙間 0.2 + 潰し代 0.18")
 add(SEC, "潰しリブ: 潰し代の上限", crush, 0.20, "max")
 add(SEC, "潰しリブ: 穴の面の隙間（リブの無い面）", mm(P.SHAFT_BORE_CLR), 0.2, "min", note="1 面おき（法線 30°, 150°, 270°）の 3 面にだけリブ。残り 3 面は隙間 0.2 のまま")
@@ -297,21 +307,21 @@ N_rib_cam = sig_c * mm(P.HEX_RIB_W) * mm(P.HEX_RIB_L_CAM)       # N
 N_rib_gear = sig_c * mm(P.HEX_RIB_W) * mm(P.HEX_RIB_L_GEAR)
 F_cam = 3 * 0.35 * N_rib_cam
 F_gear = 3 * 0.35 * N_rib_gear
-add(SEC, "潰しリブ: カムの押し込み力の見積り（リブ 3 本 x 面圧 15MPa x 幅 0.6 x 長さ 4 x μ0.35）", F_cam, 40.0, "max", unit="N",
+add(SEC, "潰しリブ: カムの継ぎ目の押し込み力の見積り（リブ 3 本 x 面圧 15MPa x 幅 0.6 x 長さ 2.8 x μ0.35）", F_cam, 40.0, "max", unit="N",
     note="手で押せる範囲。面圧 15MPa は仮定。実測で潰し代を 0.15〜0.20 の中で調整")
-add(SEC, "潰しリブ: 歯車の押し込み力の見積り（長さ 2.4）", F_gear, 40.0, "max", unit="N")
+add(SEC, "潰しリブ: 歯車の部品の継ぎ目の押し込み力の見積り（長さ 2.4）", F_gear, 40.0, "max", unit="N")
 cap_gear = 3 * 0.35 * N_rib_gear * ap_s            # N mm（歯車の滑り始めるトルク）
 cap_cam = 3 * 0.35 * N_rib_cam * ap_s
 
 # 位相合わせ治具 phase_comb
 comb_x0, comb_x1 = mm(P.COMB_X0), mm(P.COMB_X1)
-clip_min = min(v[0] for v in clip_pos.values())
+clip_min = min(mm(K.cam_x_range(0, j)[0]) for j in range(P.N))
 add(SEC, "治具: 櫛の -X 面と -X パッドの内面", comb_x0 - (-mm(P.PAD_X0)), GAP, "min", note=f"櫛 X {comb_x0:.1f}..{comb_x1:.1f}、パッド内面 {-mm(P.PAD_X0):.1f}")
 add(SEC, "治具: 櫛が軸の裸の六角の上にある（遊び -0.2 込み。-X の肩の内側）", comb_x0 - (-mm(P.SHAFT_HALF_L) + DRIFT), 0.0, "min")
-add(SEC, "治具: 櫛の +X 面と最も -X のクリップの溝の間", clip_min - comb_x1, GAP, "min", note="奇数行のクリップは -40.8..-39.3。クリップは櫛を抜いてから嵌める")
-add(SEC, "治具: 切り欠きの角の隙間（水平、片側）", mm(P.SHAFT_BORE_AF) / math.sqrt(3) - mm(P.SHAFT_AF) / math.sqrt(3), 0.2, "min", note="切り欠きは六角（AF6.9、平らな面が上）の上半分 + 角から下へ垂直 2mm")
+add(SEC, "治具: 櫛の +X 面と最も -X のカムの -X 面（遊び -0.4 込み）の間", clip_min - DRIFT_M - comb_x1, GAP, "min", note="端の部品の六角部（-X の肩〜カムの面）の上。奇数行は 4.65mm、偶数行は 10.55mm 露出")
+add(SEC, "治具: 切り欠きの角の隙間（水平、片側）", mm(P.SHAFT_BORE_AF) / math.sqrt(3) - mm(P.SHAFT_AF) / math.sqrt(3), 0.2, "min", note="切り欠きは六角（AF5.9、平らな面が上）の上半分 + 角から下へ垂直 2mm")
 add(SEC, "治具: 切り欠きの天井と軸の上の面の隙間", ap_b - ap_s, 0.2, "min")
-add(SEC, "治具: 向きが違う軸のとき櫛が浮く量（軸の角が出っ張りに食い込む深さの最小）", worst_cut, 0.3, "min", note="正しい向きでは耳がパッドに座る。浮けば向き違い")
+add(SEC, "治具: 向きが違う端の部品のとき櫛が浮く量（角が出っ張りに食い込む深さの最小）", worst_cut, 0.25, "min", note="正しい向きでは耳がパッドに座る。浮けば向き違い")
 add(SEC, "治具: 切り欠きの間の板の幅", mm(P.PITCH) - 2 * mm(P.SHAFT_BORE_AF) / math.sqrt(3), 1.2, "min")
 add(SEC, "治具: 切り欠きの上の板の高さ", mm(P.COMB_BAR_ABOVE), 1.2, "min")
 add(SEC, "治具: 櫛の厚み", mm(P.COMB_T), 1.2, "min")
@@ -491,6 +501,7 @@ THETAS = np.arange(P.SERVO_MIN_DEG, P.SERVO_MAX_DEG + 1e-9, 0.5)
 def torque_sweep(mc, mg):
     tmax = 0.0
     t2max = 0.0
+    tjmax = 0.0
     th_at = None
     inf = False
     for th_s in THETAS:
@@ -517,15 +528,16 @@ def torque_sweep(mc, mg):
         # 軸 2 から見た合計: 軸 1,3 は 1 噛合、軸 0,4 は 2 噛合
         t2 = tau[2] + (tau[1] + tau[0] / ETA) / ETA + (tau[3] + tau[4] / ETA) / ETA
         t2max = max(t2max, t2)
+        tjmax = max(tjmax, max(tau))
         # 増速なので軸はサーボの g 倍で回る。仕事の釣り合い τs·ωs = τ2·ωc / η から τs = τ2·g / η
         t_servo = t2 * P.G_RATIO / ETA
         if t_servo > tmax:
             tmax, th_at = t_servo, float(th_s)
-    return tmax, th_at, inf, t2max
+    return tmax, th_at, inf, t2max, tjmax
 
 
-T35, th35, inf35, T2_35 = torque_sweep(P.MU_CAM, P.MU_GUIDE)
-T45, th45, inf45, T2_45 = torque_sweep(P.MU_CAM_HI, P.MU_GUIDE_HI)
+T35, th35, inf35, T2_35, TJ_35 = torque_sweep(P.MU_CAM, P.MU_GUIDE)
+T45, th45, inf45, T2_45, TJ_45 = torque_sweep(P.MU_CAM_HI, P.MU_GUIDE_HI)
 lim = P.SERVO_STALL_NM * P.TORQUE_FRAC
 add(SEC, "サーボ軸の最大トルク μ=0.35（全画素・全サーボ角、横ずれと摩擦の符号は最悪にそろえる）", T35 * 1000, lim * 1000, "max", unit="mNm",
     note=f"サーボ {th35:.1f}° で最大。停動 {P.SERVO_STALL_NM * 1000:.0f}mNm の 1/3 = {lim * 1000:.1f}。画素 {P.PIXEL_MASS_G}g、歯車効率 {ETA}/噛合")
@@ -572,7 +584,7 @@ add(SEC, "歯の曲げ応力（17T、噛み合う幅 2.0、Lewis Y=0.30、停動
 SEC = "H 位相"
 a_b = mm(P.SHAFT_BORE_AF) / 2
 Rc = mm(P.SHAFT_AF) / math.sqrt(3)
-hex_slack = 30.0 - math.degrees(math.acos(a_b / Rc))      # 潰しリブが効かないときの上限（参考）
+hex_slack = 30.0 - math.degrees(math.acos(a_b / Rc))      # 潰しリブが効かないときの上限（参考。スタブ AF5.5 / 穴 AF5.9）
 servo_deg = P.SERVO_ERR_DEG * P.G_RATIO
 # 受けの向きの残り。ホーンは 18° 刻みでしか付かず、受けの歯は ±92° にしか無いので、付け方は設計の向きに近い 1 通りに限られる（最大 ±9° ずれる）。
 # そのずれは全軸に同じだけ乗るので、組立後に位相補正（デモの + / - で 0.25° 刻み、表の高さで幅を測って中央へ）で消す。
@@ -582,8 +594,8 @@ vern_deg = vern_step / 2 * P.G_RATIO
 lash_one = math.degrees(mm(P.GEAR_LASH) / (mm(P.CHAIN_GEAR_PD) / 2))
 meshes = [3, 2, 1, 2, 3]                                  # 軸 j がサーボから何噛合（受け-中央の歯車 1 + 隣の軸）
 chain_meshes = [2, 1, 0, 1, 2]                            # そのうち隣の軸どうしの噛合の数
-fit_cam = P.FIT_ERR_DEG                                   # カム - 軸（潰しリブ）
-fit_gear = P.FIT_ERR_DEG                                  # 歯車 - 軸（潰しリブ）
+joint_deg = P.JOINT_ERR_DEG                               # 継ぎ目 1 つの回転の遊び
+n_joints = P.N                                            # 最悪のカム 0 は歯車の部品から 5 継ぎ目（歯車-カム4, 4-3, 3-2, 2-1, 1-0）
 R_g = mm(P.CHAIN_GEAR_PD) / 2                             # 17T の歯車のピッチ半径（8.5）
 # (a) 隣り合う軸の高さの差 δ（床の隙間 + 栓の隙間 + 案内板の遊び）。噛み合う接線の方向は Z なので、δ / R がそのまま位相のずれ
 delta_a = mm(P.U_FLOOR_CLR) + mm(P.HOLD_GAP) + mm(P.PLATE_PLAY_Z)
@@ -593,17 +605,24 @@ ph_b_mm = mm(P.U_SLOT_Y_CLR)
 # (c) 受けの径方向の遊び = ホーンとの隙間（片側 HORN_CLR）。Y 成分が接線
 ph_c_mm = mm(P.HORN_CLR)
 ph_sector = math.degrees((ph_b_mm + ph_c_mm) / R_g)       # 軸 2 の位相のずれ（(b) + (c)）
-tot = [servo_deg + vern_deg + fit_cam + fit_gear + lash_one * meshes[j] + ph_sector + ph_a * chain_meshes[j] for j in range(P.N)]
-tau_ax_nmm = T2_45 * 1000.0                                # 軸 2 の歯車が運ぶ最大トルク（N mm、μ0.45）
-k_t = 1150.0 * mm(P.HEX_RIB_W) * mm(P.HEX_RIB_L_GEAR) / (mm(P.HEX_RIB_H) - crush)    # リブのせん断剛性（N/mm）。G=1150MPa
-twist = tau_ax_nmm / (3 * k_t * ap_s ** 2)                # rad
-add(SEC, "潰しリブ: 歯車が滑り始めるトルク / 運転の最大トルク（軸 2、μ0.45）", cap_gear / tau_ax_nmm, 3.0, "min", unit="倍",
-    note=f"滑り始め {cap_gear:.0f}N mm、運転 {tau_ax_nmm:.1f}N mm。停動（0.245Nm x g）では滑って歯車を守る")
-add(SEC, "潰しリブ: カムが滑り始めるトルク / 運転の最大トルク（軸 2 全体を 1 枚で受けた場合）", cap_cam / tau_ax_nmm, 3.0, "min", unit="倍")
-add(SEC, "潰しリブ: 運転の最大トルクでのたわみ（リブのせん断）", math.degrees(twist), 0.2, "max", unit="度", note="せん断剛性 G=1150MPa から。FIT_ERR 1.0 度の内訳: たわみ 0.0x + 潰し代・リブ位置・穴寸法の公差 0.5 + クリープ 0.5")
-add(SEC, "潰しリブ嵌めの回転ガタ + たわみの見積り（FIT_ERR）", P.FIT_ERR_DEG, math.degrees(twist) + 0.9, "min", unit="度",
-    note="目安 ±1° 以内。根拠: 3 本が潰れて軸を挟み、運転トルクの 3 倍以上の摩擦で滑らない。ガタは潰し代・リブ位置・穴寸法の公差 0.5° とクリープ 0.4° で 0.9° 以内と置く（仮定。要実測）")
-add_info(SEC, "参考: 潰しリブが全部効かなかった場合の六角ガタ", f"±{hex_slack:.2f}° x（カムと歯車で 2 箇所）。これだと合計 {servo_deg + vern_deg + 2 * hex_slack + lash_one * 3:.1f}° で停止区間を超える。リブは必須")
+joint_total = joint_deg * n_joints
+tot = [servo_deg + vern_deg + joint_total + lash_one * meshes[j] + ph_sector + ph_a * chain_meshes[j] for j in range(P.N)]
+tau_joint_nmm = TJ_45 * 1000.0                             # 1 本の軸（5 枚のカム）が運ぶ最大トルク（N mm、μ0.45）= 歯車の部品の継ぎ目が運ぶ最大
+k_t = 1150.0 * mm(P.HEX_RIB_W) * mm(P.HEX_RIB_L_CAM) / (mm(P.HEX_RIB_H) - crush)       # リブのせん断剛性（N/mm）。G=1150MPa
+twist = tau_joint_nmm / (3 * k_t * ap_s ** 2)              # rad。継ぎ目 1 つ
+slip_tip = 0.35 * (sig_c * mm(P.HEX_RIB_W) * mm(P.HEX_RIB_L_CAM)) / k_t             # 摩擦限界までの先端のずれ（mm）
+elastic_deg = math.degrees(twist) + math.degrees(slip_tip / ap_s)
+add(SEC, "継ぎ目: 歯車の部品の継ぎ目が滑り始めるトルク / 1 本の軸の最大トルク（μ0.45）", cap_gear / tau_joint_nmm, 3.0, "min", unit="倍",
+    note=f"滑り始め {cap_gear:.0f}N mm、運転 {tau_joint_nmm:.1f}N mm（5 枚のカム分 + 軸受け）。ここが最も大きい（以後の継ぎ目は枚数が減る）")
+add(SEC, "継ぎ目: カムの継ぎ目が滑り始めるトルク / 1 本の軸の最大トルク（最悪の仮定: 5 枚分を全部受ける）", cap_cam / tau_joint_nmm, 3.0, "min", unit="倍")
+add(SEC, "継ぎ目: 継ぎ目 1 つの引き抜き力（リブの摩擦 = 3 本 x μ0.35 x 法線力）", 3 * 0.35 * N_rib_cam, 10.0, "min", unit="N",
+    note="軸方向の荷重はほぼ無い。さらに両端のパッドが鎖を挟み、継ぎ目が開ける量は合計 0.4mm（入る長さ 2.4 以上が残る）")
+add(SEC, "継ぎ目: 鎖が開けても残る入る長さ（歯車の部品の継ぎ目 2.4 - 開き 0.4）", mm(P.JOINT_ENGAGE_GEAR) - 2 * DRIFT, 1.0, "min")
+add(SEC, "継ぎ目 1 つの弾性のたわみ + 摩擦限界までの微小な滑り（計算）", elastic_deg, 0.1, "max", unit="度",
+    note=f"リブのせん断剛性 {k_t:.0f}N/mm、運転トルクのたわみ {math.degrees(twist):.4f}°、摩擦限界の微小滑り {math.degrees(slip_tip / ap_s):.3f}°。計算上はほぼ 0")
+add(SEC, "継ぎ目 1 つの遊び（JOINT_ERR）: 計算値 + 製造公差とクリープの見込み", P.JOINT_ERR_DEG, elastic_deg + 0.3, "min", unit="度",
+    note="根拠: 計算値 0.03° + 公差（リブの高さ ±0.05mm でも 3 本とも接触が残る）とクリープの見込み 0.3° 以上 = 0.4°（仮定。要実測）。リブが全部効かない最悪の六角ガタは ±8.3°（参考）")
+add_info(SEC, "参考: 潰しリブが全部効かなかった場合の継ぎ目の六角ガタ", f"±{hex_slack:.2f}° x 継ぎ目の数。リブは必須（雌穴にだけ付ける）")
 add(SEC, "サーボの位置誤差 ±1° x g", servo_deg, 2.5, "max", unit="度")
 add(SEC, "受けの向きの残り（位相補正の後）±0.474° x g", vern_deg, 1.2, "max", unit="度",
     note=f"ホーンの付け方は設計に近い 1 通りで最大 ±9° ずれる。全軸に同じだけ乗るので位相補正（0.25° 刻み）で消す。残り ±{vern_step / 2:.3f}°（サーボ角）を軸で {P.G_RATIO:.3f} 倍")
@@ -611,10 +630,12 @@ add(SEC, "歯車のバックラッシュ（軸 0/4、3 噛合 x 0.674°）", las
 add(SEC, "(a) 隣り合う軸の高さの差 δ = 床 0.05 + 栓 0.1 + 案内板 0.05（mm）", delta_a * 1.0, 0.25, "max", unit="mm", note=f"1 噛合あたり {ph_a:.2f}°（= 2δ/CD）。外側の軸は 2 噛合ぶん足す")
 add(SEC, "(b)+(c) 中央軸と受けの Y のずれ = U 溝の Y 隙間 0.1 + ホーンとの隙間 0.15（mm）", ph_b_mm + ph_c_mm, 0.3, "max", unit="mm", note=f"軸 2 の位相のずれ {ph_sector:.2f}°（接線のずれ / 歯車 17T のピッチ半径 8.5）")
 add_info(SEC, "位相誤差の内訳（最悪の軸 0/4、絶対値の線形和）",
-         f"サーボ {servo_deg:.2f} + ホーン合わせ {vern_deg:.2f} + カム嵌め {fit_cam:.2f} + 歯車嵌め {fit_gear:.2f} + バックラッシュ {lash_one * 3:.2f} + (b)(c) {ph_sector:.2f} + (a) {ph_a:.2f} x 2 = {max(tot):.2f}°")
+         f"サーボ {servo_deg:.2f} + ホーン合わせ {vern_deg:.2f} + 継ぎ目 {joint_deg:.2f} x {n_joints} = {joint_total:.2f} + バックラッシュ {lash_one * 3:.2f} + (b)(c) {ph_sector:.2f} + (a) {ph_a:.2f} x 2 = {max(tot):.2f}°")
 add(SEC, "位相誤差の合計（最悪の軸 0/4、絶対値の線形和）", max(tot), P.DWELL_HALF_DEG, "max", unit="度",
-    note=f"停止区間の半幅 {P.DWELL_HALF_DEG} 度が覆う。二乗和の平方根は {math.sqrt(servo_deg ** 2 + vern_deg ** 2 + fit_cam ** 2 + fit_gear ** 2 + (lash_one * 3) ** 2 + ph_sector ** 2 + (2 * ph_a) ** 2):.1f} 度")
+    note=f"停止区間の半幅 {P.DWELL_HALF_DEG} 度が覆う。二乗和の平方根は {math.sqrt(servo_deg ** 2 + vern_deg ** 2 + n_joints * joint_deg ** 2 + (lash_one * 3) ** 2 + ph_sector ** 2 + (2 * ph_a) ** 2):.1f} 度")
 add(SEC, "停止区間の半幅と位相誤差の合計の差（余裕）", P.DWELL_HALF_DEG - max(tot), 1.0, "min", unit="度", note="合格条件: 最悪の線形和で 1.0 度以上")
+rss_tot = math.sqrt(servo_deg ** 2 + vern_deg ** 2 + n_joints * joint_deg ** 2 + (lash_one * 3) ** 2 + ph_sector ** 2 + (2 * ph_a) ** 2)
+add_info(SEC, "停止時の誤差の見込み", f"二乗和の平方根 {rss_tot:.1f}° が典型（停止区間 ±{P.DWELL_HALF_DEG}° の半分以下）。線形和の最悪 {max(tot):.1f}° でも停止区間の内側 = 高さの誤差は 0（弧の上）。外へ出るのは余裕 {P.DWELL_HALF_DEG - max(tot):.1f}° を超えたときだけ")
 add(SEC, "サーボ 1 度あたりのカム軸の角度 g（下限 2.0）", P.G_RATIO, 2.0, "min", unit="")
 add(SEC, "サーボ 1 度あたりのカム軸の角度 g（上限 2.3）", P.G_RATIO, 2.3, "max", unit="")
 add_info(SEC, "向きの決め方", "六角の 1 つの角の非対称な切り落とし（キラル）。向きだけを決め、駆動は潰しリブの摩擦。溝・突起が無いので鍵の遊びは無い")
@@ -637,9 +658,10 @@ add(SEC, "画素: 足の X 幅（カム厚 + 片側 0.15）", mm(P.FOOT_X), T_CA
 add(SEC, "画素: 足の板の厚み", mm(P.FOOT_FLAT), 1.2, "min")
 add(SEC, "カム: 厚み（平置き）", T_CAM, 3.0, "min")
 add(SEC, "案内板: 十字溝の桟の最小", min(web_x, web_y), 1.2, "min")
-add(SEC, "軸: 寝かせて刷る長さ", 2 * mm(P.SHAFT_HALF_L), 100.0, "max", note="六角面を下に。両端の丸は径が二面幅より小さい。歯車は別部品なので軸に円盤は付かない")
-add(SEC, "軸: 鍔（六角 AF9.5、寝かせて刷る）の張り出し角（鉛直から）", 30.0, 45.0, "max", unit="度", note="六角の面が上向き斜め 60° 傾き = 鉛直から 30°")
-add(SEC, "歯車 gear_j: 平置き（軸を縦、歯の輪郭が XY 面）で歯の張り出し", 0.0, 0.0, "max", unit="度", note="歯の側面は鉛直。穴は六角 + 鍵の突起 + リブ（鉛直）")
+add(SEC, "カム cam_i_j: 平置き（雌穴をベッド側、雄スタブを上へ）。スタブの高さ/太さ", stub_ratio_max, 5.0, "max", unit="倍", note="雌穴のベッド側の縁に面取り 0.3（FIRST_LAYER_CHAMFER）")
+add(SEC, "端の部品 shaft_j: -X の丸い軸受けを下に立てて刷る。六角部の高さ/太さ", end_hex_ratio_max, 5.0, "max", unit="倍", note="丸い軸受け Ø5 と六角 AF5.5 の段は 45° の面取りで逃がす（bpy 側）")
+add(SEC, "端の部品: 丸い軸受けと六角の段（角の方向の張り出し）", (mm(P.STUB_AF) / math.sqrt(3) - mm(P.JOURNAL_D) / 2), 1.0, "max", note="0.67mm。45° の面取り")
+add(SEC, "歯車 gear_j: 平置き（雌穴をベッド側、-X 面を下）で歯の張り出し", 0.0, 0.0, "max", unit="度", note="歯の側面は鉛直。ボス Ø9.5 と軸受け Ø5 が上へ細る。雌穴は六角 + 切り落としの出っ張り + リブ（鉛直）")
 add(SEC, "horn_coupler: ポケットの橋（-X 面を下にして刷る）の最大幅", max(mm(P.SG.HORN_ROOT_W) + 2 * mm(P.HORN_CLR), mm(P.SG.HORN_HUB_DIA) + 2 * mm(P.HORN_CLR)), 10.0, "max", note="ホーンの長腕の付け根 7.3 とハブ 7.3")
 add(SEC, "phase_comb: 平置き（YZ 面を下）、切り欠きは上から抜ける形で橋は無い", mm(P.COMB_T), 1.2, "min")
 
@@ -714,7 +736,7 @@ need = ["housing", "bezel", "guide_plate", "horn_coupler", "phase_comb", "sg92r"
 need += [f"shaft_{j}" for j in range(5)] + [f"gear_{j}" for j in range(5)]
 need += [f"cam_{i}_{j}" for i in range(5) for j in range(5)] + [f"pixel_{i}_{j}" for i in range(5) for j in range(5)]
 add_bool(SEC, "親が決めた id がすべて入っている", all(n in ids for n in need), note=f"{len(ids)} 個。追加: {', '.join(P.EXTRA_PART_IDS)}")
-add_bool(SEC, "LAYOUT の部材がすべて PART_IDS にある", all(n in ids for L in LAYOUT.values() for k, n, a, b in L["members"] if k in ("cam", "gear")))
+add_bool(SEC, "LAYOUT の部材がすべて PART_IDS にある", all(n in ids for L in LAYOUT.values() for k, n, a, b in L["members"]))
 
 # ---------------------------------------------------------------------------------------------
 # 出力

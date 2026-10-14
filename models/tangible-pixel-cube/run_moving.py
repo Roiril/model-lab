@@ -438,30 +438,69 @@ def about_axis(j, deg, mirror=False):
     return m @ Matrix.Translation((0, -y, -z))
 
 
+def joint_scan(parts, owner, holder, depth, j, deg=0.0, mirror=False):
+    """継ぎ目の差し込み: owner の雄スタブを、holder の雌穴へ深さ s まで差したときの共通体積 V(s)（mm3）。depth = 全部差した深さ（組立の姿勢）。
+    owner を X 方向に (depth - s) だけ引き戻して測る（deg / mirror なら軸まわりの向きも変える）。
+    返り値: 全部差したときの V、V が出始める深さ s0（これより浅いと隙間で入る）、擦る長さ = depth - s0"""
+    base = about_axis(j, deg, mirror)
+
+    def V(sd):
+        return inter_mm3(parts[holder], parts[owner], Matrix.Translation((-(depth - sd), 0, 0)) @ base)
+    v_full = V(depth)
+    if V(0.0) > 1e-4:
+        s0 = 0.0
+    else:
+        lo_, hi_ = 0.0, depth
+        for _ in range(9):
+            mid = (lo_ + hi_) / 2
+            if V(mid) > 1e-4:
+                hi_ = mid
+            else:
+                lo_ = mid
+        s0 = hi_
+    return v_full, s0, depth - s0
+
+
 def check_fits(parts):
-    """実形状どうしの共通体積（mm3、mm の座標で計算）。意図した食い込みは潰しリブだけ（3 本 x 0.18 x 0.6 x 長さ）、他は 0。
-    間違った向き（60 度おき・鏡像）は、軸・治具に当たって食い込む"""
-    # リブはベッド側の面取りカッター（0.3）の中を通るので、ベッド側の 0.3mm は削れて無い
-    rib_cam = 3 * PM.mm(P.HEX_RIB_CRUSH) * PM.mm(P.HEX_RIB_W) * (PM.CAM_T - PM.FIRST_LAYER)
-    rib_gear = 3 * PM.mm(P.HEX_RIB_CRUSH) * PM.mm(P.HEX_RIB_W) * (PM.mm(P.GEAR_T) - PM.FIRST_LAYER)
-    out = {"rib_crush_expected_cam_mm3": round(rib_cam, 4), "rib_crush_expected_gear_mm3": round(rib_gear, 4)}
-    out["cam_in_shaft"] = {f"cam_{i}_{j}": round(inter_mm3(parts[f"cam_{i}_{j}"], parts[f"shaft_{j}"]), 4)
-                           for i, j in ((0, 0), (2, 2), (4, 4), (3, 1), (1, 3), (0, 1))}
-    out["gear_in_shaft"] = {f"gear_{j}": round(inter_mm3(parts[f"gear_{j}"], parts[f"shaft_{j}"]), 4) for j in range(P.N)}
-    out["clip_in_shaft"] = {f"shaft_clip_{j}": round(inter_mm3(parts[f"shaft_clip_{j}"], parts[f"shaft_{j}"]), 4) for j in range(P.N)}
+    """実形状どうしの共通体積（mm3、mm の座標で計算）。数珠つなぎの継ぎ目の差し込み: 意図した食い込みは潰しリブだけ
+    （3 本 x 0.18 x 0.6 x 面取りを除いた穴の深さ）。押し始めは隙間で入り（V = 0）、リブが擦るのは穴の最後の部分だけ。
+    間違った向き（60 度おき・鏡像）は、スタブの角が穴の出っ張りに当たって、穴の口のすぐ奥で止まる"""
+    w, crush = PM.mm(P.HEX_RIB_W), PM.mm(P.HEX_RIB_CRUSH)
+    out = {}
+    joints = (("cam_0_2", "cam_1_2", PM.mm(P.JOINT_ENGAGE_CAM), 2), ("cam_3_2", "cam_4_2", PM.mm(P.JOINT_ENGAGE_CAM), 2),
+              ("cam_4_2", "gear_2", PM.mm(P.JOINT_ENGAGE_GEAR), 2), ("shaft_2", "cam_0_2", PM.mm(P.JOINT_ENGAGE_CAM), 2),
+              ("shaft_1", "cam_0_1", PM.mm(P.JOINT_ENGAGE_CAM), 1), ("cam_4_1", "gear_1", PM.mm(P.JOINT_ENGAGE_GEAR), 1),
+              ("cam_4_0", "gear_0", PM.mm(P.JOINT_ENGAGE_GEAR), 0), ("shaft_4", "cam_0_4", PM.mm(P.JOINT_ENGAGE_CAM), 4))
+    rows = {}
+    ok = True
+    for owner, holder, depth, j in joints:
+        v_full, s0, rub = joint_scan(parts, owner, holder, depth, j)
+        expect_v = 3 * crush * w * (depth - PM.FIRST_LAYER)
+        rows[f"{owner}->{holder}"] = {"insert_depth_mm": round(depth, 3), "rib_start_depth_mm": round(s0, 3), "rib_rub_length_mm": round(rub, 3),
+                                      "volume_full_mm3": round(v_full, 4), "volume_expected_mm3": round(expect_v, 4)}
+        ok &= abs(v_full - expect_v) < 0.02 and abs(rub - (depth - PM.FIRST_LAYER)) < 0.15
+    out["joints"] = rows
+    out["rub_length_max_mm"] = max(r["rib_rub_length_mm"] for r in rows.values())
+    # 間違った向き（カムの継ぎ目と歯車の継ぎ目）
+    wrong = {}
+    for owner, holder, depth, j in (("cam_0_2", "cam_1_2", PM.mm(P.JOINT_ENGAGE_CAM), 2), ("cam_4_2", "gear_2", PM.mm(P.JOINT_ENGAGE_GEAR), 2)):
+        res = {}
+        for k in range(1, 6):
+            v_full, s0, _ = joint_scan(parts, owner, holder, depth, j, deg=60.0 * k)
+            res[f"rot{60 * k}"] = {"volume_full_mm3": round(v_full, 3), "blocked_at_depth_mm": round(s0, 3)}
+        v_full, s0, _ = joint_scan(parts, owner, holder, depth, j, mirror=True)
+        res["mirror"] = {"volume_full_mm3": round(v_full, 3), "blocked_at_depth_mm": round(s0, 3)}
+        wrong[f"{owner}->{holder}"] = res
+        ok &= all(r["volume_full_mm3"] > 1.0 and r["blocked_at_depth_mm"] <= 0.6 for r in res.values())
+    out["wrong_orientation"] = wrong
+    out["wrong_min_volume_mm3"] = min(r["volume_full_mm3"] for res in wrong.values() for r in res.values())
+    out["wrong_max_blocked_depth_mm"] = max(r["blocked_at_depth_mm"] for res in wrong.values() for r in res.values())
+    # 継ぎ目以外では当たらない（同じ行の隣どうし以外、治具と軸、受けと歯車、画素とカム）
     out["comb_in_shaft"] = {f"shaft_{j}": round(inter_mm3(parts["phase_comb"], parts[f"shaft_{j}"]), 4) for j in range(P.N)}
+    out["non_adjacent_in_row_2"] = round(max(inter_mm3(parts[f"cam_{a}_2"], parts[f"cam_{b}_2"]) for a in range(P.N) for b in range(a + 2, P.N)), 4)
+    out["cam_gear_non_adjacent"] = round(max(inter_mm3(parts[f"cam_{a}_2"], parts["gear_2"]) for a in range(4)), 4)
     out["coupler_in_gear_2"] = round(inter_mm3(parts["horn_coupler"], parts["gear_2"]), 4)
     out["pixel_2_2_in_cams"] = round(max(inter_mm3(parts["pixel_2_2"], parts[f"cam_{i}_{j}"]) for j in range(P.N) for i in range(P.N)), 4)
-    wrong = {}
-    for name, part, jj in (("cam_2_2", "cam_2_2", 2), ("gear_2", "gear_2", 2)):
-        vols = {f"rot{60 * k}": inter_mm3(parts[part], parts[f"shaft_{jj}"], about_axis(jj, 60.0 * k)) for k in range(1, 6)}
-        vols["mirror"] = inter_mm3(parts[part], parts[f"shaft_{jj}"], about_axis(jj, 0.0, mirror=True))
-        wrong[f"{name}_on_shaft"] = {k: round(v, 3) for k, v in vols.items()}
-    vols = {f"rot{60 * k}": inter_mm3(parts["phase_comb"], parts["shaft_2"], about_axis(2, 60.0 * k)) for k in range(1, 6)}
-    vols["mirror"] = inter_mm3(parts["phase_comb"], parts["shaft_2"], about_axis(2, 0.0, mirror=True))
-    wrong["comb_on_shaft"] = {k: round(v, 3) for k, v in vols.items()}
-    out["wrong_orientation_mm3"] = wrong
-    out["wrong_min_mm3"] = round(min(v for d in wrong.values() for v in d.values()), 3)
     # 治具: 間違った向きの軸は、軸の角が切り欠きの出っ張りに当たる。当たりが消えるまで櫛を上げた量（mm）= 浮き。正しい向きは 0
     def lift_needed(mat):
         lo_, hi_ = 0.0, 8.0
@@ -478,13 +517,10 @@ def check_fits(parts):
     for k in range(1, 6):
         lift[f"rot{60 * k}"] = lift_needed(about_axis(2, 60.0 * k))
     lift["mirror"] = lift_needed(about_axis(2, 0.0, mirror=True))
-    lift = {k: round(v, 3) for k, v in lift.items()}
-    out["comb_lift_mm"] = lift
+    out["comb_lift_mm"] = {k: round(v, 3) for k, v in lift.items()}
     lift_ok = lift["correct"] == 0.0 and min(v for k, v in lift.items() if k != "correct") >= 0.1
-    ok = (all(abs(v - rib_cam) < 0.02 for v in out["cam_in_shaft"].values())
-          and all(abs(v - rib_gear) < 0.02 for v in out["gear_in_shaft"].values())
-          and all(v < 0.001 for v in out["clip_in_shaft"].values()) and all(v < 0.001 for v in out["comb_in_shaft"].values())
-          and out["coupler_in_gear_2"] < 0.001 and out["pixel_2_2_in_cams"] < 0.001 and out["wrong_min_mm3"] > 0.5 and lift_ok)
+    ok &= (all(v < 0.001 for v in out["comb_in_shaft"].values()) and out["non_adjacent_in_row_2"] < 0.001
+           and out["cam_gear_non_adjacent"] < 0.001 and out["coupler_in_gear_2"] < 0.001 and out["pixel_2_2_in_cams"] < 0.001 and lift_ok)
     out["pass"] = bool(ok)
     return out
 
@@ -628,9 +664,9 @@ def main():
     report["horn_rejection"] = check_horn_rejection()
     report["coupler_walls"] = check_coupler_walls(parts)
     report["gear_mesh"] = check_gear_mesh()
-    report["clip"] = PM.INFO.get("clip")
+    report["shaft_len_mm"] = PM.INFO.get("shaft_len_mm")
     report["cam_label_pos_mm"] = PM.INFO.get("cam_label_pos_mm")
-    report["cam_hub_len_mm"] = PM.INFO.get("cam_hub_len_mm")
+    report["cam_stub_len_mm"] = PM.INFO.get("cam_stub_len_mm")
     report["summary"] = {
         "parts": len(ids), "all_manifold_single_component": not bad, "bad": bad,
         "self_intersections_total": si_total, "zero_area_triangles_total": za_total, "defect_parts": defects,

@@ -4,15 +4,15 @@ build_moving() が全部品を組立姿勢（サーボ THETA_FLAT = 90 度、全
 オブジェクト名 = 部品 id、単位 m。PRINT_POSE は各部品を刷る向きにする回転（オイラー XYZ 度）と理由。
 
 座標: X = 軸方向、(u, v) = (Y, Z)。軸まわりの極角 psi は +Y から +Z へ測る（kinematics と同じ）。内部は mm で組み、最後に 1/1000 する。
-部品: shaft_j, gear_j, cam_i_j, shaft_clip_j, pixel_i_j, horn_coupler, phase_comb（i = 列 = X、j = 行 = Y）。
+部品: shaft_j, gear_j, cam_i_j, pixel_i_j, horn_coupler, phase_comb（i = 列 = X、j = 行 = Y）。
 
 統合側への申し送り:
 - 全部品はワールド座標（原点 = 箱の底面の中心）で、オブジェクトの変換は焼き込み済み（原点 0、回転 0、倍率 1）
 - horn_coupler の姿勢: 付属ホーンの長腕（18mm）が -Z、右腕（16mm）が +Z、短腕が Y。sg92r_horn も同じ姿勢（サーボ 90 度）で置く。
   ホーンの腕の下面の X = 受けの -X 面（RECV_HUB_X0 = 40.0）+ 0.1 = 40.1、腕の上面 = ポケットの天井 = 41.6（接する）。ハブは 37.1 から。
   受けの -X 面は歯の面（40.6）より 0.6 -X へ出る（受け全体が平らに刷れるように）
-- shaft_clip_j の口は下（-Z）。phase_comb は組立の途中で外す治具で、最終形には残らない
-- 軸 shaft_j の鍔は下の面（法線 270 度）の高さで下を切ってある。刷る向きは PRINT_POSE
+- phase_comb は組立の途中で外す治具で、最終形には残らない
+- 軸は数珠つなぎ: gear_j（+X、ボス + Ø5 軸受け + 雌穴）← cam_4..0（雄スタブ + 雌穴）← shaft_j（-X の端、雄スタブ + Ø5 軸受け）。刷る向きは PRINT_POSE
 """
 import json
 import math
@@ -48,8 +48,7 @@ GEAR_X1 = mm(P.GEAR_X1)
 LASH = mm(P.GEAR_LASH)                      # 1 噛合のバックラッシュ（0.1）。2 枚で半分ずつ（歯厚を 0.05 ずつ細らせる）
 
 # --- この部品側で足した定数（params に無い。理由を各行に）---------------------------------------
-HUB_R = mm(P.SLEEVE_R) - 0.01               # カムのハブの頂点半径。板の最小半径 5.2 と同じだと頂点が板の縁に接して boolean が縮退するので 0.01 内側
-SHAFT_NECK_CLR = 0.2                        # クリップ溝の -X 側の軸方向の遊び（クリップ厚 1.5 + 0.2 = 溝幅 1.7。軸全体の遊びと同じ 0.2）
+STUB_OVERLAP = 0.4                          # カムの雄スタブを板の中へ重ねる量（板の +X 面と面一にしない。穴の底より +X）
 RIB_NORMALS = (30, 150, 270)                # 潰しリブを付ける穴の面の法線（度）。切り落とす角（60 度）の側の面（90 度）を避けた 1 面おき
 KEY_N = (math.cos(math.radians(P.HEX_KEY_NORMAL_DEG)), math.sin(math.radians(P.HEX_KEY_NORMAL_DEG)))   # 切り落とし面の法線
 FIRST_LAYER = mm(P.FIRST_LAYER_CHAMFER)     # 第 1 層の膨らみ対策の面取り（0.3、45 度）
@@ -57,16 +56,12 @@ CAM_BORE_PAD = 1.0                          # 穴のカッターの突き出し
 COUPLER_WALL = 2.45                         # 受けの肉（長腕の先 18 + 0.15 + 2.45 = 20.6 = RECV_BAR_R）
 COUPLER_CAP_R = 17.5                        # 受けの +X 側の蓋（半円）の半径。右腕のポケットの先 16.15 から 1.35 の肉。歯底 17.75 より内
 MOUTH_RELIEF = FIRST_LAYER                  # ポケットの口の 45 度の面取り（刷るときベッド側の第 1 層の膨らみを逃がす）
-CLIP_R_IN = 2.95                            # C クリップの内径の半径（溝の底 R2.9 に 0.05）
-CLIP_T_RADIAL = 1.5                         # C クリップの輪の肉（半径方向 1.5mm）
-CLIP_MOUTH = 5.0                            # C クリップの口の幅（内周での弦、5.0mm。軸の溝の底の径 5.8 を 0.8 広げて通す）
-CLIP_LEADIN = 0.4                           # 口の内側の角の面取り
 COMB_HANDLE_Y = 7.0                         # 治具の持ち手の Y 半幅
 COMB_HANDLE_TOP = mm(P.PLATE_Z0) - 0.6      # 持ち手の上端（案内板の下面 63.5 から 0.6）
 COMB_EAR_H = 3.5                            # 耳の高さ（パッドの上面から。板の上端 4.0 より低くして、耳の上面が板の上端と面一にならないように）
-LABEL_W, LABEL_H = 3.4, 2.2                 # カムの番号の箱。+X 面でハブの外に全 25 枚が入る最大（3.0 mm 高さは入らない）
-LABEL_STROKE = 0.4                          # 番号の線の太さ
-LABEL_MARGIN = 0.3                          # 番号と板の縁・ハブの余裕
+LABEL_W, LABEL_H = 4.6, 3.0                 # カムの番号の箱。+X 面でスタブ（外接円 R3.2）の外に全 25 枚が入る（CAM_LABEL_H 3.0）
+LABEL_STROKE = 0.5                          # 番号の線の太さ
+LABEL_MARGIN = 0.3                          # 番号と板の縁・スタブの余裕
 VENT = 3.0                                  # 画素の茎の通気穴（内部の空洞を外へ開けて連結成分を 1 にする。3mm 角、刷るとき橋 3mm）
 
 INFO = {}                                   # run_moving.py が report.json に入れる計算値
@@ -368,102 +363,44 @@ def row_cams(j):
     return sorted(((i, cam_x(i, j) - CAM_T / 2, cam_x(i, j) + CAM_T / 2) for i in range(P.N)), key=lambda t: t[1])
 
 
-def hub_end(i, j):
-    """カム (i, j) のハブの +X 端 = 次の部材（隣のカム or 歯車）の -X 面"""
-    cams = row_cams(j)
-    for n, (ii, x0, x1) in enumerate(cams):
-        if ii == i:
-            return cams[n + 1][1] if n + 1 < len(cams) else GEAR_X0
-    raise KeyError((i, j))
+def stub_end(i, j):
+    """カム (i, j) の雄スタブの +X 端 = 次の部品（隣のカム・歯車の部品）の -X 面 + 雌穴の深さ（スタブの先は穴の底に着く）"""
+    if i + 1 < P.N:
+        return cam_x(i + 1, j) - CAM_T / 2 + mm(P.JOINT_ENGAGE_CAM)
+    return GEAR_X0 + mm(P.JOINT_ENGAGE_GEAR)
 
 
-def clip_x(j):
-    """軸 j の C クリップの X の範囲（最も -X のカムの -X 面に当てる）"""
-    x1 = row_cams(j)[0][1]
-    return x1 - mm(P.CLIP_T), x1
-
-
-# --- 軸 ------------------------------------------------------------------------------------------------
+# --- 数珠つなぎの -X の端の部品 shaft_j ---------------------------------------------------------------------------
 def build_shaft(j):
-    """軸 j（軸の中心を原点にした局所）。切り落とし六角 AF6.5 + +X の鍔（1.2mm）+ 両端の丸（Ø5.0）+ クリップ溝。
-    刷るときは組立の向きのまま寝かせ、六角の下の面（法線 270 度）がベッド。鍔はこの面の高さで下を切る
-    （寝かせたとき鍔だけが下へ 1.5mm 張り出して軸の本体がベッドから浮かないように）"""
+    """-X の端の部品 shaft_j（軸の中心を原点にした局所）。切り落とし六角のスタブ AF5.5 を -X 端（肩 -43.6）から最も -X のカムの雌穴の底まで、
+    -X の丸い軸受け Ø5（-44.6..-43.6）。スタブのカムの手前の部分は裸で、位相合わせ治具が掛かる。刷るときは組立の向きのまま寝かせ、
+    六角の下の面（法線 270 度）がベッド"""
     half_l = mm(P.SHAFT_HALF_L)
-    jr = mm(P.JOURNAL_D) / 2
     je = mm(P.JOURNAL_END)
-    x_col = mm(P.COLLAR_X0)
-    sh = prism(shaft_poly(), "x", -half_l, x_col, f"shaft_{j}")
-    collar = clip_half(hex_poly(mm(P.COLLAR_AF)), (0.0, -1.0), mm(P.SHAFT_AF) / 2)       # v >= -3.25
-    union(sh, prism(collar, "x", x_col, half_l, "collar"))
-    union(sh, prism(circle((0, 0), jr, 48), "x", -je, -half_l, "journal_n"))
-    union(sh, prism(circle((0, 0), jr, 48), "x", half_l, je, "journal_p"))
-    # クリップの溝（底の半径 2.9 の丸い首）
-    c0, c1 = clip_x(j)
-    cut(sh, annulus_x(mm(P.CLIP_GROOVE_R), 6.0, c0 - SHAFT_NECK_CLR, c1, 64, "clip_groove"))
+    x_end = row_cams(j)[0][1] + mm(P.JOINT_ENGAGE_CAM)
+    sh = prism(shaft_poly(), "x", -half_l, x_end, f"shaft_{j}")
+    union(sh, prism(circle((0, 0), mm(P.JOURNAL_D) / 2, 48), "x", -je, -half_l, "journal_n"))
+    INFO.setdefault("shaft_len_mm", {})[str(j)] = round(x_end + half_l, 3)
     return sh
 
 
-# --- C クリップ ----------------------------------------------------------------------------------------
-def clip_strain():
-    """C クリップを軸の首（径 5.8）へ嵌めるときの最大ひずみ。円弧の梁に先端の力 F が掛かる（カスティリアーノ）。
-    ひずみ = δ (1 + cos b)(t / 2) / (R^2 J)、J = ∫ (sin psi + cos b)^2 dpsi（輪の両端の間）、R = 輪の中心半径、b = 口の半角。
-    δ = 首の径 - 口の幅。面取りの前の口（5.0）で計算した値を strain_pct、面取り後の実効の口で計算した値を strain_effective_pct にする"""
-    r_in = CLIP_R_IN
-    t = CLIP_T_RADIAL
-    rm = r_in + t / 2
-    beta = math.asin(CLIP_MOUTH / 2 / r_in)
-    a, b = -math.pi / 2 + beta, 3 * math.pi / 2 - beta
-    n = 4000
-    j = 0.0
-    for q in range(n):
-        psi = a + (b - a) * (q + 0.5) / n
-        j += (math.sin(psi) + math.cos(beta)) ** 2 * (b - a) / n
-    neck = 2 * mm(P.CLIP_GROOVE_R)
-    mouth_eff = 2 * min(r_in * math.sin(beta + CLIP_LEADIN / r_in), (r_in + CLIP_LEADIN) * math.sin(beta))   # 面取り後の口の最小の幅
-
-    def eps(delta):
-        return delta * (1 + math.cos(beta)) * (t / 2) / (rm ** 2 * j) * 100.0
-
-    return {"strain_pct": eps(neck - CLIP_MOUTH), "strain_effective_pct": eps(neck - mouth_eff), "mouth_mm": CLIP_MOUTH,
-            "mouth_effective_mm": mouth_eff, "neck_diameter_mm": neck, "spread_mm": neck - CLIP_MOUTH,
-            "spread_effective_mm": neck - mouth_eff, "r_in_mm": r_in, "r_out_mm": r_in + t, "thickness_mm": t,
-            "beta_deg": math.degrees(beta)}
-
-
-def build_clip(j):
-    """C クリップ（軸の中心を原点にした局所）。口は下（ψ = 270 度。上から軸の首へ押し込んだ姿）。輪の面は YZ、厚み 1.5mm"""
-    c0, c1 = clip_x(j)
-    r_in, r_out = CLIP_R_IN, CLIP_R_IN + CLIP_T_RADIAL
-    beta = math.asin(CLIP_MOUTH / 2 / r_in)
-    a0 = math.radians(270.0) + beta                  # 口の +側の端（輪はここから ccw に一周する）
-    a1 = math.radians(270.0) - beta + 2 * math.pi
-    n = 72
-    outer = [(r_out * math.cos(a0 + (a1 - a0) * q / n), r_out * math.sin(a0 + (a1 - a0) * q / n)) for q in range(n + 1)]
-    # 口の内側の角を面取りする（軸の首を口へ導く）。先端面（半径方向）の r_in + li の点と、内周で li / r_in だけ戻った点を結ぶ
-    li = CLIP_LEADIN
-    ta1, ta0 = a1 - li / r_in, a0 + li / r_in
-    inner = [((r_in + li) * math.cos(a1), (r_in + li) * math.sin(a1))]
-    inner += [(r_in * math.cos(ta1 - (ta1 - ta0) * q / n), r_in * math.sin(ta1 - (ta1 - ta0) * q / n)) for q in range(n + 1)]
-    inner.append(((r_in + li) * math.cos(a0), (r_in + li) * math.sin(a0)))
-    poly = outer + inner
-    return prism(poly, "x", c0, c1, f"shaft_clip_{j}")
-
-
 # --- 歯車 gear_j -----------------------------------------------------------------------------------------
-def build_bore_part(outline, x0, x1, name):
-    """外形 outline を x0..x1 に押し出し、切り落とし六角 + 潰しリブの穴を貫通させ、ベッド側（-X 面）の穴の縁に 0.3 の面取り"""
-    ob = prism(outline, "x", x0, x1, name)
-    cut(ob, prism(bore_poly(True), "x", x0 - CAM_BORE_PAD, x1 + CAM_BORE_PAD, name + "_bore"))
-    cut(ob, bore_chamfer(x0))
-    return ob
-
-
 def build_gear():
+    """+X の端の部品 gear_j（軸の中心を原点にした局所）。歯車（X 40.0..42.4）+ 丸いボス Ø9.5（42.4..43.6、パッドの内面に当たる肩）+ +X の
+    丸い軸受け Ø5（43.6..44.6）+ -X 面から開く雌の六角穴（深さ 2.4 = 歯幅。切り落とし六角 + 潰しリブ、口に 0.3 の面取り）。
+    刷るときは歯の輪郭を XY 面にして -X 面（穴の口）がベッド、ボスと軸受けが上"""
     g = chain_gear_spec()
-    return build_bore_part(gear_outline(g, P.CHAIN_TOOTH_PHASE_DEG), GEAR_X0, GEAR_X1, "gear"), g
+    x0, x1 = GEAR_X0, GEAR_X1
+    plate = prism(gear_outline(g, P.CHAIN_TOOTH_PHASE_DEG), "x", x0, x1, "gear")
+    cut(plate, prism(bore_poly(True), "x", x0 - CAM_BORE_PAD, x1 + CAM_BORE_PAD, "gear_bore"))
+    cut(plate, bore_chamfer(x0))
+    # 穴は歯車の板だけを貫き、ボスの面が底になる（ボスは板の +X 面に接して付ける。穴を先に開けてから接合）
+    xb = x1 + mm(P.GEAR_BOSS_T)
+    union(plate, prism(circle((0, 0), mm(P.GEAR_BOSS_D) / 2, 64), "x", x1, xb, "boss"))
+    union(plate, prism(circle((0, 0), mm(P.JOURNAL_D) / 2, 48), "x", xb, mm(P.JOURNAL_END), "journal_p"))
+    return plate, g
 
 
-# --- カム cam_i_j -----------------------------------------------------------------------------------------
 _CAMS = None
 
 
@@ -486,7 +423,7 @@ def label_cutters(i, j, contour, x_face):
     nrm /= np.hypot(nrm[:, 0], nrm[:, 1])[:, None]
     gx, gy = np.meshgrid(np.linspace(-LABEL_W / 2, LABEL_W / 2, 5), np.linspace(-LABEL_H / 2, LABEL_H / 2, 4))
     box_pts = np.stack([gx.ravel(), gy.ravel()], axis=1)
-    hub = mm(P.SLEEVE_R) + LABEL_MARGIN
+    hub = mm(P.SHAFT_AF) / math.sqrt(3.0) + LABEL_MARGIN       # スタブの外接円の外
     angles = sorted(np.arange(0.0, 360.0, 3.0), key=lambda t: abs(((t - 90.0 + 180.0) % 360.0) - 180.0))
     found = None
     for r in np.arange(6.0, 10.5, 0.15):
@@ -527,22 +464,22 @@ def label_cutters(i, j, contour, x_face):
 
 
 def build_cam(i, j):
-    """カム (i, j)（軸の中心を原点にした局所。X は組立の位置）。板 + ハブ（+X、次の部材まで）+ 切り落とし六角の穴 + 潰しリブ + 番号"""
+    """カム (i, j)（軸の中心を原点にした局所。X は組立の位置）。板 + 雄スタブ（+X、次の部品の雌穴の底まで）+ 雌穴（-X 面、深さ 2.8、
+    切り落とし六角 + 潰しリブ、口に 0.3 の面取り）+ 番号"""
     c = load_cams()["cams"][j][i]
     xc = cam_x(i, j)
     x0, x1 = xc - CAM_T / 2, xc + CAM_T / 2
-    xh = hub_end(i, j)
     ob = prism([tuple(p) for p in c["vertices"]], "x", x0, x1, f"cam_{i}_{j}")
-    cut(ob, prism(bore_poly(True), "x", x0 - CAM_BORE_PAD, x1 + CAM_BORE_PAD, "bore"))
-    # ハブは板の +X 面に接して付ける（穴は潰しリブの無い六角。板の穴の壁と面が重ならないように、先に穴を開けてから接合する）
-    hub = prism(circle((0, 0), HUB_R, 48), "x", x1, xh, "hub")
-    cut(hub, prism(bore_poly(False), "x", x1 - CAM_BORE_PAD, xh + CAM_BORE_PAD, "hub_bore"))
-    union(ob, hub)
+    # 雌穴: -X 面から深さ JOINT_ENGAGE_CAM（2.8）の止まり穴。底に肉 1.2
+    cut(ob, prism(bore_poly(True), "x", x0 - CAM_BORE_PAD, x0 + mm(P.JOINT_ENGAGE_CAM), "bore"))
     cut(ob, bore_chamfer(x0))
+    # 雄スタブ: +X 面から次の部品の雌穴の底まで（切り落とし六角 AF5.5）。板の中へ 0.4 重ねる
+    xs = stub_end(i, j)
+    union(ob, prism(shaft_poly(), "x", x1 - STUB_OVERLAP, xs, "stub"))
     cutters, pos = label_cutters(i, j, c["vertices"], x1)
     cut_collection(ob, cutters, f"label_{i}{j}")
     INFO.setdefault("cam_label_pos_mm", {})[f"{i}_{j}"] = [round(pos[0], 2), round(pos[1], 2)]
-    INFO.setdefault("cam_hub_len_mm", {})[f"{i}_{j}"] = round(xh - x1, 3)
+    INFO.setdefault("cam_stub_len_mm", {})[f"{i}_{j}"] = round(xs - x1, 3)
     return ob
 
 
@@ -702,7 +639,7 @@ def build_phase_comb():
 # --- 全部品 ---------------------------------------------------------------------------------------------------
 def part_ids():
     ids = [f"shaft_{j}" for j in range(P.N)] + [f"gear_{j}" for j in range(P.N)]
-    ids += [f"cam_{i}_{j}" for j in range(P.N) for i in range(P.N)] + [f"shaft_clip_{j}" for j in range(P.N)]
+    ids += [f"cam_{i}_{j}" for j in range(P.N) for i in range(P.N)]
     ids += [f"pixel_{i}_{j}" for j in range(P.N) for i in range(P.N)] + ["horn_coupler", "phase_comb"]
     return ids
 
@@ -715,21 +652,15 @@ def build_moving():
         if old is not None:
             drop(old)
     INFO.clear()
-    INFO["clip"] = clip_strain()
 
-    # 軸 + クリップ + 歯車は、行の偶奇ごとに 1 つ作って並べる
-    shafts, clips = {}, {}
-    for par in (0, 1):
-        j0 = par                                       # 偶数行の代表 = 0、奇数行の代表 = 1
-        shafts[par] = build_shaft(j0)
-        clips[par] = build_clip(j0)
+    # 端の部品 shaft_j（行の偶奇で長さが違う）と歯車の部品 gear_j
+    shafts = {par: build_shaft(par) for par in (0, 1)}       # 偶数行の代表 = 0、奇数行の代表 = 1
     gear_t, g = build_gear()
     for j in range(P.N):
         y = axis_y(j)
         out[f"shaft_{j}"] = inst(shafts[j % 2], f"shaft_{j}", (0.0, y, ZC))
-        out[f"shaft_clip_{j}"] = inst(clips[j % 2], f"shaft_clip_{j}", (0.0, y, ZC))
         out[f"gear_{j}"] = inst(gear_t, f"gear_{j}", (0.0, y, ZC))
-    for ob in (*shafts.values(), *clips.values(), gear_t):
+    for ob in (*shafts.values(), gear_t):
         drop(ob)
 
     # カム（25 枚それぞれ別の輪郭）
@@ -766,25 +697,21 @@ PRINT_POSE = {}
 for _j in range(P.N):
     PRINT_POSE[f"shaft_{_j}"] = {
         "euler_deg": (0.0, 0.0, 0.0),
-        "reason": "組立の向きのまま寝かせて刷る（長さ 87mm、立てると太さ 6.5 の 13 倍）。六角の下の面（法線 270 度）がベッド。"
-                  "切り落とし面は上向き（法線 74 度）、他の面は 30 度の斜面。鍔はベッドの面の高さで下を切ってあり、下へ張り出さない。"
-                  "両端の丸（Ø5.0）は六角の端面から 1mm 出る片持ちで、ベッドから 0.75 浮く",
-        "support": "なし。クリップ溝の首（底の半径 2.9、ベッドから 0.35 浮く、長さ 1.7）の下面だけが橋（2mm 以下）で、クリップの下に隠れる"}
+        "reason": "組立の向きのまま寝かせて刷る（長さ 7.5〜13.4mm の六角スタブ + -X の Ø5 軸受け 1mm）。六角の下の面（法線 270 度）がベッド。"
+                  "切り落とし面は上向き、他の面は 30 度の斜面。Ø5 の軸受けは六角の端面から 1mm の片持ちで、ベッドから 0.25 浮く",
+        "support": "なし"}
     PRINT_POSE[f"gear_{_j}"] = {
         "euler_deg": _X_UP,
-        "reason": "歯の輪郭を XY 面にして平置き（厚み 2.4）。歯の側面は鉛直、穴の切り落とし六角とリブも鉛直。ベッド側（-X 面）の穴の縁に 0.3 の面取り",
-        "support": "なし"}
-    PRINT_POSE[f"shaft_clip_{_j}"] = {
-        "euler_deg": _X_UP,
-        "reason": "輪の面を XY 面にして平置き（厚み 1.5）。脚は層に沿って面内でしなる",
-        "support": "なし"}
+        "reason": "歯の輪郭を XY 面にして平置き。-X 面（雌穴の口、0.3 面取り）がベッド。丸いボス Ø9.5（1.2）と +X の Ø5 軸受け（1.0）が上へ立つ。"
+                  "歯の側面・穴の切り落とし六角とリブは鉛直",
+        "support": "なし。雌穴の底（ボスの面、橋 5.9mm）だけが水平な下向き面で、内側"}
 for _j in range(P.N):
     for _i in range(P.N):
         PRINT_POSE[f"cam_{_i}_{_j}"] = {
             "euler_deg": (0.0, -90.0, -90.0),
-            "reason": "板（厚み 4）を平置きにしてハブ（+X）を上へ立てる。-X 面がベッド（穴の縁に 0.3 の面取り）。番号は上になる +X 面。"
-                      "Z まわり -90 度で番号が正立（右 = +Y、上 = +Z）",
-            "support": "なし。輪郭は鉛直な壁、穴の切り落とし六角とリブも鉛直。ハブは板の上の円筒（高さは最長 13mm、径 10.4 の 1.3 倍）"}
+            "reason": "板（厚み 4）を平置きにして雄スタブ（+X、六角 AF5.5）を上へ立てる（高さ 3.5〜15.8、太さの 2.9 倍以下）。-X 面がベッド"
+                      "（雌穴の口に 0.3 の面取り）。番号は上になる +X 面。Z まわり -90 度で番号が正立（右 = +Y、上 = +Z）",
+            "support": "なし。輪郭は鉛直な壁、雌穴の切り落とし六角とリブも鉛直。雌穴の底（橋 5.9mm、内側）だけが水平な下向き面"}
         PRINT_POSE[f"pixel_{_i}_{_j}"] = {
             "euler_deg": (180.0, 0.0, 0.0),
             "reason": "頭の上面（見える面）を下にして立てる（上縁に 0.3 の面取り）。つばは頭の下側が 45 度の面取り。茎は 9mm 角、"

@@ -727,55 +727,34 @@ def hex_rib_regions(axis_j, x0, x1):
     return regions
 
 
+def joint_seams(j):
+    """軸 j の数珠つなぎの継ぎ目（雌, 雄）。+X の歯車の部品から順に: 歯車の雌穴 <- カム 4 の雄スタブ、カム 4 の雌穴 <- カム 3、...、
+    カム 1 の雌穴 <- カム 0、カム 0 の雌穴 <- -X の端の部品 shaft_j のスタブ。歯車からカム 0 までは 5 継ぎ目"""
+    order = [f"gear_{j}"] + [f"cam_{i}_{j}" for i in range(P.N - 1, -1, -1)] + [f"shaft_{j}"]
+    return [(order[k], order[k + 1]) for k in range(len(order) - 1)]
+
+
 def designed_overlaps(scene):
-    """{(a, b): 仕様}。a < b の順。仕様 = {kind, regions, components, minMm3, maxMm3, theoryMm3}"""
+    """{(a, b): 仕様}。a < b の順。仕様 = {kind, regions, components, minMm3, maxMm3, theoryMm3}。
+    許すのは継ぎ目の雌穴の潰しリブだけ（場所 = 雌の部品の -X 面から穴の深さの範囲 x 六角の 3 面のリブ位置、個数 3、量 = 理論値）。
+    リブは差し込みの最後の 2.8mm（歯車の部品は 2.4）だけ。雌穴の -X 側の縁の面取り FIRST_LAYER_CHAMFER だけ短くなりうるので、
+    量の下限は（深さ - 面取り）、上限は深さの理論値"""
     specs = {}
     crush = P.HEX_RIB_CRUSH * 1000.0
     width = P.HEX_RIB_W * 1000.0
-    chamfer = P.FIRST_LAYER_CHAMFER * 1000.0      # 穴のベッド側の縁の面取り 0.3mm 分、リブの長さが短くなる
+    chamfer = P.FIRST_LAYER_CHAMFER * 1000.0
     for j in range(P.N):
-        shaft = f"shaft_{j}"
-        for i in range(P.N):
-            cam = f"cam_{i}_{j}"
-            cx = K.cam_x(i, j) * 1000.0
-            theory = P.HEX_RIB_FACES * width * crush * (P.CAM_T * 1000.0 - chamfer)
-            specs[tuple(sorted((shaft, cam)))] = {
-                "kind": "hex-crush-ribs", "regions": hex_rib_regions(j, cx - P.CAM_T * 500.0, cx + P.CAM_T * 500.0),
-                "components": P.HEX_RIB_FACES, "theoryMm3": theory,
-                "minMm3": theory * 0.98, "maxMm3": theory * 1.02,
-                "basis": "潰しリブ 3 本 x 幅 0.6 x 潰し代 0.18 x（カム厚 4.0 - 穴の面取り 0.3）"}
-        gear = f"gear_{j}"
-        theory = P.HEX_RIB_FACES * width * crush * (P.HEX_RIB_L_GEAR * 1000.0 - chamfer)
-        specs[tuple(sorted((shaft, gear)))] = {
-            "kind": "hex-crush-ribs",
-            "regions": hex_rib_regions(j, P.GEAR_X0 * 1000.0, P.GEAR_X1 * 1000.0),
-            "components": P.HEX_RIB_FACES, "theoryMm3": theory,
-            "minMm3": theory * 0.98, "maxMm3": theory * 1.02,
-            "basis": "潰しリブ 3 本 x 幅 0.6 x 潰し代 0.18 x（歯幅 2.4 - 穴の面取り 0.3）"}
-    # SG92R の取付耳と柵の潰しリブ（片側 2 本 x 柵 2 枚 x 耳 2 つ = 8 本）。耳と柵の隙間 0.2、リブの高さ 0.3 で潰し代 0.1
-    SG = P.SG
-    ear_x0 = P.SERVO_BODY_X0 * 1000.0 + SG.FLANGE_BOTTOM_Z * 1000.0
-    ear_x1 = ear_x0 + SG.FLANGE_T * 1000.0
-    ear_z0 = P.SERVO_AXIS_Z * 1000.0 - SG.BODY_W * 1000.0 / 2.0
-    fence_top = ear_z0 + 8.0
-    clr = P.SERVO_CLR * 1000.0
-    body_y0 = (SG.BODY_CENTER_X - SG.BODY_L / 2) * 1000.0
-    body_y1 = (SG.BODY_CENTER_X + SG.BODY_L / 2) * 1000.0
-    ear_y0 = (SG.BODY_CENTER_X - SG.FLANGE_L / 2) * 1000.0
-    ear_y1 = (SG.BODY_CENTER_X + SG.FLANGE_L / 2) * 1000.0
-    rib_y = [ear_y0 - clr + 0.9, body_y0 - clr - 1.5, body_y1 + clr + 1.5, ear_y1 + clr - 0.9]
-    rib_w = 0.6                      # parts_static.EAR_RIB_W
-    crush_depth = 0.1                # 柵のリブ高さ 0.3（EAR_RIB_H）- 耳と柵の隙間 0.2（EAR_GAP）
-    rib_top = fence_top - 1.6 + crush_depth   # リブの上端は柵の上 1.6 下から 45 度で耳側へ下がる。耳の面（リブの根元から 0.2）での高さ
-    regions = []
-    for y in rib_y:
-        regions.append([[ear_x0, y - rib_w / 2, ear_z0], [ear_x0 + crush_depth, y + rib_w / 2, rib_top]])
-        regions.append([[ear_x1 - crush_depth, y - rib_w / 2, ear_z0], [ear_x1, y + rib_w / 2, rib_top]])
-    max_volume = len(regions) * rib_w * crush_depth * (rib_top - ear_z0)
-    specs[("housing", "sg92r")] = {
-        "kind": "ear-crush-ribs", "regions": regions, "components": len(regions), "theoryMm3": max_volume,
-        "minMm3": len(regions) * 0.2, "maxMm3": max_volume * 1.02,
-        "basis": "柵の潰しリブ 8 本 x 幅 0.6 x 潰し代 0.1 x 長さ（耳の下端 18.2 からリブの上端 24.7 まで 6.5 以下）。上限は全部が 6.5 のとき"}
+        for female, male in joint_seams(j):
+            depth = (P.JOINT_ENGAGE_GEAR if female.startswith("gear_") else P.JOINT_ENGAGE_CAM) * 1000.0
+            x0 = float(scene.solids[female].lo[0])
+            full = P.HEX_RIB_FACES * width * crush * depth
+            short = P.HEX_RIB_FACES * width * crush * (depth - chamfer)
+            specs[tuple(sorted((female, male)))] = {
+                "kind": "joint-crush-ribs", "female": female, "male": male,
+                "regions": hex_rib_regions(j, x0 - 0.02, x0 + depth + 0.02),
+                "components": P.HEX_RIB_FACES, "theoryMm3": short, "theoryFullDepthMm3": full,
+                "minMm3": short * 0.98, "maxMm3": full * 1.02,
+                "basis": f"継ぎ目の雌穴の潰しリブ 3 本 x 幅 0.6 x 潰し代 0.18 x 長さ（穴の深さ {depth:.1f}、面取り分 {chamfer:.1f} まで短くなりうる）"}
     return specs
 
 
