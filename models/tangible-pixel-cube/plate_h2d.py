@@ -50,12 +50,38 @@ def load(part_id):
     return {"name": PREFIX + part_id, "v": v, "t": t, "lo": lo, "w": hi[0] - lo[0], "d": hi[1] - lo[1], "h": hi[2] - lo[2]}
 
 
+def changed_since(rev):
+    """rev（刷った版のコミット）から prints/.../parts の STL が変わった部品 id。消えた部品は含めない"""
+    import subprocess
+    ids = set()
+    for name in os.listdir(PARTS_DIR):
+        if not name.endswith(".stl"):
+            continue
+        rel = f"prints/tangible-pixel-cube/parts/{name}"
+        old = subprocess.run(["git", "rev-parse", f"{rev}:{rel}"], cwd=ROOT, capture_output=True, text=True)
+        new = subprocess.run(["git", "hash-object", rel], cwd=ROOT, capture_output=True, text=True, check=True)
+        if old.returncode != 0 or old.stdout.strip() != new.stdout.strip():
+            ids.add(os.path.splitext(name)[0])
+    return ids
+
+
 def main():
     sys.stdout.reconfigure(encoding="utf-8")
+    global LEFT, RIGHT_GROUPS, NAME
+    reprint = None
+    if len(sys.argv) > 2 and sys.argv[1] == "--reprint-since":
+        # 刷り直しだけのプレート: 指定したコミットから形が変わった部品だけを並べる（Studio の表示は全部品の版のまま）
+        reprint = changed_since(sys.argv[2])
+        LEFT = [p for p in LEFT if p in reprint]
+        RIGHT_GROUPS = [[p for p in g if p in reprint] for g in RIGHT_GROUPS]
+        NAME = "tangible-pixel-cube-h2d-reprint"
+        print(f"[h2d] {sys.argv[2]} から変わった部品 {len(reprint)} 個: {' '.join(sorted(reprint))}")
     every = set(LEFT) | {p for g in RIGHT_GROUPS for p in g}
     on_disk = {os.path.splitext(f)[0] for f in os.listdir(PARTS_DIR) if f.endswith(".stl")}
-    if every != on_disk:
+    if reprint is None and every != on_disk:
         raise SystemExit(f"部品の過不足: 足りない {sorted(on_disk - every)} / 余分 {sorted(every - on_disk)}")
+    if reprint is not None and every != reprint:
+        raise SystemExit(f"並びに無い部品: {sorted(reprint - every)}")
 
     placed = []
     # 左の列: 大物を縦に積む
@@ -72,6 +98,8 @@ def main():
     x_max = BED_X - MARGIN
     y = MARGIN
     for group in RIGHT_GROUPS:
+        if not group:
+            continue
         x, shelf = x0, 0.0
         for pid in group:
             p = load(pid)
@@ -104,6 +132,8 @@ def main():
     shutil.copyfile(out, os.path.join(ROOT, "prints", "tangible-pixel-cube", NAME + ".3mf"))
     print(f"[h2d] {out}（{os.path.getsize(out):,} バイト）")
 
+    if reprint is not None:
+        return
     # Studio の「印刷プレート」に載せる（viewer/studio/plates/tangible-pixel-cube.json と配置済みの STL）
     import studio_plate  # noqa: E402
     manifest = studio_plate.export_studio_plate("tangible-pixel-cube", out, bed=(BED_X, BED_Y))
