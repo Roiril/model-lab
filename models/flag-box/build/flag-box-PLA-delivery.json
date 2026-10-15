@@ -1,0 +1,130 @@
+{
+ "pass": true,
+ "calibration": {
+  "known_unchanged": true,
+  "injected_1mm_shift_rejected": true
+ },
+ "gcode_md5": "4772D2BC62FF1F90D5D8CA325CC2AFA6",
+ "settings": {
+  "printer_model": "Bambu Lab X1 Carbon",
+  "nozzle_diameter": [
+   "0.4"
+  ],
+  "layer_height": "0.2",
+  "wall_loops": "3",
+  "sparse_infill_density": "15%",
+  "enable_support": "0",
+  "curr_bed_type": "Textured PEI Plate",
+  "elefant_foot_compensation": "0.15"
+ },
+ "parts": [
+  {
+   "name": "box",
+   "actual_bounds_mm": [
+    [
+     17.375,
+     87.25,
+     0.0
+    ],
+    [
+     85.375,
+     155.25,
+     65.0
+    ]
+   ],
+   "input_bounds_error_mm": 0.0,
+   "volume_ratio_to_stl": 0.9999999998393271,
+   "triangles": 234
+  },
+  {
+   "name": "roof",
+   "actual_bounds_mm": [
+    [
+     91.375,
+     87.25,
+     0.0
+    ],
+    [
+     159.375,
+     155.25,
+     30.0
+    ]
+   ],
+   "input_bounds_error_mm": 0.0,
+   "volume_ratio_to_stl": 1.0000000394790256,
+   "triangles": 334
+  },
+  {
+   "name": "flag",
+   "actual_bounds_mm": [
+    [
+     165.375,
+     87.25,
+     0.0
+    ],
+    [
+     205.375,
+     142.25,
+     15.0
+    ]
+   ],
+   "input_bounds_error_mm": 0.0,
+   "volume_ratio_to_stl": 0.9999990062284507,
+   "triangles": 1068
+  },
+  {
+   "name": "bearing_button",
+   "actual_bounds_mm": [
+    [
+     211.375,
+     87.25,
+     0.0
+    ],
+    [
+     223.375,
+     99.25,
+     11.75
+    ]
+   ],
+   "input_bounds_error_mm": 0.0,
+   "volume_ratio_to_stl": 0.9999987259848032,
+   "triangles": 892
+  },
+  {
+   "name": "key_left",
+   "actual_bounds_mm": [
+    [
+     229.375,
+     87.25,
+     0.0
+    ],
+    [
+     238.625,
+     94.75,
+     3.0
+    ]
+   ],
+   "input_bounds_error_mm": 0.0,
+   "volume_ratio_to_stl": 0.9999997917460832,
+   "triangles": 84
+  },
+  {
+   "name": "key_right",
+   "actual_bounds_mm": [
+    [
+     17.375,
+     161.25,
+     0.0
+    ],
+    [
+     26.625,
+     168.75,
+     3.0
+    ]
+   ],
+   "input_bounds_error_mm": 0.0,
+   "volume_ratio_to_stl": 0.9999997946275857,
+   "triangles": 84
+  }
+ ]
+}

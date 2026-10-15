@@ -1,0 +1,61 @@
+{
+ "method": "signed tetrahedral mass, centroid and inertia; prescribed quintic inverse dynamics",
+ "calibration": {
+  "pass": true,
+  "cube_side_m": 0.01,
+  "volume_m3": 1.0000000000000002e-06,
+  "inertia_per_density_m5": 1.6666666666666674e-11,
+  "expected_m5": 1.666666666666667e-11
+ },
+ "assumptions": {
+  "printed_and_horn_density_kg_m3": 1240.0,
+  "extra_drag_bound_nm": 0.01,
+  "drag_note": "Added conservative allowance. Actual friction is unmeasured.",
+  "trajectory_seconds": 2.0,
+  "motion": "0 to 90 degrees, quintic, zero endpoint speed and acceleration"
+ },
+ "parts": {
+  "flag": {
+   "mass_kg": 0.01640885654710522,
+   "centroid_relative_m": [
+    0.01720048350681166,
+    0.002080056436312409,
+    0.0018937352797106918
+   ],
+   "inertia_x_kg_m2": 4.519629779559476e-06
+  },
+  "bearing_button": {
+   "mass_kg": 0.000823380012981924,
+   "centroid_relative_m": [
+    0.02566508448870327,
+    -3.8653525119025e-05,
+    8.56929869946815e-06
+   ],
+   "inertia_x_kg_m2": 8.761774000327585e-09
+  },
+  "horn": {
+   "mass_kg": 0.0004582825308662662,
+   "centroid_relative_m": [
+    0.014859465828451907,
+    -0.000630918033204986,
+    9.2213512416256e-10
+   ],
+   "inertia_x_kg_m2": 2.870305550227154e-08
+  }
+ },
+ "result": {
+  "total_moving_mass_kg": 0.01769051909095341,
+  "inertia_x_kg_m2": 4.557094609062075e-06,
+  "peak_gravity_nm": 0.0003316798515430702,
+  "peak_inertia_gravity_nm": 0.00033621634953299675,
+  "with_drag_bound_nm": 0.010336216349532997,
+  "continuous_budget_nm": 0.08166666666666667,
+  "peak_velocity_deg_s": 84.375,
+  "peak_acceleration_deg_s2": 129.9037388625001,
+  "endpoint_velocity_deg_s": [
+   0.0,
+   0.0
+  ],
+  "pass": true
+ }
+}

@@ -1,0 +1,94 @@
+{
+ "pass": true,
+ "calibration": {
+  "known_unchanged": true,
+  "injected_1mm_shift_rejected": true
+ },
+ "gcode_md5": "36A22FB5827D969F028BD1E94A065470",
+ "settings": {
+  "printer_model": "Bambu Lab X1 Carbon",
+  "nozzle_diameter": [
+   "0.4"
+  ],
+  "layer_height": "0.2",
+  "wall_loops": "3",
+  "sparse_infill_density": "15%",
+  "enable_support": "0",
+  "curr_bed_type": "Textured PEI Plate",
+  "elefant_foot_compensation": "0.15"
+ },
+ "parts": [
+  {
+   "name": "horn-fit-trial",
+   "actual_bounds_mm": [
+    [
+     78.375,
+     108.0,
+     0.0
+    ],
+    [
+     109.375,
+     148.0,
+     10.5
+    ]
+   ],
+   "input_bounds_error_mm": 0.0,
+   "volume_ratio_to_stl": 0.999999051348495,
+   "triangles": 1034
+  },
+  {
+   "name": "servo-fit-trial",
+   "actual_bounds_mm": [
+    [
+     115.375,
+     108.0,
+     0.0
+    ],
+    [
+     144.375,
+     146.0,
+     17.0
+    ]
+   ],
+   "input_bounds_error_mm": 0.0,
+   "volume_ratio_to_stl": 0.9999999936062499,
+   "triangles": 126
+  },
+  {
+   "name": "bearing_button",
+   "actual_bounds_mm": [
+    [
+     150.375,
+     108.0,
+     0.0
+    ],
+    [
+     162.375,
+     120.0,
+     11.75
+    ]
+   ],
+   "input_bounds_error_mm": 0.0,
+   "volume_ratio_to_stl": 0.9999987259847894,
+   "triangles": 892
+  },
+  {
+   "name": "key_right",
+   "actual_bounds_mm": [
+    [
+     168.375,
+     108.0,
+     0.0
+    ],
+    [
+     177.625,
+     115.5,
+     3.0
+    ]
+   ],
+   "input_bounds_error_mm": 0.0,
+   "volume_ratio_to_stl": 0.9999997946275876,
+   "triangles": 84
+  }
+ ]
+}

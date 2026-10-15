@@ -1,0 +1,82 @@
+{
+ "model": "flag-box",
+ "request": "① 外から見て一辺70mm以下の立方体。天面に寝ている旗（板）がSG92R1台で0°から90°まで起き上がる。② 見える面にサポートなしできれいに刷れる。③ SG92Rとホーンはmodels/sg92r-photo。④ 印刷部品とSG92R・付属ホーンだけ。ねじ・接着剤・結束バンドなし。工具なし。壊さず分解。⑤ 物理検証と組立検証。⑥ PLA、X1C用gcode.3mf。変更はmodels/flag-boxとprints/flag-boxだけ。Blenderはbackground。このブランチにコミット可。pushなし。",
+ "requirements": [
+  {
+   "id": "R1",
+   "text": "① 閉じた外形70mm以下の立方体。SG92R1台で旗0〜90度。",
+   "checks": [
+    "motion.interference",
+    "interface.drive", "assembly.envelope", "motion.torque", "manual:実機でソフトの角度端点を合わせる"
+   ]
+  },
+  {
+   "id": "R2",
+   "text": "④⑤ 工具とねじを使わず組めて動き、分解できる。",
+   "checks": [
+    "assembly.path",
+    "interface.retention", "instrument.calibration", "manual:爪を指で押し3回着脱する。摩擦と破損を確かめる"
+   ]
+  },
+  {
+   "id": "C3",
+   "text": "②⑥ PLA。X1C用gcode.3mf。見える面をサポート無しできれいに刷る。外装3mm。",
+   "checks": [
+    "print.slice",
+    "print.grounding",
+    "print.slender"
+   ]
+  },
+  {
+   "id": "C4",
+   "text": "③ SG92Rとホーンの正本をimport。配線は上開き窓へ置く。",
+   "checks": [
+    "assembly.path",
+    "unknowns.resolved", "manual:試し刷りで個体差と配線経路を確認する"
+   ]
+  }
+ ],
+ "envelope_mm": [
+  70,
+  70,
+  70
+ ],
+ "uses": [
+  "sg92r"
+ ],
+ "parts": {
+  "components": {},
+  "jigs": [],
+  "slender_ok": {}
+ },
+ "motion": {
+  "actuator": "horn",
+  "servo": "sg92r",
+  "exclude": []
+ },
+ "allowances": [
+  {"type":"reference_internal","pairs":[["servo","horn"]],"max_mm3":0.05,"basis":"正本どうしの同軸嵌合。円筒近似のスプラインとソケットは同径。浮動小数点メッシュの共通体積最大0.029983mm3。印刷部品には適用しない。"},
+  {"type":"snap","pairs":[["roof","key_left"],["roof","key_right"]],"engage_mm":6,"deflection_mm":0.3,"strain_percent":1.6333,"basis":"別刷りの留め具だけ。L5.75mm、t1.2mm、δ0.3mm。ε=1.5tδ/L²=1.6333%。層内で曲がる向きに寝かせて刷る。最後に重なりを残さない。"}
+ ],
+ "interfaces": [
+  {"id":"horn-flag","type":"drive","driver":"horn","driven":"flag","sides":"both","max_play_deg":3},
+  {"id":"flag-button","type":"drive","driver":"flag","driven":"bearing_button","sides":"both","max_play_deg":5},
+  {"id":"flag-out","type":"retention","parts":["flag","horn","bearing_button"],"direction":[1,0,0],"max_free_mm":1,"engage_depth_mm":3},
+  {"id":"flag-in","type":"retention","parts":["flag","horn","bearing_button"],"direction":[-1,0,0],"max_free_mm":1,"engage_depth_mm":3},
+  {"id":"roof-up","type":"retention","parts":["roof"],"direction":[0,0,1],"max_free_mm":2,"engage_depth_mm":2},
+  {"id":"servo-up","type":"retention","parts":["servo"],"direction":[0,0,1],"max_free_mm":1,"engage_depth_mm":2}
+  ,{"id":"key-right-out","type":"retention","parts":["key_right"],"direction":[1,0,0],"max_free_mm":2,"engage_depth_mm":2}
+  ,{"id":"key-left-out","type":"retention","parts":["key_left"],"direction":[-1,0,0],"max_free_mm":2,"engage_depth_mm":2}
+ ],
+ "unknowns": [
+  {"id":"sg92r.horn_arm_lengths","trial_part":"prints/flag-box/horn-fit-trial.stl"},
+  {"id":"sg92r.horn_hole_positions","not_applicable":"ホーンの穴を使わず腕の外形で駆動する。"},
+  {"id":"sg92r.output_spline","not_applicable":"付属ホーンを実物のスプラインへ付ける。印刷で歯を作らない。"},
+  {"id":"sg92r.shaft_height","trial_part":"prints/flag-box/horn-fit-trial.stl"},
+  {"id":"sg92r.cover_circle","trial_part":"prints/flag-box/servo-fit-trial.stl"},
+  {"id":"sg92r.wire","accepted_risk":"出口高さは仮値。上開き14mm幅の切欠きを設ける。線の経路は実物で確認する。"},
+  {"id":"sg92r.connector","not_applicable":"コネクタを閉じた穴に通さない。天板を外して線だけを上開き切欠きへ置く。"}
+ ],
+ "slice":{"files":["prints/flag-box/flag-box-PLA.gcode.3mf"]},
+ "waivers": []
+}
