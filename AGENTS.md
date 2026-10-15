@@ -35,6 +35,8 @@ server.js            # HTTP + WebSocket サーバー
 
 ## モデル作成ワークフロー
 
+**動く部品・組み立て・既製部品の嵌め合いがある依頼（箱・機構・サーボで動く物）は、最初に [.agents/skills/mechanism-gate/SKILL.md](.agents/skills/mechanism-gate/SKILL.md) を読む。** 完了は `py -3.11 tools/mechgate.py check <name>` の exit 0 で決まる（自前の検証スクリプトや報告の文章では決まらない）。計器と閾値（`tools/mechgate*`・`lib/printmech/solid_meter.py`）はモデルの作業の中で変えない。
+
 モデルを作成・派生・追加するときは先に [.agents/skills/model-catalog/SKILL.md](.agents/skills/model-catalog/SKILL.md) を読む。表示名と用途を `models/<name>/catalog.json` に記録する。分類の正本は `models/catalog-groups.json`。完了前に `node tools/catalog.js check` を実行する。既存のモデルIDを改名せず整理する。
 
 SG92Rサーボと付属ホーンの正本は `models/sg92r-photo/`。2026-10-07にユーザーが形状を確定した。寸法は同フォルダの `params.py`、出典と仮値は `README.md` を参照する。旧 `models/sg92r/` と `models/horn/` は削除済み。単独の実寸モデルや計測UIを作り直さず、正本を更新する。古いスキルの計測UI手順よりこの指定を優先する。既存ロボットが使う `lib/servo_core.py` の値を正本として扱わない。既存ロボットの形状変更はその依頼の範囲で行う。
@@ -49,6 +51,60 @@ SG92Rサーボと付属ホーンの正本は `models/sg92r-photo/`。2026-10-07�
 4. **ビルド実行** — `./run.sh models/<name>/model.py`（または下記の watch.py 経由）
 5. **ビューワー確認** — サーバーが起動していなければ `node server.js` を起動する
 6. **ユーザーへ報告** — 外形寸法・肉厚・設計上の判断を明示する
+
+---
+
+## 参考モデルを読む（3mf / STL）
+
+ユーザーが既存の設計を「これを参考に」と渡してきたら、**画像ではなく 3mf を受け取る**。
+3mf には寸法・部品構成・造形姿勢・スライス設定が数値で入っており、画像は 3mf から作れる。
+
+```bash
+# 寸法・穴径・部品名・造形姿勢・スライス設定を表で出す（Blender 不要）
+py -3.11 lib/read_3mf.py "C:/Users/kouga/Downloads/<name>.3mf"
+
+# 部品ごとに大きさをそろえた格子で描く（小さい部品が潰れない）
+"C:/Program Files/Blender Foundation/Blender 5.1/blender.exe" --background \
+  --python lib/import_3mf.py -- "<name>.3mf" exports/_ref.png --sheet
+```
+
+`--sheet` は部品ごとに倍率が違う。実寸は必ず `read_3mf.py` の表で読む。
+`--assembled` を付けると造形プレート上の配置、無指定だと実寸のまま 1 列に並ぶ。
+
+作るときの順番:
+
+1. `read_3mf.py` を全参考ファイルに通し、**穴径・肉厚・クリアランスの実績値を集める**
+2. その値を `params.py` に書く（自分で決めた数字より、実際に刷られた数字を優先する）
+3. `--sheet` で描いて**部品の分け方**を見る（どこで割ったか、リブをどう入れたか）
+4. 造形姿勢とサポート設定を見て、**サポート無しで刷れる向き**があるかを確かめる
+
+### 刷るときに渡す形
+
+STL を並べた 3mf にまとめる。プリンタは既存 3mf から読んだ X1C の値
+（256 x 256 x 250mm / 手前左 18 x 28mm は除外域）に合わせてある。
+
+```bash
+py -3.11 tools/plate_3mf.py hug-arm-pla exports/hug-arm-upper-l.stl <...>
+```
+
+部品ごとの名前とフィラメント番号が入るので、スライサー側で見分けられる。
+重なり・はみ出し・除外域を突き合わせて報告するので、その行を読んでから渡すこと。
+
+そのまま印刷に送れる `.gcode.3mf` まで作るときは Bambu Studio の CLI を使う（実例: `models/servo-lid-cube/plate.py`）。
+- ⚠⚠ **CLI は標準プロファイルの `inherits` をたどらない。** そのまま `--load-settings` に渡すと、第 1 層の補正 0・
+  Cool Plate・充填 20% など CLI の内蔵既定値で切られる。`lib/bambu_profiles.py` の `resolve()` で平らにしてから渡す
+- ユーザーの既定（既存プロジェクトから読んだ値）: X1C 0.4 / Textured PEI Plate / 0.20mm Standard / 補正 0.15 / 壁 2 / 充填 15%
+- G-code を自分で読むときは **G2/G3（円弧近似）を円弧として展開する**。弦のまま読むと角や円周が「下に支えが無い」に見える
+- 高さごとの層の厚みは `Metadata/layer_config_ranges.xml`。`<object id>` は `3D/3dmodel.model` の物体 id の小さい順の番号
+
+### 読み取りの限界
+
+`read_3mf.py` の円筒検出は面の法線から軸を求める。フィレットや球は落ちるが、
+**低ポリのメッシュでは径が数 % 内側に出る**。0.1mm を争う嵌合は
+表の値をそのまま使わず、`--sheet` の絵と突き合わせる。
+
+同じ部品の参考が複数あると値が食い違うことがある（SG90 の取り付け穴間隔が
+`SG90実寸.3mf` で 28.8mm、`つまむサーボ.3mf` で 27.6mm）。**食い違ったら公称値を調べ直す**。
 
 ---
 
@@ -143,6 +199,12 @@ bm.to_mesh(mesh)
 bm.free()
 ```
 
+⚠⚠ **凹んだ輪郭を n-gon の蓋（`bm.faces.new(poly)`）で閉じない。**
+三角化が凹みをまたいで膜を張り、へこみが塞がって板になる（Blender 5.1 で実測）。
+たちが悪いのは**体積も非多様体エッジ数も正しいまま**なところで、数値の検証では気づけない。
+弧やくびれのある断面は、蓋も**四角形の帯**で作る（下端の点列と上端の点列を並べて quad で埋める）。
+気づいた経緯は 2026-09-05 の pipe-foot-pair。ユーザーがビューワーで「変な面が一つある」と見つけた。
+
 ### Boolean カッターの配置
 
 カッターの面がターゲットと **面一（coplanar）** だと Boolean が不安定になる。
@@ -187,7 +249,7 @@ http://localhost:3000 が Studio。ユーザーは面を選んで「ここを厚
 
 モデルを作成・更新した後、必ず以下を伝える。
 
-1. **ビューワーURL**: http://localhost:3000 を開くよう促す
+1. **ビューワーは「そのモデルを開いた状態」の URL で渡す**: `http://localhost:3000/?model=<name>`（モデルが 65 個以上あり、URL だけでは探せない）
 2. **外形寸法**: W × D × H mm で明記する
 3. **設計上の判断**: クリアランス・肉厚・特記事項を簡潔に説明する
 4. **次のアクション**: 「フィットが合わなければクリアランスを変えます」など
@@ -213,8 +275,9 @@ http://localhost:3000 が Studio。ユーザーは面を選んで「ここを厚
   （1サーボ・ロボットとサーボ/ホーン嵌合部品・アクセサリの設計原則・落とし穴。サーボ系を触る前に必読）
 - **共通スキル `printable-mechanism-design`**（`~/.agents/skills/`）— 刷れる機構を設計・検証して、そのまま刷れる 3mf まで作る手順。
   ユーザーの依頼文の好み・形の規則・印刷部品だけの継ぎ手・検証の型・Bambu Studio CLI の罠。動く部品・組み立てがある依頼で読む
-- **[memory/](.claude/memory/)** — 自動メモリ（`MEMORY.md` がインデックス、topic ごとに分割）
-- **[hooks/](.claude/hooks/)** — プロジェクト固有 PreToolUse ガード
+- **[.agents/skills/mechanism-gate](.agents/skills/mechanism-gate/SKILL.md)** — 機構の依頼の手順と完了条件（spec.json → build/ の契約 → `tools/mechgate.py check`）。ゲートの閾値は `tools/mechgate_lib/limits.py`、既製部品の仮値の台帳は `lib/printmech/parts_ledger.json`
+- **[memory/](.claude/memory/)** — 経緯の記録（Claude Code が書く）。検証の落とし穴は `lattice-verified-assembly.md`、SG92R ホーンの左右は `sg92r-horn-orientation.md`
+- **[hooks/](.claude/hooks/)** — プロジェクト固有 PreToolUse ガード、`mechgate-stop.js`（機構モデルのゲートが古い・赤のまま終わろうとしたら知らせる。Codex の Stop hook からも呼ぶ）
 - **[commands/](.claude/commands/)** — `/new-model` `/build` `/print-check` の本体（Claude Code 用。手順は Codex も読んでよい）
 
 汎用の規約とスキルは `~/.codex/AGENTS.md` と `~/.agents/skills/` にグローバル配置済み。

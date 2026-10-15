@@ -35,6 +35,8 @@ server.js            # HTTP + WebSocket サーバー
 
 ## モデル作成ワークフロー
 
+**動く部品・組み立て・既製部品の嵌め合いがある依頼（箱・機構・サーボで動く物）は、最初に [.agents/skills/mechanism-gate/SKILL.md](.agents/skills/mechanism-gate/SKILL.md)（スキル `mechanism-gate`） を読む。** 完了は `py -3.11 tools/mechgate.py check <name>` の exit 0 で決まる（自前の検証スクリプトや報告の文章では決まらない）。計器と閾値（`tools/mechgate*`・`lib/printmech/solid_meter.py`）はモデルの作業の中で変えない。
+
 新しいモデルを作るとき、必ずこの順番で進める。
 
 0. **依頼の共通条件を読む** — [.agent/rules/model-request.md](.agent/rules/model-request.md)。
@@ -275,6 +277,7 @@ http://localhost:3000 が Studio。ユーザーは面を選んで「ここを厚
 - **共通スキル `printable-mechanism-design`**（`~/.claude/skills/`。Codex も `~/.agents/skills/` から同じ物を読む）— 刷れる機構を設計・検証して、そのまま刷れる 3mf まで作る手順。ユーザーの依頼文の好み・形の規則・印刷部品だけの継ぎ手・検証の型・Bambu Studio CLI の罠。動く部品・組み立てがある依頼で読む。Codex 用の `.agents/skills/servo-robot-design` は入口だけで、本文は `.claude/skills/servo-robot-design`
 - **[hooks/](.claude/hooks/)** — プロジェクト固有 PreToolUse ガード、`studio-inbox.js`（Studio の未対応依頼を SessionStart / UserPromptSubmit で差し込む）
 - **[skills/studio-inbox](.claude/skills/studio-inbox/SKILL.md)** — Studio の依頼の受け方・読み方・返し方
+- **[skills/mechanism-gate](.claude/skills/mechanism-gate/SKILL.md)** — 機構の依頼の手順と完了条件。本文は `.agents/skills/mechanism-gate/SKILL.md`（Codex と共有）
 - **[settings.json](.claude/settings.json)** — `bypassPermissions`（書き込み前承認なし）
 - **[settings.local.json](.claude/settings.local.json)** — ローカル個別 allow リスト
 - **[commands/](.claude/commands/)** — `/new-model` `/build` `/print-check` の本体

@@ -31,6 +31,18 @@
           }
         ]
       }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .agents/hooks/stop.js",
+            "timeout": 30
+          }
+        ]
+      }
     ]
   }
 }

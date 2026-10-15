@@ -1,0 +1,871 @@
+{
+ "model": "tangible-pixel-cube",
+ "request": ".agent/plans/2026-10-12_tangible-pixel-cube.md「依頼」節（2026-10-12 ユーザー原文の要約）",
+ "requirements": [
+  {
+   "id": "R0",
+   "text": "SG92R 1 台で、外から見て一辺 10cm 以下の立方体",
+   "checks": [
+    "assembly.envelope",
+    "motion.torque"
+   ]
+  },
+  {
+   "id": "R0b",
+   "text": "天面の小さな正方形が、後から表で決めた形にボコボコ動く",
+   "checks": [
+    "motion.interference",
+    "interface.coverage",
+    "interface.drive",
+    "manual:実機でサーボを回し、表どおりの高さになるか"
+   ]
+  },
+  {
+   "id": "R1",
+   "text": "見える面にサポートなしできれいに刷れる",
+   "checks": [
+    "print.grounding",
+    "print.slender",
+    "parts.components",
+    "parts.self_intersection",
+    "manual:見える面の仕上がり"
+   ]
+  },
+  {
+   "id": "R2",
+   "text": "SG92R の寸法は models/sg92r-photo を使う",
+   "checks": [
+    "unknowns.resolved"
+   ]
+  },
+  {
+   "id": "R3",
+   "text": "組立は印刷部品だけ（工具・ねじ・接着なし）",
+   "checks": [
+    "assembly.path",
+    "interface.retention",
+    "manual:潰しリブとスナップを手で押し込めるか"
+   ]
+  },
+  {
+   "id": "R4",
+   "text": "PLA/PETG で薄いと揺れる。スライスは不要",
+   "checks": [
+    "parts.topology",
+    "manual:立てて刷る薄い部品が揺れないか"
+   ]
+  },
+  {
+   "id": "R5",
+   "text": "物理検証と組立検証",
+   "checks": [
+    "motion.interference",
+    "assembly.path",
+    "interface.drive"
+   ]
+  }
+ ],
+ "envelope_mm": [
+  100,
+  100,
+  100
+ ],
+ "uses": [
+  "sg92r"
+ ],
+ "parts": {
+  "components": {},
+  "jigs": [
+   "phase_comb"
+  ],
+  "slender_ok": {}
+ },
+ "motion": {
+  "actuator": "sg92r_horn",
+  "servo": "sg92r",
+  "exclude": [
+   {
+    "part": "phase_comb",
+    "reason": "組立の途中だけに置く位相合わせの治具。動作の前に外す（assembly の phase-comb-remove）"
+   }
+  ]
+ },
+ "allowances": [
+  {
+   "type": "press_fit",
+   "pairs": [
+    [
+     "cam_4_0",
+     "gear_0"
+    ],
+    [
+     "cam_4_1",
+     "gear_1"
+    ],
+    [
+     "cam_4_2",
+     "gear_2"
+    ],
+    [
+     "cam_4_3",
+     "gear_3"
+    ],
+    [
+     "cam_4_4",
+     "gear_4"
+    ]
+   ],
+   "insertion_mm": 2.4,
+   "basis": "継ぎ目の雌穴の潰しリブ 3 本（潰し 0.18mm）。当たるのは差し込みの最後の 2.4mm だけ（params.JOINT_ENGAGE_*）"
+  },
+  {
+   "type": "press_fit",
+   "pairs": [
+    [
+     "cam_0_0",
+     "cam_1_0"
+    ],
+    [
+     "cam_0_0",
+     "shaft_0"
+    ],
+    [
+     "cam_0_1",
+     "cam_1_1"
+    ],
+    [
+     "cam_0_1",
+     "shaft_1"
+    ],
+    [
+     "cam_0_2",
+     "cam_1_2"
+    ],
+    [
+     "cam_0_2",
+     "shaft_2"
+    ],
+    [
+     "cam_0_3",
+     "cam_1_3"
+    ],
+    [
+     "cam_0_3",
+     "shaft_3"
+    ],
+    [
+     "cam_0_4",
+     "cam_1_4"
+    ],
+    [
+     "cam_0_4",
+     "shaft_4"
+    ],
+    [
+     "cam_1_0",
+     "cam_2_0"
+    ],
+    [
+     "cam_1_1",
+     "cam_2_1"
+    ],
+    [
+     "cam_1_2",
+     "cam_2_2"
+    ],
+    [
+     "cam_1_3",
+     "cam_2_3"
+    ],
+    [
+     "cam_1_4",
+     "cam_2_4"
+    ],
+    [
+     "cam_2_0",
+     "cam_3_0"
+    ],
+    [
+     "cam_2_1",
+     "cam_3_1"
+    ],
+    [
+     "cam_2_2",
+     "cam_3_2"
+    ],
+    [
+     "cam_2_3",
+     "cam_3_3"
+    ],
+    [
+     "cam_2_4",
+     "cam_3_4"
+    ],
+    [
+     "cam_3_0",
+     "cam_4_0"
+    ],
+    [
+     "cam_3_1",
+     "cam_4_1"
+    ],
+    [
+     "cam_3_2",
+     "cam_4_2"
+    ],
+    [
+     "cam_3_3",
+     "cam_4_3"
+    ],
+    [
+     "cam_3_4",
+     "cam_4_4"
+    ]
+   ],
+   "insertion_mm": 2.8,
+   "basis": "継ぎ目の雌穴の潰しリブ 3 本（潰し 0.18mm）。当たるのは差し込みの最後の 2.8mm だけ（params.JOINT_ENGAGE_*）"
+  },
+  {
+   "type": "static_fit",
+   "pairs": [
+    [
+     "cam_0_0",
+     "cam_1_0"
+    ],
+    [
+     "cam_0_0",
+     "shaft_0"
+    ],
+    [
+     "cam_0_1",
+     "cam_1_1"
+    ],
+    [
+     "cam_0_1",
+     "shaft_1"
+    ],
+    [
+     "cam_0_2",
+     "cam_1_2"
+    ],
+    [
+     "cam_0_2",
+     "shaft_2"
+    ],
+    [
+     "cam_0_3",
+     "cam_1_3"
+    ],
+    [
+     "cam_0_3",
+     "shaft_3"
+    ],
+    [
+     "cam_0_4",
+     "cam_1_4"
+    ],
+    [
+     "cam_0_4",
+     "shaft_4"
+    ],
+    [
+     "cam_1_0",
+     "cam_2_0"
+    ],
+    [
+     "cam_1_1",
+     "cam_2_1"
+    ],
+    [
+     "cam_1_2",
+     "cam_2_2"
+    ],
+    [
+     "cam_1_3",
+     "cam_2_3"
+    ],
+    [
+     "cam_1_4",
+     "cam_2_4"
+    ],
+    [
+     "cam_2_0",
+     "cam_3_0"
+    ],
+    [
+     "cam_2_1",
+     "cam_3_1"
+    ],
+    [
+     "cam_2_2",
+     "cam_3_2"
+    ],
+    [
+     "cam_2_3",
+     "cam_3_3"
+    ],
+    [
+     "cam_2_4",
+     "cam_3_4"
+    ],
+    [
+     "cam_3_0",
+     "cam_4_0"
+    ],
+    [
+     "cam_3_1",
+     "cam_4_1"
+    ],
+    [
+     "cam_3_2",
+     "cam_4_2"
+    ],
+    [
+     "cam_3_3",
+     "cam_4_3"
+    ],
+    [
+     "cam_3_4",
+     "cam_4_4"
+    ],
+    [
+     "cam_4_0",
+     "gear_0"
+    ],
+    [
+     "cam_4_1",
+     "gear_1"
+    ],
+    [
+     "cam_4_2",
+     "gear_2"
+    ],
+    [
+     "cam_4_3",
+     "gear_3"
+    ],
+    [
+     "cam_4_4",
+     "gear_4"
+    ]
+   ],
+   "max_mm3": 1.0,
+   "basis": "組んだ後も潰しリブ 3 本 x 幅 0.6 x 潰し 0.18 x 長さ（最大 2.8）= 0.91mm3 が重なったまま残る"
+  },
+  {
+   "type": "snap",
+   "pairs": [
+    [
+     "housing",
+     "servo_clip_0"
+    ]
+   ],
+   "engage_mm": 10.5,
+   "strain_percent": 0.362,
+   "deflection_mm": 0.3,
+   "basis": "押さえクリップの脚が爪の分だけしなって受けの側面を通る。爪が相手の面に乗り上げて進む距離 10.5mm（ゲートの実測 5.4〜10.8mm から）"
+  },
+  {
+   "type": "snap",
+   "pairs": [
+    [
+     "housing",
+     "servo_clip_1"
+    ]
+   ],
+   "engage_mm": 10.5,
+   "strain_percent": 0.362,
+   "deflection_mm": 0.3,
+   "basis": "押さえクリップの脚が爪の分だけしなって受けの側面を通る。爪が相手の面に乗り上げて進む距離 10.5mm（ゲートの実測 5.4〜10.8mm から）"
+  },
+  {
+   "type": "snap",
+   "pairs": [
+    [
+     "guide_plate",
+     "housing"
+    ]
+   ],
+   "engage_mm": 11.0,
+   "strain_percent": 0.997,
+   "deflection_mm": 0.4,
+   "basis": "案内板の舌の爪が端壁の内面を押して、舌が面内にしなる。爪が相手の面に乗り上げて進む距離 11.0mm（ゲートの実測 5.4〜10.8mm から）"
+  },
+  {
+   "type": "snap",
+   "pairs": [
+    [
+     "bezel",
+     "housing"
+    ]
+   ],
+   "engage_mm": 6.0,
+   "strain_percent": 1.709,
+   "deflection_mm": 0.35,
+   "basis": "ベゼルの爪が端壁の内面を押して壁がたわむ（片持ち梁の最悪見積り）。爪が相手の面に乗り上げて進む距離 6.0mm（ゲートの実測 5.4〜10.8mm から）"
+  },
+  {
+   "type": "reference_internal",
+   "pairs": [
+    [
+     "sg92r",
+     "sg92r_horn"
+    ]
+   ],
+   "max_mm3": 0.05,
+   "basis": "正本 SG92R の出力軸（径 4.6）とホーン穴は 64 角形どうしで頂点が辺へ入る。スプライン歯は正本に無い"
+  }
+ ],
+ "interfaces": [
+  {
+   "id": "horn-coupler",
+   "type": "drive",
+   "driver": "sg92r_horn",
+   "driven": "horn_coupler",
+   "sides": "both",
+   "max_play_deg": 3.0
+  },
+  {
+   "id": "coupler-gear_2",
+   "type": "drive",
+   "driver": "horn_coupler",
+   "driven": "gear_2",
+   "sides": "both",
+   "max_play_deg": 5.0
+  },
+  {
+   "id": "gear_2-gear_1",
+   "type": "drive",
+   "driver": "gear_2",
+   "driven": "gear_1",
+   "sides": "both",
+   "max_play_deg": 5.0
+  },
+  {
+   "id": "gear_1-gear_0",
+   "type": "drive",
+   "driver": "gear_1",
+   "driven": "gear_0",
+   "sides": "both",
+   "max_play_deg": 5.0
+  },
+  {
+   "id": "gear_2-gear_3",
+   "type": "drive",
+   "driver": "gear_2",
+   "driven": "gear_3",
+   "sides": "both",
+   "max_play_deg": 5.0
+  },
+  {
+   "id": "gear_3-gear_4",
+   "type": "drive",
+   "driver": "gear_3",
+   "driven": "gear_4",
+   "sides": "both",
+   "max_play_deg": 5.0
+  },
+  {
+   "id": "cam-pixel_0_0",
+   "type": "drive",
+   "driver": "cam_0_0",
+   "driven": "pixel_0_0",
+   "sides": "one_sided",
+   "max_play_mm": 0.5
+  },
+  {
+   "id": "cam-pixel_0_1",
+   "type": "drive",
+   "driver": "cam_0_1",
+   "driven": "pixel_0_1",
+   "sides": "one_sided",
+   "max_play_mm": 0.5
+  },
+  {
+   "id": "cam-pixel_0_2",
+   "type": "drive",
+   "driver": "cam_0_2",
+   "driven": "pixel_0_2",
+   "sides": "one_sided",
+   "max_play_mm": 0.5
+  },
+  {
+   "id": "cam-pixel_0_3",
+   "type": "drive",
+   "driver": "cam_0_3",
+   "driven": "pixel_0_3",
+   "sides": "one_sided",
+   "max_play_mm": 0.5
+  },
+  {
+   "id": "cam-pixel_0_4",
+   "type": "drive",
+   "driver": "cam_0_4",
+   "driven": "pixel_0_4",
+   "sides": "one_sided",
+   "max_play_mm": 0.5
+  },
+  {
+   "id": "cam-pixel_1_0",
+   "type": "drive",
+   "driver": "cam_1_0",
+   "driven": "pixel_1_0",
+   "sides": "one_sided",
+   "max_play_mm": 0.5
+  },
+  {
+   "id": "cam-pixel_1_1",
+   "type": "drive",
+   "driver": "cam_1_1",
+   "driven": "pixel_1_1",
+   "sides": "one_sided",
+   "max_play_mm": 0.5
+  },
+  {
+   "id": "cam-pixel_1_2",
+   "type": "drive",
+   "driver": "cam_1_2",
+   "driven": "pixel_1_2",
+   "sides": "one_sided",
+   "max_play_mm": 0.5
+  },
+  {
+   "id": "cam-pixel_1_3",
+   "type": "drive",
+   "driver": "cam_1_3",
+   "driven": "pixel_1_3",
+   "sides": "one_sided",
+   "max_play_mm": 0.5
+  },
+  {
+   "id": "cam-pixel_1_4",
+   "type": "drive",
+   "driver": "cam_1_4",
+   "driven": "pixel_1_4",
+   "sides": "one_sided",
+   "max_play_mm": 0.5
+  },
+  {
+   "id": "cam-pixel_2_0",
+   "type": "drive",
+   "driver": "cam_2_0",
+   "driven": "pixel_2_0",
+   "sides": "one_sided",
+   "max_play_mm": 0.5
+  },
+  {
+   "id": "cam-pixel_2_1",
+   "type": "drive",
+   "driver": "cam_2_1",
+   "driven": "pixel_2_1",
+   "sides": "one_sided",
+   "max_play_mm": 0.5
+  },
+  {
+   "id": "cam-pixel_2_2",
+   "type": "drive",
+   "driver": "cam_2_2",
+   "driven": "pixel_2_2",
+   "sides": "one_sided",
+   "max_play_mm": 0.5
+  },
+  {
+   "id": "cam-pixel_2_3",
+   "type": "drive",
+   "driver": "cam_2_3",
+   "driven": "pixel_2_3",
+   "sides": "one_sided",
+   "max_play_mm": 0.5
+  },
+  {
+   "id": "cam-pixel_2_4",
+   "type": "drive",
+   "driver": "cam_2_4",
+   "driven": "pixel_2_4",
+   "sides": "one_sided",
+   "max_play_mm": 0.5
+  },
+  {
+   "id": "cam-pixel_3_0",
+   "type": "drive",
+   "driver": "cam_3_0",
+   "driven": "pixel_3_0",
+   "sides": "one_sided",
+   "max_play_mm": 0.5
+  },
+  {
+   "id": "cam-pixel_3_1",
+   "type": "drive",
+   "driver": "cam_3_1",
+   "driven": "pixel_3_1",
+   "sides": "one_sided",
+   "max_play_mm": 0.5
+  },
+  {
+   "id": "cam-pixel_3_2",
+   "type": "drive",
+   "driver": "cam_3_2",
+   "driven": "pixel_3_2",
+   "sides": "one_sided",
+   "max_play_mm": 0.5
+  },
+  {
+   "id": "cam-pixel_3_3",
+   "type": "drive",
+   "driver": "cam_3_3",
+   "driven": "pixel_3_3",
+   "sides": "one_sided",
+   "max_play_mm": 0.5
+  },
+  {
+   "id": "cam-pixel_3_4",
+   "type": "drive",
+   "driver": "cam_3_4",
+   "driven": "pixel_3_4",
+   "sides": "one_sided",
+   "max_play_mm": 0.5
+  },
+  {
+   "id": "cam-pixel_4_0",
+   "type": "drive",
+   "driver": "cam_4_0",
+   "driven": "pixel_4_0",
+   "sides": "one_sided",
+   "max_play_mm": 0.5
+  },
+  {
+   "id": "cam-pixel_4_1",
+   "type": "drive",
+   "driver": "cam_4_1",
+   "driven": "pixel_4_1",
+   "sides": "one_sided",
+   "max_play_mm": 0.5
+  },
+  {
+   "id": "cam-pixel_4_2",
+   "type": "drive",
+   "driver": "cam_4_2",
+   "driven": "pixel_4_2",
+   "sides": "one_sided",
+   "max_play_mm": 0.5
+  },
+  {
+   "id": "cam-pixel_4_3",
+   "type": "drive",
+   "driver": "cam_4_3",
+   "driven": "pixel_4_3",
+   "sides": "one_sided",
+   "max_play_mm": 0.5
+  },
+  {
+   "id": "cam-pixel_4_4",
+   "type": "drive",
+   "driver": "cam_4_4",
+   "driven": "pixel_4_4",
+   "sides": "one_sided",
+   "max_play_mm": 0.5
+  },
+  {
+   "id": "shaft0-up",
+   "type": "retention",
+   "parts": [
+    "shaft_0",
+    "gear_0",
+    "cam_0_0",
+    "cam_1_0",
+    "cam_2_0",
+    "cam_3_0",
+    "cam_4_0"
+   ],
+   "direction": [
+    0,
+    0,
+    1
+   ],
+   "max_free_mm": 1.0,
+   "engage_depth_mm": 2.25
+  },
+  {
+   "id": "shaft1-up",
+   "type": "retention",
+   "parts": [
+    "shaft_1",
+    "gear_1",
+    "cam_0_1",
+    "cam_1_1",
+    "cam_2_1",
+    "cam_3_1",
+    "cam_4_1"
+   ],
+   "direction": [
+    0,
+    0,
+    1
+   ],
+   "max_free_mm": 1.0,
+   "engage_depth_mm": 2.25
+  },
+  {
+   "id": "shaft2-up",
+   "type": "retention",
+   "parts": [
+    "shaft_2",
+    "gear_2",
+    "cam_0_2",
+    "cam_1_2",
+    "cam_2_2",
+    "cam_3_2",
+    "cam_4_2"
+   ],
+   "direction": [
+    0,
+    0,
+    1
+   ],
+   "max_free_mm": 1.0,
+   "engage_depth_mm": 2.25
+  },
+  {
+   "id": "shaft3-up",
+   "type": "retention",
+   "parts": [
+    "shaft_3",
+    "gear_3",
+    "cam_0_3",
+    "cam_1_3",
+    "cam_2_3",
+    "cam_3_3",
+    "cam_4_3"
+   ],
+   "direction": [
+    0,
+    0,
+    1
+   ],
+   "max_free_mm": 1.0,
+   "engage_depth_mm": 2.25
+  },
+  {
+   "id": "shaft4-up",
+   "type": "retention",
+   "parts": [
+    "shaft_4",
+    "gear_4",
+    "cam_0_4",
+    "cam_1_4",
+    "cam_2_4",
+    "cam_3_4",
+    "cam_4_4"
+   ],
+   "direction": [
+    0,
+    0,
+    1
+   ],
+   "max_free_mm": 1.0,
+   "engage_depth_mm": 2.25
+  },
+  {
+   "id": "bezel-up",
+   "type": "retention",
+   "part": "bezel",
+   "direction": [
+    0,
+    0,
+    1
+   ],
+   "max_free_mm": 0.5
+  },
+  {
+   "id": "guide-plate-up",
+   "type": "retention",
+   "part": "guide_plate",
+   "direction": [
+    0,
+    0,
+    1
+   ],
+   "max_free_mm": 0.5
+  },
+  {
+   "id": "servo-clip_0-up",
+   "type": "retention",
+   "part": "servo_clip_0",
+   "direction": [
+    0,
+    0,
+    1
+   ],
+   "max_free_mm": 0.5
+  },
+  {
+   "id": "servo-clip_1-up",
+   "type": "retention",
+   "part": "servo_clip_1",
+   "direction": [
+    0,
+    0,
+    1
+   ],
+   "max_free_mm": 0.5
+  },
+  {
+   "id": "servo-up",
+   "type": "retention",
+   "parts": [
+    "sg92r",
+    "sg92r_horn",
+    "horn_coupler"
+   ],
+   "direction": [
+    0,
+    0,
+    1
+   ],
+   "max_free_mm": 0.5
+  }
+ ],
+ "unknowns": [
+  {
+   "id": "sg92r.horn_arm_lengths",
+   "what": "ホーン長腕 -18/+16 は写真からの推定",
+   "trial_part": "prints/tangible-pixel-cube/trial/horn_coupler.stl"
+  },
+  {
+   "id": "sg92r.horn_hole_positions",
+   "what": "ホーンの穴は使わない（受けはホーンの外形で掴む）",
+   "not_applicable": "受けのポケットはホーンの腕の外形で回す。穴の位置に依存しない"
+  },
+  {
+   "id": "sg92r.output_spline",
+   "what": "スプラインと付属ホーンの嵌合",
+   "not_applicable": "付属ホーンを付属のまま使い、スプラインに印刷部品が触れない"
+  },
+  {
+   "id": "sg92r.shaft_height",
+   "what": "出力軸の高さ 3.5mm（ホーンの高さが決まる）",
+   "trial_part": "prints/tangible-pixel-cube/trial/horn_coupler.stl"
+  },
+  {
+   "id": "sg92r.cover_circle",
+   "what": "上面カバーの円形部分 φ12",
+   "trial_part": "prints/tangible-pixel-cube/trial/housing_servo_block_minusY.stl"
+  },
+  {
+   "id": "sg92r.wire",
+   "what": "配線の太さ・出口の高さ",
+   "accepted_risk": "配線は柔らかく、窓 11 x 7mm に対して 4mm 幅。試し刷りの小片に窓は無い"
+  },
+  {
+   "id": "sg92r.connector",
+   "what": "3 ピンコネクタの外形（8.2 x 4.4 x 14 と仮定）",
+   "accepted_risk": "試し刷りの小片に配線の窓が無い。初版の窓は実物で通らず 11 x 7mm に広げた（e8b4c65）。広げた窓も実物では未確認"
+  }
+ ],
+ "waivers": [
+  {
+   "check": "print.slice",
+   "reason": "依頼 ④「スライスは不要」"
+  }
+ ]
+}

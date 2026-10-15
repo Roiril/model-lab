@@ -1,0 +1,32 @@
+{
+ "_about": "既製部品の値と出どころの台帳。ゲート（tools/mechgate.py）が読む。spec.json の uses に部品を書くと、source が measured / datasheet / printed_ok 以外の項目は spec.unknowns で扱いを決めないと不合格になる。形の正本は canonical のファイル。値を足すときは出どころ（コミット・日付・誰が確かめたか）を basis に書く。",
+ "sources": {
+  "measured": "実物を測った",
+  "datasheet": "公称値",
+  "printed_ok": "この値で刷った物が実物で組めた・動いた",
+  "printed_ng": "この値で刷った物が実物で合わなかった（使わない）",
+  "estimated": "写真の比率などからの推定",
+  "assumed": "仮に置いた値",
+  "missing": "正本に形が無い"
+ },
+ "parts": {
+  "sg92r": {
+   "canonical": "models/sg92r-photo/params.py",
+   "stall_torque_nm": 0.245,
+   "no_load_speed_deg_per_s": 600,
+   "items": [
+    {"id": "sg92r.stall_torque", "what": "停動トルク 0.245 N·m・60°/0.1s", "source": "datasheet"},
+    {"id": "sg92r.body", "what": "本体 23 x 12 x 22mm、取付耳 32 x 12 x 2mm（耳下面 16mm）", "source": "measured", "basis": "2026-10-07 ユーザーが正本として確定"},
+    {"id": "sg92r.ear_slot_fit", "what": "取付耳を受ける溝: 片側 0.25mm・潰しリブ無し", "source": "printed_ok", "basis": "C1 で組めた。C4-3 の片側 0.2＋リブ 0.3 はきつかった（bd54320）"},
+    {"id": "sg92r.horn_orientation", "what": "クロスホーンは左右の腕の長さが違う。受けは 180° 逆向きの装着を拒む形にする", "source": "printed_ok", "basis": "B は逆向きに入って中心がずれ組めなかった。C1 は逆向きを拒み組めて回った（2026-10-10 ユーザー報告）"},
+    {"id": "sg92r.horn_arm_lengths", "what": "ホーン長腕 -18 / +16mm", "source": "estimated", "basis": "写真の比率（models/sg92r-photo/README.md）"},
+    {"id": "sg92r.horn_hole_positions", "what": "ホーンのセンター穴 2.4・腕穴 1.0 と位置", "source": "assumed"},
+    {"id": "sg92r.output_spline", "what": "出力軸のスプライン歯とホーンの嵌合（正本は径 4.6 の円筒）", "source": "missing"},
+    {"id": "sg92r.shaft_height", "what": "出力軸の高さ 3.5mm", "source": "assumed"},
+    {"id": "sg92r.cover_circle", "what": "上面カバーの円形部分 φ12", "source": "estimated"},
+    {"id": "sg92r.wire", "what": "配線の太さ 1.6・出口の高さ 5mm・長さ", "source": "assumed"},
+    {"id": "sg92r.connector", "what": "3 ピンコネクタの外形（正本に無い。C4-3 は 8.2 x 4.4 x 14 と仮定して窓を作り直した）", "source": "missing", "basis": "C4-3 の初版の窓は実物のコネクタが通らなかった（e8b4c65）。model-request の「8 x 4mm で通った」は窓の形が記録されていない"}
+   ]
+  }
+ }
+}

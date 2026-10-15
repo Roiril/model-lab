@@ -11,3 +11,8 @@ __pycache__/
 # Studio（依頼と待ち受けの実行時データ）
 requests/
 .studio.json
+
+# ゲートの作業ファイル（gate_report.json と gate_summary.md は残す）
+models/*/build/gate_job.json
+models/*/build/gate_blender.json
+models/*/build/gate_blender.log

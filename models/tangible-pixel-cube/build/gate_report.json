@@ -1,0 +1,3340 @@
+{
+ "model": "tangible-pixel-cube",
+ "generatedAt": "2026-10-15T10:57:56",
+ "pass": true,
+ "blocking": [],
+ "harness": {
+  "sha": "1c43cff2ea0c41adde95b44a6b71ddb1ad68744d238c51129462964436cbb1ca",
+  "stamp": "1c43cff2ea0c41adde95b44a6b71ddb1ad68744d238c51129462964436cbb1ca",
+  "stampedAt": "2026-10-15T10:54:42"
+ },
+ "blenderSeconds": 190.3,
+ "declared": {
+  "waivers": {
+   "print.slice": "依頼 ④「スライスは不要」"
+  },
+  "allowances": [
+   {
+    "type": "press_fit",
+    "pairs": [
+     [
+      "cam_4_0",
+      "gear_0"
+     ],
+     [
+      "cam_4_1",
+      "gear_1"
+     ],
+     [
+      "cam_4_2",
+      "gear_2"
+     ],
+     [
+      "cam_4_3",
+      "gear_3"
+     ],
+     [
+      "cam_4_4",
+      "gear_4"
+     ]
+    ],
+    "insertion_mm": 2.4,
+    "basis": "継ぎ目の雌穴の潰しリブ 3 本（潰し 0.18mm）。当たるのは差し込みの最後の 2.4mm だけ（params.JOINT_ENGAGE_*）"
+   },
+   {
+    "type": "press_fit",
+    "pairs": [
+     [
+      "cam_0_0",
+      "cam_1_0"
+     ],
+     [
+      "cam_0_0",
+      "shaft_0"
+     ],
+     [
+      "cam_0_1",
+      "cam_1_1"
+     ],
+     [
+      "cam_0_1",
+      "shaft_1"
+     ],
+     [
+      "cam_0_2",
+      "cam_1_2"
+     ],
+     [
+      "cam_0_2",
+      "shaft_2"
+     ],
+     [
+      "cam_0_3",
+      "cam_1_3"
+     ],
+     [
+      "cam_0_3",
+      "shaft_3"
+     ],
+     [
+      "cam_0_4",
+      "cam_1_4"
+     ],
+     [
+      "cam_0_4",
+      "shaft_4"
+     ],
+     [
+      "cam_1_0",
+      "cam_2_0"
+     ],
+     [
+      "cam_1_1",
+      "cam_2_1"
+     ],
+     [
+      "cam_1_2",
+      "cam_2_2"
+     ],
+     [
+      "cam_1_3",
+      "cam_2_3"
+     ],
+     [
+      "cam_1_4",
+      "cam_2_4"
+     ],
+     [
+      "cam_2_0",
+      "cam_3_0"
+     ],
+     [
+      "cam_2_1",
+      "cam_3_1"
+     ],
+     [
+      "cam_2_2",
+      "cam_3_2"
+     ],
+     [
+      "cam_2_3",
+      "cam_3_3"
+     ],
+     [
+      "cam_2_4",
+      "cam_3_4"
+     ],
+     [
+      "cam_3_0",
+      "cam_4_0"
+     ],
+     [
+      "cam_3_1",
+      "cam_4_1"
+     ],
+     [
+      "cam_3_2",
+      "cam_4_2"
+     ],
+     [
+      "cam_3_3",
+      "cam_4_3"
+     ],
+     [
+      "cam_3_4",
+      "cam_4_4"
+     ]
+    ],
+    "insertion_mm": 2.8,
+    "basis": "継ぎ目の雌穴の潰しリブ 3 本（潰し 0.18mm）。当たるのは差し込みの最後の 2.8mm だけ（params.JOINT_ENGAGE_*）"
+   },
+   {
+    "type": "static_fit",
+    "pairs": [
+     [
+      "cam_0_0",
+      "cam_1_0"
+     ],
+     [
+      "cam_0_0",
+      "shaft_0"
+     ],
+     [
+      "cam_0_1",
+      "cam_1_1"
+     ],
+     [
+      "cam_0_1",
+      "shaft_1"
+     ],
+     [
+      "cam_0_2",
+      "cam_1_2"
+     ],
+     [
+      "cam_0_2",
+      "shaft_2"
+     ],
+     [
+      "cam_0_3",
+      "cam_1_3"
+     ],
+     [
+      "cam_0_3",
+      "shaft_3"
+     ],
+     [
+      "cam_0_4",
+      "cam_1_4"
+     ],
+     [
+      "cam_0_4",
+      "shaft_4"
+     ],
+     [
+      "cam_1_0",
+      "cam_2_0"
+     ],
+     [
+      "cam_1_1",
+      "cam_2_1"
+     ],
+     [
+      "cam_1_2",
+      "cam_2_2"
+     ],
+     [
+      "cam_1_3",
+      "cam_2_3"
+     ],
+     [
+      "cam_1_4",
+      "cam_2_4"
+     ],
+     [
+      "cam_2_0",
+      "cam_3_0"
+     ],
+     [
+      "cam_2_1",
+      "cam_3_1"
+     ],
+     [
+      "cam_2_2",
+      "cam_3_2"
+     ],
+     [
+      "cam_2_3",
+      "cam_3_3"
+     ],
+     [
+      "cam_2_4",
+      "cam_3_4"
+     ],
+     [
+      "cam_3_0",
+      "cam_4_0"
+     ],
+     [
+      "cam_3_1",
+      "cam_4_1"
+     ],
+     [
+      "cam_3_2",
+      "cam_4_2"
+     ],
+     [
+      "cam_3_3",
+      "cam_4_3"
+     ],
+     [
+      "cam_3_4",
+      "cam_4_4"
+     ],
+     [
+      "cam_4_0",
+      "gear_0"
+     ],
+     [
+      "cam_4_1",
+      "gear_1"
+     ],
+     [
+      "cam_4_2",
+      "gear_2"
+     ],
+     [
+      "cam_4_3",
+      "gear_3"
+     ],
+     [
+      "cam_4_4",
+      "gear_4"
+     ]
+    ],
+    "max_mm3": 1.0,
+    "basis": "組んだ後も潰しリブ 3 本 x 幅 0.6 x 潰し 0.18 x 長さ（最大 2.8）= 0.91mm3 が重なったまま残る"
+   },
+   {
+    "type": "snap",
+    "pairs": [
+     [
+      "housing",
+      "servo_clip_0"
+     ]
+    ],
+    "engage_mm": 10.5,
+    "strain_percent": 0.362,
+    "deflection_mm": 0.3,
+    "basis": "押さえクリップの脚が爪の分だけしなって受けの側面を通る。爪が相手の面に乗り上げて進む距離 10.5mm（ゲートの実測 5.4〜10.8mm から）"
+   },
+   {
+    "type": "snap",
+    "pairs": [
+     [
+      "housing",
+      "servo_clip_1"
+     ]
+    ],
+    "engage_mm": 10.5,
+    "strain_percent": 0.362,
+    "deflection_mm": 0.3,
+    "basis": "押さえクリップの脚が爪の分だけしなって受けの側面を通る。爪が相手の面に乗り上げて進む距離 10.5mm（ゲートの実測 5.4〜10.8mm から）"
+   },
+   {
+    "type": "snap",
+    "pairs": [
+     [
+      "guide_plate",
+      "housing"
+     ]
+    ],
+    "engage_mm": 11.0,
+    "strain_percent": 0.997,
+    "deflection_mm": 0.4,
+    "basis": "案内板の舌の爪が端壁の内面を押して、舌が面内にしなる。爪が相手の面に乗り上げて進む距離 11.0mm（ゲートの実測 5.4〜10.8mm から）"
+   },
+   {
+    "type": "snap",
+    "pairs": [
+     [
+      "bezel",
+      "housing"
+     ]
+    ],
+    "engage_mm": 6.0,
+    "strain_percent": 1.709,
+    "deflection_mm": 0.35,
+    "basis": "ベゼルの爪が端壁の内面を押して壁がたわむ（片持ち梁の最悪見積り）。爪が相手の面に乗り上げて進む距離 6.0mm（ゲートの実測 5.4〜10.8mm から）"
+   },
+   {
+    "type": "reference_internal",
+    "pairs": [
+     [
+      "sg92r",
+      "sg92r_horn"
+     ]
+    ],
+    "max_mm3": 0.05,
+    "basis": "正本 SG92R の出力軸（径 4.6）とホーン穴は 64 角形どうしで頂点が辺へ入る。スプライン歯は正本に無い"
+   }
+  ],
+  "unknowns": [
+   {
+    "id": "sg92r.horn_arm_lengths",
+    "what": "ホーン長腕 -18/+16 は写真からの推定",
+    "trial_part": "prints/tangible-pixel-cube/trial/horn_coupler.stl"
+   },
+   {
+    "id": "sg92r.horn_hole_positions",
+    "what": "ホーンの穴は使わない（受けはホーンの外形で掴む）",
+    "not_applicable": "受けのポケットはホーンの腕の外形で回す。穴の位置に依存しない"
+   },
+   {
+    "id": "sg92r.output_spline",
+    "what": "スプラインと付属ホーンの嵌合",
+    "not_applicable": "付属ホーンを付属のまま使い、スプラインに印刷部品が触れない"
+   },
+   {
+    "id": "sg92r.shaft_height",
+    "what": "出力軸の高さ 3.5mm（ホーンの高さが決まる）",
+    "trial_part": "prints/tangible-pixel-cube/trial/horn_coupler.stl"
+   },
+   {
+    "id": "sg92r.cover_circle",
+    "what": "上面カバーの円形部分 φ12",
+    "trial_part": "prints/tangible-pixel-cube/trial/housing_servo_block_minusY.stl"
+   },
+   {
+    "id": "sg92r.wire",
+    "what": "配線の太さ・出口の高さ",
+    "accepted_risk": "配線は柔らかく、窓 11 x 7mm に対して 4mm 幅。試し刷りの小片に窓は無い"
+   },
+   {
+    "id": "sg92r.connector",
+    "what": "3 ピンコネクタの外形（8.2 x 4.4 x 14 と仮定）",
+    "accepted_risk": "試し刷りの小片に配線の窓が無い。初版の窓は実物で通らず 11 x 7mm に広げた（e8b4c65）。広げた窓も実物では未確認"
+   }
+  ],
+  "slenderExceptions": {},
+  "motionExcluded": [
+   {
+    "part": "phase_comb",
+    "reason": "組立の途中だけに置く位相合わせの治具。動作の前に外す（assembly の phase-comb-remove）"
+   }
+  ]
+ },
+ "requirements": [
+  {
+   "id": "R0",
+   "text": "SG92R 1 台で、外から見て一辺 10cm 以下の立方体",
+   "checks": [
+    "assembly.envelope",
+    "motion.torque"
+   ],
+   "manual": [],
+   "pass": true
+  },
+  {
+   "id": "R0b",
+   "text": "天面の小さな正方形が、後から表で決めた形にボコボコ動く",
+   "checks": [
+    "motion.interference",
+    "interface.coverage",
+    "interface.drive"
+   ],
+   "manual": [
+    "実機でサーボを回し、表どおりの高さになるか"
+   ],
+   "pass": true
+  },
+  {
+   "id": "R1",
+   "text": "見える面にサポートなしできれいに刷れる",
+   "checks": [
+    "print.grounding",
+    "print.slender",
+    "parts.components",
+    "parts.self_intersection"
+   ],
+   "manual": [
+    "見える面の仕上がり"
+   ],
+   "pass": true
+  },
+  {
+   "id": "R2",
+   "text": "SG92R の寸法は models/sg92r-photo を使う",
+   "checks": [
+    "unknowns.resolved"
+   ],
+   "manual": [],
+   "pass": true
+  },
+  {
+   "id": "R3",
+   "text": "組立は印刷部品だけ（工具・ねじ・接着なし）",
+   "checks": [
+    "assembly.path",
+    "interface.retention"
+   ],
+   "manual": [
+    "潰しリブとスナップを手で押し込めるか"
+   ],
+   "pass": true
+  },
+  {
+   "id": "R4",
+   "text": "PLA/PETG で薄いと揺れる。スライスは不要",
+   "checks": [
+    "parts.topology"
+   ],
+   "manual": [
+    "立てて刷る薄い部品が揺れないか"
+   ],
+   "pass": true
+  },
+  {
+   "id": "R5",
+   "text": "物理検証と組立検証",
+   "checks": [
+    "motion.interference",
+    "assembly.path",
+    "interface.drive"
+   ],
+   "manual": [],
+   "pass": true
+  }
+ ],
+ "checks": [
+  {
+   "id": "harness.calibrated",
+   "title": "ハーネスの計器が selftest を通った版のままか",
+   "pass": true,
+   "summary": "selftest を通った版",
+   "detail": {
+    "sha": "1c43cff2ea0c41adde95b44a6b71ddb1ad68744d238c51129462964436cbb1ca",
+    "stamp": "1c43cff2ea0c41adde95b44a6b71ddb1ad68744d238c51129462964436cbb1ca",
+    "stampedAt": "2026-10-15T10:54:42"
+   },
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "spec.valid",
+   "title": "spec.json が揃っていて、許可・界面の宣言がハーネスの上限の中か",
+   "pass": true,
+   "summary": "宣言はハーネスの上限の中",
+   "detail": [],
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "contract.files",
+   "title": "manifest / motion / assembly と全 STL がそろっているか",
+   "pass": true,
+   "summary": "そろっている",
+   "detail": [],
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "instrument.calibration",
+   "title": "共通体積と初接触の計器が正負の形で期待どおりに出たか",
+   "pass": true,
+   "summary": "正負の形がすべて期待どおり",
+   "detail": {
+    "overlapHalf": {
+     "measured": 0.5,
+     "expected": 0.5,
+     "pass": true
+    },
+    "thinOverlap0.002": {
+     "measured": 0.0020000040531158447,
+     "expected": 0.002,
+     "pass": true
+    },
+    "separated": {
+     "measured": 0.0,
+     "expected": 0.0,
+     "pass": true
+    },
+    "faceContact": {
+     "measured": 0.0,
+     "expected": 0.0,
+     "pass": true
+    },
+    "edgeContact": {
+     "measured": 0.0,
+     "expected": 0.0,
+     "pass": true
+    },
+    "nestedInside": {
+     "measured": 1.0,
+     "expected": 1.0,
+     "pass": true
+    },
+    "nestedInsideReversed": {
+     "measured": 1.0,
+     "expected": 1.0,
+     "pass": true
+    },
+    "tiltedFaceContactAtScale": {
+     "measured": 0.0,
+     "expected": 0.0,
+     "pass": true
+    },
+    "tiltedThinOverlapAtScale": {
+     "measured": 4.000433860168268,
+     "expected": 4.0,
+     "pass": true
+    },
+    "skipAgreesWithBoolean": {
+     "cases": [
+      {
+       "case": "separated",
+       "fast": 0.0,
+       "full": 0.0,
+       "pass": true
+      },
+      {
+       "case": "overlap",
+       "fast": 0.7000000029802322,
+       "full": 0.7000000029802322,
+       "pass": true
+      },
+      {
+       "case": "nested",
+       "fast": 1.0,
+       "full": 1.0,
+       "pass": true
+      }
+     ],
+     "pass": true
+    },
+    "firstContactLinear": {
+     "measured": 0.501001,
+     "expected": 0.501,
+     "pass": true
+    },
+    "firstContactNone": {
+     "measured": null,
+     "expected": null,
+     "pass": true
+    },
+    "firstContactAngular": {
+     "measured": 14.255127,
+     "expected": 14.255098890306314,
+     "pass": true
+    },
+    "pass": true
+   },
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "parts.topology",
+   "title": "全 STL が閉じて向きのそろった多様体か（面積 0 の三角形も無し）",
+   "pass": true,
+   "summary": "136 個の STL を検査（既製部品の正本 1 個に面積 0 の三角形。閉じているので計器には使える）",
+   "detail": {
+    "failing": {},
+    "referenceNotes": {
+     "sg92r_horn": {
+      "triangles": 4226,
+      "vertices": 2079,
+      "edgesNotSharedByTwo": 0,
+      "edgesWithSameDirectionTwice": 0,
+      "degenerateTriangles": 8,
+      "signedVolumeMm3": 369.5827,
+      "pass": false
+     }
+    }
+   },
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "parts.components",
+   "title": "刷る STL の連結成分の数が宣言どおりか（既定 1）",
+   "pass": true,
+   "summary": "刷る部品 67 点",
+   "detail": {},
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "parts.self_intersection",
+   "title": "刷る STL に自己交差が無いか",
+   "pass": true,
+   "summary": "刷る STL 67 点",
+   "detail": {},
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "print.grounding",
+   "title": "刷る向きでベッドに十分な面積で接し、浮いた成分が無いか",
+   "pass": true,
+   "summary": "接地 10.0mm² 以上・浮いた成分なし",
+   "detail": {},
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "print.slender",
+   "title": "立てて刷る部品の高さが接地の短辺の 5 倍以内か",
+   "pass": true,
+   "summary": "高さ / 接地の短辺 ≤ 5.0",
+   "detail": {
+    "failing": {},
+    "declaredExceptions": {}
+   },
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "assembly.envelope",
+   "title": "組んだ外形が spec の上限に収まるか",
+   "pass": true,
+   "summary": "組んだ外形 96.0 x 96.0 x 96.0mm（上限 [100, 100, 100]）",
+   "detail": {
+    "size": [
+     96.0,
+     96.0,
+     96.0
+    ],
+    "limit": [
+     100,
+     100,
+     100
+    ]
+   },
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "motion.resolution",
+   "title": "motion.json の刻みが 2.5° 以下か",
+   "pass": true,
+   "summary": "motion.json の最大の刻み 1.000°（161 姿勢）",
+   "detail": {
+    "maxGapDeg": 1.0
+   },
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "motion.interference",
+   "title": "動く全範囲で、許可の無い部品の組の共通体積が 0 か",
+   "pass": true,
+   "summary": "68 部品・2278 組 x 161 姿勢（10.0〜170.0°、どの点も姿勢の間で 1.0mm 以内。補間 0）",
+   "detail": {
+    "violations": [],
+    "allowedContacts": [
+     {
+      "parts": [
+       "cam_0_0",
+       "cam_1_0"
+      ],
+      "type": "static_fit",
+      "maxMm3": 0.8100053763023767
+     },
+     {
+      "parts": [
+       "cam_0_0",
+       "shaft_0"
+      ],
+      "type": "static_fit",
+      "maxMm3": 0.8100071149024152
+     },
+     {
+      "parts": [
+       "cam_0_1",
+       "cam_1_1"
+      ],
+      "type": "static_fit",
+      "maxMm3": 0.8100059546757427
+     },
+     {
+      "parts": [
+       "cam_0_1",
+       "shaft_1"
+      ],
+      "type": "static_fit",
+      "maxMm3": 0.8100035708420354
+     },
+     {
+      "parts": [
+       "cam_0_2",
+       "cam_1_2"
+      ],
+      "type": "static_fit",
+      "maxMm3": 0.8100048511221549
+     },
+     {
+      "parts": [
+       "cam_0_2",
+       "shaft_2"
+      ],
+      "type": "static_fit",
+      "maxMm3": 0.81000600642231
+     },
+     {
+      "parts": [
+       "cam_0_3",
+       "cam_1_3"
+      ],
+      "type": "static_fit",
+      "maxMm3": 0.8100093088277056
+     },
+     {
+      "parts": [
+       "cam_0_3",
+       "shaft_3"
+      ],
+      "type": "static_fit",
+      "maxMm3": 0.8100063667596613
+     },
+     {
+      "parts": [
+       "cam_0_4",
+       "cam_1_4"
+      ],
+      "type": "static_fit",
+      "maxMm3": 0.8100051928875995
+     },
+     {
+      "parts": [
+       "cam_0_4",
+       "shaft_4"
+      ],
+      "type": "static_fit",
+      "maxMm3": 0.8100063840816434
+     },
+     {
+      "parts": [
+       "cam_1_0",
+       "cam_2_0"
+      ],
+      "type": "static_fit",
+      "maxMm3": 0.8100082209123187
+     },
+     {
+      "parts": [
+       "cam_1_1",
+       "cam_2_1"
+      ],
+      "type": "static_fit",
+      "maxMm3": 0.8100051374277801
+     },
+     {
+      "parts": [
+       "cam_1_2",
+       "cam_2_2"
+      ],
+      "type": "static_fit",
+      "maxMm3": 0.8100062564038886
+     },
+     {
+      "parts": [
+       "cam_1_3",
+       "cam_2_3"
+      ],
+      "type": "static_fit",
+      "maxMm3": 0.8100077865274917
+     },
+     {
+      "parts": [
+       "cam_1_4",
+       "cam_2_4"
+      ],
+      "type": "static_fit",
+      "maxMm3": 0.8100065974473719
+     },
+     {
+      "parts": [
+       "cam_2_0",
+       "cam_3_0"
+      ],
+      "type": "static_fit",
+      "maxMm3": 0.8100072288102581
+     },
+     {
+      "parts": [
+       "cam_2_1",
+       "cam_3_1"
+      ],
+      "type": "static_fit",
+      "maxMm3": 0.8100050657063711
+     },
+     {
+      "parts": [
+       "cam_2_2",
+       "cam_3_2"
+      ],
+      "type": "static_fit",
+      "maxMm3": 0.8100050110668339
+     },
+     {
+      "parts": [
+       "cam_2_3",
+       "cam_3_3"
+      ],
+      "type": "static_fit",
+      "maxMm3": 0.8100073999457214
+     },
+     {
+      "parts": [
+       "cam_2_4",
+       "cam_3_4"
+      ],
+      "type": "static_fit",
+      "maxMm3": 0.810005605345484
+     },
+     {
+      "parts": [
+       "cam_3_0",
+       "cam_4_0"
+      ],
+      "type": "static_fit",
+      "maxMm3": 0.8100086132004813
+     },
+     {
+      "parts": [
+       "cam_3_1",
+       "cam_4_1"
+      ],
+      "type": "static_fit",
+      "maxMm3": 0.8100047509589806
+     },
+     {
+      "parts": [
+       "cam_3_2",
+       "cam_4_2"
+      ],
+      "type": "static_fit",
+      "maxMm3": 0.8100065010554081
+     },
+     {
+      "parts": [
+       "cam_3_3",
+       "cam_4_3"
+      ],
+      "type": "static_fit",
+      "maxMm3": 0.8100077092791387
+     },
+     {
+      "parts": [
+       "cam_3_4",
+       "cam_4_4"
+      ],
+      "type": "static_fit",
+      "maxMm3": 0.8100073300474357
+     },
+     {
+      "parts": [
+       "cam_4_0",
+       "gear_0"
+      ],
+      "type": "static_fit",
+      "maxMm3": 0.6804075877019913
+     },
+     {
+      "parts": [
+       "cam_4_1",
+       "gear_1"
+      ],
+      "type": "static_fit",
+      "maxMm3": 0.6804023278620401
+     },
+     {
+      "parts": [
+       "cam_4_2",
+       "gear_2"
+      ],
+      "type": "static_fit",
+      "maxMm3": 0.6804026415425255
+     },
+     {
+      "parts": [
+       "cam_4_3",
+       "gear_3"
+      ],
+      "type": "static_fit",
+      "maxMm3": 0.6804059449617117
+     },
+     {
+      "parts": [
+       "cam_4_4",
+       "gear_4"
+      ],
+      "type": "static_fit",
+      "maxMm3": 0.6804035546958296
+     },
+     {
+      "parts": [
+       "sg92r",
+       "sg92r_horn"
+      ],
+      "type": "reference_internal",
+      "maxMm3": 0.029990057766647815
+     }
+    ]
+   },
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "motion.torque",
+   "title": "重力だけで見積もった必要トルクが停動トルクの 1/3 以下か",
+   "pass": true,
+   "summary": "重力の必要トルク最大 8.3 mN·m（97.0°）/ 停動 0.245 N·m = 3.4%（摩擦・圧入・ばねは含まない下限の見積もり）",
+   "detail": {
+    "peakNm": 0.00830142865863781,
+    "atServoDeg": 97.0,
+    "stallNm": 0.245,
+    "limitFraction": 0.3333333333333333,
+    "massesG": {
+     "housing": 152.94,
+     "bezel": 20.06,
+     "guide_plate": 115.6,
+     "shaft_0": 0.44,
+     "shaft_1": 0.25,
+     "shaft_2": 0.44,
+     "shaft_3": 0.25,
+     "shaft_4": 0.44,
+     "gear_0": 0.69,
+     "gear_1": 0.69,
+     "gear_2": 0.69,
+     "gear_3": 0.69,
+     "gear_4": 0.69,
+     "cam_0_0": 1.52,
+     "cam_1_0": 1.47,
+     "cam_2_0": 1.4,
+     "cam_3_0": 1.47,
+     "cam_4_0": 1.14,
+     "cam_0_1": 1.47,
+     "cam_1_1": 1.41,
+     "cam_2_1": 1.43,
+     "cam_3_1": 1.48,
+     "cam_4_1": 1.27,
+     "cam_0_2": 1.42,
+     "cam_1_2": 1.41,
+     "cam_2_2": 1.42,
+     "cam_3_2": 1.49,
+     "cam_4_2": 1.1,
+     "cam_0_3": 1.47,
+     "cam_1_3": 1.43,
+     "cam_2_3": 1.47,
+     "cam_3_3": 1.5,
+     "cam_4_3": 1.27,
+     "cam_0_4": 1.52,
+     "cam_1_4": 1.47,
+     "cam_2_4": 1.5,
+     "cam_3_4": 1.47,
+     "cam_4_4": 1.14,
+     "pixel_0_0": 4.39,
+     "pixel_1_0": 4.39,
+     "pixel_2_0": 4.39,
+     "pixel_3_0": 4.39,
+     "pixel_4_0": 4.39,
+     "pixel_0_1": 4.38,
+     "pixel_1_1": 4.38,
+     "pixel_2_1": 4.38,
+     "pixel_3_1": 4.38,
+     "pixel_4_1": 4.38,
+     "pixel_0_2": 4.39,
+     "pixel_1_2": 4.39,
+     "pixel_2_2": 4.39,
+     "pixel_3_2": 4.39,
+     "pixel_4_2": 4.39,
+     "pixel_0_3": 4.38,
+     "pixel_1_3": 4.38,
+     "pixel_2_3": 4.38,
+     "pixel_3_3": 4.38,
+     "pixel_4_3": 4.38,
+     "pixel_0_4": 4.39,
+     "pixel_1_4": 4.39,
+     "pixel_2_4": 4.39,
+     "pixel_3_4": 4.39,
+     "pixel_4_4": 4.39,
+     "horn_coupler": 2.7,
+     "phase_comb": 1.43,
+     "servo_clip_0": 0.37,
+     "servo_clip_1": 0.37
+    }
+   },
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "interface.coverage",
+   "title": "動く部品の塊がすべて、駆動の界面でアクチュエータにつながっているか",
+   "pass": true,
+   "summary": "動く塊 31 個のうち 31 個がアクチュエータから駆動の界面でつながる",
+   "detail": {
+    "unreachableGroups": [],
+    "hint": "動く塊ごとに spec.interfaces に type: drive（driver → driven）を書く。界面はゲートが形で確かめる"
+   },
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "interface.drive",
+   "title": "駆動の界面ごとに、従動側を押すと遊びの中で駆動側に当たるか",
+   "pass": true,
+   "summary": "界面 31 個",
+   "detail": {
+    "failing": [],
+    "all": [
+     {
+      "id": "horn-coupler",
+      "driver": "sg92r_horn",
+      "driven": "horn_coupler",
+      "sides": "both",
+      "samples": 12,
+      "pass": true,
+      "worst": [
+       {
+        "servoDeg": 10.0,
+        "unit": "deg",
+        "limit": 3.0,
+        "back": 0.51275,
+        "ahead": 0.51275,
+        "pass": true
+       },
+       {
+        "servoDeg": 24.0,
+        "unit": "deg",
+        "limit": 3.0,
+        "back": 0.51275,
+        "ahead": 0.51275,
+        "pass": true
+       }
+      ]
+     },
+     {
+      "id": "coupler-gear_2",
+      "driver": "horn_coupler",
+      "driven": "gear_2",
+      "sides": "both",
+      "samples": 12,
+      "pass": true,
+      "worst": [
+       {
+        "servoDeg": 10.0,
+        "unit": "deg",
+        "limit": 5.0,
+        "back": 0.369019,
+        "ahead": 0.361816,
+        "pass": true
+       },
+       {
+        "servoDeg": 24.0,
+        "unit": "deg",
+        "limit": 5.0,
+        "back": 0.362244,
+        "ahead": 0.367218,
+        "pass": true
+       }
+      ]
+     },
+     {
+      "id": "gear_2-gear_1",
+      "driver": "gear_2",
+      "driven": "gear_1",
+      "sides": "both",
+      "samples": 12,
+      "pass": true,
+      "worst": [
+       {
+        "servoDeg": 10.0,
+        "unit": "deg",
+        "limit": 5.0,
+        "back": 0.3685,
+        "ahead": 0.371399,
+        "pass": true
+       },
+       {
+        "servoDeg": 24.0,
+        "unit": "deg",
+        "limit": 5.0,
+        "back": 0.372162,
+        "ahead": 0.368378,
+        "pass": true
+       }
+      ]
+     },
+     {
+      "id": "gear_1-gear_0",
+      "driver": "gear_1",
+      "driven": "gear_0",
+      "sides": "both",
+      "samples": 12,
+      "pass": true,
+      "worst": [
+       {
+        "servoDeg": 10.0,
+        "unit": "deg",
+        "limit": 5.0,
+        "back": 0.3685,
+        "ahead": 0.371429,
+        "pass": true
+       },
+       {
+        "servoDeg": 24.0,
+        "unit": "deg",
+        "limit": 5.0,
+        "back": 0.372162,
+        "ahead": 0.368408,
+        "pass": true
+       }
+      ]
+     },
+     {
+      "id": "gear_2-gear_3",
+      "driver": "gear_2",
+      "driven": "gear_3",
+      "sides": "both",
+      "samples": 12,
+      "pass": true,
+      "worst": [
+       {
+        "servoDeg": 10.0,
+        "unit": "deg",
+        "limit": 5.0,
+        "back": 0.372131,
+        "ahead": 0.368286,
+        "pass": true
+       },
+       {
+        "servoDeg": 24.0,
+        "unit": "deg",
+        "limit": 5.0,
+        "back": 0.367737,
+        "ahead": 0.372223,
+        "pass": true
+       }
+      ]
+     },
+     {
+      "id": "gear_3-gear_4",
+      "driver": "gear_3",
+      "driven": "gear_4",
+      "sides": "both",
+      "samples": 12,
+      "pass": true,
+      "worst": [
+       {
+        "servoDeg": 10.0,
+        "unit": "deg",
+        "limit": 5.0,
+        "back": 0.372131,
+        "ahead": 0.368286,
+        "pass": true
+       },
+       {
+        "servoDeg": 24.0,
+        "unit": "deg",
+        "limit": 5.0,
+        "back": 0.367706,
+        "ahead": 0.372192,
+        "pass": true
+       }
+      ]
+     },
+     {
+      "id": "cam-pixel_0_0",
+      "driver": "cam_0_0",
+      "driven": "pixel_0_0",
+      "sides": "one_sided",
+      "samples": 12,
+      "pass": true,
+      "worst": [
+       {
+        "servoDeg": 10.0,
+        "unit": "mm",
+        "limit": 0.5,
+        "back": null,
+        "ahead": 0.008447,
+        "pass": true
+       },
+       {
+        "servoDeg": 24.0,
+        "unit": "mm",
+        "limit": 0.5,
+        "back": 0.001291,
+        "ahead": null,
+        "pass": true
+       }
+      ]
+     },
+     {
+      "id": "cam-pixel_0_1",
+      "driver": "cam_0_1",
+      "driven": "pixel_0_1",
+      "sides": "one_sided",
+      "samples": 12,
+      "pass": true,
+      "worst": [
+       {
+        "servoDeg": 10.0,
+        "unit": "mm",
+        "limit": 0.5,
+        "back": null,
+        "ahead": 0.005994,
+        "pass": true
+       },
+       {
+        "servoDeg": 24.0,
+        "unit": "mm",
+        "limit": 0.5,
+        "back": 0.001288,
+        "ahead": null,
+        "pass": true
+       }
+      ]
+     },
+     {
+      "id": "cam-pixel_0_2",
+      "driver": "cam_0_2",
+      "driven": "pixel_0_2",
+      "sides": "one_sided",
+      "samples": 12,
+      "pass": true,
+      "worst": [
+       {
+        "servoDeg": 10.0,
+        "unit": "mm",
+        "limit": 0.5,
+        "back": null,
+        "ahead": 0.00621,
+        "pass": true
+       },
+       {
+        "servoDeg": 24.0,
+        "unit": "mm",
+        "limit": 0.5,
+        "back": 0.001324,
+        "ahead": null,
+        "pass": true
+       }
+      ]
+     },
+     {
+      "id": "cam-pixel_0_3",
+      "driver": "cam_0_3",
+      "driven": "pixel_0_3",
+      "sides": "one_sided",
+      "samples": 12,
+      "pass": true,
+      "worst": [
+       {
+        "servoDeg": 10.0,
+        "unit": "mm",
+        "limit": 0.5,
+        "back": null,
+        "ahead": 0.005994,
+        "pass": true
+       },
+       {
+        "servoDeg": 24.0,
+        "unit": "mm",
+        "limit": 0.5,
+        "back": 0.001288,
+        "ahead": null,
+        "pass": true
+       }
+      ]
+     },
+     {
+      "id": "cam-pixel_0_4",
+      "driver": "cam_0_4",
+      "driven": "pixel_0_4",
+      "sides": "one_sided",
+      "samples": 12,
+      "pass": true,
+      "worst": [
+       {
+        "servoDeg": 10.0,
+        "unit": "mm",
+        "limit": 0.5,
+        "back": null,
+        "ahead": 0.008447,
+        "pass": true
+       },
+       {
+        "servoDeg": 24.0,
+        "unit": "mm",
+        "limit": 0.5,
+        "back": 0.001288,
+        "ahead": null,
+        "pass": true
+       }
+      ]
+     },
+     {
+      "id": "cam-pixel_1_0",
+      "driver": "cam_1_0",
+      "driven": "pixel_1_0",
+      "sides": "one_sided",
+      "samples": 12,
+      "pass": true,
+      "worst": [
+       {
+        "servoDeg": 10.0,
+        "unit": "mm",
+        "limit": 0.5,
+        "back": null,
+        "ahead": 0.005994,
+        "pass": true
+       },
+       {
+        "servoDeg": 24.0,
+        "unit": "mm",
+        "limit": 0.5,
+        "back": 0.001291,
+        "ahead": null,
+        "pass": true
+       }
+      ]
+     },
+     {
+      "id": "cam-pixel_1_1",
+      "driver": "cam_1_1",
+      "driven": "pixel_1_1",
+      "sides": "one_sided",
+      "samples": 12,
+      "pass": true,
+      "worst": [
+       {
+        "servoDeg": 10.0,
+        "unit": "mm",
+        "limit": 0.5,
+        "back": null,
+        "ahead": 0.007983,
+        "pass": true
+       },
+       {
+        "servoDeg": 24.0,
+        "unit": "mm",
+        "limit": 0.5,
+        "back": 0.001352,
+        "ahead": null,
+        "pass": true
+       }
+      ]
+     },
+     {
+      "id": "cam-pixel_1_2",
+      "driver": "cam_1_2",
+      "driven": "pixel_1_2",
+      "sides": "one_sided",
+      "samples": 12,
+      "pass": true,
+      "worst": [
+       {
+        "servoDeg": 10.0,
+        "unit": "mm",
+        "limit": 0.5,
+        "back": null,
+        "ahead": 0.007983,
+        "pass": true
+       },
+       {
+        "servoDeg": 24.0,
+        "unit": "mm",
+        "limit": 0.5,
+        "back": 0.001352,
+        "ahead": null,
+        "pass": true
+       }
+      ]
+     },
+     {
+      "id": "cam-pixel_1_3",
+      "driver": "cam_1_3",
+      "driven": "pixel_1_3",
+      "sides": "one_sided",
+      "samples": 12,
+      "pass": true,
+      "worst": [
+       {
+        "servoDeg": 10.0,
+        "unit": "mm",
+        "limit": 0.5,
+        "back": null,
+        "ahead": 0.00621,
+        "pass": true
+       },
+       {
+        "servoDeg": 24.0,
+        "unit": "mm",
+        "limit": 0.5,
+        "back": 0.001324,
+        "ahead": null,
+        "pass": true
+       }
+      ]
+     },
+     {
+      "id": "cam-pixel_1_4",
+      "driver": "cam_1_4",
+      "driven": "pixel_1_4",
+      "sides": "one_sided",
+      "samples": 12,
+      "pass": true,
+      "worst": [
+       {
+        "servoDeg": 10.0,
+        "unit": "mm",
+        "limit": 0.5,
+        "back": null,
+        "ahead": 0.005994,
+        "pass": true
+       },
+       {
+        "servoDeg": 24.0,
+        "unit": "mm",
+        "limit": 0.5,
+        "back": 0.001288,
+        "ahead": null,
+        "pass": true
+       }
+      ]
+     },
+     {
+      "id": "cam-pixel_2_0",
+      "driver": "cam_2_0",
+      "driven": "pixel_2_0",
+      "sides": "one_sided",
+      "samples": 12,
+      "pass": true,
+      "worst": [
+       {
+        "servoDeg": 10.0,
+        "unit": "mm",
+        "limit": 0.5,
+        "back": null,
+        "ahead": 0.007983,
+        "pass": true
+       },
+       {
+        "servoDeg": 24.0,
+        "unit": "mm",
+        "limit": 0.5,
+        "back": 0.001355,
+        "ahead": null,
+        "pass": true
+       }
+      ]
+     },
+     {
+      "id": "cam-pixel_2_1",
+      "driver": "cam_2_1",
+      "driven": "pixel_2_1",
+      "sides": "one_sided",
+      "samples": 12,
+      "pass": true,
+      "worst": [
+       {
+        "servoDeg": 10.0,
+        "unit": "mm",
+        "limit": 0.5,
+        "back": null,
+        "ahead": 0.00621,
+        "pass": true
+       },
+       {
+        "servoDeg": 24.0,
+        "unit": "mm",
+        "limit": 0.5,
+        "back": 0.001324,
+        "ahead": null,
+        "pass": true
+       }
+      ]
+     },
+     {
+      "id": "cam-pixel_2_2",
+      "driver": "cam_2_2",
+      "driven": "pixel_2_2",
+      "sides": "one_sided",
+      "samples": 12,
+      "pass": true,
+      "worst": [
+       {
+        "servoDeg": 10.0,
+        "unit": "mm",
+        "limit": 0.5,
+        "back": null,
+        "ahead": 0.001349,
+        "pass": true
+       },
+       {
+        "servoDeg": 24.0,
+        "unit": "mm",
+        "limit": 0.5,
+        "back": 0.001288,
+        "ahead": null,
+        "pass": true
+       }
+      ]
+     },
+     {
+      "id": "cam-pixel_2_3",
+      "driver": "cam_2_3",
+      "driven": "pixel_2_3",
+      "sides": "one_sided",
+      "samples": 12,
+      "pass": true,
+      "worst": [
+       {
+        "servoDeg": 10.0,
+        "unit": "mm",
+        "limit": 0.5,
+        "back": 0.005029,
+        "ahead": null,
+        "pass": true
+       },
+       {
+        "servoDeg": 25.0,
+        "unit": "mm",
+        "limit": 0.5,
+        "back": null,
+        "ahead": 0.001331,
+        "pass": true
+       }
+      ]
+     },
+     {
+      "id": "cam-pixel_2_4",
+      "driver": "cam_2_4",
+      "driven": "pixel_2_4",
+      "sides": "one_sided",
+      "samples": 12,
+      "pass": true,
+      "worst": [
+       {
+        "servoDeg": 10.0,
+        "unit": "mm",
+        "limit": 0.5,
+        "back": 0.007599,
+        "ahead": null,
+        "pass": true
+       },
+       {
+        "servoDeg": 24.0,
+        "unit": "mm",
+        "limit": 0.5,
+        "back": 0.001239,
+        "ahead": null,
+        "pass": true
+       }
+      ]
+     },
+     {
+      "id": "cam-pixel_3_0",
+      "driver": "cam_3_0",
+      "driven": "pixel_3_0",
+      "sides": "one_sided",
+      "samples": 12,
+      "pass": true,
+      "worst": [
+       {
+        "servoDeg": 10.0,
+        "unit": "mm",
+        "limit": 0.5,
+        "back": null,
+        "ahead": 0.005994,
+        "pass": true
+       },
+       {
+        "servoDeg": 24.0,
+        "unit": "mm",
+        "limit": 0.5,
+        "back": 0.001291,
+        "ahead": null,
+        "pass": true
+       }
+      ]
+     },
+     {
+      "id": "cam-pixel_3_1",
+      "driver": "cam_3_1",
+      "driven": "pixel_3_1",
+      "sides": "one_sided",
+      "samples": 12,
+      "pass": true,
+      "worst": [
+       {
+        "servoDeg": 10.0,
+        "unit": "mm",
+        "limit": 0.5,
+        "back": 0.005029,
+        "ahead": null,
+        "pass": true
+       },
+       {
+        "servoDeg": 25.0,
+        "unit": "mm",
+        "limit": 0.5,
+        "back": null,
+        "ahead": 0.001328,
+        "pass": true
+       }
+      ]
+     },
+     {
+      "id": "cam-pixel_3_2",
+      "driver": "cam_3_2",
+      "driven": "pixel_3_2",
+      "sides": "one_sided",
+      "samples": 12,
+      "pass": true,
+      "worst": [
+       {
+        "servoDeg": 10.0,
+        "unit": "mm",
+        "limit": 0.5,
+        "back": 0.007599,
+        "ahead": null,
+        "pass": true
+       },
+       {
+        "servoDeg": 24.0,
+        "unit": "mm",
+        "limit": 0.5,
+        "back": 0.001239,
+        "ahead": null,
+        "pass": true
+       }
+      ]
+     },
+     {
+      "id": "cam-pixel_3_3",
+      "driver": "cam_3_3",
+      "driven": "pixel_3_3",
+      "sides": "one_sided",
+      "samples": 12,
+      "pass": true,
+      "worst": [
+       {
+        "servoDeg": 10.0,
+        "unit": "mm",
+        "limit": 0.5,
+        "back": 0.007599,
+        "ahead": null,
+        "pass": true
+       },
+       {
+        "servoDeg": 24.0,
+        "unit": "mm",
+        "limit": 0.5,
+        "back": 0.001239,
+        "ahead": null,
+        "pass": true
+       }
+      ]
+     },
+     {
+      "id": "cam-pixel_3_4",
+      "driver": "cam_3_4",
+      "driven": "pixel_3_4",
+      "sides": "one_sided",
+      "samples": 12,
+      "pass": true,
+      "worst": [
+       {
+        "servoDeg": 10.0,
+        "unit": "mm",
+        "limit": 0.5,
+        "back": null,
+        "ahead": 0.005994,
+        "pass": true
+       },
+       {
+        "servoDeg": 24.0,
+        "unit": "mm",
+        "limit": 0.5,
+        "back": 0.001288,
+        "ahead": null,
+        "pass": true
+       }
+      ]
+     },
+     {
+      "id": "cam-pixel_4_0",
+      "driver": "cam_4_0",
+      "driven": "pixel_4_0",
+      "sides": "one_sided",
+      "samples": 12,
+      "pass": true,
+      "worst": [
+       {
+        "servoDeg": 10.0,
+        "unit": "mm",
+        "limit": 0.5,
+        "back": null,
+        "ahead": 0.008447,
+        "pass": true
+       },
+       {
+        "servoDeg": 24.0,
+        "unit": "mm",
+        "limit": 0.5,
+        "back": 0.001291,
+        "ahead": null,
+        "pass": true
+       }
+      ]
+     },
+     {
+      "id": "cam-pixel_4_1",
+      "driver": "cam_4_1",
+      "driven": "pixel_4_1",
+      "sides": "one_sided",
+      "samples": 12,
+      "pass": true,
+      "worst": [
+       {
+        "servoDeg": 10.0,
+        "unit": "mm",
+        "limit": 0.5,
+        "back": null,
+        "ahead": 0.005994,
+        "pass": true
+       },
+       {
+        "servoDeg": 24.0,
+        "unit": "mm",
+        "limit": 0.5,
+        "back": 0.001288,
+        "ahead": null,
+        "pass": true
+       }
+      ]
+     },
+     {
+      "id": "cam-pixel_4_2",
+      "driver": "cam_4_2",
+      "driven": "pixel_4_2",
+      "sides": "one_sided",
+      "samples": 12,
+      "pass": true,
+      "worst": [
+       {
+        "servoDeg": 10.0,
+        "unit": "mm",
+        "limit": 0.5,
+        "back": 0.005029,
+        "ahead": null,
+        "pass": true
+       },
+       {
+        "servoDeg": 25.0,
+        "unit": "mm",
+        "limit": 0.5,
+        "back": null,
+        "ahead": 0.001331,
+        "pass": true
+       }
+      ]
+     },
+     {
+      "id": "cam-pixel_4_3",
+      "driver": "cam_4_3",
+      "driven": "pixel_4_3",
+      "sides": "one_sided",
+      "samples": 12,
+      "pass": true,
+      "worst": [
+       {
+        "servoDeg": 10.0,
+        "unit": "mm",
+        "limit": 0.5,
+        "back": null,
+        "ahead": 0.005994,
+        "pass": true
+       },
+       {
+        "servoDeg": 24.0,
+        "unit": "mm",
+        "limit": 0.5,
+        "back": 0.001288,
+        "ahead": null,
+        "pass": true
+       }
+      ]
+     },
+     {
+      "id": "cam-pixel_4_4",
+      "driver": "cam_4_4",
+      "driven": "pixel_4_4",
+      "sides": "one_sided",
+      "samples": 12,
+      "pass": true,
+      "worst": [
+       {
+        "servoDeg": 10.0,
+        "unit": "mm",
+        "limit": 0.5,
+        "back": null,
+        "ahead": 0.008447,
+        "pass": true
+       },
+       {
+        "servoDeg": 24.0,
+        "unit": "mm",
+        "limit": 0.5,
+        "back": 0.001288,
+        "ahead": null,
+        "pass": true
+       }
+      ]
+     }
+    ]
+   },
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "interface.retention",
+   "title": "抜け止めごとに、外れる向きへ動かすと上限までに止まるか",
+   "pass": true,
+   "summary": "抜け止め 10 個",
+   "detail": {
+    "failing": [],
+    "all": [
+     {
+      "id": "shaft0-up",
+      "parts": [
+       "shaft_0",
+       "gear_0",
+       "cam_0_0",
+       "cam_1_0",
+       "cam_2_0",
+       "cam_3_0",
+       "cam_4_0"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       1.0
+      ],
+      "limitMm": 1.0,
+      "travelMm": 0.10968,
+      "stoppedBy": [
+       "guide_plate"
+      ],
+      "stoppedPart": "shaft_0",
+      "pass": true
+     },
+     {
+      "id": "shaft1-up",
+      "parts": [
+       "shaft_1",
+       "gear_1",
+       "cam_0_1",
+       "cam_1_1",
+       "cam_2_1",
+       "cam_3_1",
+       "cam_4_1"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       1.0
+      ],
+      "limitMm": 1.0,
+      "travelMm": 0.10968,
+      "stoppedBy": [
+       "guide_plate"
+      ],
+      "stoppedPart": "shaft_1",
+      "pass": true
+     },
+     {
+      "id": "shaft2-up",
+      "parts": [
+       "shaft_2",
+       "gear_2",
+       "cam_0_2",
+       "cam_1_2",
+       "cam_2_2",
+       "cam_3_2",
+       "cam_4_2"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       1.0
+      ],
+      "limitMm": 1.0,
+      "travelMm": 0.10968,
+      "stoppedBy": [
+       "guide_plate"
+      ],
+      "stoppedPart": "shaft_2",
+      "pass": true
+     },
+     {
+      "id": "shaft3-up",
+      "parts": [
+       "shaft_3",
+       "gear_3",
+       "cam_0_3",
+       "cam_1_3",
+       "cam_2_3",
+       "cam_3_3",
+       "cam_4_3"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       1.0
+      ],
+      "limitMm": 1.0,
+      "travelMm": 0.10968,
+      "stoppedBy": [
+       "guide_plate"
+      ],
+      "stoppedPart": "shaft_3",
+      "pass": true
+     },
+     {
+      "id": "shaft4-up",
+      "parts": [
+       "shaft_4",
+       "gear_4",
+       "cam_0_4",
+       "cam_1_4",
+       "cam_2_4",
+       "cam_3_4",
+       "cam_4_4"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       1.0
+      ],
+      "limitMm": 1.0,
+      "travelMm": 0.10968,
+      "stoppedBy": [
+       "guide_plate"
+      ],
+      "stoppedPart": "shaft_4",
+      "pass": true
+     },
+     {
+      "id": "bezel-up",
+      "parts": [
+       "bezel"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.450104,
+      "stoppedBy": [
+       "housing"
+      ],
+      "stoppedPart": "bezel",
+      "pass": true
+     },
+     {
+      "id": "guide-plate-up",
+      "parts": [
+       "guide_plate"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.070526,
+      "stoppedBy": [
+       "housing"
+      ],
+      "stoppedPart": "guide_plate",
+      "pass": true
+     },
+     {
+      "id": "servo-clip_0-up",
+      "parts": [
+       "servo_clip_0"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.200424,
+      "stoppedBy": [
+       "housing"
+      ],
+      "stoppedPart": "servo_clip_0",
+      "pass": true
+     },
+     {
+      "id": "servo-clip_1-up",
+      "parts": [
+       "servo_clip_1"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.200424,
+      "stoppedBy": [
+       "housing"
+      ],
+      "stoppedPart": "servo_clip_1",
+      "pass": true
+     },
+     {
+      "id": "servo-up",
+      "parts": [
+       "sg92r",
+       "sg92r_horn",
+       "horn_coupler"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.200211,
+      "stoppedBy": [
+       "servo_clip_0",
+       "servo_clip_1"
+      ],
+      "stoppedPart": "sg92r",
+      "pass": true
+     }
+    ]
+   },
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "assembly.path",
+   "title": "組立の各工程で、許可の範囲の外の当たりが無く、最後に全部品が組まれるか",
+   "pass": true,
+   "summary": "16 工程（補間で足した姿勢 0）",
+   "detail": {
+    "violations": [],
+    "boundaryErrors": [],
+    "interpolatedPoses": 0,
+    "finalNotAssembled": [],
+    "allowedContacts": [
+     {
+      "parts": [
+       "bezel",
+       "housing"
+      ],
+      "type": "snap",
+      "maxCommonMm3": 13.122458,
+      "maxRemainingTravelMm": 5.366,
+      "samples": 11,
+      "steps": [
+       "bezel"
+      ]
+     },
+     {
+      "parts": [
+       "cam_0_0",
+       "cam_1_0"
+      ],
+      "type": "press_fit",
+      "maxCommonMm3": 0.651012,
+      "maxRemainingTravelMm": 2.453,
+      "samples": 5,
+      "steps": [
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_0_0",
+       "cam_1_0"
+      ],
+      "type": "static_fit",
+      "maxCommonMm3": 0.810014,
+      "maxRemainingTravelMm": 0.0,
+      "samples": 286,
+      "steps": [
+       "lower-shaft-0",
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_0_0",
+       "shaft_0"
+      ],
+      "type": "press_fit",
+      "maxCommonMm3": 0.648633,
+      "maxRemainingTravelMm": 2.49,
+      "samples": 5,
+      "steps": [
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_0_0",
+       "shaft_0"
+      ],
+      "type": "static_fit",
+      "maxCommonMm3": 0.809998,
+      "maxRemainingTravelMm": 0.0,
+      "samples": 235,
+      "steps": [
+       "lower-shaft-0",
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_0_1",
+       "cam_1_1"
+      ],
+      "type": "press_fit",
+      "maxCommonMm3": 0.651021,
+      "maxRemainingTravelMm": 2.453,
+      "samples": 5,
+      "steps": [
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_0_1",
+       "cam_1_1"
+      ],
+      "type": "static_fit",
+      "maxCommonMm3": 0.810007,
+      "maxRemainingTravelMm": 0.0,
+      "samples": 252,
+      "steps": [
+       "lower-shaft-1",
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_0_1",
+       "shaft_1"
+      ],
+      "type": "press_fit",
+      "maxCommonMm3": 0.648637,
+      "maxRemainingTravelMm": 2.49,
+      "samples": 5,
+      "steps": [
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_0_1",
+       "shaft_1"
+      ],
+      "type": "static_fit",
+      "maxCommonMm3": 0.810005,
+      "maxRemainingTravelMm": 0.0,
+      "samples": 201,
+      "steps": [
+       "lower-shaft-1",
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_0_2",
+       "cam_1_2"
+      ],
+      "type": "press_fit",
+      "maxCommonMm3": 0.651027,
+      "maxRemainingTravelMm": 2.453,
+      "samples": 5,
+      "steps": [
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_0_2",
+       "cam_1_2"
+      ],
+      "type": "static_fit",
+      "maxCommonMm3": 0.810036,
+      "maxRemainingTravelMm": 0.0,
+      "samples": 165,
+      "steps": [
+       "lower-shaft-2",
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_0_2",
+       "shaft_2"
+      ],
+      "type": "press_fit",
+      "maxCommonMm3": 0.648648,
+      "maxRemainingTravelMm": 2.49,
+      "samples": 5,
+      "steps": [
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_0_2",
+       "shaft_2"
+      ],
+      "type": "static_fit",
+      "maxCommonMm3": 0.810017,
+      "maxRemainingTravelMm": 0.0,
+      "samples": 114,
+      "steps": [
+       "lower-shaft-2",
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_0_3",
+       "cam_1_3"
+      ],
+      "type": "press_fit",
+      "maxCommonMm3": 0.65102,
+      "maxRemainingTravelMm": 2.453,
+      "samples": 5,
+      "steps": [
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_0_3",
+       "cam_1_3"
+      ],
+      "type": "static_fit",
+      "maxCommonMm3": 0.810004,
+      "maxRemainingTravelMm": 0.0,
+      "samples": 253,
+      "steps": [
+       "lower-shaft-3",
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_0_3",
+       "shaft_3"
+      ],
+      "type": "press_fit",
+      "maxCommonMm3": 0.648637,
+      "maxRemainingTravelMm": 2.49,
+      "samples": 5,
+      "steps": [
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_0_3",
+       "shaft_3"
+      ],
+      "type": "static_fit",
+      "maxCommonMm3": 0.810003,
+      "maxRemainingTravelMm": 0.0,
+      "samples": 202,
+      "steps": [
+       "lower-shaft-3",
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_0_4",
+       "cam_1_4"
+      ],
+      "type": "press_fit",
+      "maxCommonMm3": 0.65102,
+      "maxRemainingTravelMm": 2.453,
+      "samples": 5,
+      "steps": [
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_0_4",
+       "cam_1_4"
+      ],
+      "type": "static_fit",
+      "maxCommonMm3": 0.810028,
+      "maxRemainingTravelMm": 0.0,
+      "samples": 287,
+      "steps": [
+       "lower-shaft-4",
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_0_4",
+       "shaft_4"
+      ],
+      "type": "press_fit",
+      "maxCommonMm3": 0.648643,
+      "maxRemainingTravelMm": 2.49,
+      "samples": 5,
+      "steps": [
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_0_4",
+       "shaft_4"
+      ],
+      "type": "static_fit",
+      "maxCommonMm3": 0.810008,
+      "maxRemainingTravelMm": 0.0,
+      "samples": 236,
+      "steps": [
+       "lower-shaft-4",
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_1_0",
+       "cam_2_0"
+      ],
+      "type": "press_fit",
+      "maxCommonMm3": 0.649904,
+      "maxRemainingTravelMm": 2.471,
+      "samples": 5,
+      "steps": [
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_1_0",
+       "cam_2_0"
+      ],
+      "type": "static_fit",
+      "maxCommonMm3": 0.809999,
+      "maxRemainingTravelMm": 0.0,
+      "samples": 329,
+      "steps": [
+       "lower-shaft-0",
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_1_1",
+       "cam_2_1"
+      ],
+      "type": "press_fit",
+      "maxCommonMm3": 0.649913,
+      "maxRemainingTravelMm": 2.471,
+      "samples": 5,
+      "steps": [
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_1_1",
+       "cam_2_1"
+      ],
+      "type": "static_fit",
+      "maxCommonMm3": 0.810006,
+      "maxRemainingTravelMm": 0.0,
+      "samples": 295,
+      "steps": [
+       "lower-shaft-1",
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_1_2",
+       "cam_2_2"
+      ],
+      "type": "press_fit",
+      "maxCommonMm3": 0.649919,
+      "maxRemainingTravelMm": 2.471,
+      "samples": 5,
+      "steps": [
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_1_2",
+       "cam_2_2"
+      ],
+      "type": "static_fit",
+      "maxCommonMm3": 0.810016,
+      "maxRemainingTravelMm": 0.0,
+      "samples": 208,
+      "steps": [
+       "lower-shaft-2",
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_1_3",
+       "cam_2_3"
+      ],
+      "type": "press_fit",
+      "maxCommonMm3": 0.649907,
+      "maxRemainingTravelMm": 2.471,
+      "samples": 5,
+      "steps": [
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_1_3",
+       "cam_2_3"
+      ],
+      "type": "static_fit",
+      "maxCommonMm3": 0.810002,
+      "maxRemainingTravelMm": 0.0,
+      "samples": 296,
+      "steps": [
+       "lower-shaft-3",
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_1_4",
+       "cam_2_4"
+      ],
+      "type": "press_fit",
+      "maxCommonMm3": 0.649911,
+      "maxRemainingTravelMm": 2.471,
+      "samples": 5,
+      "steps": [
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_1_4",
+       "cam_2_4"
+      ],
+      "type": "static_fit",
+      "maxCommonMm3": 0.810008,
+      "maxRemainingTravelMm": 0.0,
+      "samples": 330,
+      "steps": [
+       "lower-shaft-4",
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_2_0",
+       "cam_3_0"
+      ],
+      "type": "press_fit",
+      "maxCommonMm3": 0.654231,
+      "maxRemainingTravelMm": 2.404,
+      "samples": 5,
+      "steps": [
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_2_0",
+       "cam_3_0"
+      ],
+      "type": "static_fit",
+      "maxCommonMm3": 0.809999,
+      "maxRemainingTravelMm": 0.0,
+      "samples": 363,
+      "steps": [
+       "lower-shaft-0",
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_2_1",
+       "cam_3_1"
+      ],
+      "type": "press_fit",
+      "maxCommonMm3": 0.654235,
+      "maxRemainingTravelMm": 2.404,
+      "samples": 5,
+      "steps": [
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_2_1",
+       "cam_3_1"
+      ],
+      "type": "static_fit",
+      "maxCommonMm3": 0.810007,
+      "maxRemainingTravelMm": 0.0,
+      "samples": 329,
+      "steps": [
+       "lower-shaft-1",
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_2_2",
+       "cam_3_2"
+      ],
+      "type": "press_fit",
+      "maxCommonMm3": 0.654244,
+      "maxRemainingTravelMm": 2.404,
+      "samples": 5,
+      "steps": [
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_2_2",
+       "cam_3_2"
+      ],
+      "type": "static_fit",
+      "maxCommonMm3": 0.810016,
+      "maxRemainingTravelMm": 0.0,
+      "samples": 242,
+      "steps": [
+       "lower-shaft-2",
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_2_3",
+       "cam_3_3"
+      ],
+      "type": "press_fit",
+      "maxCommonMm3": 0.654231,
+      "maxRemainingTravelMm": 2.404,
+      "samples": 5,
+      "steps": [
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_2_3",
+       "cam_3_3"
+      ],
+      "type": "static_fit",
+      "maxCommonMm3": 0.810003,
+      "maxRemainingTravelMm": 0.0,
+      "samples": 330,
+      "steps": [
+       "lower-shaft-3",
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_2_4",
+       "cam_3_4"
+      ],
+      "type": "press_fit",
+      "maxCommonMm3": 0.654236,
+      "maxRemainingTravelMm": 2.404,
+      "samples": 5,
+      "steps": [
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_2_4",
+       "cam_3_4"
+      ],
+      "type": "static_fit",
+      "maxCommonMm3": 0.810008,
+      "maxRemainingTravelMm": 0.0,
+      "samples": 364,
+      "steps": [
+       "lower-shaft-4",
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_3_0",
+       "cam_4_0"
+      ],
+      "type": "press_fit",
+      "maxCommonMm3": 0.653719,
+      "maxRemainingTravelMm": 2.412,
+      "samples": 5,
+      "steps": [
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_3_0",
+       "cam_4_0"
+      ],
+      "type": "static_fit",
+      "maxCommonMm3": 0.81,
+      "maxRemainingTravelMm": 0.0,
+      "samples": 389,
+      "steps": [
+       "lower-shaft-0",
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_3_1",
+       "cam_4_1"
+      ],
+      "type": "press_fit",
+      "maxCommonMm3": 0.653723,
+      "maxRemainingTravelMm": 2.412,
+      "samples": 5,
+      "steps": [
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_3_1",
+       "cam_4_1"
+      ],
+      "type": "static_fit",
+      "maxCommonMm3": 0.810007,
+      "maxRemainingTravelMm": 0.0,
+      "samples": 355,
+      "steps": [
+       "lower-shaft-1",
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_3_2",
+       "cam_4_2"
+      ],
+      "type": "press_fit",
+      "maxCommonMm3": 0.653732,
+      "maxRemainingTravelMm": 2.412,
+      "samples": 5,
+      "steps": [
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_3_2",
+       "cam_4_2"
+      ],
+      "type": "static_fit",
+      "maxCommonMm3": 0.810017,
+      "maxRemainingTravelMm": 0.0,
+      "samples": 268,
+      "steps": [
+       "lower-shaft-2",
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_3_3",
+       "cam_4_3"
+      ],
+      "type": "press_fit",
+      "maxCommonMm3": 0.653717,
+      "maxRemainingTravelMm": 2.412,
+      "samples": 5,
+      "steps": [
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_3_3",
+       "cam_4_3"
+      ],
+      "type": "static_fit",
+      "maxCommonMm3": 0.810002,
+      "maxRemainingTravelMm": 0.0,
+      "samples": 356,
+      "steps": [
+       "lower-shaft-3",
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_3_4",
+       "cam_4_4"
+      ],
+      "type": "press_fit",
+      "maxCommonMm3": 0.653727,
+      "maxRemainingTravelMm": 2.412,
+      "samples": 5,
+      "steps": [
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_3_4",
+       "cam_4_4"
+      ],
+      "type": "static_fit",
+      "maxCommonMm3": 0.81001,
+      "maxRemainingTravelMm": 0.0,
+      "samples": 390,
+      "steps": [
+       "lower-shaft-4",
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_4_0",
+       "gear_0"
+      ],
+      "type": "press_fit",
+      "maxCommonMm3": 0.522458,
+      "maxRemainingTravelMm": 1.95,
+      "samples": 4,
+      "steps": [
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_4_0",
+       "gear_0"
+      ],
+      "type": "static_fit",
+      "maxCommonMm3": 0.68041,
+      "maxRemainingTravelMm": 0.0,
+      "samples": 406,
+      "steps": [
+       "lower-shaft-0",
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_4_1",
+       "gear_1"
+      ],
+      "type": "press_fit",
+      "maxCommonMm3": 0.522453,
+      "maxRemainingTravelMm": 1.95,
+      "samples": 4,
+      "steps": [
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_4_1",
+       "gear_1"
+      ],
+      "type": "static_fit",
+      "maxCommonMm3": 0.680405,
+      "maxRemainingTravelMm": 0.0,
+      "samples": 372,
+      "steps": [
+       "lower-shaft-1",
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_4_2",
+       "gear_2"
+      ],
+      "type": "press_fit",
+      "maxCommonMm3": 0.522458,
+      "maxRemainingTravelMm": 1.95,
+      "samples": 4,
+      "steps": [
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_4_2",
+       "gear_2"
+      ],
+      "type": "static_fit",
+      "maxCommonMm3": 0.68041,
+      "maxRemainingTravelMm": 0.0,
+      "samples": 285,
+      "steps": [
+       "lower-shaft-2",
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_4_3",
+       "gear_3"
+      ],
+      "type": "press_fit",
+      "maxCommonMm3": 0.522455,
+      "maxRemainingTravelMm": 1.95,
+      "samples": 4,
+      "steps": [
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_4_3",
+       "gear_3"
+      ],
+      "type": "static_fit",
+      "maxCommonMm3": 0.680405,
+      "maxRemainingTravelMm": 0.0,
+      "samples": 373,
+      "steps": [
+       "lower-shaft-3",
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_4_4",
+       "gear_4"
+      ],
+      "type": "press_fit",
+      "maxCommonMm3": 0.522458,
+      "maxRemainingTravelMm": 1.95,
+      "samples": 4,
+      "steps": [
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "cam_4_4",
+       "gear_4"
+      ],
+      "type": "static_fit",
+      "maxCommonMm3": 0.680409,
+      "maxRemainingTravelMm": 0.0,
+      "samples": 407,
+      "steps": [
+       "lower-shaft-4",
+       "shafts-join"
+      ]
+     },
+     {
+      "parts": [
+       "guide_plate",
+       "housing"
+      ],
+      "type": "snap",
+      "maxCommonMm3": 2.547461,
+      "maxRemainingTravelMm": 10.82,
+      "samples": 22,
+      "steps": [
+       "guide-plate"
+      ]
+     },
+     {
+      "parts": [
+       "housing",
+       "servo_clip_0"
+      ],
+      "type": "snap",
+      "maxCommonMm3": 2.640002,
+      "maxRemainingTravelMm": 10.267,
+      "samples": 21,
+      "steps": [
+       "servo-clips"
+      ]
+     },
+     {
+      "parts": [
+       "housing",
+       "servo_clip_1"
+      ],
+      "type": "snap",
+      "maxCommonMm3": 2.640004,
+      "maxRemainingTravelMm": 10.267,
+      "samples": 21,
+      "steps": [
+       "servo-clips"
+      ]
+     }
+    ],
+    "steps": [
+     {
+      "id": "housing",
+      "frames": 22,
+      "checkedPoses": 22,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "horn-into-coupler",
+      "frames": 52,
+      "checkedPoses": 52,
+      "moving": 2,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "servo-into-horn",
+      "frames": 72,
+      "checkedPoses": 72,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "unit-lower",
+      "frames": 201,
+      "checkedPoses": 201,
+      "moving": 3,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "servo-clips",
+      "frames": 46,
+      "checkedPoses": 46,
+      "moving": 2,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "shafts-join",
+      "frames": 180,
+      "checkedPoses": 180,
+      "moving": 35,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "lower-shaft-2",
+      "frames": 113,
+      "checkedPoses": 113,
+      "moving": 7,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "lower-shaft-1",
+      "frames": 200,
+      "checkedPoses": 200,
+      "moving": 7,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "lower-shaft-3",
+      "frames": 201,
+      "checkedPoses": 201,
+      "moving": 7,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "lower-shaft-0",
+      "frames": 234,
+      "checkedPoses": 234,
+      "moving": 7,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "lower-shaft-4",
+      "frames": 235,
+      "checkedPoses": 235,
+      "moving": 7,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "phase-comb",
+      "frames": 52,
+      "checkedPoses": 52,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "phase-comb-remove",
+      "frames": 52,
+      "checkedPoses": 52,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "guide-plate",
+      "frames": 62,
+      "checkedPoses": 62,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "pixels",
+      "frames": 62,
+      "checkedPoses": 62,
+      "moving": 25,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "bezel",
+      "frames": 42,
+      "checkedPoses": 42,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     }
+    ]
+   },
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "unknowns.resolved",
+   "title": "既製部品の仮値・未確認の寸法がすべて扱いを決められているか（試し刷りの部品など）",
+   "pass": true,
+   "summary": "未確認 7 件の扱いが決まっている",
+   "detail": {
+    "problems": [],
+    "resolutions": [
+     {
+      "id": "sg92r.horn_arm_lengths",
+      "kind": "trial_part",
+      "value": "prints/tangible-pixel-cube/trial/horn_coupler.stl",
+      "what": "ホーン長腕 -18/+16 は写真からの推定"
+     },
+     {
+      "id": "sg92r.horn_hole_positions",
+      "kind": "not_applicable",
+      "value": "受けのポケットはホーンの腕の外形で回す。穴の位置に依存しない",
+      "what": "ホーンの穴は使わない（受けはホーンの外形で掴む）"
+     },
+     {
+      "id": "sg92r.output_spline",
+      "kind": "not_applicable",
+      "value": "付属ホーンを付属のまま使い、スプラインに印刷部品が触れない",
+      "what": "スプラインと付属ホーンの嵌合"
+     },
+     {
+      "id": "sg92r.shaft_height",
+      "kind": "trial_part",
+      "value": "prints/tangible-pixel-cube/trial/horn_coupler.stl",
+      "what": "出力軸の高さ 3.5mm（ホーンの高さが決まる）"
+     },
+     {
+      "id": "sg92r.cover_circle",
+      "kind": "trial_part",
+      "value": "prints/tangible-pixel-cube/trial/housing_servo_block_minusY.stl",
+      "what": "上面カバーの円形部分 φ12"
+     },
+     {
+      "id": "sg92r.wire",
+      "kind": "accepted_risk",
+      "value": "配線は柔らかく、窓 11 x 7mm に対して 4mm 幅。試し刷りの小片に窓は無い",
+      "what": "配線の太さ・出口の高さ"
+     },
+     {
+      "id": "sg92r.connector",
+      "kind": "accepted_risk",
+      "value": "試し刷りの小片に配線の窓が無い。初版の窓は実物で通らず 11 x 7mm に広げた（e8b4c65）。広げた窓も実物では未確認",
+      "what": "3 ピンコネクタの外形（8.2 x 4.4 x 14 と仮定）"
+     }
+    ]
+   },
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "print.slice",
+   "title": "スライス済みのプレートで、サポート無し・外に見える支えの無い押し出しが上限以下か",
+   "pass": false,
+   "summary": "prints/tangible-pixel-cube/ にスライス済みの 3mf が無い",
+   "detail": null,
+   "required": true,
+   "waived": "依頼 ④「スライスは不要」"
+  }
+ ],
+ "inputs": {
+  "models/tangible-pixel-cube/spec.json": "b4d728bc832e503cfbe2738853bc0d4621e2b405f08c4bd401bab5d059dc1a8b",
+  "models/tangible-pixel-cube/build/manifest.json": "86446b3ab8cb3b9faa35ab1a8b59ace1474bb6d6804d7da5c5d02c0128474356",
+  "models/tangible-pixel-cube/build/motion.json": "ed564e9a7b8adec570718c348ea0cc87a245fb198cde090d6cdafaef9b377c1e",
+  "models/tangible-pixel-cube/build/assembly.json": "2904f6d0314fc7569c28d389dd90c95336aae4933844fd5f1197f8aadcb61964",
+  "models/tangible-pixel-cube/assembly.py": "0c5c6a3a2f6d6326f505a3aba8a22bb8c38c0950f2f9a51b54a6e4556c5d4b09",
+  "models/tangible-pixel-cube/cams.py": "023f6e6eef3915cb2121ca638043af4326da7aa04c75153a6bd1f535589e0919",
+  "models/tangible-pixel-cube/compile_demo.py": "b857893dcd5247447ab00d42bf33f7b3e81f8efb5bf98d8c28d2425ad4029257",
+  "models/tangible-pixel-cube/design_check.py": "466ad77ef4ab483256bdd18fa04eb1df73f9a349df4a95259b917b987e065208",
+  "models/tangible-pixel-cube/drive.py": "9898a849deac07ed923f7d44c9a5cb25b9921e28e8379eedbdb7954da5246110",
+  "models/tangible-pixel-cube/firmware.py": "c40f01c318617af1ee507eaad1dc465f7a32da1c4761bbf92cbcd8d3ed1dbdd8",
+  "models/tangible-pixel-cube/kinematics.py": "0b11bb9bb7f242feadf5730d70bd434ec9440b7ba4c58fee27efaf66301cd7ea",
+  "models/tangible-pixel-cube/model.py": "6a4b07a5eee9d9b1daeca3a98ad25ea6ce8011063ba83b2e06a8ce74fa92c5f2",
+  "models/tangible-pixel-cube/motion.py": "2f8722d2e745e03449ed526f18f57f09e13736293baa5115ca1827bc9c1b3e5c",
+  "models/tangible-pixel-cube/params.py": "ee52c39ee13203ea7fcc022ae1eae270079e204b31ba31931a82a95143a54dfa",
+  "models/tangible-pixel-cube/parts_moving.py": "01a5090484364af4f3e3f752c6647100a7ee1232ca390bd9588f3ca691ad951a",
+  "models/tangible-pixel-cube/parts_static.py": "4ca62253c11b0248c1fb836b02f0f01e49a8e0391508e0e644fe8f042165d93c",
+  "models/tangible-pixel-cube/patterns.py": "c91d560ab93641d34294f80ed2ee9fb6ae227110dcf05927b29fad96aee8974a",
+  "models/tangible-pixel-cube/plate_h2d.py": "48a86bf62b98ed607c76cda70049a6299310a84a4b308978cc08721c1b295827",
+  "models/tangible-pixel-cube/print_deliver.py": "c864a7870fd544679c544516e30a28790de7243a9cea36a1753c689a00062c8d",
+  "models/tangible-pixel-cube/print_kit.py": "d698f505b8d45b1f6ec2aa9a9256319c7123cfec5fde98351402daffa80fc1f3",
+  "models/tangible-pixel-cube/print_loads.py": "7fa57cd0f78bdc8c4a4a857ac08ccd0c44f900c1eeac0b241c2c3fa33d435b0d",
+  "models/tangible-pixel-cube/print_review.py": "769d9eac6ac8cd2ad95f5425137a71d3945c84f4b353e9b350ab05085a2a4be9",
+  "models/tangible-pixel-cube/print_trials.py": "d086728df9c439adf5ffa3455c4d5b5cea7e79ec5fe4bf51612e0360661ecde9",
+  "models/tangible-pixel-cube/report.py": "85b751a9e44ee8093c2cf001cfb58b939d91faa396d2d6abb8fa8308dccee3c3",
+  "models/tangible-pixel-cube/run_moving.py": "663f459f794dabc300199cd25ab3abd49856309c0dbc0d66733214b8f185e9c3",
+  "models/tangible-pixel-cube/simulate.py": "fc1880d0acdb858a5347c92df1d4aa16ee7ed74b4ad23f282b0513d564a5e0a2",
+  "models/tangible-pixel-cube/test_cams.py": "6c9de9804550166349c45c35790fcd851e57a3afa1043662996220da7dcccd15",
+  "models/tangible-pixel-cube/test_motion.py": "7edcab3f569b4d77f92915e7421aae78c5ec5195fa0332facca63933288131af",
+  "models/tangible-pixel-cube/verify.py": "5a2e93628a671ac3e280fd50b5771d005d7f93a60388918520da75a0e212d44a",
+  "models/tangible-pixel-cube/build/housing.stl": "92efe83ca1df3d5331a06805c07566dcc2f3cd28851ce8598012fdeb3594de33",
+  "models/tangible-pixel-cube/build/bezel.stl": "8d63d1a4e9aa7faaa62cb28ae9188e9c9c860bd6100c75c9fc383879c76190bc",
+  "models/tangible-pixel-cube/build/guide_plate.stl": "04362f3efc63ffb5cf41f27066fe5bc1b62cdbaaa56ac58090c847abcd2a34c0",
+  "models/tangible-pixel-cube/build/shaft_0.stl": "9345d918a6aad0cf2c50b948ea7107e5feec5a484188187297c307f7a8e13a9b",
+  "models/tangible-pixel-cube/build/shaft_1.stl": "183e99a748ac6f908e9def6e6957d185779748645c9380aba8708f7fcbe8af27",
+  "models/tangible-pixel-cube/build/shaft_2.stl": "0e5976cb8ad8d0d174b4144722b9f3507eb58002df5f6bf2490d0ddeb57abee1",
+  "models/tangible-pixel-cube/build/shaft_3.stl": "217d213fa6fd2911d14484f155f31fa3fb2808c086963c818e8997f5cdd3e160",
+  "models/tangible-pixel-cube/build/shaft_4.stl": "b093ae3a34854ea8600d40fb6b3635b615f8ff89adf0e0254d928b3bc03420a8",
+  "models/tangible-pixel-cube/build/gear_0.stl": "e9c380e3b7dba52157d784591f1a72662534a2bb70cf0f9f7603ba0220e3b8b1",
+  "models/tangible-pixel-cube/build/gear_1.stl": "cfa0062e36391d303d7401578801d4d4bc04a940887186ec65c2acfb3d97eaab",
+  "models/tangible-pixel-cube/build/gear_2.stl": "1fff852e870754806ed3a3991b064cacf7683ac765006beef948e2f1e0946a31",
+  "models/tangible-pixel-cube/build/gear_3.stl": "9703b75f48384097ced899d82b0d8da3511d310ac86df054a38f07febe08fa08",
+  "models/tangible-pixel-cube/build/gear_4.stl": "8c004aba2055185acaa7a73bd1d6f60cfe77ebb03a1a13d1239b774cd33bac50",
+  "models/tangible-pixel-cube/build/cam_0_0.stl": "8fce03610577e335a67a6c707665c863855414d73d227b6a22d57bc6c3105abc",
+  "models/tangible-pixel-cube/build/cam_1_0.stl": "bcc1293f2aa30bb5b5af9c0a0fabf6d613a52e503d4d04b643dbfd7ae7f253f5",
+  "models/tangible-pixel-cube/build/cam_2_0.stl": "9311862298077083e0a433d65e854d46c2dc2f8534a62a5a51d8ae8d7b3d9d28",
+  "models/tangible-pixel-cube/build/cam_3_0.stl": "2c66980a9bba2d255411989fd8dfee9bce8d0fdff823e3ceb753f223749a1bac",
+  "models/tangible-pixel-cube/build/cam_4_0.stl": "f4cf3bbcd31aa15802372b3411ab7d19dcf450f46ac849b9422e36c64de15353",
+  "models/tangible-pixel-cube/build/cam_0_1.stl": "942cb385ed24f93fa496fecd237d1d1f939ad2dd1c1bf5b7cca90192df8aae3d",
+  "models/tangible-pixel-cube/build/cam_1_1.stl": "9a76de2a3a99c952260d1a94d951084f85775a7257c4c23fe1c3ed0d16484beb",
+  "models/tangible-pixel-cube/build/cam_2_1.stl": "fd920678d11904e0b2a6ab8dd0cd7f8893dfd695b2850405ac051499365b4894",
+  "models/tangible-pixel-cube/build/cam_3_1.stl": "bed9e54b0dd7acee03a39f2f3e0a997a681e6a4a84c9723254249589084d7989",
+  "models/tangible-pixel-cube/build/cam_4_1.stl": "48f119b70855704f2c21f73e9d8f28506ffacc8ce4d8886ce9159cdedff46076",
+  "models/tangible-pixel-cube/build/cam_0_2.stl": "123726aa887dbf7950363e6cbe4a6aaa2d9d310572159bf6d94403f57ab8fc39",
+  "models/tangible-pixel-cube/build/cam_1_2.stl": "3c72491a4e7f2437eb5624958b0f21e2277a35dd53c038c3549b4525dc45c6cc",
+  "models/tangible-pixel-cube/build/cam_2_2.stl": "ac00c2df572c8948387e33f455e25cd4d3815bc0b15ed63a1d0dec05d7ee21ab",
+  "models/tangible-pixel-cube/build/cam_3_2.stl": "4197218b2834f74c85a652d27f2cf6ed15de80592d3b1b331a21f163131e95e5",
+  "models/tangible-pixel-cube/build/cam_4_2.stl": "cf4299d7504f3a979a8eb514a78422a808f1216f1d2e39677a6d57e4526e7aa0",
+  "models/tangible-pixel-cube/build/cam_0_3.stl": "1e34324c7a15df9f11470b23265ebeb51aa93af996166b808abefe9fa69f9963",
+  "models/tangible-pixel-cube/build/cam_1_3.stl": "1bdff8903189b7f30def991a0dcafc14f519d6af6c8f331a367244a896fd959d",
+  "models/tangible-pixel-cube/build/cam_2_3.stl": "6c4ff4366223fe320edf411e162de66ea68625c34293063e01882e496ca46cd2",
+  "models/tangible-pixel-cube/build/cam_3_3.stl": "f6f2b8dbc055f04c76fc05366efc98548606717c3766907f8af83f2caa9f0a69",
+  "models/tangible-pixel-cube/build/cam_4_3.stl": "163489ede4712637d1abeaa55a32171287bb7983102b5f2c192eda8f9051ad84",
+  "models/tangible-pixel-cube/build/cam_0_4.stl": "7c24f70a8dd8d68b4463abb96b779331704678850c7b91679c41befd6d310ef6",
+  "models/tangible-pixel-cube/build/cam_1_4.stl": "5dceb9022483cb08c929035af1be856bb53bda5ab4369d3e8c950ff7269d8290",
+  "models/tangible-pixel-cube/build/cam_2_4.stl": "8690484b0201d817979eb10ed1b0749095d0516b5f24ab408645406e3f387b7e",
+  "models/tangible-pixel-cube/build/cam_3_4.stl": "718e475f36f4a0ad01efd8dcea7a3fbd371e698cdf235994cb23b8e169b782d1",
+  "models/tangible-pixel-cube/build/cam_4_4.stl": "87f799a4ca736fd27a9eae8204fc2006e6de5dee8ef77d749b3831f43371ffdc",
+  "models/tangible-pixel-cube/build/pixel_0_0.stl": "5a266deece5f7c6cf505e125790f31bd294f2a1e40ce8e7b496980af3c79e2b9",
+  "models/tangible-pixel-cube/build/pixel_1_0.stl": "c23469aac7517957881db44a5606ae08c70e4263897af663dc663b0de14a3dd8",
+  "models/tangible-pixel-cube/build/pixel_2_0.stl": "eabd9569a49017ade71922386aec478ec6bf6e57e01bbdb852011c8197c969c0",
+  "models/tangible-pixel-cube/build/pixel_3_0.stl": "c4ebad53faba8fe0c4a8779b4173d98c2143ddf9df323e004d8a2958948a316e",
+  "models/tangible-pixel-cube/build/pixel_4_0.stl": "07a0508e682e0d47775f02744d18bae21a0e5c76ad231230cdc209d1f6749c15",
+  "models/tangible-pixel-cube/build/pixel_0_1.stl": "504d0270c351ba3376177cbb85e95f14384765f1ea9efbc0bc967a2380bd9e69",
+  "models/tangible-pixel-cube/build/pixel_1_1.stl": "533a20c570ca073c9f9b968d9bff47799e237ff39e5a33c4c6e22715f86a99ee",
+  "models/tangible-pixel-cube/build/pixel_2_1.stl": "cff07a9290e28798bdb9ecf7a2a52549eedd0f843a083c129c3ce9f4634d6b0e",
+  "models/tangible-pixel-cube/build/pixel_3_1.stl": "8f720a5a5b468a87f25b317f3abbe66433d8a4efed95afb5179e9c24b54e9ede",
+  "models/tangible-pixel-cube/build/pixel_4_1.stl": "5b4414e9c55e6bcc4976bcc44f205514d950e1f28134ba0d0c9f8a59e2d6e4d8",
+  "models/tangible-pixel-cube/build/pixel_0_2.stl": "cc4b1465185696df6ca980bdf21d3d1d0e890f9f4ad15f6ce46540e3e1391cca",
+  "models/tangible-pixel-cube/build/pixel_1_2.stl": "9c8cb2b60a02f181e45f9b9214f44a9a54c86916f8a3b62f2e5ffd57b40123d3",
+  "models/tangible-pixel-cube/build/pixel_2_2.stl": "ed800ba000e08a2f14504deefb1ab65a5691e03583293885f5168dff1c66f2d1",
+  "models/tangible-pixel-cube/build/pixel_3_2.stl": "a153e53d338bd6929950f683af666de6a408c231e8fd4f4759c7f8d58fbfc067",
+  "models/tangible-pixel-cube/build/pixel_4_2.stl": "6b8cede66d464b66afdff79b0fe0df5366e2eb8ad47f2be50878145d4355999d",
+  "models/tangible-pixel-cube/build/pixel_0_3.stl": "282dbead57c99dbf00ef22d99470057ac6fa36ff9412daa2c41318917502fc4a",
+  "models/tangible-pixel-cube/build/pixel_1_3.stl": "f6d9138ee58ca05302504e42a173a6cd232690a09d45ba4766102c9a3622ffba",
+  "models/tangible-pixel-cube/build/pixel_2_3.stl": "c25e6ac2322b960409f63d45a8218d8b1f7dade050689a498acc79a81d1a9ad0",
+  "models/tangible-pixel-cube/build/pixel_3_3.stl": "3248cb2612e0dcd03fcfb61a4f065cdbfbddcc1c1a47b6d8cf53333edc9ff965",
+  "models/tangible-pixel-cube/build/pixel_4_3.stl": "4ece6d8046ce93c65e47c1e5b027d98ef52fecbc137b567d1dc233ea778555bc",
+  "models/tangible-pixel-cube/build/pixel_0_4.stl": "5f566fb37ad2de24e894895d165f10e8307665559296af709673345503fce09a",
+  "models/tangible-pixel-cube/build/pixel_1_4.stl": "be005f9f3117bc5a4491b0c2f93bc145e50ca45c83f5acf8cc50aa550629919c",
+  "models/tangible-pixel-cube/build/pixel_2_4.stl": "78adac19526cc7df00e068a82911838ef477a000bb132fb3911904261eed5ef4",
+  "models/tangible-pixel-cube/build/pixel_3_4.stl": "3079f4e46d6a25e0ffa2da793808ef1b2edd4ea614c9eaf0706ea706a705f7e2",
+  "models/tangible-pixel-cube/build/pixel_4_4.stl": "dd5b3b89250792f257f5e0cdfd35abb7f07d392a8355a664f67934e7bae98b03",
+  "models/tangible-pixel-cube/build/horn_coupler.stl": "b97409aa7a699efb340d7f1858384d63a416ede470a4db1a708023001a0465fb",
+  "models/tangible-pixel-cube/build/phase_comb.stl": "61bc1d7662f475f477edd0e37ed91708f5cb72824fade8a1e9e22ece29ad9cec",
+  "models/tangible-pixel-cube/build/sg92r.stl": "fa1be513c7fa90bad991be893307450b839a424457064cffe2b8fa11fcb31366",
+  "models/tangible-pixel-cube/build/sg92r_horn.stl": "cc587bc8ec9fb91f4a64cded910bdaf0a950e5e5b9417bdc0caf12a9e00211f9",
+  "models/tangible-pixel-cube/build/servo_clip_0.stl": "e6229361acf5c7a97d023287163d331065d2a17a0a3c6bc4a7e956012cbdcae6",
+  "models/tangible-pixel-cube/build/servo_clip_1.stl": "4c206873769d13f7893c1bc02e9a9af70ac0bebeb4c47526f59b918e311fceb9",
+  "models/tangible-pixel-cube/build/print_housing.stl": "d6ce34f21126db7fbd3adb55b41283e0b4cdde0074c0ff164b7b6b5abc581ed9",
+  "models/tangible-pixel-cube/build/print_bezel.stl": "42f728be59076f2d00b5d21f118b6e566f1315b85be6e9e47f2f81bb8ccbf6b0",
+  "models/tangible-pixel-cube/build/print_guide_plate.stl": "227eb7eef359e00075855c6026495b977709c16324ea7d39c2916de70244e80a",
+  "models/tangible-pixel-cube/build/print_shaft_0.stl": "f22aa9af99de292458282ede5cc15634a4aa335a043a35abd648450ca070a21a",
+  "models/tangible-pixel-cube/build/print_shaft_1.stl": "c6a98dbbc4c52420c107121f6d72f84587b517f86188addfba51befa7fa6f16a",
+  "models/tangible-pixel-cube/build/print_shaft_2.stl": "0006b0689d088743e15f238765c618fafbe27191fd6550414a17b806ea536295",
+  "models/tangible-pixel-cube/build/print_shaft_3.stl": "e3b91a7538a672ea08372712deab5e97eb02dd95aec1db005ce2ca31d0fe17cb",
+  "models/tangible-pixel-cube/build/print_shaft_4.stl": "b36945514c45a2b0e9a96e3de2e4c101861cb20bbeb7ab673c89e2f90650396d",
+  "models/tangible-pixel-cube/build/print_gear_0.stl": "1c53a5e129d264e197be63e359fc72452536178d57e9dbd5c44ef423668efe40",
+  "models/tangible-pixel-cube/build/print_gear_1.stl": "0937c0427b1ed2a2d28b393f0715ac839fa333643d638811dbf5df65438691f3",
+  "models/tangible-pixel-cube/build/print_gear_2.stl": "3ae65d3c24e17ef32c58fcfba37081faae29f7619e48d7737b1dd414e78379b1",
+  "models/tangible-pixel-cube/build/print_gear_3.stl": "43b17a195d2da50de399f69c7e55b0e262bf833d043ad3d3ec019e0eba4a7f2b",
+  "models/tangible-pixel-cube/build/print_gear_4.stl": "75e2bb4143c03e577df7f3a4d02e84b1726b9e74258e8ba9a4b436b9b2bced5d",
+  "models/tangible-pixel-cube/build/print_cam_0_0.stl": "625b40c66143752c8f7eca32e11c16769bd573ac6ac2c427f13878528a88139b",
+  "models/tangible-pixel-cube/build/print_cam_1_0.stl": "8b025e2a3cd33870bda47c5776f85e69740479349d2388beaf4569d4d96f5cdc",
+  "models/tangible-pixel-cube/build/print_cam_2_0.stl": "b78265809c37aba793196b6cca1ba7f5470430adc9e33198c15adf0de4a1fd5a",
+  "models/tangible-pixel-cube/build/print_cam_3_0.stl": "cdfbd042d80f3101751f8db9e84b74100970767be96c93d432079c96aa9360c8",
+  "models/tangible-pixel-cube/build/print_cam_4_0.stl": "aa37f02af51300063369d0cced81c0a6c001317429d225c1631ad498cfe21b72",
+  "models/tangible-pixel-cube/build/print_cam_0_1.stl": "17a7a9c858fb21c3946b813a6429905d13c01a58f13522b2d0bc1e1838a8bc60",
+  "models/tangible-pixel-cube/build/print_cam_1_1.stl": "ac0accc04d4c66cbf0fe7dd89d3ed2fc3a65953063f552fd6b060701f31aea72",
+  "models/tangible-pixel-cube/build/print_cam_2_1.stl": "388999fd7af9b5139d984c57a20c0591b13bd817d53db65ae00321bc5cfe12b2",
+  "models/tangible-pixel-cube/build/print_cam_3_1.stl": "e5977d0f8afb75999f19487cd491e2eb0f9a1e06b2c031effeaff6eef2fe6f35",
+  "models/tangible-pixel-cube/build/print_cam_4_1.stl": "5ba835f7da845ba5d0dea41ef2a5b28cbfe69b5b5c6ecddf59a4b953c6999d93",
+  "models/tangible-pixel-cube/build/print_cam_0_2.stl": "162d6bcdd2f051b2969423d7825e5b23f3429dcf3ada8a40549cbef21de71e2e",
+  "models/tangible-pixel-cube/build/print_cam_1_2.stl": "553eaf61813c33a4af0a3404215ab96ad1b307d13e06e7ab15b0eb60b62d5f87",
+  "models/tangible-pixel-cube/build/print_cam_2_2.stl": "b614c631bf82fe37f56ff67de554c8df2402ca275d05e5bd50e0cf9205affbeb",
+  "models/tangible-pixel-cube/build/print_cam_3_2.stl": "faba46c451c17607d59f4c01300d471b5b9411785b1dd67f216cf34388cbccda",
+  "models/tangible-pixel-cube/build/print_cam_4_2.stl": "ce0b73e8e77b9c22fc1df840b6bab9a9a25074c6178d0388ce45f537cce96e47",
+  "models/tangible-pixel-cube/build/print_cam_0_3.stl": "90a1bb41265965a7da284981ae3b40ede0cb4475be31a766add9102ea31c60cd",
+  "models/tangible-pixel-cube/build/print_cam_1_3.stl": "7371f706f116524c62b16ed5099b22a86467ce57bcee508d1660cf8eb874562d",
+  "models/tangible-pixel-cube/build/print_cam_2_3.stl": "17ce422a5ddaa1a399fe39b3e1fb77b7951689b4a8e30e3b12585c39a78fec08",
+  "models/tangible-pixel-cube/build/print_cam_3_3.stl": "436e22d0dbc75dde7c09de553cd3097423f83f82ad8ae5923aa9a51941a4f0b1",
+  "models/tangible-pixel-cube/build/print_cam_4_3.stl": "938a3e53d391f856ad537ac97757f6b844b59b08a3666011f630f47bbf172151",
+  "models/tangible-pixel-cube/build/print_cam_0_4.stl": "a9e3a03a926b5239a316f1310d8f83d5e6535f9436828fafac5c209f073ceb1a",
+  "models/tangible-pixel-cube/build/print_cam_1_4.stl": "45efa5157aab44ec80df8d52bf2d71939c0e4c943671b58753d73394fea8d461",
+  "models/tangible-pixel-cube/build/print_cam_2_4.stl": "c8ef4cccdefbea22f80da7f770a6ce2e679372ddd555a55a86ab0063753e10da",
+  "models/tangible-pixel-cube/build/print_cam_3_4.stl": "84ce11135ed03efae4a656b2a90543dcba4df8335e5f01fa8391f8576238d300",
+  "models/tangible-pixel-cube/build/print_cam_4_4.stl": "e8048d55585635982d4fde0374b470937d12f800f548ed8456fc86e370de0467",
+  "models/tangible-pixel-cube/build/print_pixel_0_0.stl": "acf0c6a95e39f5759bac9f3eed540b05091c261dfd9f1d72dd5ea4a239ff7a65",
+  "models/tangible-pixel-cube/build/print_pixel_1_0.stl": "c83cac33c7ad9c088b04fabebeecbc16f0ba379bea07711c52047d0f01302137",
+  "models/tangible-pixel-cube/build/print_pixel_2_0.stl": "8b3091f51a29c60f16746358a31eca2001c8e853bd7b29619a2818ff4903004d",
+  "models/tangible-pixel-cube/build/print_pixel_3_0.stl": "524188e452a2ca2ae4356ce9402f01d8247070fba94cfa0aecc391639331ca91",
+  "models/tangible-pixel-cube/build/print_pixel_4_0.stl": "d4b7d7d502c29b2d4ee29583f2e6dd31ee84cef84d72e7b688c3b8aae3ae9381",
+  "models/tangible-pixel-cube/build/print_pixel_0_1.stl": "79f64b4f2ab67211e8da4ebe706a67614b50622784725649fa18269fcac82e5e",
+  "models/tangible-pixel-cube/build/print_pixel_1_1.stl": "660fbb175eeb0c5564e62f88e553c28ac81b2d0d0e062edf94e2ddbbbb556b33",
+  "models/tangible-pixel-cube/build/print_pixel_2_1.stl": "41184ba14b2d20b3f4d00343b455fc4a5138d1ef2e3f37c0bcb110bcfcf4fa6f",
+  "models/tangible-pixel-cube/build/print_pixel_3_1.stl": "38b551811006764ccf652dd13c18e791595ccee27846f39ba616b1ad843a584a",
+  "models/tangible-pixel-cube/build/print_pixel_4_1.stl": "0430df5e6f103942edbea4a28949e3c0bdcb42e823808bf6d3c6de278036fda0",
+  "models/tangible-pixel-cube/build/print_pixel_0_2.stl": "28ad3d524fff8b1e3edcaec74b13d569a05bcc693a1e4b4422abce7b811a5a45",
+  "models/tangible-pixel-cube/build/print_pixel_1_2.stl": "766b77e9eed0aea717e54a9dee6764986ee7620fc38a79c139f57bd6e781d25c",
+  "models/tangible-pixel-cube/build/print_pixel_2_2.stl": "0f8843f4c671a8ebccefe67b0013881018e8269d48ab706a5dd62e04a332f9f0",
+  "models/tangible-pixel-cube/build/print_pixel_3_2.stl": "ed773666a947a6153697e1341f95925eb49e207bdc6d2d68456114c929d93e34",
+  "models/tangible-pixel-cube/build/print_pixel_4_2.stl": "f806ccb7d7e7d78c3d775245846da3ae5bd2da939004fb6580d706189f8724b2",
+  "models/tangible-pixel-cube/build/print_pixel_0_3.stl": "2e68ab4d1b681ce1f249a4bef7b1842b7c5fd99afcb81846b739c234cbd3f9ed",
+  "models/tangible-pixel-cube/build/print_pixel_1_3.stl": "778b56da56631aa9d3b5e0b4c6f62aa2667722e4ccdf4a54db6f41e89af6288c",
+  "models/tangible-pixel-cube/build/print_pixel_2_3.stl": "7c838d6af1d0d3257b068ce7675542b9d42ce42c340037b5a689e35dad89510e",
+  "models/tangible-pixel-cube/build/print_pixel_3_3.stl": "ca0fa8ad3194597289478eec53b782b60907cd09f941f33e541c26203618a68f",
+  "models/tangible-pixel-cube/build/print_pixel_4_3.stl": "14000d2399ba2ded8d7e3aca686bc08ed78a3dd2990b2400954ca2ca35eaf251",
+  "models/tangible-pixel-cube/build/print_pixel_0_4.stl": "96d46ea3fe0914da76dd5ee00531d8498476a32183479ce80d3a87d12727727e",
+  "models/tangible-pixel-cube/build/print_pixel_1_4.stl": "952210ed220295ae5e0bdaa72cfae0e46919d6b975ba6a5adf1073844fc70faf",
+  "models/tangible-pixel-cube/build/print_pixel_2_4.stl": "4f69e67028d5dbc02db89cd8d35245ac87d081f3ef2c9c6083e6342b56c9f438",
+  "models/tangible-pixel-cube/build/print_pixel_3_4.stl": "92568f64424a0958a03a947a344c20cc225e7ecd66471d811616901ead43a9cf",
+  "models/tangible-pixel-cube/build/print_pixel_4_4.stl": "fd39dd14ee571e9a77c3c7ef21a83569b204bdc0852808bcee15d18acc3a30f6",
+  "models/tangible-pixel-cube/build/print_horn_coupler.stl": "8d4800f2aa7285e3282e567100c6c03375fcd44cca40a8336bcddb53e3f4f455",
+  "models/tangible-pixel-cube/build/print_phase_comb.stl": "02312fad1ad0d78644011f7fd33aa994ee5494dd37034b5eebb6deebb7b19d50",
+  "models/tangible-pixel-cube/build/print_servo_clip_0.stl": "de0c2e28f8e45ef6974f0129ca45c9659e6074de7cb6dc82a61b57fd45170ce2",
+  "models/tangible-pixel-cube/build/print_servo_clip_1.stl": "3ef20b7cf4edd7175438d4aad709a6724b3f315da9b118373db26c45e0596458",
+  "prints/tangible-pixel-cube/trial/horn_coupler.stl": "8d4800f2aa7285e3282e567100c6c03375fcd44cca40a8336bcddb53e3f4f455",
+  "prints/tangible-pixel-cube/trial/housing_servo_block_minusY.stl": "e95e260d6ad23fe41cd2099b9ca84142f0b851a766d311aed49058d9d8004faf",
+  "tools/mechgate.py": "a04a4984d76cf8fa034fecbf79635d71513659919101b1cd6e61ff7bffba6f7b",
+  "tools/mechgate_lib/__init__.py": "7f409f2f5490445952a8c8ccbcacc41dbe79c6e4d90eaf83d1eaf05c1a20ca93",
+  "tools/mechgate_lib/limits.py": "0e544a9ae5e0495fdf009983bf0cca7696cea68c05349a92af08eb7ac3634f88",
+  "tools/mechgate_lib/meshcheck.py": "3efc9d3d1de32a392d8f1979a59665c6a382a497794c4f82d8f3af927d094110",
+  "tools/mechgate_lib/gate.py": "8540550eeb7b8a73e9919e8c772e7cf9d3e190fb5cad57fbe5d132a1831e224f",
+  "tools/mechgate_lib/bl_job.py": "91aa0d0e7150e4812b8d20f1a80c8e7ddbde5851e1e5c16656d243082158b135",
+  "tools/mechgate_lib/selftest.py": "8f0a0411afe96f993744f0ff20fb51207e857e6c8672b81d5f0b68912cae967e",
+  "lib/printmech/solid_meter.py": "29fd57451bc054b928b3f54edec94de6a8dc529372db52bf48e6e62f90a2c53d",
+  "lib/printmech/contract.py": "c07fbf75fc73042f69db935b61ce3d078d00da4d8c0f40ebc9948ddf7abf4aef",
+  "lib/solid_volume.py": "e2ef2fed94077267883da61c7b28ca09f321d1263833bcaf6580daa7748b1415"
+ }
+}

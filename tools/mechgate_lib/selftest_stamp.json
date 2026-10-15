@@ -1,0 +1,98 @@
+{
+ "harness_sha": "1c43cff2ea0c41adde95b44a6b71ddb1ad68744d238c51129462964436cbb1ca",
+ "pass": true,
+ "at": "2026-10-15T10:54:42",
+ "seconds": 15.1,
+ "results": [
+  {
+   "case": "正常な版",
+   "expect": "合格",
+   "failing": [],
+   "pass": true
+  },
+  {
+   "case": "駆動の界面が 3mm 離れている（歯車の欠落）",
+   "expect": "interface.drive",
+   "failing": [
+    "interface.drive"
+   ],
+   "pass": true
+  },
+  {
+   "case": "圧入の当たりが最後の 2mm を超えて 8mm 続く",
+   "expect": "assembly.path",
+   "failing": [
+    "assembly.path",
+    "motion.interference"
+   ],
+   "pass": true
+  },
+  {
+   "case": "圧入の差し込み長さを上限を超えて宣言する",
+   "expect": "spec.valid",
+   "failing": [
+    "spec.valid"
+   ],
+   "pass": true
+  },
+  {
+   "case": "動作中にスライダーが台に 0.5mm 食い込む",
+   "expect": "motion.interference",
+   "failing": [
+    "assembly.path",
+    "motion.interference"
+   ],
+   "pass": true
+  },
+  {
+   "case": "回る部品が駆動の界面につながっていない",
+   "expect": "interface.coverage",
+   "failing": [
+    "interface.coverage"
+   ],
+   "pass": true
+  },
+  {
+   "case": "抜け止めの壁が 4mm 離れている",
+   "expect": "interface.retention",
+   "failing": [
+    "interface.retention"
+   ],
+   "pass": true
+  },
+  {
+   "case": "刷る部品が 2 つに分かれ、片方が浮いている",
+   "expect": "parts.components",
+   "failing": [
+    "parts.components",
+    "print.grounding"
+   ],
+   "pass": true
+  },
+  {
+   "case": "STL が 1 面欠けて閉じていない",
+   "expect": "parts.topology",
+   "failing": [
+    "parts.topology"
+   ],
+   "pass": true
+  },
+  {
+   "case": "組立の刻みが 10mm で、0.6mm の板をすり抜ける",
+   "expect": "assembly.path",
+   "failing": [
+    "assembly.envelope",
+    "assembly.path"
+   ],
+   "pass": true
+  },
+  {
+   "case": "SG92R を使うのに仮値の扱いを書いていない",
+   "expect": "unknowns.resolved",
+   "failing": [
+    "unknowns.resolved"
+   ],
+   "pass": true
+  }
+ ]
+}
