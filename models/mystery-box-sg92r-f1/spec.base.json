@@ -1,0 +1,28 @@
+{
+ "model": "mystery-box-sg92r-f1",
+ "request": "段1のゴールは「交換の規格」が動くコードとして存在し、正面の蓋カセット1つで、ゲートの検査ケースが回ること。",
+ "requirements": [
+  {"id": "R1", "text": "閉状態の外形は100 × 100 × 100mm", "checks": ["assembly.envelope"]},
+  {"id": "R2", "text": "段1は正面のSG92R蓋カセット1つと他5面の空の面", "checks": ["interface.coverage", "interface.drive", "motion.torque"]},
+  {"id": "R3", "text": "他面を変更せずキーを解除して40mm以上直線で引き抜く", "checks": ["assembly.path", "interface.retention", "manual:他面を残して配線を切り離し交換する"]},
+  {"id": "R4", "text": "動作中もサーボと伝達部品を外から見せない", "checks": ["manual:閉端・中間・開端を斜め方向から見て遮蔽を確認"]},
+  {"id": "R5", "text": "印刷部品とSG92R・付属ホーンだけで工具なしに組み分解する", "checks": ["assembly.path", "interface.retention", "manual:工具なしで組立と分解"]},
+  {"id": "R6", "text": "外装2mm・荷重部3mm以上でサポートなしに見える面を刷る", "checks": ["print.slice", "print.grounding", "print.slender", "parts.topology"]},
+  {"id": "R7", "text": "全動作と交換経路で干渉しない。製造余裕0.25mmを含む占有領域を検査する", "checks": ["motion.interference", "assembly.path", "manual:verify_envelopes.pyの未証明範囲を確認"]},
+  {"id": "R8", "text": "既製部品の仮値は本体形状から作る試片で扱う", "checks": ["unknowns.resolved", "manual:実物適合と20回着脱を記録"]},
+  {"id": "R9", "text": "新しい面は独立したfacesディレクトリとslots.jsonで追加する", "checks": ["manual:verify_contract.pyで規格と依存鮮度を検査"]}
+ ],
+ "envelope_mm": [100, 100, 100],
+ "uses": ["sg92r"],
+ "parts": {"components": {}, "jigs": [], "slender_ok": {}},
+ "motion": {"actuator": "front/sg92r_horn", "servo": "sg92r", "exclude": []},
+ "allowances": [],
+ "interfaces": [],
+ "unknowns": [],
+ "waivers": [
+  {
+   "check": "print.slice",
+   "reason": "依頼原文『段1で作らないもの: sector_flag と three_pixels の中身（slots.json では一時的に right と top を blank にしておく）、印刷プレート・スライス（時間があれば最後に）。』に基づく段1限定の免除。スライスは未実施で、印刷済み・印刷可能とは未判定。その他の検査は免除しない。"
+  }
+ ]
+}

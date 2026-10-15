@@ -1,0 +1,49 @@
+{
+ "scope": "retention_only",
+ "pass": true,
+ "partial": false,
+ "inputs_fresh": true,
+ "changed_inputs": [],
+ "cases": [
+  {
+   "id": "front/mid",
+   "pass": true,
+   "returncode": 0,
+   "pose": {
+    "id": "mid",
+    "label": "蓋30度",
+    "servo_deg": 87.18351968016395,
+    "output_deg": 30
+   },
+   "checked": 40,
+   "expected": 40,
+   "calibration": true,
+   "failing": [],
+   "error": null,
+   "report": "build/retention_cases/front/mid/report.json"
+  },
+  {
+   "id": "front/open",
+   "pass": true,
+   "returncode": 0,
+   "pose": {
+    "id": "open",
+    "label": "蓋60度",
+    "servo_deg": 55.66268077250187,
+    "output_deg": 60.0
+   },
+   "checked": 40,
+   "expected": 40,
+   "calibration": true,
+   "failing": [],
+   "error": null,
+   "report": "build/retention_cases/front/open/report.json"
+  }
+ ],
+ "not_checked": [
+  "full_gate",
+  "motion.interference",
+  "assembly.path",
+  "parts.self_intersection"
+ ]
+}

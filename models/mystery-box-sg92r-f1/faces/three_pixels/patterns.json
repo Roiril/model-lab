@@ -1,0 +1,9 @@
+{
+  "units": "mm",
+  "pixels": ["pixel_1", "pixel_2", "pixel_3"],
+  "stops": [
+    {"servo_deg": 60, "heights_mm": [3, 0, 1.5]},
+    {"servo_deg": 90, "heights_mm": [0, 0, 0]},
+    {"servo_deg": 120, "heights_mm": [0, 3, 1.5]}
+  ]
+}

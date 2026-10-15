@@ -1,0 +1,13 @@
+{
+  "interface": "resident-face-v1",
+  "module": "template",
+  "supported_slots": ["top", "front", "right", "back", "left", "bottom"],
+  "parts": ["panel", "key_l", "key_r"],
+  "mass_limit_g": 30,
+  "uses": [],
+  "requirements": [{"id": "template-mount", "text": "交換規格の面板と固定キーを備える", "checks": ["assembly.path", "interface.retention"]}],
+  "interfaces": [{"id": "panel-keys", "type": "retention", "parts": ["panel"], "direction": [0,0,-1], "max_free_mm": 0.5, "engage_depth_mm": 1.2}],
+  "allowances": [],
+  "motion": null,
+  "unknowns": []
+}

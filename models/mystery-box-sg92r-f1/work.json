@@ -1,0 +1,116 @@
+{
+ "scope": "段1: 交換規格・骨格・blank/template・正面link_lid・合成と検査ケース",
+ "status": "complete",
+ "plan": [
+  {
+   "step": "設計書と既製部品正本・ゲート契約を確認",
+   "status": "complete"
+  },
+  {
+   "step": "規格と独立面APIを固定",
+   "status": "complete"
+  },
+  {
+   "step": "骨格と正面を合成しSTL・検査ケースを生成",
+   "status": "complete"
+  },
+  {
+   "step": "ゲートと包絡の指摘に合わせ形状を修正",
+   "status": "complete"
+  },
+  {
+   "step": "全ゲートと規格検査を記録して引き渡す",
+   "status": "complete"
+  }
+ ],
+ "changed_root": "models/mystery-box-sg92r-f1",
+ "generated_roots": [
+  "exports/mystery-box-sg92r-f1.stl",
+  "exports/mystery-box-sg92r-f1.blend",
+  "prints/mystery-box-sg92r-f1"
+ ],
+ "source_frozen": true,
+ "final_geometry": "1.2mm角の逆装着防止ストッパ。α0局所O基準v[-17.5,-16.3],d[-1.8,-0.6]mm、正向き16mm腕との公称隙間0.3mm。接続床もこの矩形へ縮小し、深さ24mmの占有段を避ける。",
+ "checks": [
+  {
+   "command": "py -3.11 tools/mechgate.py check mystery-box-sg92r-f1",
+   "exit": 0,
+   "session": 65410,
+   "report": "build/gate_summary.md"
+  },
+  {
+   "command": "py -3.11 tools/mechgate.py check mystery-box-sg92r-f1/checks/front",
+   "exit": 0,
+   "session": 92838,
+   "report": "checks/front/build/gate_summary.md"
+  },
+  {
+   "command": "py -3.11 models/mystery-box-sg92r-f1/certify.py --retention-only",
+   "exit": 0,
+   "session": 2394,
+   "mid": "蓋30度40/40pass",
+   "open": "蓋60度40/40pass",
+   "report": "build/retention_report.json"
+  },
+  {
+   "command": "py -3.11 models/mystery-box-sg92r-f1/verify_contract.py",
+   "exit": 0,
+   "passed": 358,
+   "total": 358,
+   "report": "build/contract_report.json"
+  },
+  {
+   "command": "py -3.11 models/mystery-box-sg92r-f1/verify_envelopes.py",
+   "exit": 0,
+   "session": 35688,
+   "passed": 26,
+   "total": 26,
+   "poses": 691,
+   "max_excess_mm": 0,
+   "report": "build/envelope_report.json"
+  },
+  {
+   "command": "node tools/catalog.js check",
+   "exit": 0,
+   "models": 106,
+   "available": 90
+  }
+ ],
+ "full_gate": "赤い検査なし。34部品561組48姿勢、駆動3界面、保持40件、組立66工程、印刷32点の連結・接地・自己交差・細長さを検査。66STLのトポロジ合格。",
+ "waivers": [
+  {
+   "check": "print.slice",
+   "reason": "ユーザーが段1の対象外と明記。プレートとスライスは未作成。印刷可能とは未判定。"
+  }
+ ],
+ "freshness": {
+  "root": "合格・最新",
+  "front": "合格・最新",
+  "dependencies": [
+   true,
+   []
+  ]
+ },
+ "horn_index_diagnostic": "正向き±0.25mmの共通体積最大1.3174e-5mm3は計器床以下。逆向き1.713736〜2.093234mm3で全拒否。局所動作・組立も合格。",
+ "decisions": [
+  "正面を代表駆動とし、right/topを含む他5面はblank。",
+  "中央トレー24×24×44mmはXY中心、Z=-10mm。配線予約の中心Z=-40mm。",
+  "面はinterface.jsonとcommon_paramsだけを共通入力にする。選択中の面だけを依存追跡し、未選択の並行作業を巻き込まない。",
+  "計器と閾値は変更なし。allowancesを広げず形状を修正した。"
+ ],
+ "unverified": [
+  "実物の嵌合・20回着脱・10N保持",
+  "閉端/中間/開端の遮蔽目視",
+  "元の非線形運動学そのものの連続包絡証明",
+  "任意の複数面の同時動作",
+  "プレート・スライス・印刷"
+ ],
+ "stage2_read": [
+  "interface.json",
+  "params.py",
+  "faces/template/README.md",
+  "README.md の『規格と面の追加』『ビルドと検査』"
+ ],
+ "commit_push": "ユーザー指示『git commit / push はしない（親がやる）』により未実施。親へ引き渡す。",
+ "next": "段2担当が規格とtemplateを読み、各自の面ディレクトリで実装する。別担当のsector_flag/three_pixelsには変更していない。"
+}

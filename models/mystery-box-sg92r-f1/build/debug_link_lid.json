@@ -1,0 +1,158 @@
+{
+ "calibration": {
+  "overlapHalf": {
+   "measured": 0.5,
+   "expected": 0.5,
+   "pass": true
+  },
+  "thinOverlap0.002": {
+   "measured": 0.0020000040531158447,
+   "expected": 0.002,
+   "pass": true
+  },
+  "separated": {
+   "measured": 0.0,
+   "expected": 0.0,
+   "pass": true
+  },
+  "faceContact": {
+   "measured": 0.0,
+   "expected": 0.0,
+   "pass": true
+  },
+  "edgeContact": {
+   "measured": 0.0,
+   "expected": 0.0,
+   "pass": true
+  },
+  "nestedInside": {
+   "measured": 1.0,
+   "expected": 1.0,
+   "pass": true
+  },
+  "nestedInsideReversed": {
+   "measured": 1.0,
+   "expected": 1.0,
+   "pass": true
+  },
+  "tiltedFaceContactAtScale": {
+   "measured": 0.0,
+   "expected": 0.0,
+   "pass": true
+  },
+  "tiltedThinOverlapAtScale": {
+   "measured": 4.000433860168268,
+   "expected": 4.0,
+   "pass": true
+  },
+  "skipAgreesWithBoolean": {
+   "cases": [
+    {
+     "case": "separated",
+     "fast": 0.0,
+     "full": 0.0,
+     "pass": true
+    },
+    {
+     "case": "overlap",
+     "fast": 0.7000000029802322,
+     "full": 0.7000000029802322,
+     "pass": true
+    },
+    {
+     "case": "nested",
+     "fast": 1.0,
+     "full": 1.0,
+     "pass": true
+    }
+   ],
+   "pass": true
+  },
+  "firstContactLinear": {
+   "measured": 0.501001,
+   "expected": 0.501,
+   "pass": true
+  },
+  "firstContactNone": {
+   "measured": null,
+   "expected": null,
+   "pass": true
+  },
+  "firstContactAngular": {
+   "measured": 14.255127,
+   "expected": 14.255098890306314,
+   "pass": true
+  },
+  "pass": true
+ },
+ "nonmanifold": {
+  "panel": 0,
+  "key_l": 0,
+  "key_r": 0,
+  "servo": 0,
+  "horn": 1,
+  "support": 0,
+  "servo_cap": 0,
+  "crank": 0,
+  "link": 0,
+  "lid": 0,
+  "hinge_pin": 0
+ },
+ "intersections": {
+  "servo/horn": {
+   "volume_mm3": 0.02999762956646164,
+   "deg": 87.51178846177551,
+   "bounds": [
+    [
+     3.0,
+     -5.300000190734863,
+     15.199999809265137
+    ],
+    [
+     6.0,
+     -0.7000002861022949,
+     19.799999237060547
+    ]
+   ]
+  }
+ },
+ "note": "診断のみ。正本ゲートの完了判定を置き換えない。",
+ "horn_index": [
+  {
+   "orientation": "correct",
+   "shift_mm": -0.25,
+   "common_mm3": 7.021421188750746e-08,
+   "pass": true
+  },
+  {
+   "orientation": "correct",
+   "shift_mm": 0.0,
+   "common_mm3": 0.0,
+   "pass": true
+  },
+  {
+   "orientation": "correct",
+   "shift_mm": 0.25,
+   "common_mm3": 1.3174210474379271e-05,
+   "pass": true
+  },
+  {
+   "orientation": "reversed",
+   "shift_mm": -0.25,
+   "common_mm3": 2.0932343703857694,
+   "pass": true
+  },
+  {
+   "orientation": "reversed",
+   "shift_mm": 0.0,
+   "common_mm3": 1.9584303434020525,
+   "pass": true
+  },
+  {
+   "orientation": "reversed",
+   "shift_mm": 0.25,
+   "common_mm3": 1.713735733861772,
+   "pass": true
+  }
+ ]
+}

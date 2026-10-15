@@ -1,0 +1,676 @@
+{
+  "interface": "resident-face-v1",
+  "module": "three_pixels",
+  "supported_slots": [
+    "top",
+    "front",
+    "right",
+    "back",
+    "left"
+  ],
+  "parts": [
+    "panel",
+    "key_l",
+    "key_r",
+    "support",
+    "servo_cap",
+    "cam_lower",
+    "cam_upper",
+    "pixel_1",
+    "pixel_2",
+    "pixel_3",
+    "guide",
+    "cam_key_1",
+    "cam_key_2",
+    "servo",
+    "horn"
+  ],
+  "mass_limit_g": 100,
+  "uses": [
+    "sg92r"
+  ],
+  "motion": {
+    "actuator": "horn",
+    "servo": "servo",
+    "closed_servo_deg": 90,
+    "open_servo_deg": 120,
+    "assembly_servo_deg": 90,
+    "step_deg": 1,
+    "duration_s": 2,
+    "range_servo_deg": [
+      60,
+      120
+    ],
+    "stop_servo_deg": [
+      60,
+      90,
+      120
+    ]
+  },
+  "requirements": [
+    {
+      "id": "pixels-table",
+      "text": "patterns.jsonから53mmの上下カムを作り、14mm角の3画素を0〜3mm押し引きする",
+      "checks": [
+        "motion.interference",
+        "interface.drive",
+        "motion.torque"
+      ]
+    },
+    {
+      "id": "pixels-fit",
+      "text": "7段の占有と外部動作域を守り、側面でも重力に頼らず動く",
+      "checks": [
+        "assembly.envelope",
+        "interface.retention",
+        "manual:実機を上向きと横向きで動かす"
+      ]
+    },
+    {
+      "id": "pixels-assembly",
+      "text": "サーボ90度で組み、印刷部品と付属ホーンだけで保持する",
+      "checks": [
+        "assembly.path",
+        "interface.retention",
+        "manual:工具なしで組立と取り外し"
+      ]
+    },
+    {
+      "id": "pixels-shield",
+      "text": "8mmのスカートで画素穴の奥を隠す",
+      "checks": [
+        "manual:0mmと3mmで斜めから内部が見えないこと"
+      ]
+    }
+  ],
+  "interfaces": [
+    {
+      "id": "horn-cam",
+      "type": "drive",
+      "driver": "horn",
+      "driven": "cam_upper",
+      "sides": "both",
+      "max_play_deg": 3
+    },
+    {
+      "id": "upper-cam-key",
+      "type": "drive",
+      "driver": "cam_upper",
+      "driven": "cam_key_1",
+      "sides": "both",
+      "max_play_deg": 3
+    },
+    {
+      "id": "key-lower-cam",
+      "type": "drive",
+      "driver": "cam_key_1",
+      "driven": "cam_lower",
+      "sides": "both",
+      "max_play_deg": 3
+    },
+    {
+      "id": "lower-pixel-1",
+      "type": "drive",
+      "driver": "cam_lower",
+      "driven": "pixel_1",
+      "sides": "one_sided",
+      "max_play_mm": 0.4,
+      "contact_direction": [
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "id": "upper-pixel-1",
+      "type": "drive",
+      "driver": "cam_upper",
+      "driven": "pixel_1",
+      "sides": "one_sided",
+      "max_play_mm": 0.4,
+      "contact_direction": [
+        0,
+        0,
+        -1
+      ]
+    },
+    {
+      "id": "pixel-1-out",
+      "type": "retention",
+      "parts": [
+        "pixel_1"
+      ],
+      "against": [
+        "cam_upper",
+        "cam_lower"
+      ],
+      "direction": [
+        0,
+        0,
+        -1
+      ],
+      "max_free_mm": 0.5,
+      "engage_depth_mm": 3
+    },
+    {
+      "id": "pixel-1-in",
+      "type": "retention",
+      "parts": [
+        "pixel_1"
+      ],
+      "against": [
+        "cam_upper",
+        "cam_lower"
+      ],
+      "direction": [
+        0,
+        0,
+        1
+      ],
+      "max_free_mm": 0.5,
+      "engage_depth_mm": 3
+    },
+    {
+      "id": "lower-pixel-2",
+      "type": "drive",
+      "driver": "cam_lower",
+      "driven": "pixel_2",
+      "sides": "one_sided",
+      "max_play_mm": 0.4,
+      "contact_direction": [
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "id": "upper-pixel-2",
+      "type": "drive",
+      "driver": "cam_upper",
+      "driven": "pixel_2",
+      "sides": "one_sided",
+      "max_play_mm": 0.4,
+      "contact_direction": [
+        0,
+        0,
+        -1
+      ]
+    },
+    {
+      "id": "pixel-2-out",
+      "type": "retention",
+      "parts": [
+        "pixel_2"
+      ],
+      "against": [
+        "cam_upper",
+        "cam_lower"
+      ],
+      "direction": [
+        0,
+        0,
+        -1
+      ],
+      "max_free_mm": 0.5,
+      "engage_depth_mm": 3
+    },
+    {
+      "id": "pixel-2-in",
+      "type": "retention",
+      "parts": [
+        "pixel_2"
+      ],
+      "against": [
+        "cam_upper",
+        "cam_lower"
+      ],
+      "direction": [
+        0,
+        0,
+        1
+      ],
+      "max_free_mm": 0.5,
+      "engage_depth_mm": 3
+    },
+    {
+      "id": "lower-pixel-3",
+      "type": "drive",
+      "driver": "cam_lower",
+      "driven": "pixel_3",
+      "sides": "one_sided",
+      "max_play_mm": 0.4,
+      "contact_direction": [
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "id": "upper-pixel-3",
+      "type": "drive",
+      "driver": "cam_upper",
+      "driven": "pixel_3",
+      "sides": "one_sided",
+      "max_play_mm": 0.4,
+      "contact_direction": [
+        0,
+        0,
+        -1
+      ]
+    },
+    {
+      "id": "pixel-3-out",
+      "type": "retention",
+      "parts": [
+        "pixel_3"
+      ],
+      "against": [
+        "cam_upper",
+        "cam_lower"
+      ],
+      "direction": [
+        0,
+        0,
+        -1
+      ],
+      "max_free_mm": 0.5,
+      "engage_depth_mm": 3
+    },
+    {
+      "id": "pixel-3-in",
+      "type": "retention",
+      "parts": [
+        "pixel_3"
+      ],
+      "against": [
+        "cam_upper",
+        "cam_lower"
+      ],
+      "direction": [
+        0,
+        0,
+        1
+      ],
+      "max_free_mm": 0.5,
+      "engage_depth_mm": 3
+    },
+    {
+      "id": "cam-out",
+      "type": "retention",
+      "parts": [
+        "cam_upper",
+        "cam_lower",
+        "cam_key_1",
+        "cam_key_2"
+      ],
+      "against": [
+        "panel",
+        "guide"
+      ],
+      "direction": [
+        0,
+        0,
+        -1
+      ],
+      "max_free_mm": 0.5,
+      "engage_depth_mm": 3
+    },
+    {
+      "id": "guide-out",
+      "type": "retention",
+      "parts": [
+        "guide"
+      ],
+      "against": [
+        "servo_cap",
+        "support"
+      ],
+      "direction": [
+        0,
+        0,
+        -1
+      ],
+      "max_free_mm": 0.5,
+      "engage_depth_mm": 2
+    },
+    {
+      "id": "servo-out",
+      "type": "retention",
+      "parts": [
+        "servo"
+      ],
+      "against": [
+        "servo_cap",
+        "support"
+      ],
+      "direction": [
+        0,
+        0,
+        -1
+      ],
+      "max_free_mm": 0.5,
+      "engage_depth_mm": 2
+    },
+    {
+      "id": "support-out",
+      "type": "retention",
+      "parts": [
+        "support"
+      ],
+      "against": [
+        "panel"
+      ],
+      "direction": [
+        0,
+        0,
+        -1
+      ],
+      "max_free_mm": 0.5,
+      "engage_depth_mm": 1.2
+    },
+    {
+      "id": "cap-out",
+      "type": "retention",
+      "parts": [
+        "servo_cap"
+      ],
+      "against": [
+        "support",
+        "servo",
+        "guide"
+      ],
+      "direction": [
+        0,
+        0,
+        -1
+      ],
+      "max_free_mm": 0.5,
+      "engage_depth_mm": 1.2
+    },
+    {
+      "id": "cam-key-1-out",
+      "type": "retention",
+      "parts": [
+        "cam_key_1"
+      ],
+      "against": [
+        "cam_upper",
+        "cam_lower"
+      ],
+      "direction": [
+        0,
+        0,
+        -1
+      ],
+      "max_free_mm": 0.5,
+      "engage_depth_mm": 1.2
+    },
+    {
+      "id": "cam-key-2-out",
+      "type": "retention",
+      "parts": [
+        "cam_key_2"
+      ],
+      "against": [
+        "cam_upper",
+        "cam_lower"
+      ],
+      "direction": [
+        0,
+        0,
+        -1
+      ],
+      "max_free_mm": 0.5,
+      "engage_depth_mm": 1.2
+    },
+    {
+      "id": "cam-in",
+      "type": "retention",
+      "parts": [
+        "cam_upper",
+        "cam_lower",
+        "cam_key_1",
+        "cam_key_2"
+      ],
+      "against": [
+        "panel",
+        "guide"
+      ],
+      "direction": [
+        0,
+        0,
+        1
+      ],
+      "max_free_mm": 0.5,
+      "engage_depth_mm": 3
+    },
+    {
+      "id": "guide-in",
+      "type": "retention",
+      "parts": [
+        "guide"
+      ],
+      "against": [
+        "servo_cap",
+        "support"
+      ],
+      "direction": [
+        0,
+        0,
+        1
+      ],
+      "max_free_mm": 0.5,
+      "engage_depth_mm": 2
+    },
+    {
+      "id": "servo-in",
+      "type": "retention",
+      "parts": [
+        "servo"
+      ],
+      "against": [
+        "servo_cap",
+        "support"
+      ],
+      "direction": [
+        0,
+        0,
+        1
+      ],
+      "max_free_mm": 0.5,
+      "engage_depth_mm": 2
+    },
+    {
+      "id": "support-in",
+      "type": "retention",
+      "parts": [
+        "support"
+      ],
+      "against": [
+        "panel"
+      ],
+      "direction": [
+        0,
+        0,
+        1
+      ],
+      "max_free_mm": 0.5,
+      "engage_depth_mm": 1.2
+    },
+    {
+      "id": "cap-in",
+      "type": "retention",
+      "parts": [
+        "servo_cap"
+      ],
+      "against": [
+        "support",
+        "servo",
+        "guide"
+      ],
+      "direction": [
+        0,
+        0,
+        1
+      ],
+      "max_free_mm": 0.5,
+      "engage_depth_mm": 1.2
+    },
+    {
+      "id": "cam-key-1-in",
+      "type": "retention",
+      "parts": [
+        "cam_key_1"
+      ],
+      "against": [
+        "cam_upper",
+        "cam_lower"
+      ],
+      "direction": [
+        0,
+        0,
+        1
+      ],
+      "max_free_mm": 0.5,
+      "engage_depth_mm": 1.2
+    },
+    {
+      "id": "cam-key-2-in",
+      "type": "retention",
+      "parts": [
+        "cam_key_2"
+      ],
+      "against": [
+        "cam_upper",
+        "cam_lower"
+      ],
+      "direction": [
+        0,
+        0,
+        1
+      ],
+      "max_free_mm": 0.5,
+      "engage_depth_mm": 1.2
+    }
+  ],
+  "allowances": [
+    {
+      "type": "reference_internal",
+      "pairs": [
+        [
+          "servo",
+          "horn"
+        ]
+      ],
+      "max_mm3": 0.05,
+      "basis": "正本の円筒近似スプラインのみ。印刷部品への除外はない。"
+    },
+    {
+      "type": "snap",
+      "pairs": [
+        [
+          "support",
+          "panel"
+        ]
+      ],
+      "engage_mm": 2.4,
+      "deflection_mm": 0.6,
+      "strain_percent": 0.444,
+      "basis": "自由長18mm、厚さ1.6mm、片側0.6mm。1.5tδ/L²。"
+    },
+    {
+      "type": "snap",
+      "pairs": [
+        [
+          "servo_cap",
+          "support"
+        ]
+      ],
+      "engage_mm": 4.5,
+      "deflection_mm": 5,
+      "strain_percent": 1.94,
+      "basis": "右腕は自由長22mm・厚さ1.2mm・先端5mm。中心線の長さを保った曲げで最大ひずみ1.938%以下。左腕は17.5mm・1.6mm・0.6mmで0.471%以下。着座まで指で開いて保持し、着座後に戻す。実形状を曲げた通過検査はcheck_localのelastic_cap。"
+    },
+    {
+      "type": "snap",
+      "pairs": [
+        [
+          "cam_key_1",
+          "cam_lower"
+        ],
+        [
+          "cam_key_2",
+          "cam_lower"
+        ]
+      ],
+      "engage_mm": 4.5,
+      "deflection_mm": 0.15,
+      "strain_percent": 0.67,
+      "basis": "二股脚厚1.2mm、自由長6.35mm、片側0.15mm。1.5tδ/L²。"
+    },
+    {
+      "type": "snap",
+      "pairs": [
+        [
+          "servo_cap",
+          "guide"
+        ]
+      ],
+      "engage_mm": 9,
+      "deflection_mm": 5,
+      "strain_percent": 1.94,
+      "basis": "右腕は自由長22mm・厚さ1.2mm・先端5mm。中心線の長さを保った曲げで最大ひずみ1.938%以下。左腕は17.5mm・1.6mm・0.6mmで0.471%以下。着座まで指で開いて保持し、着座後に戻す。実形状を曲げた通過検査はcheck_localのelastic_cap。"
+    },
+    {
+      "type": "snap",
+      "pairs": [
+        [
+          "cam_key_1",
+          "cam_upper"
+        ],
+        [
+          "cam_key_2",
+          "cam_upper"
+        ]
+      ],
+      "engage_mm": 11,
+      "deflection_mm": 0.15,
+      "strain_percent": 0.67,
+      "basis": "下カムを留める二股の爪が上カムの四角穴を通る間も片側0.15mm縮む。自由長6.35mm、厚さ1.2mm。"
+    }
+  ],
+  "unknowns": [
+    {
+      "id": "sg92r.horn_arm_lengths",
+      "trial_part": "$trial/horn_fit.stl"
+    },
+    {
+      "id": "sg92r.horn_hole_positions",
+      "not_applicable": "付属ホーンの穴は使わない。"
+    },
+    {
+      "id": "sg92r.output_spline",
+      "not_applicable": "実物付属ホーンを使い、印刷スプラインは作らない。"
+    },
+    {
+      "id": "sg92r.shaft_height",
+      "trial_part": "$trial/horn_fit.stl"
+    },
+    {
+      "id": "sg92r.cover_circle",
+      "trial_part": "$trial/servo_cap_fit.stl"
+    },
+    {
+      "id": "sg92r.wire",
+      "trial_part": "$trial/servo_fit.stl"
+    },
+    {
+      "id": "sg92r.connector",
+      "trial_part": "$trial/connector_nest.stl"
+    }
+  ],
+  "integration_notes": [
+    "closed=90は3画素が面一の基準。range_servo_deg=[60,120]の全域を検査する必要がある。closed/openだけのサンプラでは画素1を検査できない。",
+    "contact_directionは下/上の接触側。標準ゲートはone_sidedの片側を自動判定するためcheck_localでも符号を検査する。"
+  ]
+}

@@ -1,0 +1,1796 @@
+{
+ "pass": true,
+ "checks": [
+  {
+   "id": "mount.release_geometry_declared",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "front.right_handed",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "front.conjugation",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "front.key_l.exchange_continuity",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "front.key_l.exchange_final_identity",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "front.key_r.exchange_continuity",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "front.key_r.exchange_final_identity",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "front.complete_ids",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "front.retention_pose_ids",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "front.retention.mid.complete_ids",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "front.retention.open.complete_ids",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "front.monotonic_servo",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "front.endpoints",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "front.closed_identity",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "front.nonzero_motion",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "front.continuous_kinematics",
+   "pass": true,
+   "detail": "largest part rotation per sample=0.995285deg"
+  },
+  {
+   "id": "front.interface.horn-crank",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "front.interface.crank-link",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "front.interface.link-lid",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "front.interface.crank-positive-u",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "front.interface.crank-negative-u",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "front.interface.link-positive-u",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "front.interface.link-negative-u",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "front.interface.lid-positive-u",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "front.interface.lid-negative-u",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "front.interface.hinge-positive-u",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "front.interface.hinge-negative-u",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "front.interface.servo-out",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "front.interface.servo-in",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "front.interface.cap-out",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "front.interface.support-in",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "front.allowance.0.references",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "front.allowance.1.references",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "front.allowance.2.references",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "front.allowance.3.references",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "right.right_handed",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "right.conjugation",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "right.key_l.exchange_continuity",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "right.key_l.exchange_final_identity",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "right.key_r.exchange_continuity",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "right.key_r.exchange_final_identity",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "right.complete_ids",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "right.blank_static",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "right.interface.panel-key-left",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "right.interface.panel-key-right",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "back.right_handed",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "back.conjugation",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "back.key_l.exchange_continuity",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "back.key_l.exchange_final_identity",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "back.key_r.exchange_continuity",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "back.key_r.exchange_final_identity",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "back.complete_ids",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "back.blank_static",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "back.interface.panel-key-left",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "back.interface.panel-key-right",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "left.right_handed",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "left.conjugation",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "left.key_l.exchange_continuity",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "left.key_l.exchange_final_identity",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "left.key_r.exchange_continuity",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "left.key_r.exchange_final_identity",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "left.complete_ids",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "left.blank_static",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "left.interface.panel-key-left",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "left.interface.panel-key-right",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "top.right_handed",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "top.conjugation",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "top.key_l.exchange_continuity",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "top.key_l.exchange_final_identity",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "top.key_r.exchange_continuity",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "top.key_r.exchange_final_identity",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "top.complete_ids",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "top.blank_static",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "top.interface.panel-key-left",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "top.interface.panel-key-right",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "bottom.right_handed",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "bottom.conjugation",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "bottom.key_l.exchange_continuity",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "bottom.key_l.exchange_final_identity",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "bottom.key_r.exchange_continuity",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "bottom.key_r.exchange_final_identity",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "bottom.complete_ids",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "bottom.blank_static",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "bottom.interface.panel-key-left",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "bottom.interface.panel-key-right",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "reject.path_traversal",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "reject.rotation",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "reject.missing_slot",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "reject.unknown_module",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "reject.unsupported_bottom_slot",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "reject.interface_version",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "reject.reflection",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "reject.nonlocal_id",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "dependencies.include_selected_faces",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "dependencies.exclude_unselected_faces",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "dependencies.exclude_face_generated_outputs",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "dependencies.include_slots",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "dependencies.detect_slots_change",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "dependencies.selection_follows_slots",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "dependencies.include_reference",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "dependencies.detect_changed_hash",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "dependencies.detect_added_source",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "dependencies.detect_deleted_source",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "dependencies.accept_identical",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "retention.accept_complete_calibrated",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "retention.reject_bad_calibration",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "retention.reject_missing_result",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "retention.reject_failed_interface",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "retention.reject_empty",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "dependencies.fresh",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "id": "cases.every_active_slot",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "retention.every_active_pose",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "retention.front/mid.all_parts",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "retention.front/mid.static_classification",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "retention.front/mid.scope",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "retention.front/mid.complete_interfaces",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "retention.front/mid.identity_baseline",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "retention.front/mid.actual_baked_meshes",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "id": "retention.front/open.all_parts",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "retention.front/open.static_classification",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "retention.front/open.scope",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "retention.front/open.complete_interfaces",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "retention.front/open.identity_baseline",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "retention.front/open.actual_baked_meshes",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "id": "mystery-box-sg92r-f1.unique_ids",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.prefixes",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.interface.front/horn-crank",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.interface.front/crank-link",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.interface.front/link-lid",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.interface.front/crank-positive-u",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.interface.front/crank-negative-u",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.interface.front/link-positive-u",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.interface.front/link-negative-u",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.interface.front/lid-positive-u",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.interface.front/lid-negative-u",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.interface.front/hinge-positive-u",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.interface.front/hinge-negative-u",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.interface.front/servo-out",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.interface.front/servo-in",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.interface.front/cap-out",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.interface.front/support-in",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.interface.right/panel-key-left",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.interface.right/panel-key-right",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.interface.back/panel-key-left",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.interface.back/panel-key-right",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.interface.left/panel-key-left",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.interface.left/panel-key-right",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.interface.top/panel-key-left",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.interface.top/panel-key-right",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.interface.bottom/panel-key-left",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.interface.bottom/panel-key-right",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.interface.frame/post-0-bottom",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.interface.frame/post-0-top",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.interface.frame/post-1-bottom",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.interface.frame/post-1-top",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.interface.frame/post-2-bottom",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.interface.frame/post-2-top",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.interface.frame/post-3-bottom",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.interface.frame/post-3-top",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.interface.frame/wiring-seated",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.interface.frame/wiring-up",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.interface.frame/tray-down",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.interface.frame/tray-up",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.interface.front/frame_retention",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.interface.right/frame_retention",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.interface.back/frame_retention",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.interface.left/frame_retention",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.interface.top/frame_retention",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.interface.bottom/frame_retention",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.55.66268",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.56.65797",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.57.65325",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.58.64853",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.59.64382",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.60.63910",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.61.63439",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.62.62967",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.63.62496",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.64.62024",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.65.61553",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.66.61081",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.67.60610",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.68.60138",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.69.59667",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.70.59195",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.71.58723",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.72.58252",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.73.57780",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.74.57309",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.75.56837",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.76.56366",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.77.55894",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.78.55423",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.79.54951",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.80.54480",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.81.54008",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.82.53537",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.83.53065",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.84.52593",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.85.52122",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.86.51650",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.87.51179",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.88.50707",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.89.50236",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.90.49764",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.91.49293",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.92.48821",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.93.48350",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.94.47878",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.95.47407",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.96.46935",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.97.46463",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.98.45992",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.99.45520",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.100.45049",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.101.44577",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.102.44106",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.103.43634",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.104.43163",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.105.42691",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.106.42220",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.107.41748",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.108.41277",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.109.40805",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.110.40333",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.111.39862",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.112.39390",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.113.38919",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.114.38447",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.115.37976",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.116.37504",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.117.37033",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.118.36561",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.119.36090",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.120.35618",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.121.35147",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.122.34675",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.123.34203",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.frame.124.33732",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1.assembly_continuity",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "id": "mystery-box-sg92r-f1.assembly_final",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.unique_ids",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.prefixes",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.interface.front/horn-crank",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.interface.front/crank-link",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.interface.front/link-lid",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.interface.front/crank-positive-u",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.interface.front/crank-negative-u",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.interface.front/link-positive-u",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.interface.front/link-negative-u",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.interface.front/lid-positive-u",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.interface.front/lid-negative-u",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.interface.front/hinge-positive-u",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.interface.front/hinge-negative-u",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.interface.front/servo-out",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.interface.front/servo-in",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.interface.front/cap-out",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.interface.front/support-in",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.interface.right/panel-key-left",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.interface.right/panel-key-right",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.interface.back/panel-key-left",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.interface.back/panel-key-right",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.interface.left/panel-key-left",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.interface.left/panel-key-right",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.interface.top/panel-key-left",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.interface.top/panel-key-right",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.interface.bottom/panel-key-left",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.interface.bottom/panel-key-right",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.interface.frame/post-0-bottom",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.interface.frame/post-0-top",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.interface.frame/post-1-bottom",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.interface.frame/post-1-top",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.interface.frame/post-2-bottom",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.interface.frame/post-2-top",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.interface.frame/post-3-bottom",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.interface.frame/post-3-top",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.interface.frame/wiring-seated",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.interface.frame/wiring-up",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.interface.frame/tray-down",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.interface.frame/tray-up",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.interface.front/frame_retention",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.interface.right/frame_retention",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.interface.back/frame_retention",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.interface.left/frame_retention",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.interface.top/frame_retention",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.interface.bottom/frame_retention",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.55.66268",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.56.65797",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.57.65325",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.58.64853",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.59.64382",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.60.63910",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.61.63439",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.62.62967",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.63.62496",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.64.62024",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.65.61553",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.66.61081",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.67.60610",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.68.60138",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.69.59667",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.70.59195",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.71.58723",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.72.58252",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.73.57780",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.74.57309",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.75.56837",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.76.56366",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.77.55894",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.78.55423",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.79.54951",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.80.54480",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.81.54008",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.82.53537",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.83.53065",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.84.52593",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.85.52122",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.86.51650",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.87.51179",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.88.50707",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.89.50236",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.90.49764",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.91.49293",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.92.48821",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.93.48350",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.94.47878",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.95.47407",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.96.46935",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.97.46463",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.98.45992",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.99.45520",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.100.45049",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.101.44577",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.102.44106",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.103.43634",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.104.43163",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.105.42691",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.106.42220",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.107.41748",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.108.41277",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.109.40805",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.110.40333",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.111.39862",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.112.39390",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.113.38919",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.114.38447",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.115.37976",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.116.37504",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.117.37033",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.118.36561",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.119.36090",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.120.35618",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.121.35147",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.122.34675",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.123.34203",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.frame.124.33732",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.assembly_continuity",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "id": "mystery-box-sg92r-f1/checks/front.assembly_final",
+   "pass": true,
+   "detail": ""
+  }
+ ],
+ "scope": "規格・識別子・運動学・入力鮮度。物理検査と実物適合はmechgateと試し刷りで確認。"
+}

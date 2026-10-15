@@ -1,0 +1,29 @@
+{
+ "label": "住人の箱 F1",
+ "displayName": "面を交換できる住人の箱",
+ "navLabel": "住人の箱 F1",
+ "navOrder": 90,
+ "dimensionsFallback": "100 × 100 × 100mm",
+ "physics": {
+  "title": "正面の動き",
+  "playback": "motion-frames",
+  "term": "可動部",
+  "openLabel": "開く",
+  "closeLabel": "閉じる",
+  "chartSeries": [
+   "front/crank",
+   "front/link",
+   "front/lid"
+  ],
+  "simLimits": "検査ケースでは正面だけを動かし、他の面は閉じたままです。",
+  "massNote": "中実PLAの体積から質量を求めます。実物の摩擦は未測定です。"
+ },
+ "assembly": {
+  "servoSetup": "SG92Rを90°にして付属ホーンを取り付けます。",
+  "maxTranslationMm": 1,
+  "maxRotationDeg": 5
+ },
+ "print": {
+  "downloadBase": "prints"
+ }
+}

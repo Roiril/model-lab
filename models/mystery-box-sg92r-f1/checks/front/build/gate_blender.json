@@ -1,0 +1,1693 @@
+{
+ "startedAt": "2026-10-15T17:28:40",
+ "calibration": {
+  "overlapHalf": {
+   "measured": 0.5,
+   "expected": 0.5,
+   "pass": true
+  },
+  "thinOverlap0.002": {
+   "measured": 0.0020000040531158447,
+   "expected": 0.002,
+   "pass": true
+  },
+  "separated": {
+   "measured": 0.0,
+   "expected": 0.0,
+   "pass": true
+  },
+  "faceContact": {
+   "measured": 0.0,
+   "expected": 0.0,
+   "pass": true
+  },
+  "edgeContact": {
+   "measured": 0.0,
+   "expected": 0.0,
+   "pass": true
+  },
+  "nestedInside": {
+   "measured": 1.0,
+   "expected": 1.0,
+   "pass": true
+  },
+  "nestedInsideReversed": {
+   "measured": 1.0,
+   "expected": 1.0,
+   "pass": true
+  },
+  "tiltedFaceContactAtScale": {
+   "measured": 0.0,
+   "expected": 0.0,
+   "pass": true
+  },
+  "tiltedThinOverlapAtScale": {
+   "measured": 4.000433860168268,
+   "expected": 4.0,
+   "pass": true
+  },
+  "skipAgreesWithBoolean": {
+   "cases": [
+    {
+     "case": "separated",
+     "fast": 0.0,
+     "full": 0.0,
+     "pass": true
+    },
+    {
+     "case": "overlap",
+     "fast": 0.7000000029802322,
+     "full": 0.7000000029802322,
+     "pass": true
+    },
+    {
+     "case": "nested",
+     "fast": 1.0,
+     "full": 1.0,
+     "pass": true
+    }
+   ],
+   "pass": true
+  },
+  "firstContactLinear": {
+   "measured": 0.501001,
+   "expected": 0.501,
+   "pass": true
+  },
+  "firstContactNone": {
+   "measured": null,
+   "expected": null,
+   "pass": true
+  },
+  "firstContactAngular": {
+   "measured": 14.255127,
+   "expected": 14.255098890306314,
+   "pass": true
+  },
+  "pass": true
+ },
+ "selfIntersection": {
+  "pass": true,
+  "failing": {},
+  "checked": 32
+ },
+ "motion": {
+  "pass": true,
+  "parts": 34,
+  "pairs": 561,
+  "constantPairs": 436,
+  "varyingPairs": 125,
+  "frames": 48,
+  "servoDegs": [
+   55.66268077250187,
+   124.33731922749814
+  ],
+  "violations": [],
+  "allowedContacts": [
+   {
+    "parts": [
+     "front/horn",
+     "front/servo"
+    ],
+    "type": "reference_internal",
+    "maxMm3": 0.029994455296799633
+   }
+  ],
+  "interpolatedPoses": 0
+ },
+ "drive": [
+  {
+   "id": "front/horn-crank",
+   "driver": "front/horn",
+   "driven": "front/crank",
+   "sides": "both",
+   "samples": 12,
+   "pass": true,
+   "worst": [
+    {
+     "servoDeg": 55.66268077250187,
+     "unit": "deg",
+     "limit": 3,
+     "back": 1.099164,
+     "ahead": 1.099182,
+     "pass": true
+    },
+    {
+     "servoDeg": 61.63438846424068,
+     "unit": "deg",
+     "limit": 3,
+     "back": 1.099164,
+     "ahead": 1.099182,
+     "pass": true
+    }
+   ]
+  },
+  {
+   "id": "front/crank-link",
+   "driver": "front/crank",
+   "driven": "front/link",
+   "sides": "both",
+   "samples": 12,
+   "pass": true,
+   "worst": [
+    {
+     "servoDeg": 55.66268077250187,
+     "unit": "deg",
+     "limit": 3,
+     "back": 0.12735,
+     "ahead": 0.127423,
+     "pass": true
+    },
+    {
+     "servoDeg": 61.63438846424068,
+     "unit": "deg",
+     "limit": 3,
+     "back": 0.125995,
+     "ahead": 0.126105,
+     "pass": true
+    }
+   ]
+  },
+  {
+   "id": "front/link-lid",
+   "driver": "front/link",
+   "driven": "front/lid",
+   "sides": "both",
+   "samples": 12,
+   "pass": true,
+   "worst": [
+    {
+     "servoDeg": 55.66268077250187,
+     "unit": "deg",
+     "limit": 3,
+     "back": 0.929297,
+     "ahead": 0.925104,
+     "pass": true
+    },
+    {
+     "servoDeg": 61.63438846424068,
+     "unit": "deg",
+     "limit": 3,
+     "back": 0.930176,
+     "ahead": 0.925635,
+     "pass": true
+    }
+   ]
+  }
+ ],
+ "assembly": {
+  "pass": true,
+  "steps": [
+   {
+    "id": "frame/lower-frame",
+    "frames": 2,
+    "checkedPoses": 2,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "frame/insert-post_0",
+    "frames": 25,
+    "checkedPoses": 25,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "frame/insert-post_1",
+    "frames": 25,
+    "checkedPoses": 25,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "frame/insert-post_2",
+    "frames": 25,
+    "checkedPoses": 25,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "frame/insert-post_3",
+    "frames": 25,
+    "checkedPoses": 25,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "frame/wiring",
+    "frames": 204,
+    "checkedPoses": 204,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "frame/upper-frame",
+    "frames": 25,
+    "checkedPoses": 25,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "frame/tray",
+    "frames": 196,
+    "checkedPoses": 196,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "front/support-base",
+    "frames": 2,
+    "checkedPoses": 2,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "front/lid-base",
+    "frames": 2,
+    "checkedPoses": 2,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "front/link-in",
+    "frames": 51,
+    "checkedPoses": 51,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "front/servo-base",
+    "frames": 2,
+    "checkedPoses": 2,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "front/horn-in",
+    "frames": 21,
+    "checkedPoses": 21,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "front/crank-in",
+    "frames": 41,
+    "checkedPoses": 41,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "front/linkage-connect",
+    "frames": 141,
+    "checkedPoses": 141,
+    "moving": 2,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "front/cradle-in",
+    "frames": 121,
+    "checkedPoses": 121,
+    "moving": 5,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "front/servo_cap-in",
+    "frames": 101,
+    "checkedPoses": 101,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "front/hinge_pin-in",
+    "frames": 121,
+    "checkedPoses": 121,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "front/panel-in",
+    "frames": 91,
+    "checkedPoses": 91,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "front/return-closed",
+    "frames": 71,
+    "checkedPoses": 71,
+    "moving": 4,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "front/insert",
+    "frames": 101,
+    "checkedPoses": 101,
+    "moving": 9,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "front/key_l_insert",
+    "frames": 41,
+    "checkedPoses": 41,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "front/key_l_lock",
+    "frames": 5,
+    "checkedPoses": 5,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "front/key_r_insert",
+    "frames": 41,
+    "checkedPoses": 41,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "front/key_r_lock",
+    "frames": 5,
+    "checkedPoses": 5,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "right/panel",
+    "frames": 2,
+    "checkedPoses": 2,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "right/insert",
+    "frames": 101,
+    "checkedPoses": 101,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "right/key_l_insert",
+    "frames": 41,
+    "checkedPoses": 41,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "right/key_l_lock",
+    "frames": 5,
+    "checkedPoses": 5,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "right/key_r_insert",
+    "frames": 41,
+    "checkedPoses": 41,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "right/key_r_lock",
+    "frames": 5,
+    "checkedPoses": 5,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "back/panel",
+    "frames": 2,
+    "checkedPoses": 2,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "back/insert",
+    "frames": 101,
+    "checkedPoses": 101,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "back/key_l_insert",
+    "frames": 41,
+    "checkedPoses": 41,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "back/key_l_lock",
+    "frames": 5,
+    "checkedPoses": 5,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "back/key_r_insert",
+    "frames": 41,
+    "checkedPoses": 41,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "back/key_r_lock",
+    "frames": 5,
+    "checkedPoses": 5,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "left/panel",
+    "frames": 2,
+    "checkedPoses": 2,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "left/insert",
+    "frames": 101,
+    "checkedPoses": 101,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "left/key_l_insert",
+    "frames": 41,
+    "checkedPoses": 41,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "left/key_l_lock",
+    "frames": 5,
+    "checkedPoses": 5,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "left/key_r_insert",
+    "frames": 41,
+    "checkedPoses": 41,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "left/key_r_lock",
+    "frames": 5,
+    "checkedPoses": 5,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "top/panel",
+    "frames": 2,
+    "checkedPoses": 2,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "top/insert",
+    "frames": 101,
+    "checkedPoses": 101,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "top/key_l_insert",
+    "frames": 41,
+    "checkedPoses": 41,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "top/key_l_lock",
+    "frames": 5,
+    "checkedPoses": 5,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "top/key_r_insert",
+    "frames": 41,
+    "checkedPoses": 41,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "top/key_r_lock",
+    "frames": 5,
+    "checkedPoses": 5,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "bottom/panel",
+    "frames": 2,
+    "checkedPoses": 2,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "bottom/insert",
+    "frames": 101,
+    "checkedPoses": 101,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "bottom/key_l_insert",
+    "frames": 41,
+    "checkedPoses": 41,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "bottom/key_l_lock",
+    "frames": 5,
+    "checkedPoses": 5,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "bottom/key_r_insert",
+    "frames": 41,
+    "checkedPoses": 41,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "bottom/key_r_lock",
+    "frames": 5,
+    "checkedPoses": 5,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "front/exchange_key_0_release",
+    "frames": 5,
+    "checkedPoses": 5,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "front/exchange_key_0_out",
+    "frames": 51,
+    "checkedPoses": 51,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "front/exchange_key_1_release",
+    "frames": 5,
+    "checkedPoses": 5,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "front/exchange_key_1_out",
+    "frames": 51,
+    "checkedPoses": 51,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "front/exchange_out",
+    "frames": 41,
+    "checkedPoses": 41,
+    "moving": 9,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "front/disconnect",
+    "frames": 2,
+    "checkedPoses": 2,
+    "moving": 0,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "front/exchange_in",
+    "frames": 41,
+    "checkedPoses": 41,
+    "moving": 9,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "front/exchange_key_0_in",
+    "frames": 51,
+    "checkedPoses": 51,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "front/exchange_key_0_lock",
+    "frames": 5,
+    "checkedPoses": 5,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "front/exchange_key_1_in",
+    "frames": 51,
+    "checkedPoses": 51,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "front/exchange_key_1_lock",
+    "frames": 5,
+    "checkedPoses": 5,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   }
+  ],
+  "violations": [],
+  "interpolatedPoses": 0,
+  "boundaryErrors": [],
+  "finalNotAssembled": [],
+  "finalParts": [
+   "back/key_l",
+   "back/key_r",
+   "back/panel",
+   "bottom/key_l",
+   "bottom/key_r",
+   "bottom/panel",
+   "frame/lower_frame",
+   "frame/post_0",
+   "frame/post_1",
+   "frame/post_2",
+   "frame/post_3",
+   "frame/tray",
+   "frame/upper_frame",
+   "frame/wiring",
+   "front/crank",
+   "front/hinge_pin",
+   "front/horn",
+   "front/key_l",
+   "front/key_r",
+   "front/lid",
+   "front/link",
+   "front/panel",
+   "front/servo",
+   "front/servo_cap",
+   "front/support",
+   "left/key_l",
+   "left/key_r",
+   "left/panel",
+   "right/key_l",
+   "right/key_r",
+   "right/panel",
+   "top/key_l",
+   "top/key_r",
+   "top/panel"
+  ],
+  "allowedContacts": [
+   {
+    "parts": [
+     "frame/lower_frame",
+     "frame/post_0"
+    ],
+    "type": "snap",
+    "maxCommonMm3": 0.089249,
+    "maxRemainingTravelMm": 2.0,
+    "samples": 4,
+    "steps": [
+     "frame/insert-post_0"
+    ]
+   },
+   {
+    "parts": [
+     "frame/lower_frame",
+     "frame/post_1"
+    ],
+    "type": "snap",
+    "maxCommonMm3": 0.089249,
+    "maxRemainingTravelMm": 2.0,
+    "samples": 4,
+    "steps": [
+     "frame/insert-post_1"
+    ]
+   },
+   {
+    "parts": [
+     "frame/lower_frame",
+     "frame/post_2"
+    ],
+    "type": "snap",
+    "maxCommonMm3": 0.089249,
+    "maxRemainingTravelMm": 2.0,
+    "samples": 4,
+    "steps": [
+     "frame/insert-post_2"
+    ]
+   },
+   {
+    "parts": [
+     "frame/lower_frame",
+     "frame/post_3"
+    ],
+    "type": "snap",
+    "maxCommonMm3": 0.089249,
+    "maxRemainingTravelMm": 2.0,
+    "samples": 4,
+    "steps": [
+     "frame/insert-post_3"
+    ]
+   },
+   {
+    "parts": [
+     "frame/post_0",
+     "frame/upper_frame"
+    ],
+    "type": "snap",
+    "maxCommonMm3": 0.089249,
+    "maxRemainingTravelMm": 2.0,
+    "samples": 4,
+    "steps": [
+     "frame/upper-frame"
+    ]
+   },
+   {
+    "parts": [
+     "frame/post_1",
+     "frame/upper_frame"
+    ],
+    "type": "snap",
+    "maxCommonMm3": 0.089249,
+    "maxRemainingTravelMm": 2.0,
+    "samples": 4,
+    "steps": [
+     "frame/upper-frame"
+    ]
+   },
+   {
+    "parts": [
+     "frame/post_2",
+     "frame/upper_frame"
+    ],
+    "type": "snap",
+    "maxCommonMm3": 0.089249,
+    "maxRemainingTravelMm": 2.0,
+    "samples": 4,
+    "steps": [
+     "frame/upper-frame"
+    ]
+   },
+   {
+    "parts": [
+     "frame/post_3",
+     "frame/upper_frame"
+    ],
+    "type": "snap",
+    "maxCommonMm3": 0.089249,
+    "maxRemainingTravelMm": 2.0,
+    "samples": 4,
+    "steps": [
+     "frame/upper-frame"
+    ]
+   },
+   {
+    "parts": [
+     "front/crank",
+     "front/link"
+    ],
+    "type": "snap",
+    "maxCommonMm3": 2.473743,
+    "maxRemainingTravelMm": 4.0,
+    "samples": 8,
+    "steps": [
+     "front/linkage-connect"
+    ]
+   },
+   {
+    "parts": [
+     "front/horn",
+     "front/servo"
+    ],
+    "type": "reference_internal",
+    "maxCommonMm3": 0.029959,
+    "maxRemainingTravelMm": 0.0,
+    "samples": 379,
+    "steps": [
+     "front/cradle-in",
+     "front/exchange_in",
+     "front/exchange_out",
+     "front/horn-in",
+     "front/insert",
+     "front/return-closed"
+    ]
+   },
+   {
+    "parts": [
+     "front/lid",
+     "front/link"
+    ],
+    "type": "snap",
+    "maxCommonMm3": 2.473697,
+    "maxRemainingTravelMm": 4.0,
+    "samples": 8,
+    "steps": [
+     "front/link-in"
+    ]
+   },
+   {
+    "parts": [
+     "front/panel",
+     "front/support"
+    ],
+    "type": "snap",
+    "maxCommonMm3": 1.536014,
+    "maxRemainingTravelMm": 1.5,
+    "samples": 3,
+    "steps": [
+     "front/panel-in"
+    ]
+   }
+  ]
+ },
+ "retention": [
+  {
+   "id": "front/crank-positive-u",
+   "parts": [
+    "front/crank",
+    "front/horn"
+   ],
+   "direction": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.0,
+   "stoppedBy": [
+    "front/servo"
+   ],
+   "stoppedPart": "front/horn",
+   "pass": true
+  },
+  {
+   "id": "front/crank-negative-u",
+   "parts": [
+    "front/crank",
+    "front/horn"
+   ],
+   "direction": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.0,
+   "stoppedBy": [
+    "front/servo"
+   ],
+   "stoppedPart": "front/horn",
+   "pass": true
+  },
+  {
+   "id": "front/link-positive-u",
+   "parts": [
+    "front/link"
+   ],
+   "direction": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.300491,
+   "stoppedBy": [
+    "front/crank"
+   ],
+   "stoppedPart": "front/link",
+   "pass": true
+  },
+  {
+   "id": "front/link-negative-u",
+   "parts": [
+    "front/link"
+   ],
+   "direction": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.300056,
+   "stoppedBy": [
+    "front/crank"
+   ],
+   "stoppedPart": "front/link",
+   "pass": true
+  },
+  {
+   "id": "front/lid-positive-u",
+   "parts": [
+    "front/lid"
+   ],
+   "direction": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.300491,
+   "stoppedBy": [
+    "front/link"
+   ],
+   "stoppedPart": "front/lid",
+   "pass": true
+  },
+  {
+   "id": "front/lid-negative-u",
+   "parts": [
+    "front/lid"
+   ],
+   "direction": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.300049,
+   "stoppedBy": [
+    "front/link"
+   ],
+   "stoppedPart": "front/lid",
+   "pass": true
+  },
+  {
+   "id": "front/hinge-positive-u",
+   "parts": [
+    "front/hinge_pin"
+   ],
+   "direction": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.400177,
+   "stoppedBy": [
+    "front/panel"
+   ],
+   "stoppedPart": "front/hinge_pin",
+   "pass": true
+  },
+  {
+   "id": "front/hinge-negative-u",
+   "parts": [
+    "front/hinge_pin"
+   ],
+   "direction": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.100258,
+   "stoppedBy": [
+    "front/panel"
+   ],
+   "stoppedPart": "front/hinge_pin",
+   "pass": true
+  },
+  {
+   "id": "front/servo-out",
+   "parts": [
+    "front/servo"
+   ],
+   "direction": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.250008,
+   "stoppedBy": [
+    "front/servo_cap"
+   ],
+   "stoppedPart": "front/servo",
+   "pass": true
+  },
+  {
+   "id": "front/servo-in",
+   "parts": [
+    "front/servo"
+   ],
+   "direction": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.250008,
+   "stoppedBy": [
+    "front/support"
+   ],
+   "stoppedPart": "front/servo",
+   "pass": true
+  },
+  {
+   "id": "front/cap-out",
+   "parts": [
+    "front/servo_cap"
+   ],
+   "direction": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.300011,
+   "stoppedBy": [
+    "front/panel"
+   ],
+   "stoppedPart": "front/servo_cap",
+   "pass": true
+  },
+  {
+   "id": "front/support-in",
+   "parts": [
+    "front/support"
+   ],
+   "direction": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.200394,
+   "stoppedBy": [
+    "front/panel"
+   ],
+   "stoppedPart": "front/support",
+   "pass": true
+  },
+  {
+   "id": "right/panel-key-left",
+   "parts": [
+    "right/panel"
+   ],
+   "direction": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.200043,
+   "stoppedBy": [
+    "right/key_l",
+    "right/key_r"
+   ],
+   "stoppedPart": "right/panel",
+   "pass": true
+  },
+  {
+   "id": "right/panel-key-right",
+   "parts": [
+    "right/panel"
+   ],
+   "direction": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.200043,
+   "stoppedBy": [
+    "right/key_l",
+    "right/key_r"
+   ],
+   "stoppedPart": "right/panel",
+   "pass": true
+  },
+  {
+   "id": "back/panel-key-left",
+   "parts": [
+    "back/panel"
+   ],
+   "direction": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.200043,
+   "stoppedBy": [
+    "back/key_l",
+    "back/key_r"
+   ],
+   "stoppedPart": "back/panel",
+   "pass": true
+  },
+  {
+   "id": "back/panel-key-right",
+   "parts": [
+    "back/panel"
+   ],
+   "direction": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.200043,
+   "stoppedBy": [
+    "back/key_l",
+    "back/key_r"
+   ],
+   "stoppedPart": "back/panel",
+   "pass": true
+  },
+  {
+   "id": "left/panel-key-left",
+   "parts": [
+    "left/panel"
+   ],
+   "direction": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.200043,
+   "stoppedBy": [
+    "left/key_l",
+    "left/key_r"
+   ],
+   "stoppedPart": "left/panel",
+   "pass": true
+  },
+  {
+   "id": "left/panel-key-right",
+   "parts": [
+    "left/panel"
+   ],
+   "direction": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.200043,
+   "stoppedBy": [
+    "left/key_l",
+    "left/key_r"
+   ],
+   "stoppedPart": "left/panel",
+   "pass": true
+  },
+  {
+   "id": "top/panel-key-left",
+   "parts": [
+    "top/panel"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.200043,
+   "stoppedBy": [
+    "top/key_l",
+    "top/key_r"
+   ],
+   "stoppedPart": "top/panel",
+   "pass": true
+  },
+  {
+   "id": "top/panel-key-right",
+   "parts": [
+    "top/panel"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.200043,
+   "stoppedBy": [
+    "top/key_l",
+    "top/key_r"
+   ],
+   "stoppedPart": "top/panel",
+   "pass": true
+  },
+  {
+   "id": "bottom/panel-key-left",
+   "parts": [
+    "bottom/panel"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.200043,
+   "stoppedBy": [
+    "bottom/key_l",
+    "bottom/key_r"
+   ],
+   "stoppedPart": "bottom/panel",
+   "pass": true
+  },
+  {
+   "id": "bottom/panel-key-right",
+   "parts": [
+    "bottom/panel"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.200043,
+   "stoppedBy": [
+    "bottom/key_l",
+    "bottom/key_r"
+   ],
+   "stoppedPart": "bottom/panel",
+   "pass": true
+  },
+  {
+   "id": "frame/post-0-bottom",
+   "parts": [
+    "frame/post_0"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.250038,
+   "stoppedBy": [
+    "frame/upper_frame"
+   ],
+   "stoppedPart": "frame/post_0",
+   "pass": true
+  },
+  {
+   "id": "frame/post-0-top",
+   "parts": [
+    "frame/post_0"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.250038,
+   "stoppedBy": [
+    "frame/lower_frame"
+   ],
+   "stoppedPart": "frame/post_0",
+   "pass": true
+  },
+  {
+   "id": "frame/post-1-bottom",
+   "parts": [
+    "frame/post_1"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.250038,
+   "stoppedBy": [
+    "frame/upper_frame"
+   ],
+   "stoppedPart": "frame/post_1",
+   "pass": true
+  },
+  {
+   "id": "frame/post-1-top",
+   "parts": [
+    "frame/post_1"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.250038,
+   "stoppedBy": [
+    "frame/lower_frame"
+   ],
+   "stoppedPart": "frame/post_1",
+   "pass": true
+  },
+  {
+   "id": "frame/post-2-bottom",
+   "parts": [
+    "frame/post_2"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.250038,
+   "stoppedBy": [
+    "frame/upper_frame"
+   ],
+   "stoppedPart": "frame/post_2",
+   "pass": true
+  },
+  {
+   "id": "frame/post-2-top",
+   "parts": [
+    "frame/post_2"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.250038,
+   "stoppedBy": [
+    "frame/lower_frame"
+   ],
+   "stoppedPart": "frame/post_2",
+   "pass": true
+  },
+  {
+   "id": "frame/post-3-bottom",
+   "parts": [
+    "frame/post_3"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.250038,
+   "stoppedBy": [
+    "frame/upper_frame"
+   ],
+   "stoppedPart": "frame/post_3",
+   "pass": true
+  },
+  {
+   "id": "frame/post-3-top",
+   "parts": [
+    "frame/post_3"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.250038,
+   "stoppedBy": [
+    "frame/lower_frame"
+   ],
+   "stoppedPart": "frame/post_3",
+   "pass": true
+  },
+  {
+   "id": "frame/wiring-seated",
+   "parts": [
+    "frame/wiring"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.250015,
+   "stoppedBy": [
+    "frame/lower_frame"
+   ],
+   "stoppedPart": "frame/wiring",
+   "pass": true
+  },
+  {
+   "id": "frame/wiring-up",
+   "parts": [
+    "frame/wiring"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.250069,
+   "stoppedBy": [
+    "frame/tray"
+   ],
+   "stoppedPart": "frame/wiring",
+   "pass": true
+  },
+  {
+   "id": "frame/tray-down",
+   "parts": [
+    "frame/tray"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.250069,
+   "stoppedBy": [
+    "frame/wiring"
+   ],
+   "stoppedPart": "frame/tray",
+   "pass": true
+  },
+  {
+   "id": "frame/tray-up",
+   "parts": [
+    "frame/tray"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.250481,
+   "stoppedBy": [
+    "frame/wiring"
+   ],
+   "stoppedPart": "frame/tray",
+   "pass": true
+  },
+  {
+   "id": "front/frame_retention",
+   "parts": [
+    "front/panel",
+    "front/key_l",
+    "front/key_r",
+    "front/support",
+    "front/servo_cap",
+    "front/crank",
+    "front/link",
+    "front/lid",
+    "front/hinge_pin",
+    "front/servo",
+    "front/horn"
+   ],
+   "direction": [
+    -0.0,
+    -1.0,
+    -0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.251434,
+   "stoppedBy": [
+    "frame/post_0"
+   ],
+   "stoppedPart": "front/key_l",
+   "pass": true
+  },
+  {
+   "id": "right/frame_retention",
+   "parts": [
+    "right/panel",
+    "right/key_l",
+    "right/key_r"
+   ],
+   "direction": [
+    1.0,
+    -0.0,
+    -0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.251434,
+   "stoppedBy": [
+    "frame/post_1"
+   ],
+   "stoppedPart": "right/key_l",
+   "pass": true
+  },
+  {
+   "id": "back/frame_retention",
+   "parts": [
+    "back/panel",
+    "back/key_l",
+    "back/key_r"
+   ],
+   "direction": [
+    -0.0,
+    1.0,
+    -0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.251434,
+   "stoppedBy": [
+    "frame/post_2"
+   ],
+   "stoppedPart": "back/key_l",
+   "pass": true
+  },
+  {
+   "id": "left/frame_retention",
+   "parts": [
+    "left/panel",
+    "left/key_l",
+    "left/key_r"
+   ],
+   "direction": [
+    -1.0,
+    -0.0,
+    -0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.251434,
+   "stoppedBy": [
+    "frame/post_3"
+   ],
+   "stoppedPart": "left/key_l",
+   "pass": true
+  },
+  {
+   "id": "top/frame_retention",
+   "parts": [
+    "top/panel",
+    "top/key_l",
+    "top/key_r"
+   ],
+   "direction": [
+    -0.0,
+    -0.0,
+    1.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.251434,
+   "stoppedBy": [
+    "frame/upper_frame"
+   ],
+   "stoppedPart": "top/key_l",
+   "pass": true
+  },
+  {
+   "id": "bottom/frame_retention",
+   "parts": [
+    "bottom/panel",
+    "bottom/key_l",
+    "bottom/key_r"
+   ],
+   "direction": [
+    -0.0,
+    -0.0,
+    -1.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.251434,
+   "stoppedBy": [
+    "frame/lower_frame"
+   ],
+   "stoppedPart": "bottom/key_l",
+   "pass": true
+  }
+ ],
+ "meterStats": {
+  "boolean": 2682,
+  "skipped": 28446
+ },
+ "ok": true
+}

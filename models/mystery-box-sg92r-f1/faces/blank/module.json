@@ -1,0 +1,16 @@
+{
+  "interface": "resident-face-v1",
+  "module": "blank",
+  "supported_slots": ["top", "front", "right", "back", "left", "bottom"],
+  "parts": ["panel", "key_l", "key_r"],
+  "mass_limit_g": 30,
+  "uses": [],
+  "requirements": [{"id": "blank-closed", "text": "空の面を3点の座へ固定し、キーを外して面法線方向へ抜ける", "checks": ["assembly.path", "interface.retention"]}],
+  "interfaces": [
+    {"id": "panel-key-left", "type": "retention", "parts": ["panel"], "direction": [0,0,-1], "max_free_mm": 0.5, "engage_depth_mm": 1.2},
+    {"id": "panel-key-right", "type": "retention", "parts": ["panel"], "direction": [0,0,-1], "max_free_mm": 0.5, "engage_depth_mm": 1.2}
+  ],
+  "allowances": [],
+  "motion": null,
+  "unknowns": []
+}

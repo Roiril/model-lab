@@ -1,0 +1,43 @@
+{
+ "interface":"resident-face-v1", "module":"link_lid", "supported_slots":["front","right","back","left","top"],
+ "parts":["panel","key_l","key_r","support","servo_cap","crank","link","lid","hinge_pin","servo","horn"],
+ "mass_limit_g":180,"uses":["sg92r"],
+ "motion":{"actuator":"horn","servo":"servo","closed_servo_deg":124.33731922749814,"open_servo_deg":55.66268077250187,"assembly_servo_deg":90,"step_deg":1,"duration_s":2},
+ "requirements":[
+  {"id":"lid-motion","text":"C節の4節リンクで36×30×2mmの蓋を0〜60度開く","checks":["motion.interference","motion.torque","interface.drive"]},
+  {"id":"lid-assembly","text":"90度で組み、閉姿勢へ戻す。工具とねじなしで分解","checks":["assembly.path","interface.retention","manual:実物で両ピンの先端と解除腕を押して外す"]},
+  {"id":"lid-shield","text":"開いた蓋の奥を無地の壁で遮る","checks":["manual:0度・30度・60度を正面と斜めから見る"]}
+ ],
+ "interfaces":[
+  {"id":"horn-crank","type":"drive","driver":"horn","driven":"crank","sides":"both","max_play_deg":3},
+  {"id":"crank-link","type":"drive","driver":"crank","driven":"link","sides":"both","max_play_deg":3},
+  {"id":"link-lid","type":"drive","driver":"link","driven":"lid","sides":"both","max_play_deg":3},
+  {"id":"crank-positive-u","type":"retention","parts":["crank","horn"],"against":["support","servo_cap","servo"],"direction":[1,0,0],"max_free_mm":0.5,"engage_depth_mm":3},
+  {"id":"crank-negative-u","type":"retention","parts":["crank","horn"],"against":["support","servo_cap","servo"],"direction":[-1,0,0],"max_free_mm":0.5,"engage_depth_mm":3},
+  {"id":"link-positive-u","type":"retention","parts":["link"],"against":["crank"],"direction":[1,0,0],"max_free_mm":0.5,"engage_depth_mm":1.2},
+  {"id":"link-negative-u","type":"retention","parts":["link"],"against":["crank"],"direction":[-1,0,0],"max_free_mm":0.5,"engage_depth_mm":3},
+  {"id":"lid-positive-u","type":"retention","parts":["lid"],"against":["link"],"direction":[1,0,0],"max_free_mm":0.5,"engage_depth_mm":1.2},
+  {"id":"lid-negative-u","type":"retention","parts":["lid"],"against":["link"],"direction":[-1,0,0],"max_free_mm":0.5,"engage_depth_mm":3},
+  {"id":"hinge-positive-u","type":"retention","parts":["hinge_pin"],"direction":[1,0,0],"max_free_mm":0.5,"engage_depth_mm":1.2},
+  {"id":"hinge-negative-u","type":"retention","parts":["hinge_pin"],"direction":[-1,0,0],"max_free_mm":0.5,"engage_depth_mm":1.2},
+  {"id":"servo-out","type":"retention","parts":["servo"],"direction":[0,0,-1],"max_free_mm":0.5,"engage_depth_mm":2},
+  {"id":"servo-in","type":"retention","parts":["servo"],"direction":[0,0,1],"max_free_mm":0.5,"engage_depth_mm":2},
+  {"id":"cap-out","type":"retention","parts":["servo_cap"],"direction":[0,0,-1],"max_free_mm":0.5,"engage_depth_mm":2},
+  {"id":"support-in","type":"retention","parts":["support"],"against":["panel"],"direction":[0,0,1],"max_free_mm":0.5,"engage_depth_mm":1.2}
+ ],
+ "allowances":[
+  {"type":"reference_internal","pairs":[["servo","horn"]],"max_mm3":0.05,"basis":"正本の円筒近似スプライン同士のみ。印刷部品には適用しない。"},
+  {"type":"snap","pairs":[["crank","link"]],"engage_mm":4.5,"deflection_mm":0.15,"strain_percent":1.563,"basis":"Aピンは頭半径2.85/穴半径2.7。座金の先からの自由長4.8mm・片脚t1.6mm以下・δ0.15mm。1.5tδ/L²=1.563%。"},
+  {"type":"snap","pairs":[["link","lid"]],"engage_mm":4.5,"deflection_mm":0.15,"strain_percent":1.778,"basis":"Bピン先端半径2.85/穴半径2.7、δ0.15mm。自由長4.5mm・t1.6mm、1.5tδ/L²=1.778%。実物の着脱で確認。"},
+  {"type":"snap","pairs":[["support","panel"]],"engage_mm":2.4,"deflection_mm":0.6,"strain_percent":0.444,"basis":"支持座の解除腕自由長18mm以上・t1.6mm・δ0.6mm、上限1.5tδ/L²=0.444%。終端に重なりを残さない。"}
+ ],
+ "unknowns":[
+  {"id":"sg92r.horn_arm_lengths","trial_part":"$trial/horn_fit.stl"},
+  {"id":"sg92r.horn_hole_positions","not_applicable":"ホーンの既存穴は使わない。"},
+  {"id":"sg92r.output_spline","not_applicable":"実物の付属ホーンを使い、印刷スプラインは作らない。"},
+  {"id":"sg92r.shaft_height","trial_part":"$trial/horn_fit.stl"},
+  {"id":"sg92r.cover_circle","trial_part":"$trial/servo_fit.stl"},
+  {"id":"sg92r.wire","trial_part":"$trial/servo_fit.stl"},
+  {"id":"sg92r.connector","trial_part":"$trial/connector_nest.stl"}
+ ]
+}

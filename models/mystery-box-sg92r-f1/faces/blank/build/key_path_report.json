@@ -1,0 +1,454 @@
+{
+ "steps": [
+  {
+   "key": "key_l",
+   "phase": "insert",
+   "fixed": "blank_panel",
+   "samples": 161,
+   "contact_samples": 0,
+   "max_mm3": 0
+  },
+  {
+   "key": "key_l",
+   "phase": "insert",
+   "fixed": "front_panel",
+   "samples": 161,
+   "contact_samples": 0,
+   "max_mm3": 0
+  },
+  {
+   "key": "key_l",
+   "phase": "insert",
+   "fixed": "front_support",
+   "samples": 161,
+   "contact_samples": 32,
+   "max_mm3": 0.388067308537128,
+   "contact_union_bounds_mm": [
+    [
+     -30.600000381469727,
+     -25.047895431518555,
+     0.20000076293945312
+    ],
+    [
+     -29.547922134399414,
+     -4.599999904632568,
+     8.0
+    ]
+   ],
+   "contact_regions_mm": {
+    "root": [
+     [
+      -30.600000381469727,
+      -25.047895431518555,
+      3.299999237060547
+     ],
+     [
+      -29.547922134399414,
+      -25.0,
+      8.0
+     ]
+    ],
+    "tip": [
+     [
+      -29.799999237060547,
+      -6.400000095367432,
+      0.20000076293945312
+     ],
+     [
+      -29.585811614990234,
+      -4.599999904632568,
+      1.2000007629394531
+     ]
+    ]
+   }
+  },
+  {
+   "key": "key_l",
+   "phase": "lock",
+   "fixed": "blank_panel",
+   "samples": 21,
+   "contact_samples": 0,
+   "max_mm3": 0
+  },
+  {
+   "key": "key_l",
+   "phase": "lock",
+   "fixed": "front_panel",
+   "samples": 21,
+   "contact_samples": 0,
+   "max_mm3": 0
+  },
+  {
+   "key": "key_l",
+   "phase": "lock",
+   "fixed": "front_support",
+   "samples": 21,
+   "contact_samples": 20,
+   "max_mm3": 0.15243526273079347,
+   "contact_union_bounds_mm": [
+    [
+     -30.600000381469727,
+     -25.047895431518555,
+     3.299999237060547
+    ],
+    [
+     -29.50243377685547,
+     -25.0,
+     8.0
+    ]
+   ],
+   "contact_regions_mm": {
+    "root": [
+     [
+      -30.600000381469727,
+      -25.047895431518555,
+      3.299999237060547
+     ],
+     [
+      -29.50243377685547,
+      -25.0,
+      8.0
+     ]
+    ]
+   }
+  },
+  {
+   "key": "key_l",
+   "phase": "release",
+   "fixed": "blank_panel",
+   "samples": 21,
+   "contact_samples": 0,
+   "max_mm3": 0
+  },
+  {
+   "key": "key_l",
+   "phase": "release",
+   "fixed": "front_panel",
+   "samples": 21,
+   "contact_samples": 0,
+   "max_mm3": 0
+  },
+  {
+   "key": "key_l",
+   "phase": "release",
+   "fixed": "front_support",
+   "samples": 21,
+   "contact_samples": 20,
+   "max_mm3": 0.15243526273079347,
+   "contact_union_bounds_mm": [
+    [
+     -30.600000381469727,
+     -25.047895431518555,
+     3.299999237060547
+    ],
+    [
+     -29.50243377685547,
+     -25.0,
+     8.0
+    ]
+   ],
+   "contact_regions_mm": {
+    "root": [
+     [
+      -30.600000381469727,
+      -25.047895431518555,
+      3.299999237060547
+     ],
+     [
+      -29.50243377685547,
+      -25.0,
+      8.0
+     ]
+    ]
+   }
+  },
+  {
+   "key": "key_l",
+   "phase": "extract",
+   "fixed": "blank_panel",
+   "samples": 161,
+   "contact_samples": 0,
+   "max_mm3": 0
+  },
+  {
+   "key": "key_l",
+   "phase": "extract",
+   "fixed": "front_panel",
+   "samples": 161,
+   "contact_samples": 0,
+   "max_mm3": 0
+  },
+  {
+   "key": "key_l",
+   "phase": "extract",
+   "fixed": "front_support",
+   "samples": 161,
+   "contact_samples": 32,
+   "max_mm3": 0.388067308537128,
+   "contact_union_bounds_mm": [
+    [
+     -30.600000381469727,
+     -25.047895431518555,
+     0.20000076293945312
+    ],
+    [
+     -29.547922134399414,
+     -4.599999904632568,
+     8.0
+    ]
+   ],
+   "contact_regions_mm": {
+    "root": [
+     [
+      -30.600000381469727,
+      -25.047895431518555,
+      3.299999237060547
+     ],
+     [
+      -29.547922134399414,
+      -25.0,
+      8.0
+     ]
+    ],
+    "tip": [
+     [
+      -29.799999237060547,
+      -6.400000095367432,
+      0.20000076293945312
+     ],
+     [
+      -29.585811614990234,
+      -4.599999904632568,
+      1.2000007629394531
+     ]
+    ]
+   }
+  },
+  {
+   "key": "key_r",
+   "phase": "insert",
+   "fixed": "blank_panel",
+   "samples": 161,
+   "contact_samples": 0,
+   "max_mm3": 0
+  },
+  {
+   "key": "key_r",
+   "phase": "insert",
+   "fixed": "front_panel",
+   "samples": 161,
+   "contact_samples": 0,
+   "max_mm3": 0
+  },
+  {
+   "key": "key_r",
+   "phase": "insert",
+   "fixed": "front_support",
+   "samples": 161,
+   "contact_samples": 32,
+   "max_mm3": 0.3880669610190511,
+   "contact_union_bounds_mm": [
+    [
+     29.547922134399414,
+     -25.047895431518555,
+     0.20000076293945312
+    ],
+    [
+     30.600000381469727,
+     -4.599999904632568,
+     8.0
+    ]
+   ],
+   "contact_regions_mm": {
+    "root": [
+     [
+      29.547922134399414,
+      -25.047895431518555,
+      3.299999237060547
+     ],
+     [
+      30.600000381469727,
+      -25.0,
+      8.0
+     ]
+    ],
+    "tip": [
+     [
+      29.585811614990234,
+      -6.400000095367432,
+      0.20000076293945312
+     ],
+     [
+      29.799999237060547,
+      -4.599999904632568,
+      1.2000007629394531
+     ]
+    ]
+   }
+  },
+  {
+   "key": "key_r",
+   "phase": "lock",
+   "fixed": "blank_panel",
+   "samples": 21,
+   "contact_samples": 0,
+   "max_mm3": 0
+  },
+  {
+   "key": "key_r",
+   "phase": "lock",
+   "fixed": "front_panel",
+   "samples": 21,
+   "contact_samples": 0,
+   "max_mm3": 0
+  },
+  {
+   "key": "key_r",
+   "phase": "lock",
+   "fixed": "front_support",
+   "samples": 21,
+   "contact_samples": 20,
+   "max_mm3": 0.15243656526626737,
+   "contact_union_bounds_mm": [
+    [
+     29.50243377685547,
+     -25.047895431518555,
+     3.299999237060547
+    ],
+    [
+     30.600000381469727,
+     -25.0,
+     8.0
+    ]
+   ],
+   "contact_regions_mm": {
+    "root": [
+     [
+      29.50243377685547,
+      -25.047895431518555,
+      3.299999237060547
+     ],
+     [
+      30.600000381469727,
+      -25.0,
+      8.0
+     ]
+    ]
+   }
+  },
+  {
+   "key": "key_r",
+   "phase": "release",
+   "fixed": "blank_panel",
+   "samples": 21,
+   "contact_samples": 0,
+   "max_mm3": 0
+  },
+  {
+   "key": "key_r",
+   "phase": "release",
+   "fixed": "front_panel",
+   "samples": 21,
+   "contact_samples": 0,
+   "max_mm3": 0
+  },
+  {
+   "key": "key_r",
+   "phase": "release",
+   "fixed": "front_support",
+   "samples": 21,
+   "contact_samples": 20,
+   "max_mm3": 0.15243656526626737,
+   "contact_union_bounds_mm": [
+    [
+     29.50243377685547,
+     -25.047895431518555,
+     3.299999237060547
+    ],
+    [
+     30.600000381469727,
+     -25.0,
+     8.0
+    ]
+   ],
+   "contact_regions_mm": {
+    "root": [
+     [
+      29.50243377685547,
+      -25.047895431518555,
+      3.299999237060547
+     ],
+     [
+      30.600000381469727,
+      -25.0,
+      8.0
+     ]
+    ]
+   }
+  },
+  {
+   "key": "key_r",
+   "phase": "extract",
+   "fixed": "blank_panel",
+   "samples": 161,
+   "contact_samples": 0,
+   "max_mm3": 0
+  },
+  {
+   "key": "key_r",
+   "phase": "extract",
+   "fixed": "front_panel",
+   "samples": 161,
+   "contact_samples": 0,
+   "max_mm3": 0
+  },
+  {
+   "key": "key_r",
+   "phase": "extract",
+   "fixed": "front_support",
+   "samples": 161,
+   "contact_samples": 32,
+   "max_mm3": 0.3880669610190511,
+   "contact_union_bounds_mm": [
+    [
+     29.547922134399414,
+     -25.047895431518555,
+     0.20000076293945312
+    ],
+    [
+     30.600000381469727,
+     -4.599999904632568,
+     8.0
+    ]
+   ],
+   "contact_regions_mm": {
+    "root": [
+     [
+      29.547922134399414,
+      -25.047895431518555,
+      3.299999237060547
+     ],
+     [
+      30.600000381469727,
+      -25.0,
+      8.0
+     ]
+    ],
+    "tip": [
+     [
+      29.585811614990234,
+      -6.400000095367432,
+      0.20000076293945312
+     ],
+     [
+      29.799999237060547,
+      -4.599999904632568,
+      1.2000007629394531
+     ]
+    ]
+   }
+  }
+ ],
+ "support_suggested_notches": [],
+ "panel_paths_pass": true
+}

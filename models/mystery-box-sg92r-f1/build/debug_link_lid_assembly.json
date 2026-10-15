@@ -1,0 +1,172 @@
+{
+ "pass": true,
+ "steps": [
+  {
+   "id": "support-base",
+   "frames": 2,
+   "checkedPoses": 2,
+   "moving": 1,
+   "violations": 0,
+   "pass": true
+  },
+  {
+   "id": "lid-base",
+   "frames": 2,
+   "checkedPoses": 2,
+   "moving": 1,
+   "violations": 0,
+   "pass": true
+  },
+  {
+   "id": "link-in",
+   "frames": 51,
+   "checkedPoses": 51,
+   "moving": 1,
+   "violations": 0,
+   "pass": true
+  },
+  {
+   "id": "servo-base",
+   "frames": 2,
+   "checkedPoses": 2,
+   "moving": 1,
+   "violations": 0,
+   "pass": true
+  },
+  {
+   "id": "horn-in",
+   "frames": 21,
+   "checkedPoses": 21,
+   "moving": 1,
+   "violations": 0,
+   "pass": true
+  },
+  {
+   "id": "crank-in",
+   "frames": 41,
+   "checkedPoses": 41,
+   "moving": 1,
+   "violations": 0,
+   "pass": true
+  },
+  {
+   "id": "linkage-connect",
+   "frames": 141,
+   "checkedPoses": 141,
+   "moving": 2,
+   "violations": 0,
+   "pass": true
+  },
+  {
+   "id": "cradle-in",
+   "frames": 121,
+   "checkedPoses": 121,
+   "moving": 5,
+   "violations": 0,
+   "pass": true
+  },
+  {
+   "id": "servo_cap-in",
+   "frames": 101,
+   "checkedPoses": 101,
+   "moving": 1,
+   "violations": 0,
+   "pass": true
+  },
+  {
+   "id": "hinge_pin-in",
+   "frames": 121,
+   "checkedPoses": 121,
+   "moving": 1,
+   "violations": 0,
+   "pass": true
+  },
+  {
+   "id": "panel-in",
+   "frames": 91,
+   "checkedPoses": 91,
+   "moving": 1,
+   "violations": 0,
+   "pass": true
+  },
+  {
+   "id": "return-closed",
+   "frames": 71,
+   "checkedPoses": 71,
+   "moving": 4,
+   "violations": 0,
+   "pass": true
+  }
+ ],
+ "violations": [],
+ "interpolatedPoses": 0,
+ "boundaryErrors": [],
+ "finalNotAssembled": [],
+ "finalParts": [
+  "crank",
+  "hinge_pin",
+  "horn",
+  "lid",
+  "link",
+  "panel",
+  "servo",
+  "servo_cap",
+  "support"
+ ],
+ "allowedContacts": [
+  {
+   "parts": [
+    "crank",
+    "link"
+   ],
+   "type": "snap",
+   "maxCommonMm3": 2.473744,
+   "maxRemainingTravelMm": 4.0,
+   "samples": 8,
+   "steps": [
+    "linkage-connect"
+   ]
+  },
+  {
+   "parts": [
+    "horn",
+    "servo"
+   ],
+   "type": "reference_internal",
+   "maxCommonMm3": 0.029987,
+   "maxRemainingTravelMm": 0.0,
+   "samples": 196,
+   "steps": [
+    "cradle-in",
+    "horn-in",
+    "return-closed"
+   ]
+  },
+  {
+   "parts": [
+    "lid",
+    "link"
+   ],
+   "type": "snap",
+   "maxCommonMm3": 2.4737,
+   "maxRemainingTravelMm": 4.0,
+   "samples": 8,
+   "steps": [
+    "link-in"
+   ]
+  },
+  {
+   "parts": [
+    "panel",
+    "support"
+   ],
+   "type": "snap",
+   "maxCommonMm3": 1.535999,
+   "maxRemainingTravelMm": 1.5,
+   "samples": 3,
+   "steps": [
+    "panel-in"
+   ]
+  }
+ ]
+}
