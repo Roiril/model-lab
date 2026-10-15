@@ -57,7 +57,8 @@ def reference_parts(common):
 
 def cam_shell(which):
     angles=np.arange(0,360,P.CAM_MESH_STEP_DEG)
-    radii=np.linspace(M(P.CAM_INNER_RADIUS),M(P.CAM_RADIUS),P.RADIAL_SAMPLES)
+    inner=P.UPPER_CAM_INNER_RADIUS if which=='upper' else P.CAM_INNER_RADIUS
+    radii=np.linspace(M(inner),M(P.CAM_RADIUS),P.RADIAL_SAMPLES)
     n=len(angles)
     vs=[]
     for r in radii:
@@ -110,7 +111,8 @@ def upper_cam(sg):
     # left exchange key's complete +/-30 degree sweep and panel pad corner.
     angles=np.linspace(150,255,211)
     profile=[(O+30*math.cos(math.radians(a)),30*math.sin(math.radians(a))) for a in angles]
-    profile += [(O+25.2*math.cos(math.radians(a)),25.2*math.sin(math.radians(a))) for a in angles[::-1]]
+    relief=M(P.UPPER_CAM_RELIEF_RADIUS)
+    profile += [(O+relief*math.cos(math.radians(a)),relief*math.sin(math.radians(a))) for a in angles[::-1]]
     G.cut(cam,G.prism(profile,'z',1.5,11.0))
     return cam
 
@@ -157,7 +159,7 @@ def pixel(index,angle,name):
     G.cut(head,G.prism(outline(7-wall,inner_cut),'z',2,10.5))
     pin=G.cyl_x((0,M(P.PIN_D)),2,M(P.PIN_R0),M(P.PIN_R1),64)
     radial(pin,angle)
-    if index==1: G.union(pin,arc_band(27,31,61,122,9.25,12.25,'pixel_bridge_2'))
+    if index==1: G.union(pin,arc_band(27,M(P.PIXEL_2_BRIDGE_RADIUS),61,122,9.25,12.25,'pixel_bridge_2'))
     if index==2: G.union(pin,arc_band(27,31,240,299,9.25,12.25,'pixel_bridge_3'))
     if index==0: G.union(pin,G.box(13,16,-1,10,9.25,12.25))
     G.union(pin,stem_box(index,2,9.25,M(P.STEM_END_D)))
@@ -219,26 +221,21 @@ def support_and_cap(panel,sg):
             continue
         G.union(support,mirrored(19,22,-23,-11.5,20.5,23.5),
                 mirrored(14.8,22,-14.5,-11.5,20.5,23.5),
-                mirrored(20.5,23.5,-24.5,-21.5,16.75,23.5),
-                mirrored(33.5,36.5,-35,1.5,7.5,10.5),
-                mirrored(32.5,37.5,-1.5,1.5,2.3,10.5))
-        if sign==1:
-            G.union(support,mirrored(21,24,-30.5,-21.5,10.2,16.5),
-                    mirrored(21,24,-36.5,-28,7.5,10.5),
-                    mirrored(22,36.5,-36.5,-33.5,7.5,10.5))
-        else:
-            G.union(support,mirrored(27.5,30.5,-30.5,-21.5,10.2,16.5),
-                    mirrored(27.5,30.5,-36.5,-28,7.5,10.5),
-                    mirrored(28,36.5,-36.5,-33.5,7.5,10.5),
-                    mirrored(21,30.5,-24.5,-21.5,13.5,16.5))
+                mirrored(20.5,23.5,-24.5,-21.5,16.75,23.5))
+        # Route before the seat (v=-30) and below the key head (v=-26).
+        # The old outer U crossed both the seat and latch during insertion.
+        G.union(support,G.box(-28.5,-25.5,-29.5,-21.5,10.2,16.5),
+                G.box(-36.5,-25.5,-29.5,-26.5,7.5,10.5),
+                G.box(-28.5,-21,-24.5,-21.5,13.5,16.5),
+                G.box(-37.5,-34.5,-29.5,-26.5,3.25,10.5))
         # Small diagonal bridge is fully behind the rotating cam.
         G.union(support,mirrored(21,24,-24.5,-21.5,16.3,17.25))
-        u=sign*35
-        G.union(support,G.box(u-.8,u+.8,0,18,3.3,4.9),
-                G.box(u-.8,u+.8,15,18,.8,4),
-                G.box(u-1.4,u+1.4,15.6,17.4,.2,1.2))
-        G.cut(panel,G.box(u-1,u+1,14.8,18.2,-.5,3.5),
-              G.box(u-1.6,u+1.6,15.4,17.6,-.5,1.4))
+        # Same 18 mm x 1.6 mm snap beam, ending before the frame latch.
+        G.union(support,G.box(-36.8,-35.2,-28,-10,3.3,4.9),
+                G.box(-36.8,-35.2,-13,-10,.8,4),
+                G.box(-37.4,-34.6,-12.4,-10.6,.2,1.2))
+        G.cut(panel,G.box(-37,-35,-13.2,-9.8,-.5,3.5),
+              G.box(-37.6,-34.4,-12.6,-10.4,-.5,1.4))
     # Cap joins two ear retainers around the body. It also traps guide tongues.
     cap=G.box(-16,16,-12.5,12.5,ear_front-3.25,ear_front-.25,'servo_cap')
     G.cut(cap,G.box(-half_l-.25,half_l+.25,-M(sg.BODY_W)/2-.25,M(sg.BODY_W)/2+.25,12,20))
@@ -290,11 +287,13 @@ def build(interface, common_params):
             G.cut(ob,rb(20.05,23.45,-1.7,1.7,3.2,17,a))
         key=G.box(20.25,23.25,-1.5,1.5,2.5,14.95,f'cam_key_{i}')
         # Head is recessed in the upper web; split hooks spring into lower pockets.
-        G.union(key,G.box(19.25,24.25,-2.5,2.5,2.5,3.7),
+        head_front=M(P.CAM_KEY_HEAD_D)
+        head_back=head_front+M(P.CAM_KEY_HEAD_T)
+        G.union(key,G.box(19.25,24.25,-2.5,2.5,head_front,head_back),
                 G.box(19.9,23.6,-1.5,1.5,13.35,14.55))
         G.cut(key,G.box(21.45,22.05,-2,2,7.0,17))
         radial(key,a)
-        G.cut(upper,rb(19.05,24.45,-2.7,2.7,1.75,3.95,a))
+        G.cut(upper,rb(19.05,24.45,-2.7,2.7,1.75,head_back+M(P.CAM_KEY_HEAD_CLEARANCE),a))
         G.cut(lower,rb(19.7,23.8,-1.7,1.7,13.1,14.8,a))
         parts[f'cam_key_{i}']=key
     parts.update(cam_upper=upper,cam_lower=lower)
@@ -310,6 +309,18 @@ def build(interface, common_params):
         bm=bmesh.new(); bm.from_mesh(ob.data)
         wires=[e for e in bm.edges if not e.link_faces]
         if wires: bmesh.ops.delete(bm,geom=wires,context='EDGES')
+        if pid in ('cam_lower','cam_upper'):
+            # Boolean key pockets leave collinear vertices in otherwise manifold faces.
+            # Re-triangulate after each dissolve; one pass can expose a second zero face.
+            for _ in range(8):
+                bmesh.ops.triangulate(bm,faces=list(bm.faces))
+                if all((f.verts[1].co-f.verts[0].co).cross(f.verts[2].co-f.verts[0].co).length >= 1e-9
+                       for f in bm.faces):
+                    break
+                bmesh.ops.dissolve_degenerate(bm,edges=list(bm.edges),dist=1e-6)
+            else:
+                raise ValueError(f'{pid}: degenerate cam triangles remain')
+            bmesh.ops.recalc_face_normals(bm,faces=list(bm.faces))
         bm.to_mesh(ob.data); bm.free()
         rot=np.eye(4)
         if pid in ('cam_lower','support'):

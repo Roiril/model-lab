@@ -1,0 +1,86 @@
+ M models/mystery-box-sg92r-f1/README.md
+ M models/mystery-box-sg92r-f1/build/assembly.json
+ M models/mystery-box-sg92r-f1/build/cases.json
+ M models/mystery-box-sg92r-f1/build/contract_report.json
+ M models/mystery-box-sg92r-f1/build/dependencies.json
+ M models/mystery-box-sg92r-f1/build/envelope_report.json
+ M models/mystery-box-sg92r-f1/build/exchange_cases/front.json
+ M models/mystery-box-sg92r-f1/build/gate_report.json
+ M models/mystery-box-sg92r-f1/build/gate_summary.md
+ M models/mystery-box-sg92r-f1/build/manifest.json
+ M models/mystery-box-sg92r-f1/build/motion.json
+ M models/mystery-box-sg92r-f1/build/parts/top/panel.stl
+ M models/mystery-box-sg92r-f1/build/retention_cases.json
+ M models/mystery-box-sg92r-f1/build/retention_cases/front/mid/job.json
+ M models/mystery-box-sg92r-f1/build/retention_cases/front/mid/parts/top/panel.stl
+ M models/mystery-box-sg92r-f1/build/retention_cases/front/mid/pose.json
+ M models/mystery-box-sg92r-f1/build/retention_cases/front/mid/report.json
+ M models/mystery-box-sg92r-f1/build/retention_cases/front/open/job.json
+ M models/mystery-box-sg92r-f1/build/retention_cases/front/open/parts/top/panel.stl
+ M models/mystery-box-sg92r-f1/build/retention_cases/front/open/pose.json
+ M models/mystery-box-sg92r-f1/build/retention_cases/front/open/report.json
+ M models/mystery-box-sg92r-f1/build/retention_report.json
+ M models/mystery-box-sg92r-f1/catalog.json
+ M models/mystery-box-sg92r-f1/checks/front/build/assembly.json
+ M models/mystery-box-sg92r-f1/checks/front/build/gate_blender.json
+ M models/mystery-box-sg92r-f1/checks/front/build/gate_blender.log
+ M models/mystery-box-sg92r-f1/checks/front/build/gate_job.json
+ M models/mystery-box-sg92r-f1/checks/front/build/gate_report.json
+ M models/mystery-box-sg92r-f1/checks/front/build/gate_summary.md
+ M models/mystery-box-sg92r-f1/checks/front/build/manifest.json
+ M models/mystery-box-sg92r-f1/checks/front/build/motion.json
+ M models/mystery-box-sg92r-f1/checks/front/spec.json
+ M models/mystery-box-sg92r-f1/compose.py
+ M models/mystery-box-sg92r-f1/faces/template/README.md
+ M models/mystery-box-sg92r-f1/faces/three_pixels/README.md
+ M models/mystery-box-sg92r-f1/faces/three_pixels/geometry.py
+ M models/mystery-box-sg92r-f1/faces/three_pixels/kinematics.py
+ M models/mystery-box-sg92r-f1/faces/three_pixels/params.py
+ M models/mystery-box-sg92r-f1/slots.json
+ M models/mystery-box-sg92r-f1/spec.base.json
+ M models/mystery-box-sg92r-f1/spec.json
+ M models/mystery-box-sg92r-f1/verify_contract.py
+?? models/mystery-box-sg92r-f1/build/exchange_cases/top.json
+?? models/mystery-box-sg92r-f1/build/git-status-short.txt
+?? models/mystery-box-sg92r-f1/build/motion_cases/top.json
+?? models/mystery-box-sg92r-f1/build/parts/top/cam_key_1.stl
+?? models/mystery-box-sg92r-f1/build/parts/top/cam_key_2.stl
+?? models/mystery-box-sg92r-f1/build/parts/top/cam_lower.stl
+?? models/mystery-box-sg92r-f1/build/parts/top/cam_upper.stl
+?? models/mystery-box-sg92r-f1/build/parts/top/guide.stl
+?? models/mystery-box-sg92r-f1/build/parts/top/horn.stl
+?? models/mystery-box-sg92r-f1/build/parts/top/pixel_1.stl
+?? models/mystery-box-sg92r-f1/build/parts/top/pixel_2.stl
+?? models/mystery-box-sg92r-f1/build/parts/top/pixel_3.stl
+?? models/mystery-box-sg92r-f1/build/parts/top/servo.stl
+?? models/mystery-box-sg92r-f1/build/parts/top/servo_cap.stl
+?? models/mystery-box-sg92r-f1/build/parts/top/support.stl
+?? models/mystery-box-sg92r-f1/build/retention_cases/front/mid/parts/top/cam_key_1.stl
+?? models/mystery-box-sg92r-f1/build/retention_cases/front/mid/parts/top/cam_key_2.stl
+?? models/mystery-box-sg92r-f1/build/retention_cases/front/mid/parts/top/cam_lower.stl
+?? models/mystery-box-sg92r-f1/build/retention_cases/front/mid/parts/top/cam_upper.stl
+?? models/mystery-box-sg92r-f1/build/retention_cases/front/mid/parts/top/guide.stl
+?? models/mystery-box-sg92r-f1/build/retention_cases/front/mid/parts/top/horn.stl
+?? models/mystery-box-sg92r-f1/build/retention_cases/front/mid/parts/top/pixel_1.stl
+?? models/mystery-box-sg92r-f1/build/retention_cases/front/mid/parts/top/pixel_2.stl
+?? models/mystery-box-sg92r-f1/build/retention_cases/front/mid/parts/top/pixel_3.stl
+?? models/mystery-box-sg92r-f1/build/retention_cases/front/mid/parts/top/servo.stl
+?? models/mystery-box-sg92r-f1/build/retention_cases/front/mid/parts/top/servo_cap.stl
+?? models/mystery-box-sg92r-f1/build/retention_cases/front/mid/parts/top/support.stl
+?? models/mystery-box-sg92r-f1/build/retention_cases/front/open/parts/top/cam_key_1.stl
+?? models/mystery-box-sg92r-f1/build/retention_cases/front/open/parts/top/cam_key_2.stl
+?? models/mystery-box-sg92r-f1/build/retention_cases/front/open/parts/top/cam_lower.stl
+?? models/mystery-box-sg92r-f1/build/retention_cases/front/open/parts/top/cam_upper.stl
+?? models/mystery-box-sg92r-f1/build/retention_cases/front/open/parts/top/guide.stl
+?? models/mystery-box-sg92r-f1/build/retention_cases/front/open/parts/top/horn.stl
+?? models/mystery-box-sg92r-f1/build/retention_cases/front/open/parts/top/pixel_1.stl
+?? models/mystery-box-sg92r-f1/build/retention_cases/front/open/parts/top/pixel_2.stl
+?? models/mystery-box-sg92r-f1/build/retention_cases/front/open/parts/top/pixel_3.stl
+?? models/mystery-box-sg92r-f1/build/retention_cases/front/open/parts/top/servo.stl
+?? models/mystery-box-sg92r-f1/build/retention_cases/front/open/parts/top/servo_cap.stl
+?? models/mystery-box-sg92r-f1/build/retention_cases/front/open/parts/top/support.stl
+?? models/mystery-box-sg92r-f1/build/retention_cases/top/
+?? models/mystery-box-sg92r-f1/build/stage3_result.json
+?? models/mystery-box-sg92r-f1/build/stage3_work.json
+?? models/mystery-box-sg92r-f1/checks/top/
+?? models/mystery-box-sg92r-f1/faces/sector_flag/

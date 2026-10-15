@@ -1,6 +1,6 @@
 {
  "model": "mystery-box-sg92r-f1",
- "request": "段1のゴールは「交換の規格」が動くコードとして存在し、正面の蓋カセット1つで、ゲートの検査ケースが回ること。",
+ "request": "段3の前半。slots.topをthree_pixelsにし、motion.range_servo_degがあれば全域を掃引する。checks/top・checks/front・ルートのゲートをexit 0にする。rightはblank。交換規格と骨格は変更しない。",
  "requirements": [
   {
    "id": "R1",
@@ -11,7 +11,7 @@
   },
   {
    "id": "R2",
-   "text": "段1は正面のSG92R蓋カセット1つと他5面の空の面",
+   "text": "正面のSG92R蓋と上面の3画素カセットを装着し、他4面は空の面とする",
    "checks": [
     "interface.coverage",
     "interface.drive",
@@ -127,11 +127,37 @@
    ]
   },
   {
-   "id": "top/blank-closed",
-   "text": "空の面を3点の座へ固定し、キーを外して面法線方向へ抜ける",
+   "id": "top/pixels-table",
+   "text": "patterns.jsonから53mmの上下カムを作り、14mm角の3画素を0〜3mm押し引きする",
+   "checks": [
+    "motion.interference",
+    "interface.drive",
+    "motion.torque"
+   ]
+  },
+  {
+   "id": "top/pixels-fit",
+   "text": "7段の占有と外部動作域を守り、側面でも重力に頼らず動く",
+   "checks": [
+    "assembly.envelope",
+    "interface.retention",
+    "manual:実機を上向きと横向きで動かす"
+   ]
+  },
+  {
+   "id": "top/pixels-assembly",
+   "text": "サーボ90度で組み、印刷部品と付属ホーンだけで保持する",
    "checks": [
     "assembly.path",
-    "interface.retention"
+    "interface.retention",
+    "manual:工具なしで組立と取り外し"
+   ]
+  },
+  {
+   "id": "top/pixels-shield",
+   "text": "8mmのスカートで画素穴の奥を隠す",
+   "checks": [
+    "manual:0mmと3mmで斜めから内部が見えないこと"
    ]
   },
   {
@@ -211,6 +237,90 @@
    "deflection_mm": 0.6,
    "strain_percent": 0.444,
    "basis": "支持座の解除腕自由長18mm以上・t1.6mm・δ0.6mm、上限1.5tδ/L²=0.444%。終端に重なりを残さない。"
+  },
+  {
+   "type": "reference_internal",
+   "pairs": [
+    [
+     "top/servo",
+     "top/horn"
+    ]
+   ],
+   "max_mm3": 0.05,
+   "basis": "正本の円筒近似スプラインのみ。印刷部品への除外はない。"
+  },
+  {
+   "type": "snap",
+   "pairs": [
+    [
+     "top/support",
+     "top/panel"
+    ]
+   ],
+   "engage_mm": 2.4,
+   "deflection_mm": 0.6,
+   "strain_percent": 0.444,
+   "basis": "自由長18mm、厚さ1.6mm、片側0.6mm。1.5tδ/L²。"
+  },
+  {
+   "type": "snap",
+   "pairs": [
+    [
+     "top/servo_cap",
+     "top/support"
+    ]
+   ],
+   "engage_mm": 4.5,
+   "deflection_mm": 5,
+   "strain_percent": 1.94,
+   "basis": "右腕は自由長22mm・厚さ1.2mm・先端5mm。中心線の長さを保った曲げで最大ひずみ1.938%以下。左腕は17.5mm・1.6mm・0.6mmで0.471%以下。着座まで指で開いて保持し、着座後に戻す。実形状を曲げた通過検査はcheck_localのelastic_cap。"
+  },
+  {
+   "type": "snap",
+   "pairs": [
+    [
+     "top/cam_key_1",
+     "top/cam_lower"
+    ],
+    [
+     "top/cam_key_2",
+     "top/cam_lower"
+    ]
+   ],
+   "engage_mm": 4.5,
+   "deflection_mm": 0.15,
+   "strain_percent": 0.67,
+   "basis": "二股脚厚1.2mm、自由長6.35mm、片側0.15mm。1.5tδ/L²。"
+  },
+  {
+   "type": "snap",
+   "pairs": [
+    [
+     "top/servo_cap",
+     "top/guide"
+    ]
+   ],
+   "engage_mm": 9,
+   "deflection_mm": 5,
+   "strain_percent": 1.94,
+   "basis": "右腕は自由長22mm・厚さ1.2mm・先端5mm。中心線の長さを保った曲げで最大ひずみ1.938%以下。左腕は17.5mm・1.6mm・0.6mmで0.471%以下。着座まで指で開いて保持し、着座後に戻す。実形状を曲げた通過検査はcheck_localのelastic_cap。"
+  },
+  {
+   "type": "snap",
+   "pairs": [
+    [
+     "top/cam_key_1",
+     "top/cam_upper"
+    ],
+    [
+     "top/cam_key_2",
+     "top/cam_upper"
+    ]
+   ],
+   "engage_mm": 11,
+   "deflection_mm": 0.15,
+   "strain_percent": 0.67,
+   "basis": "下カムを留める二股の爪が上カムの四角穴を通る間も片側0.15mm縮む。自由長6.35mm、厚さ1.2mm。"
   },
   {
    "type": "snap",
@@ -1062,9 +1172,177 @@
    "engage_depth_mm": 1.2
   },
   {
-   "id": "top/panel-key-left",
+   "id": "top/pixel-1-out",
    "type": "retention",
    "parts": [
+    "top/pixel_1"
+   ],
+   "against": [
+    "top/cam_upper",
+    "top/cam_lower"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3
+  },
+  {
+   "id": "top/pixel-1-in",
+   "type": "retention",
+   "parts": [
+    "top/pixel_1"
+   ],
+   "against": [
+    "top/cam_upper",
+    "top/cam_lower"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3
+  },
+  {
+   "id": "top/pixel-2-out",
+   "type": "retention",
+   "parts": [
+    "top/pixel_2"
+   ],
+   "against": [
+    "top/cam_upper",
+    "top/cam_lower"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3
+  },
+  {
+   "id": "top/pixel-2-in",
+   "type": "retention",
+   "parts": [
+    "top/pixel_2"
+   ],
+   "against": [
+    "top/cam_upper",
+    "top/cam_lower"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3
+  },
+  {
+   "id": "top/pixel-3-out",
+   "type": "retention",
+   "parts": [
+    "top/pixel_3"
+   ],
+   "against": [
+    "top/cam_upper",
+    "top/cam_lower"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3
+  },
+  {
+   "id": "top/pixel-3-in",
+   "type": "retention",
+   "parts": [
+    "top/pixel_3"
+   ],
+   "against": [
+    "top/cam_upper",
+    "top/cam_lower"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3
+  },
+  {
+   "id": "top/cam-out",
+   "type": "retention",
+   "parts": [
+    "top/cam_upper",
+    "top/cam_lower",
+    "top/cam_key_1",
+    "top/cam_key_2"
+   ],
+   "against": [
+    "top/panel",
+    "top/guide"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3
+  },
+  {
+   "id": "top/guide-out",
+   "type": "retention",
+   "parts": [
+    "top/guide"
+   ],
+   "against": [
+    "top/servo_cap",
+    "top/support"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 2
+  },
+  {
+   "id": "top/servo-out",
+   "type": "retention",
+   "parts": [
+    "top/servo"
+   ],
+   "against": [
+    "top/servo_cap",
+    "top/support"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 2
+  },
+  {
+   "id": "top/support-out",
+   "type": "retention",
+   "parts": [
+    "top/support"
+   ],
+   "against": [
     "top/panel"
    ],
    "direction": [
@@ -1076,15 +1354,185 @@
    "engage_depth_mm": 1.2
   },
   {
-   "id": "top/panel-key-right",
+   "id": "top/cap-out",
    "type": "retention",
    "parts": [
-    "top/panel"
+    "top/servo_cap"
+   ],
+   "against": [
+    "top/support",
+    "top/servo",
+    "top/guide"
    ],
    "direction": [
     0.0,
     0.0,
     1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.2
+  },
+  {
+   "id": "top/cam-key-1-out",
+   "type": "retention",
+   "parts": [
+    "top/cam_key_1"
+   ],
+   "against": [
+    "top/cam_upper",
+    "top/cam_lower"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.2
+  },
+  {
+   "id": "top/cam-key-2-out",
+   "type": "retention",
+   "parts": [
+    "top/cam_key_2"
+   ],
+   "against": [
+    "top/cam_upper",
+    "top/cam_lower"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.2
+  },
+  {
+   "id": "top/cam-in",
+   "type": "retention",
+   "parts": [
+    "top/cam_upper",
+    "top/cam_lower",
+    "top/cam_key_1",
+    "top/cam_key_2"
+   ],
+   "against": [
+    "top/panel",
+    "top/guide"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3
+  },
+  {
+   "id": "top/guide-in",
+   "type": "retention",
+   "parts": [
+    "top/guide"
+   ],
+   "against": [
+    "top/servo_cap",
+    "top/support"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 2
+  },
+  {
+   "id": "top/servo-in",
+   "type": "retention",
+   "parts": [
+    "top/servo"
+   ],
+   "against": [
+    "top/servo_cap",
+    "top/support"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 2
+  },
+  {
+   "id": "top/support-in",
+   "type": "retention",
+   "parts": [
+    "top/support"
+   ],
+   "against": [
+    "top/panel"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.2
+  },
+  {
+   "id": "top/cap-in",
+   "type": "retention",
+   "parts": [
+    "top/servo_cap"
+   ],
+   "against": [
+    "top/support",
+    "top/servo",
+    "top/guide"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.2
+  },
+  {
+   "id": "top/cam-key-1-in",
+   "type": "retention",
+   "parts": [
+    "top/cam_key_1"
+   ],
+   "against": [
+    "top/cam_upper",
+    "top/cam_lower"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.2
+  },
+  {
+   "id": "top/cam-key-2-in",
+   "type": "retention",
+   "parts": [
+    "top/cam_key_2"
+   ],
+   "against": [
+    "top/cam_upper",
+    "top/cam_lower"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
    ],
    "max_free_mm": 0.5,
    "engage_depth_mm": 1.2
@@ -1363,7 +1811,19 @@
    "parts": [
     "top/panel",
     "top/key_l",
-    "top/key_r"
+    "top/key_r",
+    "top/support",
+    "top/servo_cap",
+    "top/cam_lower",
+    "top/cam_upper",
+    "top/pixel_1",
+    "top/pixel_2",
+    "top/pixel_3",
+    "top/guide",
+    "top/cam_key_1",
+    "top/cam_key_2",
+    "top/servo",
+    "top/horn"
    ],
    "direction": [
     -0.0,
@@ -1393,37 +1853,58 @@
  "unknowns": [
   {
    "id": "sg92r.horn_arm_lengths",
-   "trial_part": "prints/mystery-box-sg92r-f1/trial/front/horn_fit.stl"
+   "trial_part": "prints/mystery-box-sg92r-f1/trial/front/horn_fit.stl",
+   "additional_trials": [
+    "prints/mystery-box-sg92r-f1/trial/top/horn_fit.stl"
+   ]
   },
   {
    "id": "sg92r.horn_hole_positions",
-   "not_applicable": "ホーンの既存穴は使わない。"
+   "not_applicable": "ホーンの既存穴は使わない。",
+   "additional_trials": [
+    null
+   ]
   },
   {
    "id": "sg92r.output_spline",
-   "not_applicable": "実物の付属ホーンを使い、印刷スプラインは作らない。"
+   "not_applicable": "実物の付属ホーンを使い、印刷スプラインは作らない。",
+   "additional_trials": [
+    null
+   ]
   },
   {
    "id": "sg92r.shaft_height",
-   "trial_part": "prints/mystery-box-sg92r-f1/trial/front/horn_fit.stl"
+   "trial_part": "prints/mystery-box-sg92r-f1/trial/front/horn_fit.stl",
+   "additional_trials": [
+    "prints/mystery-box-sg92r-f1/trial/top/horn_fit.stl"
+   ]
   },
   {
    "id": "sg92r.cover_circle",
-   "trial_part": "prints/mystery-box-sg92r-f1/trial/front/servo_fit.stl"
+   "trial_part": "prints/mystery-box-sg92r-f1/trial/front/servo_fit.stl",
+   "additional_trials": [
+    "prints/mystery-box-sg92r-f1/trial/top/servo_cap_fit.stl"
+   ]
   },
   {
    "id": "sg92r.wire",
-   "trial_part": "prints/mystery-box-sg92r-f1/trial/front/servo_fit.stl"
+   "trial_part": "prints/mystery-box-sg92r-f1/trial/front/servo_fit.stl",
+   "additional_trials": [
+    "prints/mystery-box-sg92r-f1/trial/top/servo_fit.stl"
+   ]
   },
   {
    "id": "sg92r.connector",
-   "trial_part": "prints/mystery-box-sg92r-f1/trial/front/connector_nest.stl"
+   "trial_part": "prints/mystery-box-sg92r-f1/trial/front/connector_nest.stl",
+   "additional_trials": [
+    "prints/mystery-box-sg92r-f1/trial/top/connector_nest.stl"
+   ]
   }
  ],
  "waivers": [
   {
    "check": "print.slice",
-   "reason": "依頼原文『段1で作らないもの: sector_flag と three_pixels の中身（slots.json では一時的に right と top を blank にしておく）、印刷プレート・スライス（時間があれば最後に）。』に基づく段1限定の免除。スライスは未実施で、印刷済み・印刷可能とは未判定。その他の検査は免除しない。"
+   "reason": "段1の依頼原文『印刷プレート・スライス（時間があれば最後に）』による未実施を継続。今回の段3前半は上面の統合・掃引範囲対応・3ケースの機構検査までで、印刷プレートとスライスは対象に含まれていない。印刷可能とは未判定。その他の検査は免除しない。"
   }
  ]
 }

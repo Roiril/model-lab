@@ -15,8 +15,8 @@
     "servo_deg": 87.18351968016395,
     "output_deg": 30
    },
-   "checked": 40,
-   "expected": 40,
+   "checked": 58,
+   "expected": 58,
    "calibration": true,
    "failing": [],
    "error": null,
@@ -32,12 +32,44 @@
     "servo_deg": 55.66268077250187,
     "output_deg": 60.0
    },
-   "checked": 40,
-   "expected": 40,
+   "checked": 58,
+   "expected": 58,
    "calibration": true,
    "failing": [],
    "error": null,
    "report": "build/retention_cases/front/open/report.json"
+  },
+  {
+   "id": "top/mid",
+   "pass": true,
+   "returncode": 0,
+   "pose": {
+    "id": "mid",
+    "label": "サーボ範囲の中間",
+    "servo_deg": 90.0
+   },
+   "checked": 58,
+   "expected": 58,
+   "calibration": true,
+   "failing": [],
+   "error": null,
+   "report": "build/retention_cases/top/mid/report.json"
+  },
+  {
+   "id": "top/open",
+   "pass": true,
+   "returncode": 0,
+   "pose": {
+    "id": "open",
+    "label": "開端",
+    "servo_deg": 120
+   },
+   "checked": 58,
+   "expected": 58,
+   "calibration": true,
+   "failing": [],
+   "error": null,
+   "report": "build/retention_cases/top/open/report.json"
   }
  ],
  "not_checked": [

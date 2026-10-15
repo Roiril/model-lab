@@ -1,6 +1,6 @@
 {
  "model": "mystery-box-sg92r-f1/checks/front",
- "generatedAt": "2026-10-15T17:29:58",
+ "generatedAt": "2026-10-15T18:37:11",
  "pass": true,
  "blocking": [],
  "harness": {
@@ -8,10 +8,10 @@
   "stamp": "e81958ee6cd94fa6d5ba5c2bc4c8447cd632c08acb97f9bb697922edb475deee",
   "stampedAt": "2026-10-15T10:58:57"
  },
- "blenderSeconds": 79.8,
+ "blenderSeconds": 73.7,
  "declared": {
   "waivers": {
-   "print.slice": "依頼原文『段1で作らないもの: sector_flag と three_pixels の中身（slots.json では一時的に right と top を blank にしておく）、印刷プレート・スライス（時間があれば最後に）。』に基づく段1限定の免除。スライスは未実施で、印刷済み・印刷可能とは未判定。その他の検査は免除しない。"
+   "print.slice": "段1の依頼原文『印刷プレート・スライス（時間があれば最後に）』による未実施を継続。今回の段3前半は上面の統合・掃引範囲対応・3ケースの機構検査までで、印刷プレートとスライスは対象に含まれていない。印刷可能とは未判定。その他の検査は免除しない。"
   },
   "allowances": [
    {
@@ -63,6 +63,90 @@
     "deflection_mm": 0.6,
     "strain_percent": 0.444,
     "basis": "支持座の解除腕自由長18mm以上・t1.6mm・δ0.6mm、上限1.5tδ/L²=0.444%。終端に重なりを残さない。"
+   },
+   {
+    "type": "reference_internal",
+    "pairs": [
+     [
+      "top/servo",
+      "top/horn"
+     ]
+    ],
+    "max_mm3": 0.05,
+    "basis": "正本の円筒近似スプラインのみ。印刷部品への除外はない。"
+   },
+   {
+    "type": "snap",
+    "pairs": [
+     [
+      "top/support",
+      "top/panel"
+     ]
+    ],
+    "engage_mm": 2.4,
+    "deflection_mm": 0.6,
+    "strain_percent": 0.444,
+    "basis": "自由長18mm、厚さ1.6mm、片側0.6mm。1.5tδ/L²。"
+   },
+   {
+    "type": "snap",
+    "pairs": [
+     [
+      "top/servo_cap",
+      "top/support"
+     ]
+    ],
+    "engage_mm": 4.5,
+    "deflection_mm": 5,
+    "strain_percent": 1.94,
+    "basis": "右腕は自由長22mm・厚さ1.2mm・先端5mm。中心線の長さを保った曲げで最大ひずみ1.938%以下。左腕は17.5mm・1.6mm・0.6mmで0.471%以下。着座まで指で開いて保持し、着座後に戻す。実形状を曲げた通過検査はcheck_localのelastic_cap。"
+   },
+   {
+    "type": "snap",
+    "pairs": [
+     [
+      "top/cam_key_1",
+      "top/cam_lower"
+     ],
+     [
+      "top/cam_key_2",
+      "top/cam_lower"
+     ]
+    ],
+    "engage_mm": 4.5,
+    "deflection_mm": 0.15,
+    "strain_percent": 0.67,
+    "basis": "二股脚厚1.2mm、自由長6.35mm、片側0.15mm。1.5tδ/L²。"
+   },
+   {
+    "type": "snap",
+    "pairs": [
+     [
+      "top/servo_cap",
+      "top/guide"
+     ]
+    ],
+    "engage_mm": 9,
+    "deflection_mm": 5,
+    "strain_percent": 1.94,
+    "basis": "右腕は自由長22mm・厚さ1.2mm・先端5mm。中心線の長さを保った曲げで最大ひずみ1.938%以下。左腕は17.5mm・1.6mm・0.6mmで0.471%以下。着座まで指で開いて保持し、着座後に戻す。実形状を曲げた通過検査はcheck_localのelastic_cap。"
+   },
+   {
+    "type": "snap",
+    "pairs": [
+     [
+      "top/cam_key_1",
+      "top/cam_upper"
+     ],
+     [
+      "top/cam_key_2",
+      "top/cam_upper"
+     ]
+    ],
+    "engage_mm": 11,
+    "deflection_mm": 0.15,
+    "strain_percent": 0.67,
+    "basis": "下カムを留める二股の爪が上カムの四角穴を通る間も片側0.15mm縮む。自由長6.35mm、厚さ1.2mm。"
    },
    {
     "type": "snap",
@@ -612,31 +696,52 @@
   "unknowns": [
    {
     "id": "sg92r.horn_arm_lengths",
-    "trial_part": "prints/mystery-box-sg92r-f1/trial/front/horn_fit.stl"
+    "trial_part": "prints/mystery-box-sg92r-f1/trial/front/horn_fit.stl",
+    "additional_trials": [
+     "prints/mystery-box-sg92r-f1/trial/top/horn_fit.stl"
+    ]
    },
    {
     "id": "sg92r.horn_hole_positions",
-    "not_applicable": "ホーンの既存穴は使わない。"
+    "not_applicable": "ホーンの既存穴は使わない。",
+    "additional_trials": [
+     null
+    ]
    },
    {
     "id": "sg92r.output_spline",
-    "not_applicable": "実物の付属ホーンを使い、印刷スプラインは作らない。"
+    "not_applicable": "実物の付属ホーンを使い、印刷スプラインは作らない。",
+    "additional_trials": [
+     null
+    ]
    },
    {
     "id": "sg92r.shaft_height",
-    "trial_part": "prints/mystery-box-sg92r-f1/trial/front/horn_fit.stl"
+    "trial_part": "prints/mystery-box-sg92r-f1/trial/front/horn_fit.stl",
+    "additional_trials": [
+     "prints/mystery-box-sg92r-f1/trial/top/horn_fit.stl"
+    ]
    },
    {
     "id": "sg92r.cover_circle",
-    "trial_part": "prints/mystery-box-sg92r-f1/trial/front/servo_fit.stl"
+    "trial_part": "prints/mystery-box-sg92r-f1/trial/front/servo_fit.stl",
+    "additional_trials": [
+     "prints/mystery-box-sg92r-f1/trial/top/servo_cap_fit.stl"
+    ]
    },
    {
     "id": "sg92r.wire",
-    "trial_part": "prints/mystery-box-sg92r-f1/trial/front/servo_fit.stl"
+    "trial_part": "prints/mystery-box-sg92r-f1/trial/front/servo_fit.stl",
+    "additional_trials": [
+     "prints/mystery-box-sg92r-f1/trial/top/servo_fit.stl"
+    ]
    },
    {
     "id": "sg92r.connector",
-    "trial_part": "prints/mystery-box-sg92r-f1/trial/front/connector_nest.stl"
+    "trial_part": "prints/mystery-box-sg92r-f1/trial/front/connector_nest.stl",
+    "additional_trials": [
+     "prints/mystery-box-sg92r-f1/trial/top/connector_nest.stl"
+    ]
    }
   ],
   "slenderExceptions": {},
@@ -654,7 +759,7 @@
   },
   {
    "id": "R2",
-   "text": "段1は正面のSG92R蓋カセット1つと他5面の空の面",
+   "text": "正面のSG92R蓋と上面の3画素カセットを装着し、他4面は空の面とする",
    "checks": [
     "interface.coverage",
     "interface.drive",
@@ -803,14 +908,48 @@
    "pass": true
   },
   {
-   "id": "top/blank-closed",
-   "text": "空の面を3点の座へ固定し、キーを外して面法線方向へ抜ける",
+   "id": "top/pixels-table",
+   "text": "patterns.jsonから53mmの上下カムを作り、14mm角の3画素を0〜3mm押し引きする",
+   "checks": [
+    "motion.interference",
+    "interface.drive",
+    "motion.torque"
+   ],
+   "manual": [],
+   "pass": true
+  },
+  {
+   "id": "top/pixels-fit",
+   "text": "7段の占有と外部動作域を守り、側面でも重力に頼らず動く",
+   "checks": [
+    "assembly.envelope",
+    "interface.retention"
+   ],
+   "manual": [
+    "実機を上向きと横向きで動かす"
+   ],
+   "pass": true
+  },
+  {
+   "id": "top/pixels-assembly",
+   "text": "サーボ90度で組み、印刷部品と付属ホーンだけで保持する",
    "checks": [
     "assembly.path",
     "interface.retention"
    ],
-   "manual": [],
+   "manual": [
+    "工具なしで組立と取り外し"
+   ],
    "pass": true
+  },
+  {
+   "id": "top/pixels-shield",
+   "text": "8mmのスカートで画素穴の奥を隠す",
+   "checks": [],
+   "manual": [
+    "0mmと3mmで斜めから内部が見えないこと"
+   ],
+   "pass": null
   },
   {
    "id": "bottom/blank-closed",
@@ -953,7 +1092,7 @@
    "id": "parts.topology",
    "title": "全 STL が閉じて向きのそろった多様体か（面積 0 の三角形も無し）",
    "pass": true,
-   "summary": "66 個の STL を検査",
+   "summary": "88 個の STL を検査",
    "detail": {
     "failing": {},
     "referenceNotes": {}
@@ -965,7 +1104,7 @@
    "id": "parts.components",
    "title": "刷る STL の連結成分の数が宣言どおりか（既定 1）",
    "pass": true,
-   "summary": "刷る部品 32 点",
+   "summary": "刷る部品 42 点",
    "detail": {},
    "required": true,
    "waived": null
@@ -974,7 +1113,7 @@
    "id": "parts.self_intersection",
    "title": "刷る STL に自己交差が無いか",
    "pass": true,
-   "summary": "刷る STL 32 点",
+   "summary": "刷る STL 42 点",
    "detail": {},
    "required": true,
    "waived": null
@@ -1035,7 +1174,7 @@
    "id": "motion.interference",
    "title": "動く全範囲で、許可の無い部品の組の共通体積が 0 か",
    "pass": true,
-   "summary": "34 部品・561 組 x 48 姿勢（55.66268077250187〜124.33731922749814°、どの点も姿勢の間で 1.0mm 以内。補間 0）",
+   "summary": "46 部品・1035 組 x 48 姿勢（55.66268077250187〜124.33731922749814°、どの点も姿勢の間で 1.0mm 以内。補間 0）",
    "detail": {
     "violations": [],
     "allowedContacts": [
@@ -1089,9 +1228,19 @@
      "left/panel": 20.42,
      "left/key_l": 0.4,
      "left/key_r": 0.4,
-     "top/panel": 20.42,
+     "top/panel": 18.9,
      "top/key_l": 0.4,
      "top/key_r": 0.4,
+     "top/support": 4.08,
+     "top/servo_cap": 1.74,
+     "top/cam_lower": 2.57,
+     "top/cam_upper": 6.29,
+     "top/pixel_1": 1.65,
+     "top/pixel_2": 1.67,
+     "top/pixel_3": 1.83,
+     "top/guide": 2.81,
+     "top/cam_key_1": 0.17,
+     "top/cam_key_2": 0.17,
      "bottom/panel": 20.42,
      "bottom/key_l": 0.4,
      "bottom/key_r": 0.4
@@ -1207,7 +1356,7 @@
    "id": "interface.retention",
    "title": "抜け止めごとに、外れる向きへ動かすと上限までに止まるか",
    "pass": true,
-   "summary": "抜け止め 40 個",
+   "summary": "抜け止め 58 個",
    "detail": {
     "failing": [],
     "all": [
@@ -1544,9 +1693,9 @@
       "pass": true
      },
      {
-      "id": "top/panel-key-left",
+      "id": "top/pixel-1-out",
       "parts": [
-       "top/panel"
+       "top/pixel_1"
       ],
       "direction": [
        0.0,
@@ -1554,18 +1703,35 @@
        1.0
       ],
       "limitMm": 0.5,
-      "travelMm": 0.200043,
+      "travelMm": 0.203751,
       "stoppedBy": [
-       "top/key_l",
-       "top/key_r"
+       "top/cam_upper"
       ],
-      "stoppedPart": "top/panel",
+      "stoppedPart": "top/pixel_1",
       "pass": true
      },
      {
-      "id": "top/panel-key-right",
+      "id": "top/pixel-1-in",
       "parts": [
-       "top/panel"
+       "top/pixel_1"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       -1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.204048,
+      "stoppedBy": [
+       "top/cam_lower"
+      ],
+      "stoppedPart": "top/pixel_1",
+      "pass": true
+     },
+     {
+      "id": "top/pixel-2-out",
+      "parts": [
+       "top/pixel_2"
       ],
       "direction": [
        0.0,
@@ -1573,12 +1739,323 @@
        1.0
       ],
       "limitMm": 0.5,
-      "travelMm": 0.200043,
+      "travelMm": 0.203751,
       "stoppedBy": [
-       "top/key_l",
-       "top/key_r"
+       "top/cam_upper"
       ],
-      "stoppedPart": "top/panel",
+      "stoppedPart": "top/pixel_2",
+      "pass": true
+     },
+     {
+      "id": "top/pixel-2-in",
+      "parts": [
+       "top/pixel_2"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       -1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.204048,
+      "stoppedBy": [
+       "top/cam_lower"
+      ],
+      "stoppedPart": "top/pixel_2",
+      "pass": true
+     },
+     {
+      "id": "top/pixel-3-out",
+      "parts": [
+       "top/pixel_3"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.205544,
+      "stoppedBy": [
+       "top/cam_upper"
+      ],
+      "stoppedPart": "top/pixel_3",
+      "pass": true
+     },
+     {
+      "id": "top/pixel-3-in",
+      "parts": [
+       "top/pixel_3"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       -1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.204048,
+      "stoppedBy": [
+       "top/cam_lower"
+      ],
+      "stoppedPart": "top/pixel_3",
+      "pass": true
+     },
+     {
+      "id": "top/cam-out",
+      "parts": [
+       "top/cam_upper",
+       "top/cam_lower",
+       "top/cam_key_1",
+       "top/cam_key_2"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.250008,
+      "stoppedBy": [
+       "top/panel"
+      ],
+      "stoppedPart": "top/cam_upper",
+      "pass": true
+     },
+     {
+      "id": "top/guide-out",
+      "parts": [
+       "top/guide"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.250023,
+      "stoppedBy": [
+       "top/servo_cap"
+      ],
+      "stoppedPart": "top/guide",
+      "pass": true
+     },
+     {
+      "id": "top/servo-out",
+      "parts": [
+       "top/servo"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.250015,
+      "stoppedBy": [
+       "top/servo_cap"
+      ],
+      "stoppedPart": "top/servo",
+      "pass": true
+     },
+     {
+      "id": "top/support-out",
+      "parts": [
+       "top/support"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.254005,
+      "stoppedBy": [
+       "top/panel"
+      ],
+      "stoppedPart": "top/support",
+      "pass": true
+     },
+     {
+      "id": "top/cap-out",
+      "parts": [
+       "top/servo_cap"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.250481,
+      "stoppedBy": [
+       "top/support"
+      ],
+      "stoppedPart": "top/servo_cap",
+      "pass": true
+     },
+     {
+      "id": "top/cam-key-1-out",
+      "parts": [
+       "top/cam_key_1"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.251114,
+      "stoppedBy": [
+       "top/cam_lower"
+      ],
+      "stoppedPart": "top/cam_key_1",
+      "pass": true
+     },
+     {
+      "id": "top/cam-key-2-out",
+      "parts": [
+       "top/cam_key_2"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.251114,
+      "stoppedBy": [
+       "top/cam_lower"
+      ],
+      "stoppedPart": "top/cam_key_2",
+      "pass": true
+     },
+     {
+      "id": "top/cam-in",
+      "parts": [
+       "top/cam_upper",
+       "top/cam_lower",
+       "top/cam_key_1",
+       "top/cam_key_2"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       -1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.250008,
+      "stoppedBy": [
+       "top/guide"
+      ],
+      "stoppedPart": "top/cam_lower",
+      "pass": true
+     },
+     {
+      "id": "top/guide-in",
+      "parts": [
+       "top/guide"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       -1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.250023,
+      "stoppedBy": [
+       "top/support"
+      ],
+      "stoppedPart": "top/guide",
+      "pass": true
+     },
+     {
+      "id": "top/servo-in",
+      "parts": [
+       "top/servo"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       -1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.250015,
+      "stoppedBy": [
+       "top/support"
+      ],
+      "stoppedPart": "top/servo",
+      "pass": true
+     },
+     {
+      "id": "top/support-in",
+      "parts": [
+       "top/support"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       -1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.200356,
+      "stoppedBy": [
+       "top/panel"
+      ],
+      "stoppedPart": "top/support",
+      "pass": true
+     },
+     {
+      "id": "top/cap-in",
+      "parts": [
+       "top/servo_cap"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       -1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.250015,
+      "stoppedBy": [
+       "top/servo"
+      ],
+      "stoppedPart": "top/servo_cap",
+      "pass": true
+     },
+     {
+      "id": "top/cam-key-1-in",
+      "parts": [
+       "top/cam_key_1"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       -1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.250076,
+      "stoppedBy": [
+       "top/cam_upper"
+      ],
+      "stoppedPart": "top/cam_key_1",
+      "pass": true
+     },
+     {
+      "id": "top/cam-key-2-in",
+      "parts": [
+       "top/cam_key_2"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       -1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.250076,
+      "stoppedBy": [
+       "top/cam_upper"
+      ],
+      "stoppedPart": "top/cam_key_2",
       "pass": true
      },
      {
@@ -1928,7 +2405,19 @@
       "parts": [
        "top/panel",
        "top/key_l",
-       "top/key_r"
+       "top/key_r",
+       "top/support",
+       "top/servo_cap",
+       "top/cam_lower",
+       "top/cam_upper",
+       "top/pixel_1",
+       "top/pixel_2",
+       "top/pixel_3",
+       "top/guide",
+       "top/cam_key_1",
+       "top/cam_key_2",
+       "top/servo",
+       "top/horn"
       ],
       "direction": [
        -0.0,
@@ -1972,7 +2461,7 @@
    "id": "assembly.path",
    "title": "組立の各工程で、許可の範囲の外の当たりが無く、最後に全部品が組まれるか",
    "pass": true,
-   "summary": "66 工程（補間で足した姿勢 0）",
+   "summary": "90 工程（補間で足した姿勢 0）",
    "detail": {
     "violations": [],
     "boundaryErrors": [],
@@ -2138,6 +2627,97 @@
       "samples": 3,
       "steps": [
        "front/panel-in"
+      ]
+     },
+     {
+      "parts": [
+       "top/cam_key_1",
+       "top/cam_lower"
+      ],
+      "type": "snap",
+      "maxCommonMm3": 1.079992,
+      "maxRemainingTravelMm": 4.0,
+      "samples": 8,
+      "steps": [
+       "top/cam_key_1-in"
+      ]
+     },
+     {
+      "parts": [
+       "top/cam_key_1",
+       "top/cam_upper"
+      ],
+      "type": "snap",
+      "maxCommonMm3": 1.079991,
+      "maxRemainingTravelMm": 9.5,
+      "samples": 13,
+      "steps": [
+       "top/cam_key_1-in"
+      ]
+     },
+     {
+      "parts": [
+       "top/cam_key_2",
+       "top/cam_lower"
+      ],
+      "type": "snap",
+      "maxCommonMm3": 1.079996,
+      "maxRemainingTravelMm": 3.5,
+      "samples": 7,
+      "steps": [
+       "top/cam_key_2-in"
+      ]
+     },
+     {
+      "parts": [
+       "top/cam_key_2",
+       "top/cam_upper"
+      ],
+      "type": "snap",
+      "maxCommonMm3": 1.079997,
+      "maxRemainingTravelMm": 9.5,
+      "samples": 13,
+      "steps": [
+       "top/cam_key_2-in"
+      ]
+     },
+     {
+      "parts": [
+       "top/guide",
+       "top/servo_cap"
+      ],
+      "type": "snap",
+      "maxCommonMm3": 14.410714,
+      "maxRemainingTravelMm": 8.0,
+      "samples": 13,
+      "steps": [
+       "top/servo_cap-in"
+      ]
+     },
+     {
+      "parts": [
+       "top/panel",
+       "top/support"
+      ],
+      "type": "snap",
+      "maxCommonMm3": 1.728019,
+      "maxRemainingTravelMm": 1.5,
+      "samples": 3,
+      "steps": [
+       "top/panel-in"
+      ]
+     },
+     {
+      "parts": [
+       "top/servo_cap",
+       "top/support"
+      ],
+      "type": "snap",
+      "maxCommonMm3": 2.519983,
+      "maxRemainingTravelMm": 4.0,
+      "samples": 8,
+      "steps": [
+       "top/servo_cap-in"
       ]
      }
     ],
@@ -2487,7 +3067,7 @@
       "pass": true
      },
      {
-      "id": "top/panel",
+      "id": "top/support-base",
       "frames": 2,
       "checkedPoses": 2,
       "moving": 1,
@@ -2495,10 +3075,114 @@
       "pass": true
      },
      {
+      "id": "top/guide-in",
+      "frames": 81,
+      "checkedPoses": 81,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "top/servo-in",
+      "frames": 91,
+      "checkedPoses": 91,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "top/servo_cap-in",
+      "frames": 81,
+      "checkedPoses": 81,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "top/horn-in",
+      "frames": 41,
+      "checkedPoses": 41,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "top/cam_lower-in",
+      "frames": 61,
+      "checkedPoses": 61,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "top/pixel_1-in",
+      "frames": 71,
+      "checkedPoses": 71,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "top/pixel_2-in",
+      "frames": 71,
+      "checkedPoses": 71,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "top/pixel_3-in",
+      "frames": 71,
+      "checkedPoses": 71,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "top/cam_upper-in",
+      "frames": 61,
+      "checkedPoses": 61,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "top/cam_key_1-in",
+      "frames": 41,
+      "checkedPoses": 41,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "top/cam_key_2-in",
+      "frames": 41,
+      "checkedPoses": 41,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "top/panel-in",
+      "frames": 71,
+      "checkedPoses": 71,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "top/closed-neutral",
+      "frames": 2,
+      "checkedPoses": 2,
+      "moving": 13,
+      "violations": 0,
+      "pass": true
+     },
+     {
       "id": "top/insert",
       "frames": 101,
       "checkedPoses": 101,
-      "moving": 1,
+      "moving": 13,
       "violations": 0,
       "pass": true
      },
@@ -2669,6 +3353,94 @@
       "moving": 1,
       "violations": 0,
       "pass": true
+     },
+     {
+      "id": "top/exchange_key_0_release",
+      "frames": 5,
+      "checkedPoses": 5,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "top/exchange_key_0_out",
+      "frames": 51,
+      "checkedPoses": 51,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "top/exchange_key_1_release",
+      "frames": 5,
+      "checkedPoses": 5,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "top/exchange_key_1_out",
+      "frames": 51,
+      "checkedPoses": 51,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "top/exchange_out",
+      "frames": 41,
+      "checkedPoses": 41,
+      "moving": 13,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "top/disconnect",
+      "frames": 2,
+      "checkedPoses": 2,
+      "moving": 0,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "top/exchange_in",
+      "frames": 41,
+      "checkedPoses": 41,
+      "moving": 13,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "top/exchange_key_0_in",
+      "frames": 51,
+      "checkedPoses": 51,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "top/exchange_key_0_lock",
+      "frames": 5,
+      "checkedPoses": 5,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "top/exchange_key_1_in",
+      "frames": 51,
+      "checkedPoses": 51,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "top/exchange_key_1_lock",
+      "frames": 5,
+      "checkedPoses": 5,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
      }
     ]
    },
@@ -2737,14 +3509,14 @@
    "summary": "prints/mystery-box-sg92r-f1/checks/front/ にスライス済みの 3mf が無い",
    "detail": null,
    "required": true,
-   "waived": "依頼原文『段1で作らないもの: sector_flag と three_pixels の中身（slots.json では一時的に right と top を blank にしておく）、印刷プレート・スライス（時間があれば最後に）。』に基づく段1限定の免除。スライスは未実施で、印刷済み・印刷可能とは未判定。その他の検査は免除しない。"
+   "waived": "段1の依頼原文『印刷プレート・スライス（時間があれば最後に）』による未実施を継続。今回の段3前半は上面の統合・掃引範囲対応・3ケースの機構検査までで、印刷プレートとスライスは対象に含まれていない。印刷可能とは未判定。その他の検査は免除しない。"
   }
  ],
  "inputs": {
-  "models/mystery-box-sg92r-f1/checks/front/spec.json": "d1013cc6493724603cf73afd3d8f0db3f2a0cda041b385a5c9e3451e83a84e0b",
-  "models/mystery-box-sg92r-f1/checks/front/build/manifest.json": "60472c43707ccb96fc13b9ee0e69f4874078ab37908a942af898d3ee1df83f50",
-  "models/mystery-box-sg92r-f1/checks/front/build/motion.json": "2560112c01b3c946343096f982df183aeb93d5451dd54818a83cd4321a34a952",
-  "models/mystery-box-sg92r-f1/checks/front/build/assembly.json": "aadff0896ff31a3dd2f610e5970ecfcf451cb25ca530f9d08aa87b25732d6938",
+  "models/mystery-box-sg92r-f1/checks/front/spec.json": "d850dd6aa3235a3b8a99b6c123a4d60ce39119464c52dce2a23cc8ccb31f493b",
+  "models/mystery-box-sg92r-f1/checks/front/build/manifest.json": "6545bdf4cc1871207cead034955c384d42a213a5035c3fde8b4e587a55b42ee8",
+  "models/mystery-box-sg92r-f1/checks/front/build/motion.json": "0753b946074d9013e67c1666127504ec4446acabad3a837020b0b03566cf7d37",
+  "models/mystery-box-sg92r-f1/checks/front/build/assembly.json": "30369d06a8218af5f5d7090976597631fa8fde8b19bff0d88d73f0bd7523942e",
   "models/mystery-box-sg92r-f1/checks/front/../../build/parts/frame/lower_frame.stl": "9d292f7fff7e4c8f5f591afd20994c5dbce84a8b751dc0e94f075b3158149bdd",
   "models/mystery-box-sg92r-f1/checks/front/../../build/parts/frame/upper_frame.stl": "574f657dab5ac41cc83955d0c2fd51b27205f05c5c6225a22abf3682300f6b19",
   "models/mystery-box-sg92r-f1/checks/front/../../build/parts/frame/post_0.stl": "5a15f85db740db7b6c8e121287e335e8040349034f1ad8d4bed211815c8375c4",
@@ -2773,9 +3545,21 @@
   "models/mystery-box-sg92r-f1/checks/front/../../build/parts/left/panel.stl": "fd93f25fb16680ab754c4126f824767f49b738e63ef1a07bf46b533222562a74",
   "models/mystery-box-sg92r-f1/checks/front/../../build/parts/left/key_l.stl": "e069286f55e007fc5a0665fd39ea18f7e162df577eab3543b5b5d7ede938adba",
   "models/mystery-box-sg92r-f1/checks/front/../../build/parts/left/key_r.stl": "6e71d411f50ef51641f43b47775f37cd109d83de10713f692d3480d4c4f2952d",
-  "models/mystery-box-sg92r-f1/checks/front/../../build/parts/top/panel.stl": "9aa8368064a0653f0909c7d658beb9d24d07a1edd7db4ea561642cffd73aaef8",
+  "models/mystery-box-sg92r-f1/checks/front/../../build/parts/top/panel.stl": "aafd5b6100b7893063267bb0b2c78e0706ecb5f965b107afe3437aea2858355e",
   "models/mystery-box-sg92r-f1/checks/front/../../build/parts/top/key_l.stl": "057c633b5f80f096fab2e3179cacad8608701a5ed8721f3dcd4fa350f6ee7641",
   "models/mystery-box-sg92r-f1/checks/front/../../build/parts/top/key_r.stl": "903e0416add8363a88e7250041e415a647bf508ebd547f3f0ee0414db42d0887",
+  "models/mystery-box-sg92r-f1/checks/front/../../build/parts/top/support.stl": "a4fe1383c1e6ffbae3e0ae20e92462ec6ccd07e6da744ab8a1d379382c3187b7",
+  "models/mystery-box-sg92r-f1/checks/front/../../build/parts/top/servo_cap.stl": "c1b8d51d198eb62cc52de3af90374d8e1c34242fba3ec8e9850340038c4eef22",
+  "models/mystery-box-sg92r-f1/checks/front/../../build/parts/top/cam_lower.stl": "788927d678010905b918982bc99395ef2d8598515a5a151217fffc8a88a4ce8a",
+  "models/mystery-box-sg92r-f1/checks/front/../../build/parts/top/cam_upper.stl": "a6ed828b1ae163b20c4d8f522e244a3697f4c0bab149afb28215c05b78f11fb1",
+  "models/mystery-box-sg92r-f1/checks/front/../../build/parts/top/pixel_1.stl": "dd300c84c8f82b53a27533f6cf17efd1ec91d75300f4bb490976925de5e65615",
+  "models/mystery-box-sg92r-f1/checks/front/../../build/parts/top/pixel_2.stl": "d1b6d010bb20391099977762a01d02a813f741f7a014783ca17cbbd6843a526f",
+  "models/mystery-box-sg92r-f1/checks/front/../../build/parts/top/pixel_3.stl": "302d847a0fb9641292be0780ebb473df2fd60edd7f56fd6f967d146c231cd735",
+  "models/mystery-box-sg92r-f1/checks/front/../../build/parts/top/guide.stl": "a29ec966f72a156c6aa347bf3ae6fa86402783386c346efddd4b95cad2372195",
+  "models/mystery-box-sg92r-f1/checks/front/../../build/parts/top/cam_key_1.stl": "b348a29cc40a69f3a80c3831b2dcb02b86dce1ebf01207596f306b1b862b2161",
+  "models/mystery-box-sg92r-f1/checks/front/../../build/parts/top/cam_key_2.stl": "6576d92fc6dfcc6656ae9f3d0d8e69d51d799e55bc87b61b35eba2135da14ec8",
+  "models/mystery-box-sg92r-f1/checks/front/../../build/parts/top/servo.stl": "b8816cff532933f873c3ee025c2833c81fe6ba98186ac426c86764b04587a1b3",
+  "models/mystery-box-sg92r-f1/checks/front/../../build/parts/top/horn.stl": "238e7600d4e74ccfa3732e42d1589420a8588afff1d6e75425afc5c421850ed6",
   "models/mystery-box-sg92r-f1/checks/front/../../build/parts/bottom/panel.stl": "1e6c82608831cbdaff820f5a6b614b8191d8853a3d4ba1cb4c3a602305e19218",
   "models/mystery-box-sg92r-f1/checks/front/../../build/parts/bottom/key_l.stl": "ceecd1dcd3a68d2611246ba1b45b113d4c4edc42eab249ee612be0cd6ef16fdf",
   "models/mystery-box-sg92r-f1/checks/front/../../build/parts/bottom/key_r.stl": "faee87da42eecc2c24d886da16b09b8d0799d172d83541ce2c6f612567f6d51a",
@@ -2805,9 +3589,19 @@
   "models/mystery-box-sg92r-f1/checks/front/../../../../prints/mystery-box-sg92r-f1/left/panel.stl": "088c2601c0493130331c7ffa0f1611a4b57cf987ddffc21417ae5bfa64990c2e",
   "models/mystery-box-sg92r-f1/checks/front/../../../../prints/mystery-box-sg92r-f1/left/key_l.stl": "47de897756b1b62c46f37db61a5429ab954e389409548de76d3d435aba61286b",
   "models/mystery-box-sg92r-f1/checks/front/../../../../prints/mystery-box-sg92r-f1/left/key_r.stl": "bc28b263c77c12c18a321918cf19bf122bed484371a68a982078b8cb1da60335",
-  "models/mystery-box-sg92r-f1/checks/front/../../../../prints/mystery-box-sg92r-f1/top/panel.stl": "088c2601c0493130331c7ffa0f1611a4b57cf987ddffc21417ae5bfa64990c2e",
+  "models/mystery-box-sg92r-f1/checks/front/../../../../prints/mystery-box-sg92r-f1/top/panel.stl": "502d5ea8b587a541264351fedcf6e37220df46cc1091e83cb2707742d732af65",
   "models/mystery-box-sg92r-f1/checks/front/../../../../prints/mystery-box-sg92r-f1/top/key_l.stl": "47de897756b1b62c46f37db61a5429ab954e389409548de76d3d435aba61286b",
   "models/mystery-box-sg92r-f1/checks/front/../../../../prints/mystery-box-sg92r-f1/top/key_r.stl": "bc28b263c77c12c18a321918cf19bf122bed484371a68a982078b8cb1da60335",
+  "models/mystery-box-sg92r-f1/checks/front/../../../../prints/mystery-box-sg92r-f1/top/support.stl": "78e3e93ece18b2b2548bbc09631aa74f5eb5d4bb47556e26c8eae9296d85fb19",
+  "models/mystery-box-sg92r-f1/checks/front/../../../../prints/mystery-box-sg92r-f1/top/servo_cap.stl": "4ea9f99d974ce1f9c005859076fd408e6e43256174f80007af719cc443555ee6",
+  "models/mystery-box-sg92r-f1/checks/front/../../../../prints/mystery-box-sg92r-f1/top/cam_lower.stl": "ce6bea9d7fc037cfc0d4ed851b36bbf0a24889cc5d93d4e42c9d5c995afb6f52",
+  "models/mystery-box-sg92r-f1/checks/front/../../../../prints/mystery-box-sg92r-f1/top/cam_upper.stl": "4cd7dd9a90d960e699700446486bd9467afa09ff15f2be582a068b3be49af4e2",
+  "models/mystery-box-sg92r-f1/checks/front/../../../../prints/mystery-box-sg92r-f1/top/pixel_1.stl": "c0feeb0fe878821e2aa40026938f932677a71e4c4433792aedd213d9aeaefa1d",
+  "models/mystery-box-sg92r-f1/checks/front/../../../../prints/mystery-box-sg92r-f1/top/pixel_2.stl": "32942d0e999e5bdf7c04c9ca655e012158caedf33866243afcb24af6e4bcb573",
+  "models/mystery-box-sg92r-f1/checks/front/../../../../prints/mystery-box-sg92r-f1/top/pixel_3.stl": "96563c26daf2073bba48be845dc9a22c13177b2e1c6a6563cb89d8bd1278f63c",
+  "models/mystery-box-sg92r-f1/checks/front/../../../../prints/mystery-box-sg92r-f1/top/guide.stl": "b45b749e7e4f247251f6d180adf441c8ec16d41455a455bf1fd8c4d91f3e2924",
+  "models/mystery-box-sg92r-f1/checks/front/../../../../prints/mystery-box-sg92r-f1/top/cam_key_1.stl": "d55726b966c8b30ca363394f8b143180f4231769282a35f9f5c921d0358260ab",
+  "models/mystery-box-sg92r-f1/checks/front/../../../../prints/mystery-box-sg92r-f1/top/cam_key_2.stl": "0395bbb494d8b4fc82124ecc754ed961248b39f333cf8c7216d721926bee2e81",
   "models/mystery-box-sg92r-f1/checks/front/../../../../prints/mystery-box-sg92r-f1/bottom/panel.stl": "088c2601c0493130331c7ffa0f1611a4b57cf987ddffc21417ae5bfa64990c2e",
   "models/mystery-box-sg92r-f1/checks/front/../../../../prints/mystery-box-sg92r-f1/bottom/key_l.stl": "47de897756b1b62c46f37db61a5429ab954e389409548de76d3d435aba61286b",
   "models/mystery-box-sg92r-f1/checks/front/../../../../prints/mystery-box-sg92r-f1/bottom/key_r.stl": "bc28b263c77c12c18a321918cf19bf122bed484371a68a982078b8cb1da60335",

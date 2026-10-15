@@ -7,12 +7,13 @@ import json
 import math
 from pathlib import Path
 import sys
+from unittest.mock import patch
 
 import numpy as np
 
 from compose import (C, HERE, MODEL, ROOT, SLOTS, changed_dependencies, checked_transforms, common_params,
                      dependency_hashes, dependency_status, face_package, load_configuration,
-                     key_slide_step, key_turn_step, qualify, read, rigid, sample_angles,
+                     key_slide_step, key_turn_step, motion_range, qualify, read, rigid, sample_angles,
                      retention_poses, selected_face_sources, world_transform)
 from certify import retention_result_passed
 
@@ -25,6 +26,66 @@ def rejected(function):
     return False
 
 
+def verify_motion_ranges(check, interface, config, common):
+    pixels = read(HERE / "faces" / "three_pixels" / "module.json")
+    motion = pixels["motion"]
+    angles = sample_angles(motion)
+    check("range.explicit_endpoints", motion_range(motion) == (60, 120))
+    check("range.explicit_61_poses", np.array_equal(angles, np.arange(60, 121)))
+    check("range.physical_home_unchanged", motion["closed_servo_deg"] == 90 and 90 in angles)
+    poses = retention_poses(object(), motion, interface, common)
+    check("range.retention_mid_and_open", {p["id"]: p["servo_deg"] for p in poses} == {"mid": 90, "open": 120})
+    narrower = {key: value for key, value in motion.items() if key != "range_servo_deg"}
+    check("range.default_uses_closed_open", motion_range(narrower) == (90, 120)
+          and len(sample_angles(narrower)) == 31)
+    fallback_poses = retention_poses(object(), narrower, interface, common)
+    check("range.default_retention_mid", {p["id"]: p["servo_deg"] for p in fallback_poses}
+          == {"mid": 105, "open": 120})
+    link_motion = read(HERE / "faces" / "link_lid" / "module.json")["motion"]
+    link_angles = sample_angles(link_motion)
+    check("range.link_lid_legacy_70_poses", "range_servo_deg" not in link_motion and len(link_angles) == 70
+          and np.allclose((link_angles[0], link_angles[-1]),
+                          sorted((link_motion["closed_servo_deg"], link_motion["open_servo_deg"]))))
+    explicit_config = copy.deepcopy(config)
+    explicit_config["slots"]["top"] = {"module": "three_pixels", "rotation_deg": 0, "calibration_deg": 0}
+    _, _, explicit_faces = load_configuration(explicit_config, interface)
+    check("range.configuration_accepts_explicit", motion_range(explicit_faces["top"]["meta"]["motion"]) == (60, 120))
+    kinematics = face_package("three_pixels", "top")["kinematics"]
+    low = checked_transforms(kinematics, float(angles[0]), interface, common, pixels["parts"])
+    home = checked_transforms(kinematics, motion["closed_servo_deg"], interface, common, pixels["parts"])
+    check("range.low_endpoint_preserves_pixel_1", np.isclose(low["pixel_1"][2, 3], -3)
+          and all(np.allclose(matrix, np.eye(4)) for matrix in home.values()))
+    invalid_bounds = {
+        "null": None, "scalar": 60, "string": "60,120", "mapping": {"low": 60, "high": 120},
+        "empty": [], "short": [60], "long": [60, 90, 120], "tuple": (60, 120),
+        "bool_low": [False, 120], "bool_high": [60, True], "numeric_string": ["60", 120],
+        "nan": [float("nan"), 120], "infinity": [60, float("inf")],
+        "reversed": [120, 60], "equal": [90, 90], "negative": [-1, 120], "over_180": [60, 181],
+        "missing_closed": [91, 120], "missing_open": [60, 119]}
+    for name, bounds in invalid_bounds.items():
+        invalid = {**motion, "range_servo_deg": bounds}
+        check(f"range.reject.{name}", rejected(lambda: motion_range(invalid))
+              and rejected(lambda: sample_angles(invalid))
+              and rejected(lambda: retention_poses(object(), invalid, interface, common)))
+    assembly_outside = {**motion, "closed_servo_deg": 100, "assembly_servo_deg": 90, "range_servo_deg": [95, 120]}
+    check("range.reject.missing_assembly", rejected(lambda: motion_range(assembly_outside)))
+    for key in ("closed_servo_deg", "open_servo_deg", "assembly_servo_deg"):
+        check(f"range.reject.bool_{key}", rejected(lambda: motion_range({**motion, key: True})))
+    check("range.calibration_boundary_accepted", motion_range(motion, -60) == (60, 120)
+          and motion_range(motion, 60) == (60, 120))
+    for calibration in (-60.1, 60.1, True, float("nan")):
+        check(f"range.reject.calibration_{calibration}", rejected(lambda: motion_range(motion, calibration)))
+    invalid_config = copy.deepcopy(explicit_config)
+    invalid_config["slots"]["top"]["calibration_deg"] = -61
+    check("range.configuration_rejects_calibration", rejected(lambda: load_configuration(invalid_config, interface)))
+    invalid_metadata = copy.deepcopy(pixels)
+    invalid_metadata["motion"]["range_servo_deg"] = [90, 90]
+    def invalid_read(path):
+        return invalid_metadata if Path(path) == HERE / "faces" / "three_pixels" / "module.json" else read(path)
+    with patch("compose.read", side_effect=invalid_read):
+        check("range.configuration_rejects_invalid", rejected(lambda: load_configuration(explicit_config, interface)))
+
+
 def verify(require_outputs=True):
     rows = []
 
@@ -33,6 +94,7 @@ def verify(require_outputs=True):
 
     interface, config, faces = load_configuration()
     common = common_params()
+    verify_motion_ranges(check, interface, config, common)
     key_definition = interface["mount"]["keys"]
     check("mount.release_geometry_declared", "release_rotation_deg" in key_definition
           and "release_pivot_uv_mm" in key_definition)
@@ -70,8 +132,8 @@ def verify(require_outputs=True):
                                            face["meta"]["parts"])
                 check(f"{slot}.retention.{pose['id']}.complete_ids", set(posed) == set(face["meta"]["parts"]))
             check(f"{slot}.monotonic_servo", np.all(np.diff(angles) > 0) and np.max(np.diff(angles)) <= 1 + 1e-8)
-            check(f"{slot}.endpoints", np.isclose(angles[0], min(motion["closed_servo_deg"], motion["open_servo_deg"]))
-                  and np.isclose(angles[-1], max(motion["closed_servo_deg"], motion["open_servo_deg"])))
+            low, high = motion_range(motion, face["config"].get("calibration_deg", 0))
+            check(f"{slot}.endpoints", np.isclose(angles[0], low) and np.isclose(angles[-1], high))
             closed = checked_transforms(modules["kinematics"], motion["closed_servo_deg"], interface, common,
                                         face["meta"]["parts"])
             check(f"{slot}.closed_identity", all(np.allclose(m, np.eye(4), atol=1e-7) for m in closed.values()))
@@ -125,8 +187,17 @@ def verify(require_outputs=True):
           for prefix in unselected_prefixes) for path in hashes))
     face_prefix = (HERE / "faces").relative_to(ROOT).as_posix() + "/"
     check("dependencies.exclude_face_generated_outputs", all(
-        not {"build", "__pycache__"}.intersection(Path(path).parts[:-1])
+        not {"build", "__pycache__", "_local"}.intersection(Path(path).parts[:-1])
         for path in hashes if path.startswith(face_prefix)))
+    pruned = []
+    def generated_walk(directory):
+        children = ["build", "__pycache__", "_local"]
+        yield str(directory), children, ["module.json", "params.py", "README.md"]
+        pruned.append(not children)
+    with patch("compose.os.walk", side_effect=generated_walk):
+        generated_sources = selected_face_sources(config)
+    check("dependencies.prune_generated_directories", bool(pruned) and all(pruned)
+          and all(path.name in {"module.json", "params.py"} for path in generated_sources))
     slots_path = (HERE / "slots.json").relative_to(ROOT).as_posix()
     check("dependencies.include_slots", slots_path in hashes)
     changed_slots = copy.deepcopy(config)
@@ -208,7 +279,14 @@ def verify(require_outputs=True):
                 references = ([item[k] for k in ("part", "driver", "driven") if k in item]
                               + item.get("parts", []) + item.get("against", []))
                 check(f"{name}.interface.{item['id']}", set(references) <= set(ids))
-            for frame in read(directory / "build" / "motion.json")["frames"]:
+            saved_motion = read(directory / "build" / "motion.json")
+            source_motion = faces[saved_motion["slot"]]["meta"]["motion"]
+            expected_angles = sample_angles(source_motion)
+            saved_angles = [frame["servo_deg"] for frame in saved_motion["frames"]]
+            check(f"{name}.saved_range", len(saved_angles) == len(expected_angles)
+                  and np.allclose(saved_angles, expected_angles))
+            check(f"{name}.physical_home", np.isclose(saved_motion["home_servo_deg"], source_motion["closed_servo_deg"]))
+            for frame in saved_motion["frames"]:
                 check(f"{name}.frame.{frame['servo_deg']:.5f}", set(frame["transforms"]) == set(ids))
             assembly = read(directory / "build" / "assembly.json")
             previous = {}

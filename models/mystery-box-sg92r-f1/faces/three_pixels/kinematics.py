@@ -118,7 +118,7 @@ def diagnostics():
     phi=np.asarray(P.FOLLOWER_DEG)[:,None]-(angles[None,:]-90)
     slopes=np.abs(curve(phi,1,table))
     slope=float(slopes.max())
-    r=P.CAM_INNER_RADIUS*1000
+    r=min(P.CAM_INNER_RADIUS,P.UPPER_CAM_INNER_RADIUS)*1000
     contact_r=math.sqrt(r*r-(P.GROOVE_WIDTH*500)**2)
     actual=float((P.PIXEL_RESISTANCE_N*slopes.sum(axis=0)/1000/P.EFFICIENCY).max()+P.FRICTION_NM+P.ACCELERATION_NM)
     conservative=3*P.PIXEL_RESISTANCE_N*slope/1000/P.EFFICIENCY+P.FRICTION_NM+P.ACCELERATION_NM

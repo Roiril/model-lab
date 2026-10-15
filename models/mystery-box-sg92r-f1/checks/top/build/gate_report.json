@@ -1,0 +1,3786 @@
+{
+ "model": "mystery-box-sg92r-f1/checks/top",
+ "generatedAt": "2026-10-15T18:35:55",
+ "pass": true,
+ "blocking": [],
+ "harness": {
+  "sha": "e81958ee6cd94fa6d5ba5c2bc4c8447cd632c08acb97f9bb697922edb475deee",
+  "stamp": "e81958ee6cd94fa6d5ba5c2bc4c8447cd632c08acb97f9bb697922edb475deee",
+  "stampedAt": "2026-10-15T10:58:57"
+ },
+ "blenderSeconds": 117.7,
+ "declared": {
+  "waivers": {
+   "print.slice": "段1の依頼原文『印刷プレート・スライス（時間があれば最後に）』による未実施を継続。今回の段3前半は上面の統合・掃引範囲対応・3ケースの機構検査までで、印刷プレートとスライスは対象に含まれていない。印刷可能とは未判定。その他の検査は免除しない。"
+  },
+  "allowances": [
+   {
+    "type": "reference_internal",
+    "pairs": [
+     [
+      "front/servo",
+      "front/horn"
+     ]
+    ],
+    "max_mm3": 0.05,
+    "basis": "正本の円筒近似スプライン同士のみ。印刷部品には適用しない。"
+   },
+   {
+    "type": "snap",
+    "pairs": [
+     [
+      "front/crank",
+      "front/link"
+     ]
+    ],
+    "engage_mm": 4.5,
+    "deflection_mm": 0.15,
+    "strain_percent": 1.563,
+    "basis": "Aピンは頭半径2.85/穴半径2.7。座金の先からの自由長4.8mm・片脚t1.6mm以下・δ0.15mm。1.5tδ/L²=1.563%。"
+   },
+   {
+    "type": "snap",
+    "pairs": [
+     [
+      "front/link",
+      "front/lid"
+     ]
+    ],
+    "engage_mm": 4.5,
+    "deflection_mm": 0.15,
+    "strain_percent": 1.778,
+    "basis": "Bピン先端半径2.85/穴半径2.7、δ0.15mm。自由長4.5mm・t1.6mm、1.5tδ/L²=1.778%。実物の着脱で確認。"
+   },
+   {
+    "type": "snap",
+    "pairs": [
+     [
+      "front/support",
+      "front/panel"
+     ]
+    ],
+    "engage_mm": 2.4,
+    "deflection_mm": 0.6,
+    "strain_percent": 0.444,
+    "basis": "支持座の解除腕自由長18mm以上・t1.6mm・δ0.6mm、上限1.5tδ/L²=0.444%。終端に重なりを残さない。"
+   },
+   {
+    "type": "reference_internal",
+    "pairs": [
+     [
+      "top/servo",
+      "top/horn"
+     ]
+    ],
+    "max_mm3": 0.05,
+    "basis": "正本の円筒近似スプラインのみ。印刷部品への除外はない。"
+   },
+   {
+    "type": "snap",
+    "pairs": [
+     [
+      "top/support",
+      "top/panel"
+     ]
+    ],
+    "engage_mm": 2.4,
+    "deflection_mm": 0.6,
+    "strain_percent": 0.444,
+    "basis": "自由長18mm、厚さ1.6mm、片側0.6mm。1.5tδ/L²。"
+   },
+   {
+    "type": "snap",
+    "pairs": [
+     [
+      "top/servo_cap",
+      "top/support"
+     ]
+    ],
+    "engage_mm": 4.5,
+    "deflection_mm": 5,
+    "strain_percent": 1.94,
+    "basis": "右腕は自由長22mm・厚さ1.2mm・先端5mm。中心線の長さを保った曲げで最大ひずみ1.938%以下。左腕は17.5mm・1.6mm・0.6mmで0.471%以下。着座まで指で開いて保持し、着座後に戻す。実形状を曲げた通過検査はcheck_localのelastic_cap。"
+   },
+   {
+    "type": "snap",
+    "pairs": [
+     [
+      "top/cam_key_1",
+      "top/cam_lower"
+     ],
+     [
+      "top/cam_key_2",
+      "top/cam_lower"
+     ]
+    ],
+    "engage_mm": 4.5,
+    "deflection_mm": 0.15,
+    "strain_percent": 0.67,
+    "basis": "二股脚厚1.2mm、自由長6.35mm、片側0.15mm。1.5tδ/L²。"
+   },
+   {
+    "type": "snap",
+    "pairs": [
+     [
+      "top/servo_cap",
+      "top/guide"
+     ]
+    ],
+    "engage_mm": 9,
+    "deflection_mm": 5,
+    "strain_percent": 1.94,
+    "basis": "右腕は自由長22mm・厚さ1.2mm・先端5mm。中心線の長さを保った曲げで最大ひずみ1.938%以下。左腕は17.5mm・1.6mm・0.6mmで0.471%以下。着座まで指で開いて保持し、着座後に戻す。実形状を曲げた通過検査はcheck_localのelastic_cap。"
+   },
+   {
+    "type": "snap",
+    "pairs": [
+     [
+      "top/cam_key_1",
+      "top/cam_upper"
+     ],
+     [
+      "top/cam_key_2",
+      "top/cam_upper"
+     ]
+    ],
+    "engage_mm": 11,
+    "deflection_mm": 0.15,
+    "strain_percent": 0.67,
+    "basis": "下カムを留める二股の爪が上カムの四角穴を通る間も片側0.15mm縮む。自由長6.35mm、厚さ1.2mm。"
+   },
+   {
+    "type": "snap",
+    "pairs": [
+     [
+      "frame/post_0",
+      "frame/lower_frame"
+     ]
+    ],
+    "engage_mm": 2.4,
+    "deflection_mm": 0.6,
+    "strain_percent": 0.4444444444,
+    "basis": "自由長18mm、厚1.6mm、解除0.6mm。角の爪だけ。完成姿勢に重なりを残さない。",
+    "region_mm": [
+     [
+      -46.7,
+      -48.0,
+      -47.1
+     ],
+     [
+      -43.5,
+      -42.0,
+      -43.9
+     ]
+    ],
+    "step": "frame/insert-post_0"
+   },
+   {
+    "type": "snap",
+    "pairs": [
+     [
+      "frame/post_0",
+      "frame/upper_frame"
+     ]
+    ],
+    "engage_mm": 2.4,
+    "deflection_mm": 0.6,
+    "strain_percent": 0.4444444444,
+    "basis": "自由長18mm、厚1.6mm、解除0.6mm。角の爪だけ。完成姿勢に重なりを残さない。",
+    "region_mm": [
+     [
+      -46.7,
+      -48.0,
+      43.9
+     ],
+     [
+      -43.5,
+      -42.0,
+      47.1
+     ]
+    ],
+    "step": "frame/upper-frame"
+   },
+   {
+    "type": "snap",
+    "pairs": [
+     [
+      "frame/post_1",
+      "frame/lower_frame"
+     ]
+    ],
+    "engage_mm": 2.4,
+    "deflection_mm": 0.6,
+    "strain_percent": 0.4444444444,
+    "basis": "自由長18mm、厚1.6mm、解除0.6mm。角の爪だけ。完成姿勢に重なりを残さない。",
+    "region_mm": [
+     [
+      43.5,
+      -48.0,
+      -47.1
+     ],
+     [
+      46.7,
+      -42.0,
+      -43.9
+     ]
+    ],
+    "step": "frame/insert-post_1"
+   },
+   {
+    "type": "snap",
+    "pairs": [
+     [
+      "frame/post_1",
+      "frame/upper_frame"
+     ]
+    ],
+    "engage_mm": 2.4,
+    "deflection_mm": 0.6,
+    "strain_percent": 0.4444444444,
+    "basis": "自由長18mm、厚1.6mm、解除0.6mm。角の爪だけ。完成姿勢に重なりを残さない。",
+    "region_mm": [
+     [
+      43.5,
+      -48.0,
+      43.9
+     ],
+     [
+      46.7,
+      -42.0,
+      47.1
+     ]
+    ],
+    "step": "frame/upper-frame"
+   },
+   {
+    "type": "snap",
+    "pairs": [
+     [
+      "frame/post_2",
+      "frame/lower_frame"
+     ]
+    ],
+    "engage_mm": 2.4,
+    "deflection_mm": 0.6,
+    "strain_percent": 0.4444444444,
+    "basis": "自由長18mm、厚1.6mm、解除0.6mm。角の爪だけ。完成姿勢に重なりを残さない。",
+    "region_mm": [
+     [
+      43.5,
+      42.0,
+      -47.1
+     ],
+     [
+      46.7,
+      48.0,
+      -43.9
+     ]
+    ],
+    "step": "frame/insert-post_2"
+   },
+   {
+    "type": "snap",
+    "pairs": [
+     [
+      "frame/post_2",
+      "frame/upper_frame"
+     ]
+    ],
+    "engage_mm": 2.4,
+    "deflection_mm": 0.6,
+    "strain_percent": 0.4444444444,
+    "basis": "自由長18mm、厚1.6mm、解除0.6mm。角の爪だけ。完成姿勢に重なりを残さない。",
+    "region_mm": [
+     [
+      43.5,
+      42.0,
+      43.9
+     ],
+     [
+      46.7,
+      48.0,
+      47.1
+     ]
+    ],
+    "step": "frame/upper-frame"
+   },
+   {
+    "type": "snap",
+    "pairs": [
+     [
+      "frame/post_3",
+      "frame/lower_frame"
+     ]
+    ],
+    "engage_mm": 2.4,
+    "deflection_mm": 0.6,
+    "strain_percent": 0.4444444444,
+    "basis": "自由長18mm、厚1.6mm、解除0.6mm。角の爪だけ。完成姿勢に重なりを残さない。",
+    "region_mm": [
+     [
+      -46.7,
+      42.0,
+      -47.1
+     ],
+     [
+      -43.5,
+      48.0,
+      -43.9
+     ]
+    ],
+    "step": "frame/insert-post_3"
+   },
+   {
+    "type": "snap",
+    "pairs": [
+     [
+      "frame/post_3",
+      "frame/upper_frame"
+     ]
+    ],
+    "engage_mm": 2.4,
+    "deflection_mm": 0.6,
+    "strain_percent": 0.4444444444,
+    "basis": "自由長18mm、厚1.6mm、解除0.6mm。角の爪だけ。完成姿勢に重なりを残さない。",
+    "region_mm": [
+     [
+      -46.7,
+      42.0,
+      43.9
+     ],
+     [
+      -43.5,
+      48.0,
+      47.1
+     ]
+    ],
+    "step": "frame/upper-frame"
+   },
+   {
+    "type": "snap",
+    "pairs": [
+     [
+      "front/key_l",
+      "frame/post_0"
+     ]
+    ],
+    "engage_mm": 2.4,
+    "deflection_mm": 0.6,
+    "strain_percent": 0.4444444444,
+    "step": "front/key_l_lock",
+    "basis": "規格のキー先端だけ。L18mm・t1.6mm・δ0.6mm、ε=1.5tδ/L²=0.444%。完成姿勢に重なりなし。"
+   },
+   {
+    "type": "snap",
+    "pairs": [
+     [
+      "front/key_l",
+      "frame/post_0"
+     ]
+    ],
+    "engage_mm": 2.4,
+    "deflection_mm": 0.6,
+    "strain_percent": 0.4444444444,
+    "step": "front/exchange_key_0_in",
+    "basis": "規格のキー先端だけ。L18mm・t1.6mm・δ0.6mm、ε=1.5tδ/L²=0.444%。完成姿勢に重なりなし。"
+   },
+   {
+    "type": "snap",
+    "pairs": [
+     [
+      "front/key_r",
+      "frame/post_1"
+     ]
+    ],
+    "engage_mm": 2.4,
+    "deflection_mm": 0.6,
+    "strain_percent": 0.4444444444,
+    "step": "front/key_r_lock",
+    "basis": "規格のキー先端だけ。L18mm・t1.6mm・δ0.6mm、ε=1.5tδ/L²=0.444%。完成姿勢に重なりなし。"
+   },
+   {
+    "type": "snap",
+    "pairs": [
+     [
+      "front/key_r",
+      "frame/post_1"
+     ]
+    ],
+    "engage_mm": 2.4,
+    "deflection_mm": 0.6,
+    "strain_percent": 0.4444444444,
+    "step": "front/exchange_key_1_in",
+    "basis": "規格のキー先端だけ。L18mm・t1.6mm・δ0.6mm、ε=1.5tδ/L²=0.444%。完成姿勢に重なりなし。"
+   },
+   {
+    "type": "snap",
+    "pairs": [
+     [
+      "right/key_l",
+      "frame/post_1"
+     ]
+    ],
+    "engage_mm": 2.4,
+    "deflection_mm": 0.6,
+    "strain_percent": 0.4444444444,
+    "step": "right/key_l_lock",
+    "basis": "規格のキー先端だけ。L18mm・t1.6mm・δ0.6mm、ε=1.5tδ/L²=0.444%。完成姿勢に重なりなし。"
+   },
+   {
+    "type": "snap",
+    "pairs": [
+     [
+      "right/key_l",
+      "frame/post_1"
+     ]
+    ],
+    "engage_mm": 2.4,
+    "deflection_mm": 0.6,
+    "strain_percent": 0.4444444444,
+    "step": "right/exchange_key_0_in",
+    "basis": "規格のキー先端だけ。L18mm・t1.6mm・δ0.6mm、ε=1.5tδ/L²=0.444%。完成姿勢に重なりなし。"
+   },
+   {
+    "type": "snap",
+    "pairs": [
+     [
+      "right/key_r",
+      "frame/post_2"
+     ]
+    ],
+    "engage_mm": 2.4,
+    "deflection_mm": 0.6,
+    "strain_percent": 0.4444444444,
+    "step": "right/key_r_lock",
+    "basis": "規格のキー先端だけ。L18mm・t1.6mm・δ0.6mm、ε=1.5tδ/L²=0.444%。完成姿勢に重なりなし。"
+   },
+   {
+    "type": "snap",
+    "pairs": [
+     [
+      "right/key_r",
+      "frame/post_2"
+     ]
+    ],
+    "engage_mm": 2.4,
+    "deflection_mm": 0.6,
+    "strain_percent": 0.4444444444,
+    "step": "right/exchange_key_1_in",
+    "basis": "規格のキー先端だけ。L18mm・t1.6mm・δ0.6mm、ε=1.5tδ/L²=0.444%。完成姿勢に重なりなし。"
+   },
+   {
+    "type": "snap",
+    "pairs": [
+     [
+      "back/key_l",
+      "frame/post_2"
+     ]
+    ],
+    "engage_mm": 2.4,
+    "deflection_mm": 0.6,
+    "strain_percent": 0.4444444444,
+    "step": "back/key_l_lock",
+    "basis": "規格のキー先端だけ。L18mm・t1.6mm・δ0.6mm、ε=1.5tδ/L²=0.444%。完成姿勢に重なりなし。"
+   },
+   {
+    "type": "snap",
+    "pairs": [
+     [
+      "back/key_l",
+      "frame/post_2"
+     ]
+    ],
+    "engage_mm": 2.4,
+    "deflection_mm": 0.6,
+    "strain_percent": 0.4444444444,
+    "step": "back/exchange_key_0_in",
+    "basis": "規格のキー先端だけ。L18mm・t1.6mm・δ0.6mm、ε=1.5tδ/L²=0.444%。完成姿勢に重なりなし。"
+   },
+   {
+    "type": "snap",
+    "pairs": [
+     [
+      "back/key_r",
+      "frame/post_3"
+     ]
+    ],
+    "engage_mm": 2.4,
+    "deflection_mm": 0.6,
+    "strain_percent": 0.4444444444,
+    "step": "back/key_r_lock",
+    "basis": "規格のキー先端だけ。L18mm・t1.6mm・δ0.6mm、ε=1.5tδ/L²=0.444%。完成姿勢に重なりなし。"
+   },
+   {
+    "type": "snap",
+    "pairs": [
+     [
+      "back/key_r",
+      "frame/post_3"
+     ]
+    ],
+    "engage_mm": 2.4,
+    "deflection_mm": 0.6,
+    "strain_percent": 0.4444444444,
+    "step": "back/exchange_key_1_in",
+    "basis": "規格のキー先端だけ。L18mm・t1.6mm・δ0.6mm、ε=1.5tδ/L²=0.444%。完成姿勢に重なりなし。"
+   },
+   {
+    "type": "snap",
+    "pairs": [
+     [
+      "left/key_l",
+      "frame/post_3"
+     ]
+    ],
+    "engage_mm": 2.4,
+    "deflection_mm": 0.6,
+    "strain_percent": 0.4444444444,
+    "step": "left/key_l_lock",
+    "basis": "規格のキー先端だけ。L18mm・t1.6mm・δ0.6mm、ε=1.5tδ/L²=0.444%。完成姿勢に重なりなし。"
+   },
+   {
+    "type": "snap",
+    "pairs": [
+     [
+      "left/key_l",
+      "frame/post_3"
+     ]
+    ],
+    "engage_mm": 2.4,
+    "deflection_mm": 0.6,
+    "strain_percent": 0.4444444444,
+    "step": "left/exchange_key_0_in",
+    "basis": "規格のキー先端だけ。L18mm・t1.6mm・δ0.6mm、ε=1.5tδ/L²=0.444%。完成姿勢に重なりなし。"
+   },
+   {
+    "type": "snap",
+    "pairs": [
+     [
+      "left/key_r",
+      "frame/post_0"
+     ]
+    ],
+    "engage_mm": 2.4,
+    "deflection_mm": 0.6,
+    "strain_percent": 0.4444444444,
+    "step": "left/key_r_lock",
+    "basis": "規格のキー先端だけ。L18mm・t1.6mm・δ0.6mm、ε=1.5tδ/L²=0.444%。完成姿勢に重なりなし。"
+   },
+   {
+    "type": "snap",
+    "pairs": [
+     [
+      "left/key_r",
+      "frame/post_0"
+     ]
+    ],
+    "engage_mm": 2.4,
+    "deflection_mm": 0.6,
+    "strain_percent": 0.4444444444,
+    "step": "left/exchange_key_1_in",
+    "basis": "規格のキー先端だけ。L18mm・t1.6mm・δ0.6mm、ε=1.5tδ/L²=0.444%。完成姿勢に重なりなし。"
+   },
+   {
+    "type": "snap",
+    "pairs": [
+     [
+      "top/key_l",
+      "frame/upper_frame"
+     ]
+    ],
+    "engage_mm": 2.4,
+    "deflection_mm": 0.6,
+    "strain_percent": 0.4444444444,
+    "step": "top/key_l_lock",
+    "basis": "規格のキー先端だけ。L18mm・t1.6mm・δ0.6mm、ε=1.5tδ/L²=0.444%。完成姿勢に重なりなし。"
+   },
+   {
+    "type": "snap",
+    "pairs": [
+     [
+      "top/key_l",
+      "frame/upper_frame"
+     ]
+    ],
+    "engage_mm": 2.4,
+    "deflection_mm": 0.6,
+    "strain_percent": 0.4444444444,
+    "step": "top/exchange_key_0_in",
+    "basis": "規格のキー先端だけ。L18mm・t1.6mm・δ0.6mm、ε=1.5tδ/L²=0.444%。完成姿勢に重なりなし。"
+   },
+   {
+    "type": "snap",
+    "pairs": [
+     [
+      "top/key_r",
+      "frame/upper_frame"
+     ]
+    ],
+    "engage_mm": 2.4,
+    "deflection_mm": 0.6,
+    "strain_percent": 0.4444444444,
+    "step": "top/key_r_lock",
+    "basis": "規格のキー先端だけ。L18mm・t1.6mm・δ0.6mm、ε=1.5tδ/L²=0.444%。完成姿勢に重なりなし。"
+   },
+   {
+    "type": "snap",
+    "pairs": [
+     [
+      "top/key_r",
+      "frame/upper_frame"
+     ]
+    ],
+    "engage_mm": 2.4,
+    "deflection_mm": 0.6,
+    "strain_percent": 0.4444444444,
+    "step": "top/exchange_key_1_in",
+    "basis": "規格のキー先端だけ。L18mm・t1.6mm・δ0.6mm、ε=1.5tδ/L²=0.444%。完成姿勢に重なりなし。"
+   },
+   {
+    "type": "snap",
+    "pairs": [
+     [
+      "bottom/key_l",
+      "frame/lower_frame"
+     ]
+    ],
+    "engage_mm": 2.4,
+    "deflection_mm": 0.6,
+    "strain_percent": 0.4444444444,
+    "step": "bottom/key_l_lock",
+    "basis": "規格のキー先端だけ。L18mm・t1.6mm・δ0.6mm、ε=1.5tδ/L²=0.444%。完成姿勢に重なりなし。"
+   },
+   {
+    "type": "snap",
+    "pairs": [
+     [
+      "bottom/key_l",
+      "frame/lower_frame"
+     ]
+    ],
+    "engage_mm": 2.4,
+    "deflection_mm": 0.6,
+    "strain_percent": 0.4444444444,
+    "step": "bottom/exchange_key_0_in",
+    "basis": "規格のキー先端だけ。L18mm・t1.6mm・δ0.6mm、ε=1.5tδ/L²=0.444%。完成姿勢に重なりなし。"
+   },
+   {
+    "type": "snap",
+    "pairs": [
+     [
+      "bottom/key_r",
+      "frame/lower_frame"
+     ]
+    ],
+    "engage_mm": 2.4,
+    "deflection_mm": 0.6,
+    "strain_percent": 0.4444444444,
+    "step": "bottom/key_r_lock",
+    "basis": "規格のキー先端だけ。L18mm・t1.6mm・δ0.6mm、ε=1.5tδ/L²=0.444%。完成姿勢に重なりなし。"
+   },
+   {
+    "type": "snap",
+    "pairs": [
+     [
+      "bottom/key_r",
+      "frame/lower_frame"
+     ]
+    ],
+    "engage_mm": 2.4,
+    "deflection_mm": 0.6,
+    "strain_percent": 0.4444444444,
+    "step": "bottom/exchange_key_1_in",
+    "basis": "規格のキー先端だけ。L18mm・t1.6mm・δ0.6mm、ε=1.5tδ/L²=0.444%。完成姿勢に重なりなし。"
+   }
+  ],
+  "unknowns": [
+   {
+    "id": "sg92r.horn_arm_lengths",
+    "trial_part": "prints/mystery-box-sg92r-f1/trial/front/horn_fit.stl",
+    "additional_trials": [
+     "prints/mystery-box-sg92r-f1/trial/top/horn_fit.stl"
+    ]
+   },
+   {
+    "id": "sg92r.horn_hole_positions",
+    "not_applicable": "ホーンの既存穴は使わない。",
+    "additional_trials": [
+     null
+    ]
+   },
+   {
+    "id": "sg92r.output_spline",
+    "not_applicable": "実物の付属ホーンを使い、印刷スプラインは作らない。",
+    "additional_trials": [
+     null
+    ]
+   },
+   {
+    "id": "sg92r.shaft_height",
+    "trial_part": "prints/mystery-box-sg92r-f1/trial/front/horn_fit.stl",
+    "additional_trials": [
+     "prints/mystery-box-sg92r-f1/trial/top/horn_fit.stl"
+    ]
+   },
+   {
+    "id": "sg92r.cover_circle",
+    "trial_part": "prints/mystery-box-sg92r-f1/trial/front/servo_fit.stl",
+    "additional_trials": [
+     "prints/mystery-box-sg92r-f1/trial/top/servo_cap_fit.stl"
+    ]
+   },
+   {
+    "id": "sg92r.wire",
+    "trial_part": "prints/mystery-box-sg92r-f1/trial/front/servo_fit.stl",
+    "additional_trials": [
+     "prints/mystery-box-sg92r-f1/trial/top/servo_fit.stl"
+    ]
+   },
+   {
+    "id": "sg92r.connector",
+    "trial_part": "prints/mystery-box-sg92r-f1/trial/front/connector_nest.stl",
+    "additional_trials": [
+     "prints/mystery-box-sg92r-f1/trial/top/connector_nest.stl"
+    ]
+   }
+  ],
+  "slenderExceptions": {},
+  "motionExcluded": []
+ },
+ "requirements": [
+  {
+   "id": "R1",
+   "text": "閉状態の外形は100 × 100 × 100mm",
+   "checks": [
+    "assembly.envelope"
+   ],
+   "manual": [],
+   "pass": true
+  },
+  {
+   "id": "R2",
+   "text": "正面のSG92R蓋と上面の3画素カセットを装着し、他4面は空の面とする",
+   "checks": [
+    "interface.coverage",
+    "interface.drive",
+    "motion.torque"
+   ],
+   "manual": [],
+   "pass": true
+  },
+  {
+   "id": "R3",
+   "text": "他面を変更せずキーを解除して40mm以上直線で引き抜く",
+   "checks": [
+    "assembly.path",
+    "interface.retention"
+   ],
+   "manual": [
+    "他面を残して配線を切り離し交換する"
+   ],
+   "pass": true
+  },
+  {
+   "id": "R4",
+   "text": "動作中もサーボと伝達部品を外から見せない",
+   "checks": [],
+   "manual": [
+    "閉端・中間・開端を斜め方向から見て遮蔽を確認"
+   ],
+   "pass": null
+  },
+  {
+   "id": "R5",
+   "text": "印刷部品とSG92R・付属ホーンだけで工具なしに組み分解する",
+   "checks": [
+    "assembly.path",
+    "interface.retention"
+   ],
+   "manual": [
+    "工具なしで組立と分解"
+   ],
+   "pass": true
+  },
+  {
+   "id": "R6",
+   "text": "外装2mm・荷重部3mm以上でサポートなしに見える面を刷る",
+   "checks": [
+    "print.slice",
+    "print.grounding",
+    "print.slender",
+    "parts.topology"
+   ],
+   "manual": [],
+   "pass": true
+  },
+  {
+   "id": "R7",
+   "text": "全動作と交換経路で干渉しない。製造余裕0.25mmを含む占有領域を検査する",
+   "checks": [
+    "motion.interference",
+    "assembly.path"
+   ],
+   "manual": [
+    "verify_envelopes.pyの未証明範囲を確認"
+   ],
+   "pass": true
+  },
+  {
+   "id": "R8",
+   "text": "既製部品の仮値は本体形状から作る試片で扱う",
+   "checks": [
+    "unknowns.resolved"
+   ],
+   "manual": [
+    "実物適合と20回着脱を記録"
+   ],
+   "pass": true
+  },
+  {
+   "id": "R9",
+   "text": "新しい面は独立したfacesディレクトリとslots.jsonで追加する",
+   "checks": [],
+   "manual": [
+    "verify_contract.pyで規格と依存鮮度を検査"
+   ],
+   "pass": null
+  },
+  {
+   "id": "front/lid-motion",
+   "text": "C節の4節リンクで36×30×2mmの蓋を0〜60度開く",
+   "checks": [
+    "motion.interference",
+    "motion.torque",
+    "interface.drive"
+   ],
+   "manual": [],
+   "pass": true
+  },
+  {
+   "id": "front/lid-assembly",
+   "text": "90度で組み、閉姿勢へ戻す。工具とねじなしで分解",
+   "checks": [
+    "assembly.path",
+    "interface.retention"
+   ],
+   "manual": [
+    "実物で両ピンの先端と解除腕を押して外す"
+   ],
+   "pass": true
+  },
+  {
+   "id": "front/lid-shield",
+   "text": "開いた蓋の奥を無地の壁で遮る",
+   "checks": [],
+   "manual": [
+    "0度・30度・60度を正面と斜めから見る"
+   ],
+   "pass": null
+  },
+  {
+   "id": "right/blank-closed",
+   "text": "空の面を3点の座へ固定し、キーを外して面法線方向へ抜ける",
+   "checks": [
+    "assembly.path",
+    "interface.retention"
+   ],
+   "manual": [],
+   "pass": true
+  },
+  {
+   "id": "back/blank-closed",
+   "text": "空の面を3点の座へ固定し、キーを外して面法線方向へ抜ける",
+   "checks": [
+    "assembly.path",
+    "interface.retention"
+   ],
+   "manual": [],
+   "pass": true
+  },
+  {
+   "id": "left/blank-closed",
+   "text": "空の面を3点の座へ固定し、キーを外して面法線方向へ抜ける",
+   "checks": [
+    "assembly.path",
+    "interface.retention"
+   ],
+   "manual": [],
+   "pass": true
+  },
+  {
+   "id": "top/pixels-table",
+   "text": "patterns.jsonから53mmの上下カムを作り、14mm角の3画素を0〜3mm押し引きする",
+   "checks": [
+    "motion.interference",
+    "interface.drive",
+    "motion.torque"
+   ],
+   "manual": [],
+   "pass": true
+  },
+  {
+   "id": "top/pixels-fit",
+   "text": "7段の占有と外部動作域を守り、側面でも重力に頼らず動く",
+   "checks": [
+    "assembly.envelope",
+    "interface.retention"
+   ],
+   "manual": [
+    "実機を上向きと横向きで動かす"
+   ],
+   "pass": true
+  },
+  {
+   "id": "top/pixels-assembly",
+   "text": "サーボ90度で組み、印刷部品と付属ホーンだけで保持する",
+   "checks": [
+    "assembly.path",
+    "interface.retention"
+   ],
+   "manual": [
+    "工具なしで組立と取り外し"
+   ],
+   "pass": true
+  },
+  {
+   "id": "top/pixels-shield",
+   "text": "8mmのスカートで画素穴の奥を隠す",
+   "checks": [],
+   "manual": [
+    "0mmと3mmで斜めから内部が見えないこと"
+   ],
+   "pass": null
+  },
+  {
+   "id": "bottom/blank-closed",
+   "text": "空の面を3点の座へ固定し、キーを外して面法線方向へ抜ける",
+   "checks": [
+    "assembly.path",
+    "interface.retention"
+   ],
+   "manual": [],
+   "pass": true
+  }
+ ],
+ "checks": [
+  {
+   "id": "harness.calibrated",
+   "title": "ハーネスの計器が selftest を通った版のままか",
+   "pass": true,
+   "summary": "selftest を通った版",
+   "detail": {
+    "sha": "e81958ee6cd94fa6d5ba5c2bc4c8447cd632c08acb97f9bb697922edb475deee",
+    "stamp": "e81958ee6cd94fa6d5ba5c2bc4c8447cd632c08acb97f9bb697922edb475deee",
+    "stampedAt": "2026-10-15T10:58:57"
+   },
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "spec.valid",
+   "title": "spec.json が揃っていて、許可・界面の宣言がハーネスの上限の中か",
+   "pass": true,
+   "summary": "宣言はハーネスの上限の中",
+   "detail": [],
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "contract.files",
+   "title": "manifest / motion / assembly と全 STL がそろっているか",
+   "pass": true,
+   "summary": "そろっている",
+   "detail": [],
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "instrument.calibration",
+   "title": "共通体積と初接触の計器が正負の形で期待どおりに出たか",
+   "pass": true,
+   "summary": "正負の形がすべて期待どおり",
+   "detail": {
+    "overlapHalf": {
+     "measured": 0.5,
+     "expected": 0.5,
+     "pass": true
+    },
+    "thinOverlap0.002": {
+     "measured": 0.0020000040531158447,
+     "expected": 0.002,
+     "pass": true
+    },
+    "separated": {
+     "measured": 0.0,
+     "expected": 0.0,
+     "pass": true
+    },
+    "faceContact": {
+     "measured": 0.0,
+     "expected": 0.0,
+     "pass": true
+    },
+    "edgeContact": {
+     "measured": 0.0,
+     "expected": 0.0,
+     "pass": true
+    },
+    "nestedInside": {
+     "measured": 1.0,
+     "expected": 1.0,
+     "pass": true
+    },
+    "nestedInsideReversed": {
+     "measured": 1.0,
+     "expected": 1.0,
+     "pass": true
+    },
+    "tiltedFaceContactAtScale": {
+     "measured": 0.0,
+     "expected": 0.0,
+     "pass": true
+    },
+    "tiltedThinOverlapAtScale": {
+     "measured": 4.000433860168268,
+     "expected": 4.0,
+     "pass": true
+    },
+    "skipAgreesWithBoolean": {
+     "cases": [
+      {
+       "case": "separated",
+       "fast": 0.0,
+       "full": 0.0,
+       "pass": true
+      },
+      {
+       "case": "overlap",
+       "fast": 0.7000000029802322,
+       "full": 0.7000000029802322,
+       "pass": true
+      },
+      {
+       "case": "nested",
+       "fast": 1.0,
+       "full": 1.0,
+       "pass": true
+      }
+     ],
+     "pass": true
+    },
+    "firstContactLinear": {
+     "measured": 0.501001,
+     "expected": 0.501,
+     "pass": true
+    },
+    "firstContactNone": {
+     "measured": null,
+     "expected": null,
+     "pass": true
+    },
+    "firstContactAngular": {
+     "measured": 14.255127,
+     "expected": 14.255098890306314,
+     "pass": true
+    },
+    "pass": true
+   },
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "parts.topology",
+   "title": "全 STL が閉じて向きのそろった多様体か（面積 0 の三角形も無し）",
+   "pass": true,
+   "summary": "88 個の STL を検査",
+   "detail": {
+    "failing": {},
+    "referenceNotes": {}
+   },
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "parts.components",
+   "title": "刷る STL の連結成分の数が宣言どおりか（既定 1）",
+   "pass": true,
+   "summary": "刷る部品 42 点",
+   "detail": {},
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "parts.self_intersection",
+   "title": "刷る STL に自己交差が無いか",
+   "pass": true,
+   "summary": "刷る STL 42 点",
+   "detail": {},
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "print.grounding",
+   "title": "刷る向きでベッドに十分な面積で接し、浮いた成分が無いか",
+   "pass": true,
+   "summary": "接地 10.0mm² 以上・浮いた成分なし",
+   "detail": {},
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "print.slender",
+   "title": "立てて刷る部品の高さが接地の短辺の 5 倍以内か",
+   "pass": true,
+   "summary": "高さ / 接地の短辺 ≤ 5.0",
+   "detail": {
+    "failing": {},
+    "declaredExceptions": {}
+   },
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "assembly.envelope",
+   "title": "組んだ外形が spec の上限に収まるか",
+   "pass": true,
+   "summary": "組んだ外形 100.0 x 100.0 x 100.0mm（上限 [100, 100, 100]）",
+   "detail": {
+    "size": [
+     100.0,
+     100.0,
+     100.0
+    ],
+    "limit": [
+     100,
+     100,
+     100
+    ]
+   },
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "motion.resolution",
+   "title": "motion.json の刻みが 2.5° 以下か",
+   "pass": true,
+   "summary": "motion.json の最大の刻み 1.000°（61 姿勢）",
+   "detail": {
+    "maxGapDeg": 1.0
+   },
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "motion.interference",
+   "title": "動く全範囲で、許可の無い部品の組の共通体積が 0 か",
+   "pass": true,
+   "summary": "46 部品・1035 組 x 61 姿勢（60.0〜120.0°、どの点も姿勢の間で 1.0mm 以内。補間 0）",
+   "detail": {
+    "violations": [],
+    "allowedContacts": [
+     {
+      "parts": [
+       "front/horn",
+       "front/servo"
+      ],
+      "type": "reference_internal",
+      "maxMm3": 0.005099249187005753
+     },
+     {
+      "parts": [
+       "top/horn",
+       "top/servo"
+      ],
+      "type": "reference_internal",
+      "maxMm3": 0.02998198845930516
+     }
+    ]
+   },
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "motion.torque",
+   "title": "重力だけで見積もった必要トルクが停動トルクの 1/3 以下か",
+   "pass": true,
+   "summary": "重力の必要トルク最大 0.4 mN·m（105.0°）/ 停動 0.245 N·m = 0.2%（摩擦・圧入・ばねは含まない下限の見積もり）",
+   "detail": {
+    "peakNm": 0.00040561816327008143,
+    "atServoDeg": 105.0,
+    "stallNm": 0.245,
+    "limitFraction": 0.3333333333333333,
+    "massesG": {
+     "frame/lower_frame": 20.89,
+     "frame/upper_frame": 13.59,
+     "frame/post_0": 5.18,
+     "frame/post_1": 5.18,
+     "frame/post_2": 5.18,
+     "frame/post_3": 5.18,
+     "frame/wiring": 9.32,
+     "frame/tray": 10.67,
+     "front/panel": 15.9,
+     "front/key_l": 0.4,
+     "front/key_r": 0.4,
+     "front/support": 7.32,
+     "front/servo_cap": 4.77,
+     "front/crank": 1.52,
+     "front/link": 0.66,
+     "front/lid": 3.6,
+     "front/hinge_pin": 1.24,
+     "right/panel": 20.42,
+     "right/key_l": 0.4,
+     "right/key_r": 0.4,
+     "back/panel": 20.42,
+     "back/key_l": 0.4,
+     "back/key_r": 0.4,
+     "left/panel": 20.42,
+     "left/key_l": 0.4,
+     "left/key_r": 0.4,
+     "top/panel": 18.9,
+     "top/key_l": 0.4,
+     "top/key_r": 0.4,
+     "top/support": 4.08,
+     "top/servo_cap": 1.74,
+     "top/cam_lower": 2.57,
+     "top/cam_upper": 6.29,
+     "top/pixel_1": 1.65,
+     "top/pixel_2": 1.67,
+     "top/pixel_3": 1.83,
+     "top/guide": 2.81,
+     "top/cam_key_1": 0.17,
+     "top/cam_key_2": 0.17,
+     "bottom/panel": 20.42,
+     "bottom/key_l": 0.4,
+     "bottom/key_r": 0.4
+    }
+   },
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "interface.coverage",
+   "title": "動く部品の塊がすべて、駆動の界面でアクチュエータにつながっているか",
+   "pass": true,
+   "summary": "動く塊 4 個のうち 4 個がアクチュエータから駆動の界面でつながる",
+   "detail": {
+    "unreachableGroups": [],
+    "hint": "動く塊ごとに spec.interfaces に type: drive（driver → driven）を書く。界面はゲートが形で確かめる"
+   },
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "interface.drive",
+   "title": "駆動の界面ごとに、従動側を押すと遊びの中で駆動側に当たるか",
+   "pass": true,
+   "summary": "界面 9 個",
+   "detail": {
+    "failing": [],
+    "all": [
+     {
+      "id": "top/horn-cam",
+      "driver": "top/horn",
+      "driven": "top/cam_upper",
+      "sides": "both",
+      "samples": 12,
+      "pass": true,
+      "worst": [
+       {
+        "servoDeg": 60.0,
+        "unit": "deg",
+        "limit": 3,
+        "back": 1.78515,
+        "ahead": 1.785168,
+        "pass": true
+       },
+       {
+        "servoDeg": 65.0,
+        "unit": "deg",
+        "limit": 3,
+        "back": 1.78515,
+        "ahead": 1.785168,
+        "pass": true
+       }
+      ]
+     },
+     {
+      "id": "top/upper-cam-key",
+      "driver": "top/cam_upper",
+      "driven": "top/cam_key_1",
+      "sides": "both",
+      "samples": 12,
+      "pass": true,
+      "worst": [
+       {
+        "servoDeg": 60.0,
+        "unit": "deg",
+        "limit": 3,
+        "back": 0.479279,
+        "ahead": 0.479608,
+        "pass": true
+       },
+       {
+        "servoDeg": 65.0,
+        "unit": "deg",
+        "limit": 3,
+        "back": 0.479279,
+        "ahead": 0.479608,
+        "pass": true
+       }
+      ]
+     },
+     {
+      "id": "top/key-lower-cam",
+      "driver": "top/cam_key_1",
+      "driven": "top/cam_lower",
+      "sides": "both",
+      "samples": 12,
+      "pass": true,
+      "worst": [
+       {
+        "servoDeg": 60.0,
+        "unit": "deg",
+        "limit": 3,
+        "back": 0.494586,
+        "ahead": 0.494586,
+        "pass": true
+       },
+       {
+        "servoDeg": 65.0,
+        "unit": "deg",
+        "limit": 3,
+        "back": 0.494586,
+        "ahead": 0.494586,
+        "pass": true
+       }
+      ]
+     },
+     {
+      "id": "top/lower-pixel-1",
+      "driver": "top/cam_lower",
+      "driven": "top/pixel_1",
+      "sides": "one_sided",
+      "samples": 12,
+      "pass": true,
+      "worst": [
+       {
+        "servoDeg": 65.0,
+        "unit": "mm",
+        "limit": 0.4,
+        "back": null,
+        "ahead": 0.204094,
+        "pass": true
+       },
+       {
+        "servoDeg": 67.0,
+        "unit": "mm",
+        "limit": 0.4,
+        "back": null,
+        "ahead": 0.205994,
+        "pass": true
+       }
+      ]
+     },
+     {
+      "id": "top/upper-pixel-1",
+      "driver": "top/cam_upper",
+      "driven": "top/pixel_1",
+      "sides": "one_sided",
+      "samples": 12,
+      "pass": true,
+      "worst": [
+       {
+        "servoDeg": 65.0,
+        "unit": "mm",
+        "limit": 0.4,
+        "back": 0.203154,
+        "ahead": null,
+        "pass": true
+       },
+       {
+        "servoDeg": 67.0,
+        "unit": "mm",
+        "limit": 0.4,
+        "back": 0.203865,
+        "ahead": null,
+        "pass": true
+       }
+      ]
+     },
+     {
+      "id": "top/lower-pixel-2",
+      "driver": "top/cam_lower",
+      "driven": "top/pixel_2",
+      "sides": "one_sided",
+      "samples": 12,
+      "pass": true,
+      "worst": [
+       {
+        "servoDeg": 95.0,
+        "unit": "mm",
+        "limit": 0.4,
+        "back": 0.204009,
+        "ahead": null,
+        "pass": true
+       },
+       {
+        "servoDeg": 97.0,
+        "unit": "mm",
+        "limit": 0.4,
+        "back": 0.204099,
+        "ahead": null,
+        "pass": true
+       }
+      ]
+     },
+     {
+      "id": "top/upper-pixel-2",
+      "driver": "top/cam_upper",
+      "driven": "top/pixel_2",
+      "sides": "one_sided",
+      "samples": 12,
+      "pass": true,
+      "worst": [
+       {
+        "servoDeg": 95.0,
+        "unit": "mm",
+        "limit": 0.4,
+        "back": null,
+        "ahead": 0.203792,
+        "pass": true
+       },
+       {
+        "servoDeg": 97.0,
+        "unit": "mm",
+        "limit": 0.4,
+        "back": null,
+        "ahead": 0.205635,
+        "pass": true
+       }
+      ]
+     },
+     {
+      "id": "top/lower-pixel-3",
+      "driver": "top/cam_lower",
+      "driven": "top/pixel_3",
+      "sides": "one_sided",
+      "samples": 12,
+      "pass": true,
+      "worst": [
+       {
+        "servoDeg": 65.0,
+        "unit": "mm",
+        "limit": 0.4,
+        "back": null,
+        "ahead": 0.20407,
+        "pass": true
+       },
+       {
+        "servoDeg": 69.0,
+        "unit": "mm",
+        "limit": 0.4,
+        "back": null,
+        "ahead": 0.206631,
+        "pass": true
+       }
+      ]
+     },
+     {
+      "id": "top/upper-pixel-3",
+      "driver": "top/cam_upper",
+      "driven": "top/pixel_3",
+      "sides": "one_sided",
+      "samples": 12,
+      "pass": true,
+      "worst": [
+       {
+        "servoDeg": 65.0,
+        "unit": "mm",
+        "limit": 0.4,
+        "back": 0.203728,
+        "ahead": null,
+        "pass": true
+       },
+       {
+        "servoDeg": 69.0,
+        "unit": "mm",
+        "limit": 0.4,
+        "back": 0.205059,
+        "ahead": null,
+        "pass": true
+       }
+      ]
+     }
+    ]
+   },
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "interface.retention",
+   "title": "抜け止めごとに、外れる向きへ動かすと上限までに止まるか",
+   "pass": true,
+   "summary": "抜け止め 58 個",
+   "detail": {
+    "failing": [],
+    "all": [
+     {
+      "id": "front/crank-positive-u",
+      "parts": [
+       "front/crank",
+       "front/horn"
+      ],
+      "direction": [
+       1.0,
+       0.0,
+       0.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.0,
+      "stoppedBy": [
+       "front/servo"
+      ],
+      "stoppedPart": "front/horn",
+      "pass": true
+     },
+     {
+      "id": "front/crank-negative-u",
+      "parts": [
+       "front/crank",
+       "front/horn"
+      ],
+      "direction": [
+       -1.0,
+       0.0,
+       0.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.0,
+      "stoppedBy": [
+       "front/servo"
+      ],
+      "stoppedPart": "front/horn",
+      "pass": true
+     },
+     {
+      "id": "front/link-positive-u",
+      "parts": [
+       "front/link"
+      ],
+      "direction": [
+       1.0,
+       0.0,
+       0.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.300491,
+      "stoppedBy": [
+       "front/crank"
+      ],
+      "stoppedPart": "front/link",
+      "pass": true
+     },
+     {
+      "id": "front/link-negative-u",
+      "parts": [
+       "front/link"
+      ],
+      "direction": [
+       -1.0,
+       0.0,
+       0.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.300056,
+      "stoppedBy": [
+       "front/crank"
+      ],
+      "stoppedPart": "front/link",
+      "pass": true
+     },
+     {
+      "id": "front/lid-positive-u",
+      "parts": [
+       "front/lid"
+      ],
+      "direction": [
+       1.0,
+       0.0,
+       0.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.300491,
+      "stoppedBy": [
+       "front/link"
+      ],
+      "stoppedPart": "front/lid",
+      "pass": true
+     },
+     {
+      "id": "front/lid-negative-u",
+      "parts": [
+       "front/lid"
+      ],
+      "direction": [
+       -1.0,
+       0.0,
+       0.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.300049,
+      "stoppedBy": [
+       "front/link"
+      ],
+      "stoppedPart": "front/lid",
+      "pass": true
+     },
+     {
+      "id": "front/hinge-positive-u",
+      "parts": [
+       "front/hinge_pin"
+      ],
+      "direction": [
+       1.0,
+       0.0,
+       0.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.400177,
+      "stoppedBy": [
+       "front/panel"
+      ],
+      "stoppedPart": "front/hinge_pin",
+      "pass": true
+     },
+     {
+      "id": "front/hinge-negative-u",
+      "parts": [
+       "front/hinge_pin"
+      ],
+      "direction": [
+       -1.0,
+       0.0,
+       0.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.100258,
+      "stoppedBy": [
+       "front/panel"
+      ],
+      "stoppedPart": "front/hinge_pin",
+      "pass": true
+     },
+     {
+      "id": "front/servo-out",
+      "parts": [
+       "front/servo"
+      ],
+      "direction": [
+       0.0,
+       -1.0,
+       0.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.0,
+      "stoppedBy": [
+       "front/horn"
+      ],
+      "stoppedPart": "front/servo",
+      "pass": true
+     },
+     {
+      "id": "front/servo-in",
+      "parts": [
+       "front/servo"
+      ],
+      "direction": [
+       0.0,
+       1.0,
+       0.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.0,
+      "stoppedBy": [
+       "front/horn"
+      ],
+      "stoppedPart": "front/servo",
+      "pass": true
+     },
+     {
+      "id": "front/cap-out",
+      "parts": [
+       "front/servo_cap"
+      ],
+      "direction": [
+       0.0,
+       -1.0,
+       0.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.254051,
+      "stoppedBy": [
+       "front/lid"
+      ],
+      "stoppedPart": "front/servo_cap",
+      "pass": true
+     },
+     {
+      "id": "front/support-in",
+      "parts": [
+       "front/support"
+      ],
+      "direction": [
+       0.0,
+       1.0,
+       0.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.200394,
+      "stoppedBy": [
+       "front/panel"
+      ],
+      "stoppedPart": "front/support",
+      "pass": true
+     },
+     {
+      "id": "right/panel-key-left",
+      "parts": [
+       "right/panel"
+      ],
+      "direction": [
+       1.0,
+       0.0,
+       0.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.200043,
+      "stoppedBy": [
+       "right/key_l",
+       "right/key_r"
+      ],
+      "stoppedPart": "right/panel",
+      "pass": true
+     },
+     {
+      "id": "right/panel-key-right",
+      "parts": [
+       "right/panel"
+      ],
+      "direction": [
+       1.0,
+       0.0,
+       0.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.200043,
+      "stoppedBy": [
+       "right/key_l",
+       "right/key_r"
+      ],
+      "stoppedPart": "right/panel",
+      "pass": true
+     },
+     {
+      "id": "back/panel-key-left",
+      "parts": [
+       "back/panel"
+      ],
+      "direction": [
+       0.0,
+       1.0,
+       0.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.200043,
+      "stoppedBy": [
+       "back/key_l",
+       "back/key_r"
+      ],
+      "stoppedPart": "back/panel",
+      "pass": true
+     },
+     {
+      "id": "back/panel-key-right",
+      "parts": [
+       "back/panel"
+      ],
+      "direction": [
+       0.0,
+       1.0,
+       0.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.200043,
+      "stoppedBy": [
+       "back/key_l",
+       "back/key_r"
+      ],
+      "stoppedPart": "back/panel",
+      "pass": true
+     },
+     {
+      "id": "left/panel-key-left",
+      "parts": [
+       "left/panel"
+      ],
+      "direction": [
+       -1.0,
+       0.0,
+       0.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.200043,
+      "stoppedBy": [
+       "left/key_l",
+       "left/key_r"
+      ],
+      "stoppedPart": "left/panel",
+      "pass": true
+     },
+     {
+      "id": "left/panel-key-right",
+      "parts": [
+       "left/panel"
+      ],
+      "direction": [
+       -1.0,
+       0.0,
+       0.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.200043,
+      "stoppedBy": [
+       "left/key_l",
+       "left/key_r"
+      ],
+      "stoppedPart": "left/panel",
+      "pass": true
+     },
+     {
+      "id": "top/pixel-1-out",
+      "parts": [
+       "top/pixel_1"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.203751,
+      "stoppedBy": [
+       "top/cam_upper"
+      ],
+      "stoppedPart": "top/pixel_1",
+      "pass": true
+     },
+     {
+      "id": "top/pixel-1-in",
+      "parts": [
+       "top/pixel_1"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       -1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.204048,
+      "stoppedBy": [
+       "top/cam_lower"
+      ],
+      "stoppedPart": "top/pixel_1",
+      "pass": true
+     },
+     {
+      "id": "top/pixel-2-out",
+      "parts": [
+       "top/pixel_2"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.203751,
+      "stoppedBy": [
+       "top/cam_upper"
+      ],
+      "stoppedPart": "top/pixel_2",
+      "pass": true
+     },
+     {
+      "id": "top/pixel-2-in",
+      "parts": [
+       "top/pixel_2"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       -1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.204048,
+      "stoppedBy": [
+       "top/cam_lower"
+      ],
+      "stoppedPart": "top/pixel_2",
+      "pass": true
+     },
+     {
+      "id": "top/pixel-3-out",
+      "parts": [
+       "top/pixel_3"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.205544,
+      "stoppedBy": [
+       "top/cam_upper"
+      ],
+      "stoppedPart": "top/pixel_3",
+      "pass": true
+     },
+     {
+      "id": "top/pixel-3-in",
+      "parts": [
+       "top/pixel_3"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       -1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.204048,
+      "stoppedBy": [
+       "top/cam_lower"
+      ],
+      "stoppedPart": "top/pixel_3",
+      "pass": true
+     },
+     {
+      "id": "top/cam-out",
+      "parts": [
+       "top/cam_upper",
+       "top/cam_lower",
+       "top/cam_key_1",
+       "top/cam_key_2"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.250008,
+      "stoppedBy": [
+       "top/panel"
+      ],
+      "stoppedPart": "top/cam_upper",
+      "pass": true
+     },
+     {
+      "id": "top/guide-out",
+      "parts": [
+       "top/guide"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.250023,
+      "stoppedBy": [
+       "top/servo_cap"
+      ],
+      "stoppedPart": "top/guide",
+      "pass": true
+     },
+     {
+      "id": "top/servo-out",
+      "parts": [
+       "top/servo"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.250015,
+      "stoppedBy": [
+       "top/servo_cap"
+      ],
+      "stoppedPart": "top/servo",
+      "pass": true
+     },
+     {
+      "id": "top/support-out",
+      "parts": [
+       "top/support"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.254005,
+      "stoppedBy": [
+       "top/panel"
+      ],
+      "stoppedPart": "top/support",
+      "pass": true
+     },
+     {
+      "id": "top/cap-out",
+      "parts": [
+       "top/servo_cap"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.250481,
+      "stoppedBy": [
+       "top/support"
+      ],
+      "stoppedPart": "top/servo_cap",
+      "pass": true
+     },
+     {
+      "id": "top/cam-key-1-out",
+      "parts": [
+       "top/cam_key_1"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.251114,
+      "stoppedBy": [
+       "top/cam_lower"
+      ],
+      "stoppedPart": "top/cam_key_1",
+      "pass": true
+     },
+     {
+      "id": "top/cam-key-2-out",
+      "parts": [
+       "top/cam_key_2"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.251114,
+      "stoppedBy": [
+       "top/cam_lower"
+      ],
+      "stoppedPart": "top/cam_key_2",
+      "pass": true
+     },
+     {
+      "id": "top/cam-in",
+      "parts": [
+       "top/cam_upper",
+       "top/cam_lower",
+       "top/cam_key_1",
+       "top/cam_key_2"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       -1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.250008,
+      "stoppedBy": [
+       "top/guide"
+      ],
+      "stoppedPart": "top/cam_lower",
+      "pass": true
+     },
+     {
+      "id": "top/guide-in",
+      "parts": [
+       "top/guide"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       -1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.250023,
+      "stoppedBy": [
+       "top/support"
+      ],
+      "stoppedPart": "top/guide",
+      "pass": true
+     },
+     {
+      "id": "top/servo-in",
+      "parts": [
+       "top/servo"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       -1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.250015,
+      "stoppedBy": [
+       "top/support"
+      ],
+      "stoppedPart": "top/servo",
+      "pass": true
+     },
+     {
+      "id": "top/support-in",
+      "parts": [
+       "top/support"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       -1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.200356,
+      "stoppedBy": [
+       "top/panel"
+      ],
+      "stoppedPart": "top/support",
+      "pass": true
+     },
+     {
+      "id": "top/cap-in",
+      "parts": [
+       "top/servo_cap"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       -1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.250015,
+      "stoppedBy": [
+       "top/servo"
+      ],
+      "stoppedPart": "top/servo_cap",
+      "pass": true
+     },
+     {
+      "id": "top/cam-key-1-in",
+      "parts": [
+       "top/cam_key_1"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       -1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.250076,
+      "stoppedBy": [
+       "top/cam_upper"
+      ],
+      "stoppedPart": "top/cam_key_1",
+      "pass": true
+     },
+     {
+      "id": "top/cam-key-2-in",
+      "parts": [
+       "top/cam_key_2"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       -1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.250076,
+      "stoppedBy": [
+       "top/cam_upper"
+      ],
+      "stoppedPart": "top/cam_key_2",
+      "pass": true
+     },
+     {
+      "id": "bottom/panel-key-left",
+      "parts": [
+       "bottom/panel"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       -1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.200043,
+      "stoppedBy": [
+       "bottom/key_l",
+       "bottom/key_r"
+      ],
+      "stoppedPart": "bottom/panel",
+      "pass": true
+     },
+     {
+      "id": "bottom/panel-key-right",
+      "parts": [
+       "bottom/panel"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       -1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.200043,
+      "stoppedBy": [
+       "bottom/key_l",
+       "bottom/key_r"
+      ],
+      "stoppedPart": "bottom/panel",
+      "pass": true
+     },
+     {
+      "id": "frame/post-0-bottom",
+      "parts": [
+       "frame/post_0"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.250038,
+      "stoppedBy": [
+       "frame/upper_frame"
+      ],
+      "stoppedPart": "frame/post_0",
+      "pass": true
+     },
+     {
+      "id": "frame/post-0-top",
+      "parts": [
+       "frame/post_0"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       -1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.250038,
+      "stoppedBy": [
+       "frame/lower_frame"
+      ],
+      "stoppedPart": "frame/post_0",
+      "pass": true
+     },
+     {
+      "id": "frame/post-1-bottom",
+      "parts": [
+       "frame/post_1"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.250038,
+      "stoppedBy": [
+       "frame/upper_frame"
+      ],
+      "stoppedPart": "frame/post_1",
+      "pass": true
+     },
+     {
+      "id": "frame/post-1-top",
+      "parts": [
+       "frame/post_1"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       -1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.250038,
+      "stoppedBy": [
+       "frame/lower_frame"
+      ],
+      "stoppedPart": "frame/post_1",
+      "pass": true
+     },
+     {
+      "id": "frame/post-2-bottom",
+      "parts": [
+       "frame/post_2"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.250038,
+      "stoppedBy": [
+       "frame/upper_frame"
+      ],
+      "stoppedPart": "frame/post_2",
+      "pass": true
+     },
+     {
+      "id": "frame/post-2-top",
+      "parts": [
+       "frame/post_2"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       -1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.250038,
+      "stoppedBy": [
+       "frame/lower_frame"
+      ],
+      "stoppedPart": "frame/post_2",
+      "pass": true
+     },
+     {
+      "id": "frame/post-3-bottom",
+      "parts": [
+       "frame/post_3"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.250038,
+      "stoppedBy": [
+       "frame/upper_frame"
+      ],
+      "stoppedPart": "frame/post_3",
+      "pass": true
+     },
+     {
+      "id": "frame/post-3-top",
+      "parts": [
+       "frame/post_3"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       -1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.250038,
+      "stoppedBy": [
+       "frame/lower_frame"
+      ],
+      "stoppedPart": "frame/post_3",
+      "pass": true
+     },
+     {
+      "id": "frame/wiring-seated",
+      "parts": [
+       "frame/wiring"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       -1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.250015,
+      "stoppedBy": [
+       "frame/lower_frame"
+      ],
+      "stoppedPart": "frame/wiring",
+      "pass": true
+     },
+     {
+      "id": "frame/wiring-up",
+      "parts": [
+       "frame/wiring"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.250069,
+      "stoppedBy": [
+       "frame/tray"
+      ],
+      "stoppedPart": "frame/wiring",
+      "pass": true
+     },
+     {
+      "id": "frame/tray-down",
+      "parts": [
+       "frame/tray"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       -1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.250069,
+      "stoppedBy": [
+       "frame/wiring"
+      ],
+      "stoppedPart": "frame/tray",
+      "pass": true
+     },
+     {
+      "id": "frame/tray-up",
+      "parts": [
+       "frame/tray"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.250481,
+      "stoppedBy": [
+       "frame/wiring"
+      ],
+      "stoppedPart": "frame/tray",
+      "pass": true
+     },
+     {
+      "id": "front/frame_retention",
+      "parts": [
+       "front/panel",
+       "front/key_l",
+       "front/key_r",
+       "front/support",
+       "front/servo_cap",
+       "front/crank",
+       "front/link",
+       "front/lid",
+       "front/hinge_pin",
+       "front/servo",
+       "front/horn"
+      ],
+      "direction": [
+       -0.0,
+       -1.0,
+       -0.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.251434,
+      "stoppedBy": [
+       "frame/post_0"
+      ],
+      "stoppedPart": "front/key_l",
+      "pass": true
+     },
+     {
+      "id": "right/frame_retention",
+      "parts": [
+       "right/panel",
+       "right/key_l",
+       "right/key_r"
+      ],
+      "direction": [
+       1.0,
+       -0.0,
+       -0.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.251434,
+      "stoppedBy": [
+       "frame/post_1"
+      ],
+      "stoppedPart": "right/key_l",
+      "pass": true
+     },
+     {
+      "id": "back/frame_retention",
+      "parts": [
+       "back/panel",
+       "back/key_l",
+       "back/key_r"
+      ],
+      "direction": [
+       -0.0,
+       1.0,
+       -0.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.251434,
+      "stoppedBy": [
+       "frame/post_2"
+      ],
+      "stoppedPart": "back/key_l",
+      "pass": true
+     },
+     {
+      "id": "left/frame_retention",
+      "parts": [
+       "left/panel",
+       "left/key_l",
+       "left/key_r"
+      ],
+      "direction": [
+       -1.0,
+       -0.0,
+       -0.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.251434,
+      "stoppedBy": [
+       "frame/post_3"
+      ],
+      "stoppedPart": "left/key_l",
+      "pass": true
+     },
+     {
+      "id": "top/frame_retention",
+      "parts": [
+       "top/panel",
+       "top/key_l",
+       "top/key_r",
+       "top/support",
+       "top/servo_cap",
+       "top/cam_lower",
+       "top/cam_upper",
+       "top/pixel_1",
+       "top/pixel_2",
+       "top/pixel_3",
+       "top/guide",
+       "top/cam_key_1",
+       "top/cam_key_2",
+       "top/servo",
+       "top/horn"
+      ],
+      "direction": [
+       -0.0,
+       -0.0,
+       1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.251434,
+      "stoppedBy": [
+       "frame/upper_frame"
+      ],
+      "stoppedPart": "top/key_l",
+      "pass": true
+     },
+     {
+      "id": "bottom/frame_retention",
+      "parts": [
+       "bottom/panel",
+       "bottom/key_l",
+       "bottom/key_r"
+      ],
+      "direction": [
+       -0.0,
+       -0.0,
+       -1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.251434,
+      "stoppedBy": [
+       "frame/lower_frame"
+      ],
+      "stoppedPart": "bottom/key_l",
+      "pass": true
+     }
+    ]
+   },
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "assembly.path",
+   "title": "組立の各工程で、許可の範囲の外の当たりが無く、最後に全部品が組まれるか",
+   "pass": true,
+   "summary": "90 工程（補間で足した姿勢 0）",
+   "detail": {
+    "violations": [],
+    "boundaryErrors": [],
+    "interpolatedPoses": 0,
+    "finalNotAssembled": [],
+    "allowedContacts": [
+     {
+      "parts": [
+       "frame/lower_frame",
+       "frame/post_0"
+      ],
+      "type": "snap",
+      "maxCommonMm3": 0.089249,
+      "maxRemainingTravelMm": 2.0,
+      "samples": 4,
+      "steps": [
+       "frame/insert-post_0"
+      ]
+     },
+     {
+      "parts": [
+       "frame/lower_frame",
+       "frame/post_1"
+      ],
+      "type": "snap",
+      "maxCommonMm3": 0.089249,
+      "maxRemainingTravelMm": 2.0,
+      "samples": 4,
+      "steps": [
+       "frame/insert-post_1"
+      ]
+     },
+     {
+      "parts": [
+       "frame/lower_frame",
+       "frame/post_2"
+      ],
+      "type": "snap",
+      "maxCommonMm3": 0.089249,
+      "maxRemainingTravelMm": 2.0,
+      "samples": 4,
+      "steps": [
+       "frame/insert-post_2"
+      ]
+     },
+     {
+      "parts": [
+       "frame/lower_frame",
+       "frame/post_3"
+      ],
+      "type": "snap",
+      "maxCommonMm3": 0.089249,
+      "maxRemainingTravelMm": 2.0,
+      "samples": 4,
+      "steps": [
+       "frame/insert-post_3"
+      ]
+     },
+     {
+      "parts": [
+       "frame/post_0",
+       "frame/upper_frame"
+      ],
+      "type": "snap",
+      "maxCommonMm3": 0.089249,
+      "maxRemainingTravelMm": 2.0,
+      "samples": 4,
+      "steps": [
+       "frame/upper-frame"
+      ]
+     },
+     {
+      "parts": [
+       "frame/post_1",
+       "frame/upper_frame"
+      ],
+      "type": "snap",
+      "maxCommonMm3": 0.089249,
+      "maxRemainingTravelMm": 2.0,
+      "samples": 4,
+      "steps": [
+       "frame/upper-frame"
+      ]
+     },
+     {
+      "parts": [
+       "frame/post_2",
+       "frame/upper_frame"
+      ],
+      "type": "snap",
+      "maxCommonMm3": 0.089249,
+      "maxRemainingTravelMm": 2.0,
+      "samples": 4,
+      "steps": [
+       "frame/upper-frame"
+      ]
+     },
+     {
+      "parts": [
+       "frame/post_3",
+       "frame/upper_frame"
+      ],
+      "type": "snap",
+      "maxCommonMm3": 0.089249,
+      "maxRemainingTravelMm": 2.0,
+      "samples": 4,
+      "steps": [
+       "frame/upper-frame"
+      ]
+     },
+     {
+      "parts": [
+       "front/crank",
+       "front/link"
+      ],
+      "type": "snap",
+      "maxCommonMm3": 2.473743,
+      "maxRemainingTravelMm": 4.0,
+      "samples": 8,
+      "steps": [
+       "front/linkage-connect"
+      ]
+     },
+     {
+      "parts": [
+       "front/horn",
+       "front/servo"
+      ],
+      "type": "reference_internal",
+      "maxCommonMm3": 0.029959,
+      "maxRemainingTravelMm": 0.0,
+      "samples": 379,
+      "steps": [
+       "front/cradle-in",
+       "front/exchange_in",
+       "front/exchange_out",
+       "front/horn-in",
+       "front/insert",
+       "front/return-closed"
+      ]
+     },
+     {
+      "parts": [
+       "front/lid",
+       "front/link"
+      ],
+      "type": "snap",
+      "maxCommonMm3": 2.473697,
+      "maxRemainingTravelMm": 4.0,
+      "samples": 8,
+      "steps": [
+       "front/link-in"
+      ]
+     },
+     {
+      "parts": [
+       "front/panel",
+       "front/support"
+      ],
+      "type": "snap",
+      "maxCommonMm3": 1.536014,
+      "maxRemainingTravelMm": 1.5,
+      "samples": 3,
+      "steps": [
+       "front/panel-in"
+      ]
+     },
+     {
+      "parts": [
+       "top/cam_key_1",
+       "top/cam_lower"
+      ],
+      "type": "snap",
+      "maxCommonMm3": 1.079992,
+      "maxRemainingTravelMm": 4.0,
+      "samples": 8,
+      "steps": [
+       "top/cam_key_1-in"
+      ]
+     },
+     {
+      "parts": [
+       "top/cam_key_1",
+       "top/cam_upper"
+      ],
+      "type": "snap",
+      "maxCommonMm3": 1.079991,
+      "maxRemainingTravelMm": 9.5,
+      "samples": 13,
+      "steps": [
+       "top/cam_key_1-in"
+      ]
+     },
+     {
+      "parts": [
+       "top/cam_key_2",
+       "top/cam_lower"
+      ],
+      "type": "snap",
+      "maxCommonMm3": 1.079996,
+      "maxRemainingTravelMm": 3.5,
+      "samples": 7,
+      "steps": [
+       "top/cam_key_2-in"
+      ]
+     },
+     {
+      "parts": [
+       "top/cam_key_2",
+       "top/cam_upper"
+      ],
+      "type": "snap",
+      "maxCommonMm3": 1.079997,
+      "maxRemainingTravelMm": 9.5,
+      "samples": 13,
+      "steps": [
+       "top/cam_key_2-in"
+      ]
+     },
+     {
+      "parts": [
+       "top/guide",
+       "top/servo_cap"
+      ],
+      "type": "snap",
+      "maxCommonMm3": 14.410714,
+      "maxRemainingTravelMm": 8.0,
+      "samples": 13,
+      "steps": [
+       "top/servo_cap-in"
+      ]
+     },
+     {
+      "parts": [
+       "top/panel",
+       "top/support"
+      ],
+      "type": "snap",
+      "maxCommonMm3": 1.728019,
+      "maxRemainingTravelMm": 1.5,
+      "samples": 3,
+      "steps": [
+       "top/panel-in"
+      ]
+     },
+     {
+      "parts": [
+       "top/servo_cap",
+       "top/support"
+      ],
+      "type": "snap",
+      "maxCommonMm3": 2.519983,
+      "maxRemainingTravelMm": 4.0,
+      "samples": 8,
+      "steps": [
+       "top/servo_cap-in"
+      ]
+     }
+    ],
+    "steps": [
+     {
+      "id": "frame/lower-frame",
+      "frames": 2,
+      "checkedPoses": 2,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "frame/insert-post_0",
+      "frames": 25,
+      "checkedPoses": 25,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "frame/insert-post_1",
+      "frames": 25,
+      "checkedPoses": 25,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "frame/insert-post_2",
+      "frames": 25,
+      "checkedPoses": 25,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "frame/insert-post_3",
+      "frames": 25,
+      "checkedPoses": 25,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "frame/wiring",
+      "frames": 204,
+      "checkedPoses": 204,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "frame/upper-frame",
+      "frames": 25,
+      "checkedPoses": 25,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "frame/tray",
+      "frames": 196,
+      "checkedPoses": 196,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "front/support-base",
+      "frames": 2,
+      "checkedPoses": 2,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "front/lid-base",
+      "frames": 2,
+      "checkedPoses": 2,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "front/link-in",
+      "frames": 51,
+      "checkedPoses": 51,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "front/servo-base",
+      "frames": 2,
+      "checkedPoses": 2,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "front/horn-in",
+      "frames": 21,
+      "checkedPoses": 21,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "front/crank-in",
+      "frames": 41,
+      "checkedPoses": 41,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "front/linkage-connect",
+      "frames": 141,
+      "checkedPoses": 141,
+      "moving": 2,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "front/cradle-in",
+      "frames": 121,
+      "checkedPoses": 121,
+      "moving": 5,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "front/servo_cap-in",
+      "frames": 101,
+      "checkedPoses": 101,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "front/hinge_pin-in",
+      "frames": 121,
+      "checkedPoses": 121,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "front/panel-in",
+      "frames": 91,
+      "checkedPoses": 91,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "front/return-closed",
+      "frames": 71,
+      "checkedPoses": 71,
+      "moving": 4,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "front/insert",
+      "frames": 101,
+      "checkedPoses": 101,
+      "moving": 9,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "front/key_l_insert",
+      "frames": 41,
+      "checkedPoses": 41,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "front/key_l_lock",
+      "frames": 5,
+      "checkedPoses": 5,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "front/key_r_insert",
+      "frames": 41,
+      "checkedPoses": 41,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "front/key_r_lock",
+      "frames": 5,
+      "checkedPoses": 5,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "right/panel",
+      "frames": 2,
+      "checkedPoses": 2,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "right/insert",
+      "frames": 101,
+      "checkedPoses": 101,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "right/key_l_insert",
+      "frames": 41,
+      "checkedPoses": 41,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "right/key_l_lock",
+      "frames": 5,
+      "checkedPoses": 5,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "right/key_r_insert",
+      "frames": 41,
+      "checkedPoses": 41,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "right/key_r_lock",
+      "frames": 5,
+      "checkedPoses": 5,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "back/panel",
+      "frames": 2,
+      "checkedPoses": 2,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "back/insert",
+      "frames": 101,
+      "checkedPoses": 101,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "back/key_l_insert",
+      "frames": 41,
+      "checkedPoses": 41,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "back/key_l_lock",
+      "frames": 5,
+      "checkedPoses": 5,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "back/key_r_insert",
+      "frames": 41,
+      "checkedPoses": 41,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "back/key_r_lock",
+      "frames": 5,
+      "checkedPoses": 5,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "left/panel",
+      "frames": 2,
+      "checkedPoses": 2,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "left/insert",
+      "frames": 101,
+      "checkedPoses": 101,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "left/key_l_insert",
+      "frames": 41,
+      "checkedPoses": 41,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "left/key_l_lock",
+      "frames": 5,
+      "checkedPoses": 5,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "left/key_r_insert",
+      "frames": 41,
+      "checkedPoses": 41,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "left/key_r_lock",
+      "frames": 5,
+      "checkedPoses": 5,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "top/support-base",
+      "frames": 2,
+      "checkedPoses": 2,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "top/guide-in",
+      "frames": 81,
+      "checkedPoses": 81,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "top/servo-in",
+      "frames": 91,
+      "checkedPoses": 91,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "top/servo_cap-in",
+      "frames": 81,
+      "checkedPoses": 81,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "top/horn-in",
+      "frames": 41,
+      "checkedPoses": 41,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "top/cam_lower-in",
+      "frames": 61,
+      "checkedPoses": 61,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "top/pixel_1-in",
+      "frames": 71,
+      "checkedPoses": 71,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "top/pixel_2-in",
+      "frames": 71,
+      "checkedPoses": 71,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "top/pixel_3-in",
+      "frames": 71,
+      "checkedPoses": 71,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "top/cam_upper-in",
+      "frames": 61,
+      "checkedPoses": 61,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "top/cam_key_1-in",
+      "frames": 41,
+      "checkedPoses": 41,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "top/cam_key_2-in",
+      "frames": 41,
+      "checkedPoses": 41,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "top/panel-in",
+      "frames": 71,
+      "checkedPoses": 71,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "top/closed-neutral",
+      "frames": 2,
+      "checkedPoses": 2,
+      "moving": 13,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "top/insert",
+      "frames": 101,
+      "checkedPoses": 101,
+      "moving": 13,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "top/key_l_insert",
+      "frames": 41,
+      "checkedPoses": 41,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "top/key_l_lock",
+      "frames": 5,
+      "checkedPoses": 5,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "top/key_r_insert",
+      "frames": 41,
+      "checkedPoses": 41,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "top/key_r_lock",
+      "frames": 5,
+      "checkedPoses": 5,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "bottom/panel",
+      "frames": 2,
+      "checkedPoses": 2,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "bottom/insert",
+      "frames": 101,
+      "checkedPoses": 101,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "bottom/key_l_insert",
+      "frames": 41,
+      "checkedPoses": 41,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "bottom/key_l_lock",
+      "frames": 5,
+      "checkedPoses": 5,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "bottom/key_r_insert",
+      "frames": 41,
+      "checkedPoses": 41,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "bottom/key_r_lock",
+      "frames": 5,
+      "checkedPoses": 5,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "front/exchange_key_0_release",
+      "frames": 5,
+      "checkedPoses": 5,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "front/exchange_key_0_out",
+      "frames": 51,
+      "checkedPoses": 51,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "front/exchange_key_1_release",
+      "frames": 5,
+      "checkedPoses": 5,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "front/exchange_key_1_out",
+      "frames": 51,
+      "checkedPoses": 51,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "front/exchange_out",
+      "frames": 41,
+      "checkedPoses": 41,
+      "moving": 9,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "front/disconnect",
+      "frames": 2,
+      "checkedPoses": 2,
+      "moving": 0,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "front/exchange_in",
+      "frames": 41,
+      "checkedPoses": 41,
+      "moving": 9,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "front/exchange_key_0_in",
+      "frames": 51,
+      "checkedPoses": 51,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "front/exchange_key_0_lock",
+      "frames": 5,
+      "checkedPoses": 5,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "front/exchange_key_1_in",
+      "frames": 51,
+      "checkedPoses": 51,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "front/exchange_key_1_lock",
+      "frames": 5,
+      "checkedPoses": 5,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "top/exchange_key_0_release",
+      "frames": 5,
+      "checkedPoses": 5,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "top/exchange_key_0_out",
+      "frames": 51,
+      "checkedPoses": 51,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "top/exchange_key_1_release",
+      "frames": 5,
+      "checkedPoses": 5,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "top/exchange_key_1_out",
+      "frames": 51,
+      "checkedPoses": 51,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "top/exchange_out",
+      "frames": 41,
+      "checkedPoses": 41,
+      "moving": 13,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "top/disconnect",
+      "frames": 2,
+      "checkedPoses": 2,
+      "moving": 0,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "top/exchange_in",
+      "frames": 41,
+      "checkedPoses": 41,
+      "moving": 13,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "top/exchange_key_0_in",
+      "frames": 51,
+      "checkedPoses": 51,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "top/exchange_key_0_lock",
+      "frames": 5,
+      "checkedPoses": 5,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "top/exchange_key_1_in",
+      "frames": 51,
+      "checkedPoses": 51,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "top/exchange_key_1_lock",
+      "frames": 5,
+      "checkedPoses": 5,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     }
+    ]
+   },
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "unknowns.resolved",
+   "title": "既製部品の仮値・未確認の寸法がすべて扱いを決められているか（試し刷りの部品など）",
+   "pass": true,
+   "summary": "未確認 7 件の扱いが決まっている",
+   "detail": {
+    "problems": [],
+    "resolutions": [
+     {
+      "id": "sg92r.horn_arm_lengths",
+      "kind": "trial_part",
+      "value": "prints/mystery-box-sg92r-f1/trial/front/horn_fit.stl",
+      "what": null
+     },
+     {
+      "id": "sg92r.horn_hole_positions",
+      "kind": "not_applicable",
+      "value": "ホーンの既存穴は使わない。",
+      "what": null
+     },
+     {
+      "id": "sg92r.output_spline",
+      "kind": "not_applicable",
+      "value": "実物の付属ホーンを使い、印刷スプラインは作らない。",
+      "what": null
+     },
+     {
+      "id": "sg92r.shaft_height",
+      "kind": "trial_part",
+      "value": "prints/mystery-box-sg92r-f1/trial/front/horn_fit.stl",
+      "what": null
+     },
+     {
+      "id": "sg92r.cover_circle",
+      "kind": "trial_part",
+      "value": "prints/mystery-box-sg92r-f1/trial/front/servo_fit.stl",
+      "what": null
+     },
+     {
+      "id": "sg92r.wire",
+      "kind": "trial_part",
+      "value": "prints/mystery-box-sg92r-f1/trial/front/servo_fit.stl",
+      "what": null
+     },
+     {
+      "id": "sg92r.connector",
+      "kind": "trial_part",
+      "value": "prints/mystery-box-sg92r-f1/trial/front/connector_nest.stl",
+      "what": null
+     }
+    ]
+   },
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "print.slice",
+   "title": "スライス済みのプレートで、サポート無し・外に見える支えの無い押し出しが上限以下か",
+   "pass": false,
+   "summary": "prints/mystery-box-sg92r-f1/checks/top/ にスライス済みの 3mf が無い",
+   "detail": null,
+   "required": true,
+   "waived": "段1の依頼原文『印刷プレート・スライス（時間があれば最後に）』による未実施を継続。今回の段3前半は上面の統合・掃引範囲対応・3ケースの機構検査までで、印刷プレートとスライスは対象に含まれていない。印刷可能とは未判定。その他の検査は免除しない。"
+  }
+ ],
+ "inputs": {
+  "models/mystery-box-sg92r-f1/checks/top/spec.json": "de58bc0d02091c3ad1d3ea22c3a194ef872cbead3a434d953e73d365470872e1",
+  "models/mystery-box-sg92r-f1/checks/top/build/manifest.json": "3936a35b4d539436b6cd16de184872e3162352d204d37a4c72a9797eb238960e",
+  "models/mystery-box-sg92r-f1/checks/top/build/motion.json": "99a8a1c3d64808239e54800762d214db80deb50a68c4557a1768f51673de3680",
+  "models/mystery-box-sg92r-f1/checks/top/build/assembly.json": "30369d06a8218af5f5d7090976597631fa8fde8b19bff0d88d73f0bd7523942e",
+  "models/mystery-box-sg92r-f1/checks/top/../../build/parts/frame/lower_frame.stl": "9d292f7fff7e4c8f5f591afd20994c5dbce84a8b751dc0e94f075b3158149bdd",
+  "models/mystery-box-sg92r-f1/checks/top/../../build/parts/frame/upper_frame.stl": "574f657dab5ac41cc83955d0c2fd51b27205f05c5c6225a22abf3682300f6b19",
+  "models/mystery-box-sg92r-f1/checks/top/../../build/parts/frame/post_0.stl": "5a15f85db740db7b6c8e121287e335e8040349034f1ad8d4bed211815c8375c4",
+  "models/mystery-box-sg92r-f1/checks/top/../../build/parts/frame/post_1.stl": "ef2233796dfd0cef901c4c90d4a355046943a70a6134fb2d7140ed4a90761431",
+  "models/mystery-box-sg92r-f1/checks/top/../../build/parts/frame/post_2.stl": "2ee4e82d0105b84095b7a3af9063f72d46023574a77a98e3524c8f367d691b0d",
+  "models/mystery-box-sg92r-f1/checks/top/../../build/parts/frame/post_3.stl": "7acd2d4e8eb8af284f71af5d497a3b1b1dc261f30a7746effe167d3c250b18e0",
+  "models/mystery-box-sg92r-f1/checks/top/../../build/parts/frame/wiring.stl": "4a6ea422f8942505fadb656c65ba9cf20ac4d3c68d90b551085eaa6e15e288a5",
+  "models/mystery-box-sg92r-f1/checks/top/../../build/parts/frame/tray.stl": "0b704403536b9b323584c63464697329f328e0d975897a55315ef2648bbc6b3c",
+  "models/mystery-box-sg92r-f1/checks/top/../../build/parts/front/panel.stl": "1d871d92cbae8321c66e573292ebffb7905cbeffbd699278c0ec3befe63bf21e",
+  "models/mystery-box-sg92r-f1/checks/top/../../build/parts/front/key_l.stl": "ceadfadd1ff03137714a03d02dc1e3c81616bbd2ff4a6e7337280e222fb4fa45",
+  "models/mystery-box-sg92r-f1/checks/top/../../build/parts/front/key_r.stl": "153387616300023399ee6e3fe2c08a329da7a3d64b7416ed981b1effefae0c91",
+  "models/mystery-box-sg92r-f1/checks/top/../../build/parts/front/servo.stl": "bf115c906b38256e0887511a61fc9ddd6184ba911c0f3911b7a0ed2718c1af79",
+  "models/mystery-box-sg92r-f1/checks/top/../../build/parts/front/horn.stl": "a86bc1ab7a12492ef34e362db1d7a94f441fe5192d45dba9726631c672d05812",
+  "models/mystery-box-sg92r-f1/checks/top/../../build/parts/front/support.stl": "dbb0c6802c444e39a6e60abbbf8b29cb08b6f28d7b6463acdbc052d884efcc68",
+  "models/mystery-box-sg92r-f1/checks/top/../../build/parts/front/servo_cap.stl": "62947169417f929d019294e8b794ee1e9963a39ba61d49572c5bc0dd5c86153f",
+  "models/mystery-box-sg92r-f1/checks/top/../../build/parts/front/crank.stl": "faead4f77def5a38ef595ede85e84e083e536ea3c6105b7f1112c6940bca3e4b",
+  "models/mystery-box-sg92r-f1/checks/top/../../build/parts/front/link.stl": "556b3af70cd0aecc53ed399835b29c909c2e0645a6386079f52526adc891782a",
+  "models/mystery-box-sg92r-f1/checks/top/../../build/parts/front/lid.stl": "a79ba436dcd2b1ff7c6699d796f6529fc162076d69a3a62f161be8e00734bed7",
+  "models/mystery-box-sg92r-f1/checks/top/../../build/parts/front/hinge_pin.stl": "adae79edc8bf0c7ce602efedcd5e49638ea14365ee82c704adb2239fa112762c",
+  "models/mystery-box-sg92r-f1/checks/top/../../build/parts/right/panel.stl": "c4d4d7bfd3171cf77330f02b7a2ea5d3bccd3963479874ba8725ce3851f34d61",
+  "models/mystery-box-sg92r-f1/checks/top/../../build/parts/right/key_l.stl": "0e1418ab9cd9a6bc65dd2d46268f922087e2f1196b1c03e898da37db52e0e88c",
+  "models/mystery-box-sg92r-f1/checks/top/../../build/parts/right/key_r.stl": "d5b6c5f72d171a1591393c6f700eab7d1a51dd0055e0952ad416f71d918a6a8a",
+  "models/mystery-box-sg92r-f1/checks/top/../../build/parts/back/panel.stl": "1bfe0f811a6ff903830804b281a64495b8144793ec8a3d06374d5040eb392dc8",
+  "models/mystery-box-sg92r-f1/checks/top/../../build/parts/back/key_l.stl": "d57016a1ef1eaafd1f78efb7dc30bbc743ac32dd993a34debf9b273806413b9c",
+  "models/mystery-box-sg92r-f1/checks/top/../../build/parts/back/key_r.stl": "69c5ac6044fc4088148a66080775adb4e010687cc39a0eb4a45089822c35c8d9",
+  "models/mystery-box-sg92r-f1/checks/top/../../build/parts/left/panel.stl": "fd93f25fb16680ab754c4126f824767f49b738e63ef1a07bf46b533222562a74",
+  "models/mystery-box-sg92r-f1/checks/top/../../build/parts/left/key_l.stl": "e069286f55e007fc5a0665fd39ea18f7e162df577eab3543b5b5d7ede938adba",
+  "models/mystery-box-sg92r-f1/checks/top/../../build/parts/left/key_r.stl": "6e71d411f50ef51641f43b47775f37cd109d83de10713f692d3480d4c4f2952d",
+  "models/mystery-box-sg92r-f1/checks/top/../../build/parts/top/panel.stl": "aafd5b6100b7893063267bb0b2c78e0706ecb5f965b107afe3437aea2858355e",
+  "models/mystery-box-sg92r-f1/checks/top/../../build/parts/top/key_l.stl": "057c633b5f80f096fab2e3179cacad8608701a5ed8721f3dcd4fa350f6ee7641",
+  "models/mystery-box-sg92r-f1/checks/top/../../build/parts/top/key_r.stl": "903e0416add8363a88e7250041e415a647bf508ebd547f3f0ee0414db42d0887",
+  "models/mystery-box-sg92r-f1/checks/top/../../build/parts/top/support.stl": "a4fe1383c1e6ffbae3e0ae20e92462ec6ccd07e6da744ab8a1d379382c3187b7",
+  "models/mystery-box-sg92r-f1/checks/top/../../build/parts/top/servo_cap.stl": "c1b8d51d198eb62cc52de3af90374d8e1c34242fba3ec8e9850340038c4eef22",
+  "models/mystery-box-sg92r-f1/checks/top/../../build/parts/top/cam_lower.stl": "788927d678010905b918982bc99395ef2d8598515a5a151217fffc8a88a4ce8a",
+  "models/mystery-box-sg92r-f1/checks/top/../../build/parts/top/cam_upper.stl": "a6ed828b1ae163b20c4d8f522e244a3697f4c0bab149afb28215c05b78f11fb1",
+  "models/mystery-box-sg92r-f1/checks/top/../../build/parts/top/pixel_1.stl": "dd300c84c8f82b53a27533f6cf17efd1ec91d75300f4bb490976925de5e65615",
+  "models/mystery-box-sg92r-f1/checks/top/../../build/parts/top/pixel_2.stl": "d1b6d010bb20391099977762a01d02a813f741f7a014783ca17cbbd6843a526f",
+  "models/mystery-box-sg92r-f1/checks/top/../../build/parts/top/pixel_3.stl": "302d847a0fb9641292be0780ebb473df2fd60edd7f56fd6f967d146c231cd735",
+  "models/mystery-box-sg92r-f1/checks/top/../../build/parts/top/guide.stl": "a29ec966f72a156c6aa347bf3ae6fa86402783386c346efddd4b95cad2372195",
+  "models/mystery-box-sg92r-f1/checks/top/../../build/parts/top/cam_key_1.stl": "b348a29cc40a69f3a80c3831b2dcb02b86dce1ebf01207596f306b1b862b2161",
+  "models/mystery-box-sg92r-f1/checks/top/../../build/parts/top/cam_key_2.stl": "6576d92fc6dfcc6656ae9f3d0d8e69d51d799e55bc87b61b35eba2135da14ec8",
+  "models/mystery-box-sg92r-f1/checks/top/../../build/parts/top/servo.stl": "b8816cff532933f873c3ee025c2833c81fe6ba98186ac426c86764b04587a1b3",
+  "models/mystery-box-sg92r-f1/checks/top/../../build/parts/top/horn.stl": "238e7600d4e74ccfa3732e42d1589420a8588afff1d6e75425afc5c421850ed6",
+  "models/mystery-box-sg92r-f1/checks/top/../../build/parts/bottom/panel.stl": "1e6c82608831cbdaff820f5a6b614b8191d8853a3d4ba1cb4c3a602305e19218",
+  "models/mystery-box-sg92r-f1/checks/top/../../build/parts/bottom/key_l.stl": "ceecd1dcd3a68d2611246ba1b45b113d4c4edc42eab249ee612be0cd6ef16fdf",
+  "models/mystery-box-sg92r-f1/checks/top/../../build/parts/bottom/key_r.stl": "faee87da42eecc2c24d886da16b09b8d0799d172d83541ce2c6f612567f6d51a",
+  "models/mystery-box-sg92r-f1/checks/top/../../../../prints/mystery-box-sg92r-f1/frame/lower_frame.stl": "68c62025a28d99ff3025b1459ffa1e4fd75d8b54d048f2dcd7e1f61d573e1c10",
+  "models/mystery-box-sg92r-f1/checks/top/../../../../prints/mystery-box-sg92r-f1/frame/upper_frame.stl": "6367ce289a78ff6803619a07cee7dc162f7f01a18d824ada0d3ac989a2b0214b",
+  "models/mystery-box-sg92r-f1/checks/top/../../../../prints/mystery-box-sg92r-f1/frame/post_0.stl": "62635ec42989314abbc27751aa6190c8a9fa2f1d2ecc574d1ffdabf1297d2f07",
+  "models/mystery-box-sg92r-f1/checks/top/../../../../prints/mystery-box-sg92r-f1/frame/post_1.stl": "7054563c5f45b40a19c9b42531f69a000f49951511414ef4f29f8c05eb4d06da",
+  "models/mystery-box-sg92r-f1/checks/top/../../../../prints/mystery-box-sg92r-f1/frame/post_2.stl": "2c735cf91825e6f30e63cb7d428c83569367b0f06195f11481d375b2fd7fc63c",
+  "models/mystery-box-sg92r-f1/checks/top/../../../../prints/mystery-box-sg92r-f1/frame/post_3.stl": "1f17a997d0043b31c15ad902d53a3bece7486cfabb94f205adaa98204f3dc5b7",
+  "models/mystery-box-sg92r-f1/checks/top/../../../../prints/mystery-box-sg92r-f1/frame/wiring.stl": "38d12ac9acbd6597ead6457fdfbcf939252cf295de09e9c2ef881c2ab9479379",
+  "models/mystery-box-sg92r-f1/checks/top/../../../../prints/mystery-box-sg92r-f1/frame/tray.stl": "0b230f16349c9210d44257e5dd77207f8f077e17fe0573619d04a0664d00b1df",
+  "models/mystery-box-sg92r-f1/checks/top/../../../../prints/mystery-box-sg92r-f1/front/panel.stl": "63f7be4d3585529501c2126fef882bc27fabe69d029e186389bd5eced5b0551c",
+  "models/mystery-box-sg92r-f1/checks/top/../../../../prints/mystery-box-sg92r-f1/front/key_l.stl": "47de897756b1b62c46f37db61a5429ab954e389409548de76d3d435aba61286b",
+  "models/mystery-box-sg92r-f1/checks/top/../../../../prints/mystery-box-sg92r-f1/front/key_r.stl": "bc28b263c77c12c18a321918cf19bf122bed484371a68a982078b8cb1da60335",
+  "models/mystery-box-sg92r-f1/checks/top/../../../../prints/mystery-box-sg92r-f1/front/support.stl": "1e416d790a7791ab84abcf7609a8d483f1a0aa0b936c5a99d33ad82cfab673ad",
+  "models/mystery-box-sg92r-f1/checks/top/../../../../prints/mystery-box-sg92r-f1/front/servo_cap.stl": "e5c4782749f78545a79d4c7f5759bcaf60c12c2ac05c029dbd4a119f8ebe4824",
+  "models/mystery-box-sg92r-f1/checks/top/../../../../prints/mystery-box-sg92r-f1/front/crank.stl": "b90011230c07abca65f57a16f6235eacfca1cdf90a65f2a320e53cd3727d1758",
+  "models/mystery-box-sg92r-f1/checks/top/../../../../prints/mystery-box-sg92r-f1/front/link.stl": "ddb4b939325b7cf27ec0ff627406362b945a989c6dc86d9542be3be28f409ea3",
+  "models/mystery-box-sg92r-f1/checks/top/../../../../prints/mystery-box-sg92r-f1/front/lid.stl": "58bbee72d34b404d24be3be48371afde0693e600cd63a6880c0fda21112174c7",
+  "models/mystery-box-sg92r-f1/checks/top/../../../../prints/mystery-box-sg92r-f1/front/hinge_pin.stl": "ff393c0393a1a3fac80f8f6de8fa669036a71108423091741f97d04ca5fb86c9",
+  "models/mystery-box-sg92r-f1/checks/top/../../../../prints/mystery-box-sg92r-f1/right/panel.stl": "088c2601c0493130331c7ffa0f1611a4b57cf987ddffc21417ae5bfa64990c2e",
+  "models/mystery-box-sg92r-f1/checks/top/../../../../prints/mystery-box-sg92r-f1/right/key_l.stl": "47de897756b1b62c46f37db61a5429ab954e389409548de76d3d435aba61286b",
+  "models/mystery-box-sg92r-f1/checks/top/../../../../prints/mystery-box-sg92r-f1/right/key_r.stl": "bc28b263c77c12c18a321918cf19bf122bed484371a68a982078b8cb1da60335",
+  "models/mystery-box-sg92r-f1/checks/top/../../../../prints/mystery-box-sg92r-f1/back/panel.stl": "088c2601c0493130331c7ffa0f1611a4b57cf987ddffc21417ae5bfa64990c2e",
+  "models/mystery-box-sg92r-f1/checks/top/../../../../prints/mystery-box-sg92r-f1/back/key_l.stl": "47de897756b1b62c46f37db61a5429ab954e389409548de76d3d435aba61286b",
+  "models/mystery-box-sg92r-f1/checks/top/../../../../prints/mystery-box-sg92r-f1/back/key_r.stl": "bc28b263c77c12c18a321918cf19bf122bed484371a68a982078b8cb1da60335",
+  "models/mystery-box-sg92r-f1/checks/top/../../../../prints/mystery-box-sg92r-f1/left/panel.stl": "088c2601c0493130331c7ffa0f1611a4b57cf987ddffc21417ae5bfa64990c2e",
+  "models/mystery-box-sg92r-f1/checks/top/../../../../prints/mystery-box-sg92r-f1/left/key_l.stl": "47de897756b1b62c46f37db61a5429ab954e389409548de76d3d435aba61286b",
+  "models/mystery-box-sg92r-f1/checks/top/../../../../prints/mystery-box-sg92r-f1/left/key_r.stl": "bc28b263c77c12c18a321918cf19bf122bed484371a68a982078b8cb1da60335",
+  "models/mystery-box-sg92r-f1/checks/top/../../../../prints/mystery-box-sg92r-f1/top/panel.stl": "502d5ea8b587a541264351fedcf6e37220df46cc1091e83cb2707742d732af65",
+  "models/mystery-box-sg92r-f1/checks/top/../../../../prints/mystery-box-sg92r-f1/top/key_l.stl": "47de897756b1b62c46f37db61a5429ab954e389409548de76d3d435aba61286b",
+  "models/mystery-box-sg92r-f1/checks/top/../../../../prints/mystery-box-sg92r-f1/top/key_r.stl": "bc28b263c77c12c18a321918cf19bf122bed484371a68a982078b8cb1da60335",
+  "models/mystery-box-sg92r-f1/checks/top/../../../../prints/mystery-box-sg92r-f1/top/support.stl": "78e3e93ece18b2b2548bbc09631aa74f5eb5d4bb47556e26c8eae9296d85fb19",
+  "models/mystery-box-sg92r-f1/checks/top/../../../../prints/mystery-box-sg92r-f1/top/servo_cap.stl": "4ea9f99d974ce1f9c005859076fd408e6e43256174f80007af719cc443555ee6",
+  "models/mystery-box-sg92r-f1/checks/top/../../../../prints/mystery-box-sg92r-f1/top/cam_lower.stl": "ce6bea9d7fc037cfc0d4ed851b36bbf0a24889cc5d93d4e42c9d5c995afb6f52",
+  "models/mystery-box-sg92r-f1/checks/top/../../../../prints/mystery-box-sg92r-f1/top/cam_upper.stl": "4cd7dd9a90d960e699700446486bd9467afa09ff15f2be582a068b3be49af4e2",
+  "models/mystery-box-sg92r-f1/checks/top/../../../../prints/mystery-box-sg92r-f1/top/pixel_1.stl": "c0feeb0fe878821e2aa40026938f932677a71e4c4433792aedd213d9aeaefa1d",
+  "models/mystery-box-sg92r-f1/checks/top/../../../../prints/mystery-box-sg92r-f1/top/pixel_2.stl": "32942d0e999e5bdf7c04c9ca655e012158caedf33866243afcb24af6e4bcb573",
+  "models/mystery-box-sg92r-f1/checks/top/../../../../prints/mystery-box-sg92r-f1/top/pixel_3.stl": "96563c26daf2073bba48be845dc9a22c13177b2e1c6a6563cb89d8bd1278f63c",
+  "models/mystery-box-sg92r-f1/checks/top/../../../../prints/mystery-box-sg92r-f1/top/guide.stl": "b45b749e7e4f247251f6d180adf441c8ec16d41455a455bf1fd8c4d91f3e2924",
+  "models/mystery-box-sg92r-f1/checks/top/../../../../prints/mystery-box-sg92r-f1/top/cam_key_1.stl": "d55726b966c8b30ca363394f8b143180f4231769282a35f9f5c921d0358260ab",
+  "models/mystery-box-sg92r-f1/checks/top/../../../../prints/mystery-box-sg92r-f1/top/cam_key_2.stl": "0395bbb494d8b4fc82124ecc754ed961248b39f333cf8c7216d721926bee2e81",
+  "models/mystery-box-sg92r-f1/checks/top/../../../../prints/mystery-box-sg92r-f1/bottom/panel.stl": "088c2601c0493130331c7ffa0f1611a4b57cf987ddffc21417ae5bfa64990c2e",
+  "models/mystery-box-sg92r-f1/checks/top/../../../../prints/mystery-box-sg92r-f1/bottom/key_l.stl": "47de897756b1b62c46f37db61a5429ab954e389409548de76d3d435aba61286b",
+  "models/mystery-box-sg92r-f1/checks/top/../../../../prints/mystery-box-sg92r-f1/bottom/key_r.stl": "bc28b263c77c12c18a321918cf19bf122bed484371a68a982078b8cb1da60335",
+  "prints/mystery-box-sg92r-f1/trial/front/horn_fit.stl": "732fd2e183537c2443c873bad99f4c2d0a77d96b9fc5063493f4b612c900b8bb",
+  "prints/mystery-box-sg92r-f1/trial/front/servo_fit.stl": "cc6ed9aeb40eda2b5b2d099994732038af3b4021342f48d0a9b839ca52cf6de6",
+  "prints/mystery-box-sg92r-f1/trial/front/connector_nest.stl": "9512426b27a82bbdad6ba21385de0485505d7908d4a469cce861e2aaa5285ad1",
+  "tools/mechgate.py": "a04a4984d76cf8fa034fecbf79635d71513659919101b1cd6e61ff7bffba6f7b",
+  "tools/mechgate_lib/__init__.py": "7f409f2f5490445952a8c8ccbcacc41dbe79c6e4d90eaf83d1eaf05c1a20ca93",
+  "tools/mechgate_lib/limits.py": "0e544a9ae5e0495fdf009983bf0cca7696cea68c05349a92af08eb7ac3634f88",
+  "tools/mechgate_lib/meshcheck.py": "3efc9d3d1de32a392d8f1979a59665c6a382a497794c4f82d8f3af927d094110",
+  "tools/mechgate_lib/gate.py": "678d74e161580b390d630c39ac6df5717e9c391f9c6bd68e5cd08d1da40e3f99",
+  "tools/mechgate_lib/bl_job.py": "91aa0d0e7150e4812b8d20f1a80c8e7ddbde5851e1e5c16656d243082158b135",
+  "tools/mechgate_lib/selftest.py": "8f0a0411afe96f993744f0ff20fb51207e857e6c8672b81d5f0b68912cae967e",
+  "lib/printmech/solid_meter.py": "29fd57451bc054b928b3f54edec94de6a8dc529372db52bf48e6e62f90a2c53d",
+  "lib/printmech/contract.py": "c07fbf75fc73042f69db935b61ce3d078d00da4d8c0f40ebc9948ddf7abf4aef",
+  "lib/solid_volume.py": "e2ef2fed94077267883da61c7b28ca09f321d1263833bcaf6580daa7748b1415"
+ }
+}

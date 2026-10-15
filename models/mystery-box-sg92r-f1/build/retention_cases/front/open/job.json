@@ -31,6 +31,18 @@
   "top/panel": "C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-f1\\build\\retention_cases\\front\\open\\parts\\top\\panel.stl",
   "top/key_l": "C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-f1\\build\\retention_cases\\front\\open\\parts\\top\\key_l.stl",
   "top/key_r": "C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-f1\\build\\retention_cases\\front\\open\\parts\\top\\key_r.stl",
+  "top/support": "C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-f1\\build\\retention_cases\\front\\open\\parts\\top\\support.stl",
+  "top/servo_cap": "C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-f1\\build\\retention_cases\\front\\open\\parts\\top\\servo_cap.stl",
+  "top/cam_lower": "C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-f1\\build\\retention_cases\\front\\open\\parts\\top\\cam_lower.stl",
+  "top/cam_upper": "C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-f1\\build\\retention_cases\\front\\open\\parts\\top\\cam_upper.stl",
+  "top/pixel_1": "C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-f1\\build\\retention_cases\\front\\open\\parts\\top\\pixel_1.stl",
+  "top/pixel_2": "C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-f1\\build\\retention_cases\\front\\open\\parts\\top\\pixel_2.stl",
+  "top/pixel_3": "C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-f1\\build\\retention_cases\\front\\open\\parts\\top\\pixel_3.stl",
+  "top/guide": "C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-f1\\build\\retention_cases\\front\\open\\parts\\top\\guide.stl",
+  "top/cam_key_1": "C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-f1\\build\\retention_cases\\front\\open\\parts\\top\\cam_key_1.stl",
+  "top/cam_key_2": "C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-f1\\build\\retention_cases\\front\\open\\parts\\top\\cam_key_2.stl",
+  "top/servo": "C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-f1\\build\\retention_cases\\front\\open\\parts\\top\\servo.stl",
+  "top/horn": "C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-f1\\build\\retention_cases\\front\\open\\parts\\top\\horn.stl",
   "bottom/panel": "C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-f1\\build\\retention_cases\\front\\open\\parts\\bottom\\panel.stl",
   "bottom/key_l": "C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-f1\\build\\retention_cases\\front\\open\\parts\\bottom\\key_l.stl",
   "bottom/key_r": "C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-f1\\build\\retention_cases\\front\\open\\parts\\bottom\\key_r.stl"
@@ -318,9 +330,177 @@
    "engage_depth_mm": 1.2
   },
   {
-   "id": "top/panel-key-left",
+   "id": "top/pixel-1-out",
    "type": "retention",
    "parts": [
+    "top/pixel_1"
+   ],
+   "against": [
+    "top/cam_upper",
+    "top/cam_lower"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3
+  },
+  {
+   "id": "top/pixel-1-in",
+   "type": "retention",
+   "parts": [
+    "top/pixel_1"
+   ],
+   "against": [
+    "top/cam_upper",
+    "top/cam_lower"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3
+  },
+  {
+   "id": "top/pixel-2-out",
+   "type": "retention",
+   "parts": [
+    "top/pixel_2"
+   ],
+   "against": [
+    "top/cam_upper",
+    "top/cam_lower"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3
+  },
+  {
+   "id": "top/pixel-2-in",
+   "type": "retention",
+   "parts": [
+    "top/pixel_2"
+   ],
+   "against": [
+    "top/cam_upper",
+    "top/cam_lower"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3
+  },
+  {
+   "id": "top/pixel-3-out",
+   "type": "retention",
+   "parts": [
+    "top/pixel_3"
+   ],
+   "against": [
+    "top/cam_upper",
+    "top/cam_lower"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3
+  },
+  {
+   "id": "top/pixel-3-in",
+   "type": "retention",
+   "parts": [
+    "top/pixel_3"
+   ],
+   "against": [
+    "top/cam_upper",
+    "top/cam_lower"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3
+  },
+  {
+   "id": "top/cam-out",
+   "type": "retention",
+   "parts": [
+    "top/cam_upper",
+    "top/cam_lower",
+    "top/cam_key_1",
+    "top/cam_key_2"
+   ],
+   "against": [
+    "top/panel",
+    "top/guide"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3
+  },
+  {
+   "id": "top/guide-out",
+   "type": "retention",
+   "parts": [
+    "top/guide"
+   ],
+   "against": [
+    "top/servo_cap",
+    "top/support"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 2
+  },
+  {
+   "id": "top/servo-out",
+   "type": "retention",
+   "parts": [
+    "top/servo"
+   ],
+   "against": [
+    "top/servo_cap",
+    "top/support"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 2
+  },
+  {
+   "id": "top/support-out",
+   "type": "retention",
+   "parts": [
+    "top/support"
+   ],
+   "against": [
     "top/panel"
    ],
    "direction": [
@@ -332,15 +512,185 @@
    "engage_depth_mm": 1.2
   },
   {
-   "id": "top/panel-key-right",
+   "id": "top/cap-out",
    "type": "retention",
    "parts": [
-    "top/panel"
+    "top/servo_cap"
+   ],
+   "against": [
+    "top/support",
+    "top/servo",
+    "top/guide"
    ],
    "direction": [
     0.0,
     0.0,
     1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.2
+  },
+  {
+   "id": "top/cam-key-1-out",
+   "type": "retention",
+   "parts": [
+    "top/cam_key_1"
+   ],
+   "against": [
+    "top/cam_upper",
+    "top/cam_lower"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.2
+  },
+  {
+   "id": "top/cam-key-2-out",
+   "type": "retention",
+   "parts": [
+    "top/cam_key_2"
+   ],
+   "against": [
+    "top/cam_upper",
+    "top/cam_lower"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.2
+  },
+  {
+   "id": "top/cam-in",
+   "type": "retention",
+   "parts": [
+    "top/cam_upper",
+    "top/cam_lower",
+    "top/cam_key_1",
+    "top/cam_key_2"
+   ],
+   "against": [
+    "top/panel",
+    "top/guide"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3
+  },
+  {
+   "id": "top/guide-in",
+   "type": "retention",
+   "parts": [
+    "top/guide"
+   ],
+   "against": [
+    "top/servo_cap",
+    "top/support"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 2
+  },
+  {
+   "id": "top/servo-in",
+   "type": "retention",
+   "parts": [
+    "top/servo"
+   ],
+   "against": [
+    "top/servo_cap",
+    "top/support"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 2
+  },
+  {
+   "id": "top/support-in",
+   "type": "retention",
+   "parts": [
+    "top/support"
+   ],
+   "against": [
+    "top/panel"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.2
+  },
+  {
+   "id": "top/cap-in",
+   "type": "retention",
+   "parts": [
+    "top/servo_cap"
+   ],
+   "against": [
+    "top/support",
+    "top/servo",
+    "top/guide"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.2
+  },
+  {
+   "id": "top/cam-key-1-in",
+   "type": "retention",
+   "parts": [
+    "top/cam_key_1"
+   ],
+   "against": [
+    "top/cam_upper",
+    "top/cam_lower"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.2
+  },
+  {
+   "id": "top/cam-key-2-in",
+   "type": "retention",
+   "parts": [
+    "top/cam_key_2"
+   ],
+   "against": [
+    "top/cam_upper",
+    "top/cam_lower"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
    ],
    "max_free_mm": 0.5,
    "engage_depth_mm": 1.2
@@ -619,7 +969,19 @@
    "parts": [
     "top/panel",
     "top/key_l",
-    "top/key_r"
+    "top/key_r",
+    "top/support",
+    "top/servo_cap",
+    "top/cam_lower",
+    "top/cam_upper",
+    "top/pixel_1",
+    "top/pixel_2",
+    "top/pixel_3",
+    "top/guide",
+    "top/cam_key_1",
+    "top/cam_key_2",
+    "top/servo",
+    "top/horn"
    ],
    "direction": [
     -0.0,
@@ -675,9 +1037,21 @@
   "right/key_l",
   "right/key_r",
   "right/panel",
+  "top/cam_key_1",
+  "top/cam_key_2",
+  "top/cam_lower",
+  "top/cam_upper",
+  "top/guide",
+  "top/horn",
   "top/key_l",
   "top/key_r",
-  "top/panel"
+  "top/panel",
+  "top/pixel_1",
+  "top/pixel_2",
+  "top/pixel_3",
+  "top/servo",
+  "top/servo_cap",
+  "top/support"
  ],
  "out": "C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-f1\\build\\retention_cases\\front\\open\\report.json"
 }

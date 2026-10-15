@@ -108,6 +108,36 @@ def face_package(name, slot, with_geometry=False):
     return modules
 
 
+def motion_range(motion, calibration_deg=0):
+    angles = []
+    for key in ("closed_servo_deg", "open_servo_deg", "assembly_servo_deg"):
+        angle = motion.get(key)
+        if isinstance(angle, bool) or not isinstance(angle, (int, float)) or not math.isfinite(angle):
+            raise ValueError(f"invalid motion.{key}")
+        if not 0 <= angle <= 180:
+            raise ValueError("physical servo range outside 0..180")
+        angles.append(angle)
+    if "range_servo_deg" in motion:
+        bounds = motion["range_servo_deg"]
+        if (not isinstance(bounds, list) or len(bounds) != 2
+                or any(isinstance(value, bool) or not isinstance(value, (int, float))
+                       or not math.isfinite(value) for value in bounds)):
+            raise ValueError("motion.range_servo_deg must be exactly two finite numbers")
+        low, high = bounds
+        if not 0 <= low < high <= 180:
+            raise ValueError("motion.range_servo_deg must satisfy 0 <= low < high <= 180")
+        if any(not low <= angle <= high for angle in angles):
+            raise ValueError("motion.range_servo_deg must include closed, open and assembly commands")
+    else:
+        low, high = sorted(angles[:2])
+    if (isinstance(calibration_deg, bool) or not isinstance(calibration_deg, (int, float))
+            or not math.isfinite(calibration_deg)):
+        raise ValueError("finite calibration_deg required")
+    if not 0 <= low + calibration_deg <= high + calibration_deg <= 180:
+        raise ValueError("calibrated command outside servo range")
+    return low, high
+
+
 def load_configuration(configuration=None, interface=None):
     interface = read(HERE / "interface.json") if interface is None else copy.deepcopy(interface)
     configuration = read(HERE / "slots.json") if configuration is None else copy.deepcopy(configuration)
@@ -125,7 +155,7 @@ def load_configuration(configuration=None, interface=None):
         if row.get("rotation_deg") != 0:
             raise ValueError(f"{slot}: asymmetric locating keys permit rotation_deg=0 only")
         calibration = row.get("calibration_deg", 0)
-        if not isinstance(calibration, (int, float)) or not math.isfinite(calibration):
+        if isinstance(calibration, bool) or not isinstance(calibration, (int, float)) or not math.isfinite(calibration):
             raise ValueError(f"{slot}: finite calibration_deg required")
         directory = HERE / "faces" / name
         for filename in FACE_FILES:
@@ -151,14 +181,13 @@ def load_configuration(configuration=None, interface=None):
             for key in ("actuator", "servo"):
                 if motion.get(key) not in ids:
                     raise ValueError(f"{slot}: motion.{key} absent from parts")
-            for key in ("closed_servo_deg", "open_servo_deg", "assembly_servo_deg", "step_deg", "duration_s"):
-                if not isinstance(motion.get(key), (int, float)) or not math.isfinite(motion[key]):
+            for key in ("step_deg", "duration_s"):
+                if (isinstance(motion.get(key), bool) or not isinstance(motion.get(key), (int, float))
+                        or not math.isfinite(motion[key])):
                     raise ValueError(f"{slot}: invalid motion.{key}")
             if not 0 < motion["step_deg"] <= 1 or motion["duration_s"] <= 0:
                 raise ValueError(f"{slot}: invalid motion sampling or duration")
-            if any(not 0 <= motion[k] <= 180 for k in
-                   ("closed_servo_deg", "open_servo_deg", "assembly_servo_deg")):
-                raise ValueError(f"{slot}: physical servo range outside 0..180")
+            motion_range(motion, calibration)
         loaded[slot] = {"config": row, "meta": metadata, "S": slot_matrix(interface, slot)}
     return interface, configuration, loaded
 
@@ -175,23 +204,23 @@ def checked_transforms(module, angle, interface, common, ids):
 
 
 def sample_angles(motion):
-    low, high = sorted((motion["closed_servo_deg"], motion["open_servo_deg"]))
+    low, high = motion_range(motion)
     count = max(1, math.ceil((high - low) / motion["step_deg"]))
     return np.linspace(low, high, count + 1)
 
 
 def retention_poses(kinematics, motion, interface, common):
+    low, high = motion_range(motion)
     provider = getattr(kinematics, "retention_poses", None)
     if provider is not None and not callable(provider):
         raise ValueError("retention_poses must be callable")
     poses = provider(interface, common) if callable(provider) else [
         {"id": "mid", "label": "サーボ範囲の中間", "servo_deg":
-         (motion["closed_servo_deg"] + motion["open_servo_deg"]) / 2},
+         (low + high) / 2},
         {"id": "open", "label": "開端", "servo_deg": motion["open_servo_deg"]}]
     if (not isinstance(poses, list) or len(poses) != 2 or not all(isinstance(p, dict) for p in poses)
             or {p.get("id") for p in poses} != {"mid", "open"}):
         raise ValueError("retention_poses must provide exactly mid and open")
-    low, high = sorted((motion["closed_servo_deg"], motion["open_servo_deg"]))
     for pose in poses:
         angle = pose.get("servo_deg")
         if isinstance(angle, bool) or not isinstance(angle, (int, float)) or not math.isfinite(angle) or not low <= angle <= high:
@@ -345,8 +374,9 @@ def selected_face_sources(configuration):
         directory = HERE / "faces" / name
         if not directory.is_dir():
             raise ValueError(f"selected module directory missing: {name}")
-        sources.update(p for p in directory.rglob("*") if p.is_file() and p.suffix in (".py", ".json")
-                       and not {"build", "__pycache__"}.intersection(p.relative_to(directory).parts[:-1]))
+        for current, directories, filenames in os.walk(directory):
+            directories[:] = [name for name in directories if name not in {"build", "__pycache__", "_local"}]
+            sources.update(Path(current) / name for name in filenames if Path(name).suffix in (".py", ".json"))
     return sources
 
 
@@ -606,8 +636,7 @@ def build():
                                for key, value in local.items()})
             frames.append((float(angle), transforms))
         calibration = faces[target]["config"].get("calibration_deg", 0)
-        if any(not 0 <= angle + calibration <= 180 for angle, _ in frames):
-            raise ValueError(f"{target}: calibrated command outside servo range")
+        motion_range(motion, calibration)
         C.write_motion(case_build, frames, home_servo_deg=motion["closed_servo_deg"],
                        duration_s=motion["duration_s"], easing="quintic", slot=target,
                        calibration_deg=calibration,

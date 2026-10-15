@@ -1,0 +1,12 @@
+{
+ "scope":"段3前半: 上面three_pixelsの統合",
+ "plan":[
+  {"step":"規格と単体モデルの申し送りを確認","status":"complete"},
+  {"step":"掃引範囲APIとslots/spec/READMEを更新","status":"complete"},
+  {"step":"合成しtop/front/rootのゲートを実行","status":"complete","returncodes":{"top":0,"front":0,"root":0}},
+  {"step":"違反を面内で修正し最終証拠を記録","status":"complete"}
+ ],
+ "boundaries":["sector_flagは読み書きしない","規格・骨格・計器は変更しない","allowancesを広げない","commit/pushしない"],
+ "changed_inputs":["slots.json","spec.base.json","compose.py","verify_contract.py","faces/template/README.md","README.md"],
+ "next":"段3前半完了。3ゲートexit0、契約624/624、包絡38/38、補助保持4ケース各58/58。生出力はgit-status-short.txt。commit/pushは親担当。"
+}

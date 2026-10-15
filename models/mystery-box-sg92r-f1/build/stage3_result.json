@@ -1,0 +1,18 @@
+{
+  "scope": "段3前半: 上面 three_pixels の統合",
+  "gate_runs": [
+    {"command": "py -3.11 tools/mechgate.py check mystery-box-sg92r-f1/checks/top", "returncode": 0, "report": "checks/top/build/gate_report.json"},
+    {"command": "py -3.11 tools/mechgate.py check mystery-box-sg92r-f1/checks/front", "returncode": 0, "report": "checks/front/build/gate_report.json"},
+    {"command": "py -3.11 tools/mechgate.py check mystery-box-sg92r-f1", "returncode": 0, "report": "build/gate_report.json"}
+  ],
+  "contract": {"returncode": 0, "passed": 624, "total": 624},
+  "local_three_pixels": {"returncode": 0, "poses": 61, "report": "faces/three_pixels/_local/check.json"},
+  "retention": {"returncode": 0, "cases": 4, "interfaces_per_case": 58, "report": "build/retention_report.json"},
+  "dense_envelopes": {"returncode": 0, "passed": 38, "total": 38, "report": "build/envelope_report.json"},
+  "catalog": {"returncode": 0},
+  "red_check_ids": [],
+  "waived_checks": ["print.slice"],
+  "protected": {"interface_changed": false, "frame_changed": false, "meter_changed": false, "allowances_widened": false, "sector_flag_read_or_written": false, "right_module": "blank"},
+  "unresolved": ["スライス・実物の嵌合・摩擦・遮蔽・着脱", "任意の面の同時動作", "非線形運動学そのものの連続証明"],
+  "commit_or_push": false
+}
