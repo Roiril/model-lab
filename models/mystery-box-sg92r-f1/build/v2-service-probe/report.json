@@ -1,0 +1,493 @@
+{
+ "parts": [
+  {
+   "part": "lower_frame",
+   "topology": {
+    "triangles": 1292,
+    "vertices": 646,
+    "edgesNotSharedByTwo": 0,
+    "edgesWithSameDirectionTwice": 0,
+    "degenerateTriangles": 0,
+    "signedVolumeMm3": 14776.9847,
+    "pass": true
+   },
+   "components": 1,
+   "volume_mm3": 14776.98474507049,
+   "grounding": {
+    "bedZ": 0.0,
+    "contactAreaMm2": 2417.539,
+    "floatingComponents": [],
+    "heightMm": 6.0,
+    "contactShortSideMm": 100.0,
+    "heightOverShortSide": 0.06
+   }
+  },
+  {
+   "part": "upper_frame",
+   "topology": {
+    "triangles": 1136,
+    "vertices": 568,
+    "edgesNotSharedByTwo": 0,
+    "edgesWithSameDirectionTwice": 0,
+    "degenerateTriangles": 0,
+    "signedVolumeMm3": 15036.5282,
+    "pass": true
+   },
+   "components": 1,
+   "volume_mm3": 15036.528196715493,
+   "grounding": {
+    "bedZ": 0.0,
+    "contactAreaMm2": 2441.869,
+    "floatingComponents": [],
+    "heightMm": 6.0,
+    "contactShortSideMm": 100.0,
+    "heightOverShortSide": 0.06
+   }
+  },
+  {
+   "part": "post_0",
+   "topology": {
+    "triangles": 140,
+    "vertices": 72,
+    "edgesNotSharedByTwo": 0,
+    "edgesWithSameDirectionTwice": 0,
+    "degenerateTriangles": 0,
+    "signedVolumeMm3": 2963.9099,
+    "pass": true
+   },
+   "components": 1,
+   "volume_mm3": 2963.9098814392923,
+   "grounding": {
+    "bedZ": 0.0,
+    "contactAreaMm2": 493.985,
+    "floatingComponents": [],
+    "heightMm": 6.0,
+    "contactShortSideMm": 6.0,
+    "heightOverShortSide": 1.0
+   }
+  },
+  {
+   "part": "post_1",
+   "topology": {
+    "triangles": 140,
+    "vertices": 72,
+    "edgesNotSharedByTwo": 0,
+    "edgesWithSameDirectionTwice": 0,
+    "degenerateTriangles": 0,
+    "signedVolumeMm3": 2963.9099,
+    "pass": true
+   },
+   "components": 1,
+   "volume_mm3": 2963.909881439294,
+   "grounding": {
+    "bedZ": 0.0,
+    "contactAreaMm2": 493.985,
+    "floatingComponents": [],
+    "heightMm": 6.0,
+    "contactShortSideMm": 6.0,
+    "heightOverShortSide": 1.0
+   }
+  },
+  {
+   "part": "post_2",
+   "topology": {
+    "triangles": 140,
+    "vertices": 72,
+    "edgesNotSharedByTwo": 0,
+    "edgesWithSameDirectionTwice": 0,
+    "degenerateTriangles": 0,
+    "signedVolumeMm3": 2963.9099,
+    "pass": true
+   },
+   "components": 1,
+   "volume_mm3": 2963.9098814392933,
+   "grounding": {
+    "bedZ": 0.0,
+    "contactAreaMm2": 493.985,
+    "floatingComponents": [],
+    "heightMm": 6.0,
+    "contactShortSideMm": 6.0,
+    "heightOverShortSide": 1.0
+   }
+  },
+  {
+   "part": "post_3",
+   "topology": {
+    "triangles": 140,
+    "vertices": 72,
+    "edgesNotSharedByTwo": 0,
+    "edgesWithSameDirectionTwice": 0,
+    "degenerateTriangles": 0,
+    "signedVolumeMm3": 2963.9099,
+    "pass": true
+   },
+   "components": 1,
+   "volume_mm3": 2963.909881439293,
+   "grounding": {
+    "bedZ": 0.0,
+    "contactAreaMm2": 493.985,
+    "floatingComponents": [],
+    "heightMm": 6.0,
+    "contactShortSideMm": 6.0,
+    "heightOverShortSide": 1.0
+   }
+  },
+  {
+   "part": "carrier_front",
+   "topology": {
+    "triangles": 686,
+    "vertices": 343,
+    "edgesNotSharedByTwo": 0,
+    "edgesWithSameDirectionTwice": 0,
+    "degenerateTriangles": 0,
+    "signedVolumeMm3": 6077.1415,
+    "pass": true
+   },
+   "components": 1,
+   "volume_mm3": 6077.141465168624,
+   "grounding": {
+    "bedZ": 0.0,
+    "contactAreaMm2": 1747.15,
+    "floatingComponents": [],
+    "heightMm": 5.25,
+    "contactShortSideMm": 83.0,
+    "heightOverShortSide": 0.063
+   }
+  },
+  {
+   "part": "carrier_right",
+   "topology": {
+    "triangles": 690,
+    "vertices": 345,
+    "edgesNotSharedByTwo": 0,
+    "edgesWithSameDirectionTwice": 0,
+    "degenerateTriangles": 0,
+    "signedVolumeMm3": 6077.1415,
+    "pass": true
+   },
+   "components": 1,
+   "volume_mm3": 6077.141465168624,
+   "grounding": {
+    "bedZ": 0.0,
+    "contactAreaMm2": 1747.15,
+    "floatingComponents": [],
+    "heightMm": 5.25,
+    "contactShortSideMm": 83.0,
+    "heightOverShortSide": 0.063
+   }
+  },
+  {
+   "part": "carrier_back",
+   "topology": {
+    "triangles": 754,
+    "vertices": 377,
+    "edgesNotSharedByTwo": 0,
+    "edgesWithSameDirectionTwice": 0,
+    "degenerateTriangles": 0,
+    "signedVolumeMm3": 6032.4331,
+    "pass": true
+   },
+   "components": 1,
+   "volume_mm3": 6032.4331318352915,
+   "grounding": {
+    "bedZ": 0.0,
+    "contactAreaMm2": 1747.15,
+    "floatingComponents": [],
+    "heightMm": 5.25,
+    "contactShortSideMm": 83.0,
+    "heightOverShortSide": 0.063
+   }
+  },
+  {
+   "part": "carrier_left",
+   "topology": {
+    "triangles": 690,
+    "vertices": 345,
+    "edgesNotSharedByTwo": 0,
+    "edgesWithSameDirectionTwice": 0,
+    "degenerateTriangles": 0,
+    "signedVolumeMm3": 6077.1415,
+    "pass": true
+   },
+   "components": 1,
+   "volume_mm3": 6077.141465168624,
+   "grounding": {
+    "bedZ": 0.0,
+    "contactAreaMm2": 1747.15,
+    "floatingComponents": [],
+    "heightMm": 5.25,
+    "contactShortSideMm": 83.0,
+    "heightOverShortSide": 0.063
+   }
+  },
+  {
+   "part": "wiring",
+   "topology": {
+    "triangles": 434,
+    "vertices": 219,
+    "edgesNotSharedByTwo": 0,
+    "edgesWithSameDirectionTwice": 0,
+    "degenerateTriangles": 0,
+    "signedVolumeMm3": 17714.9117,
+    "pass": true
+   },
+   "components": 1,
+   "volume_mm3": 17714.911717419964,
+   "grounding": {
+    "bedZ": 0.0,
+    "contactAreaMm2": 2011.0,
+    "floatingComponents": [],
+    "heightMm": 19.0,
+    "contactShortSideMm": 50.0,
+    "heightOverShortSide": 0.38
+   }
+  },
+  {
+   "part": "tray",
+   "topology": {
+    "triangles": 194,
+    "vertices": 95,
+    "edgesNotSharedByTwo": 0,
+    "edgesWithSameDirectionTwice": 0,
+    "degenerateTriangles": 0,
+    "signedVolumeMm3": 8589.928,
+    "pass": true
+   },
+   "components": 1,
+   "volume_mm3": 8589.928012222295,
+   "grounding": {
+    "bedZ": 0.0,
+    "contactAreaMm2": 405.44,
+    "floatingComponents": [],
+    "heightMm": 44.0,
+    "contactShortSideMm": 24.0,
+    "heightOverShortSide": 1.833
+   }
+  }
+ ],
+ "static_intersections": [],
+ "paths": [
+  {
+   "step": "lower-frame",
+   "contact_samples": 0,
+   "first_hit": []
+  },
+  {
+   "step": "insert-post_0",
+   "contact_samples": 0,
+   "first_hit": []
+  },
+  {
+   "step": "insert-post_1",
+   "contact_samples": 0,
+   "first_hit": []
+  },
+  {
+   "step": "insert-post_2",
+   "contact_samples": 0,
+   "first_hit": []
+  },
+  {
+   "step": "insert-post_3",
+   "contact_samples": 0,
+   "first_hit": []
+  },
+  {
+   "step": "insert-carrier_front",
+   "contact_samples": 0,
+   "first_hit": []
+  },
+  {
+   "step": "insert-carrier_right",
+   "contact_samples": 0,
+   "first_hit": []
+  },
+  {
+   "step": "wiring",
+   "contact_samples": 0,
+   "first_hit": []
+  },
+  {
+   "step": "insert-carrier_back",
+   "contact_samples": 0,
+   "first_hit": []
+  },
+  {
+   "step": "insert-carrier_left",
+   "contact_samples": 0,
+   "first_hit": []
+  },
+  {
+   "step": "upper-frame",
+   "contact_samples": 0,
+   "first_hit": []
+  },
+  {
+   "step": "tray",
+   "contact_samples": 0,
+   "first_hit": []
+  }
+ ],
+ "retention": [
+  {
+   "id": "post-0-bottom",
+   "first_collision_mm": 0.275
+  },
+  {
+   "id": "post-0-top",
+   "first_collision_mm": 0.275
+  },
+  {
+   "id": "post-1-bottom",
+   "first_collision_mm": 0.275
+  },
+  {
+   "id": "post-1-top",
+   "first_collision_mm": 0.275
+  },
+  {
+   "id": "post-2-bottom",
+   "first_collision_mm": 0.275
+  },
+  {
+   "id": "post-2-top",
+   "first_collision_mm": 0.275
+  },
+  {
+   "id": "post-3-bottom",
+   "first_collision_mm": 0.275
+  },
+  {
+   "id": "post-3-top",
+   "first_collision_mm": 0.275
+  },
+  {
+   "id": "carrier-front-left",
+   "first_collision_mm": 0.225
+  },
+  {
+   "id": "carrier-front-right",
+   "first_collision_mm": 0.225
+  },
+  {
+   "id": "carrier-front-out",
+   "first_collision_mm": 0.025
+  },
+  {
+   "id": "carrier-front-in",
+   "first_collision_mm": 0.275
+  },
+  {
+   "id": "carrier-front-down",
+   "first_collision_mm": 0.275
+  },
+  {
+   "id": "carrier-front-up",
+   "first_collision_mm": 0.275
+  },
+  {
+   "id": "carrier-right-left",
+   "first_collision_mm": 0.225
+  },
+  {
+   "id": "carrier-right-right",
+   "first_collision_mm": 0.225
+  },
+  {
+   "id": "carrier-right-out",
+   "first_collision_mm": 0.025
+  },
+  {
+   "id": "carrier-right-in",
+   "first_collision_mm": 0.275
+  },
+  {
+   "id": "carrier-right-down",
+   "first_collision_mm": 0.275
+  },
+  {
+   "id": "carrier-right-up",
+   "first_collision_mm": 0.275
+  },
+  {
+   "id": "carrier-back-left",
+   "first_collision_mm": 0.225
+  },
+  {
+   "id": "carrier-back-right",
+   "first_collision_mm": 0.225
+  },
+  {
+   "id": "carrier-back-out",
+   "first_collision_mm": 0.025
+  },
+  {
+   "id": "carrier-back-in",
+   "first_collision_mm": 0.225
+  },
+  {
+   "id": "carrier-back-down",
+   "first_collision_mm": 0.225
+  },
+  {
+   "id": "carrier-back-up",
+   "first_collision_mm": 0.275
+  },
+  {
+   "id": "carrier-left-left",
+   "first_collision_mm": 0.225
+  },
+  {
+   "id": "carrier-left-right",
+   "first_collision_mm": 0.225
+  },
+  {
+   "id": "carrier-left-out",
+   "first_collision_mm": 0.025
+  },
+  {
+   "id": "carrier-left-in",
+   "first_collision_mm": 0.275
+  },
+  {
+   "id": "carrier-left-down",
+   "first_collision_mm": 0.275
+  },
+  {
+   "id": "carrier-left-up",
+   "first_collision_mm": 0.275
+  },
+  {
+   "id": "wiring-left",
+   "first_collision_mm": 0.1
+  },
+  {
+   "id": "wiring-right",
+   "first_collision_mm": 0.1
+  },
+  {
+   "id": "wiring-front",
+   "first_collision_mm": 0.275
+  },
+  {
+   "id": "wiring-back",
+   "first_collision_mm": 0.275
+  },
+  {
+   "id": "wiring-seated",
+   "first_collision_mm": 0.075
+  },
+  {
+   "id": "wiring-up",
+   "first_collision_mm": 0.225
+  },
+  {
+   "id": "tray-down",
+   "first_collision_mm": 0.275
+  },
+  {
+   "id": "tray-up",
+   "first_collision_mm": 0.075
+  }
+ ]
+}

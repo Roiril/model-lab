@@ -23,6 +23,7 @@ sys.path.insert(0, str(ROOT / "tools"))
 from bambu_profiles import resolve, write_flat
 import plate_3mf as P
 from printmech.three_mf import inspect_sliced_3mf
+from printmech.gcode import parse_gcode
 from mechgate_lib import limits as L
 
 NS = {"m": "http://schemas.microsoft.com/3dmanufacturing/core/2015/02"}
@@ -78,6 +79,9 @@ def production_groups():
         group = next((name for name, prefixes in PLATES.items() if pid.startswith(prefixes)), None)
         if pid in ("frame/wiring", "frame/tray"):
             group = "02-front"
+        if pid.startswith("frame/carrier_"):
+            group = {"front": "02-front", "right": "03-top", "back": "03-top",
+                     "left": "02-front"}[pid.removeprefix("frame/carrier_")]
         if group is None or pid in sources:
             raise ValueError(f"unassigned or duplicate print part: {pid}")
         path = (HERE / part["print"]).resolve()
@@ -94,7 +98,7 @@ def trial_files():
     return [
         ("frame_corner", "trial/frame_corner.stl", False),
         ("mount_panel", "trial/back/mount_panel.stl", False),
-        ("mount_key", "trial/back/mount_key_l.stl", False),
+        ("mount_key", "trial/back/mount_key_l.stl", True),
         ("servo_seat", "trial/top/servo_fit.stl", True),
         ("servo_cap", "trial/top/servo_cap_fit.stl", False),
         ("horn_fit", "trial/top/horn_fit.stl", False),
@@ -298,6 +302,7 @@ def slice_plate(name, parts, settings, log_directory):
                  "command": command, "returncode": result.returncode, "log": str(log_path),
                  "sha256": sha(output), "file": destination.relative_to(ROOT).as_posix(),
                  "layout_file": layout.relative_to(ROOT).as_posix()})
+    info["named_objects"] = identify_slice_objects(output, info, read(mp))
     temporary = destination.with_name(destination.name + ".tmp")
     shutil.copyfile(output, temporary)
     os.replace(temporary, destination)
@@ -309,6 +314,49 @@ def slice_plate(name, parts, settings, log_directory):
     write(BUILD / f"plate-{name}.json", info)
     print(f"{name}: {info['prediction_s']} s / {info['weight_g']} g / support={info['support_used']} / external unsupported={bad}", flush=True)
     return info
+
+
+def identify_slice_objects(path, report, machine):
+    """Map meter object IDs by actual extrusion bounds, never XML/index order.
+
+    Measurements come from the shared slice meter unchanged. This only attaches
+    the manifest part name after checking a unique geometric correspondence.
+    """
+    offset = [float(v) for v in machine["extruder_offset"][0].split("x")]
+    with zipfile.ZipFile(path) as archive:
+        members = [n for n in archive.namelist() if n.endswith(".gcode")]
+        if len(members) != 1:
+            raise ValueError(f"expected one sliced plate: {members}")
+        payload = archive.read(members[0])
+    with tempfile.TemporaryDirectory(dir=BUILD) as directory:
+        gcode = Path(directory) / "plate.gcode"
+        gcode.write_bytes(payload)
+        layers, _stats = parse_gcode(str(gcode))
+    bounds = {}
+    for layer in layers:
+        for x0, y0, x1, y1, _feature, oid, _z in layer["segs"]:
+            x0, x1 = x0 + offset[0], x1 + offset[0]
+            y0, y1 = y0 + offset[1], y1 + offset[1]
+            box = bounds.setdefault(str(oid), [float("inf"), float("inf"),
+                                                 -float("inf"), -float("inf")])
+            box[:] = [min(box[0], x0, x1), min(box[1], y0, y1),
+                      max(box[2], x0, x1), max(box[3], y0, y1)]
+    rows, matched = [], set()
+    for oid, obj in report["objects"].items():
+        box = bounds[oid]
+        candidates = [b for b in report["layout_boxes"]
+                      if all(box[i] >= b["min_mm"][i] - 1 for i in (0, 1))
+                      and all(box[i + 2] <= b["max_mm"][i] + 1 for i in (0, 1))]
+        if len(candidates) != 1 or candidates[0]["name"] in matched:
+            raise ValueError(f"{report['plate']}: ambiguous extrusion object {oid}: {box}")
+        name = candidates[0]["name"]
+        matched.add(name)
+        rows.append({"part": name.replace("__", "/"), "gcode_object_id": oid,
+                     "external_unsupported_mm": obj["floating"]["external_unsupported_mm"],
+                     "print_xy_mm": box, "overhang_walls": obj["overhang_walls"]})
+    if matched != set(report["parts"]):
+        raise ValueError(f"{report['plate']}: printed object coverage differs from layout")
+    return rows
 
 
 def publish_case_plates(reports):
@@ -339,7 +387,7 @@ def main():
         write(BUILD / "plate-layout-check.json", {"sources": sources, "plates": rows})
         print(json.dumps({k: len(v) for k, v in rows.items()}, indent=1))
         return 0
-    log_directory = Path("G:/マイドライブ/shubie/reports") / f"{MODEL}-slices"
+    log_directory = Path("G:/マイドライブ/shubie/reports") / f"{MODEL}-v2-slices"
     log_directory.mkdir(parents=True, exist_ok=True)
     temp_directory = BUILD / "slice-temp"
     temp_directory.mkdir(parents=True, exist_ok=True)
@@ -347,6 +395,8 @@ def main():
     tempfile.tempdir = str(temp_directory)
     settings = profiles(data)
     reports = [slice_plate(name, parts, settings, log_directory) for name, parts in groups.items()]
+    write(BUILD / "plate-diagnostics.json", {"plates": [
+        {"plate": r["plate"], "file": r["file"], "parts": r["named_objects"]} for r in reports]})
     if not args.trial_only:
         publish_case_plates(reports)
     outputs = [ROOT / r[key] for r in reports for key in ("file", "layout_file")]
@@ -354,6 +404,7 @@ def main():
     outputs += [BUILD / f"plate-{r['plate']}.json" for r in reports]
     if not args.trial_only:
         outputs.append(BUILD / "plate-case-files.json")
+    outputs.append(BUILD / "plate-diagnostics.json")
     current_sources = {} if args.trial_only else production_groups()[1]
     if fingerprint(current_sources, profile_data(), args.trial_only) != inputs:
         raise RuntimeError("slice inputs changed during execution; regenerate before certification")
@@ -361,6 +412,9 @@ def main():
           "logs": str(log_directory), "support_required": False,
           "slice_pass": all(r["slice_pass"] for r in reports), "fingerprint": inputs,
           "output_sha256": {p.relative_to(ROOT).as_posix(): sha(p) for p in outputs}})
+    if not args.trial_only:
+        from print_results import generate
+        generate()
     return 0 if all(r["slice_pass"] for r in reports) else 1
 
 

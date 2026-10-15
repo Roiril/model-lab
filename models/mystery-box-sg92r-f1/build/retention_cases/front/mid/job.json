@@ -6,6 +6,10 @@
   "frame/post_1": "C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-f1\\build\\retention_cases\\front\\mid\\parts\\frame\\post_1.stl",
   "frame/post_2": "C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-f1\\build\\retention_cases\\front\\mid\\parts\\frame\\post_2.stl",
   "frame/post_3": "C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-f1\\build\\retention_cases\\front\\mid\\parts\\frame\\post_3.stl",
+  "frame/carrier_front": "C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-f1\\build\\retention_cases\\front\\mid\\parts\\frame\\carrier_front.stl",
+  "frame/carrier_right": "C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-f1\\build\\retention_cases\\front\\mid\\parts\\frame\\carrier_right.stl",
+  "frame/carrier_back": "C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-f1\\build\\retention_cases\\front\\mid\\parts\\frame\\carrier_back.stl",
+  "frame/carrier_left": "C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-f1\\build\\retention_cases\\front\\mid\\parts\\frame\\carrier_left.stl",
   "frame/wiring": "C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-f1\\build\\retention_cases\\front\\mid\\parts\\frame\\wiring.stl",
   "frame/tray": "C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-f1\\build\\retention_cases\\front\\mid\\parts\\frame\\tray.stl",
   "front/panel": "C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-f1\\build\\retention_cases\\front\\mid\\parts\\front\\panel.stl",
@@ -1453,6 +1457,398 @@
    "engage_depth_mm": 1.8
   },
   {
+   "id": "frame/carrier-front-left",
+   "type": "retention",
+   "parts": [
+    "frame/carrier_front"
+   ],
+   "direction": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3.75
+  },
+  {
+   "id": "frame/carrier-front-right",
+   "type": "retention",
+   "parts": [
+    "frame/carrier_front"
+   ],
+   "direction": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3.75
+  },
+  {
+   "id": "frame/carrier-front-out",
+   "type": "retention",
+   "parts": [
+    "frame/carrier_front"
+   ],
+   "direction": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3.75
+  },
+  {
+   "id": "frame/carrier-front-in",
+   "type": "retention",
+   "parts": [
+    "frame/carrier_front"
+   ],
+   "direction": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3.75
+  },
+  {
+   "id": "frame/carrier-front-down",
+   "type": "retention",
+   "parts": [
+    "frame/carrier_front"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3.75
+  },
+  {
+   "id": "frame/carrier-front-up",
+   "type": "retention",
+   "parts": [
+    "frame/carrier_front"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3.75
+  },
+  {
+   "id": "frame/carrier-right-left",
+   "type": "retention",
+   "parts": [
+    "frame/carrier_right"
+   ],
+   "direction": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3.75
+  },
+  {
+   "id": "frame/carrier-right-right",
+   "type": "retention",
+   "parts": [
+    "frame/carrier_right"
+   ],
+   "direction": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3.75
+  },
+  {
+   "id": "frame/carrier-right-out",
+   "type": "retention",
+   "parts": [
+    "frame/carrier_right"
+   ],
+   "direction": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3.75
+  },
+  {
+   "id": "frame/carrier-right-in",
+   "type": "retention",
+   "parts": [
+    "frame/carrier_right"
+   ],
+   "direction": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3.75
+  },
+  {
+   "id": "frame/carrier-right-down",
+   "type": "retention",
+   "parts": [
+    "frame/carrier_right"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3.75
+  },
+  {
+   "id": "frame/carrier-right-up",
+   "type": "retention",
+   "parts": [
+    "frame/carrier_right"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3.75
+  },
+  {
+   "id": "frame/carrier-back-left",
+   "type": "retention",
+   "parts": [
+    "frame/carrier_back"
+   ],
+   "direction": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3.75
+  },
+  {
+   "id": "frame/carrier-back-right",
+   "type": "retention",
+   "parts": [
+    "frame/carrier_back"
+   ],
+   "direction": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3.75
+  },
+  {
+   "id": "frame/carrier-back-out",
+   "type": "retention",
+   "parts": [
+    "frame/carrier_back"
+   ],
+   "direction": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3.75
+  },
+  {
+   "id": "frame/carrier-back-in",
+   "type": "retention",
+   "parts": [
+    "frame/carrier_back"
+   ],
+   "direction": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3.75
+  },
+  {
+   "id": "frame/carrier-back-down",
+   "type": "retention",
+   "parts": [
+    "frame/carrier_back"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3.75
+  },
+  {
+   "id": "frame/carrier-back-up",
+   "type": "retention",
+   "parts": [
+    "frame/carrier_back"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3.75
+  },
+  {
+   "id": "frame/carrier-left-left",
+   "type": "retention",
+   "parts": [
+    "frame/carrier_left"
+   ],
+   "direction": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3.75
+  },
+  {
+   "id": "frame/carrier-left-right",
+   "type": "retention",
+   "parts": [
+    "frame/carrier_left"
+   ],
+   "direction": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3.75
+  },
+  {
+   "id": "frame/carrier-left-out",
+   "type": "retention",
+   "parts": [
+    "frame/carrier_left"
+   ],
+   "direction": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3.75
+  },
+  {
+   "id": "frame/carrier-left-in",
+   "type": "retention",
+   "parts": [
+    "frame/carrier_left"
+   ],
+   "direction": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3.75
+  },
+  {
+   "id": "frame/carrier-left-down",
+   "type": "retention",
+   "parts": [
+    "frame/carrier_left"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3.75
+  },
+  {
+   "id": "frame/carrier-left-up",
+   "type": "retention",
+   "parts": [
+    "frame/carrier_left"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3.75
+  },
+  {
+   "id": "frame/wiring-left",
+   "type": "retention",
+   "parts": [
+    "frame/wiring"
+   ],
+   "direction": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.55
+  },
+  {
+   "id": "frame/wiring-right",
+   "type": "retention",
+   "parts": [
+    "frame/wiring"
+   ],
+   "direction": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.55
+  },
+  {
+   "id": "frame/wiring-front",
+   "type": "retention",
+   "parts": [
+    "frame/wiring"
+   ],
+   "direction": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.55
+  },
+  {
+   "id": "frame/wiring-back",
+   "type": "retention",
+   "parts": [
+    "frame/wiring"
+   ],
+   "direction": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.55
+  },
+  {
    "id": "frame/wiring-seated",
    "type": "retention",
    "parts": [
@@ -1464,7 +1860,7 @@
     -1.0
    ],
    "max_free_mm": 0.5,
-   "engage_depth_mm": 2
+   "engage_depth_mm": 1.55
   },
   {
    "id": "frame/wiring-up",
@@ -1478,7 +1874,7 @@
     1.0
    ],
    "max_free_mm": 0.5,
-   "engage_depth_mm": 1.6
+   "engage_depth_mm": 1.55
   },
   {
    "id": "frame/tray-down",
@@ -1647,6 +2043,10 @@
   "bottom/key_l",
   "bottom/key_r",
   "bottom/panel",
+  "frame/carrier_back",
+  "frame/carrier_front",
+  "frame/carrier_left",
+  "frame/carrier_right",
   "frame/lower_frame",
   "frame/post_0",
   "frame/post_1",

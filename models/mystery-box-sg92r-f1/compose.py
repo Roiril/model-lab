@@ -1,4 +1,4 @@
-"""resident-face-v1 の独立した面を合成する。形状と契約の長さは mm。"""
+"""resident-face-v2 の独立した面を合成する。形状と契約の長さは mm。"""
 from __future__ import annotations
 
 import ast
@@ -142,8 +142,8 @@ def load_configuration(configuration=None, interface=None):
     interface = read(HERE / "interface.json") if interface is None else copy.deepcopy(interface)
     configuration = read(HERE / "slots.json") if configuration is None else copy.deepcopy(configuration)
     version = interface.get("interface", interface.get("id"))
-    if version != "resident-face-v1" or configuration.get("interface") != version:
-        raise ValueError("resident-face-v1 interface version required")
+    if version != "resident-face-v2" or configuration.get("interface") != version:
+        raise ValueError("resident-face-v2 interface version required")
     if set(configuration.get("slots", {})) != set(SLOTS):
         raise ValueError("exactly six named slots required")
     loaded = {}
@@ -425,7 +425,7 @@ def export_binary(path, objects, transform=None):
     if not triangles:
         raise ValueError(f"{path}: empty mesh")
     with temporary.open("wb") as handle:
-        handle.write(b"resident-face-v1 mm".ljust(80, b"\0"))
+        handle.write(b"resident-face-v2 mm".ljust(80, b"\0"))
         handle.write(struct.pack("<I", len(triangles)))
         for values in triangles:
             handle.write(struct.pack("<12fH", *values, 0))
@@ -560,17 +560,19 @@ def build():
     common = common_params()
     frame_module = load_file("_resident_frame", HERE / "frame.py")
     frame_parts = frame_module.build(interface, common)
-    # A real receiver cut from the front-left post, paired with blank/mount_panel.
-    # Keep the outer post wall as well as the exchange-key catch.
+    # A real left receiver cut from the front carrier, paired with blank/mount_panel.
+    # Keep the carrier rail and exchange-key catch in their production print pose.
     from printmech import geometry as G
     from mathutils import Matrix
-    corner = frame_parts["post_0"]["object"].copy()
-    corner.data = corner.data.copy()
+    carrier_source = frame_parts["carrier_front"]["object"]
+    corner = carrier_source.copy()
+    corner.data = carrier_source.data.copy()
     bpy.context.collection.objects.link(corner)
     clean_object(corner)
     G.transform(corner, Matrix(np.linalg.inv(faces["front"]["S"]).tolist()))
     G.intersect(corner, G.box(-50, -10, -32, -2, -2, 10))
     clean_object(corner)
+    G.transform(corner, Matrix.Rotation(math.pi, 4, "X"))
     export_binary(ROOT / "prints" / MODEL / "trial" / "frame_corner.stl", [corner])
     bpy.data.objects.remove(corner, do_unlink=True)
     parts = {}

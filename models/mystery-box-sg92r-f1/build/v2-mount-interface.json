@@ -1,0 +1,1408 @@
+{
+  "id": "resident-face-v2",
+  "version": 2,
+  "units": "mm",
+  "coordinates": {
+    "u": "outside view right",
+    "v": "outside view down",
+    "d": "inward",
+    "handedness": "right"
+  },
+  "cube_mm": [
+    100,
+    100,
+    100
+  ],
+  "panel_mm": [
+    87.4,
+    87.4,
+    2
+  ],
+  "aperture_mm": [
+    88,
+    88
+  ],
+  "manufacturing_tolerance_mm": 0.25,
+  "internal_envelope": [
+    {
+      "d_mm": [
+        0,
+        3
+      ],
+      "size_uv_mm": [
+        87.4,
+        87.4
+      ]
+    },
+    {
+      "d_mm": [
+        3,
+        11
+      ],
+      "size_uv_mm": [
+        76,
+        76
+      ]
+    },
+    {
+      "d_mm": [
+        11,
+        17
+      ],
+      "size_uv_mm": [
+        64,
+        64
+      ]
+    },
+    {
+      "d_mm": [
+        17,
+        24
+      ],
+      "size_uv_mm": [
+        50,
+        50
+      ]
+    },
+    {
+      "d_mm": [
+        24,
+        29
+      ],
+      "size_uv_mm": [
+        40,
+        40
+      ]
+    },
+    {
+      "d_mm": [
+        29,
+        34
+      ],
+      "size_uv_mm": [
+        30,
+        30
+      ]
+    },
+    {
+      "d_mm": [
+        34,
+        37
+      ],
+      "size_uv_mm": [
+        24,
+        24
+      ]
+    }
+  ],
+  "external_envelope": {
+    "u_mm": [
+      -38,
+      38
+    ],
+    "v_mm": [
+      -38,
+      38
+    ],
+    "d_mm": [
+      -32,
+      0
+    ]
+  },
+  "envelope_policy": {
+    "moving_and_internal": "Minkowski inflation by 0.25mm must remain in the union of the internal and external boxes. Split triangles at slab boundaries; do not test their bounding box against one slab.",
+    "cosmetic_mount": "The fixed 87.4mm panel, flush key heads, and matching frame datum contacts are evaluated at nominal geometry. Panel side variation is checked separately: 87.4+2*0.25=87.9mm < 88mm aperture.",
+    "frame_keepouts": "The listed frame receiver solids are occupied, not extra cassette space. Every mechanism must avoid them; only explicitly named datum contacts and temporary snap deflections may touch."
+  },
+  "mount": {
+    "datum_d_mm": 3,
+    "seats": [
+      {
+        "uv_mm": [
+          -32,
+          -32
+        ],
+        "size_mm": [
+          6,
+          6
+        ]
+      },
+      {
+        "uv_mm": [
+          32,
+          -32
+        ],
+        "size_mm": [
+          6,
+          6
+        ]
+      },
+      {
+        "uv_mm": [
+          0,
+          32
+        ],
+        "size_mm": [
+          6,
+          6
+        ]
+      }
+    ],
+    "positioning": [
+      {
+        "id": "round",
+        "uv_mm": [
+          -30,
+          23
+        ],
+        "pin_diameter_mm": 4,
+        "hole_diameter_mm": 4.4
+      },
+      {
+        "id": "flat",
+        "uv_mm": [
+          25,
+          23
+        ],
+        "pin_size_uv_mm": [
+          6,
+          4
+        ],
+        "slot_size_uv_mm": [
+          8.4,
+          4.4
+        ],
+        "relief_axis": "u"
+      }
+    ],
+    "keys": {
+      "ids": [
+        "key_l",
+        "key_r"
+      ],
+      "head_centers_uv_mm": [
+        [
+          -31.2,
+          -22.1
+        ],
+        [
+          31.2,
+          -22.1
+        ]
+      ],
+      "head_size_mm": [
+        7.2,
+        4.8,
+        1.2
+      ],
+      "arm_length_mm": 18,
+      "arm_thickness_mm": 1.6,
+      "arm_width_mm": 5,
+      "deflection_mm": 0.6,
+      "engage_mm": 2.4,
+      "strain_percent": 0.4444444444,
+      "release_direction": "toward u=0",
+      "release_travel_mm": 0.6,
+      "release_rotation_deg": 1.86,
+      "release_pivot_uv_mm": [
+        [
+          -31.2,
+          -23
+        ],
+        [
+          31.2,
+          -23
+        ]
+      ],
+      "assembly_clearance_mm": 0.25,
+      "head_taper_sections": [
+        {
+          "d_mm": 1.2,
+          "size_uv_mm": [
+            7.2,
+            4.8
+          ],
+          "v_mm": -22.1
+        },
+        {
+          "d_mm": 3,
+          "size_uv_mm": [
+            3.6,
+            3
+          ],
+          "v_mm": -23
+        },
+        {
+          "d_mm": 3.3,
+          "size_uv_mm": [
+            3,
+            3
+          ],
+          "v_mm": -23
+        }
+      ],
+      "maximum_overhang_deg": 45,
+      "head_clearance_mm": 0.2,
+      "hook_clearance_mm": 0.25,
+      "retention_stack_mm": 0.45,
+      "print_direction": "-d (d=8 on bed, Rx180)",
+      "fingerwell": {
+        "centers_uv_mm": [
+          [
+            -36,
+            -22
+          ],
+          [
+            36,
+            -22
+          ]
+        ],
+        "mouth_uv_mm": [
+          2,
+          2
+        ],
+        "depth_mm": 0.95,
+        "terminal_uv_mm": [
+          0.1,
+          0.1
+        ],
+        "actuation": "Fingernail presses outer head edge inward through 0.6mm release travel; verify on printed part."
+      }
+    },
+    "extraction_mm": 40,
+    "insertion_axis": [
+      0,
+      0,
+      1
+    ],
+    "retention_free_mm": 0.45,
+    "contacts": [
+      {
+        "part": "panel",
+        "kind": "datum",
+        "d_mm": 3,
+        "centers_uv_mm": [
+          [
+            -32,
+            -32
+          ],
+          [
+            32,
+            -32
+          ],
+          [
+            0,
+            32
+          ]
+        ],
+        "size_uv_mm": [
+          6,
+          6
+        ]
+      },
+      {
+        "part": "key_l",
+        "kind": "snap",
+        "bounds_mm": [
+          [
+            -32.6,
+            -5.5,
+            5.6
+          ],
+          [
+            -32,
+            -3.5,
+            8
+          ]
+        ],
+        "deflection_direction": [
+          1,
+          0,
+          0
+        ]
+      },
+      {
+        "part": "key_r",
+        "kind": "snap",
+        "bounds_mm": [
+          [
+            32,
+            -5.5,
+            5.6
+          ],
+          [
+            32.6,
+            -3.5,
+            8
+          ]
+        ],
+        "deflection_direction": [
+          -1,
+          0,
+          0
+        ]
+      }
+    ]
+  },
+  "wiring": {
+    "open_channel_mm": [
+      6,
+      3
+    ],
+    "service_length_mm": 60,
+    "connector_provisional_mm": [
+      8.2,
+      4.4,
+      14
+    ],
+    "connector_bay_mm": [
+      14,
+      8,
+      18
+    ],
+    "bottom_reserved_mm": [
+      56,
+      40,
+      8
+    ],
+    "bottom_reserved_center_mm": [
+      0,
+      0,
+      -40
+    ]
+  },
+  "central_reserved_mm": [
+    24,
+    24,
+    44
+  ],
+  "central_reserved_center_mm": [
+    0,
+    0,
+    -10
+  ],
+  "bottom_mechanism_allowed": false,
+  "slot_transforms_mm": {
+    "front": [
+      [
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        1,
+        -50
+      ],
+      [
+        0,
+        -1,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        1
+      ]
+    ],
+    "right": [
+      [
+        0,
+        0,
+        -1,
+        50
+      ],
+      [
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        -1,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        1
+      ]
+    ],
+    "back": [
+      [
+        -1,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        -1,
+        50
+      ],
+      [
+        0,
+        -1,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        1
+      ]
+    ],
+    "left": [
+      [
+        0,
+        0,
+        1,
+        -50
+      ],
+      [
+        -1,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        -1,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        1
+      ]
+    ],
+    "top": [
+      [
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        -1,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        -1,
+        50
+      ],
+      [
+        0,
+        0,
+        0,
+        1
+      ]
+    ],
+    "bottom": [
+      [
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        1,
+        -50
+      ],
+      [
+        0,
+        0,
+        0,
+        1
+      ]
+    ]
+  },
+  "mount_geometry": {
+    "schema": "csg-mm-v2",
+    "description": "Build base then apply ordered operations with EXACT booleans. Box/cylinder centers and all dimensions are local (u,v,d) mm. Cylinder axis is u/v/d. Bake transforms into mesh vertices. loft_box has ordered d_mm/center_uv_mm/size_uv_mm sections; join rectangular sections with quad walls. center_mm/size_mm give its exact AABB.",
+    "parts": {
+      "panel": {
+        "base": {
+          "type": "box",
+          "size_mm": [
+            87.4,
+            87.4,
+            2
+          ],
+          "center_mm": [
+            0,
+            0,
+            1
+          ]
+        },
+        "operations": [
+          {
+            "op": "union",
+            "shape": {
+              "type": "box",
+              "size_mm": [
+                6,
+                6,
+                1.2
+              ],
+              "center_mm": [
+                -32,
+                -32,
+                2.4
+              ]
+            }
+          },
+          {
+            "op": "union",
+            "shape": {
+              "type": "box",
+              "size_mm": [
+                6,
+                6,
+                1.2
+              ],
+              "center_mm": [
+                32,
+                -32,
+                2.4
+              ]
+            }
+          },
+          {
+            "op": "union",
+            "shape": {
+              "type": "box",
+              "size_mm": [
+                6,
+                6,
+                1.2
+              ],
+              "center_mm": [
+                0,
+                32,
+                2.4
+              ]
+            }
+          },
+          {
+            "op": "union",
+            "shape": {
+              "type": "box",
+              "size_mm": [
+                9,
+                9,
+                1.2
+              ],
+              "center_mm": [
+                -30,
+                23,
+                2.4
+              ]
+            }
+          },
+          {
+            "op": "union",
+            "shape": {
+              "type": "box",
+              "size_mm": [
+                11,
+                9,
+                1.2
+              ],
+              "center_mm": [
+                25,
+                23,
+                2.4
+              ]
+            }
+          },
+          {
+            "op": "union",
+            "shape": {
+              "type": "box",
+              "size_mm": [
+                13,
+                9,
+                1.2
+              ],
+              "center_mm": [
+                -31.2,
+                -21.5,
+                2.4
+              ]
+            }
+          },
+          {
+            "op": "union",
+            "shape": {
+              "type": "box",
+              "size_mm": [
+                13,
+                9,
+                1.2
+              ],
+              "center_mm": [
+                31.2,
+                -21.5,
+                2.4
+              ]
+            }
+          },
+          {
+            "op": "difference",
+            "shape": {
+              "type": "cylinder",
+              "radius_mm": 2.2,
+              "depth_mm": 5,
+              "center_mm": [
+                -30,
+                23,
+                1.5
+              ],
+              "axis": "d"
+            }
+          },
+          {
+            "op": "difference",
+            "shape": {
+              "type": "box",
+              "size_mm": [
+                8.4,
+                4.4,
+                5
+              ],
+              "center_mm": [
+                25,
+                23,
+                1.5
+              ]
+            }
+          },
+          {
+            "op": "difference",
+            "shape": {
+              "type": "loft_box",
+              "center_mm": [
+                -36,
+                -22,
+                0.225
+              ],
+              "size_mm": [
+                2,
+                2,
+                1.45
+              ],
+              "sections": [
+                {
+                  "d_mm": -0.5,
+                  "center_uv_mm": [
+                    -36,
+                    -22
+                  ],
+                  "size_uv_mm": [
+                    2,
+                    2
+                  ]
+                },
+                {
+                  "d_mm": 0,
+                  "center_uv_mm": [
+                    -36,
+                    -22
+                  ],
+                  "size_uv_mm": [
+                    2,
+                    2
+                  ]
+                },
+                {
+                  "d_mm": 0.95,
+                  "center_uv_mm": [
+                    -36,
+                    -22
+                  ],
+                  "size_uv_mm": [
+                    0.1,
+                    0.1
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "op": "difference",
+            "shape": {
+              "type": "loft_box",
+              "center_mm": [
+                36,
+                -22,
+                0.225
+              ],
+              "size_mm": [
+                2,
+                2,
+                1.45
+              ],
+              "sections": [
+                {
+                  "d_mm": -0.5,
+                  "center_uv_mm": [
+                    36,
+                    -22
+                  ],
+                  "size_uv_mm": [
+                    2,
+                    2
+                  ]
+                },
+                {
+                  "d_mm": 0,
+                  "center_uv_mm": [
+                    36,
+                    -22
+                  ],
+                  "size_uv_mm": [
+                    2,
+                    2
+                  ]
+                },
+                {
+                  "d_mm": 0.95,
+                  "center_uv_mm": [
+                    36,
+                    -22
+                  ],
+                  "size_uv_mm": [
+                    0.1,
+                    0.1
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "op": "difference",
+            "shape": {
+              "type": "box",
+              "size_mm": [
+                4,
+                5,
+                5
+              ],
+              "center_mm": [
+                -31.2,
+                -4.5,
+                1.5
+              ]
+            }
+          },
+          {
+            "op": "difference",
+            "shape": {
+              "type": "box",
+              "size_mm": [
+                4,
+                5,
+                5
+              ],
+              "center_mm": [
+                31.2,
+                -4.5,
+                1.5
+              ]
+            }
+          },
+          {
+            "op": "difference",
+            "shape": {
+              "type": "box",
+              "size_mm": [
+                3.5,
+                22,
+                5
+              ],
+              "center_mm": [
+                -31.2,
+                -14,
+                1.5
+              ]
+            }
+          },
+          {
+            "op": "difference",
+            "shape": {
+              "type": "box",
+              "size_mm": [
+                3.5,
+                22,
+                5
+              ],
+              "center_mm": [
+                31.2,
+                -14,
+                1.5
+              ]
+            }
+          },
+          {
+            "op": "difference",
+            "shape": {
+              "type": "box",
+              "size_mm": [
+                7.6,
+                5.2,
+                1.7
+              ],
+              "center_mm": [
+                -31.2,
+                -22.1,
+                0.35
+              ]
+            }
+          },
+          {
+            "op": "difference",
+            "shape": {
+              "type": "loft_box",
+              "sections": [
+                {
+                  "d_mm": 1.2,
+                  "center_uv_mm": [
+                    -31.2,
+                    -22.1
+                  ],
+                  "size_uv_mm": [
+                    7.6000000000000005,
+                    5.2
+                  ]
+                },
+                {
+                  "d_mm": 3,
+                  "center_uv_mm": [
+                    -31.2,
+                    -23
+                  ],
+                  "size_uv_mm": [
+                    4,
+                    3.4
+                  ]
+                },
+                {
+                  "d_mm": 3.3,
+                  "center_uv_mm": [
+                    -31.2,
+                    -23
+                  ],
+                  "size_uv_mm": [
+                    3.4,
+                    3.4
+                  ]
+                }
+              ],
+              "center_mm": [
+                -31.2,
+                -22.1,
+                2.25
+              ],
+              "size_mm": [
+                7.6000000000000005,
+                5.2,
+                2.0999999999999996
+              ]
+            }
+          },
+          {
+            "op": "difference",
+            "shape": {
+              "type": "box",
+              "size_mm": [
+                3.5,
+                3.5,
+                5
+              ],
+              "center_mm": [
+                -31.2,
+                -23,
+                5.8
+              ]
+            }
+          },
+          {
+            "op": "difference",
+            "shape": {
+              "type": "box",
+              "size_mm": [
+                7.6,
+                5.2,
+                1.7
+              ],
+              "center_mm": [
+                31.2,
+                -22.1,
+                0.35
+              ]
+            }
+          },
+          {
+            "op": "difference",
+            "shape": {
+              "type": "loft_box",
+              "sections": [
+                {
+                  "d_mm": 1.2,
+                  "center_uv_mm": [
+                    31.2,
+                    -22.1
+                  ],
+                  "size_uv_mm": [
+                    7.6000000000000005,
+                    5.2
+                  ]
+                },
+                {
+                  "d_mm": 3,
+                  "center_uv_mm": [
+                    31.2,
+                    -23
+                  ],
+                  "size_uv_mm": [
+                    4,
+                    3.4
+                  ]
+                },
+                {
+                  "d_mm": 3.3,
+                  "center_uv_mm": [
+                    31.2,
+                    -23
+                  ],
+                  "size_uv_mm": [
+                    3.4,
+                    3.4
+                  ]
+                }
+              ],
+              "center_mm": [
+                31.2,
+                -22.1,
+                2.25
+              ],
+              "size_mm": [
+                7.6000000000000005,
+                5.2,
+                2.0999999999999996
+              ]
+            }
+          },
+          {
+            "op": "difference",
+            "shape": {
+              "type": "box",
+              "size_mm": [
+                3.5,
+                3.5,
+                5
+              ],
+              "center_mm": [
+                31.2,
+                -23,
+                5.8
+              ]
+            }
+          }
+        ]
+      },
+      "key_l": {
+        "base": {
+          "type": "box",
+          "size_mm": [
+            7.2,
+            4.8,
+            1.2
+          ],
+          "center_mm": [
+            -31.2,
+            -22.1,
+            0.6
+          ]
+        },
+        "operations": [
+          {
+            "op": "union",
+            "shape": {
+              "type": "loft_box",
+              "sections": [
+                {
+                  "d_mm": 1.2,
+                  "center_uv_mm": [
+                    -31.2,
+                    -22.1
+                  ],
+                  "size_uv_mm": [
+                    7.2,
+                    4.8
+                  ]
+                },
+                {
+                  "d_mm": 3,
+                  "center_uv_mm": [
+                    -31.2,
+                    -23
+                  ],
+                  "size_uv_mm": [
+                    3.6,
+                    3
+                  ]
+                },
+                {
+                  "d_mm": 3.3,
+                  "center_uv_mm": [
+                    -31.2,
+                    -23
+                  ],
+                  "size_uv_mm": [
+                    3,
+                    3
+                  ]
+                }
+              ],
+              "center_mm": [
+                -31.2,
+                -22.1,
+                2.25
+              ],
+              "size_mm": [
+                7.2,
+                4.8,
+                2.0999999999999996
+              ]
+            }
+          },
+          {
+            "op": "union",
+            "shape": {
+              "type": "box",
+              "size_mm": [
+                3,
+                3,
+                5
+              ],
+              "center_mm": [
+                -31.2,
+                -23,
+                5.5
+              ]
+            }
+          },
+          {
+            "op": "union",
+            "shape": {
+              "type": "box",
+              "size_mm": [
+                1.6,
+                19.7,
+                5
+              ],
+              "center_mm": [
+                -31.2,
+                -13.35,
+                5.5
+              ]
+            }
+          },
+          {
+            "op": "union",
+            "shape": {
+              "type": "box",
+              "size_mm": [
+                0.8,
+                2,
+                2.4
+              ],
+              "center_mm": [
+                -32.2,
+                -4.5,
+                6.8
+              ]
+            }
+          }
+        ]
+      },
+      "key_r": {
+        "base": {
+          "type": "box",
+          "size_mm": [
+            7.2,
+            4.8,
+            1.2
+          ],
+          "center_mm": [
+            31.2,
+            -22.1,
+            0.6
+          ]
+        },
+        "operations": [
+          {
+            "op": "union",
+            "shape": {
+              "type": "loft_box",
+              "sections": [
+                {
+                  "d_mm": 1.2,
+                  "center_uv_mm": [
+                    31.2,
+                    -22.1
+                  ],
+                  "size_uv_mm": [
+                    7.2,
+                    4.8
+                  ]
+                },
+                {
+                  "d_mm": 3,
+                  "center_uv_mm": [
+                    31.2,
+                    -23
+                  ],
+                  "size_uv_mm": [
+                    3.6,
+                    3
+                  ]
+                },
+                {
+                  "d_mm": 3.3,
+                  "center_uv_mm": [
+                    31.2,
+                    -23
+                  ],
+                  "size_uv_mm": [
+                    3,
+                    3
+                  ]
+                }
+              ],
+              "center_mm": [
+                31.2,
+                -22.1,
+                2.25
+              ],
+              "size_mm": [
+                7.2,
+                4.8,
+                2.0999999999999996
+              ]
+            }
+          },
+          {
+            "op": "union",
+            "shape": {
+              "type": "box",
+              "size_mm": [
+                3,
+                3,
+                5
+              ],
+              "center_mm": [
+                31.2,
+                -23,
+                5.5
+              ]
+            }
+          },
+          {
+            "op": "union",
+            "shape": {
+              "type": "box",
+              "size_mm": [
+                1.6,
+                19.7,
+                5
+              ],
+              "center_mm": [
+                31.2,
+                -13.35,
+                5.5
+              ]
+            }
+          },
+          {
+            "op": "union",
+            "shape": {
+              "type": "box",
+              "size_mm": [
+                0.8,
+                2,
+                2.4
+              ],
+              "center_mm": [
+                32.2,
+                -4.5,
+                6.8
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "frame_receivers": [
+      {
+        "id": "seat_l",
+        "type": "box",
+        "size_mm": [
+          6,
+          17.75,
+          3
+        ],
+        "center_mm": [
+          -32,
+          -38.875,
+          4.5
+        ],
+        "owner": "upper_frame"
+      },
+      {
+        "id": "seat_r",
+        "type": "box",
+        "size_mm": [
+          6,
+          17.75,
+          3
+        ],
+        "center_mm": [
+          32,
+          -38.875,
+          4.5
+        ],
+        "owner": "upper_frame"
+      },
+      {
+        "id": "seat_b",
+        "type": "box",
+        "size_mm": [
+          6,
+          17.75,
+          3
+        ],
+        "center_mm": [
+          0,
+          38.875,
+          4.5
+        ],
+        "owner": "lower_frame"
+      },
+      {
+        "id": "round_spine",
+        "type": "box",
+        "size_mm": [
+          9,
+          29.25,
+          3
+        ],
+        "center_mm": [
+          -30,
+          33.125,
+          4.5
+        ],
+        "owner": "lower_frame"
+      },
+      {
+        "id": "flat_spine",
+        "type": "box",
+        "size_mm": [
+          11,
+          29.25,
+          3
+        ],
+        "center_mm": [
+          25,
+          33.125,
+          4.5
+        ],
+        "owner": "lower_frame"
+      },
+      {
+        "id": "round_pin",
+        "type": "cylinder",
+        "radius_mm": 2,
+        "depth_mm": 4.25,
+        "center_mm": [
+          -30,
+          23,
+          2.875
+        ],
+        "axis": "d",
+        "owner": "lower_frame"
+      },
+      {
+        "id": "flat_pin",
+        "type": "box",
+        "size_mm": [
+          6,
+          4,
+          4.25
+        ],
+        "center_mm": [
+          25,
+          23,
+          2.875
+        ],
+        "owner": "lower_frame"
+      },
+      {
+        "id": "latch_l",
+        "type": "box",
+        "size_mm": [
+          15.7,
+          6,
+          2.35
+        ],
+        "center_mm": [
+          -39.9,
+          -5,
+          4.175
+        ],
+        "owner": "post_left"
+      },
+      {
+        "id": "latch_r",
+        "type": "box",
+        "size_mm": [
+          15.7,
+          6,
+          2.35
+        ],
+        "center_mm": [
+          39.9,
+          -5,
+          4.175
+        ],
+        "owner": "post_right"
+      }
+    ],
+    "keepout_rule": "All frame_receivers are occupied CSG solids in every slot. Mechanisms must keep 0.25mm clearance except panel datum pads, positioning holes and key hooks declared in mount.contacts. Receiver spines continue to the cosmetic rim outside the cassette envelope."
+  }
+}

@@ -286,7 +286,7 @@ def build(interface,common):
         lo,hi=c-size/2-.4,c+size/2+.4
         G.cut(support,G.box(lo[0],hi[0],lo[1],hi[1],lo[2],hi[2]+interface['mount']['extraction_mm']))
     # The standard keys turn about d before being pulled out through the face.
-    # A convex sweep of each box keeps the clearance local to the arm and root.
+    # Sweep each sectioned solid locally, including the key-head taper.
     keys=interface['mount']['keys']
     gap=keys['assembly_clearance_mm']
     for i,pid in enumerate(keys['ids']):
@@ -294,15 +294,27 @@ def build(interface,common):
         angle=keys['release_rotation_deg']*(-1 if i==0 else 1)
         recipe=interface['mount_geometry']['parts'][pid]
         for shape in [recipe['base']]+[r['shape'] for r in recipe['operations'] if r['op']=='union']:
-            if shape['type']!='box': raise ValueError('Key sweep requires box mount solids')
-            c=np.array(shape['center_mm']); half=np.array(shape['size_mm'])/2
-            corners=[np.array((u,v)) for u in (c[0]-half[0]-gap,c[0]+half[0]+gap)
-                     for v in (c[1]-half[1]-gap,c[1]+half[1]+gap)]
+            if shape['type']=='loft_box':
+                corners=[np.array((u,v,section['d_mm'])) for section in shape['sections']
+                         for u in (section['center_uv_mm'][0]-section['size_uv_mm'][0]/2,
+                                   section['center_uv_mm'][0]+section['size_uv_mm'][0]/2)
+                         for v in (section['center_uv_mm'][1]-section['size_uv_mm'][1]/2,
+                                   section['center_uv_mm'][1]+section['size_uv_mm'][1]/2)]
+            elif shape['type']=='box':
+                c=np.array(shape['center_mm']); half=np.array(shape['size_mm'])/2
+                corners=[np.array((u,v,d)) for u in (c[0]-half[0],c[0]+half[0])
+                         for v in (c[1]-half[1],c[1]+half[1]) for d in (c[2]-half[2],c[2]+half[2])]
+            else:
+                raise ValueError('Key sweep requires box or loft_box mount solids')
             points=[]
             for a in np.linspace(0,math.radians(angle),17):
                 rot=np.array(((math.cos(a),-math.sin(a)),(math.sin(a),math.cos(a))))
-                points.extend((rot@(p-pivot)+pivot).tolist() for p in corners)
-            G.cut(support,G.prism(G.hull(points),'z',c[2]-half[2]-interface['mount']['extraction_mm']-gap,c[2]+half[2]+gap))
+                for corner in corners:
+                    uv=rot@(corner[:2]-pivot)+pivot
+                    points.extend((uv[0]+du,uv[1]+dv,corner[2]+dd-travel)
+                                  for du in (-gap,gap) for dv in (-gap,gap) for dd in (-gap,gap)
+                                  for travel in (0,interface['mount']['extraction_mm']))
+            G.cut(support,G.hull3d(points,'key_clearance'))
     parts['support']=support
     labels={'panel':'旗カセットの面板','key_l':'左の交換キー','key_r':'右の交換キー',
             'support':'サーボ座と後側の軸受け','servo_cap':'旗室の底とサーボ押さえ',
@@ -327,7 +339,7 @@ def build(interface,common):
         if pid in ('input_gear','input_cup','input_spindle'): rot=np.asarray(Matrix.Rotation(math.pi/2,4,'Y'))
         if pid=='cap_foot': rot=np.asarray(Matrix.Rotation(-math.pi/2,4,'Y'))
         if pid in ('sector_gear','flag_cover'): rot=np.asarray(Matrix.Rotation(math.pi/2,4,'Y'))
-        if pid=='support':rot=np.asarray(Matrix.Rotation(math.pi,4,'X'))
+        if pid in ('support','key_l','key_r'):rot=np.asarray(Matrix.Rotation(math.pi,4,'X'))
         result[pid]={'object':ob,'print_rotation':rot,'label':labels[pid],
                     'color':'#7598b3' if pid=='servo' else '#444844' if pid=='horn' else '#deddd5',
                     'purchased':pid in ('servo','horn')}

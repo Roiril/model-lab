@@ -1,0 +1,226 @@
+{
+ "support_used": "false",
+ "prediction_s": 3635,
+ "weight_g": "24.39",
+ "filament": [
+  [
+   "8.05",
+   "24.39"
+  ]
+ ],
+ "stats": {
+  "time": "model printing time: 53m 19s; total estimated time: 1h 0m 35s",
+  "filament_mm": 8048.2,
+  "filament_g_header": "24.39"
+ },
+ "objects": {
+  "12": {
+   "layers": 26,
+   "z_top": 5.2,
+   "layer_steps": {
+    "0.2": [
+     0.2,
+     5.0,
+     25
+    ]
+   },
+   "floating": {
+    "external_unsupported_mm": 0.0,
+    "bridge_mm": 2703.36,
+    "bridge_unsupported_mm": 729.21,
+    "internal_unsupported_mm": 6.01
+   },
+   "overhang_walls": []
+  },
+  "20": {
+   "layers": 26,
+   "z_top": 5.2,
+   "layer_steps": {
+    "0.2": [
+     0.2,
+     5.0,
+     25
+    ]
+   },
+   "floating": {
+    "external_unsupported_mm": 0.0,
+    "bridge_mm": 2703.36,
+    "bridge_unsupported_mm": 732.87,
+    "internal_unsupported_mm": 2.04
+   },
+   "overhang_walls": []
+  },
+  "16": {
+   "layers": 26,
+   "z_top": 5.2,
+   "layer_steps": {
+    "0.2": [
+     0.2,
+     5.0,
+     25
+    ]
+   },
+   "floating": {
+    "external_unsupported_mm": 0.0,
+    "bridge_mm": 2703.37,
+    "bridge_unsupported_mm": 729.21,
+    "internal_unsupported_mm": 6.01
+   },
+   "overhang_walls": []
+  },
+  "8": {
+   "layers": 26,
+   "z_top": 5.2,
+   "layer_steps": {
+    "0.2": [
+     0.2,
+     5.0,
+     25
+    ]
+   },
+   "floating": {
+    "external_unsupported_mm": 0.0,
+    "bridge_mm": 2703.36,
+    "bridge_unsupported_mm": 732.87,
+    "internal_unsupported_mm": 2.04
+   },
+   "overhang_walls": []
+  }
+ },
+ "plate": "v2-frame-carriers",
+ "parts": [
+  "frame__carrier_front",
+  "frame__carrier_right",
+  "frame__carrier_back",
+  "frame__carrier_left"
+ ],
+ "layout_boxes": [
+  {
+   "name": "frame__carrier_back",
+   "min_mm": [
+    20.0,
+    6.0,
+    0.0
+   ],
+   "max_mm": [
+    115.5,
+    89.0,
+    5.25
+   ]
+  },
+  {
+   "name": "frame__carrier_front",
+   "min_mm": [
+    121.5,
+    6.0,
+    0.0
+   ],
+   "max_mm": [
+    217.0,
+    89.0,
+    5.25
+   ]
+  },
+  {
+   "name": "frame__carrier_left",
+   "min_mm": [
+    20.0,
+    95.0,
+    0.0
+   ],
+   "max_mm": [
+    103.0,
+    190.5,
+    5.25
+   ]
+  },
+  {
+   "name": "frame__carrier_right",
+   "min_mm": [
+    109.0,
+    95.0,
+    0.0
+   ],
+   "max_mm": [
+    204.5,
+    178.0,
+    5.25
+   ]
+  }
+ ],
+ "command": [
+  "C:\\Program Files\\Bambu Studio\\bambu-studio.exe",
+  "--slice",
+  "0",
+  "--debug",
+  "2",
+  "--arrange",
+  "0",
+  "--load-settings",
+  "C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-f1\\build\\v2-frame-slice\\profiles\\machine.json;C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-f1\\build\\v2-frame-slice\\profiles\\process.json",
+  "--load-filaments",
+  "C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-f1\\build\\v2-frame-slice\\profiles\\filament_PLA.json",
+  "--outputdir",
+  "C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-f1\\build\\v2-frame-slice\\slice-v2-frame-carriers",
+  "--export-3mf",
+  "mystery-box-sg92r-f1-v2-frame-carriers-PLA.gcode.3mf",
+  "C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-f1\\build\\v2-frame-slice\\mystery-box-sg92r-f1-v2-frame-carriers-PLA-layout.3mf"
+ ],
+ "returncode": 0,
+ "log": "G:\\マイドライブ\\shubie\\reports\\v2-frame-carriers.log",
+ "sha256": "37f9424cddea6cb3cdafcc7952713d43b1c49e36114d1f426eaa2122d40a40d9",
+ "file": "models/mystery-box-sg92r-f1/build/v2-frame-slice/mystery-box-sg92r-f1-v2-frame-carriers-PLA.gcode.3mf",
+ "layout_file": "models/mystery-box-sg92r-f1/build/v2-frame-slice/mystery-box-sg92r-f1-v2-frame-carriers-PLA-layout.3mf",
+ "named_objects": [
+  {
+   "part": "frame/carrier_front",
+   "gcode_object_id": "12",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    121.81,
+    6.21,
+    216.69,
+    88.79
+   ],
+   "overhang_walls": []
+  },
+  {
+   "part": "frame/carrier_right",
+   "gcode_object_id": "20",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    109.31,
+    95.21,
+    204.19,
+    177.79
+   ],
+   "overhang_walls": []
+  },
+  {
+   "part": "frame/carrier_left",
+   "gcode_object_id": "16",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    20.21,
+    95.31,
+    102.79,
+    190.19
+   ],
+   "overhang_walls": []
+  },
+  {
+   "part": "frame/carrier_back",
+   "gcode_object_id": "8",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    20.31,
+    6.21,
+    115.19,
+    88.79
+   ],
+   "overhang_walls": []
+  }
+ ],
+ "slice_failing": {},
+ "slice_pass": true
+}

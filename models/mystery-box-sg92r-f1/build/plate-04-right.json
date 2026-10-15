@@ -1,19 +1,37 @@
 {
  "support_used": "false",
- "prediction_s": 6513,
- "weight_g": "50.54",
+ "prediction_s": 6372,
+ "weight_g": "48.98",
  "filament": [
   [
-   "16.68",
-   "50.54"
+   "16.16",
+   "48.98"
   ]
  ],
  "stats": {
-  "time": "model printing time: 1h 41m 17s; total estimated time: 1h 48m 33s",
-  "filament_mm": 16676.18,
-  "filament_g_header": "50.54"
+  "time": "model printing time: 1h 38m 57s; total estimated time: 1h 46m 12s",
+  "filament_mm": 16160.41,
+  "filament_g_header": "48.98"
  },
  "objects": {
+  "44": {
+   "layers": 20,
+   "z_top": 4.0,
+   "layer_steps": {
+    "0.2": [
+     0.2,
+     3.8,
+     19
+    ]
+   },
+   "floating": {
+    "external_unsupported_mm": 0.0,
+    "bridge_mm": 0.0,
+    "bridge_unsupported_mm": 0.0,
+    "internal_unsupported_mm": 16.04
+   },
+   "overhang_walls": []
+  },
   "36": {
    "layers": 21,
    "z_top": 4.2,
@@ -32,72 +50,21 @@
    },
    "overhang_walls": []
   },
-  "56": {
-   "layers": 27,
-   "z_top": 5.4,
+  "40": {
+   "layers": 63,
+   "z_top": 12.6,
    "layer_steps": {
     "0.2": [
      0.2,
-     5.2,
-     26
-    ]
-   },
-   "floating": {
-    "external_unsupported_mm": 0.0,
-    "bridge_mm": 199.82,
-    "bridge_unsupported_mm": 53.91,
-    "internal_unsupported_mm": 0.0
-   },
-   "overhang_walls": []
-  },
-  "32": {
-   "layers": 70,
-   "z_top": 14.0,
-   "layer_steps": {
-    "0.2": [
-     0.2,
-     13.8,
-     69
-    ]
-   },
-   "floating": {
-    "external_unsupported_mm": 1.29,
-    "bridge_mm": 347.73,
-    "bridge_unsupported_mm": 105.68,
-    "internal_unsupported_mm": 6.49
-   },
-   "overhang_walls": [
-    {
-     "layer": 13,
-     "z": 2.8,
-     "feature": "Overhang wall",
-     "points": 7,
-     "x": [
-      -3.5,
-      -3.4
-     ],
-     "y": [
-      0.2,
-      1.1
-     ]
-    }
-   ]
-  },
-  "24": {
-   "layers": 16,
-   "z_top": 3.2,
-   "layer_steps": {
-    "0.2": [
-     0.2,
-     3.0,
-     15
+     12.4,
+     62
     ]
    },
    "floating": {
     "external_unsupported_mm": 0.0,
     "bridge_mm": 0.0,
     "bridge_unsupported_mm": 0.0,
-    "internal_unsupported_mm": 0.0
+    "internal_unsupported_mm": 7.79
    },
    "overhang_walls": []
   },
@@ -114,8 +81,8 @@
    "floating": {
     "external_unsupported_mm": 70.36,
     "bridge_mm": 1094.52,
-    "bridge_unsupported_mm": 375.06,
-    "internal_unsupported_mm": 13.06
+    "bridge_unsupported_mm": 372.89,
+    "internal_unsupported_mm": 17.89
    },
    "overhang_walls": [
     {
@@ -204,14 +171,14 @@
     }
    ]
   },
-  "20": {
-   "layers": 66,
-   "z_top": 13.2,
+  "24": {
+   "layers": 16,
+   "z_top": 3.2,
    "layer_steps": {
     "0.2": [
      0.2,
-     13.0,
-     65
+     3.0,
+     15
     ]
    },
    "floating": {
@@ -222,21 +189,141 @@
    },
    "overhang_walls": []
   },
-  "16": {
-   "layers": 75,
-   "z_top": 15.0,
+  "32": {
+   "layers": 70,
+   "z_top": 14.0,
    "layer_steps": {
     "0.2": [
      0.2,
-     14.8,
-     74
+     13.8,
+     69
+    ]
+   },
+   "floating": {
+    "external_unsupported_mm": 1.29,
+    "bridge_mm": 347.73,
+    "bridge_unsupported_mm": 105.68,
+    "internal_unsupported_mm": 6.49
+   },
+   "overhang_walls": [
+    {
+     "layer": 13,
+     "z": 2.8,
+     "feature": "Overhang wall",
+     "points": 7,
+     "x": [
+      -3.5,
+      -3.4
+     ],
+     "y": [
+      0.2,
+      1.1
+     ]
+    }
+   ]
+  },
+  "64": {
+   "layers": 50,
+   "z_top": 10.0,
+   "layer_steps": {
+    "0.2": [
+     0.2,
+     9.8,
+     49
     ]
    },
    "floating": {
     "external_unsupported_mm": 0.0,
-    "bridge_mm": 1189.86,
-    "bridge_unsupported_mm": 545.56,
-    "internal_unsupported_mm": 1.0
+    "bridge_mm": 63.04,
+    "bridge_unsupported_mm": 6.87,
+    "internal_unsupported_mm": 0.0
+   },
+   "overhang_walls": []
+  },
+  "60": {
+   "layers": 21,
+   "z_top": 4.2,
+   "layer_steps": {
+    "0.2": [
+     0.2,
+     4.0,
+     20
+    ]
+   },
+   "floating": {
+    "external_unsupported_mm": 1.3,
+    "bridge_mm": 6.04,
+    "bridge_unsupported_mm": 0.0,
+    "internal_unsupported_mm": 12.69
+   },
+   "overhang_walls": [
+    {
+     "layer": 9,
+     "z": 2.0,
+     "feature": "Overhang wall",
+     "points": 7,
+     "x": [
+      -5.0,
+      -5.0
+     ],
+     "y": [
+      -1.3,
+      1.3
+     ]
+    }
+   ]
+  },
+  "56": {
+   "layers": 27,
+   "z_top": 5.4,
+   "layer_steps": {
+    "0.2": [
+     0.2,
+     5.2,
+     26
+    ]
+   },
+   "floating": {
+    "external_unsupported_mm": 0.0,
+    "bridge_mm": 196.89,
+    "bridge_unsupported_mm": 51.74,
+    "internal_unsupported_mm": 0.0
+   },
+   "overhang_walls": []
+  },
+  "52": {
+   "layers": 40,
+   "z_top": 8.0,
+   "layer_steps": {
+    "0.2": [
+     0.2,
+     7.8,
+     39
+    ]
+   },
+   "floating": {
+    "external_unsupported_mm": 0.0,
+    "bridge_mm": 0.0,
+    "bridge_unsupported_mm": 0.0,
+    "internal_unsupported_mm": 0.0
+   },
+   "overhang_walls": []
+  },
+  "48": {
+   "layers": 40,
+   "z_top": 8.0,
+   "layer_steps": {
+    "0.2": [
+     0.2,
+     7.8,
+     39
+    ]
+   },
+   "floating": {
+    "external_unsupported_mm": 0.0,
+    "bridge_mm": 0.0,
+    "bridge_unsupported_mm": 0.0,
+    "internal_unsupported_mm": 0.0
    },
    "overhang_walls": []
   },
@@ -252,9 +339,9 @@
    },
    "floating": {
     "external_unsupported_mm": 1516.02,
-    "bridge_mm": 12445.54,
-    "bridge_unsupported_mm": 6979.34,
-    "internal_unsupported_mm": 84.21
+    "bridge_mm": 12425.96,
+    "bridge_unsupported_mm": 6970.7,
+    "internal_unsupported_mm": 91.5
    },
    "overhang_walls": [
     {
@@ -343,158 +430,41 @@
     }
    ]
   },
-  "40": {
-   "layers": 63,
-   "z_top": 12.6,
+  "16": {
+   "layers": 75,
+   "z_top": 15.0,
    "layer_steps": {
     "0.2": [
      0.2,
-     12.4,
-     62
+     14.8,
+     74
+    ]
+   },
+   "floating": {
+    "external_unsupported_mm": 0.0,
+    "bridge_mm": 1189.86,
+    "bridge_unsupported_mm": 545.56,
+    "internal_unsupported_mm": 1.0
+   },
+   "overhang_walls": []
+  },
+  "20": {
+   "layers": 66,
+   "z_top": 13.2,
+   "layer_steps": {
+    "0.2": [
+     0.2,
+     13.0,
+     65
     ]
    },
    "floating": {
     "external_unsupported_mm": 0.0,
     "bridge_mm": 0.0,
     "bridge_unsupported_mm": 0.0,
-    "internal_unsupported_mm": 7.74
-   },
-   "overhang_walls": []
-  },
-  "48": {
-   "layers": 40,
-   "z_top": 8.0,
-   "layer_steps": {
-    "0.2": [
-     0.2,
-     7.8,
-     39
-    ]
-   },
-   "floating": {
-    "external_unsupported_mm": 70.35,
-    "bridge_mm": 0.0,
-    "bridge_unsupported_mm": 0.0,
-    "internal_unsupported_mm": 0.0
-   },
-   "overhang_walls": [
-    {
-     "layer": 15,
-     "z": 3.2,
-     "feature": "Overhang wall",
-     "points": 352,
-     "x": [
-      -10.8,
-      6.6
-     ],
-     "y": [
-      -0.6,
-      0.6
-     ]
-    }
-   ]
-  },
-  "64": {
-   "layers": 50,
-   "z_top": 10.0,
-   "layer_steps": {
-    "0.2": [
-     0.2,
-     9.8,
-     49
-    ]
-   },
-   "floating": {
-    "external_unsupported_mm": 0.0,
-    "bridge_mm": 63.05,
-    "bridge_unsupported_mm": 6.86,
     "internal_unsupported_mm": 0.0
    },
    "overhang_walls": []
-  },
-  "60": {
-   "layers": 21,
-   "z_top": 4.2,
-   "layer_steps": {
-    "0.2": [
-     0.2,
-     4.0,
-     20
-    ]
-   },
-   "floating": {
-    "external_unsupported_mm": 1.3,
-    "bridge_mm": 6.04,
-    "bridge_unsupported_mm": 0.0,
-    "internal_unsupported_mm": 12.08
-   },
-   "overhang_walls": [
-    {
-     "layer": 9,
-     "z": 2.0,
-     "feature": "Overhang wall",
-     "points": 7,
-     "x": [
-      -5.0,
-      -5.0
-     ],
-     "y": [
-      -1.3,
-      1.3
-     ]
-    }
-   ]
-  },
-  "52": {
-   "layers": 20,
-   "z_top": 4.0,
-   "layer_steps": {
-    "0.2": [
-     0.2,
-     3.8,
-     19
-    ]
-   },
-   "floating": {
-    "external_unsupported_mm": 0.0,
-    "bridge_mm": 0.0,
-    "bridge_unsupported_mm": 0.0,
-    "internal_unsupported_mm": 12.27
-   },
-   "overhang_walls": []
-  },
-  "44": {
-   "layers": 40,
-   "z_top": 8.0,
-   "layer_steps": {
-    "0.2": [
-     0.2,
-     7.8,
-     39
-    ]
-   },
-   "floating": {
-    "external_unsupported_mm": 69.55,
-    "bridge_mm": 0.0,
-    "bridge_unsupported_mm": 0.0,
-    "internal_unsupported_mm": 0.0
-   },
-   "overhang_walls": [
-    {
-     "layer": 15,
-     "z": 3.2,
-     "feature": "Overhang wall",
-     "points": 348,
-     "x": [
-      -10.8,
-      6.4
-     ],
-     "y": [
-      -0.6,
-      0.6
-     ]
-    }
-   ]
   },
   "8": {
    "layers": 15,
@@ -507,38 +477,24 @@
     ]
    },
    "floating": {
-    "external_unsupported_mm": 146.01,
-    "bridge_mm": 13170.84,
-    "bridge_unsupported_mm": 6185.76,
-    "internal_unsupported_mm": 4.19
+    "external_unsupported_mm": 1.87,
+    "bridge_mm": 11228.96,
+    "bridge_unsupported_mm": 5427.75,
+    "internal_unsupported_mm": 6.53
    },
    "overhang_walls": [
     {
-     "layer": 5,
-     "z": 1.2,
-     "feature": "Overhang wall",
-     "points": 120,
+     "layer": 2,
+     "z": 0.6,
+     "feature": "Outer wall",
+     "points": 10,
      "x": [
-      -38.1,
-      38.1
+      -35.3,
+      35.3
      ],
      "y": [
-      -24.9,
-      -19.1
-     ]
-    },
-    {
-     "layer": 7,
-     "z": 1.6,
-     "feature": "Overhang wall",
-     "points": 640,
-     "x": [
-      -36.6,
-      36.6
-     ],
-     "y": [
-      -25.9,
-      -18.1
+      -22.2,
+      -21.8
      ]
     }
    ]
@@ -566,25 +522,25 @@
   {
    "name": "right__panel",
    "min_mm": [
-    20.0,
-    6.0,
+    19.999999200000005,
+    5.999999200000005,
     0.0
    ],
    "max_mm": [
-    112.0,
-    98.0,
+    107.4000008,
+    93.4000008,
     3.0
    ]
   },
   {
    "name": "right__support",
    "min_mm": [
-    118.0,
+    113.4,
     6.0,
     0.0
    ],
    "max_mm": [
-    184.5,
+    179.9,
     64.5,
     33.4500008
    ]
@@ -592,12 +548,12 @@
   {
    "name": "right__servo_cap",
    "min_mm": [
-    190.5000003,
+    185.9000003,
     6.0,
     0.0
    ],
    "max_mm": [
-    220.4953997,
+    215.89539969999998,
     33.25,
     14.9499998
    ]
@@ -605,12 +561,12 @@
   {
    "name": "right__bearing_bridge",
    "min_mm": [
-    226.4954,
+    221.8954,
     5.999999499999998,
     0.0
    ],
    "max_mm": [
-    246.7454,
+    242.1454,
     45.004600100000005,
     13.1999998
    ]
@@ -618,12 +574,12 @@
   {
    "name": "right__input_cup",
    "min_mm": [
-    190.5000008,
+    185.9000008,
     39.2499993,
     0.0
    ],
    "max_mm": [
-    216.12239920000002,
+    211.5223992,
     64.3020003,
     3.29999996
    ]
@@ -631,12 +587,12 @@
   {
    "name": "right__flag",
    "min_mm": [
-    222.1224,
+    217.5224,
     51.004599,
     0.0
    ],
    "max_mm": [
-    237.6224,
+    233.0224,
     83.9046006,
     23.1499004
    ]
@@ -644,12 +600,12 @@
   {
    "name": "right__sector_gear",
    "min_mm": [
-    190.49999939999998,
+    185.8999994,
     70.30199949,
     0.0
    ],
    "max_mm": [
-    212.4130987,
+    207.8130987,
     89.80190031,
     14.0
    ]
@@ -657,12 +613,12 @@
   {
    "name": "right__input_gear",
    "min_mm": [
-    218.4131,
+    213.8131,
     89.90460060999999,
     0.0
    ],
    "max_mm": [
-    238.6477,
+    234.0477,
     109.5826001,
     4.25
    ]
@@ -670,91 +626,91 @@
   {
    "name": "right__input_bridge",
    "min_mm": [
-    117.9999995,
-    70.5,
+    240.0477,
+    51.00459930000001,
     0.0
    ],
    "max_mm": [
-    155.8954005,
-    79.25,
+    248.7977,
+    88.9000003,
     12.64999962
+   ]
+  },
+  {
+   "name": "right__hinge_pin",
+   "min_mm": [
+    240.047701,
+    94.9,
+    0.0
+   ],
+   "max_mm": [
+    245.047701,
+    133.4,
+    4.0
    ]
   },
   {
    "name": "right__key_l",
    "min_mm": [
-    161.8954,
-    70.5,
+    113.4,
+    70.50000173,
     0.0
    ],
    "max_mm": [
-    183.8954,
-    82.5,
+    134.4,
+    77.70000058,
     8.0
    ]
   },
   {
    "name": "right__key_r",
    "min_mm": [
-    118.0,
-    85.25,
+    140.4,
+    70.49999942000001,
     0.0
    ],
    "max_mm": [
-    140.0,
-    97.25,
+    161.4,
+    77.69999827000001,
     8.0
-   ]
-  },
-  {
-   "name": "right__hinge_pin",
-   "min_mm": [
-    146.0,
-    88.4999994,
-    0.0
-   ],
-   "max_mm": [
-    184.5,
-    93.4999994,
-    4.0
    ]
   },
   {
    "name": "right__cap_foot",
    "min_mm": [
-    190.50000018999998,
-    95.8018998,
+    167.3999999,
+    70.49999999,
     0.0
    ],
    "max_mm": [
-    210.39999981,
-    102.2269,
+    173.8250001,
+    90.39999961,
     5.5
    ]
   },
   {
    "name": "right__flag_cover",
    "min_mm": [
-    146.0,
-    99.50000038,
+    179.825,
+    95.80190037999999,
     0.0
    ],
    "max_mm": [
-    156.5,
-    109.29999962000001,
+    190.325,
+    105.60189962,
     4.25
    ]
   },
   {
    "name": "right__input_spindle",
    "min_mm": [
-    118.00000080999999,
-    103.25000029,
+    196.32500081,
+    95.80190029,
     0.0
    ],
    "max_mm": [
-    125.60000119,
-    110.85000019,
+    203.92500119,
+    103.40190019,
     10.0500002
    ]
   }
@@ -778,16 +734,410 @@
   "C:\\Users\\kouga\\Projects\\Web\\model-lab\\prints\\mystery-box-sg92r-f1\\mystery-box-sg92r-f1-04-right-PLA-layout.3mf"
  ],
  "returncode": 0,
- "log": "G:\\マイドライブ\\shubie\\reports\\mystery-box-sg92r-f1-slices\\04-right.log",
- "sha256": "69c8e482ca9547fbb9ed4a864947a847a067877cff61b75d4e8e55a41b0fd900",
+ "log": "G:\\マイドライブ\\shubie\\reports\\mystery-box-sg92r-f1-v2-slices\\04-right.log",
+ "sha256": "3c68fa2920b864846464e74ac10a7879e54e3ca0764d3eb8c3e3fab70b043c55",
  "file": "prints/mystery-box-sg92r-f1/mystery-box-sg92r-f1-04-right-PLA.gcode.3mf",
  "layout_file": "prints/mystery-box-sg92r-f1/mystery-box-sg92r-f1-04-right-PLA-layout.3mf",
+ "named_objects": [
+  {
+   "part": "right/hinge_pin",
+   "gcode_object_id": "44",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    240.258,
+    95.11,
+    244.838,
+    133.19
+   ],
+   "overhang_walls": []
+  },
+  {
+   "part": "right/input_gear",
+   "gcode_object_id": "36",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    214.0242721264047,
+    90.11543577085381,
+    233.823,
+    109.344
+   ],
+   "overhang_walls": []
+  },
+  {
+   "part": "right/input_bridge",
+   "gcode_object_id": "40",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    240.258,
+    51.215,
+    248.588,
+    88.69
+   ],
+   "overhang_walls": []
+  },
+  {
+   "part": "right/flag",
+   "gcode_object_id": "28",
+   "external_unsupported_mm": 70.36,
+   "print_xy_mm": [
+    217.732,
+    51.219,
+    232.812,
+    83.695
+   ],
+   "overhang_walls": [
+    {
+     "layer": 28,
+     "z": 5.8,
+     "feature": "Overhang wall",
+     "points": 61,
+     "x": [
+      2.7,
+      7.5
+     ],
+     "y": [
+      -12.3,
+      -10.8
+     ]
+    },
+    {
+     "layer": 29,
+     "z": 6.0,
+     "feature": "Overhang wall",
+     "points": 37,
+     "x": [
+      2.7,
+      7.5
+     ],
+     "y": [
+      -13.4,
+      -9.7
+     ]
+    },
+    {
+     "layer": 30,
+     "z": 6.2,
+     "feature": "Overhang wall",
+     "points": 33,
+     "x": [
+      2.7,
+      7.5
+     ],
+     "y": [
+      -14.1,
+      -9.0
+     ]
+    },
+    {
+     "layer": 48,
+     "z": 9.8,
+     "feature": "Overhang wall",
+     "points": 64,
+     "x": [
+      -7.5,
+      -4.0
+     ],
+     "y": [
+      -12.7,
+      -10.4
+     ]
+    },
+    {
+     "layer": 56,
+     "z": 11.4,
+     "feature": "Overhang wall",
+     "points": 93,
+     "x": [
+      -3.1,
+      1.9
+     ],
+     "y": [
+      -12.1,
+      -11.0
+     ]
+    },
+    {
+     "layer": 79,
+     "z": 16.0,
+     "feature": "Outer wall",
+     "points": 30,
+     "x": [
+      4.7,
+      7.5
+     ],
+     "y": [
+      -8.0,
+      -8.0
+     ]
+    }
+   ]
+  },
+  {
+   "part": "right/input_cup",
+   "gcode_object_id": "24",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    186.18,
+    39.53,
+    211.31042649993242,
+    64.092
+   ],
+   "overhang_walls": []
+  },
+  {
+   "part": "right/sector_gear",
+   "gcode_object_id": "32",
+   "external_unsupported_mm": 1.29,
+   "print_xy_mm": [
+    186.131,
+    70.51227045355903,
+    207.569,
+    89.591
+   ],
+   "overhang_walls": [
+    {
+     "layer": 13,
+     "z": 2.8,
+     "feature": "Overhang wall",
+     "points": 7,
+     "x": [
+      -3.5,
+      -3.4
+     ],
+     "y": [
+      0.2,
+      1.1
+     ]
+    }
+   ]
+  },
+  {
+   "part": "right/input_spindle",
+   "gcode_object_id": "64",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    196.5286298368563,
+    96.01170760724212,
+    203.70998929646805,
+    103.191
+   ],
+   "overhang_walls": []
+  },
+  {
+   "part": "right/flag_cover",
+   "gcode_object_id": "60",
+   "external_unsupported_mm": 1.3,
+   "print_xy_mm": [
+    180.035,
+    96.013,
+    190.11434146499914,
+    105.392
+   ],
+   "overhang_walls": [
+    {
+     "layer": 9,
+     "z": 2.0,
+     "feature": "Overhang wall",
+     "points": 7,
+     "x": [
+      -5.0,
+      -5.0
+     ],
+     "y": [
+      -1.3,
+      1.3
+     ]
+    }
+   ]
+  },
+  {
+   "part": "right/cap_foot",
+   "gcode_object_id": "56",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    167.61,
+    70.71,
+    173.615,
+    90.19
+   ],
+   "overhang_walls": []
+  },
+  {
+   "part": "right/key_r",
+   "gcode_object_id": "52",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    140.61,
+    70.71,
+    161.19,
+    77.49
+   ],
+   "overhang_walls": []
+  },
+  {
+   "part": "right/key_l",
+   "gcode_object_id": "48",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    113.61,
+    70.71,
+    134.19,
+    77.49
+   ],
+   "overhang_walls": []
+  },
+  {
+   "part": "right/support",
+   "gcode_object_id": "12",
+   "external_unsupported_mm": 1516.02,
+   "print_xy_mm": [
+    113.61,
+    6.21,
+    179.69,
+    64.28999999999999
+   ],
+   "overhang_walls": [
+    {
+     "layer": 25,
+     "z": 5.2,
+     "feature": "Overhang wall",
+     "points": 1544,
+     "x": [
+      -16.2,
+      22.7
+     ],
+     "y": [
+      -18.7,
+      20.2
+     ]
+    },
+    {
+     "layer": 50,
+     "z": 10.2,
+     "feature": "Overhang wall",
+     "points": 1965,
+     "x": [
+      -21.2,
+      27.7
+     ],
+     "y": [
+      -23.7,
+      24.5
+     ]
+    },
+    {
+     "layer": 85,
+     "z": 17.2,
+     "feature": "Overhang wall",
+     "points": 2328,
+     "x": [
+      -28.2,
+      33.0
+     ],
+     "y": [
+      -29.0,
+      24.5
+     ]
+    },
+    {
+     "layer": 85,
+     "z": 17.2,
+     "feature": "Gap infill",
+     "points": 93,
+     "x": [
+      -27.7,
+      -23.5
+     ],
+     "y": [
+      -13.7,
+      3.4
+     ]
+    },
+    {
+     "layer": 110,
+     "z": 22.2,
+     "feature": "Overhang wall",
+     "points": 8,
+     "x": [
+      -17.2,
+      -16.9
+     ],
+     "y": [
+      -29.0,
+      -16.7
+     ]
+    },
+    {
+     "layer": 115,
+     "z": 23.2,
+     "feature": "Overhang wall",
+     "points": 812,
+     "x": [
+      -33.0,
+      -29.0
+     ],
+     "y": [
+      -27.6,
+      24.5
+     ]
+    }
+   ]
+  },
+  {
+   "part": "right/servo_cap",
+   "gcode_object_id": "16",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    186.11,
+    6.21,
+    215.685,
+    33.04
+   ],
+   "overhang_walls": []
+  },
+  {
+   "part": "right/bearing_bridge",
+   "gcode_object_id": "20",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    222.105,
+    6.21,
+    241.935,
+    44.795
+   ],
+   "overhang_walls": []
+  },
+  {
+   "part": "right/panel",
+   "gcode_object_id": "8",
+   "external_unsupported_mm": 1.87,
+   "print_xy_mm": [
+    20.21,
+    6.21,
+    107.19,
+    93.19
+   ],
+   "overhang_walls": [
+    {
+     "layer": 2,
+     "z": 0.6,
+     "feature": "Outer wall",
+     "points": 10,
+     "x": [
+      -35.3,
+      35.3
+     ],
+     "y": [
+      -22.2,
+      -21.8
+     ]
+    }
+   ]
+  }
+ ],
  "slice_failing": {
   "28": 70.36,
-  "12": 1516.02,
-  "48": 70.35,
-  "44": 69.55,
-  "8": 146.01
+  "12": 1516.02
  },
  "slice_pass": false
 }

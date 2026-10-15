@@ -1,6 +1,6 @@
 {
  "model": "mystery-box-sg92r-f1",
- "request": "最終段。slots.jsonのrightをsector_flagにし、checks/rightを作る。ルート・checks/front・checks/top・checks/rightのゲートをすべてexit 0。lattice_exportとtools/lattice_web.pyを流し直し、Studioの表示データに右面も入れる。READMEの面一覧・部品表・組立・交換手順を更新。設計書D節の割付4枚程度で全部品のプレートを作る。X1C 256×256、手前左18×28除外。PLA、X1C 0.4、Textured PEI、0.20mm Standard、補正0.15、壁2、充填15%。Bambu Studio CLIでスライスしprints/mystery-box-sg92r-f1/に.gcode.3mfを置く。print.sliceのwaiverを外し、外に見える支えの無い押し出し≤2mm、サポート無し。赤なら刷る向きか形を直し、通らない部品は理由とともに報告する。交換部の角・サーボ座・カム1区間の試し刷りを1枚にまとめてスライス。計器・閾値とallowancesを広げず、交換規格・骨格を旗に合わせて曲げない。commit/pushしない。",
+ "request": "段v2-A。共通交換規格をresident-face-v2へ改訂する。部品ごとに印刷方向を先に決め、45度以下の張り出し・見えない面の10mm以下の橋渡し・積層面内でしなるばねから取付形状を作る。3点座面・位置決め・抜け止め・工具なしの着脱・他面を残した40mmの抜きを維持する。共通面板・キー・受け・上下枠・柱4本・配線案内・中央トレーを改訂し、blank/templateと各可動面のmount_geometry由来部分を追従させる。面固有の支持座・押さえ・クランク・旗の腕などは変更しない。ルートの共通部品print.sliceを0件超過にし、機構検査を緑のまま維持する。面固有の印刷不合格は前後件数を報告する。plate.pyを再実行する。X1C0.4、Textured PEI、PLA、0.20mm Standard、補正0.15、壁2、充填15%、サポート無し。計器・閾値・allowancesを広げずwaiverを追加しない。viewer/index.htmlを変更しない。commit/pushしない。",
  "requirements": [
   {"id": "R1", "text": "閉状態の外形は100 × 100 × 100mm", "checks": ["assembly.envelope"]},
   {"id": "R2", "text": "正面の蓋・上面の3画素・右面の旗を各SG92Rで動かし、背面・左面・底面を空の面とする", "checks": ["interface.coverage", "interface.drive", "motion.torque"]},

@@ -1,5 +1,5 @@
 {
- "interface":"resident-face-v1", "module":"link_lid", "supported_slots":["front","right","back","left","top"],
+ "interface":"resident-face-v2", "module":"link_lid", "supported_slots":["front","right","back","left","top"],
  "parts":["panel","key_l","key_r","support","servo_cap","crank","link","lid","hinge_pin","servo","horn"],
  "mass_limit_g":180,"uses":["sg92r"],
  "motion":{"actuator":"horn","servo":"servo","closed_servo_deg":124.33731922749814,"open_servo_deg":55.66268077250187,"assembly_servo_deg":90,"step_deg":1,"duration_s":2},

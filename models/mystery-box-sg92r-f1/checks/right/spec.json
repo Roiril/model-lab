@@ -1,6 +1,6 @@
 {
  "model": "mystery-box-sg92r-f1/checks/right",
- "request": "最終段。slots.jsonのrightをsector_flagにし、checks/rightを作る。ルート・checks/front・checks/top・checks/rightのゲートをすべてexit 0。lattice_exportとtools/lattice_web.pyを流し直し、Studioの表示データに右面も入れる。READMEの面一覧・部品表・組立・交換手順を更新。設計書D節の割付4枚程度で全部品のプレートを作る。X1C 256×256、手前左18×28除外。PLA、X1C 0.4、Textured PEI、0.20mm Standard、補正0.15、壁2、充填15%。Bambu Studio CLIでスライスしprints/mystery-box-sg92r-f1/に.gcode.3mfを置く。print.sliceのwaiverを外し、外に見える支えの無い押し出し≤2mm、サポート無し。赤なら刷る向きか形を直し、通らない部品は理由とともに報告する。交換部の角・サーボ座・カム1区間の試し刷りを1枚にまとめてスライス。計器・閾値とallowancesを広げず、交換規格・骨格を旗に合わせて曲げない。commit/pushしない。",
+ "request": "段v2-A。共通交換規格をresident-face-v2へ改訂する。部品ごとに印刷方向を先に決め、45度以下の張り出し・見えない面の10mm以下の橋渡し・積層面内でしなるばねから取付形状を作る。3点座面・位置決め・抜け止め・工具なしの着脱・他面を残した40mmの抜きを維持する。共通面板・キー・受け・上下枠・柱4本・配線案内・中央トレーを改訂し、blank/templateと各可動面のmount_geometry由来部分を追従させる。面固有の支持座・押さえ・クランク・旗の腕などは変更しない。ルートの共通部品print.sliceを0件超過にし、機構検査を緑のまま維持する。面固有の印刷不合格は前後件数を報告する。plate.pyを再実行する。X1C0.4、Textured PEI、PLA、0.20mm Standard、補正0.15、壁2、充填15%、サポート無し。計器・閾値・allowancesを広げずwaiverを追加しない。viewer/index.htmlを変更しない。commit/pushしない。",
  "requirements": [
   {
    "id": "R1",
@@ -394,14 +394,14 @@
    "basis": "自由長18mm、厚1.6mm、解除0.6mm。角の爪だけ。完成姿勢に重なりを残さない。",
    "region_mm": [
     [
-     -46.7,
-     -48.0,
-     -47.1
+     -47.9,
+     -50.0,
+     -46.15
     ],
     [
-     -43.5,
-     -42.0,
-     -43.9
+     -47.3,
+     -44.0,
+     -44.35
     ]
    ],
    "step": "frame/insert-post_0"
@@ -420,14 +420,14 @@
    "basis": "自由長18mm、厚1.6mm、解除0.6mm。角の爪だけ。完成姿勢に重なりを残さない。",
    "region_mm": [
     [
-     -46.7,
-     -48.0,
-     43.9
+     -47.9,
+     -50.0,
+     44.35
     ],
     [
-     -43.5,
-     -42.0,
-     47.1
+     -47.3,
+     -44.0,
+     46.15
     ]
    ],
    "step": "frame/upper-frame"
@@ -446,14 +446,14 @@
    "basis": "自由長18mm、厚1.6mm、解除0.6mm。角の爪だけ。完成姿勢に重なりを残さない。",
    "region_mm": [
     [
-     43.5,
-     -48.0,
-     -47.1
+     47.3,
+     -50.0,
+     -46.15
     ],
     [
-     46.7,
-     -42.0,
-     -43.9
+     47.9,
+     -44.0,
+     -44.35
     ]
    ],
    "step": "frame/insert-post_1"
@@ -472,14 +472,14 @@
    "basis": "自由長18mm、厚1.6mm、解除0.6mm。角の爪だけ。完成姿勢に重なりを残さない。",
    "region_mm": [
     [
-     43.5,
-     -48.0,
-     43.9
+     47.3,
+     -50.0,
+     44.35
     ],
     [
-     46.7,
-     -42.0,
-     47.1
+     47.9,
+     -44.0,
+     46.15
     ]
    ],
    "step": "frame/upper-frame"
@@ -498,14 +498,14 @@
    "basis": "自由長18mm、厚1.6mm、解除0.6mm。角の爪だけ。完成姿勢に重なりを残さない。",
    "region_mm": [
     [
-     43.5,
-     42.0,
-     -47.1
+     47.3,
+     44.0,
+     -46.15
     ],
     [
-     46.7,
-     48.0,
-     -43.9
+     47.9,
+     50.0,
+     -44.35
     ]
    ],
    "step": "frame/insert-post_2"
@@ -524,14 +524,14 @@
    "basis": "自由長18mm、厚1.6mm、解除0.6mm。角の爪だけ。完成姿勢に重なりを残さない。",
    "region_mm": [
     [
-     43.5,
-     42.0,
-     43.9
+     47.3,
+     44.0,
+     44.35
     ],
     [
-     46.7,
-     48.0,
-     47.1
+     47.9,
+     50.0,
+     46.15
     ]
    ],
    "step": "frame/upper-frame"
@@ -550,14 +550,14 @@
    "basis": "自由長18mm、厚1.6mm、解除0.6mm。角の爪だけ。完成姿勢に重なりを残さない。",
    "region_mm": [
     [
-     -46.7,
-     42.0,
-     -47.1
+     -47.9,
+     44.0,
+     -46.15
     ],
     [
-     -43.5,
-     48.0,
-     -43.9
+     -47.3,
+     50.0,
+     -44.35
     ]
    ],
    "step": "frame/insert-post_3"
@@ -576,14 +576,14 @@
    "basis": "自由長18mm、厚1.6mm、解除0.6mm。角の爪だけ。完成姿勢に重なりを残さない。",
    "region_mm": [
     [
-     -46.7,
-     42.0,
-     43.9
+     -47.9,
+     44.0,
+     44.35
     ],
     [
-     -43.5,
-     48.0,
-     47.1
+     -47.3,
+     50.0,
+     46.15
     ]
    ],
    "step": "frame/upper-frame"
@@ -593,7 +593,7 @@
    "pairs": [
     [
      "front/key_l",
-     "frame/post_0"
+     "frame/carrier_front"
     ]
    ],
    "engage_mm": 2.4,
@@ -607,7 +607,7 @@
    "pairs": [
     [
      "front/key_l",
-     "frame/post_0"
+     "frame/carrier_front"
     ]
    ],
    "engage_mm": 2.4,
@@ -621,7 +621,7 @@
    "pairs": [
     [
      "front/key_r",
-     "frame/post_1"
+     "frame/carrier_front"
     ]
    ],
    "engage_mm": 2.4,
@@ -635,7 +635,7 @@
    "pairs": [
     [
      "front/key_r",
-     "frame/post_1"
+     "frame/carrier_front"
     ]
    ],
    "engage_mm": 2.4,
@@ -649,7 +649,7 @@
    "pairs": [
     [
      "right/key_l",
-     "frame/post_1"
+     "frame/carrier_right"
     ]
    ],
    "engage_mm": 2.4,
@@ -663,7 +663,7 @@
    "pairs": [
     [
      "right/key_l",
-     "frame/post_1"
+     "frame/carrier_right"
     ]
    ],
    "engage_mm": 2.4,
@@ -677,7 +677,7 @@
    "pairs": [
     [
      "right/key_r",
-     "frame/post_2"
+     "frame/carrier_right"
     ]
    ],
    "engage_mm": 2.4,
@@ -691,7 +691,7 @@
    "pairs": [
     [
      "right/key_r",
-     "frame/post_2"
+     "frame/carrier_right"
     ]
    ],
    "engage_mm": 2.4,
@@ -705,7 +705,7 @@
    "pairs": [
     [
      "back/key_l",
-     "frame/post_2"
+     "frame/carrier_back"
     ]
    ],
    "engage_mm": 2.4,
@@ -719,7 +719,7 @@
    "pairs": [
     [
      "back/key_l",
-     "frame/post_2"
+     "frame/carrier_back"
     ]
    ],
    "engage_mm": 2.4,
@@ -733,7 +733,7 @@
    "pairs": [
     [
      "back/key_r",
-     "frame/post_3"
+     "frame/carrier_back"
     ]
    ],
    "engage_mm": 2.4,
@@ -747,7 +747,7 @@
    "pairs": [
     [
      "back/key_r",
-     "frame/post_3"
+     "frame/carrier_back"
     ]
    ],
    "engage_mm": 2.4,
@@ -761,7 +761,7 @@
    "pairs": [
     [
      "left/key_l",
-     "frame/post_3"
+     "frame/carrier_left"
     ]
    ],
    "engage_mm": 2.4,
@@ -775,7 +775,7 @@
    "pairs": [
     [
      "left/key_l",
-     "frame/post_3"
+     "frame/carrier_left"
     ]
    ],
    "engage_mm": 2.4,
@@ -789,7 +789,7 @@
    "pairs": [
     [
      "left/key_r",
-     "frame/post_0"
+     "frame/carrier_left"
     ]
    ],
    "engage_mm": 2.4,
@@ -803,7 +803,7 @@
    "pairs": [
     [
      "left/key_r",
-     "frame/post_0"
+     "frame/carrier_left"
     ]
    ],
    "engage_mm": 2.4,
@@ -2355,6 +2355,398 @@
    "engage_depth_mm": 1.8
   },
   {
+   "id": "frame/carrier-front-left",
+   "type": "retention",
+   "parts": [
+    "frame/carrier_front"
+   ],
+   "direction": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3.75
+  },
+  {
+   "id": "frame/carrier-front-right",
+   "type": "retention",
+   "parts": [
+    "frame/carrier_front"
+   ],
+   "direction": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3.75
+  },
+  {
+   "id": "frame/carrier-front-out",
+   "type": "retention",
+   "parts": [
+    "frame/carrier_front"
+   ],
+   "direction": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3.75
+  },
+  {
+   "id": "frame/carrier-front-in",
+   "type": "retention",
+   "parts": [
+    "frame/carrier_front"
+   ],
+   "direction": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3.75
+  },
+  {
+   "id": "frame/carrier-front-down",
+   "type": "retention",
+   "parts": [
+    "frame/carrier_front"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3.75
+  },
+  {
+   "id": "frame/carrier-front-up",
+   "type": "retention",
+   "parts": [
+    "frame/carrier_front"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3.75
+  },
+  {
+   "id": "frame/carrier-right-left",
+   "type": "retention",
+   "parts": [
+    "frame/carrier_right"
+   ],
+   "direction": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3.75
+  },
+  {
+   "id": "frame/carrier-right-right",
+   "type": "retention",
+   "parts": [
+    "frame/carrier_right"
+   ],
+   "direction": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3.75
+  },
+  {
+   "id": "frame/carrier-right-out",
+   "type": "retention",
+   "parts": [
+    "frame/carrier_right"
+   ],
+   "direction": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3.75
+  },
+  {
+   "id": "frame/carrier-right-in",
+   "type": "retention",
+   "parts": [
+    "frame/carrier_right"
+   ],
+   "direction": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3.75
+  },
+  {
+   "id": "frame/carrier-right-down",
+   "type": "retention",
+   "parts": [
+    "frame/carrier_right"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3.75
+  },
+  {
+   "id": "frame/carrier-right-up",
+   "type": "retention",
+   "parts": [
+    "frame/carrier_right"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3.75
+  },
+  {
+   "id": "frame/carrier-back-left",
+   "type": "retention",
+   "parts": [
+    "frame/carrier_back"
+   ],
+   "direction": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3.75
+  },
+  {
+   "id": "frame/carrier-back-right",
+   "type": "retention",
+   "parts": [
+    "frame/carrier_back"
+   ],
+   "direction": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3.75
+  },
+  {
+   "id": "frame/carrier-back-out",
+   "type": "retention",
+   "parts": [
+    "frame/carrier_back"
+   ],
+   "direction": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3.75
+  },
+  {
+   "id": "frame/carrier-back-in",
+   "type": "retention",
+   "parts": [
+    "frame/carrier_back"
+   ],
+   "direction": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3.75
+  },
+  {
+   "id": "frame/carrier-back-down",
+   "type": "retention",
+   "parts": [
+    "frame/carrier_back"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3.75
+  },
+  {
+   "id": "frame/carrier-back-up",
+   "type": "retention",
+   "parts": [
+    "frame/carrier_back"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3.75
+  },
+  {
+   "id": "frame/carrier-left-left",
+   "type": "retention",
+   "parts": [
+    "frame/carrier_left"
+   ],
+   "direction": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3.75
+  },
+  {
+   "id": "frame/carrier-left-right",
+   "type": "retention",
+   "parts": [
+    "frame/carrier_left"
+   ],
+   "direction": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3.75
+  },
+  {
+   "id": "frame/carrier-left-out",
+   "type": "retention",
+   "parts": [
+    "frame/carrier_left"
+   ],
+   "direction": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3.75
+  },
+  {
+   "id": "frame/carrier-left-in",
+   "type": "retention",
+   "parts": [
+    "frame/carrier_left"
+   ],
+   "direction": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3.75
+  },
+  {
+   "id": "frame/carrier-left-down",
+   "type": "retention",
+   "parts": [
+    "frame/carrier_left"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3.75
+  },
+  {
+   "id": "frame/carrier-left-up",
+   "type": "retention",
+   "parts": [
+    "frame/carrier_left"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3.75
+  },
+  {
+   "id": "frame/wiring-left",
+   "type": "retention",
+   "parts": [
+    "frame/wiring"
+   ],
+   "direction": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.55
+  },
+  {
+   "id": "frame/wiring-right",
+   "type": "retention",
+   "parts": [
+    "frame/wiring"
+   ],
+   "direction": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.55
+  },
+  {
+   "id": "frame/wiring-front",
+   "type": "retention",
+   "parts": [
+    "frame/wiring"
+   ],
+   "direction": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.55
+  },
+  {
+   "id": "frame/wiring-back",
+   "type": "retention",
+   "parts": [
+    "frame/wiring"
+   ],
+   "direction": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.55
+  },
+  {
    "id": "frame/wiring-seated",
    "type": "retention",
    "parts": [
@@ -2366,7 +2758,7 @@
     -1.0
    ],
    "max_free_mm": 0.5,
-   "engage_depth_mm": 2
+   "engage_depth_mm": 1.55
   },
   {
    "id": "frame/wiring-up",
@@ -2380,7 +2772,7 @@
     1.0
    ],
    "max_free_mm": 0.5,
-   "engage_depth_mm": 1.6
+   "engage_depth_mm": 1.55
   },
   {
    "id": "frame/tray-down",

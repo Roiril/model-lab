@@ -386,6 +386,8 @@ def build(interface, common_params):
             bmesh.ops.recalc_face_normals(bm,faces=list(bm.faces))
         bm.to_mesh(ob.data); bm.free()
         rot=np.eye(4)
+        if pid in ('key_l','key_r'):
+            rot=np.asarray(Matrix.Rotation(math.pi,4,'X'))
         if pid in ('cam_lower','support'):
             rot=np.asarray(Matrix.Rotation(math.pi,4,'X'))
         if pid.startswith('cam_key'):

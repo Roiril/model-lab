@@ -1,0 +1,10 @@
+{
+ "task": "F1 resident-face-v2 shared interface/frame support-free redesign",
+ "baseline_commit": "4ceb596",
+ "phase": "design",
+ "scope": "Shared panels/keys/receivers/frame/wiring/tray only; retain mechanics and 40mm tool-free cassette exchange. Face-specific print failures allowed in v2-A.",
+ "baseline": {"shared_parts":26,"shared_red":25,"face_specific_red":10,"trial_shared_red":3,"trial_face_specific_red":3},
+ "agents": {"v2_mount_design":"readonly mount design", "v2_frame_design":"readonly frame/wiring design"},
+ "next": ["Agree numeric orientation-first design", "Implement common parts and v2 consumers", "Slice and measure", "Full mechanical checks and plate regeneration"],
+ "prohibited": ["meter/threshold changes", "allowance widening", "waivers", "face-specific redesign", "viewer/index.html", "viewer/lattice/sim.mjs", "tools/lattice_simulation.py", "commit/push", "unrelated files"]
+}

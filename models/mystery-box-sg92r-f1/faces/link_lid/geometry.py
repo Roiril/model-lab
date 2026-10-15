@@ -214,7 +214,7 @@ def build(interface, common_params):
         if pid in ('crank','link'):
             turn=np.asarray(Matrix.Rotation(-math.pi/2,4,'Y'))
         if pid in ('key_l','key_r'):
-            turn=np.eye(4)
+            turn=np.asarray(Matrix.Rotation(math.pi,4,'X'))
         if pid=='support':
             turn=np.asarray(Matrix.Rotation(math.pi,4,'X'))
         if pid=='hinge_pin':

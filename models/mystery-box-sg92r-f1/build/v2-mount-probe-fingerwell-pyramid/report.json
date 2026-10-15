@@ -1,0 +1,89 @@
+{
+ "parts": [
+  {
+   "face": "blank",
+   "part": "panel",
+   "topology": {
+    "triangles": 658,
+    "vertices": 323,
+    "edgesNotSharedByTwo": 0,
+    "edgesWithSameDirectionTwice": 0,
+    "degenerateTriangles": 0,
+    "signedVolumeMm3": 15163.7154,
+    "pass": true
+   },
+   "components": 1,
+   "volume_mm3": 15163.715417729409,
+   "grounding": {
+    "bedZ": 0.0,
+    "contactAreaMm2": 7369.979,
+    "floatingComponents": [],
+    "heightMm": 3.0,
+    "contactShortSideMm": 87.4,
+    "heightOverShortSide": 0.034
+   }
+  },
+  {
+   "face": "blank",
+   "part": "key_l",
+   "topology": {
+    "triangles": 110,
+    "vertices": 57,
+    "edgesNotSharedByTwo": 0,
+    "edgesWithSameDirectionTwice": 0,
+    "degenerateTriangles": 0,
+    "signedVolumeMm3": 272.502,
+    "pass": true
+   },
+   "components": 1,
+   "volume_mm3": 272.5020074758539,
+   "grounding": {
+    "bedZ": 0.0,
+    "contactAreaMm2": 39.0,
+    "floatingComponents": [],
+    "heightMm": 8.0,
+    "contactShortSideMm": 3.0,
+    "heightOverShortSide": 2.667
+   }
+  },
+  {
+   "face": "blank",
+   "part": "key_r",
+   "topology": {
+    "triangles": 104,
+    "vertices": 54,
+    "edgesNotSharedByTwo": 0,
+    "edgesWithSameDirectionTwice": 0,
+    "degenerateTriangles": 0,
+    "signedVolumeMm3": 272.502,
+    "pass": true
+   },
+   "components": 1,
+   "volume_mm3": 272.5020074758539,
+   "grounding": {
+    "bedZ": 0.0,
+    "contactAreaMm2": 39.0,
+    "floatingComponents": [],
+    "heightMm": 8.0,
+    "contactShortSideMm": 3.0,
+    "heightOverShortSide": 2.667
+   }
+  }
+ ],
+ "key_paths": [
+  {
+   "face": "blank",
+   "key": "key_l",
+   "samples": 182,
+   "max_panel_mm3": 0.0,
+   "contact_samples": 0
+  },
+  {
+   "face": "blank",
+   "key": "key_r",
+   "samples": 182,
+   "max_panel_mm3": 0.0,
+   "contact_samples": 0
+  }
+ ]
+}

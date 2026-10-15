@@ -94,6 +94,15 @@ def verify(require_outputs=True):
 
     interface, config, faces = load_configuration()
     common = common_params()
+    check("v2.common_version", interface["id"] == common.INTERFACE_ID == "resident-face-v2")
+    check("v2.panel_dimensions", np.allclose(interface["panel_mm"],
+          [common.mm(common.PANEL), common.mm(common.PANEL), common.mm(common.PANEL_T)]))
+    check("v2.aperture_dimensions", np.allclose(interface["aperture_mm"], common.mm(common.APERTURE)))
+    legacy_interface = copy.deepcopy(interface)
+    legacy_interface["id"] = "resident-face-v1"
+    legacy_config = copy.deepcopy(config)
+    legacy_config["interface"] = "resident-face-v1"
+    check("v2.reject_legacy_pair", rejected(lambda: load_configuration(legacy_config, legacy_interface)))
     verify_motion_ranges(check, interface, config, common)
     key_definition = interface["mount"]["keys"]
     check("mount.release_geometry_declared", "release_rotation_deg" in key_definition

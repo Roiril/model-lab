@@ -1,0 +1,214 @@
+{
+ "support_used": "false",
+ "prediction_s": 2007,
+ "weight_g": "17.37",
+ "filament": [
+  [
+   "5.73",
+   "17.37"
+  ]
+ ],
+ "stats": {
+  "time": "model printing time: 26m 12s; total estimated time: 33m 27s",
+  "filament_mm": 5731.01,
+  "filament_g_header": "17.37"
+ },
+ "objects": {
+  "16": {
+   "layers": 40,
+   "z_top": 8.0,
+   "layer_steps": {
+    "0.2": [
+     0.2,
+     7.8,
+     39
+    ]
+   },
+   "floating": {
+    "external_unsupported_mm": 0.0,
+    "bridge_mm": 0.0,
+    "bridge_unsupported_mm": 0.0,
+    "internal_unsupported_mm": 0.0
+   },
+   "overhang_walls": []
+  },
+  "12": {
+   "layers": 40,
+   "z_top": 8.0,
+   "layer_steps": {
+    "0.2": [
+     0.2,
+     7.8,
+     39
+    ]
+   },
+   "floating": {
+    "external_unsupported_mm": 0.0,
+    "bridge_mm": 0.0,
+    "bridge_unsupported_mm": 0.0,
+    "internal_unsupported_mm": 0.0
+   },
+   "overhang_walls": []
+  },
+  "8": {
+   "layers": 15,
+   "z_top": 3.0,
+   "layer_steps": {
+    "0.2": [
+     0.2,
+     2.8,
+     14
+    ]
+   },
+   "floating": {
+    "external_unsupported_mm": 11.91,
+    "bridge_mm": 15343.07,
+    "bridge_unsupported_mm": 7963.02,
+    "internal_unsupported_mm": 7.23
+   },
+   "overhang_walls": [
+    {
+     "layer": 13,
+     "z": 2.8,
+     "feature": "Outer wall",
+     "points": 64,
+     "x": [
+      -33.8,
+      33.8
+     ],
+     "y": [
+      -24.3,
+      -21.4
+     ]
+    }
+   ]
+  }
+ },
+ "plate": "v2-mount-fingerwell-through",
+ "parts": [
+  "blank__key_l",
+  "blank__key_r",
+  "blank__panel"
+ ],
+ "layout_boxes": [
+  {
+   "name": "blank__panel",
+   "min_mm": [
+    19.999999200000005,
+    5.999999200000005,
+    0.0
+   ],
+   "max_mm": [
+    107.4000008,
+    93.4000008,
+    3.0
+   ]
+  },
+  {
+   "name": "blank__key_l",
+   "min_mm": [
+    113.4,
+    6.000001719999999,
+    0.0
+   ],
+   "max_mm": [
+    134.4,
+    13.20000057,
+    8.0
+   ]
+  },
+  {
+   "name": "blank__key_r",
+   "min_mm": [
+    140.4,
+    5.99999943,
+    0.0
+   ],
+   "max_mm": [
+    161.4,
+    13.199998279999999,
+    8.0
+   ]
+  }
+ ],
+ "command": [
+  "C:\\Program Files\\Bambu Studio\\bambu-studio.exe",
+  "--slice",
+  "0",
+  "--debug",
+  "2",
+  "--arrange",
+  "0",
+  "--load-settings",
+  "C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-f1\\build\\v2-mount-slice-fingerwell-through\\profiles\\machine.json;C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-f1\\build\\v2-mount-slice-fingerwell-through\\profiles\\process.json",
+  "--load-filaments",
+  "C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-f1\\build\\v2-mount-slice-fingerwell-through\\profiles\\filament_PLA.json",
+  "--outputdir",
+  "C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-f1\\build\\v2-mount-slice-fingerwell-through\\slice-v2-mount-fingerwell-through",
+  "--export-3mf",
+  "mystery-box-sg92r-f1-v2-mount-fingerwell-through-PLA.gcode.3mf",
+  "C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-f1\\build\\v2-mount-slice-fingerwell-through\\mystery-box-sg92r-f1-v2-mount-fingerwell-through-PLA-layout.3mf"
+ ],
+ "returncode": 0,
+ "log": "G:\\マイドライブ\\shubie\\reports\\v2-mount-fingerwell-through.log",
+ "sha256": "e51e13feef2d2f30cd3f1f936fa97fa5b1e541739d79a538118c6cb62def3652",
+ "file": "models/mystery-box-sg92r-f1/build/v2-mount-slice-fingerwell-through/mystery-box-sg92r-f1-v2-mount-fingerwell-through-PLA.gcode.3mf",
+ "layout_file": "models/mystery-box-sg92r-f1/build/v2-mount-slice-fingerwell-through/mystery-box-sg92r-f1-v2-mount-fingerwell-through-PLA-layout.3mf",
+ "named_objects": [
+  {
+   "part": "blank/key_r",
+   "gcode_object_id": "16",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    140.61,
+    6.21,
+    161.19,
+    12.99
+   ],
+   "overhang_walls": []
+  },
+  {
+   "part": "blank/key_l",
+   "gcode_object_id": "12",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    113.61,
+    6.21,
+    134.19,
+    12.99
+   ],
+   "overhang_walls": []
+  },
+  {
+   "part": "blank/panel",
+   "gcode_object_id": "8",
+   "external_unsupported_mm": 11.91,
+   "print_xy_mm": [
+    20.21,
+    6.21,
+    107.19,
+    93.19
+   ],
+   "overhang_walls": [
+    {
+     "layer": 13,
+     "z": 2.8,
+     "feature": "Outer wall",
+     "points": 64,
+     "x": [
+      -33.8,
+      33.8
+     ],
+     "y": [
+      -24.3,
+      -21.4
+     ]
+    }
+   ]
+  }
+ ],
+ "slice_failing": {
+  "8": 11.91
+ },
+ "slice_pass": false
+}

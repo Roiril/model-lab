@@ -1,0 +1,2071 @@
+{
+ "baseline_commit": "4ceb596",
+ "interface": "resident-face-v2",
+ "limit_mm": 2.0,
+ "before": {
+  "shared": {
+   "total": 26,
+   "failing": 25
+  },
+  "face": {
+   "total": 28,
+   "failing": 10
+  },
+  "trial_shared": {
+   "total": 3,
+   "failing": 3
+  },
+  "trial_face": {
+   "total": 9,
+   "failing": 3
+  }
+ },
+ "after": {
+  "shared": {
+   "total": 30,
+   "failing": 2
+  },
+  "face": {
+   "total": 28,
+   "failing": 10
+  },
+  "trial_shared": {
+   "total": 3,
+   "failing": 0
+  },
+  "trial_face": {
+   "total": 9,
+   "failing": 3
+  }
+ },
+ "parts": [
+  {
+   "part": "frame/post_1",
+   "gcode_object_id": "28",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    244.21,
+    6.21,
+    249.79,
+    99.29
+   ],
+   "overhang_walls": [],
+   "plate": "01-frame",
+   "category": "shared",
+   "pass": true
+  },
+  {
+   "part": "frame/post_0",
+   "gcode_object_id": "24",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    232.21,
+    6.21,
+    237.79,
+    99.29
+   ],
+   "overhang_walls": [],
+   "plate": "01-frame",
+   "category": "shared",
+   "pass": true
+  },
+  {
+   "part": "frame/upper_frame",
+   "gcode_object_id": "12",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    126.21,
+    6.21,
+    225.79,
+    105.79
+   ],
+   "overhang_walls": [],
+   "plate": "01-frame",
+   "category": "shared",
+   "pass": true
+  },
+  {
+   "part": "left/key_r",
+   "gcode_object_id": "52",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    207.01,
+    193.21,
+    213.79,
+    213.79
+   ],
+   "overhang_walls": [],
+   "plate": "01-frame",
+   "category": "shared",
+   "pass": true
+  },
+  {
+   "part": "left/key_l",
+   "gcode_object_id": "48",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    207.01,
+    166.21,
+    213.79,
+    186.79
+   ],
+   "overhang_walls": [],
+   "plate": "01-frame",
+   "category": "shared",
+   "pass": true
+  },
+  {
+   "part": "frame/post_3",
+   "gcode_object_id": "36",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    244.21,
+    105.71,
+    249.79,
+    198.79
+   ],
+   "overhang_walls": [],
+   "plate": "01-frame",
+   "category": "shared",
+   "pass": true
+  },
+  {
+   "part": "frame/post_2",
+   "gcode_object_id": "32",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    232.21,
+    105.71,
+    237.79,
+    198.79
+   ],
+   "overhang_walls": [],
+   "plate": "01-frame",
+   "category": "shared",
+   "pass": true
+  },
+  {
+   "part": "back/key_r",
+   "gcode_object_id": "44",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    207.01,
+    139.21,
+    213.79,
+    159.79
+   ],
+   "overhang_walls": [],
+   "plate": "01-frame",
+   "category": "shared",
+   "pass": true
+  },
+  {
+   "part": "back/key_l",
+   "gcode_object_id": "40",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    207.01,
+    112.21,
+    213.79,
+    132.79
+   ],
+   "overhang_walls": [],
+   "plate": "01-frame",
+   "category": "shared",
+   "pass": true
+  },
+  {
+   "part": "left/panel",
+   "gcode_object_id": "20",
+   "external_unsupported_mm": 1.87,
+   "print_xy_mm": [
+    113.61,
+    112.21,
+    200.59,
+    199.19
+   ],
+   "overhang_walls": [
+    {
+     "layer": 2,
+     "z": 0.6,
+     "feature": "Outer wall",
+     "points": 10,
+     "x": [
+      -35.3,
+      35.3
+     ],
+     "y": [
+      -22.2,
+      -21.8
+     ]
+    }
+   ],
+   "plate": "01-frame",
+   "category": "shared",
+   "pass": true
+  },
+  {
+   "part": "back/panel",
+   "gcode_object_id": "16",
+   "external_unsupported_mm": 1.87,
+   "print_xy_mm": [
+    20.21,
+    112.21,
+    107.19,
+    199.19
+   ],
+   "overhang_walls": [
+    {
+     "layer": 2,
+     "z": 0.6,
+     "feature": "Outer wall",
+     "points": 10,
+     "x": [
+      -35.3,
+      35.3
+     ],
+     "y": [
+      -22.2,
+      -21.8
+     ]
+    }
+   ],
+   "plate": "01-frame",
+   "category": "shared",
+   "pass": true
+  },
+  {
+   "part": "frame/lower_frame",
+   "gcode_object_id": "8",
+   "external_unsupported_mm": 51.28,
+   "print_xy_mm": [
+    20.21,
+    6.21,
+    119.79,
+    105.79
+   ],
+   "overhang_walls": [
+    {
+     "layer": 15,
+     "z": 3.2,
+     "feature": "Overhang wall",
+     "points": 260,
+     "x": [
+      -17.3,
+      17.3
+     ],
+     "y": [
+      -45.9,
+      -43.5
+     ]
+    }
+   ],
+   "plate": "01-frame",
+   "category": "shared",
+   "pass": false
+  },
+  {
+   "part": "front/panel",
+   "gcode_object_id": "20",
+   "external_unsupported_mm": 28.79,
+   "print_xy_mm": [
+    113.61,
+    95.21,
+    200.59,
+    182.19
+   ],
+   "overhang_walls": [
+    {
+     "layer": 2,
+     "z": 0.6,
+     "feature": "Outer wall",
+     "points": 10,
+     "x": [
+      -35.3,
+      35.3
+     ],
+     "y": [
+      -22.2,
+      -21.8
+     ]
+    },
+    {
+     "layer": 9,
+     "z": 2.0,
+     "feature": "Overhang wall",
+     "points": 58,
+     "x": [
+      26.8,
+      27.2
+     ],
+     "y": [
+      -14.8,
+      -9.2
+     ]
+    },
+    {
+     "layer": 11,
+     "z": 2.4,
+     "feature": "Overhang wall",
+     "points": 80,
+     "x": [
+      -27.1,
+      27.1
+     ],
+     "y": [
+      -19.2,
+      -17.2
+     ]
+    }
+   ],
+   "plate": "02-front",
+   "category": "shared",
+   "pass": false
+  },
+  {
+   "part": "frame/carrier_left",
+   "gcode_object_id": "12",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    121.81,
+    6.21,
+    216.69,
+    88.79
+   ],
+   "overhang_walls": [],
+   "plate": "02-front",
+   "category": "shared",
+   "pass": true
+  },
+  {
+   "part": "front/crank",
+   "gcode_object_id": "40",
+   "external_unsupported_mm": 96.65,
+   "print_xy_mm": [
+    223.21134121127085,
+    6.265,
+    244.516,
+    33.71025725813189
+   ],
+   "overhang_walls": [
+    {
+     "layer": 10,
+     "z": 2.2,
+     "feature": "Overhang wall",
+     "points": 362,
+     "x": [
+      -10.5,
+      9.9
+     ],
+     "y": [
+      -12.8,
+      13.7
+     ]
+    },
+    {
+     "layer": 10,
+     "z": 2.2,
+     "feature": "Outer wall",
+     "points": 3,
+     "x": [
+      -10.5,
+      -1.0
+     ],
+     "y": [
+      -5.1,
+      13.7
+     ]
+    },
+    {
+     "layer": 10,
+     "z": 2.2,
+     "feature": "Gap infill",
+     "points": 13,
+     "x": [
+      8.8,
+      9.4
+     ],
+     "y": [
+      -12.4,
+      -11.6
+     ]
+    },
+    {
+     "layer": 37,
+     "z": 7.6,
+     "feature": "Overhang wall",
+     "points": 334,
+     "x": [
+      -10.7,
+      -3.5
+     ],
+     "y": [
+      6.5,
+      13.7
+     ]
+    }
+   ],
+   "plate": "02-front",
+   "category": "face",
+   "pass": false
+  },
+  {
+   "part": "frame/tray",
+   "gcode_object_id": "44",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    223.21,
+    40.131,
+    246.79,
+    63.711
+   ],
+   "overhang_walls": [],
+   "plate": "02-front",
+   "category": "shared",
+   "pass": true
+  },
+  {
+   "part": "front/link",
+   "gcode_object_id": "48",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    223.2150177924103,
+    70.135,
+    248.1961202553747,
+    83.857
+   ],
+   "overhang_walls": [],
+   "plate": "02-front",
+   "category": "face",
+   "pass": true
+  },
+  {
+   "part": "front/servo_cap",
+   "gcode_object_id": "32",
+   "external_unsupported_mm": 820.69,
+   "print_xy_mm": [
+    207.01,
+    95.21,
+    243.59,
+    148.79
+   ],
+   "overhang_walls": [
+    {
+     "layer": 12,
+     "z": 2.6,
+     "feature": "Overhang wall",
+     "points": 2002,
+     "x": [
+      -18.3,
+      6.3
+     ],
+     "y": [
+      -26.8,
+      26.8
+     ]
+    },
+    {
+     "layer": 12,
+     "z": 2.6,
+     "feature": "Gap infill",
+     "points": 254,
+     "x": [
+      -17.7,
+      5.7
+     ],
+     "y": [
+      -26.0,
+      26.0
+     ]
+    },
+    {
+     "layer": 24,
+     "z": 5.0,
+     "feature": "Overhang wall",
+     "points": 662,
+     "x": [
+      -15.8,
+      -0.7
+     ],
+     "y": [
+      5.4,
+      24.6
+     ]
+    },
+    {
+     "layer": 24,
+     "z": 5.0,
+     "feature": "Gap infill",
+     "points": 178,
+     "x": [
+      -15.0,
+      -1.3
+     ],
+     "y": [
+      5.3,
+      24.6
+     ]
+    },
+    {
+     "layer": 41,
+     "z": 8.4,
+     "feature": "Overhang wall",
+     "points": 834,
+     "x": [
+      -18.3,
+      18.3
+     ],
+     "y": [
+      -19.3,
+      4.5
+     ]
+    },
+    {
+     "layer": 59,
+     "z": 12.0,
+     "feature": "Overhang wall",
+     "points": 180,
+     "x": [
+      -0.1,
+      8.5
+     ],
+     "y": [
+      11.2,
+      12.6
+     ]
+    }
+   ],
+   "plate": "02-front",
+   "category": "face",
+   "pass": false
+  },
+  {
+   "part": "front/lid",
+   "gcode_object_id": "36",
+   "external_unsupported_mm": 1.38,
+   "print_xy_mm": [
+    207.01,
+    155.215,
+    246.04,
+    189.89
+   ],
+   "overhang_walls": [
+    {
+     "layer": 46,
+     "z": 9.4,
+     "feature": "Overhang wall",
+     "points": 8,
+     "x": [
+      16.9,
+      19.5
+     ],
+     "y": [
+      -0.6,
+      -0.3
+     ]
+    }
+   ],
+   "plate": "02-front",
+   "category": "face",
+   "pass": true
+  },
+  {
+   "part": "bottom/key_r",
+   "gcode_object_id": "60",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    174.46,
+    188.61,
+    195.04,
+    195.39
+   ],
+   "overhang_walls": [],
+   "plate": "02-front",
+   "category": "shared",
+   "pass": true
+  },
+  {
+   "part": "bottom/key_l",
+   "gcode_object_id": "56",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    147.46,
+    188.61,
+    168.04,
+    195.39
+   ],
+   "overhang_walls": [],
+   "plate": "02-front",
+   "category": "shared",
+   "pass": true
+  },
+  {
+   "part": "front/key_l",
+   "gcode_object_id": "64",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    147.46,
+    201.81,
+    154.24,
+    222.39
+   ],
+   "overhang_walls": [],
+   "plate": "02-front",
+   "category": "shared",
+   "pass": true
+  },
+  {
+   "part": "front/hinge_pin",
+   "gcode_object_id": "52",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    136.465,
+    196.31,
+    141.035,
+    249.74
+   ],
+   "overhang_walls": [],
+   "plate": "02-front",
+   "category": "face",
+   "pass": true
+  },
+  {
+   "part": "front/key_r",
+   "gcode_object_id": "68",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    147.46,
+    228.81,
+    154.24,
+    249.39
+   ],
+   "overhang_walls": [],
+   "plate": "02-front",
+   "category": "shared",
+   "pass": true
+  },
+  {
+   "part": "front/support",
+   "gcode_object_id": "28",
+   "external_unsupported_mm": 867.52,
+   "print_xy_mm": [
+    93.71,
+    188.61,
+    130.04,
+    249.39
+   ],
+   "overhang_walls": [
+    {
+     "layer": 24,
+     "z": 5.0,
+     "feature": "Overhang wall",
+     "points": 872,
+     "x": [
+      -9.9,
+      15.9
+     ],
+     "y": [
+      -19.3,
+      0.5
+     ]
+    },
+    {
+     "layer": 24,
+     "z": 5.0,
+     "feature": "Gap infill",
+     "points": 17,
+     "x": [
+      -9.5,
+      -9.5
+     ],
+     "y": [
+      -2.9,
+      0.3
+     ]
+    },
+    {
+     "layer": 36,
+     "z": 7.4,
+     "feature": "Overhang wall",
+     "points": 110,
+     "x": [
+      16.5,
+      18.2
+     ],
+     "y": [
+      -11.5,
+      -3.5
+     ]
+    },
+    {
+     "layer": 39,
+     "z": 8.0,
+     "feature": "Overhang wall",
+     "points": 462,
+     "x": [
+      -14.9,
+      -10.3
+     ],
+     "y": [
+      -19.3,
+      0.5
+     ]
+    },
+    {
+     "layer": 74,
+     "z": 15.0,
+     "feature": "Overhang wall",
+     "points": 30,
+     "x": [
+      -16.2,
+      -15.7
+     ],
+     "y": [
+      -2.0,
+      0.5
+     ]
+    },
+    {
+     "layer": 94,
+     "z": 19.0,
+     "feature": "Overhang wall",
+     "points": 178,
+     "x": [
+      -16.7,
+      -14.1
+     ],
+     "y": [
+      -19.3,
+      -11.0
+     ]
+    }
+   ],
+   "plate": "02-front",
+   "category": "face",
+   "pass": false
+  },
+  {
+   "part": "frame/wiring",
+   "gcode_object_id": "24",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    20.21,
+    188.61,
+    87.29,
+    244.19
+   ],
+   "overhang_walls": [],
+   "plate": "02-front",
+   "category": "shared",
+   "pass": true
+  },
+  {
+   "part": "bottom/panel",
+   "gcode_object_id": "16",
+   "external_unsupported_mm": 1.87,
+   "print_xy_mm": [
+    20.21,
+    95.21,
+    107.19,
+    182.19
+   ],
+   "overhang_walls": [
+    {
+     "layer": 2,
+     "z": 0.6,
+     "feature": "Outer wall",
+     "points": 10,
+     "x": [
+      -35.3,
+      35.3
+     ],
+     "y": [
+      -22.2,
+      -21.8
+     ]
+    }
+   ],
+   "plate": "02-front",
+   "category": "shared",
+   "pass": true
+  },
+  {
+   "part": "frame/carrier_front",
+   "gcode_object_id": "8",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    20.31,
+    6.21,
+    115.19,
+    88.79
+   ],
+   "overhang_walls": [],
+   "plate": "02-front",
+   "category": "shared",
+   "pass": true
+  },
+  {
+   "part": "frame/carrier_right",
+   "gcode_object_id": "12",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    121.81,
+    6.21,
+    216.69,
+    88.79
+   ],
+   "overhang_walls": [],
+   "plate": "03-top",
+   "category": "shared",
+   "pass": true
+  },
+  {
+   "part": "top/pixel_2",
+   "gcode_object_id": "40",
+   "external_unsupported_mm": 158.53,
+   "print_xy_mm": [
+    225.881,
+    6.29,
+    248.127,
+    48.443
+   ],
+   "overhang_walls": [
+    {
+     "layer": 46,
+     "z": 9.4,
+     "feature": "Overhang wall",
+     "points": 1278,
+     "x": [
+      -3.1,
+      11.1
+     ],
+     "y": [
+      -19.7,
+      11.1
+     ]
+    },
+    {
+     "layer": 46,
+     "z": 9.4,
+     "feature": "Gap infill",
+     "points": 43,
+     "x": [
+      -1.3,
+      7.3
+     ],
+     "y": [
+      -19.4,
+      -14.2
+     ]
+    }
+   ],
+   "plate": "03-top",
+   "category": "face",
+   "pass": false
+  },
+  {
+   "part": "top/pixel_3",
+   "gcode_object_id": "44",
+   "external_unsupported_mm": 160.5,
+   "print_xy_mm": [
+    225.881,
+    54.943,
+    246.961,
+    96.149
+   ],
+   "overhang_walls": [
+    {
+     "layer": 46,
+     "z": 9.4,
+     "feature": "Overhang wall",
+     "points": 1297,
+     "x": [
+      -10.5,
+      4.0
+     ],
+     "y": [
+      -19.2,
+      11.4
+     ]
+    },
+    {
+     "layer": 46,
+     "z": 9.4,
+     "feature": "Gap infill",
+     "points": 34,
+     "x": [
+      -7.2,
+      1.3
+     ],
+     "y": [
+      -18.9,
+      -14.2
+     ]
+    }
+   ],
+   "plate": "03-top",
+   "category": "face",
+   "pass": false
+  },
+  {
+   "part": "top/cam_key_2",
+   "gcode_object_id": "64",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    225.881,
+    102.569,
+    237.911,
+    107.149
+   ],
+   "overhang_walls": [],
+   "plate": "03-top",
+   "category": "face",
+   "pass": true
+  },
+  {
+   "part": "top/guide",
+   "gcode_object_id": "32",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    170.755,
+    95.21,
+    219.461,
+    138.927
+   ],
+   "overhang_walls": [],
+   "plate": "03-top",
+   "category": "face",
+   "pass": true
+  },
+  {
+   "part": "top/servo_cap",
+   "gcode_object_id": "36",
+   "external_unsupported_mm": 439.99,
+   "print_xy_mm": [
+    170.677,
+    145.417,
+    209.557,
+    173.747
+   ],
+   "overhang_walls": [
+    {
+     "layer": 5,
+     "z": 1.2,
+     "feature": "Overhang wall",
+     "points": 1379,
+     "x": [
+      -15.8,
+      15.8
+     ],
+     "y": [
+      -11.7,
+      10.4
+     ]
+    },
+    {
+     "layer": 14,
+     "z": 3.0,
+     "feature": "Overhang wall",
+     "points": 209,
+     "x": [
+      -19.4,
+      19.4
+     ],
+     "y": [
+      -14.2,
+      -7.1
+     ]
+    },
+    {
+     "layer": 37,
+     "z": 7.6,
+     "feature": "Overhang wall",
+     "points": 528,
+     "x": [
+      -19.4,
+      19.2
+     ],
+     "y": [
+      -11.0,
+      9.4
+     ]
+    },
+    {
+     "layer": 37,
+     "z": 7.6,
+     "feature": "Gap infill",
+     "points": 101,
+     "x": [
+      18.9,
+      18.9
+     ],
+     "y": [
+      -10.9,
+      9.2
+     ]
+    },
+    {
+     "layer": 39,
+     "z": 8.0,
+     "feature": "Overhang wall",
+     "points": 22,
+     "x": [
+      -19.4,
+      19.2
+     ],
+     "y": [
+      10.0,
+      10.4
+     ]
+    },
+    {
+     "layer": 49,
+     "z": 10.0,
+     "feature": "Overhang wall",
+     "points": 15,
+     "x": [
+      17.7,
+      17.7
+     ],
+     "y": [
+      7.8,
+      10.4
+     ]
+    }
+   ],
+   "plate": "03-top",
+   "category": "face",
+   "pass": false
+  },
+  {
+   "part": "top/cam_upper",
+   "gcode_object_id": "28",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    113.624,
+    95.20996593826771,
+    164.2573838093603,
+    147.78875309225324
+   ],
+   "overhang_walls": [],
+   "plate": "03-top",
+   "category": "face",
+   "pass": true
+  },
+  {
+   "part": "top/pixel_1",
+   "gcode_object_id": "48",
+   "external_unsupported_mm": 85.76,
+   "print_xy_mm": [
+    113.61,
+    154.28,
+    127.335,
+    180.06
+   ],
+   "overhang_walls": [
+    {
+     "layer": 46,
+     "z": 9.4,
+     "feature": "Overhang wall",
+     "points": 394,
+     "x": [
+      -6.0,
+      6.2
+     ],
+     "y": [
+      -12.9,
+      3.1
+     ]
+    },
+    {
+     "layer": 46,
+     "z": 9.4,
+     "feature": "Gap infill",
+     "points": 46,
+     "x": [
+      4.9,
+      5.1
+     ],
+     "y": [
+      -8.6,
+      2.9
+     ]
+    }
+   ],
+   "plate": "03-top",
+   "category": "face",
+   "pass": false
+  },
+  {
+   "part": "top/cam_lower",
+   "gcode_object_id": "24",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    101.211,
+    188.60965631110957,
+    153.79874040910747,
+    241.189
+   ],
+   "overhang_walls": [],
+   "plate": "03-top",
+   "category": "face",
+   "pass": true
+  },
+  {
+   "part": "top/support",
+   "gcode_object_id": "20",
+   "external_unsupported_mm": 543.45,
+   "print_xy_mm": [
+    20.21,
+    188.61,
+    94.79,
+    235.69
+   ],
+   "overhang_walls": [
+    {
+     "layer": 1,
+     "z": 0.4,
+     "feature": "Overhang wall",
+     "points": 1461,
+     "x": [
+      -23.3,
+      23.8
+     ],
+     "y": [
+      -23.5,
+      18.5
+     ]
+    },
+    {
+     "layer": 1,
+     "z": 0.4,
+     "feature": "Outer wall",
+     "points": 3,
+     "x": [
+      -18.0,
+      18.0
+     ],
+     "y": [
+      -20.5,
+      8.5
+     ]
+    },
+    {
+     "layer": 36,
+     "z": 7.4,
+     "feature": "Overhang wall",
+     "points": 196,
+     "x": [
+      -28.3,
+      -24.6
+     ],
+     "y": [
+      16.0,
+      23.5
+     ]
+    },
+    {
+     "layer": 66,
+     "z": 13.4,
+     "feature": "Overhang wall",
+     "points": 460,
+     "x": [
+      -37.3,
+      37.3
+     ],
+     "y": [
+      -23.5,
+      23.5
+     ]
+    },
+    {
+     "layer": 94,
+     "z": 19.0,
+     "feature": "Overhang wall",
+     "points": 624,
+     "x": [
+      -36.6,
+      32.1
+     ],
+     "y": [
+      -22.8,
+      20.1
+     ]
+    }
+   ],
+   "plate": "03-top",
+   "category": "face",
+   "pass": false
+  },
+  {
+   "part": "top/cam_key_1",
+   "gcode_object_id": "60",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    74.21,
+    242.11,
+    86.24,
+    246.69
+   ],
+   "overhang_walls": [],
+   "plate": "03-top",
+   "category": "face",
+   "pass": true
+  },
+  {
+   "part": "top/key_r",
+   "gcode_object_id": "56",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    47.21,
+    242.11,
+    67.79,
+    248.89
+   ],
+   "overhang_walls": [],
+   "plate": "03-top",
+   "category": "shared",
+   "pass": true
+  },
+  {
+   "part": "top/key_l",
+   "gcode_object_id": "52",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    20.21,
+    242.11,
+    40.79,
+    248.89
+   ],
+   "overhang_walls": [],
+   "plate": "03-top",
+   "category": "shared",
+   "pass": true
+  },
+  {
+   "part": "top/panel",
+   "gcode_object_id": "16",
+   "external_unsupported_mm": 1.87,
+   "print_xy_mm": [
+    20.21,
+    95.21,
+    107.19,
+    182.19
+   ],
+   "overhang_walls": [
+    {
+     "layer": 2,
+     "z": 0.6,
+     "feature": "Outer wall",
+     "points": 10,
+     "x": [
+      -35.3,
+      35.3
+     ],
+     "y": [
+      -22.2,
+      -21.8
+     ]
+    }
+   ],
+   "plate": "03-top",
+   "category": "shared",
+   "pass": true
+  },
+  {
+   "part": "frame/carrier_back",
+   "gcode_object_id": "8",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    20.31,
+    6.21,
+    115.19,
+    88.79
+   ],
+   "overhang_walls": [],
+   "plate": "03-top",
+   "category": "shared",
+   "pass": true
+  },
+  {
+   "part": "right/hinge_pin",
+   "gcode_object_id": "44",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    240.258,
+    95.11,
+    244.838,
+    133.19
+   ],
+   "overhang_walls": [],
+   "plate": "04-right",
+   "category": "face",
+   "pass": true
+  },
+  {
+   "part": "right/input_gear",
+   "gcode_object_id": "36",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    214.0242721264047,
+    90.11543577085381,
+    233.823,
+    109.344
+   ],
+   "overhang_walls": [],
+   "plate": "04-right",
+   "category": "face",
+   "pass": true
+  },
+  {
+   "part": "right/input_bridge",
+   "gcode_object_id": "40",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    240.258,
+    51.215,
+    248.588,
+    88.69
+   ],
+   "overhang_walls": [],
+   "plate": "04-right",
+   "category": "face",
+   "pass": true
+  },
+  {
+   "part": "right/flag",
+   "gcode_object_id": "28",
+   "external_unsupported_mm": 70.36,
+   "print_xy_mm": [
+    217.732,
+    51.219,
+    232.812,
+    83.695
+   ],
+   "overhang_walls": [
+    {
+     "layer": 28,
+     "z": 5.8,
+     "feature": "Overhang wall",
+     "points": 61,
+     "x": [
+      2.7,
+      7.5
+     ],
+     "y": [
+      -12.3,
+      -10.8
+     ]
+    },
+    {
+     "layer": 29,
+     "z": 6.0,
+     "feature": "Overhang wall",
+     "points": 37,
+     "x": [
+      2.7,
+      7.5
+     ],
+     "y": [
+      -13.4,
+      -9.7
+     ]
+    },
+    {
+     "layer": 30,
+     "z": 6.2,
+     "feature": "Overhang wall",
+     "points": 33,
+     "x": [
+      2.7,
+      7.5
+     ],
+     "y": [
+      -14.1,
+      -9.0
+     ]
+    },
+    {
+     "layer": 48,
+     "z": 9.8,
+     "feature": "Overhang wall",
+     "points": 64,
+     "x": [
+      -7.5,
+      -4.0
+     ],
+     "y": [
+      -12.7,
+      -10.4
+     ]
+    },
+    {
+     "layer": 56,
+     "z": 11.4,
+     "feature": "Overhang wall",
+     "points": 93,
+     "x": [
+      -3.1,
+      1.9
+     ],
+     "y": [
+      -12.1,
+      -11.0
+     ]
+    },
+    {
+     "layer": 79,
+     "z": 16.0,
+     "feature": "Outer wall",
+     "points": 30,
+     "x": [
+      4.7,
+      7.5
+     ],
+     "y": [
+      -8.0,
+      -8.0
+     ]
+    }
+   ],
+   "plate": "04-right",
+   "category": "face",
+   "pass": false
+  },
+  {
+   "part": "right/input_cup",
+   "gcode_object_id": "24",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    186.18,
+    39.53,
+    211.31042649993242,
+    64.092
+   ],
+   "overhang_walls": [],
+   "plate": "04-right",
+   "category": "face",
+   "pass": true
+  },
+  {
+   "part": "right/sector_gear",
+   "gcode_object_id": "32",
+   "external_unsupported_mm": 1.29,
+   "print_xy_mm": [
+    186.131,
+    70.51227045355903,
+    207.569,
+    89.591
+   ],
+   "overhang_walls": [
+    {
+     "layer": 13,
+     "z": 2.8,
+     "feature": "Overhang wall",
+     "points": 7,
+     "x": [
+      -3.5,
+      -3.4
+     ],
+     "y": [
+      0.2,
+      1.1
+     ]
+    }
+   ],
+   "plate": "04-right",
+   "category": "face",
+   "pass": true
+  },
+  {
+   "part": "right/input_spindle",
+   "gcode_object_id": "64",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    196.5286298368563,
+    96.01170760724212,
+    203.70998929646805,
+    103.191
+   ],
+   "overhang_walls": [],
+   "plate": "04-right",
+   "category": "face",
+   "pass": true
+  },
+  {
+   "part": "right/flag_cover",
+   "gcode_object_id": "60",
+   "external_unsupported_mm": 1.3,
+   "print_xy_mm": [
+    180.035,
+    96.013,
+    190.11434146499914,
+    105.392
+   ],
+   "overhang_walls": [
+    {
+     "layer": 9,
+     "z": 2.0,
+     "feature": "Overhang wall",
+     "points": 7,
+     "x": [
+      -5.0,
+      -5.0
+     ],
+     "y": [
+      -1.3,
+      1.3
+     ]
+    }
+   ],
+   "plate": "04-right",
+   "category": "face",
+   "pass": true
+  },
+  {
+   "part": "right/cap_foot",
+   "gcode_object_id": "56",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    167.61,
+    70.71,
+    173.615,
+    90.19
+   ],
+   "overhang_walls": [],
+   "plate": "04-right",
+   "category": "face",
+   "pass": true
+  },
+  {
+   "part": "right/key_r",
+   "gcode_object_id": "52",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    140.61,
+    70.71,
+    161.19,
+    77.49
+   ],
+   "overhang_walls": [],
+   "plate": "04-right",
+   "category": "shared",
+   "pass": true
+  },
+  {
+   "part": "right/key_l",
+   "gcode_object_id": "48",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    113.61,
+    70.71,
+    134.19,
+    77.49
+   ],
+   "overhang_walls": [],
+   "plate": "04-right",
+   "category": "shared",
+   "pass": true
+  },
+  {
+   "part": "right/support",
+   "gcode_object_id": "12",
+   "external_unsupported_mm": 1516.02,
+   "print_xy_mm": [
+    113.61,
+    6.21,
+    179.69,
+    64.28999999999999
+   ],
+   "overhang_walls": [
+    {
+     "layer": 25,
+     "z": 5.2,
+     "feature": "Overhang wall",
+     "points": 1544,
+     "x": [
+      -16.2,
+      22.7
+     ],
+     "y": [
+      -18.7,
+      20.2
+     ]
+    },
+    {
+     "layer": 50,
+     "z": 10.2,
+     "feature": "Overhang wall",
+     "points": 1965,
+     "x": [
+      -21.2,
+      27.7
+     ],
+     "y": [
+      -23.7,
+      24.5
+     ]
+    },
+    {
+     "layer": 85,
+     "z": 17.2,
+     "feature": "Overhang wall",
+     "points": 2328,
+     "x": [
+      -28.2,
+      33.0
+     ],
+     "y": [
+      -29.0,
+      24.5
+     ]
+    },
+    {
+     "layer": 85,
+     "z": 17.2,
+     "feature": "Gap infill",
+     "points": 93,
+     "x": [
+      -27.7,
+      -23.5
+     ],
+     "y": [
+      -13.7,
+      3.4
+     ]
+    },
+    {
+     "layer": 110,
+     "z": 22.2,
+     "feature": "Overhang wall",
+     "points": 8,
+     "x": [
+      -17.2,
+      -16.9
+     ],
+     "y": [
+      -29.0,
+      -16.7
+     ]
+    },
+    {
+     "layer": 115,
+     "z": 23.2,
+     "feature": "Overhang wall",
+     "points": 812,
+     "x": [
+      -33.0,
+      -29.0
+     ],
+     "y": [
+      -27.6,
+      24.5
+     ]
+    }
+   ],
+   "plate": "04-right",
+   "category": "face",
+   "pass": false
+  },
+  {
+   "part": "right/servo_cap",
+   "gcode_object_id": "16",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    186.11,
+    6.21,
+    215.685,
+    33.04
+   ],
+   "overhang_walls": [],
+   "plate": "04-right",
+   "category": "face",
+   "pass": true
+  },
+  {
+   "part": "right/bearing_bridge",
+   "gcode_object_id": "20",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    222.105,
+    6.21,
+    241.935,
+    44.795
+   ],
+   "overhang_walls": [],
+   "plate": "04-right",
+   "category": "face",
+   "pass": true
+  },
+  {
+   "part": "right/panel",
+   "gcode_object_id": "8",
+   "external_unsupported_mm": 1.87,
+   "print_xy_mm": [
+    20.21,
+    6.21,
+    107.19,
+    93.19
+   ],
+   "overhang_walls": [
+    {
+     "layer": 2,
+     "z": 0.6,
+     "feature": "Outer wall",
+     "points": 10,
+     "x": [
+      -35.3,
+      35.3
+     ],
+     "y": [
+      -22.2,
+      -21.8
+     ]
+    }
+   ],
+   "plate": "04-right",
+   "category": "shared",
+   "pass": true
+  },
+  {
+   "part": "trial/servo_seat",
+   "gcode_object_id": "12",
+   "external_unsupported_mm": 27.48,
+   "print_xy_mm": [
+    63.21,
+    6.21,
+    103.29,
+    35.79
+   ],
+   "overhang_walls": [
+    {
+     "layer": 1,
+     "z": 0.4,
+     "feature": "Overhang wall",
+     "points": 137,
+     "x": [
+      -20.0,
+      20.0
+     ],
+     "y": [
+      -14.3,
+      14.8
+     ]
+    },
+    {
+     "layer": 1,
+     "z": 0.4,
+     "feature": "Gap infill",
+     "points": 3,
+     "x": [
+      -19.8,
+      -19.8
+     ],
+     "y": [
+      14.1,
+      14.6
+     ]
+    }
+   ],
+   "plate": "05-fit-trial",
+   "category": "trial_face",
+   "pass": false
+  },
+  {
+   "part": "trial/mount_panel",
+   "gcode_object_id": "20",
+   "external_unsupported_mm": 0.55,
+   "print_xy_mm": [
+    155.01,
+    6.21,
+    191.29,
+    35.79
+   ],
+   "overhang_walls": [
+    {
+     "layer": 2,
+     "z": 0.6,
+     "feature": "Outer wall",
+     "points": 3,
+     "x": [
+      -9.9,
+      -9.9
+     ],
+     "y": [
+      -5.1,
+      -4.9
+     ]
+    }
+   ],
+   "plate": "05-fit-trial",
+   "category": "trial_shared",
+   "pass": true
+  },
+  {
+   "part": "trial/servo_cap",
+   "gcode_object_id": "16",
+   "external_unsupported_mm": 439.6,
+   "print_xy_mm": [
+    109.71,
+    6.21,
+    148.59,
+    34.54
+   ],
+   "overhang_walls": [
+    {
+     "layer": 5,
+     "z": 1.2,
+     "feature": "Overhang wall",
+     "points": 1379,
+     "x": [
+      -15.8,
+      15.8
+     ],
+     "y": [
+      -11.7,
+      10.4
+     ]
+    },
+    {
+     "layer": 14,
+     "z": 3.0,
+     "feature": "Overhang wall",
+     "points": 210,
+     "x": [
+      -19.4,
+      19.4
+     ],
+     "y": [
+      -14.2,
+      -7.1
+     ]
+    },
+    {
+     "layer": 37,
+     "z": 7.6,
+     "feature": "Overhang wall",
+     "points": 528,
+     "x": [
+      -19.4,
+      19.2
+     ],
+     "y": [
+      -11.0,
+      9.4
+     ]
+    },
+    {
+     "layer": 37,
+     "z": 7.6,
+     "feature": "Gap infill",
+     "points": 101,
+     "x": [
+      18.8,
+      18.8
+     ],
+     "y": [
+      -10.9,
+      9.2
+     ]
+    },
+    {
+     "layer": 39,
+     "z": 8.0,
+     "feature": "Overhang wall",
+     "points": 18,
+     "x": [
+      -19.4,
+      19.2
+     ],
+     "y": [
+      10.1,
+      10.4
+     ]
+    },
+    {
+     "layer": 49,
+     "z": 10.0,
+     "feature": "Overhang wall",
+     "points": 15,
+     "x": [
+      17.7,
+      17.7
+     ],
+     "y": [
+      7.8,
+      10.4
+     ]
+    }
+   ],
+   "plate": "05-fit-trial",
+   "category": "trial_face",
+   "pass": false
+  },
+  {
+   "part": "trial/frame_corner",
+   "gcode_object_id": "24",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    109.71,
+    40.96,
+    139.29,
+    53.04
+   ],
+   "overhang_walls": [],
+   "plate": "05-fit-trial",
+   "category": "trial_shared",
+   "pass": true
+  },
+  {
+   "part": "trial/cam_lower",
+   "gcode_object_id": "32",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    95.479,
+    42.21,
+    102.85772364849511,
+    76.79
+   ],
+   "overhang_walls": [],
+   "plate": "05-fit-trial",
+   "category": "trial_face",
+   "pass": true
+  },
+  {
+   "part": "trial/pixel",
+   "gcode_object_id": "28",
+   "external_unsupported_mm": 85.77,
+   "print_xy_mm": [
+    63.28,
+    42.216,
+    89.06,
+    55.941
+   ],
+   "overhang_walls": [
+    {
+     "layer": 46,
+     "z": 9.4,
+     "feature": "Overhang wall",
+     "points": 394,
+     "x": [
+      -12.9,
+      3.1
+     ],
+     "y": [
+      -6.2,
+      6.0
+     ]
+    },
+    {
+     "layer": 46,
+     "z": 9.4,
+     "feature": "Gap infill",
+     "points": 46,
+     "x": [
+      -8.6,
+      2.9
+     ],
+     "y": [
+      -5.1,
+      -4.9
+     ]
+    }
+   ],
+   "plate": "05-fit-trial",
+   "category": "trial_face",
+   "pass": false
+  },
+  {
+   "part": "trial/connector_nest",
+   "gcode_object_id": "40",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    61.21,
+    62.361,
+    78.79,
+    73.941
+   ],
+   "overhang_walls": [],
+   "plate": "05-fit-trial",
+   "category": "trial_face",
+   "pass": true
+  },
+  {
+   "part": "trial/cam_key",
+   "gcode_object_id": "52",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    40.225,
+    76.21,
+    52.255,
+    80.79
+   ],
+   "overhang_walls": [],
+   "plate": "05-fit-trial",
+   "category": "trial_face",
+   "pass": true
+  },
+  {
+   "part": "trial/guide",
+   "gcode_object_id": "48",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    20.28,
+    76.21,
+    33.735,
+    85.54
+   ],
+   "overhang_walls": [],
+   "plate": "05-fit-trial",
+   "category": "trial_face",
+   "pass": true
+  },
+  {
+   "part": "trial/mount_key",
+   "gcode_object_id": "44",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    20.21,
+    63.01,
+    40.79,
+    69.79
+   ],
+   "overhang_walls": [],
+   "plate": "05-fit-trial",
+   "category": "trial_shared",
+   "pass": true
+  },
+  {
+   "part": "trial/cam_upper",
+   "gcode_object_id": "36",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    20.21,
+    49.21,
+    54.79,
+    56.589
+   ],
+   "overhang_walls": [],
+   "plate": "05-fit-trial",
+   "category": "trial_face",
+   "pass": true
+  },
+  {
+   "part": "trial/horn_fit",
+   "gcode_object_id": "8",
+   "external_unsupported_mm": 0.0,
+   "print_xy_mm": [
+    20.20943092127285,
+    6.209862049662462,
+    56.791978684407056,
+    42.79
+   ],
+   "overhang_walls": [],
+   "plate": "05-fit-trial",
+   "category": "trial_face",
+   "pass": true
+  }
+ ],
+ "plates_using_support": [],
+ "shared_pass": false
+}
