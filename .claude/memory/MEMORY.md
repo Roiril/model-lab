@@ -9,3 +9,4 @@
 - [SG92Rホーンの左右と実物の組立結果](sg92r-horn-orientation.md) — Bは左右逆装着で中心がずれた。向きを直すと組めた。C1は逆装着できず組立と回転に成功
 - [タンジブル画素キューブの方式と歯車列の落とし穴](tangible-pixel-cube-design.md) — 円盤カム ROM は 100mm に入らない。位相 2δ/CD と遊びの鎖。旧格子の表示データは書き換えない
 - [C3とC4の表示経路を使う組立検査](lattice-verified-assembly.md) — C1と同じ物理計算。累積した部品との途中姿勢を検査。90°で組んだ後に下限へ戻して格子を入れる
+- [機構モデルの完了はゲートで決める](mechanism-gate-harness.md) — tools/mechgate.py。計器はハーネスが持つ。閾値の根拠、CRLF と SHA、tangible の窓の試し刷りが無い
