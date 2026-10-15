@@ -1,0 +1,149 @@
+{
+ "support_used": "false",
+ "prediction_s": 1903,
+ "weight_g": "15.28",
+ "filament": [
+  [
+   "5.04",
+   "15.28"
+  ]
+ ],
+ "stats": {
+  "time": "model printing time: 24m 27s; total estimated time: 31m 43s",
+  "filament_mm": 5041.55,
+  "filament_g_header": "15.28"
+ },
+ "objects": {
+  "20": {
+   "layers": 15,
+   "z_top": 3.0,
+   "layer_steps": {
+    "0.2": [
+     0.2,
+     2.8,
+     14
+    ]
+   },
+   "floating": {
+    "external_unsupported_mm": 0.0,
+    "bridge_mm": 0.0,
+    "bridge_unsupported_mm": 0.0,
+    "internal_unsupported_mm": 0.0
+   },
+   "overhang_walls": []
+  },
+  "16": {
+   "layers": 59,
+   "z_top": 11.8,
+   "layer_steps": {
+    "0.2": [
+     0.2,
+     11.6,
+     58
+    ]
+   },
+   "floating": {
+    "external_unsupported_mm": 0.0,
+    "bridge_mm": 183.56,
+    "bridge_unsupported_mm": 54.63,
+    "internal_unsupported_mm": 10.55
+   },
+   "overhang_walls": []
+  },
+  "12": {
+   "layers": 85,
+   "z_top": 17.0,
+   "layer_steps": {
+    "0.2": [
+     0.2,
+     16.8,
+     84
+    ]
+   },
+   "floating": {
+    "external_unsupported_mm": 0.0,
+    "bridge_mm": 2526.29,
+    "bridge_unsupported_mm": 1138.7,
+    "internal_unsupported_mm": 15.7
+   },
+   "overhang_walls": []
+  },
+  "8": {
+   "layers": 53,
+   "z_top": 10.6,
+   "layer_steps": {
+    "0.2": [
+     0.2,
+     10.4,
+     52
+    ]
+   },
+   "floating": {
+    "external_unsupported_mm": 0.0,
+    "bridge_mm": 2788.39,
+    "bridge_unsupported_mm": 1231.22,
+    "internal_unsupported_mm": 6.74
+   },
+   "overhang_walls": []
+  }
+ },
+ "layout_checks": {
+  "overlap": false,
+  "outside_bed": false,
+  "exclusion": false,
+  "boxes": [
+   {
+    "name": "horn-fit-trial",
+    "bounds_xy": [
+     78.375,
+     108.0,
+     109.375,
+     148.0
+    ],
+    "height_mm": 10.5
+   },
+   {
+    "name": "servo-fit-trial",
+    "bounds_xy": [
+     115.375,
+     108.0,
+     144.375,
+     146.0
+    ],
+    "height_mm": 17.0
+   },
+   {
+    "name": "bearing_button",
+    "bounds_xy": [
+     150.375,
+     108.0,
+     162.375,
+     120.0
+    ],
+    "height_mm": 11.75
+   },
+   {
+    "name": "key_right",
+    "bounds_xy": [
+     168.375,
+     108.0,
+     177.625,
+     115.5
+    ],
+    "height_mm": 3.0
+   }
+  ]
+ },
+ "layout_input_transforms": [
+  "1 0 0 0 1 0 0 0 1 78.3750 108.0000 0",
+  "1 0 0 0 1 0 0 0 1 115.3750 108.0000 0",
+  "1 0 0 0 1 0 0 0 1 150.3750 108.0000 0",
+  "1 0 0 0 1 0 0 0 1 168.3750 108.0000 0"
+ ],
+ "layout_output_transforms": [
+  "1 0 0 0 1 0 0 0 1 93.875 128 5.25",
+  "1 0 0 0 1 0 0 0 1 129.875 127 8.5",
+  "1 0 0 0 1 0 0 0 1 156.375 114 5.875",
+  "1 0 0 0 1 0 0 0 1 173 111.75 1.5"
+ ]
+}

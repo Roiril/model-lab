@@ -1,0 +1,70 @@
+{
+ "meta": {
+  "dimensions_mm": [
+   68,
+   68,
+   68
+  ],
+  "description": "天面の旗が起き上がる箱",
+  "exterior_parts": [
+   "box",
+   "roof"
+  ]
+ },
+ "parts": [
+  {
+   "id": "box",
+   "label": "箱",
+   "assembly": "build/box.stl",
+   "color": "#d2d5d1",
+   "print": "../../prints/flag-box/box.stl"
+  },
+  {
+   "id": "roof",
+   "label": "天板",
+   "assembly": "build/roof.stl",
+   "color": "#e5e5df",
+   "print": "../../prints/flag-box/roof.stl"
+  },
+  {
+   "id": "flag",
+   "label": "旗とホーン受け",
+   "assembly": "build/flag.stl",
+   "color": "#bc5a39",
+   "print": "../../prints/flag-box/flag.stl"
+  },
+  {
+   "id": "bearing_button",
+   "label": "軸受けボタン",
+   "assembly": "build/bearing_button.stl",
+   "color": "#bc5a39",
+   "print": "../../prints/flag-box/bearing_button.stl"
+  },
+  {
+   "id": "key_left",
+   "label": "左の留め具",
+   "assembly": "build/key_left.stl",
+   "color": "#70796d",
+   "print": "../../prints/flag-box/key_left.stl"
+  },
+  {
+   "id": "key_right",
+   "label": "右の留め具",
+   "assembly": "build/key_right.stl",
+   "color": "#70796d",
+   "print": "../../prints/flag-box/key_right.stl"
+  },
+  {
+   "id": "servo",
+   "label": "SG92R",
+   "assembly": "build/servo.stl",
+   "color": "#356ca5"
+  },
+  {
+   "id": "horn",
+   "label": "付属ホーン",
+   "assembly": "build/horn.stl",
+   "color": "#303438"
+  }
+ ]
+}

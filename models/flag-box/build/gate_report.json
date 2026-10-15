@@ -1,0 +1,821 @@
+{
+ "model": "flag-box",
+ "generatedAt": "2026-10-15T11:30:22",
+ "pass": true,
+ "blocking": [],
+ "harness": {
+  "sha": "e81958ee6cd94fa6d5ba5c2bc4c8447cd632c08acb97f9bb697922edb475deee",
+  "stamp": "e81958ee6cd94fa6d5ba5c2bc4c8447cd632c08acb97f9bb697922edb475deee",
+  "stampedAt": "2026-10-15T10:58:57"
+ },
+ "blenderSeconds": 16.7,
+ "declared": {
+  "waivers": {},
+  "allowances": [
+   {
+    "type": "reference_internal",
+    "pairs": [
+     [
+      "servo",
+      "horn"
+     ]
+    ],
+    "max_mm3": 0.05,
+    "basis": "正本どうしの同軸嵌合。円筒近似のスプラインとソケットは同径。浮動小数点メッシュの共通体積最大0.029983mm3。印刷部品には適用しない。"
+   },
+   {
+    "type": "snap",
+    "pairs": [
+     [
+      "roof",
+      "key_left"
+     ],
+     [
+      "roof",
+      "key_right"
+     ]
+    ],
+    "engage_mm": 6,
+    "deflection_mm": 0.3,
+    "strain_percent": 1.6333,
+    "basis": "別刷りの留め具だけ。L5.75mm、t1.2mm、δ0.3mm。ε=1.5tδ/L²=1.6333%。層内で曲がる向きに寝かせて刷る。最後に重なりを残さない。"
+   }
+  ],
+  "unknowns": [
+   {
+    "id": "sg92r.horn_arm_lengths",
+    "trial_part": "prints/flag-box/horn-fit-trial.stl"
+   },
+   {
+    "id": "sg92r.horn_hole_positions",
+    "not_applicable": "ホーンの穴を使わず腕の外形で駆動する。"
+   },
+   {
+    "id": "sg92r.output_spline",
+    "not_applicable": "付属ホーンを実物のスプラインへ付ける。印刷で歯を作らない。"
+   },
+   {
+    "id": "sg92r.shaft_height",
+    "trial_part": "prints/flag-box/horn-fit-trial.stl"
+   },
+   {
+    "id": "sg92r.cover_circle",
+    "trial_part": "prints/flag-box/servo-fit-trial.stl"
+   },
+   {
+    "id": "sg92r.wire",
+    "accepted_risk": "出口高さは仮値。上開き14mm幅の切欠きを設ける。線の経路は実物で確認する。"
+   },
+   {
+    "id": "sg92r.connector",
+    "not_applicable": "コネクタを閉じた穴に通さない。天板を外して線だけを上開き切欠きへ置く。"
+   }
+  ],
+  "slenderExceptions": {},
+  "motionExcluded": []
+ },
+ "requirements": [
+  {
+   "id": "R1",
+   "text": "① 閉じた外形70mm以下の立方体。SG92R1台で旗0〜90度。",
+   "checks": [
+    "motion.interference",
+    "interface.drive",
+    "assembly.envelope",
+    "motion.torque"
+   ],
+   "manual": [
+    "実機でソフトの角度端点を合わせる"
+   ],
+   "pass": true
+  },
+  {
+   "id": "R2",
+   "text": "④⑤ 工具とねじを使わず組めて動き、分解できる。",
+   "checks": [
+    "assembly.path",
+    "interface.retention",
+    "instrument.calibration"
+   ],
+   "manual": [
+    "爪を指で押し3回着脱する。摩擦と破損を確かめる"
+   ],
+   "pass": true
+  },
+  {
+   "id": "C3",
+   "text": "②⑥ PLA。X1C用gcode.3mf。見える面をサポート無しできれいに刷る。外装3mm。",
+   "checks": [
+    "print.slice",
+    "print.grounding",
+    "print.slender"
+   ],
+   "manual": [],
+   "pass": true
+  },
+  {
+   "id": "C4",
+   "text": "③ SG92Rとホーンの正本をimport。配線は上開き窓へ置く。",
+   "checks": [
+    "assembly.path",
+    "unknowns.resolved"
+   ],
+   "manual": [
+    "試し刷りで個体差と配線経路を確認する"
+   ],
+   "pass": true
+  }
+ ],
+ "checks": [
+  {
+   "id": "harness.calibrated",
+   "title": "ハーネスの計器が selftest を通った版のままか",
+   "pass": true,
+   "summary": "selftest を通った版",
+   "detail": {
+    "sha": "e81958ee6cd94fa6d5ba5c2bc4c8447cd632c08acb97f9bb697922edb475deee",
+    "stamp": "e81958ee6cd94fa6d5ba5c2bc4c8447cd632c08acb97f9bb697922edb475deee",
+    "stampedAt": "2026-10-15T10:58:57"
+   },
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "spec.valid",
+   "title": "spec.json が揃っていて、許可・界面の宣言がハーネスの上限の中か",
+   "pass": true,
+   "summary": "宣言はハーネスの上限の中",
+   "detail": [],
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "contract.files",
+   "title": "manifest / motion / assembly と全 STL がそろっているか",
+   "pass": true,
+   "summary": "そろっている",
+   "detail": [],
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "instrument.calibration",
+   "title": "共通体積と初接触の計器が正負の形で期待どおりに出たか",
+   "pass": true,
+   "summary": "正負の形がすべて期待どおり",
+   "detail": {
+    "overlapHalf": {
+     "measured": 0.5,
+     "expected": 0.5,
+     "pass": true
+    },
+    "thinOverlap0.002": {
+     "measured": 0.0020000040531158447,
+     "expected": 0.002,
+     "pass": true
+    },
+    "separated": {
+     "measured": 0.0,
+     "expected": 0.0,
+     "pass": true
+    },
+    "faceContact": {
+     "measured": 0.0,
+     "expected": 0.0,
+     "pass": true
+    },
+    "edgeContact": {
+     "measured": 0.0,
+     "expected": 0.0,
+     "pass": true
+    },
+    "nestedInside": {
+     "measured": 1.0,
+     "expected": 1.0,
+     "pass": true
+    },
+    "nestedInsideReversed": {
+     "measured": 1.0,
+     "expected": 1.0,
+     "pass": true
+    },
+    "tiltedFaceContactAtScale": {
+     "measured": 0.0,
+     "expected": 0.0,
+     "pass": true
+    },
+    "tiltedThinOverlapAtScale": {
+     "measured": 4.000433860168268,
+     "expected": 4.0,
+     "pass": true
+    },
+    "skipAgreesWithBoolean": {
+     "cases": [
+      {
+       "case": "separated",
+       "fast": 0.0,
+       "full": 0.0,
+       "pass": true
+      },
+      {
+       "case": "overlap",
+       "fast": 0.7000000029802322,
+       "full": 0.7000000029802322,
+       "pass": true
+      },
+      {
+       "case": "nested",
+       "fast": 1.0,
+       "full": 1.0,
+       "pass": true
+      }
+     ],
+     "pass": true
+    },
+    "firstContactLinear": {
+     "measured": 0.501001,
+     "expected": 0.501,
+     "pass": true
+    },
+    "firstContactNone": {
+     "measured": null,
+     "expected": null,
+     "pass": true
+    },
+    "firstContactAngular": {
+     "measured": 14.255127,
+     "expected": 14.255098890306314,
+     "pass": true
+    },
+    "pass": true
+   },
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "parts.topology",
+   "title": "全 STL が閉じて向きのそろった多様体か（面積 0 の三角形も無し）",
+   "pass": true,
+   "summary": "14 個の STL を検査",
+   "detail": {
+    "failing": {},
+    "referenceNotes": {}
+   },
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "parts.components",
+   "title": "刷る STL の連結成分の数が宣言どおりか（既定 1）",
+   "pass": true,
+   "summary": "刷る部品 6 点",
+   "detail": {},
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "parts.self_intersection",
+   "title": "刷る STL に自己交差が無いか",
+   "pass": true,
+   "summary": "刷る STL 6 点",
+   "detail": {},
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "print.grounding",
+   "title": "刷る向きでベッドに十分な面積で接し、浮いた成分が無いか",
+   "pass": true,
+   "summary": "接地 10.0mm² 以上・浮いた成分なし",
+   "detail": {},
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "print.slender",
+   "title": "立てて刷る部品の高さが接地の短辺の 5 倍以内か",
+   "pass": true,
+   "summary": "高さ / 接地の短辺 ≤ 5.0",
+   "detail": {
+    "failing": {},
+    "declaredExceptions": {}
+   },
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "assembly.envelope",
+   "title": "組んだ外形が spec の上限に収まるか",
+   "pass": true,
+   "summary": "組んだ外形 68.0 x 68.0 x 68.0mm（上限 [70, 70, 70]）",
+   "detail": {
+    "size": [
+     68.0,
+     68.0,
+     68.0
+    ],
+    "limit": [
+     70,
+     70,
+     70
+    ]
+   },
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "motion.resolution",
+   "title": "motion.json の刻みが 2.5° 以下か",
+   "pass": true,
+   "summary": "motion.json の最大の刻み 1.000°（91 姿勢）",
+   "detail": {
+    "maxGapDeg": 1.0
+   },
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "motion.interference",
+   "title": "動く全範囲で、許可の無い部品の組の共通体積が 0 か",
+   "pass": true,
+   "summary": "8 部品・28 組 x 91 姿勢（45.0〜135.0°、どの点も姿勢の間で 1.0mm 以内。補間 0）",
+   "detail": {
+    "violations": [],
+    "allowedContacts": [
+     {
+      "parts": [
+       "horn",
+       "servo"
+      ],
+      "type": "reference_internal",
+      "maxMm3": 0.029983883628706624
+     }
+    ]
+   },
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "motion.torque",
+   "title": "重力だけで見積もった必要トルクが停動トルクの 1/3 以下か",
+   "pass": true,
+   "summary": "重力の必要トルク最大 0.3 mN·m（45.0°）/ 停動 0.245 N·m = 0.1%（摩擦・圧入・ばねは含まない下限の見積もり）",
+   "detail": {
+    "peakNm": 0.00033183853494957914,
+    "atServoDeg": 45.0,
+    "stallNm": 0.245,
+    "limitFraction": 0.3333333333333333,
+    "massesG": {
+     "box": 134.02,
+     "roof": 17.3,
+     "flag": 16.41,
+     "bearing_button": 0.82,
+     "key_left": 0.11,
+     "key_right": 0.11
+    }
+   },
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "interface.coverage",
+   "title": "動く部品の塊がすべて、駆動の界面でアクチュエータにつながっているか",
+   "pass": true,
+   "summary": "動く塊 1 個のうち 1 個がアクチュエータから駆動の界面でつながる",
+   "detail": {
+    "unreachableGroups": [],
+    "hint": "動く塊ごとに spec.interfaces に type: drive（driver → driven）を書く。界面はゲートが形で確かめる"
+   },
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "interface.drive",
+   "title": "駆動の界面ごとに、従動側を押すと遊びの中で駆動側に当たるか",
+   "pass": true,
+   "summary": "界面 2 個",
+   "detail": {
+    "failing": [],
+    "all": [
+     {
+      "id": "horn-flag",
+      "driver": "horn",
+      "driven": "flag",
+      "sides": "both",
+      "samples": 12,
+      "pass": true,
+      "worst": [
+       {
+        "servoDeg": 45.0,
+        "unit": "deg",
+        "limit": 3,
+        "back": 1.717621,
+        "ahead": 1.717621,
+        "pass": true
+       },
+       {
+        "servoDeg": 53.0,
+        "unit": "deg",
+        "limit": 3,
+        "back": 1.717621,
+        "ahead": 1.717621,
+        "pass": true
+       }
+      ]
+     },
+     {
+      "id": "flag-button",
+      "driver": "flag",
+      "driven": "bearing_button",
+      "sides": "both",
+      "samples": 12,
+      "pass": true,
+      "worst": [
+       {
+        "servoDeg": 45.0,
+        "unit": "deg",
+        "limit": 5,
+        "back": 4.211304,
+        "ahead": 4.211304,
+        "pass": true
+       },
+       {
+        "servoDeg": 53.0,
+        "unit": "deg",
+        "limit": 5,
+        "back": 4.211304,
+        "ahead": 4.211304,
+        "pass": true
+       }
+      ]
+     }
+    ]
+   },
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "interface.retention",
+   "title": "抜け止めごとに、外れる向きへ動かすと上限までに止まるか",
+   "pass": true,
+   "summary": "抜け止め 6 個",
+   "detail": {
+    "failing": [],
+    "all": [
+     {
+      "id": "flag-out",
+      "parts": [
+       "flag",
+       "horn",
+       "bearing_button"
+      ],
+      "direction": [
+       1.0,
+       0.0,
+       0.0
+      ],
+      "limitMm": 1,
+      "travelMm": 0.500015,
+      "stoppedBy": [
+       "box"
+      ],
+      "stoppedPart": "bearing_button",
+      "pass": true
+     },
+     {
+      "id": "flag-in",
+      "parts": [
+       "flag",
+       "horn",
+       "bearing_button"
+      ],
+      "direction": [
+       -1.0,
+       0.0,
+       0.0
+      ],
+      "limitMm": 1,
+      "travelMm": 0.250031,
+      "stoppedBy": [
+       "roof"
+      ],
+      "stoppedPart": "bearing_button",
+      "pass": true
+     },
+     {
+      "id": "roof-up",
+      "parts": [
+       "roof"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       1.0
+      ],
+      "limitMm": 2,
+      "travelMm": 0.565811,
+      "stoppedBy": [
+       "key_left"
+      ],
+      "stoppedPart": "roof",
+      "pass": true
+     },
+     {
+      "id": "servo-up",
+      "parts": [
+       "servo"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       1.0
+      ],
+      "limitMm": 1,
+      "travelMm": 0.250031,
+      "stoppedBy": [
+       "roof"
+      ],
+      "stoppedPart": "servo",
+      "pass": true
+     },
+     {
+      "id": "key-right-out",
+      "parts": [
+       "key_right"
+      ],
+      "direction": [
+       1.0,
+       0.0,
+       0.0
+      ],
+      "limitMm": 2,
+      "travelMm": 0.498596,
+      "stoppedBy": [
+       "roof"
+      ],
+      "stoppedPart": "key_right",
+      "pass": true
+     },
+     {
+      "id": "key-left-out",
+      "parts": [
+       "key_left"
+      ],
+      "direction": [
+       -1.0,
+       0.0,
+       0.0
+      ],
+      "limitMm": 2,
+      "travelMm": 0.498596,
+      "stoppedBy": [
+       "roof"
+      ],
+      "stoppedPart": "key_left",
+      "pass": true
+     }
+    ]
+   },
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "assembly.path",
+   "title": "組立の各工程で、許可の範囲の外の当たりが無く、最後に全部品が組まれるか",
+   "pass": true,
+   "summary": "9 工程（補間で足した姿勢 0）",
+   "detail": {
+    "violations": [],
+    "boundaryErrors": [],
+    "interpolatedPoses": 0,
+    "finalNotAssembled": [],
+    "allowedContacts": [
+     {
+      "parts": [
+       "horn",
+       "servo"
+      ],
+      "type": "reference_internal",
+      "maxCommonMm3": 0.029983,
+      "maxRemainingTravelMm": 0.0,
+      "samples": 44,
+      "steps": [
+       "close"
+      ]
+     },
+     {
+      "parts": [
+       "key_left",
+       "roof"
+      ],
+      "type": "snap",
+      "maxCommonMm3": 1.265451,
+      "maxRemainingTravelMm": 5.75,
+      "samples": 22,
+      "steps": [
+       "key_left"
+      ]
+     },
+     {
+      "parts": [
+       "key_right",
+       "roof"
+      ],
+      "type": "snap",
+      "maxCommonMm3": 1.265451,
+      "maxRemainingTravelMm": 5.75,
+      "samples": 22,
+      "steps": [
+       "key_right"
+      ]
+     }
+    ],
+    "steps": [
+     {
+      "id": "servo",
+      "frames": 2,
+      "checkedPoses": 2,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "horn",
+      "frames": 21,
+      "checkedPoses": 21,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "flag",
+      "frames": 25,
+      "checkedPoses": 25,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "button",
+      "frames": 31,
+      "checkedPoses": 31,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "box",
+      "frames": 161,
+      "checkedPoses": 161,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "roof",
+      "frames": 81,
+      "checkedPoses": 81,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "key_right",
+      "frames": 61,
+      "checkedPoses": 61,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "key_left",
+      "frames": 61,
+      "checkedPoses": 61,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "close",
+      "frames": 46,
+      "checkedPoses": 46,
+      "moving": 3,
+      "violations": 0,
+      "pass": true
+     }
+    ]
+   },
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "unknowns.resolved",
+   "title": "既製部品の仮値・未確認の寸法がすべて扱いを決められているか（試し刷りの部品など）",
+   "pass": true,
+   "summary": "未確認 7 件の扱いが決まっている",
+   "detail": {
+    "problems": [],
+    "resolutions": [
+     {
+      "id": "sg92r.horn_arm_lengths",
+      "kind": "trial_part",
+      "value": "prints/flag-box/horn-fit-trial.stl",
+      "what": null
+     },
+     {
+      "id": "sg92r.horn_hole_positions",
+      "kind": "not_applicable",
+      "value": "ホーンの穴を使わず腕の外形で駆動する。",
+      "what": null
+     },
+     {
+      "id": "sg92r.output_spline",
+      "kind": "not_applicable",
+      "value": "付属ホーンを実物のスプラインへ付ける。印刷で歯を作らない。",
+      "what": null
+     },
+     {
+      "id": "sg92r.shaft_height",
+      "kind": "trial_part",
+      "value": "prints/flag-box/horn-fit-trial.stl",
+      "what": null
+     },
+     {
+      "id": "sg92r.cover_circle",
+      "kind": "trial_part",
+      "value": "prints/flag-box/servo-fit-trial.stl",
+      "what": null
+     },
+     {
+      "id": "sg92r.wire",
+      "kind": "accepted_risk",
+      "value": "出口高さは仮値。上開き14mm幅の切欠きを設ける。線の経路は実物で確認する。",
+      "what": null
+     },
+     {
+      "id": "sg92r.connector",
+      "kind": "not_applicable",
+      "value": "コネクタを閉じた穴に通さない。天板を外して線だけを上開き切欠きへ置く。",
+      "what": null
+     }
+    ]
+   },
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "print.slice",
+   "title": "スライス済みのプレートで、サポート無し・外に見える支えの無い押し出しが上限以下か",
+   "pass": true,
+   "summary": "1 枚・6 物体。外の支えなし押し出し ≤ 2.0mm",
+   "detail": {
+    "failing": {},
+    "declaredSupports": {}
+   },
+   "required": true,
+   "waived": null
+  }
+ ],
+ "inputs": {
+  "models/flag-box/spec.json": "57240c73d60cd6ae6860a1fa50bc79d018e1e2a344be2f74e58f3b645c5a77c0",
+  "models/flag-box/build/manifest.json": "70555f11182f1c0e99016845bfd865284a5b324389c81bee0db67e321bc0d86a",
+  "models/flag-box/build/motion.json": "de98c2c7fdc54d90f883639d0a8b41422878c29bd91e0b1de65025af78bf0edc",
+  "models/flag-box/build/assembly.json": "8e2269c1676b19fb2294544cb3a47d5b68722c531ef6d96bf9ef7b5f4b6ba56c",
+  "models/flag-box/certify.py": "4a7a999576081977d637c40ef195ab5a1fd0c987344b27e6722d64888e5f6da9",
+  "models/flag-box/kinematics.py": "1a5feb566bac039c451072b1c02fefc95de4c0ea1aae2dfe54ea9f27bf2baf9d",
+  "models/flag-box/make_preview.py": "a14a15b837092c8f0ed68bc65d03f515918bc2929bfd9213224577808a787cb1",
+  "models/flag-box/model.py": "56ba6547c56432ffc0704e261f9d96de7cc3329cdbd526b972098d4a31cac48f",
+  "models/flag-box/params.py": "c464b867abff08b281181c076ceb14d682b31209aa8a13393121e2c14eaaf43d",
+  "models/flag-box/physics.py": "0edda52908b7979b0a6f7aeef07b058553066d9f4bcac4748ec286e1adf4c96b",
+  "models/flag-box/plate.py": "28f1225cec2580b395e4f5020f7f2c42db5498024f7e4977830d785e81175d80",
+  "models/flag-box/render.py": "0fece65dad0df3840f23c95d08d20a94b7e096e3fda05ac24ea52475982cad9b",
+  "models/flag-box/validate_delivery.py": "84ed387dc147a4fc9567473b2c2ba437964e02432b5d52612eb2c7e04a6cd43a",
+  "models/flag-box/build/box.stl": "89035827fcfaa194f6c23e2c6f856d109e6f76c1065aa8e219a7a769a709f1f3",
+  "models/flag-box/build/roof.stl": "cab0b828377d6c4b438f224beb24402e274806075535b0df31badd80d347595c",
+  "models/flag-box/build/flag.stl": "234828dfd545fa5415109ccaf7893a07a7991e231e9eb65a706b3eae04c343e8",
+  "models/flag-box/build/bearing_button.stl": "baa115df4d4fefe1fe67d7c2b8ecdbb2993530ec666ed807d4e7490f88e56b72",
+  "models/flag-box/build/key_left.stl": "08b9b1e4fad84e076902579519a7481e8041c2c018aad9d2c88b4a4363268454",
+  "models/flag-box/build/key_right.stl": "21d7f0849fe5c340ff3ead160a5da2aab3f3e95c78e6cf001f24cc1be6c695d2",
+  "models/flag-box/build/servo.stl": "f2778bab84a77c03ddcf9edbdbcdecb0fe0628ece698746b606bac3684fe2eaf",
+  "models/flag-box/build/horn.stl": "1c41348facd7b4f6d6837dc47a8779a25dcf781b7b774e61135f5cebf4495d4c",
+  "models/flag-box/../../prints/flag-box/box.stl": "12cc6b736a08bffec86058fb3ce4d33374fd08a5dfd34ee81b3b69a5f368776f",
+  "models/flag-box/../../prints/flag-box/roof.stl": "27b9bc39fa097bcee9207dd7a57033d4db2d0ef57ad311a9c887e30fd514901d",
+  "models/flag-box/../../prints/flag-box/flag.stl": "c387ea873bd753555db92331f530148ad6064be2ab1f781ba932941d39f2a019",
+  "models/flag-box/../../prints/flag-box/bearing_button.stl": "7af30e5d9e55870279bda40cf2a6f33d0fe4082a3675238ba4ae2eeb2c523e83",
+  "models/flag-box/../../prints/flag-box/key_left.stl": "c92dda93b94f95d88fe9f87e95d905ccd7e598267dcf07b6b765c6ed533b5948",
+  "models/flag-box/../../prints/flag-box/key_right.stl": "bb0a24d924de72497ee7bda25a1970e5c4b75ab4e5bd786a94ff3cd35c8f3212",
+  "prints/flag-box/horn-fit-trial.stl": "3dad842e4305eaaf482cd1e664185da0916b5e4bded1b97e88fff8d9cf130bd7",
+  "prints/flag-box/servo-fit-trial.stl": "04f37d291f287c8a23bcf77c31cb3326d2dfd0c9db37865ffb8452f51cd6a546",
+  "prints/flag-box/flag-box-PLA.gcode.3mf": "f11237bef9f7cdb1fdf96c3ea71c054e7aa36ffd1340fa557eabf51691c0dd95",
+  "tools/mechgate.py": "a04a4984d76cf8fa034fecbf79635d71513659919101b1cd6e61ff7bffba6f7b",
+  "tools/mechgate_lib/__init__.py": "7f409f2f5490445952a8c8ccbcacc41dbe79c6e4d90eaf83d1eaf05c1a20ca93",
+  "tools/mechgate_lib/limits.py": "0e544a9ae5e0495fdf009983bf0cca7696cea68c05349a92af08eb7ac3634f88",
+  "tools/mechgate_lib/meshcheck.py": "3efc9d3d1de32a392d8f1979a59665c6a382a497794c4f82d8f3af927d094110",
+  "tools/mechgate_lib/gate.py": "678d74e161580b390d630c39ac6df5717e9c391f9c6bd68e5cd08d1da40e3f99",
+  "tools/mechgate_lib/bl_job.py": "91aa0d0e7150e4812b8d20f1a80c8e7ddbde5851e1e5c16656d243082158b135",
+  "tools/mechgate_lib/selftest.py": "8f0a0411afe96f993744f0ff20fb51207e857e6c8672b81d5f0b68912cae967e",
+  "lib/printmech/solid_meter.py": "29fd57451bc054b928b3f54edec94de6a8dc529372db52bf48e6e62f90a2c53d",
+  "lib/printmech/contract.py": "c07fbf75fc73042f69db935b61ce3d078d00da4d8c0f40ebc9948ddf7abf4aef",
+  "lib/solid_volume.py": "e2ef2fed94077267883da61c7b28ca09f321d1263833bcaf6580daa7748b1415"
+ }
+}

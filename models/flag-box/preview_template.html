@@ -1,0 +1,499 @@
+<!doctype html>
+<html lang="ja" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>旗が起き上がる箱</title>
+<style>
+:root {
+  --paper: #f5efe2; --card: #ece4d4; --ink: #2b2723; --mute: #6a6257;
+  --line: #d8cdb8; --accent: #b85042; --accent-strong: #a8493c;
+  --accent-2: #5f7d70; --accent-2-strong: #526c61;
+  --serif: "Shippori Mincho", "Yu Mincho", "YuMincho", "Hiragino Mincho ProN", "MS PMincho", serif;
+  --gothic: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic UI", "Yu Gothic", Meiryo, system-ui, sans-serif;
+  --mono: ui-monospace, "Cascadia Code", Consolas, "Courier New", monospace;
+  --fs-xs: .75rem; --fs-sm: .875rem; --fs-base: 1rem; --fs-md: 1.125rem;
+  --fs-lg: 1.375rem; --fs-xl: 1.875rem;
+  --sp-1: .25rem; --sp-2: .5rem; --sp-3: .75rem; --sp-4: 1rem;
+  --sp-6: 1.5rem; --sp-8: 2rem; --sp-12: 3rem; --sp-16: 4rem;
+  --measure: 70rem; --radius: 0;
+}
+:root[data-theme="dark"] {
+  --paper: #191512; --card: #221d18; --ink: #ede6d6; --mute: #a99e90;
+  --line: #3a332b; --accent: #e0663a; --accent-strong: #e87d55;
+  --accent-2: #8fae9f; --accent-2-strong: #a3bfb1;
+}
+* { box-sizing: border-box; }
+html { color-scheme: dark; background: var(--paper); -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; color: var(--ink); background: var(--paper); font-family: var(--gothic);
+  font-size: var(--fs-base); line-height: 1.8; font-feature-settings: "palt" 1;
+}
+button, input, select { font: inherit; }
+button, select {
+  min-height: 2.75rem; border: 1px solid var(--line); border-radius: 0;
+  color: var(--ink); background: var(--card); padding: var(--sp-2) var(--sp-3);
+}
+select { width: 100%; max-width: 100%; }
+button { cursor: pointer; }
+button:hover { border-color: var(--accent-2); }
+button:focus-visible, select:focus-visible, input:focus-visible {
+  outline: 2px solid var(--accent-2-strong); outline-offset: 2px;
+}
+input[type="range"] { width: 100%; accent-color: var(--accent); }
+input[type="checkbox"] { accent-color: var(--accent); inline-size: 1.1rem; block-size: 1.1rem; }
+.wrap { max-width: var(--measure); margin: 0 auto; padding: var(--sp-8) var(--sp-4) var(--sp-16); }
+h1, h2 { font-family: var(--serif); font-weight: 600; line-height: 1.35; text-wrap: balance; }
+h1 { font-size: var(--fs-xl); margin: 0 0 var(--sp-2); }
+h2 {
+  font-size: var(--fs-lg); margin: var(--sp-12) 0 var(--sp-4);
+  padding-top: var(--sp-3); border-top: 2px solid var(--ink);
+}
+p { margin: var(--sp-2) 0; }
+.eyebrow { font-size: var(--fs-xs); letter-spacing: .12em; color: var(--accent-strong); margin: 0 0 var(--sp-2); }
+.sub { color: var(--mute); font-size: var(--fs-sm); margin: 0 0 var(--sp-6); }
+.workbench { display: grid; grid-template-columns: minmax(0, 1.75fr) minmax(17rem, 1fr); gap: var(--sp-4); }
+.viewer { min-width: 0; border: 1px solid var(--line); background: var(--card); }
+.canvas-wrap { position: relative; min-height: 28rem; background: var(--paper); touch-action: none; }
+canvas { display: block; width: 100%; height: 100%; position: absolute; inset: 0; }
+.view-caption {
+  position: absolute; left: var(--sp-3); bottom: var(--sp-3); margin: 0;
+  padding: var(--sp-1) var(--sp-2); color: var(--ink); background: var(--card);
+  border-left: 3px solid var(--accent); font-size: var(--fs-sm); pointer-events: none;
+}
+.toolbar { display: flex; flex-wrap: wrap; gap: var(--sp-2); align-items: center; padding: var(--sp-3); border-top: 1px solid var(--line); }
+.check { display: inline-flex; align-items: center; gap: var(--sp-2); min-height: 2.75rem; }
+.panel { border: 1px solid var(--line); background: var(--card); padding: var(--sp-4); }
+.tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); margin-bottom: var(--sp-4); }
+.tab { border: 0; background: var(--paper); }
+.tab[aria-selected="true"] { color: var(--paper); background: var(--accent); font-weight: 700; }
+.controls { display: grid; gap: var(--sp-4); }
+.controls[hidden] { display: none; }
+.control-head { display: flex; justify-content: space-between; gap: var(--sp-3); align-items: baseline; }
+.value { font-family: var(--mono); font-size: var(--fs-md); color: var(--accent-strong); }
+.button-row { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+.button-row > * { flex: 1 1 5rem; }
+.hint, .small { color: var(--mute); font-size: var(--fs-sm); }
+.legend { display: flex; flex-wrap: wrap; gap: var(--sp-2) var(--sp-3); padding: 0; margin: var(--sp-4) 0 0; list-style: none; }
+.legend li { display: inline-flex; gap: var(--sp-2); align-items: center; font-size: var(--fs-sm); }
+.swatch { inline-size: .75rem; block-size: .75rem; border: 1px solid var(--line); }
+.status-list { display: grid; gap: 1px; padding: 1px; background: var(--line); }
+.status-row { display: grid; grid-template-columns: auto 1fr; gap: var(--sp-3); background: var(--card); padding: var(--sp-3); }
+.mark { font-family: var(--mono); color: var(--accent-2-strong); }
+.mark.fail { color: var(--accent-strong); }
+.status-title { margin: 0; line-height: 1.5; }
+.status-summary { margin: var(--sp-1) 0 0; color: var(--mute); font-size: var(--fs-sm); line-height: 1.5; }
+.manual { margin: var(--sp-3) 0; padding-left: 1.4em; }
+.manual li { margin: var(--sp-2) 0; }
+.download { border-left: 4px solid var(--accent-2); background: var(--card); padding: var(--sp-4); margin-top: var(--sp-6); }
+a { color: var(--accent-2-strong); text-underline-offset: .18em; }
+.note { font-size: var(--fs-sm); color: var(--mute); border-top: 1px solid var(--line); margin-top: var(--sp-12); padding-top: var(--sp-4); }
+@media (max-width: 52rem) {
+  .workbench { grid-template-columns: 1fr; }
+  .canvas-wrap { min-height: 24rem; }
+}
+@media (max-width: 30rem) {
+  .wrap { padding: var(--sp-6) var(--sp-3) var(--sp-12); }
+  h1 { font-size: var(--fs-lg); }
+  h2 { font-size: var(--fs-md); margin-top: var(--sp-8); }
+  .canvas-wrap { min-height: 20rem; }
+  .toolbar > button { flex: 1 1 8rem; }
+  .status-row { grid-template-columns: 1fr; gap: var(--sp-1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <p class="eyebrow">動作と組立の確認</p>
+  <h1>旗が起き上がる箱</h1>
+  <p class="sub">閉じた外形 68 × 68 × 68 mm。旗が90°のとき全高83 mm。動作途中の最大は88.3 mmです。</p>
+
+  <section class="workbench" aria-label="模型の確認">
+    <div class="viewer">
+      <div class="canvas-wrap" id="canvasWrap">
+        <canvas id="scene" aria-label="旗が起き上がる箱の立体表示"></canvas>
+        <p class="view-caption" id="viewCaption">旗角度 0°</p>
+      </div>
+      <div class="toolbar">
+        <label class="check"><input type="checkbox" id="hideExterior">外装を隠す</label>
+        <button type="button" id="homeView">ホーム視点</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="tabs" role="tablist" aria-label="確認する内容">
+        <button class="tab" id="motionTab" role="tab" aria-selected="true" aria-controls="motionControls">動き</button>
+        <button class="tab" id="assemblyTab" role="tab" aria-selected="false" aria-controls="assemblyControls">組み立て</button>
+      </div>
+
+      <div class="controls" id="motionControls" role="tabpanel" aria-labelledby="motionTab">
+        <div>
+          <div class="control-head"><label for="angle">旗角度</label><output class="value" id="angleValue">0°</output></div>
+          <input id="angle" type="range" min="0" max="90" step="1" value="0">
+        </div>
+        <div class="button-row">
+          <button type="button" id="angle0">0°</button>
+          <button type="button" id="angle90">90°</button>
+        </div>
+        <p class="hint">0°は収納位置です。90°で旗が起きます。旗板は15 × 35 × 3 mmです。</p>
+      </div>
+
+      <div class="controls" id="assemblyControls" role="tabpanel" aria-labelledby="assemblyTab" hidden>
+        <div>
+          <label for="assemblyStep">組立工程</label>
+          <select id="assemblyStep"></select>
+        </div>
+        <div>
+          <div class="control-head"><label for="assemblyProgress">進行度</label><output class="value" id="assemblyValue">0%</output></div>
+          <input id="assemblyProgress" type="range" min="0" max="100" step="1" value="0">
+        </div>
+        <button type="button" id="playAssembly">再生</button>
+        <p class="hint" id="assemblyHint"></p>
+      </div>
+
+      <ul class="legend" id="legend" aria-label="部品の色"></ul>
+    </div>
+  </section>
+
+  <h2>計算で確かめたこと</h2>
+  <p class="small" id="gateDate"></p>
+  <p class="small" id="visualLimit"></p>
+  <div class="status-list" id="gateChecks"></div>
+
+  <h2>実物で確かめること</h2>
+  <ul class="manual" id="manualChecks"></ul>
+
+  <div class="download" id="downloadBox"></div>
+  <p class="note">表示は書き出した立体形状と、生成時の姿勢データを使っています。</p>
+</main>
+
+<script>
+const DATA = __DATA__;
+const $ = (id) => document.getElementById(id);
+const canvas = $("scene");
+const ctx = canvas.getContext("2d");
+const wrap = $("canvasWrap");
+const partById = new Map(DATA.parts.map((part) => [part.id, part]));
+const exterior = new Set(DATA.parts.filter((part) => part.exterior).map((part) => part.id));
+const stepLabels = {
+  servo: "1. SG92Rを置く", horn: "2. ホーンを付ける", flag: "3. 旗を差し込む",
+  button: "4. 軸受けを付ける", box: "5. 箱をかぶせる", roof: "6. 天板を付ける",
+  key_right: "7. 右の留め具を入れる", key_left: "8. 左の留め具を入れる",
+  close: "9. 旗を収納する"
+};
+let mode = "motion";
+let yaw = -0.72;
+let pitch = 0.48;
+let dragging = false;
+let lastX = 0;
+let lastY = 0;
+let playTimer = null;
+let fitCache = null;
+
+function matrixOf(value) {
+  if (Array.isArray(value)) return value;
+  return value.matrix16 || value.matrix;
+}
+
+function transformPoint(vertices, offset, matrix) {
+  const x = vertices[offset];
+  const y = vertices[offset + 1];
+  const z = vertices[offset + 2];
+  return [
+    matrix[0] * x + matrix[4] * y + matrix[8] * z + matrix[12],
+    matrix[1] * x + matrix[5] * y + matrix[9] * z + matrix[13],
+    matrix[2] * x + matrix[6] * y + matrix[10] * z + matrix[14]
+  ];
+}
+
+function viewPoint(point) {
+  const x = point[0];
+  const y = point[1];
+  const z = point[2] - 34;
+  const cy = Math.cos(yaw);
+  const sy = Math.sin(yaw);
+  const cp = Math.cos(pitch);
+  const sp = Math.sin(pitch);
+  const across = cy * x - sy * y;
+  const forward = sy * x + cy * y;
+  return [across, -sp * forward + cp * z, cp * forward + sp * z];
+}
+
+function shadeColor(hex, factor) {
+  const value = hex.startsWith("#") ? hex.slice(1) : hex;
+  const full = value.length === 3 ? value.split("").map((digit) => digit + digit).join("") : value;
+  const channels = [0, 2, 4].map((offset) =>
+    Math.max(0, Math.min(255, Math.round(parseInt(full.slice(offset, offset + 2), 16) * factor)))
+  );
+  return `rgb(${channels[0]}, ${channels[1]}, ${channels[2]})`;
+}
+
+function fitFrames() {
+  if (mode === "motion") return DATA.motion.frames;
+  return DATA.assembly.steps[Number($("assemblyStep").value)].frames;
+}
+
+function projectedFit(width, height) {
+  const step = mode === "assembly" ? Number($("assemblyStep").value) : -1;
+  const key = `${mode}:${step}:${yaw.toFixed(6)}:${pitch.toFixed(6)}:${width}:${height}`;
+  if (fitCache && fitCache.key === key) return fitCache.value;
+
+  let minX = Infinity;
+  let minY = Infinity;
+  let maxX = -Infinity;
+  let maxY = -Infinity;
+  for (const frame of fitFrames()) {
+    for (const [partId, rawMatrix] of Object.entries(frame.transforms)) {
+      const part = partById.get(partId);
+      if (!part) continue;
+      const matrix = matrixOf(rawMatrix);
+      if (!matrix || matrix.length !== 16) continue;
+      for (let offset = 0; offset < part.mesh.vertices.length; offset += 3) {
+        const point = viewPoint(transformPoint(part.mesh.vertices, offset, matrix));
+        minX = Math.min(minX, point[0]);
+        minY = Math.min(minY, point[1]);
+        maxX = Math.max(maxX, point[0]);
+        maxY = Math.max(maxY, point[1]);
+      }
+    }
+  }
+  const padding = Math.max(16, Math.min(width, height) * 0.08);
+  const spanX = Math.max(1, maxX - minX);
+  const spanY = Math.max(1, maxY - minY);
+  const usableWidth = Math.max(1, width - padding * 2);
+  const usableHeight = Math.max(1, height - padding * 2);
+  const scale = Math.min(usableWidth / spanX, usableHeight / spanY);
+  const value = {
+    scale,
+    centerX: width / 2 - (minX + maxX) * scale / 2,
+    centerY: height / 2 + (minY + maxY) * scale / 2
+  };
+  fitCache = { key, value };
+  return value;
+}
+
+function currentTransforms() {
+  if (mode === "motion") {
+    const target = Number($("angle").value) + DATA.motion.frames[0].servo_deg;
+    return DATA.motion.frames.reduce((best, frame) =>
+      Math.abs(frame.servo_deg - target) < Math.abs(best.servo_deg - target) ? frame : best
+    ).transforms;
+  }
+  const step = DATA.assembly.steps[Number($("assemblyStep").value)];
+  const target = Number($("assemblyProgress").value) / 100;
+  return step.frames.reduce((best, frame) =>
+    Math.abs(frame.progress - target) < Math.abs(best.progress - target) ? frame : best
+  ).transforms;
+}
+
+function resizeCanvas() {
+  const bounds = wrap.getBoundingClientRect();
+  const ratio = Math.min(window.devicePixelRatio || 1, 2);
+  const width = Math.max(1, Math.round(bounds.width * ratio));
+  const height = Math.max(1, Math.round(bounds.height * ratio));
+  if (canvas.width !== width || canvas.height !== height) {
+    canvas.width = width;
+    canvas.height = height;
+  }
+  draw();
+}
+
+function draw() {
+  const width = canvas.width;
+  const height = canvas.height;
+  ctx.clearRect(0, 0, width, height);
+  const transforms = currentTransforms();
+  const hideExterior = $("hideExterior").checked;
+  const fit = projectedFit(width, height);
+  const scale = fit.scale;
+  const centerX = fit.centerX;
+  const centerY = fit.centerY;
+  const faces = [];
+
+  for (const [partId, rawMatrix] of Object.entries(transforms)) {
+    if (hideExterior && exterior.has(partId)) continue;
+    const part = partById.get(partId);
+    if (!part) continue;
+    const matrix = matrixOf(rawMatrix);
+    if (!matrix || matrix.length !== 16) continue;
+    const points = [];
+    for (let offset = 0; offset < part.mesh.vertices.length; offset += 3) {
+      points.push(viewPoint(transformPoint(part.mesh.vertices, offset, matrix)));
+    }
+    const indices = part.mesh.triangles;
+    for (let index = 0; index < indices.length; index += 3) {
+      const a = points[indices[index]];
+      const b = points[indices[index + 1]];
+      const c = points[indices[index + 2]];
+      const abx = b[0] - a[0];
+      const aby = b[1] - a[1];
+      const acx = c[0] - a[0];
+      const acy = c[1] - a[1];
+      const normal = abx * acy - aby * acx;
+      faces.push({ a, b, c, depth: (a[2] + b[2] + c[2]) / 3, color: part.color, light: normal });
+    }
+  }
+
+  faces.sort((a, b) => a.depth - b.depth);
+  for (const face of faces) {
+    const shade = face.light < 0 ? 0.64 : 0.94;
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = shadeColor(face.color, shade);
+    ctx.strokeStyle = shadeColor(face.color, 0.48);
+    ctx.lineWidth = Math.max(0.5, width / 1200);
+    ctx.beginPath();
+    ctx.moveTo(centerX + face.a[0] * scale, centerY - face.a[1] * scale);
+    ctx.lineTo(centerX + face.b[0] * scale, centerY - face.b[1] * scale);
+    ctx.lineTo(centerX + face.c[0] * scale, centerY - face.c[1] * scale);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+  }
+  ctx.globalAlpha = 1;
+}
+
+function setMode(next) {
+  mode = next;
+  const motion = next === "motion";
+  $("motionTab").setAttribute("aria-selected", String(motion));
+  $("assemblyTab").setAttribute("aria-selected", String(!motion));
+  $("motionControls").hidden = !motion;
+  $("assemblyControls").hidden = motion;
+  fitCache = null;
+  updateCaption();
+  draw();
+}
+
+function updateCaption() {
+  if (mode === "motion") {
+    const angle = Number($("angle").value);
+    $("angleValue").value = `${angle}°`;
+    $("viewCaption").textContent = `旗角度 ${angle}°`;
+  } else {
+    const stepIndex = Number($("assemblyStep").value);
+    const progress = Number($("assemblyProgress").value);
+    $("assemblyValue").value = `${progress}%`;
+    $("viewCaption").textContent = `${stepLabels[DATA.assembly.steps[stepIndex].id]}・${progress}%`;
+    $("assemblyHint").textContent = `${stepIndex + 1} / ${DATA.assembly.steps.length} 工程`;
+  }
+}
+
+function stopPlayback() {
+  if (playTimer !== null) window.clearInterval(playTimer);
+  playTimer = null;
+  $("playAssembly").textContent = "再生";
+}
+
+function togglePlayback() {
+  if (playTimer !== null) {
+    stopPlayback();
+    return;
+  }
+  if (Number($("assemblyProgress").value) >= 100) $("assemblyProgress").value = "0";
+  $("playAssembly").textContent = "停止";
+  playTimer = window.setInterval(() => {
+    const next = Number($("assemblyProgress").value) + 2;
+    $("assemblyProgress").value = String(Math.min(100, next));
+    updateCaption();
+    draw();
+    if (next >= 100) stopPlayback();
+  }, 40);
+}
+
+function renderTextSections() {
+  $("legend").replaceChildren(...DATA.parts.map((part) => {
+    const item = document.createElement("li");
+    const swatch = document.createElement("span");
+    swatch.className = "swatch";
+    swatch.style.background = part.color;
+    const label = document.createElement("span");
+    label.textContent = part.label;
+    item.append(swatch, label);
+    return item;
+  }));
+
+  const generated = DATA.gate.generatedAt ? new Date(DATA.gate.generatedAt) : null;
+  $("gateDate").textContent = generated && !Number.isNaN(generated.valueOf())
+    ? `確認結果の生成日時 ${generated.toLocaleString("ja-JP")}` : "確認結果の生成日時は記録されていません。";
+  $("visualLimit").textContent = "ブラウザーによる目視は未確認。形状はBlender画像で確認。";
+  $("gateChecks").replaceChildren(...DATA.gate.checks.map((check) => {
+    const row = document.createElement("div");
+    row.className = "status-row";
+    const mark = document.createElement("span");
+    mark.className = `mark${check.pass ? "" : " fail"}`;
+    mark.textContent = check.pass ? "合格" : "要確認";
+    const body = document.createElement("div");
+    const title = document.createElement("p");
+    title.className = "status-title";
+    title.textContent = check.title;
+    const summary = document.createElement("p");
+    summary.className = "status-summary";
+    summary.textContent = check.summary || "結果の説明はありません。";
+    body.append(title, summary);
+    row.append(mark, body);
+    return row;
+  }));
+
+  const manual = DATA.gate.manual.length ? DATA.gate.manual : ["実物で確かめる項目は記録されていません。"];
+  $("manualChecks").replaceChildren(...manual.map((text) => {
+    const item = document.createElement("li");
+    item.textContent = text;
+    return item;
+  }));
+
+  const download = $("downloadBox");
+  const heading = document.createElement("p");
+  heading.textContent = "印刷用データ";
+  const detail = document.createElement("p");
+  if (DATA.gcode.exists) {
+    const link = document.createElement("a");
+    link.href = DATA.gcode.name;
+    link.textContent = DATA.gcode.name;
+    link.download = DATA.gcode.name;
+    detail.append(link, `（${(DATA.gcode.bytes / 1024 / 1024).toFixed(1)} MB）`);
+  } else {
+    detail.textContent = `${DATA.gcode.name} は生成時に見つかりませんでした。`;
+  }
+  download.append(heading, detail);
+}
+
+for (const [index, step] of DATA.assembly.steps.entries()) {
+  const option = document.createElement("option");
+  option.value = String(index);
+  option.textContent = stepLabels[step.id] || `${index + 1}. ${step.id}`;
+  $("assemblyStep").append(option);
+}
+
+$("motionTab").addEventListener("click", () => setMode("motion"));
+$("assemblyTab").addEventListener("click", () => setMode("assembly"));
+$("angle").addEventListener("input", () => { updateCaption(); draw(); });
+$("angle0").addEventListener("click", () => { $("angle").value = "0"; updateCaption(); draw(); });
+$("angle90").addEventListener("click", () => { $("angle").value = "90"; updateCaption(); draw(); });
+$("assemblyStep").addEventListener("change", () => { stopPlayback(); fitCache = null; $("assemblyProgress").value = "0"; updateCaption(); draw(); });
+$("assemblyProgress").addEventListener("input", () => { stopPlayback(); updateCaption(); draw(); });
+$("playAssembly").addEventListener("click", togglePlayback);
+$("hideExterior").addEventListener("change", draw);
+$("homeView").addEventListener("click", () => { yaw = -0.72; pitch = 0.48; fitCache = null; draw(); });
+wrap.addEventListener("pointerdown", (event) => {
+  dragging = true; lastX = event.clientX; lastY = event.clientY; wrap.setPointerCapture(event.pointerId);
+});
+wrap.addEventListener("pointermove", (event) => {
+  if (!dragging) return;
+  yaw += (event.clientX - lastX) * 0.01;
+  pitch = Math.max(-1.35, Math.min(1.35, pitch + (event.clientY - lastY) * 0.01));
+  fitCache = null;
+  lastX = event.clientX; lastY = event.clientY; draw();
+});
+wrap.addEventListener("pointerup", () => { dragging = false; });
+wrap.addEventListener("pointercancel", () => { dragging = false; });
+
+renderTextSections();
+updateCaption();
+new ResizeObserver(resizeCanvas).observe(wrap);
+resizeCanvas();
+</script>
+</body>
+</html>
