@@ -121,6 +121,9 @@ def main():
             print("INCOMPLETE: rebuild did not produce fresh, complete contracts.")
             return 2
     results = []
+    if not args.no_blender:
+        code = run([sys.executable, HERE / "plate.py", "--if-stale"])
+        results.append({"check": "plate.py", "returncode": code})
     for script in ("verify_contract.py", "verify_envelopes.py"):
         code = run([sys.executable, HERE / script])
         results.append({"check": script, "returncode": code})

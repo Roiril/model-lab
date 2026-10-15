@@ -13,7 +13,7 @@ from sector_flag_local.evidence import require_meshes
 
 evidence=require_meshes(C.HERE)
 manifest=json.loads((C.HERE/'module.json').read_text(encoding='utf-8'))
-interface=json.loads((C.HERE.parents[1]/'interface.json').read_text(encoding='utf-8'))
+interface=json.loads((C.MODEL/'interface.json').read_text(encoding='utf-8'))
 solids={p:C.Solid.load(p,C.HERE/'_local'/(p+'.stl')) for p in manifest['parts']}
 meter=C.Meter()
 assert C.calibrate(meter)['pass']

@@ -1,0 +1,2612 @@
+{
+ "model": "mystery-box-sg92r-f1/checks/right",
+ "request": "最終段。slots.jsonのrightをsector_flagにし、checks/rightを作る。ルート・checks/front・checks/top・checks/rightのゲートをすべてexit 0。lattice_exportとtools/lattice_web.pyを流し直し、Studioの表示データに右面も入れる。READMEの面一覧・部品表・組立・交換手順を更新。設計書D節の割付4枚程度で全部品のプレートを作る。X1C 256×256、手前左18×28除外。PLA、X1C 0.4、Textured PEI、0.20mm Standard、補正0.15、壁2、充填15%。Bambu Studio CLIでスライスしprints/mystery-box-sg92r-f1/に.gcode.3mfを置く。print.sliceのwaiverを外し、外に見える支えの無い押し出し≤2mm、サポート無し。赤なら刷る向きか形を直し、通らない部品は理由とともに報告する。交換部の角・サーボ座・カム1区間の試し刷りを1枚にまとめてスライス。計器・閾値とallowancesを広げず、交換規格・骨格を旗に合わせて曲げない。commit/pushしない。",
+ "requirements": [
+  {
+   "id": "R1",
+   "text": "閉状態の外形は100 × 100 × 100mm",
+   "checks": [
+    "assembly.envelope"
+   ]
+  },
+  {
+   "id": "R2",
+   "text": "正面の蓋・上面の3画素・右面の旗を各SG92Rで動かし、背面・左面・底面を空の面とする",
+   "checks": [
+    "interface.coverage",
+    "interface.drive",
+    "motion.torque"
+   ]
+  },
+  {
+   "id": "R3",
+   "text": "他面を変更せずキーを解除して40mm以上直線で引き抜く",
+   "checks": [
+    "assembly.path",
+    "interface.retention",
+    "manual:他面を残して配線を切り離し交換する"
+   ]
+  },
+  {
+   "id": "R4",
+   "text": "動作中もサーボと伝達部品を外から見せない",
+   "checks": [
+    "manual:閉端・中間・開端を斜め方向から見て遮蔽を確認"
+   ]
+  },
+  {
+   "id": "R5",
+   "text": "印刷部品とSG92R・付属ホーンだけで工具なしに組み分解する",
+   "checks": [
+    "assembly.path",
+    "interface.retention",
+    "manual:工具なしで組立と分解"
+   ]
+  },
+  {
+   "id": "R6",
+   "text": "外装2mm・荷重部3mm以上でサポートなしに見える面を刷る",
+   "checks": [
+    "print.slice",
+    "print.grounding",
+    "print.slender",
+    "parts.topology"
+   ]
+  },
+  {
+   "id": "R7",
+   "text": "全動作と交換経路で干渉しない。製造余裕0.25mmを含む占有領域を検査する",
+   "checks": [
+    "motion.interference",
+    "assembly.path",
+    "manual:verify_envelopes.pyの未証明範囲を確認"
+   ]
+  },
+  {
+   "id": "R8",
+   "text": "既製部品の仮値は本体形状から作る試片で扱う",
+   "checks": [
+    "unknowns.resolved",
+    "manual:実物適合と20回着脱を記録"
+   ]
+  },
+  {
+   "id": "R9",
+   "text": "新しい面は独立したfacesディレクトリとslots.jsonで追加する",
+   "checks": [
+    "manual:verify_contract.pyで規格と依存鮮度を検査"
+   ]
+  },
+  {
+   "id": "front/lid-motion",
+   "text": "C節の4節リンクで36×30×2mmの蓋を0〜60度開く",
+   "checks": [
+    "motion.interference",
+    "motion.torque",
+    "interface.drive"
+   ]
+  },
+  {
+   "id": "front/lid-assembly",
+   "text": "90度で組み、閉姿勢へ戻す。工具とねじなしで分解",
+   "checks": [
+    "assembly.path",
+    "interface.retention",
+    "manual:実物で両ピンの先端と解除腕を押して外す"
+   ]
+  },
+  {
+   "id": "front/lid-shield",
+   "text": "開いた蓋の奥を無地の壁で遮る",
+   "checks": [
+    "manual:0度・30度・60度を正面と斜めから見る"
+   ]
+  },
+  {
+   "id": "right/flag-motion",
+   "text": "14×28×2mmの旗をm1.5・18歯相当・軸間27mmの歯車で0〜60度起こす",
+   "checks": [
+    "motion.interference",
+    "motion.torque",
+    "interface.drive"
+   ]
+  },
+  {
+   "id": "right/flag-envelope",
+   "text": "公差片側0.25mm込みで7段の占有と外部76×76×32mmを守る",
+   "checks": [
+    "assembly.envelope",
+    "manual:check_local.pyの全角度の占有結果を合成担当が確認"
+   ]
+  },
+  {
+   "id": "right/flag-assembly",
+   "text": "90度で組み閉姿勢へ戻す。工具・ねじ・接着剤なしで分解できる",
+   "checks": [
+    "assembly.path",
+    "interface.retention",
+    "manual:爪を指で解除して20回着脱"
+   ]
+  },
+  {
+   "id": "right/flag-shield",
+   "text": "旗が面一に閉じ、固定壁と重なったカラーで歯車・サーボ・ホーン・内部キー・ピンを隠す",
+   "checks": [
+    "manual:check_shield.pyの既定585225本と追加31851655本が0件。実物も正面と斜めから確認"
+   ]
+  },
+  {
+   "id": "right/flag-print",
+   "text": "見える面にサポートを付けずPLAとPETGで刷れる",
+   "checks": [
+    "print.slice",
+    "print.grounding",
+    "print.slender"
+   ]
+  },
+  {
+   "id": "back/blank-closed",
+   "text": "空の面を3点の座へ固定し、キーを外して面法線方向へ抜ける",
+   "checks": [
+    "assembly.path",
+    "interface.retention"
+   ]
+  },
+  {
+   "id": "left/blank-closed",
+   "text": "空の面を3点の座へ固定し、キーを外して面法線方向へ抜ける",
+   "checks": [
+    "assembly.path",
+    "interface.retention"
+   ]
+  },
+  {
+   "id": "top/pixels-table",
+   "text": "patterns.jsonから53mmの上下カムを作り、14mm角の3画素を0〜3mm押し引きする",
+   "checks": [
+    "motion.interference",
+    "interface.drive",
+    "motion.torque"
+   ]
+  },
+  {
+   "id": "top/pixels-fit",
+   "text": "7段の占有と外部動作域を守り、側面でも重力に頼らず動く",
+   "checks": [
+    "assembly.envelope",
+    "interface.retention",
+    "manual:実機を上向きと横向きで動かす"
+   ]
+  },
+  {
+   "id": "top/pixels-assembly",
+   "text": "サーボ90度で組み、印刷部品と付属ホーンだけで保持する",
+   "checks": [
+    "assembly.path",
+    "interface.retention",
+    "manual:工具なしで組立と取り外し"
+   ]
+  },
+  {
+   "id": "top/pixels-shield",
+   "text": "8mmのスカートで画素穴の奥を隠す",
+   "checks": [
+    "manual:0mmと3mmで斜めから内部が見えないこと"
+   ]
+  },
+  {
+   "id": "bottom/blank-closed",
+   "text": "空の面を3点の座へ固定し、キーを外して面法線方向へ抜ける",
+   "checks": [
+    "assembly.path",
+    "interface.retention"
+   ]
+  }
+ ],
+ "envelope_mm": [
+  100,
+  100,
+  100
+ ],
+ "uses": [
+  "sg92r"
+ ],
+ "parts": {
+  "components": {},
+  "jigs": [],
+  "slender_ok": {}
+ },
+ "motion": {
+  "actuator": "right/horn",
+  "servo": "sg92r",
+  "exclude": []
+ },
+ "allowances": [
+  {
+   "type": "reference_internal",
+   "pairs": [
+    [
+     "front/servo",
+     "front/horn"
+    ]
+   ],
+   "max_mm3": 0.05,
+   "basis": "正本の円筒近似スプライン同士のみ。印刷部品には適用しない。"
+  },
+  {
+   "type": "snap",
+   "pairs": [
+    [
+     "front/crank",
+     "front/link"
+    ]
+   ],
+   "engage_mm": 4.5,
+   "deflection_mm": 0.15,
+   "strain_percent": 1.563,
+   "basis": "Aピンは頭半径2.85/穴半径2.7。座金の先からの自由長4.8mm・片脚t1.6mm以下・δ0.15mm。1.5tδ/L²=1.563%。"
+  },
+  {
+   "type": "snap",
+   "pairs": [
+    [
+     "front/link",
+     "front/lid"
+    ]
+   ],
+   "engage_mm": 4.5,
+   "deflection_mm": 0.15,
+   "strain_percent": 1.778,
+   "basis": "Bピン先端半径2.85/穴半径2.7、δ0.15mm。自由長4.5mm・t1.6mm、1.5tδ/L²=1.778%。実物の着脱で確認。"
+  },
+  {
+   "type": "snap",
+   "pairs": [
+    [
+     "front/support",
+     "front/panel"
+    ]
+   ],
+   "engage_mm": 2.4,
+   "deflection_mm": 0.6,
+   "strain_percent": 0.444,
+   "basis": "支持座の解除腕自由長18mm以上・t1.6mm・δ0.6mm、上限1.5tδ/L²=0.444%。終端に重なりを残さない。"
+  },
+  {
+   "type": "reference_internal",
+   "pairs": [
+    [
+     "right/servo",
+     "right/horn"
+    ]
+   ],
+   "max_mm3": 0.05,
+   "basis": "SG92R正本の円筒近似した軸とソケットだけ。印刷部品の干渉には適用しない。"
+  },
+  {
+   "type": "snap",
+   "pairs": [
+    [
+     "right/support",
+     "right/panel"
+    ]
+   ],
+   "engage_mm": 2.4,
+   "deflection_mm": 0.6,
+   "strain_percent": 0.454489,
+   "basis": "面板を留める腕の自由長L17.8mm・t1.6mm。δ0.6mm。外面の窓から解除。"
+  },
+  {
+   "type": "reference_internal",
+   "pairs": [
+    [
+     "top/servo",
+     "top/horn"
+    ]
+   ],
+   "max_mm3": 0.05,
+   "basis": "正本の円筒近似スプラインのみ。印刷部品への除外はない。"
+  },
+  {
+   "type": "snap",
+   "pairs": [
+    [
+     "top/support",
+     "top/panel"
+    ]
+   ],
+   "engage_mm": 2.4,
+   "deflection_mm": 0.6,
+   "strain_percent": 0.444,
+   "basis": "自由長18mm、厚さ1.6mm、片側0.6mm。1.5tδ/L²。"
+  },
+  {
+   "type": "snap",
+   "pairs": [
+    [
+     "top/servo_cap",
+     "top/support"
+    ]
+   ],
+   "engage_mm": 4.5,
+   "deflection_mm": 5,
+   "strain_percent": 1.94,
+   "basis": "右腕は自由長22mm・厚さ1.2mm・先端5mm。中心線の長さを保った曲げで最大ひずみ1.938%以下。左腕は17.5mm・1.6mm・0.6mmで0.471%以下。着座まで指で開いて保持し、着座後に戻す。実形状を曲げた通過検査はcheck_localのelastic_cap。"
+  },
+  {
+   "type": "snap",
+   "pairs": [
+    [
+     "top/cam_key_1",
+     "top/cam_lower"
+    ],
+    [
+     "top/cam_key_2",
+     "top/cam_lower"
+    ]
+   ],
+   "engage_mm": 4.5,
+   "deflection_mm": 0.15,
+   "strain_percent": 0.67,
+   "basis": "二股脚厚1.2mm、自由長6.35mm、片側0.15mm。1.5tδ/L²。"
+  },
+  {
+   "type": "snap",
+   "pairs": [
+    [
+     "top/servo_cap",
+     "top/guide"
+    ]
+   ],
+   "engage_mm": 9,
+   "deflection_mm": 5,
+   "strain_percent": 1.94,
+   "basis": "右腕は自由長22mm・厚さ1.2mm・先端5mm。中心線の長さを保った曲げで最大ひずみ1.938%以下。左腕は17.5mm・1.6mm・0.6mmで0.471%以下。着座まで指で開いて保持し、着座後に戻す。実形状を曲げた通過検査はcheck_localのelastic_cap。"
+  },
+  {
+   "type": "snap",
+   "pairs": [
+    [
+     "top/cam_key_1",
+     "top/cam_upper"
+    ],
+    [
+     "top/cam_key_2",
+     "top/cam_upper"
+    ]
+   ],
+   "engage_mm": 11,
+   "deflection_mm": 0.15,
+   "strain_percent": 0.67,
+   "basis": "下カムを留める二股の爪が上カムの四角穴を通る間も片側0.15mm縮む。自由長6.35mm、厚さ1.2mm。"
+  },
+  {
+   "type": "snap",
+   "pairs": [
+    [
+     "frame/post_0",
+     "frame/lower_frame"
+    ]
+   ],
+   "engage_mm": 2.4,
+   "deflection_mm": 0.6,
+   "strain_percent": 0.4444444444,
+   "basis": "自由長18mm、厚1.6mm、解除0.6mm。角の爪だけ。完成姿勢に重なりを残さない。",
+   "region_mm": [
+    [
+     -46.7,
+     -48.0,
+     -47.1
+    ],
+    [
+     -43.5,
+     -42.0,
+     -43.9
+    ]
+   ],
+   "step": "frame/insert-post_0"
+  },
+  {
+   "type": "snap",
+   "pairs": [
+    [
+     "frame/post_0",
+     "frame/upper_frame"
+    ]
+   ],
+   "engage_mm": 2.4,
+   "deflection_mm": 0.6,
+   "strain_percent": 0.4444444444,
+   "basis": "自由長18mm、厚1.6mm、解除0.6mm。角の爪だけ。完成姿勢に重なりを残さない。",
+   "region_mm": [
+    [
+     -46.7,
+     -48.0,
+     43.9
+    ],
+    [
+     -43.5,
+     -42.0,
+     47.1
+    ]
+   ],
+   "step": "frame/upper-frame"
+  },
+  {
+   "type": "snap",
+   "pairs": [
+    [
+     "frame/post_1",
+     "frame/lower_frame"
+    ]
+   ],
+   "engage_mm": 2.4,
+   "deflection_mm": 0.6,
+   "strain_percent": 0.4444444444,
+   "basis": "自由長18mm、厚1.6mm、解除0.6mm。角の爪だけ。完成姿勢に重なりを残さない。",
+   "region_mm": [
+    [
+     43.5,
+     -48.0,
+     -47.1
+    ],
+    [
+     46.7,
+     -42.0,
+     -43.9
+    ]
+   ],
+   "step": "frame/insert-post_1"
+  },
+  {
+   "type": "snap",
+   "pairs": [
+    [
+     "frame/post_1",
+     "frame/upper_frame"
+    ]
+   ],
+   "engage_mm": 2.4,
+   "deflection_mm": 0.6,
+   "strain_percent": 0.4444444444,
+   "basis": "自由長18mm、厚1.6mm、解除0.6mm。角の爪だけ。完成姿勢に重なりを残さない。",
+   "region_mm": [
+    [
+     43.5,
+     -48.0,
+     43.9
+    ],
+    [
+     46.7,
+     -42.0,
+     47.1
+    ]
+   ],
+   "step": "frame/upper-frame"
+  },
+  {
+   "type": "snap",
+   "pairs": [
+    [
+     "frame/post_2",
+     "frame/lower_frame"
+    ]
+   ],
+   "engage_mm": 2.4,
+   "deflection_mm": 0.6,
+   "strain_percent": 0.4444444444,
+   "basis": "自由長18mm、厚1.6mm、解除0.6mm。角の爪だけ。完成姿勢に重なりを残さない。",
+   "region_mm": [
+    [
+     43.5,
+     42.0,
+     -47.1
+    ],
+    [
+     46.7,
+     48.0,
+     -43.9
+    ]
+   ],
+   "step": "frame/insert-post_2"
+  },
+  {
+   "type": "snap",
+   "pairs": [
+    [
+     "frame/post_2",
+     "frame/upper_frame"
+    ]
+   ],
+   "engage_mm": 2.4,
+   "deflection_mm": 0.6,
+   "strain_percent": 0.4444444444,
+   "basis": "自由長18mm、厚1.6mm、解除0.6mm。角の爪だけ。完成姿勢に重なりを残さない。",
+   "region_mm": [
+    [
+     43.5,
+     42.0,
+     43.9
+    ],
+    [
+     46.7,
+     48.0,
+     47.1
+    ]
+   ],
+   "step": "frame/upper-frame"
+  },
+  {
+   "type": "snap",
+   "pairs": [
+    [
+     "frame/post_3",
+     "frame/lower_frame"
+    ]
+   ],
+   "engage_mm": 2.4,
+   "deflection_mm": 0.6,
+   "strain_percent": 0.4444444444,
+   "basis": "自由長18mm、厚1.6mm、解除0.6mm。角の爪だけ。完成姿勢に重なりを残さない。",
+   "region_mm": [
+    [
+     -46.7,
+     42.0,
+     -47.1
+    ],
+    [
+     -43.5,
+     48.0,
+     -43.9
+    ]
+   ],
+   "step": "frame/insert-post_3"
+  },
+  {
+   "type": "snap",
+   "pairs": [
+    [
+     "frame/post_3",
+     "frame/upper_frame"
+    ]
+   ],
+   "engage_mm": 2.4,
+   "deflection_mm": 0.6,
+   "strain_percent": 0.4444444444,
+   "basis": "自由長18mm、厚1.6mm、解除0.6mm。角の爪だけ。完成姿勢に重なりを残さない。",
+   "region_mm": [
+    [
+     -46.7,
+     42.0,
+     43.9
+    ],
+    [
+     -43.5,
+     48.0,
+     47.1
+    ]
+   ],
+   "step": "frame/upper-frame"
+  },
+  {
+   "type": "snap",
+   "pairs": [
+    [
+     "front/key_l",
+     "frame/post_0"
+    ]
+   ],
+   "engage_mm": 2.4,
+   "deflection_mm": 0.6,
+   "strain_percent": 0.4444444444,
+   "step": "front/key_l_lock",
+   "basis": "規格のキー先端だけ。L18mm・t1.6mm・δ0.6mm、ε=1.5tδ/L²=0.444%。完成姿勢に重なりなし。"
+  },
+  {
+   "type": "snap",
+   "pairs": [
+    [
+     "front/key_l",
+     "frame/post_0"
+    ]
+   ],
+   "engage_mm": 2.4,
+   "deflection_mm": 0.6,
+   "strain_percent": 0.4444444444,
+   "step": "front/exchange_key_0_in",
+   "basis": "規格のキー先端だけ。L18mm・t1.6mm・δ0.6mm、ε=1.5tδ/L²=0.444%。完成姿勢に重なりなし。"
+  },
+  {
+   "type": "snap",
+   "pairs": [
+    [
+     "front/key_r",
+     "frame/post_1"
+    ]
+   ],
+   "engage_mm": 2.4,
+   "deflection_mm": 0.6,
+   "strain_percent": 0.4444444444,
+   "step": "front/key_r_lock",
+   "basis": "規格のキー先端だけ。L18mm・t1.6mm・δ0.6mm、ε=1.5tδ/L²=0.444%。完成姿勢に重なりなし。"
+  },
+  {
+   "type": "snap",
+   "pairs": [
+    [
+     "front/key_r",
+     "frame/post_1"
+    ]
+   ],
+   "engage_mm": 2.4,
+   "deflection_mm": 0.6,
+   "strain_percent": 0.4444444444,
+   "step": "front/exchange_key_1_in",
+   "basis": "規格のキー先端だけ。L18mm・t1.6mm・δ0.6mm、ε=1.5tδ/L²=0.444%。完成姿勢に重なりなし。"
+  },
+  {
+   "type": "snap",
+   "pairs": [
+    [
+     "right/key_l",
+     "frame/post_1"
+    ]
+   ],
+   "engage_mm": 2.4,
+   "deflection_mm": 0.6,
+   "strain_percent": 0.4444444444,
+   "step": "right/key_l_lock",
+   "basis": "規格のキー先端だけ。L18mm・t1.6mm・δ0.6mm、ε=1.5tδ/L²=0.444%。完成姿勢に重なりなし。"
+  },
+  {
+   "type": "snap",
+   "pairs": [
+    [
+     "right/key_l",
+     "frame/post_1"
+    ]
+   ],
+   "engage_mm": 2.4,
+   "deflection_mm": 0.6,
+   "strain_percent": 0.4444444444,
+   "step": "right/exchange_key_0_in",
+   "basis": "規格のキー先端だけ。L18mm・t1.6mm・δ0.6mm、ε=1.5tδ/L²=0.444%。完成姿勢に重なりなし。"
+  },
+  {
+   "type": "snap",
+   "pairs": [
+    [
+     "right/key_r",
+     "frame/post_2"
+    ]
+   ],
+   "engage_mm": 2.4,
+   "deflection_mm": 0.6,
+   "strain_percent": 0.4444444444,
+   "step": "right/key_r_lock",
+   "basis": "規格のキー先端だけ。L18mm・t1.6mm・δ0.6mm、ε=1.5tδ/L²=0.444%。完成姿勢に重なりなし。"
+  },
+  {
+   "type": "snap",
+   "pairs": [
+    [
+     "right/key_r",
+     "frame/post_2"
+    ]
+   ],
+   "engage_mm": 2.4,
+   "deflection_mm": 0.6,
+   "strain_percent": 0.4444444444,
+   "step": "right/exchange_key_1_in",
+   "basis": "規格のキー先端だけ。L18mm・t1.6mm・δ0.6mm、ε=1.5tδ/L²=0.444%。完成姿勢に重なりなし。"
+  },
+  {
+   "type": "snap",
+   "pairs": [
+    [
+     "back/key_l",
+     "frame/post_2"
+    ]
+   ],
+   "engage_mm": 2.4,
+   "deflection_mm": 0.6,
+   "strain_percent": 0.4444444444,
+   "step": "back/key_l_lock",
+   "basis": "規格のキー先端だけ。L18mm・t1.6mm・δ0.6mm、ε=1.5tδ/L²=0.444%。完成姿勢に重なりなし。"
+  },
+  {
+   "type": "snap",
+   "pairs": [
+    [
+     "back/key_l",
+     "frame/post_2"
+    ]
+   ],
+   "engage_mm": 2.4,
+   "deflection_mm": 0.6,
+   "strain_percent": 0.4444444444,
+   "step": "back/exchange_key_0_in",
+   "basis": "規格のキー先端だけ。L18mm・t1.6mm・δ0.6mm、ε=1.5tδ/L²=0.444%。完成姿勢に重なりなし。"
+  },
+  {
+   "type": "snap",
+   "pairs": [
+    [
+     "back/key_r",
+     "frame/post_3"
+    ]
+   ],
+   "engage_mm": 2.4,
+   "deflection_mm": 0.6,
+   "strain_percent": 0.4444444444,
+   "step": "back/key_r_lock",
+   "basis": "規格のキー先端だけ。L18mm・t1.6mm・δ0.6mm、ε=1.5tδ/L²=0.444%。完成姿勢に重なりなし。"
+  },
+  {
+   "type": "snap",
+   "pairs": [
+    [
+     "back/key_r",
+     "frame/post_3"
+    ]
+   ],
+   "engage_mm": 2.4,
+   "deflection_mm": 0.6,
+   "strain_percent": 0.4444444444,
+   "step": "back/exchange_key_1_in",
+   "basis": "規格のキー先端だけ。L18mm・t1.6mm・δ0.6mm、ε=1.5tδ/L²=0.444%。完成姿勢に重なりなし。"
+  },
+  {
+   "type": "snap",
+   "pairs": [
+    [
+     "left/key_l",
+     "frame/post_3"
+    ]
+   ],
+   "engage_mm": 2.4,
+   "deflection_mm": 0.6,
+   "strain_percent": 0.4444444444,
+   "step": "left/key_l_lock",
+   "basis": "規格のキー先端だけ。L18mm・t1.6mm・δ0.6mm、ε=1.5tδ/L²=0.444%。完成姿勢に重なりなし。"
+  },
+  {
+   "type": "snap",
+   "pairs": [
+    [
+     "left/key_l",
+     "frame/post_3"
+    ]
+   ],
+   "engage_mm": 2.4,
+   "deflection_mm": 0.6,
+   "strain_percent": 0.4444444444,
+   "step": "left/exchange_key_0_in",
+   "basis": "規格のキー先端だけ。L18mm・t1.6mm・δ0.6mm、ε=1.5tδ/L²=0.444%。完成姿勢に重なりなし。"
+  },
+  {
+   "type": "snap",
+   "pairs": [
+    [
+     "left/key_r",
+     "frame/post_0"
+    ]
+   ],
+   "engage_mm": 2.4,
+   "deflection_mm": 0.6,
+   "strain_percent": 0.4444444444,
+   "step": "left/key_r_lock",
+   "basis": "規格のキー先端だけ。L18mm・t1.6mm・δ0.6mm、ε=1.5tδ/L²=0.444%。完成姿勢に重なりなし。"
+  },
+  {
+   "type": "snap",
+   "pairs": [
+    [
+     "left/key_r",
+     "frame/post_0"
+    ]
+   ],
+   "engage_mm": 2.4,
+   "deflection_mm": 0.6,
+   "strain_percent": 0.4444444444,
+   "step": "left/exchange_key_1_in",
+   "basis": "規格のキー先端だけ。L18mm・t1.6mm・δ0.6mm、ε=1.5tδ/L²=0.444%。完成姿勢に重なりなし。"
+  },
+  {
+   "type": "snap",
+   "pairs": [
+    [
+     "top/key_l",
+     "frame/upper_frame"
+    ]
+   ],
+   "engage_mm": 2.4,
+   "deflection_mm": 0.6,
+   "strain_percent": 0.4444444444,
+   "step": "top/key_l_lock",
+   "basis": "規格のキー先端だけ。L18mm・t1.6mm・δ0.6mm、ε=1.5tδ/L²=0.444%。完成姿勢に重なりなし。"
+  },
+  {
+   "type": "snap",
+   "pairs": [
+    [
+     "top/key_l",
+     "frame/upper_frame"
+    ]
+   ],
+   "engage_mm": 2.4,
+   "deflection_mm": 0.6,
+   "strain_percent": 0.4444444444,
+   "step": "top/exchange_key_0_in",
+   "basis": "規格のキー先端だけ。L18mm・t1.6mm・δ0.6mm、ε=1.5tδ/L²=0.444%。完成姿勢に重なりなし。"
+  },
+  {
+   "type": "snap",
+   "pairs": [
+    [
+     "top/key_r",
+     "frame/upper_frame"
+    ]
+   ],
+   "engage_mm": 2.4,
+   "deflection_mm": 0.6,
+   "strain_percent": 0.4444444444,
+   "step": "top/key_r_lock",
+   "basis": "規格のキー先端だけ。L18mm・t1.6mm・δ0.6mm、ε=1.5tδ/L²=0.444%。完成姿勢に重なりなし。"
+  },
+  {
+   "type": "snap",
+   "pairs": [
+    [
+     "top/key_r",
+     "frame/upper_frame"
+    ]
+   ],
+   "engage_mm": 2.4,
+   "deflection_mm": 0.6,
+   "strain_percent": 0.4444444444,
+   "step": "top/exchange_key_1_in",
+   "basis": "規格のキー先端だけ。L18mm・t1.6mm・δ0.6mm、ε=1.5tδ/L²=0.444%。完成姿勢に重なりなし。"
+  },
+  {
+   "type": "snap",
+   "pairs": [
+    [
+     "bottom/key_l",
+     "frame/lower_frame"
+    ]
+   ],
+   "engage_mm": 2.4,
+   "deflection_mm": 0.6,
+   "strain_percent": 0.4444444444,
+   "step": "bottom/key_l_lock",
+   "basis": "規格のキー先端だけ。L18mm・t1.6mm・δ0.6mm、ε=1.5tδ/L²=0.444%。完成姿勢に重なりなし。"
+  },
+  {
+   "type": "snap",
+   "pairs": [
+    [
+     "bottom/key_l",
+     "frame/lower_frame"
+    ]
+   ],
+   "engage_mm": 2.4,
+   "deflection_mm": 0.6,
+   "strain_percent": 0.4444444444,
+   "step": "bottom/exchange_key_0_in",
+   "basis": "規格のキー先端だけ。L18mm・t1.6mm・δ0.6mm、ε=1.5tδ/L²=0.444%。完成姿勢に重なりなし。"
+  },
+  {
+   "type": "snap",
+   "pairs": [
+    [
+     "bottom/key_r",
+     "frame/lower_frame"
+    ]
+   ],
+   "engage_mm": 2.4,
+   "deflection_mm": 0.6,
+   "strain_percent": 0.4444444444,
+   "step": "bottom/key_r_lock",
+   "basis": "規格のキー先端だけ。L18mm・t1.6mm・δ0.6mm、ε=1.5tδ/L²=0.444%。完成姿勢に重なりなし。"
+  },
+  {
+   "type": "snap",
+   "pairs": [
+    [
+     "bottom/key_r",
+     "frame/lower_frame"
+    ]
+   ],
+   "engage_mm": 2.4,
+   "deflection_mm": 0.6,
+   "strain_percent": 0.4444444444,
+   "step": "bottom/exchange_key_1_in",
+   "basis": "規格のキー先端だけ。L18mm・t1.6mm・δ0.6mm、ε=1.5tδ/L²=0.444%。完成姿勢に重なりなし。"
+  }
+ ],
+ "interfaces": [
+  {
+   "id": "front/crank-positive-u",
+   "type": "retention",
+   "parts": [
+    "front/crank",
+    "front/horn"
+   ],
+   "against": [
+    "front/support",
+    "front/servo_cap",
+    "front/servo"
+   ],
+   "direction": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3
+  },
+  {
+   "id": "front/crank-negative-u",
+   "type": "retention",
+   "parts": [
+    "front/crank",
+    "front/horn"
+   ],
+   "against": [
+    "front/support",
+    "front/servo_cap",
+    "front/servo"
+   ],
+   "direction": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3
+  },
+  {
+   "id": "front/link-positive-u",
+   "type": "retention",
+   "parts": [
+    "front/link"
+   ],
+   "against": [
+    "front/crank"
+   ],
+   "direction": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.2
+  },
+  {
+   "id": "front/link-negative-u",
+   "type": "retention",
+   "parts": [
+    "front/link"
+   ],
+   "against": [
+    "front/crank"
+   ],
+   "direction": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3
+  },
+  {
+   "id": "front/lid-positive-u",
+   "type": "retention",
+   "parts": [
+    "front/lid"
+   ],
+   "against": [
+    "front/link"
+   ],
+   "direction": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.2
+  },
+  {
+   "id": "front/lid-negative-u",
+   "type": "retention",
+   "parts": [
+    "front/lid"
+   ],
+   "against": [
+    "front/link"
+   ],
+   "direction": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3
+  },
+  {
+   "id": "front/hinge-positive-u",
+   "type": "retention",
+   "parts": [
+    "front/hinge_pin"
+   ],
+   "direction": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.2
+  },
+  {
+   "id": "front/hinge-negative-u",
+   "type": "retention",
+   "parts": [
+    "front/hinge_pin"
+   ],
+   "direction": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.2
+  },
+  {
+   "id": "front/servo-out",
+   "type": "retention",
+   "parts": [
+    "front/servo"
+   ],
+   "direction": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 2
+  },
+  {
+   "id": "front/servo-in",
+   "type": "retention",
+   "parts": [
+    "front/servo"
+   ],
+   "direction": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 2
+  },
+  {
+   "id": "front/cap-out",
+   "type": "retention",
+   "parts": [
+    "front/servo_cap"
+   ],
+   "direction": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 2
+  },
+  {
+   "id": "front/support-in",
+   "type": "retention",
+   "parts": [
+    "front/support"
+   ],
+   "against": [
+    "front/panel"
+   ],
+   "direction": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.2
+  },
+  {
+   "id": "right/horn-input",
+   "type": "drive",
+   "driver": "right/horn",
+   "driven": "right/input_cup",
+   "sides": "both",
+   "max_play_deg": 3
+  },
+  {
+   "id": "right/cup-wheel",
+   "type": "drive",
+   "driver": "right/input_cup",
+   "driven": "right/input_gear",
+   "sides": "both",
+   "max_play_deg": 1.8
+  },
+  {
+   "id": "right/input-sector",
+   "type": "drive",
+   "driver": "right/input_gear",
+   "driven": "right/sector_gear",
+   "sides": "both",
+   "max_play_deg": 1
+  },
+  {
+   "id": "right/sector-flag",
+   "type": "drive",
+   "driver": "right/sector_gear",
+   "driven": "right/flag",
+   "sides": "both",
+   "max_play_deg": 3
+  },
+  {
+   "id": "right/sector-cover",
+   "type": "drive",
+   "driver": "right/sector_gear",
+   "driven": "right/flag_cover",
+   "sides": "both",
+   "max_play_deg": 3
+  },
+  {
+   "id": "right/input-positive-u",
+   "type": "retention",
+   "parts": [
+    "right/input_gear",
+    "right/input_cup",
+    "right/horn"
+   ],
+   "against": [
+    "right/support",
+    "right/servo_cap",
+    "right/input_bridge",
+    "right/servo"
+   ],
+   "direction": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.05
+  },
+  {
+   "id": "right/input-negative-u",
+   "type": "retention",
+   "parts": [
+    "right/input_gear",
+    "right/input_cup",
+    "right/horn"
+   ],
+   "against": [
+    "right/support",
+    "right/servo_cap",
+    "right/servo"
+   ],
+   "direction": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.05
+  },
+  {
+   "id": "right/cup-positive-u",
+   "type": "retention",
+   "parts": [
+    "right/input_cup"
+   ],
+   "against": [
+    "right/input_gear"
+   ],
+   "direction": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.05
+  },
+  {
+   "id": "right/cup-negative-u",
+   "type": "retention",
+   "parts": [
+    "right/input_cup"
+   ],
+   "against": [
+    "right/support",
+    "right/servo"
+   ],
+   "direction": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.05
+  },
+  {
+   "id": "right/wheel-positive-u",
+   "type": "retention",
+   "parts": [
+    "right/input_gear"
+   ],
+   "against": [
+    "right/input_bridge"
+   ],
+   "direction": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.05
+  },
+  {
+   "id": "right/wheel-negative-u",
+   "type": "retention",
+   "parts": [
+    "right/input_gear"
+   ],
+   "against": [
+    "right/input_cup"
+   ],
+   "direction": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.05
+  },
+  {
+   "id": "right/spindle-positive-u",
+   "type": "retention",
+   "parts": [
+    "right/input_spindle"
+   ],
+   "against": [
+    "right/support"
+   ],
+   "direction": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.5
+  },
+  {
+   "id": "right/spindle-negative-u",
+   "type": "retention",
+   "parts": [
+    "right/input_spindle"
+   ],
+   "against": [
+    "right/input_bridge"
+   ],
+   "direction": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.5
+  },
+  {
+   "id": "right/spindle-positive-v",
+   "type": "retention",
+   "parts": [
+    "right/input_spindle"
+   ],
+   "against": [
+    "right/support",
+    "right/input_bridge"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.5
+  },
+  {
+   "id": "right/spindle-negative-v",
+   "type": "retention",
+   "parts": [
+    "right/input_spindle"
+   ],
+   "against": [
+    "right/support",
+    "right/input_bridge"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.5
+  },
+  {
+   "id": "right/spindle-positive-d",
+   "type": "retention",
+   "parts": [
+    "right/input_spindle"
+   ],
+   "against": [
+    "right/support",
+    "right/input_bridge"
+   ],
+   "direction": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.5
+  },
+  {
+   "id": "right/spindle-negative-d",
+   "type": "retention",
+   "parts": [
+    "right/input_spindle"
+   ],
+   "against": [
+    "right/support",
+    "right/input_bridge"
+   ],
+   "direction": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.5
+  },
+  {
+   "id": "right/flag-positive-u",
+   "type": "retention",
+   "parts": [
+    "right/flag"
+   ],
+   "against": [
+    "right/sector_gear",
+    "right/flag_cover",
+    "right/support",
+    "right/servo_cap"
+   ],
+   "direction": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.5
+  },
+  {
+   "id": "right/flag-negative-u",
+   "type": "retention",
+   "parts": [
+    "right/flag"
+   ],
+   "against": [
+    "right/sector_gear",
+    "right/support",
+    "right/servo_cap"
+   ],
+   "direction": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.5
+  },
+  {
+   "id": "right/sector-positive-u",
+   "type": "retention",
+   "parts": [
+    "right/sector_gear"
+   ],
+   "against": [
+    "right/flag",
+    "right/flag_cover",
+    "right/support"
+   ],
+   "direction": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 2
+  },
+  {
+   "id": "right/sector-negative-u",
+   "type": "retention",
+   "parts": [
+    "right/sector_gear"
+   ],
+   "against": [
+    "right/flag",
+    "right/flag_cover",
+    "right/support"
+   ],
+   "direction": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 2
+  },
+  {
+   "id": "right/cover-positive-u",
+   "type": "retention",
+   "parts": [
+    "right/flag_cover"
+   ],
+   "against": [
+    "right/support",
+    "right/input_bridge"
+   ],
+   "direction": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 2
+  },
+  {
+   "id": "right/cover-negative-u",
+   "type": "retention",
+   "parts": [
+    "right/flag_cover"
+   ],
+   "against": [
+    "right/flag",
+    "right/sector_gear"
+   ],
+   "direction": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 2
+  },
+  {
+   "id": "right/bridge-out",
+   "type": "retention",
+   "parts": [
+    "right/bearing_bridge"
+   ],
+   "against": [
+    "right/panel"
+   ],
+   "direction": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.5
+  },
+  {
+   "id": "right/bridge-in",
+   "type": "retention",
+   "parts": [
+    "right/bearing_bridge"
+   ],
+   "against": [
+    "right/support",
+    "right/hinge_pin"
+   ],
+   "direction": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.5
+  },
+  {
+   "id": "right/input-bridge-out",
+   "type": "retention",
+   "parts": [
+    "right/input_bridge"
+   ],
+   "against": [
+    "right/panel"
+   ],
+   "direction": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3
+  },
+  {
+   "id": "right/input-bridge-in",
+   "type": "retention",
+   "parts": [
+    "right/input_bridge"
+   ],
+   "against": [
+    "right/support"
+   ],
+   "direction": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3
+  },
+  {
+   "id": "right/pin-positive-u",
+   "type": "retention",
+   "parts": [
+    "right/hinge_pin"
+   ],
+   "against": [
+    "right/support",
+    "right/bearing_bridge"
+   ],
+   "direction": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.5
+  },
+  {
+   "id": "right/pin-negative-u",
+   "type": "retention",
+   "parts": [
+    "right/hinge_pin"
+   ],
+   "against": [
+    "right/support",
+    "right/bearing_bridge"
+   ],
+   "direction": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.5
+  },
+  {
+   "id": "right/servo-out",
+   "type": "retention",
+   "parts": [
+    "right/servo"
+   ],
+   "against": [
+    "right/support",
+    "right/servo_cap",
+    "right/cap_foot"
+   ],
+   "direction": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3
+  },
+  {
+   "id": "right/servo-in",
+   "type": "retention",
+   "parts": [
+    "right/servo"
+   ],
+   "against": [
+    "right/support"
+   ],
+   "direction": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 2
+  },
+  {
+   "id": "right/cap-out",
+   "type": "retention",
+   "parts": [
+    "right/servo_cap"
+   ],
+   "against": [
+    "right/cap_foot",
+    "right/panel"
+   ],
+   "direction": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.2
+  },
+  {
+   "id": "right/cap-in",
+   "type": "retention",
+   "parts": [
+    "right/servo_cap"
+   ],
+   "against": [
+    "right/support"
+   ],
+   "direction": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.2
+  },
+  {
+   "id": "right/cap-foot-out",
+   "type": "retention",
+   "parts": [
+    "right/cap_foot"
+   ],
+   "against": [
+    "right/panel"
+   ],
+   "direction": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.2
+  },
+  {
+   "id": "right/cap-foot-in",
+   "type": "retention",
+   "parts": [
+    "right/cap_foot"
+   ],
+   "against": [
+    "right/support",
+    "right/servo_cap"
+   ],
+   "direction": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.2
+  },
+  {
+   "id": "right/cap-foot-left",
+   "type": "retention",
+   "parts": [
+    "right/cap_foot"
+   ],
+   "against": [
+    "right/support",
+    "right/servo_cap"
+   ],
+   "direction": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.2
+  },
+  {
+   "id": "right/cap-foot-right",
+   "type": "retention",
+   "parts": [
+    "right/cap_foot"
+   ],
+   "against": [
+    "right/support",
+    "right/servo_cap"
+   ],
+   "direction": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.2
+  },
+  {
+   "id": "right/cap-foot-up",
+   "type": "retention",
+   "parts": [
+    "right/cap_foot"
+   ],
+   "against": [
+    "right/support",
+    "right/servo_cap"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.2
+  },
+  {
+   "id": "right/cap-foot-down",
+   "type": "retention",
+   "parts": [
+    "right/cap_foot"
+   ],
+   "against": [
+    "right/support",
+    "right/servo_cap"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.2
+  },
+  {
+   "id": "right/support-in",
+   "type": "retention",
+   "parts": [
+    "right/support"
+   ],
+   "against": [
+    "right/panel"
+   ],
+   "direction": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.2
+  },
+  {
+   "id": "back/panel-key-left",
+   "type": "retention",
+   "parts": [
+    "back/panel"
+   ],
+   "direction": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.2
+  },
+  {
+   "id": "back/panel-key-right",
+   "type": "retention",
+   "parts": [
+    "back/panel"
+   ],
+   "direction": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.2
+  },
+  {
+   "id": "left/panel-key-left",
+   "type": "retention",
+   "parts": [
+    "left/panel"
+   ],
+   "direction": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.2
+  },
+  {
+   "id": "left/panel-key-right",
+   "type": "retention",
+   "parts": [
+    "left/panel"
+   ],
+   "direction": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.2
+  },
+  {
+   "id": "top/pixel-1-out",
+   "type": "retention",
+   "parts": [
+    "top/pixel_1"
+   ],
+   "against": [
+    "top/cam_upper",
+    "top/cam_lower"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3
+  },
+  {
+   "id": "top/pixel-1-in",
+   "type": "retention",
+   "parts": [
+    "top/pixel_1"
+   ],
+   "against": [
+    "top/cam_upper",
+    "top/cam_lower"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3
+  },
+  {
+   "id": "top/pixel-2-out",
+   "type": "retention",
+   "parts": [
+    "top/pixel_2"
+   ],
+   "against": [
+    "top/cam_upper",
+    "top/cam_lower"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3
+  },
+  {
+   "id": "top/pixel-2-in",
+   "type": "retention",
+   "parts": [
+    "top/pixel_2"
+   ],
+   "against": [
+    "top/cam_upper",
+    "top/cam_lower"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3
+  },
+  {
+   "id": "top/pixel-3-out",
+   "type": "retention",
+   "parts": [
+    "top/pixel_3"
+   ],
+   "against": [
+    "top/cam_upper",
+    "top/cam_lower"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3
+  },
+  {
+   "id": "top/pixel-3-in",
+   "type": "retention",
+   "parts": [
+    "top/pixel_3"
+   ],
+   "against": [
+    "top/cam_upper",
+    "top/cam_lower"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3
+  },
+  {
+   "id": "top/cam-out",
+   "type": "retention",
+   "parts": [
+    "top/cam_upper",
+    "top/cam_lower",
+    "top/cam_key_1",
+    "top/cam_key_2"
+   ],
+   "against": [
+    "top/panel",
+    "top/guide"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3
+  },
+  {
+   "id": "top/guide-out",
+   "type": "retention",
+   "parts": [
+    "top/guide"
+   ],
+   "against": [
+    "top/servo_cap",
+    "top/support"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 2
+  },
+  {
+   "id": "top/servo-out",
+   "type": "retention",
+   "parts": [
+    "top/servo"
+   ],
+   "against": [
+    "top/servo_cap",
+    "top/support"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 2
+  },
+  {
+   "id": "top/support-out",
+   "type": "retention",
+   "parts": [
+    "top/support"
+   ],
+   "against": [
+    "top/panel"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.2
+  },
+  {
+   "id": "top/cap-out",
+   "type": "retention",
+   "parts": [
+    "top/servo_cap"
+   ],
+   "against": [
+    "top/support",
+    "top/servo",
+    "top/guide"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.2
+  },
+  {
+   "id": "top/cam-key-1-out",
+   "type": "retention",
+   "parts": [
+    "top/cam_key_1"
+   ],
+   "against": [
+    "top/cam_upper",
+    "top/cam_lower"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.2
+  },
+  {
+   "id": "top/cam-key-2-out",
+   "type": "retention",
+   "parts": [
+    "top/cam_key_2"
+   ],
+   "against": [
+    "top/cam_upper",
+    "top/cam_lower"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.2
+  },
+  {
+   "id": "top/cam-in",
+   "type": "retention",
+   "parts": [
+    "top/cam_upper",
+    "top/cam_lower",
+    "top/cam_key_1",
+    "top/cam_key_2"
+   ],
+   "against": [
+    "top/panel",
+    "top/guide"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 3
+  },
+  {
+   "id": "top/guide-in",
+   "type": "retention",
+   "parts": [
+    "top/guide"
+   ],
+   "against": [
+    "top/servo_cap",
+    "top/support"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 2
+  },
+  {
+   "id": "top/servo-in",
+   "type": "retention",
+   "parts": [
+    "top/servo"
+   ],
+   "against": [
+    "top/servo_cap",
+    "top/support"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 2
+  },
+  {
+   "id": "top/support-in",
+   "type": "retention",
+   "parts": [
+    "top/support"
+   ],
+   "against": [
+    "top/panel"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.2
+  },
+  {
+   "id": "top/cap-in",
+   "type": "retention",
+   "parts": [
+    "top/servo_cap"
+   ],
+   "against": [
+    "top/support",
+    "top/servo",
+    "top/guide"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.2
+  },
+  {
+   "id": "top/cam-key-1-in",
+   "type": "retention",
+   "parts": [
+    "top/cam_key_1"
+   ],
+   "against": [
+    "top/cam_upper",
+    "top/cam_lower"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.2
+  },
+  {
+   "id": "top/cam-key-2-in",
+   "type": "retention",
+   "parts": [
+    "top/cam_key_2"
+   ],
+   "against": [
+    "top/cam_upper",
+    "top/cam_lower"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.2
+  },
+  {
+   "id": "bottom/panel-key-left",
+   "type": "retention",
+   "parts": [
+    "bottom/panel"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.2
+  },
+  {
+   "id": "bottom/panel-key-right",
+   "type": "retention",
+   "parts": [
+    "bottom/panel"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.2
+  },
+  {
+   "id": "frame/post-0-bottom",
+   "type": "retention",
+   "parts": [
+    "frame/post_0"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.8
+  },
+  {
+   "id": "frame/post-0-top",
+   "type": "retention",
+   "parts": [
+    "frame/post_0"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.8
+  },
+  {
+   "id": "frame/post-1-bottom",
+   "type": "retention",
+   "parts": [
+    "frame/post_1"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.8
+  },
+  {
+   "id": "frame/post-1-top",
+   "type": "retention",
+   "parts": [
+    "frame/post_1"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.8
+  },
+  {
+   "id": "frame/post-2-bottom",
+   "type": "retention",
+   "parts": [
+    "frame/post_2"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.8
+  },
+  {
+   "id": "frame/post-2-top",
+   "type": "retention",
+   "parts": [
+    "frame/post_2"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.8
+  },
+  {
+   "id": "frame/post-3-bottom",
+   "type": "retention",
+   "parts": [
+    "frame/post_3"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.8
+  },
+  {
+   "id": "frame/post-3-top",
+   "type": "retention",
+   "parts": [
+    "frame/post_3"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.8
+  },
+  {
+   "id": "frame/wiring-seated",
+   "type": "retention",
+   "parts": [
+    "frame/wiring"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 2
+  },
+  {
+   "id": "frame/wiring-up",
+   "type": "retention",
+   "parts": [
+    "frame/wiring"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 1.6
+  },
+  {
+   "id": "frame/tray-down",
+   "type": "retention",
+   "parts": [
+    "frame/tray"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 2.4
+  },
+  {
+   "id": "frame/tray-up",
+   "type": "retention",
+   "parts": [
+    "frame/tray"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 2.4
+  },
+  {
+   "id": "front/frame_retention",
+   "type": "retention",
+   "parts": [
+    "front/panel",
+    "front/key_l",
+    "front/key_r",
+    "front/support",
+    "front/servo_cap",
+    "front/crank",
+    "front/link",
+    "front/lid",
+    "front/hinge_pin",
+    "front/servo",
+    "front/horn"
+   ],
+   "direction": [
+    -0.0,
+    -1.0,
+    -0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 2.4
+  },
+  {
+   "id": "right/frame_retention",
+   "type": "retention",
+   "parts": [
+    "right/panel",
+    "right/key_l",
+    "right/key_r",
+    "right/support",
+    "right/servo_cap",
+    "right/input_gear",
+    "right/sector_gear",
+    "right/flag",
+    "right/flag_cover",
+    "right/bearing_bridge",
+    "right/input_bridge",
+    "right/hinge_pin",
+    "right/servo",
+    "right/horn",
+    "right/cap_foot",
+    "right/input_cup",
+    "right/input_spindle"
+   ],
+   "direction": [
+    1.0,
+    -0.0,
+    -0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 2.4
+  },
+  {
+   "id": "back/frame_retention",
+   "type": "retention",
+   "parts": [
+    "back/panel",
+    "back/key_l",
+    "back/key_r"
+   ],
+   "direction": [
+    -0.0,
+    1.0,
+    -0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 2.4
+  },
+  {
+   "id": "left/frame_retention",
+   "type": "retention",
+   "parts": [
+    "left/panel",
+    "left/key_l",
+    "left/key_r"
+   ],
+   "direction": [
+    -1.0,
+    -0.0,
+    -0.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 2.4
+  },
+  {
+   "id": "top/frame_retention",
+   "type": "retention",
+   "parts": [
+    "top/panel",
+    "top/key_l",
+    "top/key_r",
+    "top/support",
+    "top/servo_cap",
+    "top/cam_lower",
+    "top/cam_upper",
+    "top/pixel_1",
+    "top/pixel_2",
+    "top/pixel_3",
+    "top/guide",
+    "top/cam_key_1",
+    "top/cam_key_2",
+    "top/servo",
+    "top/horn"
+   ],
+   "direction": [
+    -0.0,
+    -0.0,
+    1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 2.4
+  },
+  {
+   "id": "bottom/frame_retention",
+   "type": "retention",
+   "parts": [
+    "bottom/panel",
+    "bottom/key_l",
+    "bottom/key_r"
+   ],
+   "direction": [
+    -0.0,
+    -0.0,
+    -1.0
+   ],
+   "max_free_mm": 0.5,
+   "engage_depth_mm": 2.4
+  }
+ ],
+ "unknowns": [
+  {
+   "id": "sg92r.horn_arm_lengths",
+   "trial_part": "prints/mystery-box-sg92r-f1/trial/front/horn_fit.stl",
+   "additional_trials": [
+    "prints/mystery-box-sg92r-f1/trial/right/horn_fit.stl",
+    "prints/mystery-box-sg92r-f1/trial/top/horn_fit.stl"
+   ]
+  },
+  {
+   "id": "sg92r.horn_hole_positions",
+   "not_applicable": "ホーンの既存穴は使わない。",
+   "additional_trials": [
+    null,
+    null
+   ]
+  },
+  {
+   "id": "sg92r.output_spline",
+   "not_applicable": "実物の付属ホーンを使い、印刷スプラインは作らない。",
+   "additional_trials": [
+    null,
+    null
+   ]
+  },
+  {
+   "id": "sg92r.shaft_height",
+   "trial_part": "prints/mystery-box-sg92r-f1/trial/front/horn_fit.stl",
+   "additional_trials": [
+    "prints/mystery-box-sg92r-f1/trial/right/horn_fit.stl",
+    "prints/mystery-box-sg92r-f1/trial/top/horn_fit.stl"
+   ]
+  },
+  {
+   "id": "sg92r.cover_circle",
+   "trial_part": "prints/mystery-box-sg92r-f1/trial/front/servo_fit.stl",
+   "additional_trials": [
+    "prints/mystery-box-sg92r-f1/trial/right/servo_fit.stl",
+    "prints/mystery-box-sg92r-f1/trial/top/servo_cap_fit.stl"
+   ]
+  },
+  {
+   "id": "sg92r.wire",
+   "trial_part": "prints/mystery-box-sg92r-f1/trial/front/servo_fit.stl",
+   "additional_trials": [
+    "prints/mystery-box-sg92r-f1/trial/right/servo_fit.stl",
+    "prints/mystery-box-sg92r-f1/trial/top/servo_fit.stl"
+   ]
+  },
+  {
+   "id": "sg92r.connector",
+   "trial_part": "prints/mystery-box-sg92r-f1/trial/front/connector_nest.stl",
+   "additional_trials": [
+    "prints/mystery-box-sg92r-f1/trial/right/connector_nest.stl",
+    "prints/mystery-box-sg92r-f1/trial/top/connector_nest.stl"
+   ]
+  }
+ ],
+ "slice": {
+  "files": [
+   "prints/mystery-box-sg92r-f1/mystery-box-sg92r-f1-01-frame-PLA.gcode.3mf",
+   "prints/mystery-box-sg92r-f1/mystery-box-sg92r-f1-02-front-PLA.gcode.3mf",
+   "prints/mystery-box-sg92r-f1/mystery-box-sg92r-f1-03-top-PLA.gcode.3mf",
+   "prints/mystery-box-sg92r-f1/mystery-box-sg92r-f1-04-right-PLA.gcode.3mf",
+   "prints/mystery-box-sg92r-f1/mystery-box-sg92r-f1-05-fit-trial-PLA.gcode.3mf"
+  ]
+ },
+ "waivers": []
+}

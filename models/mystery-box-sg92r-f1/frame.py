@@ -140,6 +140,12 @@ def _tray():
     for sign in (-1, 1):
         _boolean(obj, _box("latch_throat", (5.05, 16.4, 5), (sign * 7.525, 0, -30)), "DIFFERENCE")
         _boolean(obj, _box("latch_pocket", (5.8, 16.4, 3), (sign * 7.9, 0, -29.15)), "DIFFERENCE")
+        # Relieve the upper roof of the pocket with a 45-degree print chamfer.
+        # The lower retention shelf and the four separate downward stops remain
+        # unchanged; the outside wall is still at least 1.2 mm thick.
+        _boolean(obj, G.prism([(sign * 10, -27.65), (sign * 10.8, -27.65),
+                              (sign * 10, -26.85)], "y", -8.2, 8.2,
+                             "latch_roof_chamfer"), "DIFFERENCE")
     return obj
 
 

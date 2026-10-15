@@ -17,7 +17,7 @@ evidence=require_meshes(C.HERE)
 meter=C.Meter()
 assert C.calibrate(meter)['pass']
 manifest=json.loads((C.HERE/'module.json').read_text(encoding='utf-8'))
-interface=json.loads((C.HERE.parents[1]/'interface.json').read_text(encoding='utf-8'))
+interface=json.loads((C.MODEL/'interface.json').read_text(encoding='utf-8'))
 solids={p:C.Solid.load(p,C.HERE/'_local'/(p+'.stl')) for p in manifest['parts']}
 poses={}
 hits={}

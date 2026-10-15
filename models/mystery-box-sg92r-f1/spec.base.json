@@ -1,9 +1,9 @@
 {
  "model": "mystery-box-sg92r-f1",
- "request": "段3の前半。slots.topをthree_pixelsにし、motion.range_servo_degがあれば全域を掃引する。checks/top・checks/front・ルートのゲートをexit 0にする。rightはblank。交換規格と骨格は変更しない。",
+ "request": "最終段。slots.jsonのrightをsector_flagにし、checks/rightを作る。ルート・checks/front・checks/top・checks/rightのゲートをすべてexit 0。lattice_exportとtools/lattice_web.pyを流し直し、Studioの表示データに右面も入れる。READMEの面一覧・部品表・組立・交換手順を更新。設計書D節の割付4枚程度で全部品のプレートを作る。X1C 256×256、手前左18×28除外。PLA、X1C 0.4、Textured PEI、0.20mm Standard、補正0.15、壁2、充填15%。Bambu Studio CLIでスライスしprints/mystery-box-sg92r-f1/に.gcode.3mfを置く。print.sliceのwaiverを外し、外に見える支えの無い押し出し≤2mm、サポート無し。赤なら刷る向きか形を直し、通らない部品は理由とともに報告する。交換部の角・サーボ座・カム1区間の試し刷りを1枚にまとめてスライス。計器・閾値とallowancesを広げず、交換規格・骨格を旗に合わせて曲げない。commit/pushしない。",
  "requirements": [
   {"id": "R1", "text": "閉状態の外形は100 × 100 × 100mm", "checks": ["assembly.envelope"]},
-  {"id": "R2", "text": "正面のSG92R蓋と上面の3画素カセットを装着し、他4面は空の面とする", "checks": ["interface.coverage", "interface.drive", "motion.torque"]},
+  {"id": "R2", "text": "正面の蓋・上面の3画素・右面の旗を各SG92Rで動かし、背面・左面・底面を空の面とする", "checks": ["interface.coverage", "interface.drive", "motion.torque"]},
   {"id": "R3", "text": "他面を変更せずキーを解除して40mm以上直線で引き抜く", "checks": ["assembly.path", "interface.retention", "manual:他面を残して配線を切り離し交換する"]},
   {"id": "R4", "text": "動作中もサーボと伝達部品を外から見せない", "checks": ["manual:閉端・中間・開端を斜め方向から見て遮蔽を確認"]},
   {"id": "R5", "text": "印刷部品とSG92R・付属ホーンだけで工具なしに組み分解する", "checks": ["assembly.path", "interface.retention", "manual:工具なしで組立と分解"]},
@@ -19,10 +19,12 @@
  "allowances": [],
  "interfaces": [],
  "unknowns": [],
- "waivers": [
-  {
-   "check": "print.slice",
-   "reason": "段1の依頼原文『印刷プレート・スライス（時間があれば最後に）』による未実施を継続。今回の段3前半は上面の統合・掃引範囲対応・3ケースの機構検査までで、印刷プレートとスライスは対象に含まれていない。印刷可能とは未判定。その他の検査は免除しない。"
-  }
- ]
+ "slice": {"files": [
+  "prints/mystery-box-sg92r-f1/mystery-box-sg92r-f1-01-frame-PLA.gcode.3mf",
+  "prints/mystery-box-sg92r-f1/mystery-box-sg92r-f1-02-front-PLA.gcode.3mf",
+  "prints/mystery-box-sg92r-f1/mystery-box-sg92r-f1-03-top-PLA.gcode.3mf",
+  "prints/mystery-box-sg92r-f1/mystery-box-sg92r-f1-04-right-PLA.gcode.3mf",
+  "prints/mystery-box-sg92r-f1/mystery-box-sg92r-f1-05-fit-trial-PLA.gcode.3mf"
+ ]},
+ "waivers": []
 }

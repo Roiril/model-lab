@@ -1,5 +1,5 @@
 {
- "startedAt": "2026-10-15T18:13:56",
+ "startedAt": "2026-10-15T23:27:36",
  "calibration": {
   "overlapHalf": {
    "measured": 0.5,
@@ -177,7 +177,7 @@
     0.0
    ],
    "limitMm": 0.5,
-   "travelMm": 0.300491,
+   "travelMm": 0.300537,
    "stoppedBy": [
     "front/link"
    ],
@@ -285,7 +285,7 @@
     0.0
    ],
    "limitMm": 0.5,
-   "travelMm": 0.254051,
+   "travelMm": 0.154053,
    "stoppedBy": [
     "front/lid"
    ],
@@ -311,28 +311,211 @@
    "pass": true
   },
   {
-   "id": "right/panel-key-left",
+   "id": "right/input-positive-u",
    "parts": [
-    "right/panel"
+    "right/input_gear",
+    "right/input_cup",
+    "right/horn"
    ],
    "direction": [
-    1.0,
     0.0,
+    1.0,
     0.0
    ],
    "limitMm": 0.5,
-   "travelMm": 0.200043,
+   "travelMm": 0.0,
    "stoppedBy": [
-    "right/key_l",
-    "right/key_r"
+    "right/servo"
    ],
-   "stoppedPart": "right/panel",
+   "stoppedPart": "right/horn",
    "pass": true
   },
   {
-   "id": "right/panel-key-right",
+   "id": "right/input-negative-u",
    "parts": [
-    "right/panel"
+    "right/input_gear",
+    "right/input_cup",
+    "right/horn"
+   ],
+   "direction": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.0,
+   "stoppedBy": [
+    "right/servo"
+   ],
+   "stoppedPart": "right/horn",
+   "pass": true
+  },
+  {
+   "id": "right/cup-positive-u",
+   "parts": [
+    "right/input_cup"
+   ],
+   "direction": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.200012,
+   "stoppedBy": [
+    "right/input_gear"
+   ],
+   "stoppedPart": "right/input_cup",
+   "pass": true
+  },
+  {
+   "id": "right/cup-negative-u",
+   "parts": [
+    "right/input_cup"
+   ],
+   "direction": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.250374,
+   "stoppedBy": [
+    "right/support"
+   ],
+   "stoppedPart": "right/input_cup",
+   "pass": true
+  },
+  {
+   "id": "right/wheel-positive-u",
+   "parts": [
+    "right/input_gear"
+   ],
+   "direction": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.250031,
+   "stoppedBy": [
+    "right/input_bridge"
+   ],
+   "stoppedPart": "right/input_gear",
+   "pass": true
+  },
+  {
+   "id": "right/wheel-negative-u",
+   "parts": [
+    "right/input_gear"
+   ],
+   "direction": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.200012,
+   "stoppedBy": [
+    "right/input_cup"
+   ],
+   "stoppedPart": "right/input_gear",
+   "pass": true
+  },
+  {
+   "id": "right/spindle-positive-u",
+   "parts": [
+    "right/input_spindle"
+   ],
+   "direction": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.200027,
+   "stoppedBy": [
+    "right/support"
+   ],
+   "stoppedPart": "right/input_spindle",
+   "pass": true
+  },
+  {
+   "id": "right/spindle-negative-u",
+   "parts": [
+    "right/input_spindle"
+   ],
+   "direction": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.250092,
+   "stoppedBy": [
+    "right/input_bridge"
+   ],
+   "stoppedPart": "right/input_spindle",
+   "pass": true
+  },
+  {
+   "id": "right/spindle-positive-v",
+   "parts": [
+    "right/input_spindle"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.201324,
+   "stoppedBy": [
+    "right/input_bridge"
+   ],
+   "stoppedPart": "right/input_spindle",
+   "pass": true
+  },
+  {
+   "id": "right/spindle-negative-v",
+   "parts": [
+    "right/input_spindle"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.201324,
+   "stoppedBy": [
+    "right/input_bridge"
+   ],
+   "stoppedPart": "right/input_spindle",
+   "pass": true
+  },
+  {
+   "id": "right/spindle-positive-d",
+   "parts": [
+    "right/input_spindle"
+   ],
+   "direction": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.200676,
+   "stoppedBy": [
+    "right/support"
+   ],
+   "stoppedPart": "right/input_spindle",
+   "pass": true
+  },
+  {
+   "id": "right/spindle-negative-d",
+   "parts": [
+    "right/input_spindle"
    ],
    "direction": [
     1.0,
@@ -340,12 +523,426 @@
     0.0
    ],
    "limitMm": 0.5,
-   "travelMm": 0.200043,
+   "travelMm": 0.200676,
    "stoppedBy": [
-    "right/key_l",
-    "right/key_r"
+    "right/input_bridge"
    ],
-   "stoppedPart": "right/panel",
+   "stoppedPart": "right/input_spindle",
+   "pass": true
+  },
+  {
+   "id": "right/flag-positive-u",
+   "parts": [
+    "right/flag"
+   ],
+   "direction": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.250023,
+   "stoppedBy": [
+    "right/support"
+   ],
+   "stoppedPart": "right/flag",
+   "pass": true
+  },
+  {
+   "id": "right/flag-negative-u",
+   "parts": [
+    "right/flag"
+   ],
+   "direction": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.250023,
+   "stoppedBy": [
+    "right/servo_cap"
+   ],
+   "stoppedPart": "right/flag",
+   "pass": true
+  },
+  {
+   "id": "right/sector-positive-u",
+   "parts": [
+    "right/sector_gear"
+   ],
+   "direction": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.250023,
+   "stoppedBy": [
+    "right/flag_cover"
+   ],
+   "stoppedPart": "right/sector_gear",
+   "pass": true
+  },
+  {
+   "id": "right/sector-negative-u",
+   "parts": [
+    "right/sector_gear"
+   ],
+   "direction": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.250031,
+   "stoppedBy": [
+    "right/support"
+   ],
+   "stoppedPart": "right/sector_gear",
+   "pass": true
+  },
+  {
+   "id": "right/cover-positive-u",
+   "parts": [
+    "right/flag_cover"
+   ],
+   "direction": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.250038,
+   "stoppedBy": [
+    "right/support",
+    "right/input_bridge"
+   ],
+   "stoppedPart": "right/flag_cover",
+   "pass": true
+  },
+  {
+   "id": "right/cover-negative-u",
+   "parts": [
+    "right/flag_cover"
+   ],
+   "direction": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.250023,
+   "stoppedBy": [
+    "right/sector_gear"
+   ],
+   "stoppedPart": "right/flag_cover",
+   "pass": true
+  },
+  {
+   "id": "right/bridge-out",
+   "parts": [
+    "right/bearing_bridge"
+   ],
+   "direction": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 1.5e-05,
+   "stoppedBy": [
+    "right/panel"
+   ],
+   "stoppedPart": "right/bearing_bridge",
+   "pass": true
+  },
+  {
+   "id": "right/bridge-in",
+   "parts": [
+    "right/bearing_bridge"
+   ],
+   "direction": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.101044,
+   "stoppedBy": [
+    "right/hinge_pin"
+   ],
+   "stoppedPart": "right/bearing_bridge",
+   "pass": true
+  },
+  {
+   "id": "right/input-bridge-out",
+   "parts": [
+    "right/input_bridge"
+   ],
+   "direction": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.250015,
+   "stoppedBy": [
+    "right/panel"
+   ],
+   "stoppedPart": "right/input_bridge",
+   "pass": true
+  },
+  {
+   "id": "right/input-bridge-in",
+   "parts": [
+    "right/input_bridge"
+   ],
+   "direction": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.250008,
+   "stoppedBy": [
+    "right/support"
+   ],
+   "stoppedPart": "right/input_bridge",
+   "pass": true
+  },
+  {
+   "id": "right/pin-positive-u",
+   "parts": [
+    "right/hinge_pin"
+   ],
+   "direction": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.000427,
+   "stoppedBy": [
+    "right/support"
+   ],
+   "stoppedPart": "right/hinge_pin",
+   "pass": true
+  },
+  {
+   "id": "right/pin-negative-u",
+   "parts": [
+    "right/hinge_pin"
+   ],
+   "direction": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.252655,
+   "stoppedBy": [
+    "right/bearing_bridge"
+   ],
+   "stoppedPart": "right/hinge_pin",
+   "pass": true
+  },
+  {
+   "id": "right/servo-out",
+   "parts": [
+    "right/servo"
+   ],
+   "direction": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.225121,
+   "stoppedBy": [
+    "right/cap_foot"
+   ],
+   "stoppedPart": "right/servo",
+   "pass": true
+  },
+  {
+   "id": "right/servo-in",
+   "parts": [
+    "right/servo"
+   ],
+   "direction": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.250008,
+   "stoppedBy": [
+    "right/support"
+   ],
+   "stoppedPart": "right/servo",
+   "pass": true
+  },
+  {
+   "id": "right/cap-out",
+   "parts": [
+    "right/servo_cap"
+   ],
+   "direction": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.20005,
+   "stoppedBy": [
+    "right/cap_foot"
+   ],
+   "stoppedPart": "right/servo_cap",
+   "pass": true
+  },
+  {
+   "id": "right/cap-in",
+   "parts": [
+    "right/servo_cap"
+   ],
+   "direction": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.250084,
+   "stoppedBy": [
+    "right/support"
+   ],
+   "stoppedPart": "right/servo_cap",
+   "pass": true
+  },
+  {
+   "id": "right/cap-foot-out",
+   "parts": [
+    "right/cap_foot"
+   ],
+   "direction": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.250023,
+   "stoppedBy": [
+    "right/panel"
+   ],
+   "stoppedPart": "right/cap_foot",
+   "pass": true
+  },
+  {
+   "id": "right/cap-foot-in",
+   "parts": [
+    "right/cap_foot"
+   ],
+   "direction": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.20005,
+   "stoppedBy": [
+    "right/servo_cap"
+   ],
+   "stoppedPart": "right/cap_foot",
+   "pass": true
+  },
+  {
+   "id": "right/cap-foot-left",
+   "parts": [
+    "right/cap_foot"
+   ],
+   "direction": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.250015,
+   "stoppedBy": [
+    "right/support"
+   ],
+   "stoppedPart": "right/cap_foot",
+   "pass": true
+  },
+  {
+   "id": "right/cap-foot-right",
+   "parts": [
+    "right/cap_foot"
+   ],
+   "direction": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 4.6e-05,
+   "stoppedBy": [
+    "right/servo_cap"
+   ],
+   "stoppedPart": "right/cap_foot",
+   "pass": true
+  },
+  {
+   "id": "right/cap-foot-up",
+   "parts": [
+    "right/cap_foot"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.250122,
+   "stoppedBy": [
+    "right/servo_cap"
+   ],
+   "stoppedPart": "right/cap_foot",
+   "pass": true
+  },
+  {
+   "id": "right/cap-foot-down",
+   "parts": [
+    "right/cap_foot"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.250076,
+   "stoppedBy": [
+    "right/support"
+   ],
+   "stoppedPart": "right/cap_foot",
+   "pass": true
+  },
+  {
+   "id": "right/support-in",
+   "parts": [
+    "right/support"
+   ],
+   "direction": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.200356,
+   "stoppedBy": [
+    "right/panel"
+   ],
+   "stoppedPart": "right/support",
    "pass": true
   },
   {
@@ -564,7 +1161,7 @@
     1.0
    ],
    "limitMm": 0.5,
-   "travelMm": 0.250023,
+   "travelMm": 0.330162,
    "stoppedBy": [
     "top/servo_cap"
    ],
@@ -636,7 +1233,7 @@
     1.0
    ],
    "limitMm": 0.5,
-   "travelMm": 0.251114,
+   "travelMm": 0.252228,
    "stoppedBy": [
     "top/cam_lower"
    ],
@@ -654,7 +1251,7 @@
     1.0
    ],
    "limitMm": 0.5,
-   "travelMm": 0.251114,
+   "travelMm": 0.252228,
    "stoppedBy": [
     "top/cam_lower"
    ],
@@ -693,7 +1290,7 @@
     -1.0
    ],
    "limitMm": 0.5,
-   "travelMm": 0.250023,
+   "travelMm": 0.250031,
    "stoppedBy": [
     "top/support"
    ],
@@ -765,9 +1362,9 @@
     -1.0
    ],
    "limitMm": 0.5,
-   "travelMm": 0.250076,
+   "travelMm": 0.252228,
    "stoppedBy": [
-    "top/cam_upper"
+    "top/cam_lower"
    ],
    "stoppedPart": "top/cam_key_1",
    "pass": true
@@ -783,9 +1380,9 @@
     -1.0
    ],
    "limitMm": 0.5,
-   "travelMm": 0.250076,
+   "travelMm": 0.252228,
    "stoppedBy": [
-    "top/cam_upper"
+    "top/cam_lower"
    ],
    "stoppedPart": "top/cam_key_2",
    "pass": true
@@ -1077,7 +1674,21 @@
    "parts": [
     "right/panel",
     "right/key_l",
-    "right/key_r"
+    "right/key_r",
+    "right/support",
+    "right/servo_cap",
+    "right/input_gear",
+    "right/sector_gear",
+    "right/flag",
+    "right/flag_cover",
+    "right/bearing_bridge",
+    "right/input_bridge",
+    "right/hinge_pin",
+    "right/servo",
+    "right/horn",
+    "right/cap_foot",
+    "right/input_cup",
+    "right/input_spindle"
    ],
    "direction": [
     1.0,
@@ -1186,8 +1797,8 @@
   }
  ],
  "meterStats": {
-  "boolean": 1726,
-  "skipped": 29994
+  "boolean": 2317,
+  "skipped": 45066
  },
  "ok": true
 }

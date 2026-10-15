@@ -56,6 +56,7 @@ def reference_parts(common):
 
 
 def cam_shell(which):
+    if which=='upper': return upper_cam_shell()
     angles=np.arange(0,360,P.CAM_MESH_STEP_DEG)
     inner=P.UPPER_CAM_INNER_RADIUS if which=='upper' else P.CAM_INNER_RADIUS
     radii=np.linspace(M(inner),M(P.CAM_RADIUS),P.RADIAL_SAMPLES)
@@ -87,12 +88,45 @@ def cam_shell(which):
     return ob
 
 
+def upper_cam_shell():
+    angles=np.arange(0,360,P.CAM_MESH_STEP_DEG)
+    radii=np.linspace(M(P.UPPER_CAM_INNER_RADIUS),M(P.CAM_RADIUS),P.RADIAL_SAMPLES)
+    n=len(angles)
+    vertices=[(O,0,M(P.CAM_FRONT_D)),(O,0,4.25)]
+    def add_ring(r,depth):
+        start=len(vertices)
+        depths=np.full(n,depth) if np.isscalar(depth) else depth
+        vertices.extend((O+r*math.cos(a),r*math.sin(a),float(d))
+                        for a,d in zip(np.radians(angles),depths))
+        return start
+    front=[add_ring(r,M(P.CAM_FRONT_D)) for r in radii]
+    inner=add_ring(M(P.UPPER_CAM_INNER_RADIUS),4.25)
+    back=[add_ring(r,K.groove_bounds(r,angles)[0]) for r in radii]
+    faces=[]
+    def bridge(a,b):
+        for k in range(n):
+            j=(k+1)%n
+            faces.append((a+k,a+j,b+j,b+k))
+    for k in range(n):
+        j=(k+1)%n
+        faces.extend(((0,front[0]+j,front[0]+k),(1,inner+k,inner+j)))
+    for a,b in zip(front[:-1],front[1:]): bridge(a,b)
+    bridge(inner,back[0])
+    for a,b in zip(back[:-1],back[1:]): bridge(a,b)
+    bridge(front[-1],back[-1])
+    mesh=bpy.data.meshes.new('cam_upper')
+    mesh.from_pydata(vertices,[],faces); mesh.update()
+    cam=bpy.data.objects.new('cam_upper',mesh); bpy.context.collection.objects.link(cam)
+    G.clean(cam,dist=.002)
+    bm=bmesh.new(); bm.from_mesh(cam.data)
+    bmesh.ops.triangulate(bm,faces=list(bm.faces))
+    bmesh.ops.recalc_face_normals(bm,faces=list(bm.faces))
+    bm.to_mesh(cam.data); bm.free()
+    return cam
+
+
 def upper_cam(sg):
     cam=cam_shell('upper')
-    # The 2 mm front web is a cover. Torque travels through 3 mm spokes/cuffs.
-    G.union(cam,G.prism(G.circle((O,0),18.5,144),'z',2.25,4.25))
-    for a in (61,181,301):
-        G.union(cam,rb(17,24.5,-1.5,1.5,2.25,5.25,a))
     # Two pairs of taper-matched 3 mm tangential bearing blocks, at r=10..14.
     # Horn native x is reversed in local u; 18 mm and 16 mm arms are not exchanged.
     for side,end in ((-1,M(sg.HORN_LEFT_X)),(1,M(sg.HORN_RIGHT_X))):
@@ -107,14 +141,41 @@ def upper_cam(sg):
     # Short-arm end stop rejects 180 degree reversal; long arm has an open tip.
     short=M(sg.HORN_RIGHT_X)
     G.union(cam,G.box(O-short-2.5,O-short-.25,-2,2,4.15,7.25))
+    return cam
+
+
+def cam_pair(sg):
+    upper=upper_cam(sg)
+    lower=cam_shell('lower')
+    for a in P.CAM_KEY_DEG:
+        G.union(upper,rb(19.25,24.5,-3,3,4.2,10.2,a))
+        G.union(lower,rb(20.05,24.5,-3,3,10.75,14.95,a))
+    # Keep 1.2 mm around the recessed heads; roofs grow inward at 45 degrees.
+    for a in P.CAM_KEY_DEG: G.union(upper,rb(17.85,25.65,-3.9,3.9,2.25,6,a))
+    for a in P.CAM_KEY_DEG:
+        head_outer=27 if a==181 else 24.45
+        shaft_outer=27 if a==181 else 23.45
+        head=[(19.05,-2.7),(head_outer,-2.7),(head_outer,2.7),(19.05,2.7)]
+        shaft=[(20.05,-1.7),(shaft_outer,-1.7),(shaft_outer,1.7),(20.05,1.7)]
+        pocket_back=M(P.CAM_KEY_HEAD_D)+M(P.CAM_KEY_HEAD_T)+M(P.CAM_KEY_HEAD_CLEARANCE)
+        hole=G.loft_rings([(1.75,head),(pocket_back,head),(pocket_back+1,shaft),(17,shaft)],'key_cavity')
+        radial(hole,a); G.cut(upper,hole)
+    for a in P.CAM_KEY_DEG:
+        # The U receiver keeps both tangential walls and the outer snap hook.
+        profile=[(19,3.2),(23.45,3.2),(23.45,13.1),(23.8,13.1),
+                 (23.8,14.8),(23.45,14.8),(23.45,17),(19,17)]
+        hole=G.prism(profile,'y',-1.7,1.7)
+        radial(hole,a); G.cut(lower,hole)
+        wedge=G.prism([(19.1,14.96),(23.3,14.96),(19.1,10.5)],'y',-3.01,3.01)
+        radial(wedge,a); G.cut(lower,wedge)
     # Keep the full inner working land; relieve only the outer rim at the
     # left exchange key's complete +/-30 degree sweep and panel pad corner.
     angles=np.linspace(150,255,211)
     profile=[(O+30*math.cos(math.radians(a)),30*math.sin(math.radians(a))) for a in angles]
     relief=M(P.UPPER_CAM_RELIEF_RADIUS)
     profile += [(O+relief*math.cos(math.radians(a)),relief*math.sin(math.radians(a))) for a in angles[::-1]]
-    G.cut(cam,G.prism(profile,'z',1.5,11.0))
-    return cam
+    G.cut(upper,G.prism(profile,'z',1.5,11.0))
+    return upper,lower
 
 
 def octagon(cx,cy,half,cut):
@@ -185,6 +246,13 @@ def guide_plate(interface):
                 bx(-9,-1,10.75,17,17.5,20.5))
     # Re-cut guide bores after the bridges have been joined.
     for i in range(3): G.cut(ob,stem_box(i,2.25,16.25,21))
+    # Taper the tongue undersides from the rear bridges. Retain the cap's
+    # contact lands while growing every printed layer from the one below.
+    for sign in (-1,1):
+        profile=[(sign*y,z) for y,z in ((10,16),(13.9,16),(13.9,17.45),(10,20.57))]
+        G.cut(ob,G.prism(profile,'x',-9.1,-.9))
+        lo,hi=sorted((sign*10,sign*12.25))
+        G.cut(ob,G.box(-9.1,-.9,lo,hi,17.49,21))
     return ob
 
 
@@ -276,25 +344,20 @@ def build(interface, common_params):
         parts[f'pixel_{i}']=pixel(i-1,a,f'pixel_{i}')
     support,cap=support_and_cap(panel,common_params.SG)
     parts.update(support=support,servo_cap=cap,guide=guide_plate(interface))
-    upper=upper_cam(common_params.SG)
-    lower=cam_shell('lower')
+    upper,lower=cam_pair(common_params.SG)
     # Two keyed standoffs join the shells outside the horn and fixed guide ring.
     for i,a in enumerate(P.CAM_KEY_DEG,1):
-        G.union(upper,rb(19.25,24.5,-3,3,4.2,10.2,a))
-        G.union(lower,rb(19.25,24.5,-3,3,10.75,14.95,a))
-        # Axial square connector, 0.2 mm per side; transverse shoulders retain it.
-        for ob in (upper,lower):
-            G.cut(ob,rb(20.05,23.45,-1.7,1.7,3.2,17,a))
         key=G.box(20.25,23.25,-1.5,1.5,2.5,14.95,f'cam_key_{i}')
         # Head is recessed in the upper web; split hooks spring into lower pockets.
         head_front=M(P.CAM_KEY_HEAD_D)
         head_back=head_front+M(P.CAM_KEY_HEAD_T)
-        G.union(key,G.box(19.25,24.25,-2.5,2.5,head_front,head_back),
+        # The underside of the head is coplanar with the shaft in its flat
+        # print orientation. Three head shoulders remain outside the socket;
+        # the axial stops and spring thickness/length are unchanged.
+        G.union(key,G.box(19.25,24.25,-1.5,2.5,head_front,head_back),
                 G.box(19.9,23.6,-1.5,1.5,13.35,14.55))
         G.cut(key,G.box(21.45,22.05,-2,2,7.0,17))
         radial(key,a)
-        G.cut(upper,rb(19.05,24.45,-2.7,2.7,1.75,head_back+M(P.CAM_KEY_HEAD_CLEARANCE),a))
-        G.cut(lower,rb(19.7,23.8,-1.7,1.7,13.1,14.8,a))
         parts[f'cam_key_{i}']=key
     parts.update(cam_upper=upper,cam_lower=lower)
     labels={'panel':'3画素の面板','key_l':'左の交換キー','key_r':'右の交換キー',

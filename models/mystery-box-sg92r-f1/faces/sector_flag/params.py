@@ -38,7 +38,9 @@ SERVO_FIT = .00025
 HORN_CLOSED_DEG = 136.
 PIN_RADIUS = .0017  # 3.4mm shaft
 PIN_NECK_RADIUS = .0015  # 3.0mm retention neck, no flat
-PIN_FLAT_D = 0.
+PIN_FLAT_D = .0015  # print flat 1.5mm below axis; retain the full 3mm neck
+CAP_LAP_NORMAL_WALL = .0012  # 1.2mm perpendicular to the 45deg lap faces
+CAP_SERVO_STOP_MARGIN = .000025  # 0.025mm below the 0.5mm accumulated travel limit
 BORE_RADIUS = .0019  # 0.2mm per-side fit
 AXIAL_GAP = .00025
 COUPLING_FIT = .0002
@@ -55,4 +57,4 @@ EFFICIENCY = .65
 FRICTION_NM = .005
 ACCELERATION_BUDGET_NM = .001
 PART_IDS = ('panel','key_l','key_r','support','servo_cap','input_gear',
-            'sector_gear','flag','flag_cover','bearing_bridge','input_bridge','hinge_pin','servo','horn')
+            'sector_gear','flag','flag_cover','bearing_bridge','input_bridge','hinge_pin','servo','horn','cap_foot','input_cup','input_spindle')

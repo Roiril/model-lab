@@ -1,0 +1,1384 @@
+{
+ "command": [
+  "C:\\Program Files\\Bambu Studio\\bambu-studio.exe",
+  "--slice",
+  "0",
+  "--debug",
+  "2",
+  "--arrange",
+  "0",
+  "--load-settings",
+  "C:\\Users\\kouga\\Projects\\Web\\model-lab\\prints\\mystery-box-sg92r-f1\\profiles\\machine.json;C:\\Users\\kouga\\Projects\\Web\\model-lab\\prints\\mystery-box-sg92r-f1\\profiles\\process.json",
+  "--load-filaments",
+  "C:\\Users\\kouga\\Projects\\Web\\model-lab\\prints\\mystery-box-sg92r-f1\\profiles\\filament_PLA.json",
+  "--outputdir",
+  "C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-f1\\build\\orientation\\orthogonal-08",
+  "--export-3mf",
+  "orthogonal-08.gcode.3mf",
+  "C:\\Users\\kouga\\Projects\\Web\\model-lab\\prints\\mystery-box-sg92r-f1\\_orientation\\orthogonal-08-layout.3mf"
+ ],
+ "returncode": 0,
+ "objects": [
+  {
+   "name": "top__guide__ori_ny",
+   "part": "top/guide",
+   "aliases": [],
+   "direction": "ny",
+   "matrix": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     6.123233995736766e-17,
+     1.0
+    ],
+    [
+     0,
+     -1.0,
+     6.123233995736766e-17
+    ]
+   ],
+   "source_sha256": "b45b749e7e4f247251f6d180adf441c8ec16d41455a455bf1fd8c4d91f3e2924",
+   "source": "prints/mystery-box-sg92r-f1/top/guide.stl",
+   "contact_mm2": 0.0,
+   "grounded": false,
+   "height_mm": 49.2041,
+   "contact_short_mm": 0.0,
+   "slender_ratio": null,
+   "rotation4x4_from_current_print": [
+    [
+     0.0,
+     -0.0,
+     -1.0,
+     0
+    ],
+    [
+     1.0,
+     0.0,
+     0.0,
+     0
+    ],
+    [
+     0,
+     -1.0,
+     0.0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     1
+    ]
+   ],
+   "floating": {
+    "external_unsupported_mm": 178.03,
+    "bridge_mm": 189.12,
+    "bridge_unsupported_mm": 103.37,
+    "internal_unsupported_mm": 69.03
+   },
+   "overhang_walls": [
+    {
+     "layer": 7,
+     "z": 1.6,
+     "feature": "Overhang wall",
+     "points": 88,
+     "x": [
+      -0.9,
+      1.7
+     ],
+     "y": [
+      -21.9,
+      -19.3
+     ]
+    },
+    {
+     "layer": 44,
+     "z": 9.0,
+     "feature": "Outer wall",
+     "points": 18,
+     "x": [
+      -0.9,
+      1.7
+     ],
+     "y": [
+      17.4,
+      17.5
+     ]
+    },
+    {
+     "layer": 44,
+     "z": 9.0,
+     "feature": "Overhang wall",
+     "points": 18,
+     "x": [
+      -0.9,
+      1.7
+     ],
+     "y": [
+      17.3,
+      17.4
+     ]
+    },
+    {
+     "layer": 177,
+     "z": 35.6,
+     "feature": "Overhang wall",
+     "points": 190,
+     "x": [
+      -1.7,
+      0.9
+     ],
+     "y": [
+      -7.4,
+      0.2
+     ]
+    },
+    {
+     "layer": 187,
+     "z": 37.6,
+     "feature": "Overhang wall",
+     "points": 216,
+     "x": [
+      -0.9,
+      1.7
+     ],
+     "y": [
+      -17.6,
+      -7.5
+     ]
+    },
+    {
+     "layer": 210,
+     "z": 42.2,
+     "feature": "Overhang wall",
+     "points": 8,
+     "x": [
+      -0.9,
+      1.7
+     ],
+     "y": [
+      -18.7,
+      -18.5
+     ]
+    }
+   ],
+   "support_used": "false",
+   "slice_pass": false,
+   "plate": "prints/mystery-box-sg92r-f1/_orientation/orthogonal-08.gcode.3mf"
+  },
+  {
+   "name": "top__cam_key_1__ori_nz",
+   "part": "top/cam_key_1",
+   "aliases": [
+    "top/cam_key_2"
+   ],
+   "direction": "nz",
+   "matrix": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     -1.0,
+     -1.2246467991473532e-16
+    ],
+    [
+     0,
+     1.2246467991473532e-16,
+     -1.0
+    ]
+   ],
+   "source_sha256": "d55726b966c8b30ca363394f8b143180f4231769282a35f9f5c921d0358260ab",
+   "source": "prints/mystery-box-sg92r-f1/top/cam_key_1.stl",
+   "contact_mm2": 11.0,
+   "grounded": true,
+   "height_mm": 5.000000000000001,
+   "contact_short_mm": 2.2,
+   "slender_ratio": 2.272727272727273,
+   "rotation4x4_from_current_print": [
+    [
+     1,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     -1.0,
+     -0.0,
+     0
+    ],
+    [
+     0,
+     0.0,
+     -1.0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     1
+    ]
+   ],
+   "floating": {
+    "external_unsupported_mm": 59.73,
+    "bridge_mm": 12.49,
+    "bridge_unsupported_mm": 4.48,
+    "internal_unsupported_mm": 0.0
+   },
+   "overhang_walls": [
+    {
+     "layer": 5,
+     "z": 1.2,
+     "feature": "Overhang wall",
+     "points": 221,
+     "x": [
+      -3.4,
+      6.0
+     ],
+     "y": [
+      -1.6,
+      1.6
+     ]
+    },
+    {
+     "layer": 5,
+     "z": 1.2,
+     "feature": "Gap infill",
+     "points": 102,
+     "x": [
+      -2.1,
+      5.8
+     ],
+     "y": [
+      -1.4,
+      1.4
+     ]
+    }
+   ],
+   "support_used": "false",
+   "slice_pass": false,
+   "plate": "prints/mystery-box-sg92r-f1/_orientation/orthogonal-08.gcode.3mf"
+  },
+  {
+   "name": "top__guide__ori_px",
+   "part": "top/guide",
+   "aliases": [],
+   "direction": "px",
+   "matrix": [
+    [
+     6.123233995736766e-17,
+     0,
+     -1.0
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     1.0,
+     0,
+     6.123233995736766e-17
+    ]
+   ],
+   "source_sha256": "b45b749e7e4f247251f6d180adf441c8ec16d41455a455bf1fd8c4d91f3e2924",
+   "source": "prints/mystery-box-sg92r-f1/top/guide.stl",
+   "contact_mm2": 130.5,
+   "grounded": true,
+   "height_mm": 44.2074,
+   "contact_short_mm": 3.0,
+   "slender_ratio": 14.7358,
+   "rotation4x4_from_current_print": [
+    [
+     0.0,
+     -1.0,
+     -0.0,
+     0
+    ],
+    [
+     0.0,
+     0.0,
+     -1.0,
+     0
+    ],
+    [
+     1.0,
+     0,
+     0.0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     1
+    ]
+   ],
+   "floating": {
+    "external_unsupported_mm": 124.65,
+    "bridge_mm": 139.26,
+    "bridge_unsupported_mm": 59.47,
+    "internal_unsupported_mm": 53.87
+   },
+   "overhang_walls": [
+    {
+     "layer": 21,
+     "z": 4.4,
+     "feature": "Overhang wall",
+     "points": 156,
+     "x": [
+      13.0,
+      23.1
+     ],
+     "y": [
+      -0.9,
+      1.7
+     ]
+    },
+    {
+     "layer": 23,
+     "z": 4.8,
+     "feature": "Overhang wall",
+     "points": 96,
+     "x": [
+      -24.2,
+      24.4
+     ],
+     "y": [
+      -0.9,
+      1.7
+     ]
+    },
+    {
+     "layer": 59,
+     "z": 12.0,
+     "feature": "Overhang wall",
+     "points": 68,
+     "x": [
+      16.4,
+      19.7
+     ],
+     "y": [
+      -0.9,
+      1.7
+     ]
+    },
+    {
+     "layer": 73,
+     "z": 14.8,
+     "feature": "Overhang wall",
+     "points": 121,
+     "x": [
+      -13.9,
+      12.8
+     ],
+     "y": [
+      -1.7,
+      0.9
+     ]
+    },
+    {
+     "layer": 152,
+     "z": 30.6,
+     "feature": "Outer wall",
+     "points": 17,
+     "x": [
+      -11.3,
+      -11.0
+     ],
+     "y": [
+      -0.9,
+      1.7
+     ]
+    },
+    {
+     "layer": 152,
+     "z": 30.6,
+     "feature": "Overhang wall",
+     "points": 15,
+     "x": [
+      -11.0,
+      -11.0
+     ],
+     "y": [
+      -0.9,
+      1.7
+     ]
+    }
+   ],
+   "support_used": "false",
+   "slice_pass": false,
+   "plate": "prints/mystery-box-sg92r-f1/_orientation/orthogonal-08.gcode.3mf"
+  },
+  {
+   "name": "top__cam_key_1__ori_py",
+   "part": "top/cam_key_1",
+   "aliases": [
+    "top/cam_key_2"
+   ],
+   "direction": "py",
+   "matrix": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     6.123233995736766e-17,
+     -1.0
+    ],
+    [
+     0,
+     1.0,
+     6.123233995736766e-17
+    ]
+   ],
+   "source_sha256": "d55726b966c8b30ca363394f8b143180f4231769282a35f9f5c921d0358260ab",
+   "source": "prints/mystery-box-sg92r-f1/top/cam_key_1.stl",
+   "contact_mm2": 11.0,
+   "grounded": true,
+   "height_mm": 5.0,
+   "contact_short_mm": 2.2,
+   "slender_ratio": 2.2727272727272725,
+   "rotation4x4_from_current_print": [
+    [
+     1,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0.0,
+     -1.0,
+     0
+    ],
+    [
+     0,
+     1.0,
+     0.0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     1
+    ]
+   ],
+   "floating": {
+    "external_unsupported_mm": 70.87,
+    "bridge_mm": 70.23,
+    "bridge_unsupported_mm": 50.15,
+    "internal_unsupported_mm": 0.0
+   },
+   "overhang_walls": [
+    {
+     "layer": 3,
+     "z": 0.8,
+     "feature": "Overhang wall",
+     "points": 34,
+     "x": [
+      4.8,
+      5.6
+     ],
+     "y": [
+      -1.3,
+      1.3
+     ]
+    },
+    {
+     "layer": 3,
+     "z": 0.8,
+     "feature": "Gap infill",
+     "points": 11,
+     "x": [
+      5.2,
+      5.2
+     ],
+     "y": [
+      -1.1,
+      1.1
+     ]
+    },
+    {
+     "layer": 5,
+     "z": 1.2,
+     "feature": "Overhang wall",
+     "points": 152,
+     "x": [
+      -3.4,
+      4.0
+     ],
+     "y": [
+      -1.3,
+      1.3
+     ]
+    },
+    {
+     "layer": 14,
+     "z": 3.0,
+     "feature": "Overhang wall",
+     "points": 162,
+     "x": [
+      -1.1,
+      6.0
+     ],
+     "y": [
+      -1.3,
+      1.3
+     ]
+    }
+   ],
+   "support_used": "false",
+   "slice_pass": false,
+   "plate": "prints/mystery-box-sg92r-f1/_orientation/orthogonal-08.gcode.3mf"
+  },
+  {
+   "name": "top__cam_key_1__ori_ny",
+   "part": "top/cam_key_1",
+   "aliases": [
+    "top/cam_key_2"
+   ],
+   "direction": "ny",
+   "matrix": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     6.123233995736766e-17,
+     1.0
+    ],
+    [
+     0,
+     -1.0,
+     6.123233995736766e-17
+    ]
+   ],
+   "source_sha256": "d55726b966c8b30ca363394f8b143180f4231769282a35f9f5c921d0358260ab",
+   "source": "prints/mystery-box-sg92r-f1/top/cam_key_1.stl",
+   "contact_mm2": 11.0,
+   "grounded": true,
+   "height_mm": 5.0,
+   "contact_short_mm": 2.2,
+   "slender_ratio": 2.2727272727272725,
+   "rotation4x4_from_current_print": [
+    [
+     1,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0.0,
+     1.0,
+     0
+    ],
+    [
+     0,
+     -1.0,
+     0.0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     1
+    ]
+   ],
+   "floating": {
+    "external_unsupported_mm": 70.87,
+    "bridge_mm": 70.23,
+    "bridge_unsupported_mm": 50.15,
+    "internal_unsupported_mm": 0.0
+   },
+   "overhang_walls": [
+    {
+     "layer": 3,
+     "z": 0.8,
+     "feature": "Overhang wall",
+     "points": 34,
+     "x": [
+      4.8,
+      5.6
+     ],
+     "y": [
+      -1.3,
+      1.3
+     ]
+    },
+    {
+     "layer": 3,
+     "z": 0.8,
+     "feature": "Gap infill",
+     "points": 11,
+     "x": [
+      5.2,
+      5.2
+     ],
+     "y": [
+      -1.1,
+      1.1
+     ]
+    },
+    {
+     "layer": 5,
+     "z": 1.2,
+     "feature": "Overhang wall",
+     "points": 152,
+     "x": [
+      -3.4,
+      4.0
+     ],
+     "y": [
+      -1.3,
+      1.3
+     ]
+    },
+    {
+     "layer": 14,
+     "z": 3.0,
+     "feature": "Overhang wall",
+     "points": 162,
+     "x": [
+      -1.1,
+      6.0
+     ],
+     "y": [
+      -1.3,
+      1.3
+     ]
+    }
+   ],
+   "support_used": "false",
+   "slice_pass": false,
+   "plate": "prints/mystery-box-sg92r-f1/_orientation/orthogonal-08.gcode.3mf"
+  },
+  {
+   "name": "top__guide__ori_nx",
+   "part": "top/guide",
+   "aliases": [],
+   "direction": "nx",
+   "matrix": [
+    [
+     6.123233995736766e-17,
+     0,
+     1.0
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     -1.0,
+     0,
+     6.123233995736766e-17
+    ]
+   ],
+   "source_sha256": "b45b749e7e4f247251f6d180adf441c8ec16d41455a455bf1fd8c4d91f3e2924",
+   "source": "prints/mystery-box-sg92r-f1/top/guide.stl",
+   "contact_mm2": 0.0,
+   "grounded": false,
+   "height_mm": 44.2074,
+   "contact_short_mm": 0.0,
+   "slender_ratio": null,
+   "rotation4x4_from_current_print": [
+    [
+     0.0,
+     -1.0,
+     0.0,
+     0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0,
+     0
+    ],
+    [
+     -1.0,
+     0,
+     0.0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     1
+    ]
+   ],
+   "floating": {
+    "external_unsupported_mm": 304.29,
+    "bridge_mm": 282.48,
+    "bridge_unsupported_mm": 209.51,
+    "internal_unsupported_mm": 1.67
+   },
+   "overhang_walls": [
+    {
+     "layer": 34,
+     "z": 7.0,
+     "feature": "Overhang wall",
+     "points": 282,
+     "x": [
+      -24.2,
+      24.4
+     ],
+     "y": [
+      -1.7,
+      0.9
+     ]
+    },
+    {
+     "layer": 42,
+     "z": 8.6,
+     "feature": "Outer wall",
+     "points": 17,
+     "x": [
+      -6.6,
+      -6.4
+     ],
+     "y": [
+      -1.7,
+      0.9
+     ]
+    },
+    {
+     "layer": 42,
+     "z": 8.6,
+     "feature": "Overhang wall",
+     "points": 18,
+     "x": [
+      -6.6,
+      -6.6
+     ],
+     "y": [
+      -1.7,
+      0.9
+     ]
+    },
+    {
+     "layer": 109,
+     "z": 22.0,
+     "feature": "Overhang wall",
+     "points": 476,
+     "x": [
+      -20.8,
+      21.0
+     ],
+     "y": [
+      -1.7,
+      1.7
+     ]
+    },
+    {
+     "layer": 185,
+     "z": 37.2,
+     "feature": "Overhang wall",
+     "points": 68,
+     "x": [
+      16.4,
+      19.7
+     ],
+     "y": [
+      -1.7,
+      0.9
+     ]
+    },
+    {
+     "layer": 206,
+     "z": 41.4,
+     "feature": "Overhang wall",
+     "points": 686,
+     "x": [
+      -23.0,
+      16.7
+     ],
+     "y": [
+      -1.7,
+      0.9
+     ]
+    }
+   ],
+   "support_used": "false",
+   "slice_pass": false,
+   "plate": "prints/mystery-box-sg92r-f1/_orientation/orthogonal-08.gcode.3mf"
+  },
+  {
+   "name": "top__guide__ori_py",
+   "part": "top/guide",
+   "aliases": [],
+   "direction": "py",
+   "matrix": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     6.123233995736766e-17,
+     -1.0
+    ],
+    [
+     0,
+     1.0,
+     6.123233995736766e-17
+    ]
+   ],
+   "source_sha256": "b45b749e7e4f247251f6d180adf441c8ec16d41455a455bf1fd8c4d91f3e2924",
+   "source": "prints/mystery-box-sg92r-f1/top/guide.stl",
+   "contact_mm2": 99.0,
+   "grounded": true,
+   "height_mm": 49.2041,
+   "contact_short_mm": 3.0,
+   "slender_ratio": 16.401366666666664,
+   "rotation4x4_from_current_print": [
+    [
+     1,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0.0,
+     -1.0,
+     0
+    ],
+    [
+     0,
+     1.0,
+     0.0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     1
+    ]
+   ],
+   "floating": {
+    "external_unsupported_mm": 189.33,
+    "bridge_mm": 186.04,
+    "bridge_unsupported_mm": 96.81,
+    "internal_unsupported_mm": 43.71
+   },
+   "overhang_walls": [
+    {
+     "layer": 21,
+     "z": 4.4,
+     "feature": "Overhang wall",
+     "points": 90,
+     "x": [
+      -21.9,
+      -18.4
+     ],
+     "y": [
+      -0.9,
+      1.7
+     ]
+    },
+    {
+     "layer": 38,
+     "z": 7.8,
+     "feature": "Overhang wall",
+     "points": 40,
+     "x": [
+      -7.4,
+      0.2
+     ],
+     "y": [
+      -1.7,
+      -1.7
+     ]
+    },
+    {
+     "layer": 44,
+     "z": 9.0,
+     "feature": "Overhang wall",
+     "points": 68,
+     "x": [
+      -14.2,
+      -11.0
+     ],
+     "y": [
+      -0.9,
+      1.7
+     ]
+    },
+    {
+     "layer": 154,
+     "z": 31.0,
+     "feature": "Overhang wall",
+     "points": 264,
+     "x": [
+      10.7,
+      21.6
+     ],
+     "y": [
+      -0.9,
+      1.7
+     ]
+    },
+    {
+     "layer": 175,
+     "z": 35.2,
+     "feature": "Outer wall",
+     "points": 32,
+     "x": [
+      -15.9,
+      -15.6
+     ],
+     "y": [
+      -0.9,
+      1.7
+     ]
+    },
+    {
+     "layer": 176,
+     "z": 35.4,
+     "feature": "Overhang wall",
+     "points": 188,
+     "x": [
+      -7.4,
+      0.2
+     ],
+     "y": [
+      -1.7,
+      0.9
+     ]
+    }
+   ],
+   "support_used": "false",
+   "slice_pass": false,
+   "plate": "prints/mystery-box-sg92r-f1/_orientation/orthogonal-08.gcode.3mf"
+  },
+  {
+   "name": "top__cam_key_1__ori_nx",
+   "part": "top/cam_key_1",
+   "aliases": [
+    "top/cam_key_2"
+   ],
+   "direction": "nx",
+   "matrix": [
+    [
+     6.123233995736766e-17,
+     0,
+     1.0
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     -1.0,
+     0,
+     6.123233995736766e-17
+    ]
+   ],
+   "source_sha256": "d55726b966c8b30ca363394f8b143180f4231769282a35f9f5c921d0358260ab",
+   "source": "prints/mystery-box-sg92r-f1/top/cam_key_1.stl",
+   "contact_mm2": 7.200000000000006,
+   "grounded": false,
+   "height_mm": 12.450000000000001,
+   "contact_short_mm": 3.0,
+   "slender_ratio": 4.15,
+   "rotation4x4_from_current_print": [
+    [
+     0.0,
+     0,
+     1.0,
+     0
+    ],
+    [
+     0,
+     1,
+     0,
+     0
+    ],
+    [
+     -1.0,
+     0,
+     0.0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     1
+    ]
+   ],
+   "floating": {
+    "external_unsupported_mm": 22.91,
+    "bridge_mm": 36.26,
+    "bridge_unsupported_mm": 0.0,
+    "internal_unsupported_mm": 0.0
+   },
+   "overhang_walls": [
+    {
+     "layer": 51,
+     "z": 10.4,
+     "feature": "Overhang wall",
+     "points": 117,
+     "x": [
+      -2.3,
+      2.3
+     ],
+     "y": [
+      -2.3,
+      2.3
+     ]
+    }
+   ],
+   "support_used": "false",
+   "slice_pass": false,
+   "plate": "prints/mystery-box-sg92r-f1/_orientation/orthogonal-08.gcode.3mf"
+  },
+  {
+   "name": "top__cam_key_1__ori_px",
+   "part": "top/cam_key_1",
+   "aliases": [
+    "top/cam_key_2"
+   ],
+   "direction": "px",
+   "matrix": [
+    [
+     6.123233995736766e-17,
+     0,
+     -1.0
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     1.0,
+     0,
+     6.123233995736766e-17
+    ]
+   ],
+   "source_sha256": "d55726b966c8b30ca363394f8b143180f4231769282a35f9f5c921d0358260ab",
+   "source": "prints/mystery-box-sg92r-f1/top/cam_key_1.stl",
+   "contact_mm2": 25.0,
+   "grounded": true,
+   "height_mm": 12.450000000000001,
+   "contact_short_mm": 5.0,
+   "slender_ratio": 2.49,
+   "rotation4x4_from_current_print": [
+    [
+     0.0,
+     0,
+     -1.0,
+     0
+    ],
+    [
+     0,
+     1,
+     0,
+     0
+    ],
+    [
+     1.0,
+     0,
+     0.0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     1
+    ]
+   ],
+   "floating": {
+    "external_unsupported_mm": 0.0,
+    "bridge_mm": 0.0,
+    "bridge_unsupported_mm": 0.0,
+    "internal_unsupported_mm": 0.0
+   },
+   "overhang_walls": [],
+   "support_used": "false",
+   "slice_pass": true,
+   "plate": "prints/mystery-box-sg92r-f1/_orientation/orthogonal-08.gcode.3mf"
+  },
+  {
+   "name": "top__cam_key_1__ori_pz",
+   "part": "top/cam_key_1",
+   "aliases": [
+    "top/cam_key_2"
+   ],
+   "direction": "pz",
+   "matrix": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     1.0,
+     -0.0
+    ],
+    [
+     0,
+     0.0,
+     1.0
+    ]
+   ],
+   "source_sha256": "d55726b966c8b30ca363394f8b143180f4231769282a35f9f5c921d0358260ab",
+   "source": "prints/mystery-box-sg92r-f1/top/cam_key_1.stl",
+   "contact_mm2": 11.0,
+   "grounded": true,
+   "height_mm": 5.0,
+   "contact_short_mm": 2.2,
+   "slender_ratio": 2.2727272727272725,
+   "rotation4x4_from_current_print": [
+    [
+     1,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     1.0,
+     -0.0,
+     0
+    ],
+    [
+     0,
+     0.0,
+     1.0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     1
+    ]
+   ],
+   "floating": {
+    "external_unsupported_mm": 60.5,
+    "bridge_mm": 12.49,
+    "bridge_unsupported_mm": 4.48,
+    "internal_unsupported_mm": 0.0
+   },
+   "overhang_walls": [
+    {
+     "layer": 5,
+     "z": 1.2,
+     "feature": "Overhang wall",
+     "points": 225,
+     "x": [
+      -3.6,
+      6.0
+     ],
+     "y": [
+      -1.6,
+      1.6
+     ]
+    },
+    {
+     "layer": 5,
+     "z": 1.2,
+     "feature": "Gap infill",
+     "points": 102,
+     "x": [
+      -2.1,
+      5.8
+     ],
+     "y": [
+      -1.4,
+      1.4
+     ]
+    }
+   ],
+   "support_used": "false",
+   "slice_pass": false,
+   "plate": "prints/mystery-box-sg92r-f1/_orientation/orthogonal-08.gcode.3mf"
+  },
+  {
+   "name": "top__guide__ori_pz",
+   "part": "top/guide",
+   "aliases": [],
+   "direction": "pz",
+   "matrix": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     1.0,
+     -0.0
+    ],
+    [
+     0,
+     0.0,
+     1.0
+    ]
+   ],
+   "source_sha256": "b45b749e7e4f247251f6d180adf441c8ec16d41455a455bf1fd8c4d91f3e2924",
+   "source": "prints/mystery-box-sg92r-f1/top/guide.stl",
+   "contact_mm2": 691.2271346299998,
+   "grounded": true,
+   "height_mm": 3.75,
+   "contact_short_mm": 44.2074,
+   "slender_ratio": 0.08482742708234368,
+   "rotation4x4_from_current_print": [
+    [
+     0.0,
+     -1.0,
+     0.0,
+     0
+    ],
+    [
+     1.0,
+     0.0,
+     0.0,
+     0
+    ],
+    [
+     0,
+     0.0,
+     1.0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     1
+    ]
+   ],
+   "floating": {
+    "external_unsupported_mm": 45.2,
+    "bridge_mm": 850.01,
+    "bridge_unsupported_mm": 289.76,
+    "internal_unsupported_mm": 27.77
+   },
+   "overhang_walls": [
+    {
+     "layer": 4,
+     "z": 1.0,
+     "feature": "Overhang wall",
+     "points": 231,
+     "x": [
+      -13.3,
+      13.5
+     ],
+     "y": [
+      -7.4,
+      0.2
+     ]
+    }
+   ],
+   "support_used": "false",
+   "slice_pass": false,
+   "plate": "prints/mystery-box-sg92r-f1/_orientation/orthogonal-08.gcode.3mf"
+  },
+  {
+   "name": "top__guide__ori_nz",
+   "part": "top/guide",
+   "aliases": [],
+   "direction": "nz",
+   "matrix": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     -1.0,
+     -1.2246467991473532e-16
+    ],
+    [
+     0,
+     1.2246467991473532e-16,
+     -1.0
+    ]
+   ],
+   "source_sha256": "b45b749e7e4f247251f6d180adf441c8ec16d41455a455bf1fd8c4d91f3e2924",
+   "source": "prints/mystery-box-sg92r-f1/top/guide.stl",
+   "contact_mm2": 100.0,
+   "grounded": true,
+   "height_mm": 3.7500000000000053,
+   "contact_short_mm": 8.0,
+   "slender_ratio": 0.46875000000000067,
+   "rotation4x4_from_current_print": [
+    [
+     0.0,
+     1.0,
+     0.0,
+     0
+    ],
+    [
+     1.0,
+     -0.0,
+     -0.0,
+     0
+    ],
+    [
+     0,
+     0.0,
+     -1.0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     1
+    ]
+   ],
+   "floating": {
+    "external_unsupported_mm": 673.81,
+    "bridge_mm": 1814.66,
+    "bridge_unsupported_mm": 1219.0,
+    "internal_unsupported_mm": 18.94
+   },
+   "overhang_walls": [
+    {
+     "layer": 4,
+     "z": 1.0,
+     "feature": "Overhang wall",
+     "points": 3420,
+     "x": [
+      -24.4,
+      24.4
+     ],
+     "y": [
+      -21.9,
+      21.9
+     ]
+    }
+   ],
+   "support_used": "false",
+   "slice_pass": false,
+   "plate": "prints/mystery-box-sg92r-f1/_orientation/orthogonal-08.gcode.3mf"
+  }
+ ]
+}

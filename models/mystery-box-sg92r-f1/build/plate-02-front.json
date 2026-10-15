@@ -1,0 +1,980 @@
+{
+ "support_used": "false",
+ "prediction_s": 7934,
+ "weight_g": "67.51",
+ "filament": [
+  [
+   "22.28",
+   "67.51"
+  ]
+ ],
+ "stats": {
+  "time": "model printing time: 2h 4m 59s; total estimated time: 2h 12m 14s",
+  "filament_mm": 22275.46,
+  "filament_g_header": "67.51"
+ },
+ "objects": {
+  "12": {
+   "layers": 15,
+   "z_top": 3.0,
+   "layer_steps": {
+    "0.2": [
+     0.2,
+     2.8,
+     14
+    ]
+   },
+   "floating": {
+    "external_unsupported_mm": 159.52,
+    "bridge_mm": 12964.9,
+    "bridge_unsupported_mm": 6201.12,
+    "internal_unsupported_mm": 7.86
+   },
+   "overhang_walls": [
+    {
+     "layer": 5,
+     "z": 1.2,
+     "feature": "Overhang wall",
+     "points": 120,
+     "x": [
+      -38.1,
+      38.1
+     ],
+     "y": [
+      -24.9,
+      -19.1
+     ]
+    },
+    {
+     "layer": 7,
+     "z": 1.6,
+     "feature": "Overhang wall",
+     "points": 566,
+     "x": [
+      -36.6,
+      36.6
+     ],
+     "y": [
+      -25.9,
+      -18.1
+     ]
+    },
+    {
+     "layer": 9,
+     "z": 2.0,
+     "feature": "Overhang wall",
+     "points": 32,
+     "x": [
+      26.8,
+      27.1
+     ],
+     "y": [
+      -14.8,
+      -9.2
+     ]
+    },
+    {
+     "layer": 11,
+     "z": 2.4,
+     "feature": "Overhang wall",
+     "points": 100,
+     "x": [
+      -27.1,
+      27.1
+     ],
+     "y": [
+      -19.4,
+      -17.7
+     ]
+    },
+    {
+     "layer": 11,
+     "z": 2.4,
+     "feature": "Gap infill",
+     "points": 16,
+     "x": [
+      -27.0,
+      27.0
+     ],
+     "y": [
+      -18.1,
+      -18.1
+     ]
+    }
+   ]
+  },
+  "32": {
+   "layers": 69,
+   "z_top": 13.8,
+   "layer_steps": {
+    "0.2": [
+     0.2,
+     13.6,
+     68
+    ]
+   },
+   "floating": {
+    "external_unsupported_mm": 96.69,
+    "bridge_mm": 1091.98,
+    "bridge_unsupported_mm": 618.29,
+    "internal_unsupported_mm": 7.86
+   },
+   "overhang_walls": [
+    {
+     "layer": 10,
+     "z": 2.2,
+     "feature": "Overhang wall",
+     "points": 358,
+     "x": [
+      -13.7,
+      12.8
+     ],
+     "y": [
+      -10.4,
+      10.0
+     ]
+    },
+    {
+     "layer": 10,
+     "z": 2.2,
+     "feature": "Gap infill",
+     "points": 13,
+     "x": [
+      11.6,
+      12.4
+     ],
+     "y": [
+      8.8,
+      9.4
+     ]
+    },
+    {
+     "layer": 37,
+     "z": 7.6,
+     "feature": "Overhang wall",
+     "points": 332,
+     "x": [
+      -13.7,
+      -6.5
+     ],
+     "y": [
+      -10.6,
+      -3.5
+     ]
+    }
+   ]
+  },
+  "36": {
+   "layers": 220,
+   "z_top": 44.0,
+   "layer_steps": {
+    "0.2": [
+     0.2,
+     43.8,
+     219
+    ]
+   },
+   "floating": {
+    "external_unsupported_mm": 0.0,
+    "bridge_mm": 552.63,
+    "bridge_unsupported_mm": 171.39,
+    "internal_unsupported_mm": 0.0
+   },
+   "overhang_walls": []
+  },
+  "40": {
+   "layers": 39,
+   "z_top": 7.8,
+   "layer_steps": {
+    "0.2": [
+     0.2,
+     7.6,
+     38
+    ]
+   },
+   "floating": {
+    "external_unsupported_mm": 0.0,
+    "bridge_mm": 223.26,
+    "bridge_unsupported_mm": 72.22,
+    "internal_unsupported_mm": 1.03
+   },
+   "overhang_walls": []
+  },
+  "48": {
+   "layers": 40,
+   "z_top": 8.0,
+   "layer_steps": {
+    "0.2": [
+     0.2,
+     7.8,
+     39
+    ]
+   },
+   "floating": {
+    "external_unsupported_mm": 70.35,
+    "bridge_mm": 0.0,
+    "bridge_unsupported_mm": 0.0,
+    "internal_unsupported_mm": 0.0
+   },
+   "overhang_walls": [
+    {
+     "layer": 15,
+     "z": 3.2,
+     "feature": "Overhang wall",
+     "points": 352,
+     "x": [
+      -10.8,
+      6.6
+     ],
+     "y": [
+      -0.6,
+      0.6
+     ]
+    }
+   ]
+  },
+  "52": {
+   "layers": 40,
+   "z_top": 8.0,
+   "layer_steps": {
+    "0.2": [
+     0.2,
+     7.8,
+     39
+    ]
+   },
+   "floating": {
+    "external_unsupported_mm": 70.35,
+    "bridge_mm": 0.0,
+    "bridge_unsupported_mm": 0.0,
+    "internal_unsupported_mm": 0.0
+   },
+   "overhang_walls": [
+    {
+     "layer": 15,
+     "z": 3.2,
+     "feature": "Overhang wall",
+     "points": 352,
+     "x": [
+      -10.8,
+      6.6
+     ],
+     "y": [
+      -0.6,
+      0.6
+     ]
+    }
+   ]
+  },
+  "56": {
+   "layers": 40,
+   "z_top": 8.0,
+   "layer_steps": {
+    "0.2": [
+     0.2,
+     7.8,
+     39
+    ]
+   },
+   "floating": {
+    "external_unsupported_mm": 70.35,
+    "bridge_mm": 0.0,
+    "bridge_unsupported_mm": 0.0,
+    "internal_unsupported_mm": 0.0
+   },
+   "overhang_walls": [
+    {
+     "layer": 15,
+     "z": 3.2,
+     "feature": "Overhang wall",
+     "points": 352,
+     "x": [
+      -10.8,
+      6.6
+     ],
+     "y": [
+      -0.6,
+      0.6
+     ]
+    }
+   ]
+  },
+  "60": {
+   "layers": 40,
+   "z_top": 8.0,
+   "layer_steps": {
+    "0.2": [
+     0.2,
+     7.8,
+     39
+    ]
+   },
+   "floating": {
+    "external_unsupported_mm": 70.35,
+    "bridge_mm": 0.0,
+    "bridge_unsupported_mm": 0.0,
+    "internal_unsupported_mm": 0.0
+   },
+   "overhang_walls": [
+    {
+     "layer": 15,
+     "z": 3.2,
+     "feature": "Overhang wall",
+     "points": 352,
+     "x": [
+      -10.8,
+      6.6
+     ],
+     "y": [
+      -0.6,
+      0.6
+     ]
+    }
+   ]
+  },
+  "44": {
+   "layers": 22,
+   "z_top": 4.4,
+   "layer_steps": {
+    "0.2": [
+     0.2,
+     4.2,
+     21
+    ]
+   },
+   "floating": {
+    "external_unsupported_mm": 0.0,
+    "bridge_mm": 0.0,
+    "bridge_unsupported_mm": 0.0,
+    "internal_unsupported_mm": 0.18
+   },
+   "overhang_walls": []
+  },
+  "24": {
+   "layers": 73,
+   "z_top": 14.6,
+   "layer_steps": {
+    "0.2": [
+     0.2,
+     14.4,
+     72
+    ]
+   },
+   "floating": {
+    "external_unsupported_mm": 821.58,
+    "bridge_mm": 4550.83,
+    "bridge_unsupported_mm": 3013.63,
+    "internal_unsupported_mm": 7.59
+   },
+   "overhang_walls": [
+    {
+     "layer": 12,
+     "z": 2.6,
+     "feature": "Overhang wall",
+     "points": 2013,
+     "x": [
+      -26.8,
+      26.8
+     ],
+     "y": [
+      -6.3,
+      18.3
+     ]
+    },
+    {
+     "layer": 12,
+     "z": 2.6,
+     "feature": "Gap infill",
+     "points": 254,
+     "x": [
+      -26.0,
+      26.0
+     ],
+     "y": [
+      -5.7,
+      17.7
+     ]
+    },
+    {
+     "layer": 24,
+     "z": 5.0,
+     "feature": "Overhang wall",
+     "points": 662,
+     "x": [
+      5.4,
+      24.6
+     ],
+     "y": [
+      0.7,
+      15.8
+     ]
+    },
+    {
+     "layer": 24,
+     "z": 5.0,
+     "feature": "Gap infill",
+     "points": 178,
+     "x": [
+      5.3,
+      24.6
+     ],
+     "y": [
+      1.3,
+      15.0
+     ]
+    },
+    {
+     "layer": 41,
+     "z": 8.4,
+     "feature": "Overhang wall",
+     "points": 834,
+     "x": [
+      -19.3,
+      4.5
+     ],
+     "y": [
+      -18.3,
+      18.3
+     ]
+    },
+    {
+     "layer": 59,
+     "z": 12.0,
+     "feature": "Overhang wall",
+     "points": 176,
+     "x": [
+      11.2,
+      12.6
+     ],
+     "y": [
+      -8.5,
+      -0.1
+     ]
+    }
+   ]
+  },
+  "20": {
+   "layers": 158,
+   "z_top": 31.6,
+   "layer_steps": {
+    "0.2": [
+     0.2,
+     31.4,
+     157
+    ]
+   },
+   "floating": {
+    "external_unsupported_mm": 868.72,
+    "bridge_mm": 2841.86,
+    "bridge_unsupported_mm": 1833.61,
+    "internal_unsupported_mm": 20.8
+   },
+   "overhang_walls": [
+    {
+     "layer": 24,
+     "z": 5.0,
+     "feature": "Overhang wall",
+     "points": 874,
+     "x": [
+      -19.3,
+      0.5
+     ],
+     "y": [
+      -15.9,
+      9.9
+     ]
+    },
+    {
+     "layer": 24,
+     "z": 5.0,
+     "feature": "Gap infill",
+     "points": 17,
+     "x": [
+      -2.9,
+      0.3
+     ],
+     "y": [
+      9.5,
+      9.5
+     ]
+    },
+    {
+     "layer": 36,
+     "z": 7.4,
+     "feature": "Overhang wall",
+     "points": 106,
+     "x": [
+      -11.5,
+      -3.5
+     ],
+     "y": [
+      -18.2,
+      -16.7
+     ]
+    },
+    {
+     "layer": 39,
+     "z": 8.0,
+     "feature": "Overhang wall",
+     "points": 467,
+     "x": [
+      -19.3,
+      0.5
+     ],
+     "y": [
+      10.3,
+      14.9
+     ]
+    },
+    {
+     "layer": 74,
+     "z": 15.0,
+     "feature": "Overhang wall",
+     "points": 34,
+     "x": [
+      -2.0,
+      0.5
+     ],
+     "y": [
+      15.5,
+      16.2
+     ]
+    },
+    {
+     "layer": 94,
+     "z": 19.0,
+     "feature": "Overhang wall",
+     "points": 180,
+     "x": [
+      -19.3,
+      -11.0
+     ],
+     "y": [
+      14.1,
+      16.7
+     ]
+    }
+   ]
+  },
+  "16": {
+   "layers": 108,
+   "z_top": 21.6,
+   "layer_steps": {
+    "0.2": [
+     0.2,
+     21.4,
+     107
+    ]
+   },
+   "floating": {
+    "external_unsupported_mm": 858.36,
+    "bridge_mm": 11456.15,
+    "bridge_unsupported_mm": 8691.09,
+    "internal_unsupported_mm": 1.4
+   },
+   "overhang_walls": [
+    {
+     "layer": 18,
+     "z": 3.8,
+     "feature": "Overhang wall",
+     "points": 216,
+     "x": [
+      -30.8,
+      -27.2
+     ],
+     "y": [
+      -38.0,
+      38.0
+     ]
+    },
+    {
+     "layer": 24,
+     "z": 5.0,
+     "feature": "Overhang wall",
+     "points": 796,
+     "x": [
+      5.7,
+      7.3
+     ],
+     "y": [
+      -46.0,
+      45.8
+     ]
+    },
+    {
+     "layer": 24,
+     "z": 5.0,
+     "feature": "Gap infill",
+     "points": 190,
+     "x": [
+      6.5,
+      6.5
+     ],
+     "y": [
+      -45.9,
+      45.9
+     ]
+    },
+    {
+     "layer": 28,
+     "z": 5.8,
+     "feature": "Overhang wall",
+     "points": 132,
+     "x": [
+      -30.8,
+      -27.2
+     ],
+     "y": [
+      -40.5,
+      40.5
+     ]
+    },
+    {
+     "layer": 29,
+     "z": 6.0,
+     "feature": "Overhang wall",
+     "points": 2978,
+     "x": [
+      -29.8,
+      30.8
+     ],
+     "y": [
+      -38.8,
+      38.8
+     ]
+    },
+    {
+     "layer": 96,
+     "z": 19.4,
+     "feature": "Overhang wall",
+     "points": 9,
+     "x": [
+      9.7,
+      12.3
+     ],
+     "y": [
+      -10.2,
+      10.2
+     ]
+    }
+   ]
+  },
+  "28": {
+   "layers": 58,
+   "z_top": 11.6,
+   "layer_steps": {
+    "0.2": [
+     0.2,
+     11.4,
+     57
+    ]
+   },
+   "floating": {
+    "external_unsupported_mm": 1.38,
+    "bridge_mm": 2128.57,
+    "bridge_unsupported_mm": 1018.6,
+    "internal_unsupported_mm": 3.72
+   },
+   "overhang_walls": [
+    {
+     "layer": 46,
+     "z": 9.4,
+     "feature": "Overhang wall",
+     "points": 8,
+     "x": [
+      0.3,
+      0.6
+     ],
+     "y": [
+      16.9,
+      19.5
+     ]
+    }
+   ]
+  },
+  "8": {
+   "layers": 15,
+   "z_top": 3.0,
+   "layer_steps": {
+    "0.2": [
+     0.2,
+     2.8,
+     14
+    ]
+   },
+   "floating": {
+    "external_unsupported_mm": 146.01,
+    "bridge_mm": 17411.89,
+    "bridge_unsupported_mm": 8834.72,
+    "internal_unsupported_mm": 2.89
+   },
+   "overhang_walls": [
+    {
+     "layer": 5,
+     "z": 1.2,
+     "feature": "Overhang wall",
+     "points": 120,
+     "x": [
+      -38.1,
+      38.1
+     ],
+     "y": [
+      -24.9,
+      -19.1
+     ]
+    },
+    {
+     "layer": 7,
+     "z": 1.6,
+     "feature": "Overhang wall",
+     "points": 640,
+     "x": [
+      -36.6,
+      36.6
+     ],
+     "y": [
+      -25.9,
+      -18.1
+     ]
+    }
+   ]
+  }
+ },
+ "plate": "02-front",
+ "parts": [
+  "frame__wiring",
+  "frame__tray",
+  "front__panel",
+  "front__key_l",
+  "front__key_r",
+  "front__support",
+  "front__servo_cap",
+  "front__crank",
+  "front__link",
+  "front__lid",
+  "front__hinge_pin",
+  "bottom__panel",
+  "bottom__key_l",
+  "bottom__key_r"
+ ],
+ "layout_boxes": [
+  {
+   "name": "bottom__panel",
+   "min_mm": [
+    20.0,
+    6.0,
+    0.0
+   ],
+   "max_mm": [
+    112.0,
+    98.0,
+    3.0
+   ]
+  },
+  {
+   "name": "front__panel",
+   "min_mm": [
+    118.0,
+    6.0,
+    0.0
+   ],
+   "max_mm": [
+    210.0,
+    98.0,
+    3.0
+   ]
+  },
+  {
+   "name": "frame__wiring",
+   "min_mm": [
+    20.0,
+    104.0,
+    0.0
+   ],
+   "max_mm": [
+    82.0,
+    200.5,
+    21.6000004
+   ]
+  },
+  {
+   "name": "front__support",
+   "min_mm": [
+    19.999999600000002,
+    206.5,
+    0.0
+   ],
+   "max_mm": [
+    81.2000004,
+    243.25,
+    31.5
+   ]
+  },
+  {
+   "name": "front__servo_cap",
+   "min_mm": [
+    87.2,
+    206.5,
+    0.0
+   ],
+   "max_mm": [
+    141.2,
+    243.5,
+    14.60000038
+   ]
+  },
+  {
+   "name": "front__lid",
+   "min_mm": [
+    88.0000008,
+    103.9999996,
+    0.0
+   ],
+   "max_mm": [
+    123.0999992,
+    143.4500004,
+    11.6999998
+   ]
+  },
+  {
+   "name": "front__crank",
+   "min_mm": [
+    216.0000002,
+    6.0000008000000005,
+    0.0
+   ],
+   "max_mm": [
+    243.9209998,
+    27.7884005,
+    13.89999962
+   ]
+  },
+  {
+   "name": "frame__tray",
+   "min_mm": [
+    216.0,
+    33.7884,
+    0.0
+   ],
+   "max_mm": [
+    240.0,
+    57.7884,
+    44.0
+   ]
+  },
+  {
+   "name": "front__link",
+   "min_mm": [
+    216.0000003,
+    63.78839998000001,
+    0.0
+   ],
+   "max_mm": [
+    241.4102997,
+    77.93690042,
+    7.8000002
+   ]
+  },
+  {
+   "name": "front__hinge_pin",
+   "min_mm": [
+    216.0,
+    83.9369018,
+    0.0
+   ],
+   "max_mm": [
+    221.0,
+    137.7869002,
+    4.5
+   ]
+  },
+  {
+   "name": "bottom__key_l",
+   "min_mm": [
+    227.0,
+    83.9369,
+    0.0
+   ],
+   "max_mm": [
+    249.0,
+    95.9369,
+    8.0
+   ]
+  },
+  {
+   "name": "bottom__key_r",
+   "min_mm": [
+    227.0,
+    101.9369,
+    0.0
+   ],
+   "max_mm": [
+    249.0,
+    113.9369,
+    8.0
+   ]
+  },
+  {
+   "name": "front__key_l",
+   "min_mm": [
+    227.0,
+    119.9369,
+    0.0
+   ],
+   "max_mm": [
+    249.0,
+    131.93689999999998,
+    8.0
+   ]
+  },
+  {
+   "name": "front__key_r",
+   "min_mm": [
+    227.0,
+    137.9369,
+    0.0
+   ],
+   "max_mm": [
+    249.0,
+    149.9369,
+    8.0
+   ]
+  }
+ ],
+ "command": [
+  "C:\\Program Files\\Bambu Studio\\bambu-studio.exe",
+  "--slice",
+  "0",
+  "--debug",
+  "2",
+  "--arrange",
+  "0",
+  "--load-settings",
+  "C:\\Users\\kouga\\Projects\\Web\\model-lab\\prints\\mystery-box-sg92r-f1\\profiles\\machine.json;C:\\Users\\kouga\\Projects\\Web\\model-lab\\prints\\mystery-box-sg92r-f1\\profiles\\process.json",
+  "--load-filaments",
+  "C:\\Users\\kouga\\Projects\\Web\\model-lab\\prints\\mystery-box-sg92r-f1\\profiles\\filament_PLA.json",
+  "--outputdir",
+  "C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-f1\\build\\slice-02-front",
+  "--export-3mf",
+  "mystery-box-sg92r-f1-02-front-PLA.gcode.3mf",
+  "C:\\Users\\kouga\\Projects\\Web\\model-lab\\prints\\mystery-box-sg92r-f1\\mystery-box-sg92r-f1-02-front-PLA-layout.3mf"
+ ],
+ "returncode": 0,
+ "log": "G:\\マイドライブ\\shubie\\reports\\mystery-box-sg92r-f1-slices\\02-front.log",
+ "sha256": "d81716fb1f1605fe6d682b0ac128c35d4af4c055edf8c6390a00451cb059cfd6",
+ "file": "prints/mystery-box-sg92r-f1/mystery-box-sg92r-f1-02-front-PLA.gcode.3mf",
+ "layout_file": "prints/mystery-box-sg92r-f1/mystery-box-sg92r-f1-02-front-PLA-layout.3mf",
+ "slice_failing": {
+  "12": 159.52,
+  "32": 96.69,
+  "48": 70.35,
+  "52": 70.35,
+  "56": 70.35,
+  "60": 70.35,
+  "24": 821.58,
+  "20": 868.72,
+  "16": 858.36,
+  "8": 146.01
+ },
+ "slice_pass": false
+}

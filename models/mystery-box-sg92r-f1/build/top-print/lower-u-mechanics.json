@@ -1,0 +1,8399 @@
+{
+  "calibration": {
+    "overlapHalf": {
+      "measured": 0.5,
+      "expected": 0.5,
+      "pass": true
+    },
+    "thinOverlap0.002": {
+      "measured": 0.0020000040531158447,
+      "expected": 0.002,
+      "pass": true
+    },
+    "separated": {
+      "measured": 0.0,
+      "expected": 0.0,
+      "pass": true
+    },
+    "faceContact": {
+      "measured": 0.0,
+      "expected": 0.0,
+      "pass": true
+    },
+    "edgeContact": {
+      "measured": 0.0,
+      "expected": 0.0,
+      "pass": true
+    },
+    "nestedInside": {
+      "measured": 1.0,
+      "expected": 1.0,
+      "pass": true
+    },
+    "nestedInsideReversed": {
+      "measured": 1.0,
+      "expected": 1.0,
+      "pass": true
+    },
+    "tiltedFaceContactAtScale": {
+      "measured": 0.0,
+      "expected": 0.0,
+      "pass": true
+    },
+    "tiltedThinOverlapAtScale": {
+      "measured": 4.000433860168268,
+      "expected": 4.0,
+      "pass": true
+    },
+    "skipAgreesWithBoolean": {
+      "cases": [
+        {
+          "case": "separated",
+          "fast": 0.0,
+          "full": 0.0,
+          "pass": true
+        },
+        {
+          "case": "overlap",
+          "fast": 0.7000000029802322,
+          "full": 0.7000000029802322,
+          "pass": true
+        },
+        {
+          "case": "nested",
+          "fast": 1.0,
+          "full": 1.0,
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    "firstContactLinear": {
+      "measured": 0.501001,
+      "expected": 0.501,
+      "pass": true
+    },
+    "firstContactNone": {
+      "measured": null,
+      "expected": null,
+      "pass": true
+    },
+    "firstContactAngular": {
+      "measured": 14.255127,
+      "expected": 14.255098890306314,
+      "pass": true
+    },
+    "pass": true
+  },
+  "collisions": [],
+  "envelope": [],
+  "interfaces": {
+    "passed": true,
+    "rows": [
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 60,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 60,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 60,
+        "type": "retention",
+        "travel_mm": 0.203247,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 60,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 60,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 60,
+        "type": "retention",
+        "travel_mm": 0.205566,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 60,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 60,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 60,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 60,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 60,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 60,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 60,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 60,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 60,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 60,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 61,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 61,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 61,
+        "type": "retention",
+        "travel_mm": 0.203247,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 61,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 61,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 61,
+        "type": "retention",
+        "travel_mm": 0.204468,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 61,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 61,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 61,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 61,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 61,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 61,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 61,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 61,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 61,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 61,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 62,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 62,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 62,
+        "type": "retention",
+        "travel_mm": 0.203247,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 62,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 62,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 62,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 62,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 62,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 62,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 62,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 62,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 62,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 62,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 62,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 62,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 62,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 63,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 63,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 63,
+        "type": "retention",
+        "travel_mm": 0.203247,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 63,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 63,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 63,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 63,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 63,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 63,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 63,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 63,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 63,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 63,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 63,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 63,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 63,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 64,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 64,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 64,
+        "type": "retention",
+        "travel_mm": 0.203247,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 64,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 64,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 64,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 64,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 64,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 64,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 64,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 64,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 64,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 64,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 64,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 64,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 64,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 65,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 65,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204102
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 65,
+        "type": "retention",
+        "travel_mm": 0.203247,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 65,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 65,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 65,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 65,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 65,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204102
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 65,
+        "type": "retention",
+        "travel_mm": 0.203735,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 65,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 65,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 65,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 65,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 65,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 65,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 65,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 66,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 66,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204785
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 66,
+        "type": "retention",
+        "travel_mm": 0.203491,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 66,
+        "type": "retention",
+        "travel_mm": 0.204834,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 66,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 66,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 66,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 66,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204346
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 66,
+        "type": "retention",
+        "travel_mm": 0.203613,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 66,
+        "type": "retention",
+        "travel_mm": 0.204346,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 66,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 66,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 66,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 66,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 66,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 66,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 67,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 67,
+        "type": "drive",
+        "travels": [
+          null,
+          0.206006
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 67,
+        "type": "retention",
+        "travel_mm": 0.203979,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 67,
+        "type": "retention",
+        "travel_mm": 0.206055,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 67,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 67,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 67,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 67,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204785
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 67,
+        "type": "retention",
+        "travel_mm": 0.203613,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 67,
+        "type": "retention",
+        "travel_mm": 0.204834,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 67,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 67,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 67,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 67,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 67,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 67,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 68,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 68,
+        "type": "drive",
+        "travels": [
+          null,
+          0.208936
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 68,
+        "type": "retention",
+        "travel_mm": 0.205811,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 68,
+        "type": "retention",
+        "travel_mm": 0.208984,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 68,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 68,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 68,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 68,
+        "type": "drive",
+        "travels": [
+          null,
+          0.20542
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 68,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 68,
+        "type": "retention",
+        "travel_mm": 0.205444,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 68,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 68,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 68,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 68,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 68,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 68,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 69,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 69,
+        "type": "drive",
+        "travels": [
+          null,
+          0.213281
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 69,
+        "type": "retention",
+        "travel_mm": 0.209717,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 69,
+        "type": "retention",
+        "travel_mm": 0.213257,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 69,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 69,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 69,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 69,
+        "type": "drive",
+        "travels": [
+          null,
+          0.206641
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 69,
+        "type": "retention",
+        "travel_mm": 0.205078,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 69,
+        "type": "retention",
+        "travel_mm": 0.206665,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 69,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 69,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 69,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 69,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 69,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 69,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 70,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 70,
+        "type": "drive",
+        "travels": [
+          null,
+          0.219092
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 70,
+        "type": "retention",
+        "travel_mm": 0.215576,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 70,
+        "type": "retention",
+        "travel_mm": 0.219116,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 70,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 70,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 70,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 70,
+        "type": "drive",
+        "travels": [
+          null,
+          0.208105
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 70,
+        "type": "retention",
+        "travel_mm": 0.206665,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 70,
+        "type": "retention",
+        "travel_mm": 0.20813,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 70,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 70,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 70,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 70,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 70,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 70,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 71,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 71,
+        "type": "drive",
+        "travels": [
+          null,
+          0.225928
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 71,
+        "type": "retention",
+        "travel_mm": 0.222656,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 71,
+        "type": "retention",
+        "travel_mm": 0.225952,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 71,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 71,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 71,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 71,
+        "type": "drive",
+        "travels": [
+          null,
+          0.209961
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 71,
+        "type": "retention",
+        "travel_mm": 0.208618,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 71,
+        "type": "retention",
+        "travel_mm": 0.209961,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 71,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 71,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 71,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 71,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 71,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 71,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 72,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 72,
+        "type": "drive",
+        "travels": [
+          null,
+          0.232568
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 72,
+        "type": "retention",
+        "travel_mm": 0.22937,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 72,
+        "type": "retention",
+        "travel_mm": 0.232544,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 72,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 72,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 72,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 72,
+        "type": "drive",
+        "travels": [
+          null,
+          0.21167
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 72,
+        "type": "retention",
+        "travel_mm": 0.210449,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 72,
+        "type": "retention",
+        "travel_mm": 0.21167,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 72,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 72,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 72,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 72,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 72,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 72,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 73,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 73,
+        "type": "drive",
+        "travels": [
+          null,
+          0.237842
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 73,
+        "type": "retention",
+        "travel_mm": 0.23584,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 73,
+        "type": "retention",
+        "travel_mm": 0.237915,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 73,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 73,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 73,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 73,
+        "type": "drive",
+        "travels": [
+          null,
+          0.213135
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 73,
+        "type": "retention",
+        "travel_mm": 0.21228,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 73,
+        "type": "retention",
+        "travel_mm": 0.213135,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 73,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 73,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 73,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 73,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 73,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 73,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 74,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 74,
+        "type": "drive",
+        "travels": [
+          null,
+          0.241016
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 74,
+        "type": "retention",
+        "travel_mm": 0.239868,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 74,
+        "type": "retention",
+        "travel_mm": 0.241089,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 74,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 74,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 74,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 74,
+        "type": "drive",
+        "travels": [
+          null,
+          0.214111
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 74,
+        "type": "retention",
+        "travel_mm": 0.213623,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 74,
+        "type": "retention",
+        "travel_mm": 0.214111,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 74,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 74,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 74,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 74,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 74,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 74,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 75,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 75,
+        "type": "drive",
+        "travels": [
+          null,
+          0.241797
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 75,
+        "type": "retention",
+        "travel_mm": 0.241821,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 75,
+        "type": "retention",
+        "travel_mm": 0.241821,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 75,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 75,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 75,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 75,
+        "type": "drive",
+        "travels": [
+          null,
+          0.214307
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 75,
+        "type": "retention",
+        "travel_mm": 0.216675,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 75,
+        "type": "retention",
+        "travel_mm": 0.214355,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 75,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 75,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 75,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 75,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 75,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 75,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 76,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 76,
+        "type": "drive",
+        "travels": [
+          null,
+          0.239893
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 76,
+        "type": "retention",
+        "travel_mm": 0.241089,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 76,
+        "type": "retention",
+        "travel_mm": 0.239868,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 76,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 76,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 76,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 76,
+        "type": "drive",
+        "travels": [
+          null,
+          0.213721
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 76,
+        "type": "retention",
+        "travel_mm": 0.216553,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 76,
+        "type": "retention",
+        "travel_mm": 0.213745,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 76,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 76,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 76,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 76,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 76,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 76,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 77,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 77,
+        "type": "drive",
+        "travels": [
+          null,
+          0.235742
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 77,
+        "type": "retention",
+        "travel_mm": 0.237915,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 77,
+        "type": "retention",
+        "travel_mm": 0.23584,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 77,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 77,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 77,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 77,
+        "type": "drive",
+        "travels": [
+          null,
+          0.212402
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 77,
+        "type": "retention",
+        "travel_mm": 0.215698,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 77,
+        "type": "retention",
+        "travel_mm": 0.212402,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 77,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 77,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 77,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 77,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 77,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 77,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 78,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 78,
+        "type": "drive",
+        "travels": [
+          null,
+          0.229395
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 78,
+        "type": "retention",
+        "travel_mm": 0.232544,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 78,
+        "type": "retention",
+        "travel_mm": 0.22937,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 78,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 78,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 78,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 78,
+        "type": "drive",
+        "travels": [
+          null,
+          0.210547
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 78,
+        "type": "retention",
+        "travel_mm": 0.213989,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 78,
+        "type": "retention",
+        "travel_mm": 0.210571,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 78,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 78,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 78,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 78,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 78,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 78,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 79,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 79,
+        "type": "drive",
+        "travels": [
+          null,
+          0.222607
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 79,
+        "type": "retention",
+        "travel_mm": 0.225952,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 79,
+        "type": "retention",
+        "travel_mm": 0.222656,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 79,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 79,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 79,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 79,
+        "type": "drive",
+        "travels": [
+          null,
+          0.20874
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 79,
+        "type": "retention",
+        "travel_mm": 0.211792,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 79,
+        "type": "retention",
+        "travel_mm": 0.20874,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 79,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 79,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 79,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 79,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 79,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 79,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 80,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 80,
+        "type": "drive",
+        "travels": [
+          null,
+          0.215527
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 80,
+        "type": "retention",
+        "travel_mm": 0.218994,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 80,
+        "type": "retention",
+        "travel_mm": 0.215576,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 80,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 80,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 80,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 80,
+        "type": "drive",
+        "travels": [
+          null,
+          0.206787
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 80,
+        "type": "retention",
+        "travel_mm": 0.210083,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 80,
+        "type": "retention",
+        "travel_mm": 0.206787,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 80,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 80,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 80,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 80,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 80,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 80,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 81,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 81,
+        "type": "drive",
+        "travels": [
+          null,
+          0.209717
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 81,
+        "type": "retention",
+        "travel_mm": 0.213013,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 81,
+        "type": "retention",
+        "travel_mm": 0.209717,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 81,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 81,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 81,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 81,
+        "type": "drive",
+        "travels": [
+          null,
+          0.205273
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 81,
+        "type": "retention",
+        "travel_mm": 0.20813,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 81,
+        "type": "retention",
+        "travel_mm": 0.205322,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 81,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 81,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 81,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 81,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 81,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 81,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 82,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 82,
+        "type": "drive",
+        "travels": [
+          null,
+          0.205908
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 82,
+        "type": "retention",
+        "travel_mm": 0.208618,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 82,
+        "type": "retention",
+        "travel_mm": 0.205933,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 82,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 82,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 82,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 82,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204346
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 82,
+        "type": "retention",
+        "travel_mm": 0.207153,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 82,
+        "type": "retention",
+        "travel_mm": 0.204346,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 82,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 82,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 82,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 82,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 82,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 82,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 83,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 83,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204102
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 83,
+        "type": "retention",
+        "travel_mm": 0.205688,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 83,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 83,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 83,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 83,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 83,
+        "type": "drive",
+        "travels": [
+          null,
+          0.20376
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 83,
+        "type": "retention",
+        "travel_mm": 0.206055,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 83,
+        "type": "retention",
+        "travel_mm": 0.203735,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 83,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 83,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 83,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 83,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 83,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 83,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 84,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 84,
+        "type": "drive",
+        "travels": [
+          null,
+          0.203711
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 84,
+        "type": "retention",
+        "travel_mm": 0.20459,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 84,
+        "type": "retention",
+        "travel_mm": 0.203735,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 84,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 84,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 84,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 84,
+        "type": "drive",
+        "travels": [
+          null,
+          0.203906
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 84,
+        "type": "retention",
+        "travel_mm": 0.205933,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 84,
+        "type": "retention",
+        "travel_mm": 0.203979,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 84,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 84,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 84,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 84,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 84,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 84,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 85,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 85,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 85,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 85,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 85,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 85,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 85,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 85,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 85,
+        "type": "retention",
+        "travel_mm": 0.205688,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 85,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 85,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 85,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 85,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 85,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 85,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 85,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 86,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 86,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 86,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 86,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 86,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 86,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 86,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 86,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 86,
+        "type": "retention",
+        "travel_mm": 0.205566,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 86,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 86,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 86,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 86,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 86,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 86,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 86,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 87,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 87,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 87,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 87,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 87,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 87,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 87,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 87,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 87,
+        "type": "retention",
+        "travel_mm": 0.205566,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 87,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 87,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 87,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 87,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 87,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 87,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 87,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 88,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 88,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 88,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 88,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 88,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 88,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 88,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 88,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 88,
+        "type": "retention",
+        "travel_mm": 0.205566,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 88,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 88,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 88,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 88,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 88,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 88,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 88,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 89,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 89,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 89,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 89,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 89,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 89,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 89,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 89,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 89,
+        "type": "retention",
+        "travel_mm": 0.205566,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 89,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 89,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 89,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 89,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 89,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 89,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 89,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 90,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 90,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 90,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 90,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 90,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 90,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 90,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 90,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 90,
+        "type": "retention",
+        "travel_mm": 0.205566,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 90,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 90,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 90,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 90,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 90,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 90,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 90,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 91,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 91,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 91,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 91,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 91,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 91,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 91,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 91,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 91,
+        "type": "retention",
+        "travel_mm": 0.205566,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 91,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 91,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 91,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 91,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 91,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 91,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 91,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 92,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 92,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 92,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 92,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 92,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 92,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 92,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 92,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 92,
+        "type": "retention",
+        "travel_mm": 0.205566,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 92,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 92,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 92,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 92,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 92,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 92,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 92,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 93,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 93,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 93,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 93,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 93,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 93,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 93,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 93,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 93,
+        "type": "retention",
+        "travel_mm": 0.205566,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 93,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 93,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 93,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 93,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 93,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 93,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 93,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 94,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 94,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 94,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 94,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 94,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 94,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 94,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 94,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 94,
+        "type": "retention",
+        "travel_mm": 0.205566,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 94,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 94,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 94,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 94,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 94,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 94,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 94,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 95,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 95,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 95,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 95,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 95,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204004
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 95,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 95,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 95,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 95,
+        "type": "retention",
+        "travel_mm": 0.205688,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 95,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 95,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 95,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 95,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 95,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 95,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 95,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 96,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 96,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 96,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 96,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 96,
+        "type": "drive",
+        "travels": [
+          null,
+          0.203711
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 96,
+        "type": "retention",
+        "travel_mm": 0.20459,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 96,
+        "type": "retention",
+        "travel_mm": 0.203735,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 96,
+        "type": "drive",
+        "travels": [
+          null,
+          0.203906
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 96,
+        "type": "retention",
+        "travel_mm": 0.205933,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 96,
+        "type": "retention",
+        "travel_mm": 0.203979,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 96,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 96,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 96,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 96,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 96,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 96,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 97,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 97,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 97,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 97,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 97,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204102
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 97,
+        "type": "retention",
+        "travel_mm": 0.205688,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 97,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 97,
+        "type": "drive",
+        "travels": [
+          null,
+          0.20376
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 97,
+        "type": "retention",
+        "travel_mm": 0.206055,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 97,
+        "type": "retention",
+        "travel_mm": 0.203735,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 97,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 97,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 97,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 97,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 97,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 97,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 98,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 98,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 98,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 98,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 98,
+        "type": "drive",
+        "travels": [
+          null,
+          0.205908
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 98,
+        "type": "retention",
+        "travel_mm": 0.208618,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 98,
+        "type": "retention",
+        "travel_mm": 0.205933,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 98,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204346
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 98,
+        "type": "retention",
+        "travel_mm": 0.207153,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 98,
+        "type": "retention",
+        "travel_mm": 0.204346,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 98,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 98,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 98,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 98,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 98,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 98,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 99,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 99,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 99,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 99,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 99,
+        "type": "drive",
+        "travels": [
+          null,
+          0.209717
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 99,
+        "type": "retention",
+        "travel_mm": 0.213013,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 99,
+        "type": "retention",
+        "travel_mm": 0.209717,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 99,
+        "type": "drive",
+        "travels": [
+          null,
+          0.205273
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 99,
+        "type": "retention",
+        "travel_mm": 0.20813,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 99,
+        "type": "retention",
+        "travel_mm": 0.205322,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 99,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 99,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 99,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 99,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 99,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 99,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 100,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 100,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 100,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 100,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 100,
+        "type": "drive",
+        "travels": [
+          null,
+          0.215527
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 100,
+        "type": "retention",
+        "travel_mm": 0.218994,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 100,
+        "type": "retention",
+        "travel_mm": 0.215576,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 100,
+        "type": "drive",
+        "travels": [
+          null,
+          0.206787
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 100,
+        "type": "retention",
+        "travel_mm": 0.210083,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 100,
+        "type": "retention",
+        "travel_mm": 0.206787,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 100,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 100,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 100,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 100,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 100,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 100,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 101,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 101,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 101,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 101,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 101,
+        "type": "drive",
+        "travels": [
+          null,
+          0.222607
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 101,
+        "type": "retention",
+        "travel_mm": 0.225952,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 101,
+        "type": "retention",
+        "travel_mm": 0.222656,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 101,
+        "type": "drive",
+        "travels": [
+          null,
+          0.20874
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 101,
+        "type": "retention",
+        "travel_mm": 0.211792,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 101,
+        "type": "retention",
+        "travel_mm": 0.20874,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 101,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 101,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 101,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 101,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 101,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 101,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 102,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 102,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 102,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 102,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 102,
+        "type": "drive",
+        "travels": [
+          null,
+          0.229395
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 102,
+        "type": "retention",
+        "travel_mm": 0.232544,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 102,
+        "type": "retention",
+        "travel_mm": 0.22937,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 102,
+        "type": "drive",
+        "travels": [
+          null,
+          0.210547
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 102,
+        "type": "retention",
+        "travel_mm": 0.213989,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 102,
+        "type": "retention",
+        "travel_mm": 0.210571,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 102,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 102,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 102,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 102,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 102,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 102,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 103,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 103,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 103,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 103,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 103,
+        "type": "drive",
+        "travels": [
+          null,
+          0.235742
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 103,
+        "type": "retention",
+        "travel_mm": 0.237915,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 103,
+        "type": "retention",
+        "travel_mm": 0.23584,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 103,
+        "type": "drive",
+        "travels": [
+          null,
+          0.212402
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 103,
+        "type": "retention",
+        "travel_mm": 0.215698,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 103,
+        "type": "retention",
+        "travel_mm": 0.212402,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 103,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 103,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 103,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 103,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 103,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 103,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 104,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 104,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 104,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 104,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 104,
+        "type": "drive",
+        "travels": [
+          null,
+          0.239844
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 104,
+        "type": "retention",
+        "travel_mm": 0.241089,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 104,
+        "type": "retention",
+        "travel_mm": 0.239868,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 104,
+        "type": "drive",
+        "travels": [
+          null,
+          0.213721
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 104,
+        "type": "retention",
+        "travel_mm": 0.216553,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 104,
+        "type": "retention",
+        "travel_mm": 0.213745,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 104,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 104,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 104,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 104,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 104,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 104,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 105,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 105,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 105,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 105,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 105,
+        "type": "drive",
+        "travels": [
+          null,
+          0.241797
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 105,
+        "type": "retention",
+        "travel_mm": 0.241821,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 105,
+        "type": "retention",
+        "travel_mm": 0.241821,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 105,
+        "type": "drive",
+        "travels": [
+          null,
+          0.214307
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 105,
+        "type": "retention",
+        "travel_mm": 0.216675,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 105,
+        "type": "retention",
+        "travel_mm": 0.214355,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 105,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 105,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 105,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 105,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 105,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 105,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 106,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 106,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 106,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 106,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 106,
+        "type": "drive",
+        "travels": [
+          null,
+          0.241016
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 106,
+        "type": "retention",
+        "travel_mm": 0.239868,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 106,
+        "type": "retention",
+        "travel_mm": 0.241089,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 106,
+        "type": "drive",
+        "travels": [
+          null,
+          0.214111
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 106,
+        "type": "retention",
+        "travel_mm": 0.216064,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 106,
+        "type": "retention",
+        "travel_mm": 0.214111,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 106,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 106,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 106,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 106,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 106,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 106,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 107,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 107,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 107,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 107,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 107,
+        "type": "drive",
+        "travels": [
+          null,
+          0.237842
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 107,
+        "type": "retention",
+        "travel_mm": 0.23584,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 107,
+        "type": "retention",
+        "travel_mm": 0.237915,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 107,
+        "type": "drive",
+        "travels": [
+          null,
+          0.213135
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 107,
+        "type": "retention",
+        "travel_mm": 0.214844,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 107,
+        "type": "retention",
+        "travel_mm": 0.213135,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 107,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 107,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 107,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 107,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 107,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 107,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 108,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 108,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 108,
+        "type": "retention",
+        "travel_mm": 0.203735,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 108,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 108,
+        "type": "drive",
+        "travels": [
+          null,
+          0.232568
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 108,
+        "type": "retention",
+        "travel_mm": 0.22937,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 108,
+        "type": "retention",
+        "travel_mm": 0.232544,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 108,
+        "type": "drive",
+        "travels": [
+          null,
+          0.21167
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 108,
+        "type": "retention",
+        "travel_mm": 0.212646,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 108,
+        "type": "retention",
+        "travel_mm": 0.21167,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 108,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 108,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 108,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 108,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 108,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 108,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 109,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 109,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 109,
+        "type": "retention",
+        "travel_mm": 0.203247,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 109,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 109,
+        "type": "drive",
+        "travels": [
+          null,
+          0.225928
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 109,
+        "type": "retention",
+        "travel_mm": 0.222656,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 109,
+        "type": "retention",
+        "travel_mm": 0.225952,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 109,
+        "type": "drive",
+        "travels": [
+          null,
+          0.209961
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 109,
+        "type": "retention",
+        "travel_mm": 0.210327,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 109,
+        "type": "retention",
+        "travel_mm": 0.209961,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 109,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 109,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 109,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 109,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 109,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 109,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 110,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 110,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 110,
+        "type": "retention",
+        "travel_mm": 0.203247,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 110,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 110,
+        "type": "drive",
+        "travels": [
+          null,
+          0.219092
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 110,
+        "type": "retention",
+        "travel_mm": 0.215576,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 110,
+        "type": "retention",
+        "travel_mm": 0.219116,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 110,
+        "type": "drive",
+        "travels": [
+          null,
+          0.208105
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 110,
+        "type": "retention",
+        "travel_mm": 0.208496,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 110,
+        "type": "retention",
+        "travel_mm": 0.20813,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 110,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 110,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 110,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 110,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 110,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 110,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 111,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 111,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 111,
+        "type": "retention",
+        "travel_mm": 0.203247,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 111,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 111,
+        "type": "drive",
+        "travels": [
+          null,
+          0.213281
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 111,
+        "type": "retention",
+        "travel_mm": 0.209717,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 111,
+        "type": "retention",
+        "travel_mm": 0.213257,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 111,
+        "type": "drive",
+        "travels": [
+          null,
+          0.206641
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 111,
+        "type": "retention",
+        "travel_mm": 0.206543,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 111,
+        "type": "retention",
+        "travel_mm": 0.206665,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 111,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 111,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 111,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 111,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 111,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 111,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 112,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 112,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 112,
+        "type": "retention",
+        "travel_mm": 0.203247,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 112,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 112,
+        "type": "drive",
+        "travels": [
+          null,
+          0.208936
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 112,
+        "type": "retention",
+        "travel_mm": 0.205811,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 112,
+        "type": "retention",
+        "travel_mm": 0.208984,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 112,
+        "type": "drive",
+        "travels": [
+          null,
+          0.20542
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 112,
+        "type": "retention",
+        "travel_mm": 0.205688,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 112,
+        "type": "retention",
+        "travel_mm": 0.205444,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 112,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 112,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 112,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 112,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 112,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 112,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 113,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 113,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 113,
+        "type": "retention",
+        "travel_mm": 0.203247,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 113,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 113,
+        "type": "drive",
+        "travels": [
+          null,
+          0.206006
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 113,
+        "type": "retention",
+        "travel_mm": 0.203979,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 113,
+        "type": "retention",
+        "travel_mm": 0.206055,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 113,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204834
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 113,
+        "type": "retention",
+        "travel_mm": 0.204956,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 113,
+        "type": "retention",
+        "travel_mm": 0.204834,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 113,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 113,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 113,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 113,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 113,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 113,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 114,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 114,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 114,
+        "type": "retention",
+        "travel_mm": 0.203247,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 114,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 114,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204834
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 114,
+        "type": "retention",
+        "travel_mm": 0.203491,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 114,
+        "type": "retention",
+        "travel_mm": 0.204834,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 114,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204346
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 114,
+        "type": "retention",
+        "travel_mm": 0.205322,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 114,
+        "type": "retention",
+        "travel_mm": 0.204346,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 114,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 114,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 114,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 114,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 114,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 114,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 115,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 115,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 115,
+        "type": "retention",
+        "travel_mm": 0.203247,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 115,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 115,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204102
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 115,
+        "type": "retention",
+        "travel_mm": 0.203735,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 115,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 115,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204102
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 115,
+        "type": "retention",
+        "travel_mm": 0.205566,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 115,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 115,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 115,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 115,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 115,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 115,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 115,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 116,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 116,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 116,
+        "type": "retention",
+        "travel_mm": 0.203247,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 116,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 116,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 116,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 116,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 116,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 116,
+        "type": "retention",
+        "travel_mm": 0.205566,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 116,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 116,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 116,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 116,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 116,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 116,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 116,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 117,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 117,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 117,
+        "type": "retention",
+        "travel_mm": 0.203247,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 117,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 117,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 117,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 117,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 117,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 117,
+        "type": "retention",
+        "travel_mm": 0.205566,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 117,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 117,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 117,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 117,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 117,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 117,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 117,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 118,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 118,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 118,
+        "type": "retention",
+        "travel_mm": 0.203247,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 118,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 118,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 118,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 118,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 118,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 118,
+        "type": "retention",
+        "travel_mm": 0.205566,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 118,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 118,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 118,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 118,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 118,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 118,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 118,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 119,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 119,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 119,
+        "type": "retention",
+        "travel_mm": 0.203247,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 119,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 119,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 119,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 119,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 119,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 119,
+        "type": "retention",
+        "travel_mm": 0.205566,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 119,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 119,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 119,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 119,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 119,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 119,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 119,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "key-lower-cam",
+        "servo_deg": 120,
+        "type": "drive",
+        "travels": [
+          0.494824,
+          0.494824
+        ],
+        "unit": "deg",
+        "limit": 3,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-1",
+        "servo_deg": 120,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-out",
+        "servo_deg": 120,
+        "type": "retention",
+        "travel_mm": 0.203247,
+        "passed": true
+      },
+      {
+        "id": "pixel-1-in",
+        "servo_deg": 120,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-2",
+        "servo_deg": 120,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-out",
+        "servo_deg": 120,
+        "type": "retention",
+        "travel_mm": 0.203857,
+        "passed": true
+      },
+      {
+        "id": "pixel-2-in",
+        "servo_deg": 120,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "lower-pixel-3",
+        "servo_deg": 120,
+        "type": "drive",
+        "travels": [
+          null,
+          0.204053
+        ],
+        "unit": "mm",
+        "limit": 0.4,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-out",
+        "servo_deg": 120,
+        "type": "retention",
+        "travel_mm": 0.205566,
+        "passed": true
+      },
+      {
+        "id": "pixel-3-in",
+        "servo_deg": 120,
+        "type": "retention",
+        "travel_mm": 0.204102,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 120,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-out",
+        "servo_deg": 120,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-out",
+        "servo_deg": 120,
+        "type": "retention",
+        "travel_mm": 0.252319,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 120,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-1-in",
+        "servo_deg": 120,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-key-2-in",
+        "servo_deg": 120,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      }
+    ]
+  },
+  "assembly": {
+    "pass": true,
+    "steps": [
+      {
+        "id": "support-base",
+        "frames": 2,
+        "checkedPoses": 2,
+        "moving": 1,
+        "violations": 0,
+        "pass": true
+      },
+      {
+        "id": "guide-in",
+        "frames": 81,
+        "checkedPoses": 81,
+        "moving": 1,
+        "violations": 0,
+        "pass": true
+      },
+      {
+        "id": "servo-in",
+        "frames": 91,
+        "checkedPoses": 91,
+        "moving": 1,
+        "violations": 0,
+        "pass": true
+      },
+      {
+        "id": "servo_cap-in",
+        "frames": 81,
+        "checkedPoses": 81,
+        "moving": 1,
+        "violations": 0,
+        "pass": true
+      },
+      {
+        "id": "horn-in",
+        "frames": 41,
+        "checkedPoses": 41,
+        "moving": 1,
+        "violations": 0,
+        "pass": true
+      },
+      {
+        "id": "cam_lower-in",
+        "frames": 61,
+        "checkedPoses": 61,
+        "moving": 1,
+        "violations": 0,
+        "pass": true
+      },
+      {
+        "id": "pixel_1-in",
+        "frames": 71,
+        "checkedPoses": 71,
+        "moving": 1,
+        "violations": 0,
+        "pass": true
+      },
+      {
+        "id": "pixel_2-in",
+        "frames": 71,
+        "checkedPoses": 71,
+        "moving": 1,
+        "violations": 0,
+        "pass": true
+      },
+      {
+        "id": "pixel_3-in",
+        "frames": 71,
+        "checkedPoses": 71,
+        "moving": 1,
+        "violations": 0,
+        "pass": true
+      },
+      {
+        "id": "cam_upper-in",
+        "frames": 61,
+        "checkedPoses": 61,
+        "moving": 1,
+        "violations": 0,
+        "pass": true
+      },
+      {
+        "id": "cam_key_1-in",
+        "frames": 41,
+        "checkedPoses": 41,
+        "moving": 1,
+        "violations": 0,
+        "pass": true
+      },
+      {
+        "id": "cam_key_2-in",
+        "frames": 41,
+        "checkedPoses": 41,
+        "moving": 1,
+        "violations": 0,
+        "pass": true
+      },
+      {
+        "id": "panel-in",
+        "frames": 71,
+        "checkedPoses": 71,
+        "moving": 1,
+        "violations": 0,
+        "pass": true
+      },
+      {
+        "id": "key_l-prepare",
+        "frames": 2,
+        "checkedPoses": 2,
+        "moving": 1,
+        "violations": 0,
+        "pass": true
+      },
+      {
+        "id": "key_r-prepare",
+        "frames": 2,
+        "checkedPoses": 2,
+        "moving": 1,
+        "violations": 0,
+        "pass": true
+      },
+      {
+        "id": "closed-neutral",
+        "frames": 2,
+        "checkedPoses": 2,
+        "moving": 15,
+        "violations": 0,
+        "pass": true
+      }
+    ],
+    "violations": [],
+    "interpolatedPoses": 0,
+    "boundaryErrors": [],
+    "finalNotAssembled": [],
+    "finalParts": [
+      "cam_key_1",
+      "cam_key_2",
+      "cam_lower",
+      "cam_upper",
+      "guide",
+      "horn",
+      "key_l",
+      "key_r",
+      "panel",
+      "pixel_1",
+      "pixel_2",
+      "pixel_3",
+      "servo",
+      "servo_cap",
+      "support"
+    ],
+    "allowedContacts": [
+      {
+        "parts": [
+          "cam_key_1",
+          "cam_lower"
+        ],
+        "type": "snap",
+        "maxCommonMm3": 0.539993,
+        "maxRemainingTravelMm": 4.0,
+        "samples": 8,
+        "steps": [
+          "cam_key_1-in"
+        ]
+      },
+      {
+        "parts": [
+          "cam_key_1",
+          "cam_upper"
+        ],
+        "type": "snap",
+        "maxCommonMm3": 1.079995,
+        "maxRemainingTravelMm": 9.5,
+        "samples": 13,
+        "steps": [
+          "cam_key_1-in"
+        ]
+      },
+      {
+        "parts": [
+          "cam_key_2",
+          "cam_lower"
+        ],
+        "type": "snap",
+        "maxCommonMm3": 0.539999,
+        "maxRemainingTravelMm": 3.5,
+        "samples": 7,
+        "steps": [
+          "cam_key_2-in"
+        ]
+      },
+      {
+        "parts": [
+          "cam_key_2",
+          "cam_upper"
+        ],
+        "type": "snap",
+        "maxCommonMm3": 1.079999,
+        "maxRemainingTravelMm": 9.5,
+        "samples": 13,
+        "steps": [
+          "cam_key_2-in"
+        ]
+      },
+      {
+        "parts": [
+          "guide",
+          "servo_cap"
+        ],
+        "type": "snap",
+        "maxCommonMm3": 14.410735,
+        "maxRemainingTravelMm": 8.0,
+        "samples": 13,
+        "steps": [
+          "servo_cap-in"
+        ]
+      },
+      {
+        "parts": [
+          "panel",
+          "support"
+        ],
+        "type": "snap",
+        "maxCommonMm3": 1.728002,
+        "maxRemainingTravelMm": 1.5,
+        "samples": 3,
+        "steps": [
+          "panel-in"
+        ]
+      },
+      {
+        "parts": [
+          "servo_cap",
+          "support"
+        ],
+        "type": "snap",
+        "maxCommonMm3": 2.519991,
+        "maxRemainingTravelMm": 4.0,
+        "samples": 8,
+        "steps": [
+          "servo_cap-in"
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "volume_mm3": 2008.0137717902542,
+    "nonmanifold": 0,
+    "components": 1
+  }
+}

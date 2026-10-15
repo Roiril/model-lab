@@ -15,7 +15,8 @@ import bmesh
 from mathutils import Matrix
 
 HERE=Path(__file__).resolve().parent
-ROOT=HERE.parents[3]
+MODEL=HERE.parents[1]
+ROOT=MODEL.parents[1]
 sys.path.insert(0,str(ROOT/'lib'))
 pkg=types.ModuleType('sector_flag_local')
 pkg.__path__=[str(HERE)]
@@ -113,7 +114,7 @@ def main():
     parser.add_argument('--all',action='store_true',help='Also run wiring, drive, retention, assembly and shielding checks')
     parser.add_argument('--compare',action='store_true',help='Rebuild and compare all three shielding candidates')
     args=parser.parse_args(sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else [])
-    interface=json.loads((HERE.parents[1]/'interface.json').read_text(encoding='utf-8'))
+    interface=json.loads((MODEL/'interface.json').read_text(encoding='utf-8'))
     sg=load(ROOT/'models/sg92r-photo/params.py','sector_sg_reference')
     common=types.SimpleNamespace(ROOT=ROOT,SG=sg)
     out=HERE/'_local'; out.mkdir(exist_ok=True)
@@ -139,8 +140,8 @@ def main():
         bpy.ops.wm.stl_export(filepath=str(out/(pid+'.stl')),export_selected_objects=True)
     meter=Meter()
     keepouts={}
-    moving_ids={'horn','input_gear','sector_gear','flag','flag_cover'}
-    max_radius=max(float(np.linalg.norm(s.verts[:,1:3]-(K.O if pid in ('horn','input_gear') else K.H),axis=1).max()) for pid,s in solids.items() if pid in moving_ids)
+    moving_ids={'horn','input_cup','input_gear','sector_gear','flag','flag_cover'}
+    max_radius=max(float(np.linalg.norm(s.verts[:,1:3]-(K.O if pid in ('horn','input_cup','input_gear') else K.H),axis=1).max()) for pid,s in solids.items() if pid in moving_ids)
     frame_sweep=0 if args.quick else 2*max_radius*math.sin(math.radians(args.step/4))
     for row in interface['mount_geometry']['frame_receivers']:
         c=np.array(row['center_mm']); size=np.array(row.get('size_mm',[row.get('radius_mm',0)*2]*2+[row.get('depth_mm',0)]))
@@ -150,7 +151,7 @@ def main():
             'envelope':{},'interference':{},'frame_clearance':{},'frame_clearance_required_mm':.25,
             'frame_sweep_bound_mm':frame_sweep,'bounds':{},'mass':{p:mass_properties(s) for p,s in solids.items()}}
     pairs=list(itertools.combinations(solids,2))
-    static=set(solids)-{'horn','input_gear','sector_gear','flag','flag_cover'}
+    static=set(solids)-moving_ids
     checked=0
     for i,angle in enumerate(angles):
         mats=K.transforms(float(angle),interface,common)
@@ -162,7 +163,7 @@ def main():
         bvhs={p:meter.bvh_of(poses[p],s.faces) for p,s in solids.items()}
         for pid,s in solids.items():
             if pid in ('panel','key_l','key_r'): continue
-            pivot=K.O if pid in ('horn','input_gear') else K.H
+            pivot=K.O if pid in ('horn','input_cup','input_gear') else K.H
             radius=float(np.linalg.norm(s.verts[:,1:3]-pivot,axis=1).max()) if pid not in static else 0.
             sweep=0 if args.quick else 2*radius*math.sin(math.radians(args.step/4))
             bad=envelope(s,mats[pid],interface,.25,sweep)
@@ -189,7 +190,7 @@ def main():
     gravity_bound=0.
     acceleration_bound=0.
     moving_mass=0.
-    for pid,pivot in (('horn',K.O),('input_gear',K.O),('sector_gear',K.H),('flag',K.H),('flag_cover',K.H)):
+    for pid,pivot in (('horn',K.O),('input_cup',K.O),('input_gear',K.O),('sector_gear',K.H),('flag',K.H),('flag_cover',K.H)):
         moving_mass+=mass[pid]['mass_g']
         gravity_bound+=mass[pid]['mass_g']*.001*9.80665*np.linalg.norm(np.array(mass[pid]['com_mm'])[1:]-pivot)*.001
         radius=np.linalg.norm(solids[pid].verts[:,1:]-pivot,axis=1).max()*.001
@@ -207,7 +208,7 @@ def main():
         bpy.ops.object.select_all(action='DESELECT'); ob.select_set(True)
         bpy.ops.wm.stl_export(filepath=str(out/(name+'.stl')),export_selected_objects=True)
     report['source_sha256']={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in HERE.iterdir() if p.is_file()}
-    report['interface_sha256']=hashlib.sha256((HERE.parents[1]/'interface.json').read_bytes()).hexdigest()
+    report['interface_sha256']=hashlib.sha256((MODEL/'interface.json').read_bytes()).hexdigest()
     report['reference_sha256']={name:hashlib.sha256((ROOT/'models/sg92r-photo'/name).read_bytes()).hexdigest() for name in ('params.py','model.py')}
     write_json(out/'report.json',report)
     for key in ('diagnostics','envelope','interference','frame_clearance','torque','assembly'):
@@ -217,7 +218,7 @@ def main():
     if failed: raise RuntimeError('Local numeric checks failed; see _local/report.json')
     if args.all:
         import runpy
-        for script in ('check_features.py','check_interfaces.py','check_assembly.py','check_shield.py'):
+        for script in ('check_features.py','check_interfaces.py','check_retention_stack.py','check_assembly.py','check_shield.py'):
             runpy.run_path(str(HERE/script),run_name='__main__')
             print('CHECK_PASS',script,flush=True)
     if args.compare:

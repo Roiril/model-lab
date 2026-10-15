@@ -1,0 +1,80 @@
+{
+ "support_used": "false",
+ "prediction_s": 797,
+ "weight_g": "2.51",
+ "filament": [
+  [
+   "0.83",
+   "2.51"
+  ]
+ ],
+ "stats": {
+  "time": "model printing time: 6m 1s; total estimated time: 13m 17s",
+  "filament_mm": 829.18,
+  "filament_g_header": "2.51"
+ },
+ "objects": {
+  "None": {
+   "layers": 19,
+   "z_top": 3.8,
+   "layer_steps": {
+    "0.2": [
+     0.2,
+     3.6,
+     18
+    ]
+   },
+   "floating": {
+    "external_unsupported_mm": 0.0,
+    "bridge_mm": 678.03,
+    "bridge_unsupported_mm": 192.6,
+    "internal_unsupported_mm": 25.97
+   },
+   "overhang_walls": []
+  }
+ },
+ "plate": "top-guide2",
+ "parts": [
+  "guide"
+ ],
+ "layout_boxes": [
+  {
+   "name": "guide",
+   "min_mm": [
+    19.9999994,
+    6.000001000000001,
+    0.0
+   ],
+   "max_mm": [
+    69.20410100000001,
+    50.2073984,
+    3.75
+   ]
+  }
+ ],
+ "command": [
+  "C:\\Program Files\\Bambu Studio\\bambu-studio.exe",
+  "--slice",
+  "0",
+  "--debug",
+  "2",
+  "--arrange",
+  "0",
+  "--load-settings",
+  "C:\\Users\\kouga\\Projects\\Web\\model-lab\\prints\\mystery-box-sg92r-f1\\profiles\\machine.json;C:\\Users\\kouga\\Projects\\Web\\model-lab\\prints\\mystery-box-sg92r-f1\\profiles\\process.json",
+  "--load-filaments",
+  "C:\\Users\\kouga\\Projects\\Web\\model-lab\\prints\\mystery-box-sg92r-f1\\profiles\\filament_PLA.json",
+  "--outputdir",
+  "C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-f1\\build\\top-print\\slice-top-guide2",
+  "--export-3mf",
+  "mystery-box-sg92r-f1-top-guide2-PLA.gcode.3mf",
+  "C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-f1\\build\\top-print\\mystery-box-sg92r-f1-top-guide2-PLA-layout.3mf"
+ ],
+ "returncode": 0,
+ "log": "G:\\マイドライブ\\shubie\\reports\\top-guide2.log",
+ "sha256": "b749e989ccb42925b635a04e18a93d3cc949f4ad1a93036b3b67b6d1be713e72",
+ "file": "models/mystery-box-sg92r-f1/build/top-print/mystery-box-sg92r-f1-top-guide2-PLA.gcode.3mf",
+ "layout_file": "models/mystery-box-sg92r-f1/build/top-print/mystery-box-sg92r-f1-top-guide2-PLA-layout.3mf",
+ "slice_failing": {},
+ "slice_pass": true
+}

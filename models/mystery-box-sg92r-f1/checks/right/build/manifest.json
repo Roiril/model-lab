@@ -1,0 +1,427 @@
+{
+ "meta": {
+  "dimensions_mm": [
+   100,
+   100,
+   100
+  ],
+  "description": "面ごとのSG92Rカセットを交換する100mm角の住人の箱。",
+  "representative_slot": "right"
+ },
+ "parts": [
+  {
+   "id": "frame/lower_frame",
+   "assembly": "../../build/parts/frame/lower_frame.stl",
+   "label": "下枠",
+   "color": "#D2CDC4",
+   "print": "../../../../prints/mystery-box-sg92r-f1/frame/lower_frame.stl"
+  },
+  {
+   "id": "frame/upper_frame",
+   "assembly": "../../build/parts/frame/upper_frame.stl",
+   "label": "上枠",
+   "color": "#D2CDC4",
+   "print": "../../../../prints/mystery-box-sg92r-f1/frame/upper_frame.stl"
+  },
+  {
+   "id": "frame/post_0",
+   "assembly": "../../build/parts/frame/post_0.stl",
+   "label": "柱1",
+   "color": "#D2CDC4",
+   "print": "../../../../prints/mystery-box-sg92r-f1/frame/post_0.stl"
+  },
+  {
+   "id": "frame/post_1",
+   "assembly": "../../build/parts/frame/post_1.stl",
+   "label": "柱2",
+   "color": "#D2CDC4",
+   "print": "../../../../prints/mystery-box-sg92r-f1/frame/post_1.stl"
+  },
+  {
+   "id": "frame/post_2",
+   "assembly": "../../build/parts/frame/post_2.stl",
+   "label": "柱3",
+   "color": "#D2CDC4",
+   "print": "../../../../prints/mystery-box-sg92r-f1/frame/post_2.stl"
+  },
+  {
+   "id": "frame/post_3",
+   "assembly": "../../build/parts/frame/post_3.stl",
+   "label": "柱4",
+   "color": "#D2CDC4",
+   "print": "../../../../prints/mystery-box-sg92r-f1/frame/post_3.stl"
+  },
+  {
+   "id": "frame/wiring",
+   "assembly": "../../build/parts/frame/wiring.stl",
+   "label": "面別の配線案内",
+   "color": "#D2CDC4",
+   "print": "../../../../prints/mystery-box-sg92r-f1/frame/wiring.stl"
+  },
+  {
+   "id": "frame/tray",
+   "assembly": "../../build/parts/frame/tray.stl",
+   "label": "中央の着脱トレー",
+   "color": "#D2CDC4",
+   "print": "../../../../prints/mystery-box-sg92r-f1/frame/tray.stl"
+  },
+  {
+   "id": "front/panel",
+   "assembly": "../../build/parts/front/panel.stl",
+   "label": "正面の面板",
+   "color": "#deddd5",
+   "print": "../../../../prints/mystery-box-sg92r-f1/front/panel.stl"
+  },
+  {
+   "id": "front/key_l",
+   "assembly": "../../build/parts/front/key_l.stl",
+   "label": "左の交換キー",
+   "color": "#deddd5",
+   "print": "../../../../prints/mystery-box-sg92r-f1/front/key_l.stl"
+  },
+  {
+   "id": "front/key_r",
+   "assembly": "../../build/parts/front/key_r.stl",
+   "label": "右の交換キー",
+   "color": "#deddd5",
+   "print": "../../../../prints/mystery-box-sg92r-f1/front/key_r.stl"
+  },
+  {
+   "id": "front/servo",
+   "assembly": "../../build/parts/front/servo.stl",
+   "label": "SG92R",
+   "color": "#7598b3"
+  },
+  {
+   "id": "front/horn",
+   "assembly": "../../build/parts/front/horn.stl",
+   "label": "SG92R付属ホーン",
+   "color": "#444844"
+  },
+  {
+   "id": "front/support",
+   "assembly": "../../build/parts/front/support.stl",
+   "label": "サーボ座と軸受け",
+   "color": "#deddd5",
+   "print": "../../../../prints/mystery-box-sg92r-f1/front/support.stl"
+  },
+  {
+   "id": "front/servo_cap",
+   "assembly": "../../build/parts/front/servo_cap.stl",
+   "label": "サーボ押さえと遮蔽壁",
+   "color": "#deddd5",
+   "print": "../../../../prints/mystery-box-sg92r-f1/front/servo_cap.stl"
+  },
+  {
+   "id": "front/crank",
+   "assembly": "../../build/parts/front/crank.stl",
+   "label": "ホーン受けとクランク",
+   "color": "#deddd5",
+   "print": "../../../../prints/mystery-box-sg92r-f1/front/crank.stl"
+  },
+  {
+   "id": "front/link",
+   "assembly": "../../build/parts/front/link.stl",
+   "label": "連結リンク",
+   "color": "#deddd5",
+   "print": "../../../../prints/mystery-box-sg92r-f1/front/link.stl"
+  },
+  {
+   "id": "front/lid",
+   "assembly": "../../build/parts/front/lid.stl",
+   "label": "36×30mmの蓋",
+   "color": "#deddd5",
+   "print": "../../../../prints/mystery-box-sg92r-f1/front/lid.stl"
+  },
+  {
+   "id": "front/hinge_pin",
+   "assembly": "../../build/parts/front/hinge_pin.stl",
+   "label": "蝶番ピン",
+   "color": "#deddd5",
+   "print": "../../../../prints/mystery-box-sg92r-f1/front/hinge_pin.stl"
+  },
+  {
+   "id": "right/panel",
+   "assembly": "../../build/parts/right/panel.stl",
+   "label": "旗カセットの面板",
+   "color": "#deddd5",
+   "print": "../../../../prints/mystery-box-sg92r-f1/right/panel.stl"
+  },
+  {
+   "id": "right/key_l",
+   "assembly": "../../build/parts/right/key_l.stl",
+   "label": "左の交換キー",
+   "color": "#deddd5",
+   "print": "../../../../prints/mystery-box-sg92r-f1/right/key_l.stl"
+  },
+  {
+   "id": "right/key_r",
+   "assembly": "../../build/parts/right/key_r.stl",
+   "label": "右の交換キー",
+   "color": "#deddd5",
+   "print": "../../../../prints/mystery-box-sg92r-f1/right/key_r.stl"
+  },
+  {
+   "id": "right/servo",
+   "assembly": "../../build/parts/right/servo.stl",
+   "label": "SG92R",
+   "color": "#7598b3"
+  },
+  {
+   "id": "right/horn",
+   "assembly": "../../build/parts/right/horn.stl",
+   "label": "SG92R付属ホーン",
+   "color": "#444844"
+  },
+  {
+   "id": "right/input_cup",
+   "assembly": "../../build/parts/right/input_cup.stl",
+   "label": "分割したホーン受け",
+   "color": "#deddd5",
+   "print": "../../../../prints/mystery-box-sg92r-f1/right/input_cup.stl"
+  },
+  {
+   "id": "right/input_gear",
+   "assembly": "../../build/parts/right/input_gear.stl",
+   "label": "入力扇形歯車と伝達キー",
+   "color": "#deddd5",
+   "print": "../../../../prints/mystery-box-sg92r-f1/right/input_gear.stl"
+  },
+  {
+   "id": "right/input_spindle",
+   "assembly": "../../build/parts/right/input_spindle.stl",
+   "label": "分割した入力歯車の固定軸",
+   "color": "#deddd5",
+   "print": "../../../../prints/mystery-box-sg92r-f1/right/input_spindle.stl"
+  },
+  {
+   "id": "right/sector_gear",
+   "assembly": "../../build/parts/right/sector_gear.stl",
+   "label": "出力扇形歯車と駆動キー",
+   "color": "#deddd5",
+   "print": "../../../../prints/mystery-box-sg92r-f1/right/sector_gear.stl"
+  },
+  {
+   "id": "right/flag",
+   "assembly": "../../build/parts/right/flag.stl",
+   "label": "14×28mmの旗と偏心した腕",
+   "color": "#deddd5",
+   "print": "../../../../prints/mystery-box-sg92r-f1/right/flag.stl"
+  },
+  {
+   "id": "right/flag_cover",
+   "assembly": "../../build/parts/right/flag_cover.stl",
+   "label": "旗軸の右カラー",
+   "color": "#deddd5",
+   "print": "../../../../prints/mystery-box-sg92r-f1/right/flag_cover.stl"
+  },
+  {
+   "id": "right/hinge_pin",
+   "assembly": "../../build/parts/right/hinge_pin.stl",
+   "label": "抜け止め溝付きの旗軸ピン",
+   "color": "#deddd5",
+   "print": "../../../../prints/mystery-box-sg92r-f1/right/hinge_pin.stl"
+  },
+  {
+   "id": "right/cap_foot",
+   "assembly": "../../build/parts/right/cap_foot.stl",
+   "label": "サーボ押さえの分割した保持足",
+   "color": "#deddd5",
+   "print": "../../../../prints/mystery-box-sg92r-f1/right/cap_foot.stl"
+  },
+  {
+   "id": "right/servo_cap",
+   "assembly": "../../build/parts/right/servo_cap.stl",
+   "label": "旗室の底とサーボ押さえ",
+   "color": "#deddd5",
+   "print": "../../../../prints/mystery-box-sg92r-f1/right/servo_cap.stl"
+  },
+  {
+   "id": "right/input_bridge",
+   "assembly": "../../build/parts/right/input_bridge.stl",
+   "label": "入力軸と右軸の押さえ",
+   "color": "#deddd5",
+   "print": "../../../../prints/mystery-box-sg92r-f1/right/input_bridge.stl"
+  },
+  {
+   "id": "right/bearing_bridge",
+   "assembly": "../../build/parts/right/bearing_bridge.stl",
+   "label": "旗室の遮蔽壁と左軸押さえ",
+   "color": "#deddd5",
+   "print": "../../../../prints/mystery-box-sg92r-f1/right/bearing_bridge.stl"
+  },
+  {
+   "id": "right/support",
+   "assembly": "../../build/parts/right/support.stl",
+   "label": "サーボ座と後側の軸受け",
+   "color": "#deddd5",
+   "print": "../../../../prints/mystery-box-sg92r-f1/right/support.stl"
+  },
+  {
+   "id": "back/panel",
+   "assembly": "../../build/parts/back/panel.stl",
+   "label": "空の面板",
+   "color": "#E6E1D8",
+   "print": "../../../../prints/mystery-box-sg92r-f1/back/panel.stl"
+  },
+  {
+   "id": "back/key_l",
+   "assembly": "../../build/parts/back/key_l.stl",
+   "label": "左の固定キー",
+   "color": "#E6E1D8",
+   "print": "../../../../prints/mystery-box-sg92r-f1/back/key_l.stl"
+  },
+  {
+   "id": "back/key_r",
+   "assembly": "../../build/parts/back/key_r.stl",
+   "label": "右の固定キー",
+   "color": "#E6E1D8",
+   "print": "../../../../prints/mystery-box-sg92r-f1/back/key_r.stl"
+  },
+  {
+   "id": "left/panel",
+   "assembly": "../../build/parts/left/panel.stl",
+   "label": "空の面板",
+   "color": "#E6E1D8",
+   "print": "../../../../prints/mystery-box-sg92r-f1/left/panel.stl"
+  },
+  {
+   "id": "left/key_l",
+   "assembly": "../../build/parts/left/key_l.stl",
+   "label": "左の固定キー",
+   "color": "#E6E1D8",
+   "print": "../../../../prints/mystery-box-sg92r-f1/left/key_l.stl"
+  },
+  {
+   "id": "left/key_r",
+   "assembly": "../../build/parts/left/key_r.stl",
+   "label": "右の固定キー",
+   "color": "#E6E1D8",
+   "print": "../../../../prints/mystery-box-sg92r-f1/left/key_r.stl"
+  },
+  {
+   "id": "top/panel",
+   "assembly": "../../build/parts/top/panel.stl",
+   "label": "3画素の面板",
+   "color": "#deddd5",
+   "print": "../../../../prints/mystery-box-sg92r-f1/top/panel.stl"
+  },
+  {
+   "id": "top/key_l",
+   "assembly": "../../build/parts/top/key_l.stl",
+   "label": "左の交換キー",
+   "color": "#deddd5",
+   "print": "../../../../prints/mystery-box-sg92r-f1/top/key_l.stl"
+  },
+  {
+   "id": "top/key_r",
+   "assembly": "../../build/parts/top/key_r.stl",
+   "label": "右の交換キー",
+   "color": "#deddd5",
+   "print": "../../../../prints/mystery-box-sg92r-f1/top/key_r.stl"
+  },
+  {
+   "id": "top/support",
+   "assembly": "../../build/parts/top/support.stl",
+   "label": "サーボ座と面板の支持枠",
+   "color": "#deddd5",
+   "print": "../../../../prints/mystery-box-sg92r-f1/top/support.stl"
+  },
+  {
+   "id": "top/servo_cap",
+   "assembly": "../../build/parts/top/servo_cap.stl",
+   "label": "サーボと案内板の押さえ",
+   "color": "#deddd5",
+   "print": "../../../../prints/mystery-box-sg92r-f1/top/servo_cap.stl"
+  },
+  {
+   "id": "top/cam_lower",
+   "assembly": "../../build/parts/top/cam_lower.stl",
+   "label": "押し出す下カム",
+   "color": "#deddd5",
+   "print": "../../../../prints/mystery-box-sg92r-f1/top/cam_lower.stl"
+  },
+  {
+   "id": "top/cam_upper",
+   "assembly": "../../build/parts/top/cam_upper.stl",
+   "label": "引き戻す上カム",
+   "color": "#deddd5",
+   "print": "../../../../prints/mystery-box-sg92r-f1/top/cam_upper.stl"
+  },
+  {
+   "id": "top/pixel_1",
+   "assembly": "../../build/parts/top/pixel_1.stl",
+   "label": "画素1",
+   "color": "#deddd5",
+   "print": "../../../../prints/mystery-box-sg92r-f1/top/pixel_1.stl"
+  },
+  {
+   "id": "top/pixel_2",
+   "assembly": "../../build/parts/top/pixel_2.stl",
+   "label": "画素2",
+   "color": "#deddd5",
+   "print": "../../../../prints/mystery-box-sg92r-f1/top/pixel_2.stl"
+  },
+  {
+   "id": "top/pixel_3",
+   "assembly": "../../build/parts/top/pixel_3.stl",
+   "label": "画素3",
+   "color": "#deddd5",
+   "print": "../../../../prints/mystery-box-sg92r-f1/top/pixel_3.stl"
+  },
+  {
+   "id": "top/guide",
+   "assembly": "../../build/parts/top/guide.stl",
+   "label": "画素の案内板とカムの軸受け",
+   "color": "#deddd5",
+   "print": "../../../../prints/mystery-box-sg92r-f1/top/guide.stl"
+  },
+  {
+   "id": "top/cam_key_1",
+   "assembly": "../../build/parts/top/cam_key_1.stl",
+   "label": "カム結合キー1",
+   "color": "#deddd5",
+   "print": "../../../../prints/mystery-box-sg92r-f1/top/cam_key_1.stl"
+  },
+  {
+   "id": "top/cam_key_2",
+   "assembly": "../../build/parts/top/cam_key_2.stl",
+   "label": "カム結合キー2",
+   "color": "#deddd5",
+   "print": "../../../../prints/mystery-box-sg92r-f1/top/cam_key_2.stl"
+  },
+  {
+   "id": "top/servo",
+   "assembly": "../../build/parts/top/servo.stl",
+   "label": "SG92R",
+   "color": "#7598b3"
+  },
+  {
+   "id": "top/horn",
+   "assembly": "../../build/parts/top/horn.stl",
+   "label": "SG92R付属ホーン",
+   "color": "#444844"
+  },
+  {
+   "id": "bottom/panel",
+   "assembly": "../../build/parts/bottom/panel.stl",
+   "label": "空の面板",
+   "color": "#E6E1D8",
+   "print": "../../../../prints/mystery-box-sg92r-f1/bottom/panel.stl"
+  },
+  {
+   "id": "bottom/key_l",
+   "assembly": "../../build/parts/bottom/key_l.stl",
+   "label": "左の固定キー",
+   "color": "#E6E1D8",
+   "print": "../../../../prints/mystery-box-sg92r-f1/bottom/key_l.stl"
+  },
+  {
+   "id": "bottom/key_r",
+   "assembly": "../../build/parts/bottom/key_r.stl",
+   "label": "右の固定キー",
+   "color": "#E6E1D8",
+   "print": "../../../../prints/mystery-box-sg92r-f1/bottom/key_r.stl"
+  }
+ ]
+}

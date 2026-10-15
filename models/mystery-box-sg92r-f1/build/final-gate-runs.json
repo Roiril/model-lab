@@ -1,0 +1,62 @@
+[
+ {
+  "model": "mystery-box-sg92r-f1/checks/front",
+  "command": [
+   "C:\\Users\\kouga\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+   "C:\\Users\\kouga\\Projects\\Web\\model-lab\\tools\\mechgate.py",
+   "check",
+   "mystery-box-sg92r-f1/checks/front"
+  ],
+  "returncode": 1,
+  "blocking": [
+   "print.slice"
+  ],
+  "source": "build/certification.json",
+  "log": "G:/マイドライブ/shubie/reports/mystery-box-sg92r-f1-final-certify.log"
+ },
+ {
+  "model": "mystery-box-sg92r-f1/checks/right",
+  "command": [
+   "C:\\Users\\kouga\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+   "C:\\Users\\kouga\\Projects\\Web\\model-lab\\tools\\mechgate.py",
+   "check",
+   "mystery-box-sg92r-f1/checks/right"
+  ],
+  "returncode": 1,
+  "blocking": [
+   "print.slice"
+  ],
+  "source": "build/certification.json",
+  "log": "G:/マイドライブ/shubie/reports/mystery-box-sg92r-f1-final-certify.log"
+ },
+ {
+  "model": "mystery-box-sg92r-f1/checks/top",
+  "command": [
+   "C:\\Users\\kouga\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+   "C:\\Users\\kouga\\Projects\\Web\\model-lab\\tools\\mechgate.py",
+   "check",
+   "mystery-box-sg92r-f1/checks/top"
+  ],
+  "returncode": 1,
+  "blocking": [
+   "print.slice"
+  ],
+  "source": "build/certification.json",
+  "log": "G:/マイドライブ/shubie/reports/mystery-box-sg92r-f1-final-certify.log"
+ },
+ {
+  "model": "mystery-box-sg92r-f1",
+  "command": [
+   "C:\\Users\\kouga\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+   "C:\\Users\\kouga\\Projects\\Web\\model-lab\\tools\\mechgate.py",
+   "check",
+   "mystery-box-sg92r-f1"
+  ],
+  "returncode": 1,
+  "blocking": [
+   "print.slice"
+  ],
+  "source": "build/certification.json",
+  "log": "G:/マイドライブ/shubie/reports/mystery-box-sg92r-f1-final-certify.log"
+ }
+]

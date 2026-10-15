@@ -20,13 +20,23 @@
    "rows": 70,
    "maximumPythonJsError": 4.999947122996673e-10
   },
+  "right": {
+   "groups": 6,
+   "rows": 241,
+   "maximumPythonJsError": 4.993552238374832e-10
+  },
   "top": {
    "groups": 8,
    "rows": 61,
-   "maximumPythonJsError": 4.999947122996673e-10
+   "maximumPythonJsError": 4.998668146072305e-10
   }
  },
- "parts": 46,
- "assemblySteps": 90,
+ "gatesPass": false,
+ "rootBlocking": [
+  "print.slice"
+ ],
+ "physicsControlsDisabled": true,
+ "parts": 60,
+ "assemblySteps": 120,
  "staleEvidenceDisablesPlayback": true
 }

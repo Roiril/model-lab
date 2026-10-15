@@ -182,16 +182,20 @@ def build(interface, common_params):
 
     lid=G.box(-18,18,-12,18,0,2,'lid')
     for u0,u1 in ((-16,-13),(13,16)):
-        lug=G.cyl_x(K.H,5.0,u0,u1)
+        lug=G.cyl_x(K.H,5.1,u0,u1)
         G.cut(lug,G.cyl_x(K.H,2.7,u0-.5,u1+.5),G.box(u0-.5,u1+.5,-19,-5,-4,0))
         G.union(lid,lug)
     ear=capsule(K.H,4,K.B_CLOSED,5.7,m(P.EAR_U0),m(P.EAR_U1),'lid_ear')
     G.cut(ear,G.cyl_x(K.B_CLOSED,2.7,18,22),G.box(18,22,-20,8,-5,0),G.cyl_x(K.H,2.7,18,22))
     G.union(lid,ear,G.box(17.5,20.55,-12,-8,1.5,3.5))
+    # Back the ear's low circular edge below the B pin's lowest contact surface.
+    G.union(lid,G.box(17.9,21.45,-3.5,3.5,0,1.5))
     # A moving side skirt overlaps the opaque wall; never serves as a bearing.
     skirt=G.prism([(-11,1.5),(17.8,1.5),(17.8,5.5),(-9,5.5)],'x',-18,-16)
     G.union(lid,skirt)
-    G.cut(lid,G.cyl_x(K.H,2.7,-30,30),G.cyl_x(K.B_CLOSED,2.7,18,22))
+    # 45 degree roofs retain the circular seat; the hinge roof leaves 1.32 mm wall.
+    G.cut(lid,G.prism(G.teardrop(K.H,2.7,1.08),'x',-30,30),
+          G.prism(G.teardrop(K.B_CLOSED,2.7,.4),'x',18,22))
     parts['lid']=lid
 
     pin=G.cyl_x(K.H,2.5,-27.65,26.2,name='hinge_pin')

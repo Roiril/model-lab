@@ -26,7 +26,30 @@ assert.equal(response.status, 200);
 const data = await response.json();
 assert.deepEqual(data, source);
 assert.equal(data.model, model);
-assert.equal(drivePresentation(data.drive, data.sim).calculationPass, true);
+const cases = await read('cases.json');
+const rootGate = await read('gate_report.json');
+let gatesPass = rootGate.pass === true;
+assert.equal(data.sim.composition.fresh, true);
+assert.equal(data.sim.driveGeometry.sourceHashesFresh, true);
+assert.deepEqual(Object.keys(data.sim.faceReports).sort(), cases.models.map(id => id.split('/').at(-1)).sort());
+for (const id of cases.models) {
+  const slot = id.split('/').at(-1);
+  const gate = await read(`../checks/${slot}/build/gate_report.json`);
+  const evidence = data.sim.faceReports[slot].gate;
+  assert.equal(evidence.fresh, true);
+  assert.equal(evidence.status, gate.pass ? 'pass' : 'fail');
+  assert.deepEqual(evidence.checks, Object.fromEntries(gate.checks.map(row => [row.id, row])));
+  gatesPass &&= gate.pass === true;
+}
+const printCheck = rootGate.checks.find(row => row.id === 'print.slice');
+const printDisplay = data.drive.calibration.find(row => row.id === 'print.slice');
+assert.equal(printDisplay.pass, printCheck.pass);
+assert.equal(printDisplay.detail, printCheck.summary);
+const expectedPlayback = gatesPass && data.sim.contract.pass && data.sim.calibration.every(row => row.pass);
+assert.equal(drivePresentation(data.drive, data.sim).calculationPass, expectedPlayback);
+report.gatesPass = gatesPass;
+report.rootBlocking = rootGate.blocking;
+report.physicsControlsDisabled = !expectedPlayback;
 assert.equal(data.assembly.pass, true);
 assert.equal(data.assembly.calibration.pass, true);
 assert.ok(data.assembly.steps.every(step => step.report.pass && step.report.samples > 0));
@@ -70,6 +93,8 @@ assert.equal(drivePresentation(data.drive, stale).calculationPass, false);
 report.parts = data.parts.length;
 report.assemblySteps = data.assembly.steps.length;
 report.staleEvidenceDisablesPlayback = true;
+// pass means the served data and controls agree with the measured result,
+// including a disabled replay when an actual gate failed. It is not certification.
 report.pass = true;
 const target = new URL('lattice_verification.json', build);
 const temporary = fileURLToPath(target) + '.tmp';

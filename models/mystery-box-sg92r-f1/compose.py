@@ -560,6 +560,19 @@ def build():
     common = common_params()
     frame_module = load_file("_resident_frame", HERE / "frame.py")
     frame_parts = frame_module.build(interface, common)
+    # A real receiver cut from the front-left post, paired with blank/mount_panel.
+    # Keep the outer post wall as well as the exchange-key catch.
+    from printmech import geometry as G
+    from mathutils import Matrix
+    corner = frame_parts["post_0"]["object"].copy()
+    corner.data = corner.data.copy()
+    bpy.context.collection.objects.link(corner)
+    clean_object(corner)
+    G.transform(corner, Matrix(np.linalg.inv(faces["front"]["S"]).tolist()))
+    G.intersect(corner, G.box(-50, -10, -32, -2, -2, 10))
+    clean_object(corner)
+    export_binary(ROOT / "prints" / MODEL / "trial" / "frame_corner.stl", [corner])
+    bpy.data.objects.remove(corner, do_unlink=True)
     parts = {}
     frame_meta = {"interfaces": [], "allowances": []}
     for key in frame_meta:

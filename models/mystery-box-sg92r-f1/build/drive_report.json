@@ -1,7 +1,7 @@
 {
  "model": "mystery-box-sg92r-f1",
  "overall": {
-  "geometryPass": true
+  "geometryPass": false
  },
  "interfaces": [
   {
@@ -87,7 +87,7 @@
       "servoDeg": 55.66268077250187,
       "unit": "deg",
       "limit": 3,
-      "back": 0.929297,
+      "back": 1.612134,
       "ahead": 0.925104,
       "pass": true
      },
@@ -95,13 +95,178 @@
       "servoDeg": 61.63438846424068,
       "unit": "deg",
       "limit": 3,
-      "back": 0.930176,
+      "back": 1.469403,
       "ahead": 0.925635,
       "pass": true
      }
     ]
    },
    "source": "models/mystery-box-sg92r-f1/checks/front/build/gate_report.json"
+  },
+  {
+   "id": "right/horn-input",
+   "label": "right/horn-input",
+   "status": "pass",
+   "detail": "12姿勢。出典: mystery-box-sg92r-f1/checks/right interface.drive。現入力と一致。",
+   "measurement": {
+    "id": "right/horn-input",
+    "driver": "right/horn",
+    "driven": "right/input_cup",
+    "sides": "both",
+    "samples": 12,
+    "pass": true,
+    "worst": [
+     {
+      "servoDeg": 60.0,
+      "unit": "deg",
+      "limit": 3,
+      "back": 1.059613,
+      "ahead": 1.059595,
+      "pass": true
+     },
+     {
+      "servoDeg": 65.5,
+      "unit": "deg",
+      "limit": 3,
+      "back": 1.059613,
+      "ahead": 1.059613,
+      "pass": true
+     }
+    ]
+   },
+   "source": "models/mystery-box-sg92r-f1/checks/right/build/gate_report.json"
+  },
+  {
+   "id": "right/cup-wheel",
+   "label": "right/cup-wheel",
+   "status": "pass",
+   "detail": "12姿勢。出典: mystery-box-sg92r-f1/checks/right interface.drive。現入力と一致。",
+   "measurement": {
+    "id": "right/cup-wheel",
+    "driver": "right/input_cup",
+    "driven": "right/input_gear",
+    "sides": "both",
+    "samples": 12,
+    "pass": true,
+    "worst": [
+     {
+      "servoDeg": 60.0,
+      "unit": "deg",
+      "limit": 1.8,
+      "back": 1.554653,
+      "ahead": 1.554653,
+      "pass": true
+     },
+     {
+      "servoDeg": 65.5,
+      "unit": "deg",
+      "limit": 1.8,
+      "back": 1.554653,
+      "ahead": 1.554653,
+      "pass": true
+     }
+    ]
+   },
+   "source": "models/mystery-box-sg92r-f1/checks/right/build/gate_report.json"
+  },
+  {
+   "id": "right/input-sector",
+   "label": "right/input-sector",
+   "status": "pass",
+   "detail": "12姿勢。出典: mystery-box-sg92r-f1/checks/right interface.drive。現入力と一致。",
+   "measurement": {
+    "id": "right/input-sector",
+    "driver": "right/input_gear",
+    "driven": "right/sector_gear",
+    "sides": "both",
+    "samples": 12,
+    "pass": true,
+    "worst": [
+     {
+      "servoDeg": 60.0,
+      "unit": "deg",
+      "limit": 1,
+      "back": 0.440106,
+      "ahead": 0.854938,
+      "pass": true
+     },
+     {
+      "servoDeg": 65.5,
+      "unit": "deg",
+      "limit": 1,
+      "back": 0.439441,
+      "ahead": 0.440973,
+      "pass": true
+     }
+    ]
+   },
+   "source": "models/mystery-box-sg92r-f1/checks/right/build/gate_report.json"
+  },
+  {
+   "id": "right/sector-flag",
+   "label": "right/sector-flag",
+   "status": "pass",
+   "detail": "12姿勢。出典: mystery-box-sg92r-f1/checks/right interface.drive。現入力と一致。",
+   "measurement": {
+    "id": "right/sector-flag",
+    "driver": "right/sector_gear",
+    "driven": "right/flag",
+    "sides": "both",
+    "samples": 12,
+    "pass": true,
+    "worst": [
+     {
+      "servoDeg": 60.0,
+      "unit": "deg",
+      "limit": 3,
+      "back": 1.675983,
+      "ahead": 1.675946,
+      "pass": true
+     },
+     {
+      "servoDeg": 65.5,
+      "unit": "deg",
+      "limit": 3,
+      "back": 1.675983,
+      "ahead": 1.675946,
+      "pass": true
+     }
+    ]
+   },
+   "source": "models/mystery-box-sg92r-f1/checks/right/build/gate_report.json"
+  },
+  {
+   "id": "right/sector-cover",
+   "label": "right/sector-cover",
+   "status": "pass",
+   "detail": "12姿勢。出典: mystery-box-sg92r-f1/checks/right interface.drive。現入力と一致。",
+   "measurement": {
+    "id": "right/sector-cover",
+    "driver": "right/sector_gear",
+    "driven": "right/flag_cover",
+    "sides": "both",
+    "samples": 12,
+    "pass": true,
+    "worst": [
+     {
+      "servoDeg": 60.0,
+      "unit": "deg",
+      "limit": 3,
+      "back": 2.12384,
+      "ahead": 2.566278,
+      "pass": true
+     },
+     {
+      "servoDeg": 65.5,
+      "unit": "deg",
+      "limit": 3,
+      "back": 2.123859,
+      "ahead": 2.566296,
+      "pass": true
+     }
+    ]
+   },
+   "source": "models/mystery-box-sg92r-f1/checks/right/build/gate_report.json"
   },
   {
    "id": "top/horn-cam",
@@ -121,7 +286,7 @@
       "unit": "deg",
       "limit": 3,
       "back": 1.78515,
-      "ahead": 1.785168,
+      "ahead": 1.78515,
       "pass": true
      },
      {
@@ -129,7 +294,7 @@
       "unit": "deg",
       "limit": 3,
       "back": 1.78515,
-      "ahead": 1.785168,
+      "ahead": 1.78515,
       "pass": true
      }
     ]
@@ -153,16 +318,16 @@
       "servoDeg": 60.0,
       "unit": "deg",
       "limit": 3,
-      "back": 0.479279,
-      "ahead": 0.479608,
+      "back": 0.49801,
+      "ahead": 0.479297,
       "pass": true
      },
      {
       "servoDeg": 65.0,
       "unit": "deg",
       "limit": 3,
-      "back": 0.479279,
-      "ahead": 0.479608,
+      "back": 0.49801,
+      "ahead": 0.479297,
       "pass": true
      }
     ]
@@ -412,19 +577,43 @@
    "id": "front/motion.interference",
    "label": "正面 motion.interference",
    "pass": true,
-   "detail": "46 部品・1035 組 x 48 姿勢（55.66268077250187〜124.33731922749814°、どの点も姿勢の間で 1.0mm 以内。補間 0）"
+   "detail": "60 部品・1770 組 x 48 姿勢（55.66268077250187〜124.33731922749814°、どの点も姿勢の間で 1.0mm 以内。補間 0）"
   },
   {
    "id": "front/interface.retention",
    "label": "正面 interface.retention",
    "pass": true,
-   "detail": "抜け止め 58 個"
+   "detail": "抜け止め 91 個"
   },
   {
    "id": "front/assembly.path",
    "label": "正面 assembly.path",
    "pass": true,
-   "detail": "90 工程（補間で足した姿勢 0）"
+   "detail": "120 工程（補間で足した姿勢 0）"
+  },
+  {
+   "id": "right/instrument.calibration",
+   "label": "右面 instrument.calibration",
+   "pass": true,
+   "detail": "正負の形がすべて期待どおり"
+  },
+  {
+   "id": "right/motion.interference",
+   "label": "右面 motion.interference",
+   "pass": true,
+   "detail": "60 部品・1770 組 x 36 姿勢（60.0〜120.0°、どの点も姿勢の間で 1.0mm 以内。補間 0）"
+  },
+  {
+   "id": "right/interface.retention",
+   "label": "右面 interface.retention",
+   "pass": true,
+   "detail": "抜け止め 91 個"
+  },
+  {
+   "id": "right/assembly.path",
+   "label": "右面 assembly.path",
+   "pass": true,
+   "detail": "120 工程（補間で足した姿勢 0）"
   },
   {
    "id": "top/instrument.calibration",
@@ -436,43 +625,57 @@
    "id": "top/motion.interference",
    "label": "上面 motion.interference",
    "pass": true,
-   "detail": "46 部品・1035 組 x 61 姿勢（60.0〜120.0°、どの点も姿勢の間で 1.0mm 以内。補間 0）"
+   "detail": "60 部品・1770 組 x 61 姿勢（60.0〜120.0°、どの点も姿勢の間で 1.0mm 以内。補間 0）"
   },
   {
    "id": "top/interface.retention",
    "label": "上面 interface.retention",
    "pass": true,
-   "detail": "抜け止め 58 個"
+   "detail": "抜け止め 91 個"
   },
   {
    "id": "top/assembly.path",
    "label": "上面 assembly.path",
    "pass": true,
-   "detail": "90 工程（補間で足した姿勢 0）"
+   "detail": "120 工程（補間で足した姿勢 0）"
+  },
+  {
+   "id": "print.slice",
+   "label": "全プレートの印刷検査",
+   "pass": false,
+   "detail": "5 枚・66 物体。外の支えなし押し出し ≤ 2.0mm、41 件超過"
   }
  ],
  "hardwareUnknown": [
   "必要トルクは剛体・理想拘束の逆動力学。摩擦・圧入・ばね・弾性・衝撃を含まない。",
   "再生は既存サーボモデルの仮定値（摩擦0.004N·m、制御幅4°、慣性5e-6kg·m²、60°/0.1秒）。実機未同定。",
   "接触反力の定型表示は自由な鉛直従動子の代理値。F1のリンク・拘束カムの保持力判定には使わない。",
-  "各面を別々に動かす。他面は閉じたまま。同時駆動・実機適合・印刷スライスは未検証。"
+  "各面を別々に動かす。他面は閉じたまま。同時駆動・実機適合は未検証。印刷可否はゲートのprint.sliceを参照。"
  ],
  "sourceHashes": {
-  "models/mystery-box-sg92r-f1/checks/front/build/manifest.json": "dab9b01b4530f8d7855eabe0fb63ae314fb64de8a60d338b2e8e366213abfc4c",
-  "models/mystery-box-sg92r-f1/checks/front/build/motion.json": "0753b946074d9013e67c1666127504ec4446acabad3a837020b0b03566cf7d37",
+  "models/mystery-box-sg92r-f1/checks/front/build/manifest.json": "76f0862b4f589bcddc992d511430ce034f59f73e408622472128434d6e8e9edf",
+  "models/mystery-box-sg92r-f1/checks/front/build/motion.json": "d9aee39b91fb181c89711e18c4d95a9ec28524bfac4206535b61061ad35d1192",
   "models/mystery-box-sg92r-f1/build/parts/front/horn.stl": "a86bc1ab7a12492ef34e362db1d7a94f441fe5192d45dba9726631c672d05812",
   "models/mystery-box-sg92r-f1/build/parts/front/crank.stl": "faead4f77def5a38ef595ede85e84e083e536ea3c6105b7f1112c6940bca3e4b",
   "models/mystery-box-sg92r-f1/build/parts/front/link.stl": "556b3af70cd0aecc53ed399835b29c909c2e0645a6386079f52526adc891782a",
-  "models/mystery-box-sg92r-f1/build/parts/front/lid.stl": "a79ba436dcd2b1ff7c6699d796f6529fc162076d69a3a62f161be8e00734bed7",
-  "models/mystery-box-sg92r-f1/checks/top/build/manifest.json": "098656fc8deece732fbe0a09915bead827d0c2a7c6690921e8a4b5a0719463a7",
-  "models/mystery-box-sg92r-f1/checks/top/build/motion.json": "99a8a1c3d64808239e54800762d214db80deb50a68c4557a1768f51673de3680",
-  "models/mystery-box-sg92r-f1/build/parts/top/cam_lower.stl": "788927d678010905b918982bc99395ef2d8598515a5a151217fffc8a88a4ce8a",
-  "models/mystery-box-sg92r-f1/build/parts/top/cam_upper.stl": "a6ed828b1ae163b20c4d8f522e244a3697f4c0bab149afb28215c05b78f11fb1",
+  "models/mystery-box-sg92r-f1/build/parts/front/lid.stl": "23ac95e668e29697d223460ec2d6f95168a31a708bfeea6619da0a77c836a2cd",
+  "models/mystery-box-sg92r-f1/checks/right/build/manifest.json": "132bdf735a110a55b8af09eb7fab82a1dd64f2786fd6d701a31a264b92ce6a38",
+  "models/mystery-box-sg92r-f1/checks/right/build/motion.json": "73fa23b171121f5d8e5f948c030b92bfbcfb1b40a29d339f78f5ea7ad277e0d2",
+  "models/mystery-box-sg92r-f1/build/parts/right/horn.stl": "6270d251db660e4c19334b8071c7ce34823f86a992efb97f9f5e0d8b0fc6ece6",
+  "models/mystery-box-sg92r-f1/build/parts/right/input_cup.stl": "88ac4059ea86b4edbf76e35e339e47a586093f83acc0fb137320ffd957731616",
+  "models/mystery-box-sg92r-f1/build/parts/right/input_gear.stl": "870e300cf2813edba6304d500a4fc610bf2d49c9946e88d0adf0ea6be77ac1c0",
+  "models/mystery-box-sg92r-f1/build/parts/right/sector_gear.stl": "566e15ea5861da756950fe1893734424a54e96a97a40bb204f09fa964af5891e",
+  "models/mystery-box-sg92r-f1/build/parts/right/flag.stl": "65d5005641d2358db9a7f19c121063bfc882bd0f5d14bcbe78eb158a989e4a50",
+  "models/mystery-box-sg92r-f1/build/parts/right/flag_cover.stl": "3d4f4dfed30543ad303ca78d2c752fdb4ef92e96e3cce589d0925d5f7f37e8e7",
+  "models/mystery-box-sg92r-f1/checks/top/build/manifest.json": "98f1dfd9d1977ed1f9b65f676410de5051a82e8967139ada12fe4a8b93f43b2e",
+  "models/mystery-box-sg92r-f1/checks/top/build/motion.json": "6bf29d2835c13adfdbea4f50a50dc4df77dabfebaad24bc967ff3538baf43876",
+  "models/mystery-box-sg92r-f1/build/parts/top/cam_lower.stl": "35388577269d0cc34d10452670fccf595f8894bcb91ec2648a35864d58a5031c",
+  "models/mystery-box-sg92r-f1/build/parts/top/cam_upper.stl": "3086cb0c0c612b98767b6299dd73c9150f7fe45a121ddfa9618eee70cbc98d42",
   "models/mystery-box-sg92r-f1/build/parts/top/pixel_1.stl": "dd300c84c8f82b53a27533f6cf17efd1ec91d75300f4bb490976925de5e65615",
   "models/mystery-box-sg92r-f1/build/parts/top/pixel_2.stl": "d1b6d010bb20391099977762a01d02a813f741f7a014783ca17cbbd6843a526f",
   "models/mystery-box-sg92r-f1/build/parts/top/pixel_3.stl": "302d847a0fb9641292be0780ebb473df2fd60edd7f56fd6f967d146c231cd735",
-  "models/mystery-box-sg92r-f1/build/parts/top/cam_key_1.stl": "b348a29cc40a69f3a80c3831b2dcb02b86dce1ebf01207596f306b1b862b2161",
-  "models/mystery-box-sg92r-f1/build/parts/top/cam_key_2.stl": "6576d92fc6dfcc6656ae9f3d0d8e69d51d799e55bc87b61b35eba2135da14ec8",
+  "models/mystery-box-sg92r-f1/build/parts/top/cam_key_1.stl": "1982f528f491c1acf717f6a3522b959a67055beed59cc8ccfe79efec7729e96f",
+  "models/mystery-box-sg92r-f1/build/parts/top/cam_key_2.stl": "30ef3bd2c3646bde61c9e33660856f3edcab0f4bfa76e29fc06cf30576cca817",
   "models/mystery-box-sg92r-f1/build/parts/top/horn.stl": "238e7600d4e74ccfa3732e42d1589420a8588afff1d6e75425afc5c421850ed6"
  }
 }

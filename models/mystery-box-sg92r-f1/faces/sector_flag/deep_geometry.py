@@ -50,13 +50,33 @@ def build(interface,common):
           G.box(5.25,u0+.5,ov-30,ov-13,od-30,od+30))
     G.transform(receiver,Matrix(K.rot_x(P.HORN_CLOSED_DEG,K.O)))
     teeth=[K.INPUT_PHASE_DEG+a for a in P.INPUT_TOOTH_OFFSETS_DEG]
-    inp=G.prism(profile(sector_outline(teeth,P.INPUT_START_DEG,P.INPUT_END_DEG),K.O),'x',u0,u1)
-    G.union(receiver,inp,G.cyl_x(K.O,4.9,u0,u1),G.cyl_x(K.O,2.5,u1-.5,15.75),G.cyl_x(K.O,3.8,15.75,17.25))
-    parts['input_gear']=receiver
+    G.intersect(receiver,G.box(5.,9.05,ov-40,ov+40,od-40,od+40))
+    G.cut(receiver,G.cyl_x(K.O,2.75,5.,9.5))
+    coupling_hole=G.box(5.,9.5,ov+8.-1.75,ov+8.+1.75,od-1.75,od+1.75)
+    G.transform(coupling_hole,Matrix(K.rot_x(P.HORN_CLOSED_DEG,K.O)))
+    G.cut(receiver,coupling_hole)
+    parts['input_cup']=receiver
+    inp=G.prism(profile(sector_outline(teeth,P.INPUT_START_DEG,P.INPUT_END_DEG),K.O),'x',u0,u1,'input_gear')
+    G.union(inp,G.cyl_x(K.O,5.75,u0,u1))
+    coupling=G.box(8.,u0+.05,ov+8.-1.5,ov+8.+1.5,od-1.5,od+1.5)
+    G.transform(coupling,Matrix(K.rot_x(P.HORN_CLOSED_DEG,K.O)))
+    G.union(inp,coupling)
+    G.cut(inp,G.cyl_x(K.O,2.75,7.5,u1+.5))
+    parts['input_gear']=inp
+    spindle=G.cyl_x(K.O,2.5,7.75,15.75,name='input_spindle')
+    G.union(spindle,G.cyl_x(K.O,3.8,15.75,17.8))
+    parts['input_spindle']=spindle
     sector=G.prism(profile(sector_outline(P.SECTOR_TEETH_DEG,P.SECTOR_START_DEG,P.SECTOR_END_DEG),K.H),'x',u0,u1,'sector_gear')
     flange=[(0,0)]+G.circle((0,0),P.SHIELD_FLANGE_RADIUS*1000,80,-85,85,closed=False)
     flag_flange=[(0,0)]+G.circle((0,0),P.SHIELD_FLANGE_RADIUS*1000,100,-110,110,closed=False)
     G.union(sector,G.cyl_x(K.H,4.9,3.5,u1),G.prism(profile(flange,K.H),'x',3.5,5.75))
+    # Grow the shield collar from the existing hub when printing along -u.
+    web=G.prism(profile(flange,K.H),'x',5.5,9.85)
+    for v in web.data.vertices:
+        radius=8.75-(8.75-4.85)*(v.co.x-5.5)/(9.85-5.5)
+        factor=radius/(P.SHIELD_FLANGE_RADIUS*1000)
+        v.co.y=hv+(v.co.y-hv)*factor; v.co.z=hd+(v.co.z-hd)*factor
+    G.union(sector,web)
     key=G.cyl_x(K.H,3.5,-1.75,9.75)
     G.cut(key,G.box(-3,10,hv-5,hv-2.3,hd-5,hd+5))
     G.union(sector,key)
@@ -77,11 +97,19 @@ def build(interface,common):
     G.union(cover,G.box(10.5,13,hv+2.6,hv+5.6,hd-1.5,hd+1.5))
     G.cut(cover,G.cyl_x(K.H,bore,10,15))
     G.cut(sector,G.box(10.25,12.75,hv+2.4,hv+5.8,hd-1.7,hd+1.7))
+    # Only the blind end is tapered; the cover key's working walls stay fixed.
+    roof=G.box(8.55,10.3,hv+2.4,hv+5.8,hd-1.7,hd+1.7)
+    for v in roof.data.vertices:
+        factor=.02+.98*(v.co.x-8.55)/(10.3-8.55)
+        v.co.y=hv+4.1+(v.co.y-hv-4.1)*factor
+        v.co.z=hd+(v.co.z-hd)*factor
+    G.cut(sector,roof)
     parts['flag_cover']=cover
     pin=G.cyl_x(K.H,P.PIN_RADIUS*1000,-17.25,18.25,name='hinge_pin')
     G.union(pin,G.cyl_x(K.H,2.5,-20.25,-17.25))
     groove=G.cut(G.cyl_x(K.H,2,-17.2,-13.75),G.cyl_x(K.H,P.PIN_NECK_RADIUS*1000,-17.4,-13.55))
     G.cut(pin,groove)
+    G.cut(pin,G.box(-21,19,hv-3,hv+3,-40,hd-P.PIN_FLAT_D*1000))
     parts['hinge_pin']=pin
     # A rear tray follows the seven-step envelope. All cuts open toward the face.
     support=G.box(-30,24,-36.5,30,3.25,10.65,'support')
@@ -100,12 +128,13 @@ def build(interface,common):
           G.box(base+15.75,base+18.25,el-.25,eh+.25,-40,od+6.25),
           G.cyl_x(K.O,6.3,-3,5.5))
     front_void(G.circle(K.O,9.),-2.75,2.75)
-    ip=[]; op=[]; fp=[]
+    ip=[]; op=[]; fp=[]; hp=[]
     for theta in np.linspace(0,60,121):
-        for pid,points,pivot,sign in (('input_gear',ip,K.O,1),('horn',ip,K.O,1),('sector_gear',op,K.H,-1),('flag',fp,K.H,-1),('flag_cover',op,K.H,-1)):
+        for pid,points,pivot,sign in (('input_gear',ip,K.O,1),('input_cup',ip,K.O,1),('horn',ip,K.O,1),('sector_gear',op,K.H,-1),('flag',fp,K.H,-1),('flag_cover',op,K.H,-1)):
             ob=parts[pid]; vv=np.array([v.co[:] for v in ob.data.vertices]); mat=K.rot_x(sign*theta,pivot)
             if pid=='input_gear': vv=vv[vv[:,0]<=u1+.01]
             points.extend((vv@mat[:3,:3].T+mat[:3,3])[:,1:].tolist())
+            if pid=='horn': hp.extend((vv@mat[:3,:3].T+mat[:3,3])[:,1:].tolist())
     ip,op,fp=expanded(G.hull(ip),.3),expanded(G.hull(op),.3),expanded(G.hull(fp),.3)
     # Output group first approaches 2.8mm away from the input axis, then meshes.
     op=G.hull(op+[(v-2.8,d-.052) for v,d in op])
@@ -141,6 +170,17 @@ def build(interface,common):
     # returns, compound oblique rays can pass the staggered ends to the servo.
     G.union(cap,G.box(-9.5,-8.25,hv+3.7,hv+5.7,od-9.25,20.6),
             G.box(-5.,-3.75,hv+3.7,hv+10.2,od-9.25,20.6))
+    G.cut(cap,G.box(-28,-24.5,-40,40,-40,40))
+    G.cut(cap,G.prism([(-24.6,-40),(-22.9,-40),(-22.9,5.85),(-24.6,7.55)],
+                      'y',-5.3,12.2))
+    foot=G.box(-27,-24.5,-6.5,13.4,2.25,8.65,'cap_foot')
+    lap_thickness=P.CAP_LAP_NORMAL_WALL*1000*math.sqrt(2)
+    G.union(foot,G.prism([(-24.55,7.3-lap_thickness),(-22.9,5.65-lap_thickness),(-22.9,5.65),(-24.55,7.3)],
+                        'y',-5.05,11.95))
+    stop_margin=P.CAP_SERVO_STOP_MARGIN*1000
+    G.union(foot,G.box(-24.55,-21.5,0,3,5.65+stop_margin,8.65+stop_margin))
+    G.cut(cap,G.box(-24.75,-21.25,-.25,3.25,-40,8.9))
+    parts['cap_foot']=foot
     G.cut(support,G.box(-27.25,-12.25,bl-.45,bh+.45,-40,od-6.0))
     parts['servo_cap']=cap
     bridge=G.box(-15.25,-13.5,-29.5,hv+29.8,1.2,hd,'bearing_bridge')
@@ -167,11 +207,24 @@ def build(interface,common):
             G.box(15,21.25,hv-3,hv,3.25,6.25),
             G.box(12.5,21.25,ov+2.7,ov+5.7,3.25,od),
             G.box(12.5,15.5,ov-5.7,ov+5.7,od-5.7,od))
-    G.cut(right,G.cyl_x(K.O,2.7,12,16),G.cyl_x(K.O,4.1,15.5,17.5))
+    # Both bearing saddles have empty front-insertion seats down to the panel.
+    # Bring their undersides to the same print bed as the retaining foot.
+    G.union(right,G.box(15,18,hv-4.9,hv+4.9,2.25,hd-4.85),
+            G.box(15,21.25,hv-3,hv,2.25,3.3),
+            G.box(12.5,21.25,ov+2.7,ov+5.7,2.25,3.3),
+            G.box(12.5,15.5,ov-5.7,ov+5.7,2.25,od-5.65))
+    G.cut(right,G.cyl_x(K.O,2.7,12,16),G.cyl_x(K.O,4.1,15.5,18.))
     parts['input_bridge']=right
     collar=G.box(-17.,-13.25,hv-3.5,hv+3.5,hd-4.9,hd)
     G.cut(collar,G.cyl_x(K.H,1.6,-17.5,-13))
     G.union(bridge,collar)
+    # Back the two left-bearing ledges with ramps inside their reserved seats.
+    G.union(bridge,G.prism([(-15.25,2.25),(-13.5,2.25),(-13.25,4.),(-17.,4.)],
+                          'y',hv-4.9,hv-1.9),
+            G.prism([(-15.25,7.5),(-13.5,7.5),(-13.25,hd-4.9),(-17.,hd-4.9)],
+                    'y',hv-4.9,hv+4.9))
+    G.cut(bridge,G.prism([(-18,-2),(-15.25,-2),(-15.25,2.25),(-17,4),(-18,4)],
+                        'y',hv-4.9,hv-1.9))
     # The flag's left collar enters a stepped recess. The front wall and collar
     # overlap axially, without a projecting lip that would cross the flag plate
     # during assembly. The remaining bearing length is -17 .. -14 = 3mm.
@@ -218,13 +271,47 @@ def build(interface,common):
     G.cut(support,G.box(-38,-29.25,-26.25,-21.75,3,8.25),
           G.cyl_x(K.H,2.15,-17.5,-16.9),G.cyl_x(K.H,2.15,17.95,18.5))
     front_void(fp,-14.,2.)
+    # Rear axial seat stays above the purchased horn's complete insertion sweep.
+    # Its 3mm root grows down from the existing roof in the support print pose.
+    cup_seat=G.box(2.5,5.5,0.,14.4,23.,32.)
+    horn_clear=expanded(G.hull(hp),.3)
+    horn_clear=G.hull(horn_clear+[(v,d-60) for v,d in horn_clear])
+    G.cut(cup_seat,G.prism(horn_clear,'x',2.,6.))
+    G.union(support,cup_seat)
+    # Receivers stay fixed while the complete cassette travels 40mm normally.
+    # Cut their entire approach sweep after the mounting snaps have been added.
+    for row in interface['mount_geometry']['frame_receivers']:
+        c=np.array(row['center_mm'])
+        size=np.array(row.get('size_mm',[row.get('radius_mm',0)*2]*2+[row.get('depth_mm',0)]))
+        lo,hi=c-size/2-.4,c+size/2+.4
+        G.cut(support,G.box(lo[0],hi[0],lo[1],hi[1],lo[2],hi[2]+interface['mount']['extraction_mm']))
+    # The standard keys turn about d before being pulled out through the face.
+    # A convex sweep of each box keeps the clearance local to the arm and root.
+    keys=interface['mount']['keys']
+    gap=keys['assembly_clearance_mm']
+    for i,pid in enumerate(keys['ids']):
+        pivot=np.array(keys['release_pivot_uv_mm'][i])
+        angle=keys['release_rotation_deg']*(-1 if i==0 else 1)
+        recipe=interface['mount_geometry']['parts'][pid]
+        for shape in [recipe['base']]+[r['shape'] for r in recipe['operations'] if r['op']=='union']:
+            if shape['type']!='box': raise ValueError('Key sweep requires box mount solids')
+            c=np.array(shape['center_mm']); half=np.array(shape['size_mm'])/2
+            corners=[np.array((u,v)) for u in (c[0]-half[0]-gap,c[0]+half[0]+gap)
+                     for v in (c[1]-half[1]-gap,c[1]+half[1]+gap)]
+            points=[]
+            for a in np.linspace(0,math.radians(angle),17):
+                rot=np.array(((math.cos(a),-math.sin(a)),(math.sin(a),math.cos(a))))
+                points.extend((rot@(p-pivot)+pivot).tolist() for p in corners)
+            G.cut(support,G.prism(G.hull(points),'z',c[2]-half[2]-interface['mount']['extraction_mm']-gap,c[2]+half[2]+gap))
     parts['support']=support
     labels={'panel':'旗カセットの面板','key_l':'左の交換キー','key_r':'右の交換キー',
             'support':'サーボ座と後側の軸受け','servo_cap':'旗室の底とサーボ押さえ',
-            'input_gear':'ホーン受け付き入力扇形歯車','sector_gear':'出力扇形歯車と駆動キー',
+            'input_gear':'入力扇形歯車と伝達キー','sector_gear':'出力扇形歯車と駆動キー',
             'flag':'14×28mmの旗と偏心した腕','flag_cover':'旗軸の右カラー',
             'bearing_bridge':'旗室の遮蔽壁と左軸押さえ','input_bridge':'入力軸と右軸の押さえ',
-            'hinge_pin':'抜け止め溝付きの旗軸ピン','servo':'SG92R','horn':'SG92R付属ホーン'}
+            'hinge_pin':'抜け止め溝付きの旗軸ピン','servo':'SG92R','horn':'SG92R付属ホーン',
+            'cap_foot':'サーボ押さえの分割した保持足','input_cup':'分割したホーン受け',
+            'input_spindle':'分割した入力歯車の固定軸'}
     result={}
     for pid,ob in parts.items():
         G.clean(ob,dist=.0001 if pid=='support' else .001)
@@ -237,10 +324,10 @@ def build(interface,common):
         bm.to_mesh(ob.data); bm.free()
         ob.name=pid
         rot=np.eye(4)
-        if pid=='input_gear': rot=np.asarray(Matrix.Rotation(-math.pi/2,4,'Y'))
-        if pid=='hinge_pin': rot=np.asarray(Matrix.Rotation(-math.pi/2,4,'Y'))
+        if pid in ('input_gear','input_cup','input_spindle'): rot=np.asarray(Matrix.Rotation(math.pi/2,4,'Y'))
+        if pid=='cap_foot': rot=np.asarray(Matrix.Rotation(-math.pi/2,4,'Y'))
         if pid in ('sector_gear','flag_cover'): rot=np.asarray(Matrix.Rotation(math.pi/2,4,'Y'))
-        if pid in ('support','servo_cap'):rot=np.asarray(Matrix.Rotation(math.pi,4,'X'))
+        if pid=='support':rot=np.asarray(Matrix.Rotation(math.pi,4,'X'))
         result[pid]={'object':ob,'print_rotation':rot,'label':labels[pid],
                     'color':'#7598b3' if pid=='servo' else '#444844' if pid=='horn' else '#deddd5',
                     'purchased':pid in ('servo','horn')}

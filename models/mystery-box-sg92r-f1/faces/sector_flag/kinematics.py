@@ -23,7 +23,7 @@ def transforms(servo_deg,interface=None,common_params=None):
     if not -1e-8 <= theta <= 60+1e-8:
         raise ValueError('sector_flag requires servo 60..120 degrees')
     out={pid:np.eye(4) for pid in P.PART_IDS}
-    for pid in ('horn','input_gear'):
+    for pid in ('horn','input_cup','input_gear'):
         out[pid]=rot_x(theta,O)
     for pid in ('sector_gear','flag','flag_cover'):
         out[pid]=rot_x(-theta,H)

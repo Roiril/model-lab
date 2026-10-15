@@ -1,0 +1,112 @@
+{
+ "support_used": "false",
+ "prediction_s": 559,
+ "weight_g": "0.63",
+ "filament": [
+  [
+   "0.21",
+   "0.63"
+  ]
+ ],
+ "stats": {
+  "time": "model printing time: 2m 4s; total estimated time: 9m 19s",
+  "filament_mm": 206.3,
+  "filament_g_header": "0.63"
+ },
+ "objects": {
+  "12": {
+   "layers": 20,
+   "z_top": 4.0,
+   "layer_steps": {
+    "0.2": [
+     0.2,
+     3.8,
+     19
+    ]
+   },
+   "floating": {
+    "external_unsupported_mm": 0.0,
+    "bridge_mm": 0.0,
+    "bridge_unsupported_mm": 0.0,
+    "internal_unsupported_mm": 0.0
+   },
+   "overhang_walls": []
+  },
+  "8": {
+   "layers": 20,
+   "z_top": 4.0,
+   "layer_steps": {
+    "0.2": [
+     0.2,
+     3.8,
+     19
+    ]
+   },
+   "floating": {
+    "external_unsupported_mm": 0.0,
+    "bridge_mm": 0.0,
+    "bridge_unsupported_mm": 0.0,
+    "internal_unsupported_mm": 0.0
+   },
+   "overhang_walls": []
+  }
+ },
+ "plate": "cam-keys",
+ "parts": [
+  "cam_key_1",
+  "cam_key_2"
+ ],
+ "layout_boxes": [
+  {
+   "name": "cam_key_1",
+   "min_mm": [
+    19.99999952,
+    6.00000019,
+    0.0
+   ],
+   "max_mm": [
+    32.44999933,
+    11.00000019,
+    4.0
+   ]
+  },
+  {
+   "name": "cam_key_2",
+   "min_mm": [
+    38.449999520000006,
+    6.00000082,
+    0.0
+   ],
+   "max_mm": [
+    50.89999933,
+    11.00000082,
+    4.0
+   ]
+  }
+ ],
+ "command": [
+  "C:\\Program Files\\Bambu Studio\\bambu-studio.exe",
+  "--slice",
+  "0",
+  "--debug",
+  "2",
+  "--arrange",
+  "0",
+  "--load-settings",
+  "C:\\Users\\kouga\\Projects\\Web\\model-lab\\prints\\mystery-box-sg92r-f1\\profiles\\machine.json;C:\\Users\\kouga\\Projects\\Web\\model-lab\\prints\\mystery-box-sg92r-f1\\profiles\\process.json",
+  "--load-filaments",
+  "C:\\Users\\kouga\\Projects\\Web\\model-lab\\prints\\mystery-box-sg92r-f1\\profiles\\filament_PLA.json",
+  "--outputdir",
+  "C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-f1\\build\\cam_key_trial\\slice-cam-keys",
+  "--export-3mf",
+  "mystery-box-sg92r-f1-cam-keys-PLA.gcode.3mf",
+  "C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\mystery-box-sg92r-f1\\build\\cam_key_trial\\mystery-box-sg92r-f1-cam-keys-PLA-layout.3mf"
+ ],
+ "returncode": 0,
+ "log": "G:\\マイドライブ\\shubie\\reports\\cam-keys.log",
+ "sha256": "6cfe40da045bfbf4de424259991fc0ba81d18f17672267d528c5e5badff4088e",
+ "file": "models/mystery-box-sg92r-f1/build/cam_key_trial/mystery-box-sg92r-f1-cam-keys-PLA.gcode.3mf",
+ "layout_file": "models/mystery-box-sg92r-f1/build/cam_key_trial/mystery-box-sg92r-f1-cam-keys-PLA-layout.3mf",
+ "slice_failing": {},
+ "slice_pass": true
+}

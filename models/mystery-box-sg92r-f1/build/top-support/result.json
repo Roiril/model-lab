@@ -1,0 +1,60 @@
+{
+ "canonical_modified": false,
+ "candidate_usable": false,
+ "topology": {
+  "triangles": 768,
+  "vertices": 384,
+  "edgesNotSharedByTwo": 0,
+  "edgesWithSameDirectionTwice": 0,
+  "degenerateTriangles": 0,
+  "signedVolumeMm3": 3316.8932,
+  "pass": true
+ },
+ "grounding": {
+  "bedZ": -0.0,
+  "contactAreaMm2": 782.961,
+  "floatingComponents": [],
+  "heightMm": 23.55,
+  "contactShortSideMm": 42.5,
+  "heightOverShortSide": 0.554
+ },
+ "envelope_excess_mm": 0.0,
+ "ribbon_min_normal_thickness_mm": 1.6544630280976698,
+ "existing_unchanged_snap_head_thickness_mm": 1.0,
+ "mechanical_pass": true,
+ "motion_collisions": 0,
+ "receiver_collisions": [],
+ "exchange_key_collisions": [],
+ "interfaces_pass": true,
+ "interface_samples": 145,
+ "assembly_pass": true,
+ "assembly_steps": 16,
+ "elastic_cap_pass": true,
+ "support_used": "false",
+ "external_unsupported_mm": 120.42,
+ "prediction_s": 1189,
+ "weight_g": "3.73",
+ "overhang_walls": [
+  {
+   "layer": 94,
+   "z": 19.0,
+   "feature": "Overhang wall",
+   "points": 608,
+   "x": [
+    -36.6,
+    31.2
+   ],
+   "y": [
+    -22.8,
+    20.1
+   ]
+  }
+ ],
+ "route_corrections": [
+  "Right final rear depth 10.5 -> 6.6 mm to remain inside the d>=11 mm UV step with 0.25 mm inflation.",
+  "Left post rear trimmed to the ribbon; right post rear lowered and its 1 mm shoulders chamfered.",
+  "Guide kept unchanged; support corner relieved at u15.5..17,v14.75..16.25,d18.6..20 to remove 0.190895 mm3 interference."
+ ],
+ "remaining_problem": "Existing horizontal 18 mm snap beams begin at d4.9 with only one end attached. In -d printing their first perimeter appears near z19.0 (d4.75), unsupported. Adding a second support to the free end changes the specified spring freedom. The transport ribbon change alone cannot remove this unsupported extrusion while those beams remain unchanged.",
+ "wall_requirement": "New ribbon minimum normal wall exceeds 1.2 mm. Existing snap heads are 1.0 mm thick and were explicitly preserved; whole-part minimum 1.2 mm is therefore not met."
+}

@@ -1,0 +1,1711 @@
+{
+ "metrics": {
+  "panel": {
+   "volume_mm3": 15238.133080789945,
+   "nonmanifold": 0,
+   "components": 1
+  },
+  "key_l": {
+   "volume_mm3": 323.27987792015114,
+   "nonmanifold": 0,
+   "components": 1
+  },
+  "key_r": {
+   "volume_mm3": 323.27987792015114,
+   "nonmanifold": 0,
+   "components": 1
+  },
+  "support": {
+   "volume_mm3": 3316.893210854274,
+   "nonmanifold": 0,
+   "components": 1
+  },
+  "servo_cap": {
+   "volume_mm3": 1405.9181976016357,
+   "nonmanifold": 0,
+   "components": 1
+  },
+  "cam_lower": {
+   "volume_mm3": 2073.2816208081967,
+   "nonmanifold": 0,
+   "components": 1
+  },
+  "cam_upper": {
+   "volume_mm3": 5072.488134594302,
+   "nonmanifold": 0,
+   "components": 1
+  },
+  "pixel_1": {
+   "volume_mm3": 1326.9877843702302,
+   "nonmanifold": 0,
+   "components": 1
+  },
+  "pixel_2": {
+   "volume_mm3": 1345.7320588552336,
+   "nonmanifold": 0,
+   "components": 1
+  },
+  "pixel_3": {
+   "volume_mm3": 1474.7132223796311,
+   "nonmanifold": 0,
+   "components": 1
+  },
+  "guide": {
+   "volume_mm3": 2176.5020138186155,
+   "nonmanifold": 0,
+   "components": 1
+  },
+  "cam_key_1": {
+   "volume_mm3": 124.46001856931946,
+   "nonmanifold": 0,
+   "components": 1
+  },
+  "cam_key_2": {
+   "volume_mm3": 124.46007056284438,
+   "nonmanifold": 0,
+   "components": 1
+  },
+  "servo": {
+   "volume_mm3": 6929.305925184547,
+   "nonmanifold": 0,
+   "components": 1
+  },
+  "horn": {
+   "volume_mm3": 369.58281289837765,
+   "nonmanifold": 0,
+   "components": 1
+  }
+ },
+ "ribbon_min_normal_thickness_mm": 1.6544630280976698,
+ "ribbon_segment_normal_thickness_mm": [
+  1.6680655706810819,
+  1.6544630280976698,
+  2.128909967591811,
+  1.9611111187815542
+ ],
+ "envelope": [
+  0.0,
+  null
+ ],
+ "note": "Ribbon normal thickness only; existing snap heads span d0.2..1.2 (1mm) and are unchanged by explicit instruction.",
+ "print_topology": {
+  "triangles": 768,
+  "vertices": 384,
+  "edgesNotSharedByTwo": 0,
+  "edgesWithSameDirectionTwice": 0,
+  "degenerateTriangles": 0,
+  "signedVolumeMm3": 3316.8932,
+  "pass": true
+ },
+ "grounding": {
+  "bedZ": -0.0,
+  "contactAreaMm2": 782.961,
+  "floatingComponents": [],
+  "heightMm": 23.55,
+  "contactShortSideMm": 42.5,
+  "heightOverShortSide": 0.554
+ },
+ "calibration": {
+  "overlapHalf": {
+   "measured": 0.5,
+   "expected": 0.5,
+   "pass": true
+  },
+  "thinOverlap0.002": {
+   "measured": 0.0020000040531158447,
+   "expected": 0.002,
+   "pass": true
+  },
+  "separated": {
+   "measured": 0.0,
+   "expected": 0.0,
+   "pass": true
+  },
+  "faceContact": {
+   "measured": 0.0,
+   "expected": 0.0,
+   "pass": true
+  },
+  "edgeContact": {
+   "measured": 0.0,
+   "expected": 0.0,
+   "pass": true
+  },
+  "nestedInside": {
+   "measured": 1.0,
+   "expected": 1.0,
+   "pass": true
+  },
+  "nestedInsideReversed": {
+   "measured": 1.0,
+   "expected": 1.0,
+   "pass": true
+  },
+  "tiltedFaceContactAtScale": {
+   "measured": 0.0,
+   "expected": 0.0,
+   "pass": true
+  },
+  "tiltedThinOverlapAtScale": {
+   "measured": 4.000433860168268,
+   "expected": 4.0,
+   "pass": true
+  },
+  "skipAgreesWithBoolean": {
+   "cases": [
+    {
+     "case": "separated",
+     "fast": 0.0,
+     "full": 0.0,
+     "pass": true
+    },
+    {
+     "case": "overlap",
+     "fast": 0.7000000029802322,
+     "full": 0.7000000029802322,
+     "pass": true
+    },
+    {
+     "case": "nested",
+     "fast": 1.0,
+     "full": 1.0,
+     "pass": true
+    }
+   ],
+   "pass": true
+  },
+  "firstContactLinear": {
+   "measured": 0.501001,
+   "expected": 0.501,
+   "pass": true
+  },
+  "firstContactNone": {
+   "measured": null,
+   "expected": null,
+   "pass": true
+  },
+  "firstContactAngular": {
+   "measured": 14.255127,
+   "expected": 14.255098890306314,
+   "pass": true
+  },
+  "pass": true
+ },
+ "collisions": [],
+ "receiver_collisions": [],
+ "exchange_key_collisions": [],
+ "interfaces": {
+  "passed": true,
+  "rows": [
+   {
+    "id": "horn-cam",
+    "servo_deg": 60,
+    "type": "drive",
+    "travels": [
+     1.785352,
+     1.785352
+    ],
+    "unit": "deg",
+    "limit": 3,
+    "passed": true
+   },
+   {
+    "id": "upper-cam-key",
+    "servo_deg": 60,
+    "type": "drive",
+    "travels": [
+     0.497754,
+     0.479883
+    ],
+    "unit": "deg",
+    "limit": 3,
+    "passed": true
+   },
+   {
+    "id": "key-lower-cam",
+    "servo_deg": 60,
+    "type": "drive",
+    "travels": [
+     0.494824,
+     0.494824
+    ],
+    "unit": "deg",
+    "limit": 3,
+    "passed": true
+   },
+   {
+    "id": "lower-pixel-1",
+    "servo_deg": 60,
+    "type": "drive",
+    "travels": [
+     null,
+     0.204053
+    ],
+    "unit": "mm",
+    "limit": 0.4,
+    "passed": true
+   },
+   {
+    "id": "upper-pixel-1",
+    "servo_deg": 60,
+    "type": "drive",
+    "travels": [
+     0.203223,
+     null
+    ],
+    "unit": "mm",
+    "limit": 0.4,
+    "passed": true
+   },
+   {
+    "id": "pixel-1-out",
+    "servo_deg": 60,
+    "type": "retention",
+    "travel_mm": 0.203247,
+    "passed": true
+   },
+   {
+    "id": "pixel-1-in",
+    "servo_deg": 60,
+    "type": "retention",
+    "travel_mm": 0.204102,
+    "passed": true
+   },
+   {
+    "id": "lower-pixel-2",
+    "servo_deg": 60,
+    "type": "drive",
+    "travels": [
+     null,
+     0.204053
+    ],
+    "unit": "mm",
+    "limit": 0.4,
+    "passed": true
+   },
+   {
+    "id": "upper-pixel-2",
+    "servo_deg": 60,
+    "type": "drive",
+    "travels": [
+     0.205566,
+     null
+    ],
+    "unit": "mm",
+    "limit": 0.4,
+    "passed": true
+   },
+   {
+    "id": "pixel-2-out",
+    "servo_deg": 60,
+    "type": "retention",
+    "travel_mm": 0.205566,
+    "passed": true
+   },
+   {
+    "id": "pixel-2-in",
+    "servo_deg": 60,
+    "type": "retention",
+    "travel_mm": 0.204102,
+    "passed": true
+   },
+   {
+    "id": "lower-pixel-3",
+    "servo_deg": 60,
+    "type": "drive",
+    "travels": [
+     null,
+     0.204053
+    ],
+    "unit": "mm",
+    "limit": 0.4,
+    "passed": true
+   },
+   {
+    "id": "upper-pixel-3",
+    "servo_deg": 60,
+    "type": "drive",
+    "travels": [
+     0.20376,
+     null
+    ],
+    "unit": "mm",
+    "limit": 0.4,
+    "passed": true
+   },
+   {
+    "id": "pixel-3-out",
+    "servo_deg": 60,
+    "type": "retention",
+    "travel_mm": 0.203857,
+    "passed": true
+   },
+   {
+    "id": "pixel-3-in",
+    "servo_deg": 60,
+    "type": "retention",
+    "travel_mm": 0.204102,
+    "passed": true
+   },
+   {
+    "id": "cam-out",
+    "servo_deg": 60,
+    "type": "retention",
+    "travel_mm": 0.250122,
+    "passed": true
+   },
+   {
+    "id": "guide-out",
+    "servo_deg": 60,
+    "type": "retention",
+    "travel_mm": 0.3302,
+    "passed": true
+   },
+   {
+    "id": "servo-out",
+    "servo_deg": 60,
+    "type": "retention",
+    "travel_mm": 0.250122,
+    "passed": true
+   },
+   {
+    "id": "support-out",
+    "servo_deg": 60,
+    "type": "retention",
+    "travel_mm": 0.254028,
+    "passed": true
+   },
+   {
+    "id": "cap-out",
+    "servo_deg": 60,
+    "type": "retention",
+    "travel_mm": 0.250488,
+    "passed": true
+   },
+   {
+    "id": "cam-key-1-out",
+    "servo_deg": 60,
+    "type": "retention",
+    "travel_mm": 0.251221,
+    "passed": true
+   },
+   {
+    "id": "cam-key-2-out",
+    "servo_deg": 60,
+    "type": "retention",
+    "travel_mm": 0.251221,
+    "passed": true
+   },
+   {
+    "id": "cam-in",
+    "servo_deg": 60,
+    "type": "retention",
+    "travel_mm": 0.250122,
+    "passed": true
+   },
+   {
+    "id": "guide-in",
+    "servo_deg": 60,
+    "type": "retention",
+    "travel_mm": 0.250122,
+    "passed": true
+   },
+   {
+    "id": "servo-in",
+    "servo_deg": 60,
+    "type": "retention",
+    "travel_mm": 0.250122,
+    "passed": true
+   },
+   {
+    "id": "support-in",
+    "servo_deg": 60,
+    "type": "retention",
+    "travel_mm": 0.200439,
+    "passed": true
+   },
+   {
+    "id": "cap-in",
+    "servo_deg": 60,
+    "type": "retention",
+    "travel_mm": 0.250122,
+    "passed": true
+   },
+   {
+    "id": "cam-key-1-in",
+    "servo_deg": 60,
+    "type": "retention",
+    "travel_mm": 0.250122,
+    "passed": true
+   },
+   {
+    "id": "cam-key-2-in",
+    "servo_deg": 60,
+    "type": "retention",
+    "travel_mm": 0.250122,
+    "passed": true
+   },
+   {
+    "id": "horn-cam",
+    "servo_deg": 75,
+    "type": "drive",
+    "travels": [
+     1.785352,
+     1.785352
+    ],
+    "unit": "deg",
+    "limit": 3,
+    "passed": true
+   },
+   {
+    "id": "upper-cam-key",
+    "servo_deg": 75,
+    "type": "drive",
+    "travels": [
+     0.497754,
+     0.479883
+    ],
+    "unit": "deg",
+    "limit": 3,
+    "passed": true
+   },
+   {
+    "id": "key-lower-cam",
+    "servo_deg": 75,
+    "type": "drive",
+    "travels": [
+     0.494824,
+     0.494824
+    ],
+    "unit": "deg",
+    "limit": 3,
+    "passed": true
+   },
+   {
+    "id": "lower-pixel-1",
+    "servo_deg": 75,
+    "type": "drive",
+    "travels": [
+     null,
+     0.241797
+    ],
+    "unit": "mm",
+    "limit": 0.4,
+    "passed": true
+   },
+   {
+    "id": "upper-pixel-1",
+    "servo_deg": 75,
+    "type": "drive",
+    "travels": [
+     0.241797,
+     null
+    ],
+    "unit": "mm",
+    "limit": 0.4,
+    "passed": true
+   },
+   {
+    "id": "pixel-1-out",
+    "servo_deg": 75,
+    "type": "retention",
+    "travel_mm": 0.241821,
+    "passed": true
+   },
+   {
+    "id": "pixel-1-in",
+    "servo_deg": 75,
+    "type": "retention",
+    "travel_mm": 0.241821,
+    "passed": true
+   },
+   {
+    "id": "lower-pixel-2",
+    "servo_deg": 75,
+    "type": "drive",
+    "travels": [
+     null,
+     0.204053
+    ],
+    "unit": "mm",
+    "limit": 0.4,
+    "passed": true
+   },
+   {
+    "id": "upper-pixel-2",
+    "servo_deg": 75,
+    "type": "drive",
+    "travels": [
+     0.20376,
+     null
+    ],
+    "unit": "mm",
+    "limit": 0.4,
+    "passed": true
+   },
+   {
+    "id": "pixel-2-out",
+    "servo_deg": 75,
+    "type": "retention",
+    "travel_mm": 0.203857,
+    "passed": true
+   },
+   {
+    "id": "pixel-2-in",
+    "servo_deg": 75,
+    "type": "retention",
+    "travel_mm": 0.204102,
+    "passed": true
+   },
+   {
+    "id": "lower-pixel-3",
+    "servo_deg": 75,
+    "type": "drive",
+    "travels": [
+     null,
+     0.214307
+    ],
+    "unit": "mm",
+    "limit": 0.4,
+    "passed": true
+   },
+   {
+    "id": "upper-pixel-3",
+    "servo_deg": 75,
+    "type": "drive",
+    "travels": [
+     0.216602,
+     null
+    ],
+    "unit": "mm",
+    "limit": 0.4,
+    "passed": true
+   },
+   {
+    "id": "pixel-3-out",
+    "servo_deg": 75,
+    "type": "retention",
+    "travel_mm": 0.216675,
+    "passed": true
+   },
+   {
+    "id": "pixel-3-in",
+    "servo_deg": 75,
+    "type": "retention",
+    "travel_mm": 0.214355,
+    "passed": true
+   },
+   {
+    "id": "cam-out",
+    "servo_deg": 75,
+    "type": "retention",
+    "travel_mm": 0.250122,
+    "passed": true
+   },
+   {
+    "id": "guide-out",
+    "servo_deg": 75,
+    "type": "retention",
+    "travel_mm": 0.3302,
+    "passed": true
+   },
+   {
+    "id": "servo-out",
+    "servo_deg": 75,
+    "type": "retention",
+    "travel_mm": 0.250122,
+    "passed": true
+   },
+   {
+    "id": "support-out",
+    "servo_deg": 75,
+    "type": "retention",
+    "travel_mm": 0.254028,
+    "passed": true
+   },
+   {
+    "id": "cap-out",
+    "servo_deg": 75,
+    "type": "retention",
+    "travel_mm": 0.250488,
+    "passed": true
+   },
+   {
+    "id": "cam-key-1-out",
+    "servo_deg": 75,
+    "type": "retention",
+    "travel_mm": 0.251221,
+    "passed": true
+   },
+   {
+    "id": "cam-key-2-out",
+    "servo_deg": 75,
+    "type": "retention",
+    "travel_mm": 0.251221,
+    "passed": true
+   },
+   {
+    "id": "cam-in",
+    "servo_deg": 75,
+    "type": "retention",
+    "travel_mm": 0.250122,
+    "passed": true
+   },
+   {
+    "id": "guide-in",
+    "servo_deg": 75,
+    "type": "retention",
+    "travel_mm": 0.250122,
+    "passed": true
+   },
+   {
+    "id": "servo-in",
+    "servo_deg": 75,
+    "type": "retention",
+    "travel_mm": 0.250122,
+    "passed": true
+   },
+   {
+    "id": "support-in",
+    "servo_deg": 75,
+    "type": "retention",
+    "travel_mm": 0.200439,
+    "passed": true
+   },
+   {
+    "id": "cap-in",
+    "servo_deg": 75,
+    "type": "retention",
+    "travel_mm": 0.250122,
+    "passed": true
+   },
+   {
+    "id": "cam-key-1-in",
+    "servo_deg": 75,
+    "type": "retention",
+    "travel_mm": 0.250122,
+    "passed": true
+   },
+   {
+    "id": "cam-key-2-in",
+    "servo_deg": 75,
+    "type": "retention",
+    "travel_mm": 0.250122,
+    "passed": true
+   },
+   {
+    "id": "horn-cam",
+    "servo_deg": 90,
+    "type": "drive",
+    "travels": [
+     1.785352,
+     1.785352
+    ],
+    "unit": "deg",
+    "limit": 3,
+    "passed": true
+   },
+   {
+    "id": "upper-cam-key",
+    "servo_deg": 90,
+    "type": "drive",
+    "travels": [
+     0.497754,
+     0.479883
+    ],
+    "unit": "deg",
+    "limit": 3,
+    "passed": true
+   },
+   {
+    "id": "key-lower-cam",
+    "servo_deg": 90,
+    "type": "drive",
+    "travels": [
+     0.494824,
+     0.494824
+    ],
+    "unit": "deg",
+    "limit": 3,
+    "passed": true
+   },
+   {
+    "id": "lower-pixel-1",
+    "servo_deg": 90,
+    "type": "drive",
+    "travels": [
+     null,
+     0.204053
+    ],
+    "unit": "mm",
+    "limit": 0.4,
+    "passed": true
+   },
+   {
+    "id": "upper-pixel-1",
+    "servo_deg": 90,
+    "type": "drive",
+    "travels": [
+     0.20376,
+     null
+    ],
+    "unit": "mm",
+    "limit": 0.4,
+    "passed": true
+   },
+   {
+    "id": "pixel-1-out",
+    "servo_deg": 90,
+    "type": "retention",
+    "travel_mm": 0.203857,
+    "passed": true
+   },
+   {
+    "id": "pixel-1-in",
+    "servo_deg": 90,
+    "type": "retention",
+    "travel_mm": 0.204102,
+    "passed": true
+   },
+   {
+    "id": "lower-pixel-2",
+    "servo_deg": 90,
+    "type": "drive",
+    "travels": [
+     null,
+     0.204053
+    ],
+    "unit": "mm",
+    "limit": 0.4,
+    "passed": true
+   },
+   {
+    "id": "upper-pixel-2",
+    "servo_deg": 90,
+    "type": "drive",
+    "travels": [
+     0.20376,
+     null
+    ],
+    "unit": "mm",
+    "limit": 0.4,
+    "passed": true
+   },
+   {
+    "id": "pixel-2-out",
+    "servo_deg": 90,
+    "type": "retention",
+    "travel_mm": 0.203857,
+    "passed": true
+   },
+   {
+    "id": "pixel-2-in",
+    "servo_deg": 90,
+    "type": "retention",
+    "travel_mm": 0.204102,
+    "passed": true
+   },
+   {
+    "id": "lower-pixel-3",
+    "servo_deg": 90,
+    "type": "drive",
+    "travels": [
+     null,
+     0.204053
+    ],
+    "unit": "mm",
+    "limit": 0.4,
+    "passed": true
+   },
+   {
+    "id": "upper-pixel-3",
+    "servo_deg": 90,
+    "type": "drive",
+    "travels": [
+     0.205566,
+     null
+    ],
+    "unit": "mm",
+    "limit": 0.4,
+    "passed": true
+   },
+   {
+    "id": "pixel-3-out",
+    "servo_deg": 90,
+    "type": "retention",
+    "travel_mm": 0.205566,
+    "passed": true
+   },
+   {
+    "id": "pixel-3-in",
+    "servo_deg": 90,
+    "type": "retention",
+    "travel_mm": 0.204102,
+    "passed": true
+   },
+   {
+    "id": "cam-out",
+    "servo_deg": 90,
+    "type": "retention",
+    "travel_mm": 0.250122,
+    "passed": true
+   },
+   {
+    "id": "guide-out",
+    "servo_deg": 90,
+    "type": "retention",
+    "travel_mm": 0.3302,
+    "passed": true
+   },
+   {
+    "id": "servo-out",
+    "servo_deg": 90,
+    "type": "retention",
+    "travel_mm": 0.250122,
+    "passed": true
+   },
+   {
+    "id": "support-out",
+    "servo_deg": 90,
+    "type": "retention",
+    "travel_mm": 0.254028,
+    "passed": true
+   },
+   {
+    "id": "cap-out",
+    "servo_deg": 90,
+    "type": "retention",
+    "travel_mm": 0.250488,
+    "passed": true
+   },
+   {
+    "id": "cam-key-1-out",
+    "servo_deg": 90,
+    "type": "retention",
+    "travel_mm": 0.251221,
+    "passed": true
+   },
+   {
+    "id": "cam-key-2-out",
+    "servo_deg": 90,
+    "type": "retention",
+    "travel_mm": 0.251221,
+    "passed": true
+   },
+   {
+    "id": "cam-in",
+    "servo_deg": 90,
+    "type": "retention",
+    "travel_mm": 0.250122,
+    "passed": true
+   },
+   {
+    "id": "guide-in",
+    "servo_deg": 90,
+    "type": "retention",
+    "travel_mm": 0.250122,
+    "passed": true
+   },
+   {
+    "id": "servo-in",
+    "servo_deg": 90,
+    "type": "retention",
+    "travel_mm": 0.250122,
+    "passed": true
+   },
+   {
+    "id": "support-in",
+    "servo_deg": 90,
+    "type": "retention",
+    "travel_mm": 0.200439,
+    "passed": true
+   },
+   {
+    "id": "cap-in",
+    "servo_deg": 90,
+    "type": "retention",
+    "travel_mm": 0.250122,
+    "passed": true
+   },
+   {
+    "id": "cam-key-1-in",
+    "servo_deg": 90,
+    "type": "retention",
+    "travel_mm": 0.250122,
+    "passed": true
+   },
+   {
+    "id": "cam-key-2-in",
+    "servo_deg": 90,
+    "type": "retention",
+    "travel_mm": 0.250122,
+    "passed": true
+   },
+   {
+    "id": "horn-cam",
+    "servo_deg": 105,
+    "type": "drive",
+    "travels": [
+     1.785352,
+     1.785352
+    ],
+    "unit": "deg",
+    "limit": 3,
+    "passed": true
+   },
+   {
+    "id": "upper-cam-key",
+    "servo_deg": 105,
+    "type": "drive",
+    "travels": [
+     0.497754,
+     0.479883
+    ],
+    "unit": "deg",
+    "limit": 3,
+    "passed": true
+   },
+   {
+    "id": "key-lower-cam",
+    "servo_deg": 105,
+    "type": "drive",
+    "travels": [
+     0.494824,
+     0.494824
+    ],
+    "unit": "deg",
+    "limit": 3,
+    "passed": true
+   },
+   {
+    "id": "lower-pixel-1",
+    "servo_deg": 105,
+    "type": "drive",
+    "travels": [
+     null,
+     0.204053
+    ],
+    "unit": "mm",
+    "limit": 0.4,
+    "passed": true
+   },
+   {
+    "id": "upper-pixel-1",
+    "servo_deg": 105,
+    "type": "drive",
+    "travels": [
+     0.20376,
+     null
+    ],
+    "unit": "mm",
+    "limit": 0.4,
+    "passed": true
+   },
+   {
+    "id": "pixel-1-out",
+    "servo_deg": 105,
+    "type": "retention",
+    "travel_mm": 0.203857,
+    "passed": true
+   },
+   {
+    "id": "pixel-1-in",
+    "servo_deg": 105,
+    "type": "retention",
+    "travel_mm": 0.204102,
+    "passed": true
+   },
+   {
+    "id": "lower-pixel-2",
+    "servo_deg": 105,
+    "type": "drive",
+    "travels": [
+     null,
+     0.241797
+    ],
+    "unit": "mm",
+    "limit": 0.4,
+    "passed": true
+   },
+   {
+    "id": "upper-pixel-2",
+    "servo_deg": 105,
+    "type": "drive",
+    "travels": [
+     0.241797,
+     null
+    ],
+    "unit": "mm",
+    "limit": 0.4,
+    "passed": true
+   },
+   {
+    "id": "pixel-2-out",
+    "servo_deg": 105,
+    "type": "retention",
+    "travel_mm": 0.241821,
+    "passed": true
+   },
+   {
+    "id": "pixel-2-in",
+    "servo_deg": 105,
+    "type": "retention",
+    "travel_mm": 0.241821,
+    "passed": true
+   },
+   {
+    "id": "lower-pixel-3",
+    "servo_deg": 105,
+    "type": "drive",
+    "travels": [
+     null,
+     0.214307
+    ],
+    "unit": "mm",
+    "limit": 0.4,
+    "passed": true
+   },
+   {
+    "id": "upper-pixel-3",
+    "servo_deg": 105,
+    "type": "drive",
+    "travels": [
+     0.216602,
+     null
+    ],
+    "unit": "mm",
+    "limit": 0.4,
+    "passed": true
+   },
+   {
+    "id": "pixel-3-out",
+    "servo_deg": 105,
+    "type": "retention",
+    "travel_mm": 0.216675,
+    "passed": true
+   },
+   {
+    "id": "pixel-3-in",
+    "servo_deg": 105,
+    "type": "retention",
+    "travel_mm": 0.214355,
+    "passed": true
+   },
+   {
+    "id": "cam-out",
+    "servo_deg": 105,
+    "type": "retention",
+    "travel_mm": 0.250122,
+    "passed": true
+   },
+   {
+    "id": "guide-out",
+    "servo_deg": 105,
+    "type": "retention",
+    "travel_mm": 0.3302,
+    "passed": true
+   },
+   {
+    "id": "servo-out",
+    "servo_deg": 105,
+    "type": "retention",
+    "travel_mm": 0.250122,
+    "passed": true
+   },
+   {
+    "id": "support-out",
+    "servo_deg": 105,
+    "type": "retention",
+    "travel_mm": 0.254028,
+    "passed": true
+   },
+   {
+    "id": "cap-out",
+    "servo_deg": 105,
+    "type": "retention",
+    "travel_mm": 0.250488,
+    "passed": true
+   },
+   {
+    "id": "cam-key-1-out",
+    "servo_deg": 105,
+    "type": "retention",
+    "travel_mm": 0.251221,
+    "passed": true
+   },
+   {
+    "id": "cam-key-2-out",
+    "servo_deg": 105,
+    "type": "retention",
+    "travel_mm": 0.251221,
+    "passed": true
+   },
+   {
+    "id": "cam-in",
+    "servo_deg": 105,
+    "type": "retention",
+    "travel_mm": 0.250122,
+    "passed": true
+   },
+   {
+    "id": "guide-in",
+    "servo_deg": 105,
+    "type": "retention",
+    "travel_mm": 0.250122,
+    "passed": true
+   },
+   {
+    "id": "servo-in",
+    "servo_deg": 105,
+    "type": "retention",
+    "travel_mm": 0.250122,
+    "passed": true
+   },
+   {
+    "id": "support-in",
+    "servo_deg": 105,
+    "type": "retention",
+    "travel_mm": 0.200439,
+    "passed": true
+   },
+   {
+    "id": "cap-in",
+    "servo_deg": 105,
+    "type": "retention",
+    "travel_mm": 0.250122,
+    "passed": true
+   },
+   {
+    "id": "cam-key-1-in",
+    "servo_deg": 105,
+    "type": "retention",
+    "travel_mm": 0.250122,
+    "passed": true
+   },
+   {
+    "id": "cam-key-2-in",
+    "servo_deg": 105,
+    "type": "retention",
+    "travel_mm": 0.250122,
+    "passed": true
+   },
+   {
+    "id": "horn-cam",
+    "servo_deg": 120,
+    "type": "drive",
+    "travels": [
+     1.785352,
+     1.785352
+    ],
+    "unit": "deg",
+    "limit": 3,
+    "passed": true
+   },
+   {
+    "id": "upper-cam-key",
+    "servo_deg": 120,
+    "type": "drive",
+    "travels": [
+     0.497754,
+     0.479883
+    ],
+    "unit": "deg",
+    "limit": 3,
+    "passed": true
+   },
+   {
+    "id": "key-lower-cam",
+    "servo_deg": 120,
+    "type": "drive",
+    "travels": [
+     0.494824,
+     0.494824
+    ],
+    "unit": "deg",
+    "limit": 3,
+    "passed": true
+   },
+   {
+    "id": "lower-pixel-1",
+    "servo_deg": 120,
+    "type": "drive",
+    "travels": [
+     null,
+     0.204053
+    ],
+    "unit": "mm",
+    "limit": 0.4,
+    "passed": true
+   },
+   {
+    "id": "upper-pixel-1",
+    "servo_deg": 120,
+    "type": "drive",
+    "travels": [
+     0.203223,
+     null
+    ],
+    "unit": "mm",
+    "limit": 0.4,
+    "passed": true
+   },
+   {
+    "id": "pixel-1-out",
+    "servo_deg": 120,
+    "type": "retention",
+    "travel_mm": 0.203247,
+    "passed": true
+   },
+   {
+    "id": "pixel-1-in",
+    "servo_deg": 120,
+    "type": "retention",
+    "travel_mm": 0.204102,
+    "passed": true
+   },
+   {
+    "id": "lower-pixel-2",
+    "servo_deg": 120,
+    "type": "drive",
+    "travels": [
+     null,
+     0.204053
+    ],
+    "unit": "mm",
+    "limit": 0.4,
+    "passed": true
+   },
+   {
+    "id": "upper-pixel-2",
+    "servo_deg": 120,
+    "type": "drive",
+    "travels": [
+     0.20376,
+     null
+    ],
+    "unit": "mm",
+    "limit": 0.4,
+    "passed": true
+   },
+   {
+    "id": "pixel-2-out",
+    "servo_deg": 120,
+    "type": "retention",
+    "travel_mm": 0.203857,
+    "passed": true
+   },
+   {
+    "id": "pixel-2-in",
+    "servo_deg": 120,
+    "type": "retention",
+    "travel_mm": 0.204102,
+    "passed": true
+   },
+   {
+    "id": "lower-pixel-3",
+    "servo_deg": 120,
+    "type": "drive",
+    "travels": [
+     null,
+     0.204053
+    ],
+    "unit": "mm",
+    "limit": 0.4,
+    "passed": true
+   },
+   {
+    "id": "upper-pixel-3",
+    "servo_deg": 120,
+    "type": "drive",
+    "travels": [
+     0.205566,
+     null
+    ],
+    "unit": "mm",
+    "limit": 0.4,
+    "passed": true
+   },
+   {
+    "id": "pixel-3-out",
+    "servo_deg": 120,
+    "type": "retention",
+    "travel_mm": 0.205566,
+    "passed": true
+   },
+   {
+    "id": "pixel-3-in",
+    "servo_deg": 120,
+    "type": "retention",
+    "travel_mm": 0.204102,
+    "passed": true
+   },
+   {
+    "id": "cam-out",
+    "servo_deg": 120,
+    "type": "retention",
+    "travel_mm": 0.250122,
+    "passed": true
+   },
+   {
+    "id": "guide-out",
+    "servo_deg": 120,
+    "type": "retention",
+    "travel_mm": 0.3302,
+    "passed": true
+   },
+   {
+    "id": "servo-out",
+    "servo_deg": 120,
+    "type": "retention",
+    "travel_mm": 0.250122,
+    "passed": true
+   },
+   {
+    "id": "support-out",
+    "servo_deg": 120,
+    "type": "retention",
+    "travel_mm": 0.254028,
+    "passed": true
+   },
+   {
+    "id": "cap-out",
+    "servo_deg": 120,
+    "type": "retention",
+    "travel_mm": 0.250488,
+    "passed": true
+   },
+   {
+    "id": "cam-key-1-out",
+    "servo_deg": 120,
+    "type": "retention",
+    "travel_mm": 0.251221,
+    "passed": true
+   },
+   {
+    "id": "cam-key-2-out",
+    "servo_deg": 120,
+    "type": "retention",
+    "travel_mm": 0.251221,
+    "passed": true
+   },
+   {
+    "id": "cam-in",
+    "servo_deg": 120,
+    "type": "retention",
+    "travel_mm": 0.250122,
+    "passed": true
+   },
+   {
+    "id": "guide-in",
+    "servo_deg": 120,
+    "type": "retention",
+    "travel_mm": 0.250122,
+    "passed": true
+   },
+   {
+    "id": "servo-in",
+    "servo_deg": 120,
+    "type": "retention",
+    "travel_mm": 0.250122,
+    "passed": true
+   },
+   {
+    "id": "support-in",
+    "servo_deg": 120,
+    "type": "retention",
+    "travel_mm": 0.200439,
+    "passed": true
+   },
+   {
+    "id": "cap-in",
+    "servo_deg": 120,
+    "type": "retention",
+    "travel_mm": 0.250122,
+    "passed": true
+   },
+   {
+    "id": "cam-key-1-in",
+    "servo_deg": 120,
+    "type": "retention",
+    "travel_mm": 0.250122,
+    "passed": true
+   },
+   {
+    "id": "cam-key-2-in",
+    "servo_deg": 120,
+    "type": "retention",
+    "travel_mm": 0.250122,
+    "passed": true
+   }
+  ]
+ },
+ "assembly": {
+  "pass": true,
+  "steps": [
+   {
+    "id": "support-base",
+    "frames": 2,
+    "checkedPoses": 2,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "guide-in",
+    "frames": 81,
+    "checkedPoses": 81,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "servo-in",
+    "frames": 91,
+    "checkedPoses": 91,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "servo_cap-in",
+    "frames": 81,
+    "checkedPoses": 81,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "horn-in",
+    "frames": 41,
+    "checkedPoses": 41,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "cam_lower-in",
+    "frames": 61,
+    "checkedPoses": 61,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "pixel_1-in",
+    "frames": 71,
+    "checkedPoses": 71,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "pixel_2-in",
+    "frames": 71,
+    "checkedPoses": 71,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "pixel_3-in",
+    "frames": 71,
+    "checkedPoses": 71,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "cam_upper-in",
+    "frames": 61,
+    "checkedPoses": 61,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "cam_key_1-in",
+    "frames": 41,
+    "checkedPoses": 41,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "cam_key_2-in",
+    "frames": 41,
+    "checkedPoses": 41,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "panel-in",
+    "frames": 71,
+    "checkedPoses": 71,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "key_l-prepare",
+    "frames": 2,
+    "checkedPoses": 2,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "key_r-prepare",
+    "frames": 2,
+    "checkedPoses": 2,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "closed-neutral",
+    "frames": 2,
+    "checkedPoses": 2,
+    "moving": 15,
+    "violations": 0,
+    "pass": true
+   }
+  ],
+  "violations": [],
+  "interpolatedPoses": 0,
+  "boundaryErrors": [],
+  "finalNotAssembled": [],
+  "finalParts": [
+   "cam_key_1",
+   "cam_key_2",
+   "cam_lower",
+   "cam_upper",
+   "guide",
+   "horn",
+   "key_l",
+   "key_r",
+   "panel",
+   "pixel_1",
+   "pixel_2",
+   "pixel_3",
+   "servo",
+   "servo_cap",
+   "support"
+  ],
+  "allowedContacts": [
+   {
+    "parts": [
+     "cam_key_1",
+     "cam_lower"
+    ],
+    "type": "snap",
+    "maxCommonMm3": 1.079995,
+    "maxRemainingTravelMm": 4.0,
+    "samples": 8,
+    "steps": [
+     "cam_key_1-in"
+    ]
+   },
+   {
+    "parts": [
+     "cam_key_1",
+     "cam_upper"
+    ],
+    "type": "snap",
+    "maxCommonMm3": 1.079995,
+    "maxRemainingTravelMm": 9.5,
+    "samples": 13,
+    "steps": [
+     "cam_key_1-in"
+    ]
+   },
+   {
+    "parts": [
+     "cam_key_2",
+     "cam_lower"
+    ],
+    "type": "snap",
+    "maxCommonMm3": 1.079996,
+    "maxRemainingTravelMm": 3.5,
+    "samples": 7,
+    "steps": [
+     "cam_key_2-in"
+    ]
+   },
+   {
+    "parts": [
+     "cam_key_2",
+     "cam_upper"
+    ],
+    "type": "snap",
+    "maxCommonMm3": 1.079999,
+    "maxRemainingTravelMm": 9.5,
+    "samples": 13,
+    "steps": [
+     "cam_key_2-in"
+    ]
+   },
+   {
+    "parts": [
+     "guide",
+     "servo_cap"
+    ],
+    "type": "snap",
+    "maxCommonMm3": 14.410735,
+    "maxRemainingTravelMm": 8.0,
+    "samples": 13,
+    "steps": [
+     "servo_cap-in"
+    ]
+   },
+   {
+    "parts": [
+     "panel",
+     "support"
+    ],
+    "type": "snap",
+    "maxCommonMm3": 1.728002,
+    "maxRemainingTravelMm": 1.5,
+    "samples": 3,
+    "steps": [
+     "panel-in"
+    ]
+   },
+   {
+    "parts": [
+     "servo_cap",
+     "support"
+    ],
+    "type": "snap",
+    "maxCommonMm3": 2.519991,
+    "maxRemainingTravelMm": 4.0,
+    "samples": 8,
+    "steps": [
+     "servo_cap-in"
+    ]
+   }
+  ]
+ },
+ "elastic_cap": {
+  "strain_percent": [
+   1.9374307310439585,
+   0.47063097457496467
+  ],
+  "tip_deflection_and_shortening_mm": [
+   [
+    1,
+    5.000000000185425,
+    0.6910943978988051
+   ],
+   [
+    -1,
+    0.600000000060529,
+    0.012346591352329739
+   ]
+  ],
+  "checked_frames": 91,
+  "violations": [],
+  "passed": true
+ },
+ "pass": true
+}

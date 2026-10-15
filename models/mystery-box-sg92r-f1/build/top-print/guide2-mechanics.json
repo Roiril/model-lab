@@ -1,0 +1,329 @@
+{
+  "calibration": {
+    "overlapHalf": {
+      "measured": 0.5,
+      "expected": 0.5,
+      "pass": true
+    },
+    "thinOverlap0.002": {
+      "measured": 0.0020000040531158447,
+      "expected": 0.002,
+      "pass": true
+    },
+    "separated": {
+      "measured": 0.0,
+      "expected": 0.0,
+      "pass": true
+    },
+    "faceContact": {
+      "measured": 0.0,
+      "expected": 0.0,
+      "pass": true
+    },
+    "edgeContact": {
+      "measured": 0.0,
+      "expected": 0.0,
+      "pass": true
+    },
+    "nestedInside": {
+      "measured": 1.0,
+      "expected": 1.0,
+      "pass": true
+    },
+    "nestedInsideReversed": {
+      "measured": 1.0,
+      "expected": 1.0,
+      "pass": true
+    },
+    "tiltedFaceContactAtScale": {
+      "measured": 0.0,
+      "expected": 0.0,
+      "pass": true
+    },
+    "tiltedThinOverlapAtScale": {
+      "measured": 4.000433860168268,
+      "expected": 4.0,
+      "pass": true
+    },
+    "skipAgreesWithBoolean": {
+      "cases": [
+        {
+          "case": "separated",
+          "fast": 0.0,
+          "full": 0.0,
+          "pass": true
+        },
+        {
+          "case": "overlap",
+          "fast": 0.7000000029802322,
+          "full": 0.7000000029802322,
+          "pass": true
+        },
+        {
+          "case": "nested",
+          "fast": 1.0,
+          "full": 1.0,
+          "pass": true
+        }
+      ],
+      "pass": true
+    },
+    "firstContactLinear": {
+      "measured": 0.501001,
+      "expected": 0.501,
+      "pass": true
+    },
+    "firstContactNone": {
+      "measured": null,
+      "expected": null,
+      "pass": true
+    },
+    "firstContactAngular": {
+      "measured": 14.255127,
+      "expected": 14.255098890306314,
+      "pass": true
+    },
+    "pass": true
+  },
+  "collisions": [],
+  "interfaces": {
+    "passed": true,
+    "rows": [
+      {
+        "id": "cam-out",
+        "servo_deg": 60,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "guide-out",
+        "servo_deg": 60,
+        "type": "retention",
+        "travel_mm": 0.3302,
+        "passed": true
+      },
+      {
+        "id": "cap-out",
+        "servo_deg": 60,
+        "type": "retention",
+        "travel_mm": 0.250488,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 60,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "guide-in",
+        "servo_deg": 60,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cap-in",
+        "servo_deg": 60,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 75,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "guide-out",
+        "servo_deg": 75,
+        "type": "retention",
+        "travel_mm": 0.3302,
+        "passed": true
+      },
+      {
+        "id": "cap-out",
+        "servo_deg": 75,
+        "type": "retention",
+        "travel_mm": 0.250488,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 75,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "guide-in",
+        "servo_deg": 75,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cap-in",
+        "servo_deg": 75,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 90,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "guide-out",
+        "servo_deg": 90,
+        "type": "retention",
+        "travel_mm": 0.3302,
+        "passed": true
+      },
+      {
+        "id": "cap-out",
+        "servo_deg": 90,
+        "type": "retention",
+        "travel_mm": 0.250488,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 90,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "guide-in",
+        "servo_deg": 90,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cap-in",
+        "servo_deg": 90,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 105,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "guide-out",
+        "servo_deg": 105,
+        "type": "retention",
+        "travel_mm": 0.3302,
+        "passed": true
+      },
+      {
+        "id": "cap-out",
+        "servo_deg": 105,
+        "type": "retention",
+        "travel_mm": 0.250488,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 105,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "guide-in",
+        "servo_deg": 105,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cap-in",
+        "servo_deg": 105,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cam-out",
+        "servo_deg": 120,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "guide-out",
+        "servo_deg": 120,
+        "type": "retention",
+        "travel_mm": 0.3302,
+        "passed": true
+      },
+      {
+        "id": "cap-out",
+        "servo_deg": 120,
+        "type": "retention",
+        "travel_mm": 0.250488,
+        "passed": true
+      },
+      {
+        "id": "cam-in",
+        "servo_deg": 120,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "guide-in",
+        "servo_deg": 120,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      },
+      {
+        "id": "cap-in",
+        "servo_deg": 120,
+        "type": "retention",
+        "travel_mm": 0.250122,
+        "passed": true
+      }
+    ]
+  },
+  "metrics": {
+    "volume_mm3": 2176.5020142528133,
+    "nonmanifold": 0,
+    "components": 1
+  },
+  "envelope": {
+    "passed": true,
+    "margin_mm": {
+      "panel": 0.0,
+      "key_l": 5.5,
+      "key_r": 5.5,
+      "support": 0.25,
+      "servo_cap": 0.10000038146972656,
+      "cam_lower": 0.24999878936298003,
+      "cam_upper": 6.24999878936298,
+      "pixel_1": 0.4500007629394531,
+      "pixel_2": 0.25,
+      "pixel_3": 0.25,
+      "guide": 0.04592132568359375,
+      "cam_key_1": 3.1023782221194445,
+      "cam_key_2": 3.1023772699343546,
+      "servo": 0.25,
+      "horn": 14.75
+    }
+  }
+}

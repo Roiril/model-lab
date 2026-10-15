@@ -1,5 +1,5 @@
 {
- "startedAt": "2026-10-15T19:09:46",
+ "startedAt": "2026-10-15T23:12:53",
  "calibration": {
   "overlapHalf": {
    "measured": 0.5,
@@ -89,14 +89,14 @@
  "selfIntersection": {
   "pass": true,
   "failing": {},
-  "checked": 42
+  "checked": 54
  },
  "motion": {
   "pass": true,
-  "parts": 46,
-  "pairs": 1035,
-  "constantPairs": 862,
-  "varyingPairs": 173,
+  "parts": 60,
+  "pairs": 1770,
+  "constantPairs": 1541,
+  "varyingPairs": 229,
   "frames": 48,
   "servoDegs": [
    55.66268077250187,
@@ -111,6 +111,14 @@
     ],
     "type": "reference_internal",
     "maxMm3": 0.029994455296799633
+   },
+   {
+    "parts": [
+     "right/horn",
+     "right/servo"
+    ],
+    "type": "reference_internal",
+    "maxMm3": 0.01753747845843496
    }
   ],
   "interpolatedPoses": 0
@@ -180,7 +188,7 @@
      "servoDeg": 55.66268077250187,
      "unit": "deg",
      "limit": 3,
-     "back": 0.929297,
+     "back": 1.612134,
      "ahead": 0.925104,
      "pass": true
     },
@@ -188,7 +196,7 @@
      "servoDeg": 61.63438846424068,
      "unit": "deg",
      "limit": 3,
-     "back": 0.930176,
+     "back": 1.469403,
      "ahead": 0.925635,
      "pass": true
     }
@@ -399,7 +407,7 @@
     "pass": true
    },
    {
-    "id": "right/panel",
+    "id": "right/servo-prepare",
     "frames": 2,
     "checkedPoses": 2,
     "moving": 1,
@@ -407,10 +415,162 @@
     "pass": true
    },
    {
+    "id": "right/horn-in-1",
+    "frames": 21,
+    "checkedPoses": 21,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "right/input_cup-in-2",
+    "frames": 51,
+    "checkedPoses": 51,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "right/input_gear-in-3",
+    "frames": 51,
+    "checkedPoses": 51,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "right/input_spindle-in-4",
+    "frames": 51,
+    "checkedPoses": 51,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "right/support-prepare",
+    "frames": 2,
+    "checkedPoses": 2,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "right/servo-horn-input_cup-input_gear-input_spindle-in-6",
+    "frames": 91,
+    "checkedPoses": 91,
+    "moving": 5,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "right/servo_cap-prepare",
+    "frames": 2,
+    "checkedPoses": 2,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "right/cap_foot-in-8",
+    "frames": 21,
+    "checkedPoses": 21,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "right/servo_cap-cap_foot-in-9",
+    "frames": 81,
+    "checkedPoses": 81,
+    "moving": 2,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "right/flag-prepare",
+    "frames": 2,
+    "checkedPoses": 2,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "right/sector_gear-in-11",
+    "frames": 51,
+    "checkedPoses": 51,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "right/flag_cover-in-12",
+    "frames": 51,
+    "checkedPoses": 51,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "right/flag-sector_gear-flag_cover-in-13",
+    "frames": 92,
+    "checkedPoses": 92,
+    "moving": 3,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "right/flag-sector_gear-flag_cover-in-14",
+    "frames": 7,
+    "checkedPoses": 7,
+    "moving": 3,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "right/hinge_pin-in-15",
+    "frames": 121,
+    "checkedPoses": 121,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "right/bearing_bridge-in-16",
+    "frames": 81,
+    "checkedPoses": 81,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "right/input_bridge-in-17",
+    "frames": 81,
+    "checkedPoses": 81,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "right/panel-in-18",
+    "frames": 81,
+    "checkedPoses": 81,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "right/return-closed",
+    "frames": 61,
+    "checkedPoses": 61,
+    "moving": 6,
+    "violations": 0,
+    "pass": true
+   },
+   {
     "id": "right/insert",
     "frames": 101,
     "checkedPoses": 101,
-    "moving": 1,
+    "moving": 15,
     "violations": 0,
     "pass": true
    },
@@ -831,6 +991,94 @@
     "pass": true
    },
    {
+    "id": "right/exchange_key_0_release",
+    "frames": 5,
+    "checkedPoses": 5,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "right/exchange_key_0_out",
+    "frames": 51,
+    "checkedPoses": 51,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "right/exchange_key_1_release",
+    "frames": 5,
+    "checkedPoses": 5,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "right/exchange_key_1_out",
+    "frames": 51,
+    "checkedPoses": 51,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "right/exchange_out",
+    "frames": 41,
+    "checkedPoses": 41,
+    "moving": 15,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "right/disconnect",
+    "frames": 2,
+    "checkedPoses": 2,
+    "moving": 0,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "right/exchange_in",
+    "frames": 41,
+    "checkedPoses": 41,
+    "moving": 15,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "right/exchange_key_0_in",
+    "frames": 51,
+    "checkedPoses": 51,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "right/exchange_key_0_lock",
+    "frames": 5,
+    "checkedPoses": 5,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "right/exchange_key_1_in",
+    "frames": 51,
+    "checkedPoses": 51,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
+    "id": "right/exchange_key_1_lock",
+    "frames": 5,
+    "checkedPoses": 5,
+    "moving": 1,
+    "violations": 0,
+    "pass": true
+   },
+   {
     "id": "top/exchange_key_0_release",
     "frames": 5,
     "checkedPoses": 5,
@@ -952,9 +1200,23 @@
    "left/key_l",
    "left/key_r",
    "left/panel",
+   "right/bearing_bridge",
+   "right/cap_foot",
+   "right/flag",
+   "right/flag_cover",
+   "right/hinge_pin",
+   "right/horn",
+   "right/input_bridge",
+   "right/input_cup",
+   "right/input_gear",
+   "right/input_spindle",
    "right/key_l",
    "right/key_r",
    "right/panel",
+   "right/sector_gear",
+   "right/servo",
+   "right/servo_cap",
+   "right/support",
    "top/cam_key_1",
    "top/cam_key_2",
    "top/cam_lower",
@@ -1113,7 +1375,7 @@
      "front/link"
     ],
     "type": "snap",
-    "maxCommonMm3": 2.473697,
+    "maxCommonMm3": 2.170681,
     "maxRemainingTravelMm": 4.0,
     "samples": 8,
     "steps": [
@@ -1135,11 +1397,42 @@
    },
    {
     "parts": [
+     "right/horn",
+     "right/servo"
+    ],
+    "type": "reference_internal",
+    "maxCommonMm3": 0.029965,
+    "maxRemainingTravelMm": 0.0,
+    "samples": 340,
+    "steps": [
+     "right/exchange_in",
+     "right/exchange_out",
+     "right/horn-in-1",
+     "right/insert",
+     "right/return-closed",
+     "right/servo-horn-input_cup-input_gear-input_spindle-in-6"
+    ]
+   },
+   {
+    "parts": [
+     "right/panel",
+     "right/support"
+    ],
+    "type": "snap",
+    "maxCommonMm3": 1.728016,
+    "maxRemainingTravelMm": 1.5,
+    "samples": 3,
+    "steps": [
+     "right/panel-in-18"
+    ]
+   },
+   {
+    "parts": [
      "top/cam_key_1",
      "top/cam_lower"
     ],
     "type": "snap",
-    "maxCommonMm3": 1.079992,
+    "maxCommonMm3": 0.539996,
     "maxRemainingTravelMm": 4.0,
     "samples": 8,
     "steps": [
@@ -1153,8 +1446,8 @@
     ],
     "type": "snap",
     "maxCommonMm3": 1.079991,
-    "maxRemainingTravelMm": 9.5,
-    "samples": 13,
+    "maxRemainingTravelMm": 8.5,
+    "samples": 11,
     "steps": [
      "top/cam_key_1-in"
     ]
@@ -1165,7 +1458,7 @@
      "top/cam_lower"
     ],
     "type": "snap",
-    "maxCommonMm3": 1.079996,
+    "maxCommonMm3": 0.539999,
     "maxRemainingTravelMm": 3.5,
     "samples": 7,
     "steps": [
@@ -1178,9 +1471,9 @@
      "top/cam_upper"
     ],
     "type": "snap",
-    "maxCommonMm3": 1.079997,
-    "maxRemainingTravelMm": 9.5,
-    "samples": 13,
+    "maxCommonMm3": 0.539998,
+    "maxRemainingTravelMm": 8.5,
+    "samples": 11,
     "steps": [
      "top/cam_key_2-in"
     ]
@@ -1312,7 +1605,7 @@
     0.0
    ],
    "limitMm": 0.5,
-   "travelMm": 0.300491,
+   "travelMm": 0.300537,
    "stoppedBy": [
     "front/link"
    ],
@@ -1446,28 +1739,211 @@
    "pass": true
   },
   {
-   "id": "right/panel-key-left",
+   "id": "right/input-positive-u",
    "parts": [
-    "right/panel"
+    "right/input_gear",
+    "right/input_cup",
+    "right/horn"
    ],
    "direction": [
-    1.0,
     0.0,
+    1.0,
     0.0
    ],
    "limitMm": 0.5,
-   "travelMm": 0.200043,
+   "travelMm": 0.0,
    "stoppedBy": [
-    "right/key_l",
-    "right/key_r"
+    "right/servo"
    ],
-   "stoppedPart": "right/panel",
+   "stoppedPart": "right/horn",
    "pass": true
   },
   {
-   "id": "right/panel-key-right",
+   "id": "right/input-negative-u",
    "parts": [
-    "right/panel"
+    "right/input_gear",
+    "right/input_cup",
+    "right/horn"
+   ],
+   "direction": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.0,
+   "stoppedBy": [
+    "right/servo"
+   ],
+   "stoppedPart": "right/horn",
+   "pass": true
+  },
+  {
+   "id": "right/cup-positive-u",
+   "parts": [
+    "right/input_cup"
+   ],
+   "direction": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.200012,
+   "stoppedBy": [
+    "right/input_gear"
+   ],
+   "stoppedPart": "right/input_cup",
+   "pass": true
+  },
+  {
+   "id": "right/cup-negative-u",
+   "parts": [
+    "right/input_cup"
+   ],
+   "direction": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.250374,
+   "stoppedBy": [
+    "right/support"
+   ],
+   "stoppedPart": "right/input_cup",
+   "pass": true
+  },
+  {
+   "id": "right/wheel-positive-u",
+   "parts": [
+    "right/input_gear"
+   ],
+   "direction": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.250031,
+   "stoppedBy": [
+    "right/input_bridge"
+   ],
+   "stoppedPart": "right/input_gear",
+   "pass": true
+  },
+  {
+   "id": "right/wheel-negative-u",
+   "parts": [
+    "right/input_gear"
+   ],
+   "direction": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.200012,
+   "stoppedBy": [
+    "right/input_cup"
+   ],
+   "stoppedPart": "right/input_gear",
+   "pass": true
+  },
+  {
+   "id": "right/spindle-positive-u",
+   "parts": [
+    "right/input_spindle"
+   ],
+   "direction": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.200027,
+   "stoppedBy": [
+    "right/support"
+   ],
+   "stoppedPart": "right/input_spindle",
+   "pass": true
+  },
+  {
+   "id": "right/spindle-negative-u",
+   "parts": [
+    "right/input_spindle"
+   ],
+   "direction": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.250092,
+   "stoppedBy": [
+    "right/input_bridge"
+   ],
+   "stoppedPart": "right/input_spindle",
+   "pass": true
+  },
+  {
+   "id": "right/spindle-positive-v",
+   "parts": [
+    "right/input_spindle"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.201324,
+   "stoppedBy": [
+    "right/input_bridge"
+   ],
+   "stoppedPart": "right/input_spindle",
+   "pass": true
+  },
+  {
+   "id": "right/spindle-negative-v",
+   "parts": [
+    "right/input_spindle"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.201324,
+   "stoppedBy": [
+    "right/input_bridge"
+   ],
+   "stoppedPart": "right/input_spindle",
+   "pass": true
+  },
+  {
+   "id": "right/spindle-positive-d",
+   "parts": [
+    "right/input_spindle"
+   ],
+   "direction": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.200676,
+   "stoppedBy": [
+    "right/support"
+   ],
+   "stoppedPart": "right/input_spindle",
+   "pass": true
+  },
+  {
+   "id": "right/spindle-negative-d",
+   "parts": [
+    "right/input_spindle"
    ],
    "direction": [
     1.0,
@@ -1475,12 +1951,426 @@
     0.0
    ],
    "limitMm": 0.5,
-   "travelMm": 0.200043,
+   "travelMm": 0.200676,
    "stoppedBy": [
-    "right/key_l",
-    "right/key_r"
+    "right/input_bridge"
    ],
-   "stoppedPart": "right/panel",
+   "stoppedPart": "right/input_spindle",
+   "pass": true
+  },
+  {
+   "id": "right/flag-positive-u",
+   "parts": [
+    "right/flag"
+   ],
+   "direction": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.250023,
+   "stoppedBy": [
+    "right/support"
+   ],
+   "stoppedPart": "right/flag",
+   "pass": true
+  },
+  {
+   "id": "right/flag-negative-u",
+   "parts": [
+    "right/flag"
+   ],
+   "direction": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.250023,
+   "stoppedBy": [
+    "right/servo_cap"
+   ],
+   "stoppedPart": "right/flag",
+   "pass": true
+  },
+  {
+   "id": "right/sector-positive-u",
+   "parts": [
+    "right/sector_gear"
+   ],
+   "direction": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.250023,
+   "stoppedBy": [
+    "right/flag_cover"
+   ],
+   "stoppedPart": "right/sector_gear",
+   "pass": true
+  },
+  {
+   "id": "right/sector-negative-u",
+   "parts": [
+    "right/sector_gear"
+   ],
+   "direction": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.250031,
+   "stoppedBy": [
+    "right/support"
+   ],
+   "stoppedPart": "right/sector_gear",
+   "pass": true
+  },
+  {
+   "id": "right/cover-positive-u",
+   "parts": [
+    "right/flag_cover"
+   ],
+   "direction": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.250038,
+   "stoppedBy": [
+    "right/support",
+    "right/input_bridge"
+   ],
+   "stoppedPart": "right/flag_cover",
+   "pass": true
+  },
+  {
+   "id": "right/cover-negative-u",
+   "parts": [
+    "right/flag_cover"
+   ],
+   "direction": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.250023,
+   "stoppedBy": [
+    "right/sector_gear"
+   ],
+   "stoppedPart": "right/flag_cover",
+   "pass": true
+  },
+  {
+   "id": "right/bridge-out",
+   "parts": [
+    "right/bearing_bridge"
+   ],
+   "direction": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 1.5e-05,
+   "stoppedBy": [
+    "right/panel"
+   ],
+   "stoppedPart": "right/bearing_bridge",
+   "pass": true
+  },
+  {
+   "id": "right/bridge-in",
+   "parts": [
+    "right/bearing_bridge"
+   ],
+   "direction": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.101044,
+   "stoppedBy": [
+    "right/hinge_pin"
+   ],
+   "stoppedPart": "right/bearing_bridge",
+   "pass": true
+  },
+  {
+   "id": "right/input-bridge-out",
+   "parts": [
+    "right/input_bridge"
+   ],
+   "direction": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.250015,
+   "stoppedBy": [
+    "right/panel"
+   ],
+   "stoppedPart": "right/input_bridge",
+   "pass": true
+  },
+  {
+   "id": "right/input-bridge-in",
+   "parts": [
+    "right/input_bridge"
+   ],
+   "direction": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.250008,
+   "stoppedBy": [
+    "right/support"
+   ],
+   "stoppedPart": "right/input_bridge",
+   "pass": true
+  },
+  {
+   "id": "right/pin-positive-u",
+   "parts": [
+    "right/hinge_pin"
+   ],
+   "direction": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.000427,
+   "stoppedBy": [
+    "right/support"
+   ],
+   "stoppedPart": "right/hinge_pin",
+   "pass": true
+  },
+  {
+   "id": "right/pin-negative-u",
+   "parts": [
+    "right/hinge_pin"
+   ],
+   "direction": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.252655,
+   "stoppedBy": [
+    "right/bearing_bridge"
+   ],
+   "stoppedPart": "right/hinge_pin",
+   "pass": true
+  },
+  {
+   "id": "right/servo-out",
+   "parts": [
+    "right/servo"
+   ],
+   "direction": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.225121,
+   "stoppedBy": [
+    "right/cap_foot"
+   ],
+   "stoppedPart": "right/servo",
+   "pass": true
+  },
+  {
+   "id": "right/servo-in",
+   "parts": [
+    "right/servo"
+   ],
+   "direction": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.250008,
+   "stoppedBy": [
+    "right/support"
+   ],
+   "stoppedPart": "right/servo",
+   "pass": true
+  },
+  {
+   "id": "right/cap-out",
+   "parts": [
+    "right/servo_cap"
+   ],
+   "direction": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.20005,
+   "stoppedBy": [
+    "right/cap_foot"
+   ],
+   "stoppedPart": "right/servo_cap",
+   "pass": true
+  },
+  {
+   "id": "right/cap-in",
+   "parts": [
+    "right/servo_cap"
+   ],
+   "direction": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.250084,
+   "stoppedBy": [
+    "right/support"
+   ],
+   "stoppedPart": "right/servo_cap",
+   "pass": true
+  },
+  {
+   "id": "right/cap-foot-out",
+   "parts": [
+    "right/cap_foot"
+   ],
+   "direction": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.250023,
+   "stoppedBy": [
+    "right/panel"
+   ],
+   "stoppedPart": "right/cap_foot",
+   "pass": true
+  },
+  {
+   "id": "right/cap-foot-in",
+   "parts": [
+    "right/cap_foot"
+   ],
+   "direction": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.20005,
+   "stoppedBy": [
+    "right/servo_cap"
+   ],
+   "stoppedPart": "right/cap_foot",
+   "pass": true
+  },
+  {
+   "id": "right/cap-foot-left",
+   "parts": [
+    "right/cap_foot"
+   ],
+   "direction": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.250015,
+   "stoppedBy": [
+    "right/support"
+   ],
+   "stoppedPart": "right/cap_foot",
+   "pass": true
+  },
+  {
+   "id": "right/cap-foot-right",
+   "parts": [
+    "right/cap_foot"
+   ],
+   "direction": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 4.6e-05,
+   "stoppedBy": [
+    "right/servo_cap"
+   ],
+   "stoppedPart": "right/cap_foot",
+   "pass": true
+  },
+  {
+   "id": "right/cap-foot-up",
+   "parts": [
+    "right/cap_foot"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.250122,
+   "stoppedBy": [
+    "right/servo_cap"
+   ],
+   "stoppedPart": "right/cap_foot",
+   "pass": true
+  },
+  {
+   "id": "right/cap-foot-down",
+   "parts": [
+    "right/cap_foot"
+   ],
+   "direction": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.250076,
+   "stoppedBy": [
+    "right/support"
+   ],
+   "stoppedPart": "right/cap_foot",
+   "pass": true
+  },
+  {
+   "id": "right/support-in",
+   "parts": [
+    "right/support"
+   ],
+   "direction": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "limitMm": 0.5,
+   "travelMm": 0.200356,
+   "stoppedBy": [
+    "right/panel"
+   ],
+   "stoppedPart": "right/support",
    "pass": true
   },
   {
@@ -1699,7 +2589,7 @@
     1.0
    ],
    "limitMm": 0.5,
-   "travelMm": 0.250023,
+   "travelMm": 0.330162,
    "stoppedBy": [
     "top/servo_cap"
    ],
@@ -1771,7 +2661,7 @@
     1.0
    ],
    "limitMm": 0.5,
-   "travelMm": 0.251114,
+   "travelMm": 0.252228,
    "stoppedBy": [
     "top/cam_lower"
    ],
@@ -1789,7 +2679,7 @@
     1.0
    ],
    "limitMm": 0.5,
-   "travelMm": 0.251114,
+   "travelMm": 0.252228,
    "stoppedBy": [
     "top/cam_lower"
    ],
@@ -1828,7 +2718,7 @@
     -1.0
    ],
    "limitMm": 0.5,
-   "travelMm": 0.250023,
+   "travelMm": 0.250031,
    "stoppedBy": [
     "top/support"
    ],
@@ -1900,9 +2790,9 @@
     -1.0
    ],
    "limitMm": 0.5,
-   "travelMm": 0.250076,
+   "travelMm": 0.252228,
    "stoppedBy": [
-    "top/cam_upper"
+    "top/cam_lower"
    ],
    "stoppedPart": "top/cam_key_1",
    "pass": true
@@ -1918,9 +2808,9 @@
     -1.0
    ],
    "limitMm": 0.5,
-   "travelMm": 0.250076,
+   "travelMm": 0.252228,
    "stoppedBy": [
-    "top/cam_upper"
+    "top/cam_lower"
    ],
    "stoppedPart": "top/cam_key_2",
    "pass": true
@@ -2212,7 +3102,21 @@
    "parts": [
     "right/panel",
     "right/key_l",
-    "right/key_r"
+    "right/key_r",
+    "right/support",
+    "right/servo_cap",
+    "right/input_gear",
+    "right/sector_gear",
+    "right/flag",
+    "right/flag_cover",
+    "right/bearing_bridge",
+    "right/input_bridge",
+    "right/hinge_pin",
+    "right/servo",
+    "right/horn",
+    "right/cap_foot",
+    "right/input_cup",
+    "right/input_spindle"
    ],
    "direction": [
     1.0,
@@ -2321,8 +3225,8 @@
   }
  ],
  "meterStats": {
-  "boolean": 3183,
-  "skipped": 42274
+  "boolean": 3895,
+  "skipped": 62859
  },
  "ok": true
 }

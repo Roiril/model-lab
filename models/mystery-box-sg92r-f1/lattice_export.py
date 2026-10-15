@@ -276,6 +276,13 @@ def export():
                                       f"停動比{calculation['stallFraction'] * 100:.3f}%。"
                                       f"仮定したサーボモデルの往復到達{sum(r['reached'] for r in calculation['runs'])}/2。"
                                       "摩擦・保持力の保証ではありません。"})
+    # A failed print gate also disables the certified replay. Show that measured
+    # reason beside the mechanical checks instead of an unexplained disabled UI.
+    print_evidence = all_evidence[MODEL]
+    print_check = print_evidence["checks"].get("print.slice", {})
+    gate_calibration.append({"id": "print.slice", "label": "全プレートの印刷検査",
+                             "pass": composition_fresh and print_evidence["fresh"] and print_check.get("pass") is True,
+                             "detail": print_check.get("summary", "未検査")})
     representative = index["representative"]
     representative_motion = read(HERE / "checks" / representative / "build" / "motion.json")
     if read(BUILD / "motion.json") != representative_motion:
@@ -286,7 +293,7 @@ def export():
                    "必要トルクは剛体・理想拘束の逆動力学。摩擦・圧入・ばね・弾性・衝撃を含まない。",
                    "再生は既存サーボモデルの仮定値（摩擦0.004N·m、制御幅4°、慣性5e-6kg·m²、60°/0.1秒）。実機未同定。",
                    "接触反力の定型表示は自由な鉛直従動子の代理値。F1のリンク・拘束カムの保持力判定には使わない。",
-                   "各面を別々に動かす。他面は閉じたまま。同時駆動・実機適合・印刷スライスは未検証。"]
+                   "各面を別々に動かす。他面は閉じたまま。同時駆動・実機適合は未検証。印刷可否はゲートのprint.sliceを参照。"]
     drive = {"model": MODEL, "overall": {"geometryPass": geometry_pass}, "interfaces": interfaces,
              "calibration": gate_calibration, "hardwareUnknown": assumptions[2:], "sourceHashes": hashes}
     report = {"model": MODEL, "method": "STL tetrahedra + rigid transforms, second-order finite differences in radians",

@@ -1,0 +1,108 @@
+{
+ "metrics": {
+  "panel": {
+   "volume_mm3": 15238.133080789945,
+   "nonmanifold": 0,
+   "components": 1
+  },
+  "key_l": {
+   "volume_mm3": 323.27987792015114,
+   "nonmanifold": 0,
+   "components": 1
+  },
+  "key_r": {
+   "volume_mm3": 323.27987792015114,
+   "nonmanifold": 0,
+   "components": 1
+  },
+  "support": {
+   "volume_mm3": 3316.893210854274,
+   "nonmanifold": 0,
+   "components": 1
+  },
+  "servo_cap": {
+   "volume_mm3": 1405.9181976016357,
+   "nonmanifold": 0,
+   "components": 1
+  },
+  "cam_lower": {
+   "volume_mm3": 2073.2816208081967,
+   "nonmanifold": 0,
+   "components": 1
+  },
+  "cam_upper": {
+   "volume_mm3": 5072.488134594302,
+   "nonmanifold": 0,
+   "components": 1
+  },
+  "pixel_1": {
+   "volume_mm3": 1326.9877843702302,
+   "nonmanifold": 0,
+   "components": 1
+  },
+  "pixel_2": {
+   "volume_mm3": 1345.7320588552336,
+   "nonmanifold": 0,
+   "components": 1
+  },
+  "pixel_3": {
+   "volume_mm3": 1474.7132223796311,
+   "nonmanifold": 0,
+   "components": 1
+  },
+  "guide": {
+   "volume_mm3": 2176.5020138186155,
+   "nonmanifold": 0,
+   "components": 1
+  },
+  "cam_key_1": {
+   "volume_mm3": 124.46001856931946,
+   "nonmanifold": 0,
+   "components": 1
+  },
+  "cam_key_2": {
+   "volume_mm3": 124.46007056284438,
+   "nonmanifold": 0,
+   "components": 1
+  },
+  "servo": {
+   "volume_mm3": 6929.305925184547,
+   "nonmanifold": 0,
+   "components": 1
+  },
+  "horn": {
+   "volume_mm3": 369.58281289837765,
+   "nonmanifold": 0,
+   "components": 1
+  }
+ },
+ "ribbon_min_normal_thickness_mm": 1.6544630280976698,
+ "ribbon_segment_normal_thickness_mm": [
+  1.6680655706810819,
+  1.6544630280976698,
+  2.128909967591811,
+  1.9611111187815542
+ ],
+ "envelope": [
+  0.0,
+  null
+ ],
+ "note": "Ribbon normal thickness only; existing snap heads span d0.2..1.2 (1mm) and are unchanged by explicit instruction.",
+ "print_topology": {
+  "triangles": 768,
+  "vertices": 384,
+  "edgesNotSharedByTwo": 0,
+  "edgesWithSameDirectionTwice": 0,
+  "degenerateTriangles": 0,
+  "signedVolumeMm3": 3316.8932,
+  "pass": true
+ },
+ "grounding": {
+  "bedZ": -0.0,
+  "contactAreaMm2": 782.961,
+  "floatingComponents": [],
+  "heightMm": 23.55,
+  "contactShortSideMm": 42.5,
+  "heightOverShortSide": 0.554
+ }
+}

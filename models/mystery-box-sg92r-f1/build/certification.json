@@ -1,0 +1,153 @@
+{
+ "pass": false,
+ "partial": false,
+ "inputs_fresh": true,
+ "changed_inputs": [],
+ "results": [
+  {
+   "check": "plate.py",
+   "returncode": 1
+  },
+  {
+   "check": "verify_contract.py",
+   "returncode": 0
+  },
+  {
+   "check": "verify_envelopes.py",
+   "returncode": 0
+  },
+  {
+   "check": "mystery-box-sg92r-f1/checks/front",
+   "returncode": 1
+  },
+  {
+   "check": "mystery-box-sg92r-f1/checks/right",
+   "returncode": 1
+  },
+  {
+   "check": "mystery-box-sg92r-f1/checks/top",
+   "returncode": 1
+  },
+  {
+   "check": "mystery-box-sg92r-f1",
+   "returncode": 1
+  },
+  {
+   "check": "retention_auxiliary",
+   "returncode": 0
+  }
+ ],
+ "retention_auxiliary": {
+  "scope": "retention_only",
+  "pass": true,
+  "partial": false,
+  "inputs_fresh": true,
+  "changed_inputs": [],
+  "cases": [
+   {
+    "id": "front/mid",
+    "pass": true,
+    "returncode": 0,
+    "pose": {
+     "id": "mid",
+     "label": "蓋30度",
+     "servo_deg": 87.18351968016395,
+     "output_deg": 30
+    },
+    "checked": 91,
+    "expected": 91,
+    "calibration": true,
+    "failing": [],
+    "error": null,
+    "report": "build/retention_cases/front/mid/report.json"
+   },
+   {
+    "id": "front/open",
+    "pass": true,
+    "returncode": 0,
+    "pose": {
+     "id": "open",
+     "label": "蓋60度",
+     "servo_deg": 55.66268077250187,
+     "output_deg": 60.0
+    },
+    "checked": 91,
+    "expected": 91,
+    "calibration": true,
+    "failing": [],
+    "error": null,
+    "report": "build/retention_cases/front/open/report.json"
+   },
+   {
+    "id": "right/mid",
+    "pass": true,
+    "returncode": 0,
+    "pose": {
+     "id": "mid",
+     "label": "サーボ範囲の中間",
+     "servo_deg": 90.0
+    },
+    "checked": 91,
+    "expected": 91,
+    "calibration": true,
+    "failing": [],
+    "error": null,
+    "report": "build/retention_cases/right/mid/report.json"
+   },
+   {
+    "id": "right/open",
+    "pass": true,
+    "returncode": 0,
+    "pose": {
+     "id": "open",
+     "label": "開端",
+     "servo_deg": 120
+    },
+    "checked": 91,
+    "expected": 91,
+    "calibration": true,
+    "failing": [],
+    "error": null,
+    "report": "build/retention_cases/right/open/report.json"
+   },
+   {
+    "id": "top/mid",
+    "pass": true,
+    "returncode": 0,
+    "pose": {
+     "id": "mid",
+     "label": "サーボ範囲の中間",
+     "servo_deg": 90.0
+    },
+    "checked": 91,
+    "expected": 91,
+    "calibration": true,
+    "failing": [],
+    "error": null,
+    "report": "build/retention_cases/top/mid/report.json"
+   },
+   {
+    "id": "top/open",
+    "pass": true,
+    "returncode": 0,
+    "pose": {
+     "id": "open",
+     "label": "開端",
+     "servo_deg": 120
+    },
+    "checked": 91,
+    "expected": 91,
+    "calibration": true,
+    "failing": [],
+    "error": null,
+    "report": "build/retention_cases/top/open/report.json"
+   }
+  ],
+  "not_checked": [
+   "full_gate",
+   "motion.interference",
+   "assembly.path",
+   "parts.self_intersection"
+  ]
+ }
+}

@@ -12,7 +12,7 @@ def check(meter,solids,manifest):
         for spec in manifest['interfaces']:
             if spec['type']=='drive':
                 a,b=spec['driver'],spec['driven']
-                pivot=K.O if b=='input_gear' else K.H
+                pivot=K.O if b in ('input_cup','input_gear') else K.H
                 for sign in (-1,1):
                     limit=float(spec['max_play_deg'])
                     result=first_contact(meter,solids[b],lambda t:K.rot_x(sign*t,pivot)@poses[b],
