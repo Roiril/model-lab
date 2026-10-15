@@ -70,8 +70,15 @@ NON_WAIVABLE = {"harness.calibrated", "spec.valid", "contract.files", "instrumen
 ALLOWANCE_TYPES = {"press_fit", "snap", "static_fit", "reference_internal"}
 
 
+TEXT_SUFFIXES = {".py", ".json", ".md", ".js", ".mjs", ".txt", ".toml"}
+
+
 def sha256(path):
-    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+    """テキストは改行を LF にそろえてから取る（core.autocrlf で CRLF になった作業ツリーでも同じ値になる）"""
+    data = Path(path).read_bytes()
+    if Path(path).suffix.lower() in TEXT_SUFFIXES:
+        data = data.replace(b"\r\n", b"\n")
+    return hashlib.sha256(data).hexdigest()
 
 
 def harness_sha():

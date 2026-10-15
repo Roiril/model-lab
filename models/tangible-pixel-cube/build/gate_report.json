@@ -1,14 +1,14 @@
 {
  "model": "tangible-pixel-cube",
- "generatedAt": "2026-10-15T10:57:56",
+ "generatedAt": "2026-10-15T11:02:06",
  "pass": true,
  "blocking": [],
  "harness": {
-  "sha": "1c43cff2ea0c41adde95b44a6b71ddb1ad68744d238c51129462964436cbb1ca",
-  "stamp": "1c43cff2ea0c41adde95b44a6b71ddb1ad68744d238c51129462964436cbb1ca",
-  "stampedAt": "2026-10-15T10:54:42"
+  "sha": "e81958ee6cd94fa6d5ba5c2bc4c8447cd632c08acb97f9bb697922edb475deee",
+  "stamp": "e81958ee6cd94fa6d5ba5c2bc4c8447cd632c08acb97f9bb697922edb475deee",
+  "stampedAt": "2026-10-15T10:58:57"
  },
- "blenderSeconds": 190.3,
+ "blenderSeconds": 184.8,
  "declared": {
   "waivers": {
    "print.slice": "依頼 ④「スライスは不要」"
@@ -473,9 +473,9 @@
    "pass": true,
    "summary": "selftest を通った版",
    "detail": {
-    "sha": "1c43cff2ea0c41adde95b44a6b71ddb1ad68744d238c51129462964436cbb1ca",
-    "stamp": "1c43cff2ea0c41adde95b44a6b71ddb1ad68744d238c51129462964436cbb1ca",
-    "stampedAt": "2026-10-15T10:54:42"
+    "sha": "e81958ee6cd94fa6d5ba5c2bc4c8447cd632c08acb97f9bb697922edb475deee",
+    "stamp": "e81958ee6cd94fa6d5ba5c2bc4c8447cd632c08acb97f9bb697922edb475deee",
+    "stampedAt": "2026-10-15T10:58:57"
    },
    "required": true,
    "waived": null
@@ -3159,7 +3159,7 @@
   }
  ],
  "inputs": {
-  "models/tangible-pixel-cube/spec.json": "b4d728bc832e503cfbe2738853bc0d4621e2b405f08c4bd401bab5d059dc1a8b",
+  "models/tangible-pixel-cube/spec.json": "656e8a854549034b332e339c14f120b5d826d5777e615d894ebfe36b13c54049",
   "models/tangible-pixel-cube/build/manifest.json": "86446b3ab8cb3b9faa35ab1a8b59ace1474bb6d6804d7da5c5d02c0128474356",
   "models/tangible-pixel-cube/build/motion.json": "ed564e9a7b8adec570718c348ea0cc87a245fb198cde090d6cdafaef9b377c1e",
   "models/tangible-pixel-cube/build/assembly.json": "2904f6d0314fc7569c28d389dd90c95336aae4933844fd5f1197f8aadcb61964",
@@ -3330,7 +3330,7 @@
   "tools/mechgate_lib/__init__.py": "7f409f2f5490445952a8c8ccbcacc41dbe79c6e4d90eaf83d1eaf05c1a20ca93",
   "tools/mechgate_lib/limits.py": "0e544a9ae5e0495fdf009983bf0cca7696cea68c05349a92af08eb7ac3634f88",
   "tools/mechgate_lib/meshcheck.py": "3efc9d3d1de32a392d8f1979a59665c6a382a497794c4f82d8f3af927d094110",
-  "tools/mechgate_lib/gate.py": "8540550eeb7b8a73e9919e8c772e7cf9d3e190fb5cad57fbe5d132a1831e224f",
+  "tools/mechgate_lib/gate.py": "678d74e161580b390d630c39ac6df5717e9c391f9c6bd68e5cd08d1da40e3f99",
   "tools/mechgate_lib/bl_job.py": "91aa0d0e7150e4812b8d20f1a80c8e7ddbde5851e1e5c16656d243082158b135",
   "tools/mechgate_lib/selftest.py": "8f0a0411afe96f993744f0ff20fb51207e857e6c8672b81d5f0b68912cae967e",
   "lib/printmech/solid_meter.py": "29fd57451bc054b928b3f54edec94de6a8dc529372db52bf48e6e62f90a2c53d",
