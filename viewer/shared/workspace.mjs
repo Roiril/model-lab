@@ -29,6 +29,7 @@ export const WORKSPACE_PAGES = Object.freeze({
   'mystery-box-sg92r-c4': Object.freeze({ physics: '/viewer/lattice/index.html?mode=physics', assembly: '/viewer/lattice/index.html?mode=assembly' }),
   'mystery-box-sg92r-c4-2': Object.freeze({ physics: '/viewer/lattice/index.html?mode=physics', assembly: '/viewer/lattice/index.html?mode=assembly' }),
   'tangible-pixel-cube': Object.freeze({ physics: '/viewer/lattice/index.html?mode=physics', assembly: '/viewer/lattice/index.html?mode=assembly' }),
+  'mystery-box-sg92r-f1': Object.freeze({ physics: '/viewer/lattice/index.html?mode=physics', assembly: '/viewer/lattice/index.html?mode=assembly' }),
 });
 
 export function hasWorkspace(mode, model) {

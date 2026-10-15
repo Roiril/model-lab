@@ -624,7 +624,7 @@ def build():
                 if key in part:
                     part[key] = os.path.relpath(HERE / part[key], case_dir).replace(os.sep, "/")
         C.write_manifest(case_build, case_manifest, {"dimensions_mm": [100, 100, 100],
-                         "description": "面ごとのSG92Rカセットを交換する住人の箱。段1は正面の蓋。",
+                         "description": "面ごとのSG92Rカセットを交換する100mm角の住人の箱。",
                          "representative_slot": target})
         motion = faces[target]["meta"]["motion"]
         frames = []
@@ -699,5 +699,9 @@ def build():
                  "outputs": ["manifest.json", "motion.json", "assembly.json", "cases.json", "retention_cases.json"]})
     if changed_during_build:
         raise RuntimeError("inputs changed during composition; rebuild required: " + ", ".join(changed_during_build))
+    # Refresh Studio even before certification: stale gates must disable playback.
+    from lattice_export import prepare_assembly, export as export_lattice
+    prepare_assembly()
+    export_lattice()
     print(f"Composed {len(parts)} parts; active cases: {', '.join(active)}")
     return parts

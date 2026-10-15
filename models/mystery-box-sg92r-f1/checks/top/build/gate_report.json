@@ -1,6 +1,6 @@
 {
  "model": "mystery-box-sg92r-f1/checks/top",
- "generatedAt": "2026-10-15T18:35:55",
+ "generatedAt": "2026-10-15T19:12:53",
  "pass": true,
  "blocking": [],
  "harness": {
@@ -8,7 +8,7 @@
   "stamp": "e81958ee6cd94fa6d5ba5c2bc4c8447cd632c08acb97f9bb697922edb475deee",
   "stampedAt": "2026-10-15T10:58:57"
  },
- "blenderSeconds": 117.7,
+ "blenderSeconds": 113.4,
  "declared": {
   "waivers": {
    "print.slice": "段1の依頼原文『印刷プレート・スライス（時間があれば最後に）』による未実施を継続。今回の段3前半は上面の統合・掃引範囲対応・3ケースの機構検査までで、印刷プレートとスライスは対象に含まれていない。印刷可能とは未判定。その他の検査は免除しない。"
@@ -3678,7 +3678,7 @@
  ],
  "inputs": {
   "models/mystery-box-sg92r-f1/checks/top/spec.json": "de58bc0d02091c3ad1d3ea22c3a194ef872cbead3a434d953e73d365470872e1",
-  "models/mystery-box-sg92r-f1/checks/top/build/manifest.json": "3936a35b4d539436b6cd16de184872e3162352d204d37a4c72a9797eb238960e",
+  "models/mystery-box-sg92r-f1/checks/top/build/manifest.json": "098656fc8deece732fbe0a09915bead827d0c2a7c6690921e8a4b5a0719463a7",
   "models/mystery-box-sg92r-f1/checks/top/build/motion.json": "99a8a1c3d64808239e54800762d214db80deb50a68c4557a1768f51673de3680",
   "models/mystery-box-sg92r-f1/checks/top/build/assembly.json": "30369d06a8218af5f5d7090976597631fa8fde8b19bff0d88d73f0bd7523942e",
   "models/mystery-box-sg92r-f1/checks/top/../../build/parts/frame/lower_frame.stl": "9d292f7fff7e4c8f5f591afd20994c5dbce84a8b751dc0e94f075b3158149bdd",

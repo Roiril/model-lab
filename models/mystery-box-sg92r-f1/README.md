@@ -111,6 +111,29 @@ node tools/catalog.js check
 固定面板とキー頭の表面帯は規格の公称座面として扱い、面板92.5mmと開口92.6mmの比較を別記します。
 これらの補助検査の合格はmechgateの代わりになりません。最終結果は `build/gate_summary.md` を確認します。
 
+## Studio の物理検証・組み立て
+
+Studioの「物理検証」は正面の蓋を代表として再生します。上面の3画素は他面を閉じた条件で別に計算し、検査一覧に可動部質量・角度範囲・必要トルク・往復到達の結果を表示します。全体にはサーボが2台あります。タブの「SG92R 1台」は代表計算の対象です。同時駆動の検証ではありません。
+
+`lattice_export.py` は各検査ケースの組立STLを四面体積分し、体積・重心・慣性を求めます。保存した運動行列をラジアンで微分し、等価慣性と重力トルクを計算します。グラフは各可動部の世界Zの重心高さです。密度はゲートと同じ中実PLAの1.24g/cm³で、付属ホーンも同密度と仮定します。再生のサーボ摩擦・制御幅・内部慣性・速度は既存計算器の仮定値です。拘束リンクの接触力、実機の保持力と追従を保証するものではありません。
+
+合成時に表示用データを更新します。ゲートが古い・未実施・不合格の場合は操作を無効にします。`certify.py` は面別ゲートから組立の測定結果を写した後にルートゲートを実行し、最後に表示データを更新します。組立タブは全90工程を扱い、姿勢数と判定は実際の `assembly.path` 検査から写します。
+
+表示だけ更新する手順は次です。新しい形は先に合成してください。
+
+```powershell
+py -3.11 tools/mechgate.py check mystery-box-sg92r-f1/checks/front
+py -3.11 tools/mechgate.py check mystery-box-sg92r-f1/checks/top
+py -3.11 models/mystery-box-sg92r-f1/lattice_export.py --prepare-assembly
+py -3.11 tools/mechgate.py check mystery-box-sg92r-f1
+py -3.11 models/mystery-box-sg92r-f1/lattice_export.py
+py -3.11 tools/lattice_web.py mystery-box-sg92r-f1
+node models/mystery-box-sg92r-f1/verify_lattice.mjs
+```
+
+物理表は `build/sim_tables.json`、面別の表と数値は `build/lattice_cases/<slot>/` にあります。`build/simulate_report.json` に全可動面の結果、`drive_report.json` に駆動界面の測定、`boolean_evidence.json` に出典ゲートと鮮度を記録します。Studio用のメッシュ込みデータは `viewer/lattice/assets/mystery-box-sg92r-f1.json` です。
+`verify_lattice.mjs` はサーバー起動中に、両タブの配信・Python/JavaScriptの計算一致・表示姿勢・古い証拠での操作無効化を検査します。ブラウザの描画確認とは別です。数値校正と証拠の取り違えの回帰検査は `py -3.11 models/mystery-box-sg92r-f1/test_lattice_export.py` で実行できます。
+
 ## 要件ごとの結果
 
 2026-10-15の上面統合版は、ルート・`checks/front`・`checks/top` の全ゲートがそれぞれexit 0です。

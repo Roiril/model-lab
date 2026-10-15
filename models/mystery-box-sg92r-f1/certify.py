@@ -128,7 +128,11 @@ def main():
     if not cases:
         print("INCOMPLETE: no active face cases.")
         return 2
+    from lattice_export import prepare_assembly, export as export_lattice
     for model in cases + [MODEL]:
+        if model == MODEL:
+            # Case gate evidence supplies measured assembly metadata before root is hashed.
+            prepare_assembly()
         command = [sys.executable, ROOT / "tools" / "mechgate.py", "check", model]
         if args.no_blender:
             command.append("--no-blender")
@@ -138,6 +142,8 @@ def main():
     results.append({"check": "retention_auxiliary", "returncode": 0 if retention["pass"] else 1})
     fresh, changed = dependency_status()
     passed = not args.no_blender and fresh and all(row["returncode"] == 0 for row in results)
+    display = export_lattice()
+    passed = passed and display["overall"]["calculationPass"]
     C.write_json(HERE / "build" / "certification.json", {"pass": passed, "partial": args.no_blender,
                  "inputs_fresh": fresh, "changed_inputs": changed, "results": results,
                  "retention_auxiliary": retention})

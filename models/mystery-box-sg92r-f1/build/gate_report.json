@@ -1,6 +1,6 @@
 {
  "model": "mystery-box-sg92r-f1",
- "generatedAt": "2026-10-15T18:33:54",
+ "generatedAt": "2026-10-15T19:19:14",
  "pass": true,
  "blocking": [],
  "harness": {
@@ -8,7 +8,7 @@
   "stamp": "e81958ee6cd94fa6d5ba5c2bc4c8447cd632c08acb97f9bb697922edb475deee",
   "stampedAt": "2026-10-15T10:58:57"
  },
- "blenderSeconds": 74.7,
+ "blenderSeconds": 79.9,
  "declared": {
   "waivers": {
    "print.slice": "段1の依頼原文『印刷プレート・スライス（時間があれば最後に）』による未実施を継続。今回の段3前半は上面の統合・掃引範囲対応・3ケースの機構検査までで、印刷プレートとスライスは対象に含まれていない。印刷可能とは未判定。その他の検査は免除しない。"
@@ -3514,14 +3514,16 @@
  ],
  "inputs": {
   "models/mystery-box-sg92r-f1/spec.json": "45f9aa6f4fa4010afeb6b6fe0caf97f125a43fd578268aadceb94e7918256267",
-  "models/mystery-box-sg92r-f1/build/manifest.json": "f64d3cbf89ccfc1ffb484cfc1f4154933922abb3f1256c24ae1b710be49d66b5",
+  "models/mystery-box-sg92r-f1/build/manifest.json": "c86a4cb901e43ce2fef7ac2ac45ea3bb320ea8b373436b17ac90e7edcb2d0291",
   "models/mystery-box-sg92r-f1/build/motion.json": "0753b946074d9013e67c1666127504ec4446acabad3a837020b0b03566cf7d37",
-  "models/mystery-box-sg92r-f1/build/assembly.json": "30369d06a8218af5f5d7090976597631fa8fde8b19bff0d88d73f0bd7523942e",
-  "models/mystery-box-sg92r-f1/certify.py": "094c3d9d86e001d9fc0a7da1ff4b5bc0c4f18816bdb2c4f1a0622c065b64aa4e",
-  "models/mystery-box-sg92r-f1/compose.py": "601529499571bb226e2ddea9f0f6b09d313b4b6d76ca29b41ebef4dba2af68b1",
+  "models/mystery-box-sg92r-f1/build/assembly.json": "f5f9bd783189df172b3c50b4750086b5f92c89a1856f684692d7651ed0f01acb",
+  "models/mystery-box-sg92r-f1/certify.py": "b28c9971c799976c5b18fef3f986b2389274957687973e5b402cc92127d28323",
+  "models/mystery-box-sg92r-f1/compose.py": "d1fb46088e19756f296485be4b6c48d20596c5391f7217bbe4901f8aced741d8",
   "models/mystery-box-sg92r-f1/frame.py": "068052c0954828b7907381b129220280ec0a368732de59e405c7a688aab4b775",
+  "models/mystery-box-sg92r-f1/lattice_export.py": "ad423edcf3261dce4a4eff4cbcd93d4377d269b0f070cf14d2d7fdacc354ee9b",
   "models/mystery-box-sg92r-f1/model.py": "4be21db203be938bd6a47652e64a28c4be4a8daaf79f6c6abbe34681d58d6038",
   "models/mystery-box-sg92r-f1/params.py": "0f75aeebb10c401b6da1a24a9fb973a895debac461d48902a567745b97a08631",
+  "models/mystery-box-sg92r-f1/test_lattice_export.py": "32ea1ab4a890a732797f2964f2440b07017546bc1557d38a18f53f971aa8f0fb",
   "models/mystery-box-sg92r-f1/verify_contract.py": "d90b78fcbcbbfd96974ac1f0a2f9065df2b8900e6ba5b2f5187d52b8caaf71ce",
   "models/mystery-box-sg92r-f1/verify_envelopes.py": "a157e3074a2c71a5001a3210fafb7200fd922fc2ee65b28aeb478fd97c607d9b",
   "models/mystery-box-sg92r-f1/build/parts/frame/lower_frame.stl": "9d292f7fff7e4c8f5f591afd20994c5dbce84a8b751dc0e94f075b3158149bdd",
