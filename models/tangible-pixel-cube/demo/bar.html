@@ -43,7 +43,7 @@
   <div class="panel">
     <div class="readout"><span id="deg">90.0</span>° <small id="name"></small></div>
     <div class="bar">
-      <input id="slider" type="range" min="10" max="170" step="0.5" value="90" disabled>
+      <input id="slider" type="range" min="10" max="170" step="0.1" value="90" disabled>
     </div>
     <div class="row">
       <button id="flat" disabled>平ら（組み立て角）へ</button>
@@ -113,10 +113,10 @@ function setAngle(deg) {
   queue(Number(slider.value));
 }
 
-// 送るのは約 30Hz まで。最後の値は必ず送る
+// 送るのは約 50Hz まで。最後の値は必ず送る
 function queue(deg) {
   pending = deg;
-  const wait = 33 - (performance.now() - lastSent);
+  const wait = 20 - (performance.now() - lastSent);
   if (wait <= 0) flush(); else if (!timer) timer = setTimeout(flush, wait);
 }
 function flush() {

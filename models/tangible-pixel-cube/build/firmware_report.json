@@ -4,11 +4,11 @@
   "generator": "models/tangible-pixel-cube/firmware.py",
   "source": {
     "file": "models/tangible-pixel-cube/demo/demo.ino",
-    "sha256": "222dac74b6a42af8602f5cf4cd1dd45a4008f6b1e6cd47e96de3ec91cded653d"
+    "sha256": "eb57ac82808c5a572565516b0bdec9ac5520920988593be4d99505bf61763d4b"
   },
   "bar": {
     "file": "models/tangible-pixel-cube/demo/bar.html",
-    "sha256": "d8ca70ac37d14772f7857311ebde3ff35df7ef757031277abd9efa8f055537a8"
+    "sha256": "f80197ff383ab665d46b88788b3b24bf7afd2598f292a7b7ecb70505ef92d702"
   },
   "inputs": [
     {
@@ -21,7 +21,7 @@
     },
     {
       "file": "models/tangible-pixel-cube/firmware.py",
-      "sha256": "292dfb6b3d500ee33b1cdf05ee6308974dab35bf545c40fb98051833aea3f2e9"
+      "sha256": "fbf55437ec7abe4382a5f88e82a50e022ea469182ee77aabe639fdf01fc9349e"
     }
   ],
   "simulateReportSourceHashesMatch": {
@@ -351,10 +351,7 @@
     "w": "save trim to EEPROM"
   },
   "compile": {
-    "sourceSha256": "222dac74b6a42af8602f5cf4cd1dd45a4008f6b1e6cd47e96de3ec91cded653d",
-    "target": "arduino:avr:uno",
-    "status": "not-compiled",
-    "reason": "公式 Arduino CLI の場所が分からない（C4-2 の demo_compile_report.json が無く、--cli / --config 未指定）"
+    "status": "not-compiled"
   },
   "hardwareTested": false,
   "hardwareLimitation": "マイコンへの書き込みと SG92R の通電は未実施。位相補正 PHASE_TRIM_DEG は実物で決める。"

@@ -297,8 +297,12 @@ void loop() {
   if (following) {
     // Same average speed cap as a table move (TABLE_STEP_DEG per MIN_MOVE_MS), as a straight slew toward the bar.
     const float maxStep = 10.0f / MS_PER_DEG;   // 10 ms tick / (ms per deg)
-    const float gap = followTarget - commanded;
-    commanded += gap > maxStep ? maxStep : (gap < -maxStep ? -maxStep : gap);
+    // First-order smoothing (time constant about 40 ms) so the 30 Hz bar steps blend into one glide, then the speed cap.
+    float step = (followTarget - commanded) * 0.22f;
+    if (step > maxStep) step = maxStep;
+    if (step < -maxStep) step = -maxStep;
+    commanded += step;
+    if (followTarget - commanded < 0.03f && commanded - followTarget < 0.03f) commanded = followTarget;
     writeAngle(commanded);
   } else if (moving) {
     const uint32_t elapsed = now - startedAt;
