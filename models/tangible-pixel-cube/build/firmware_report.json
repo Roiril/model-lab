@@ -4,7 +4,11 @@
   "generator": "models/tangible-pixel-cube/firmware.py",
   "source": {
     "file": "models/tangible-pixel-cube/demo/demo.ino",
-    "sha256": "355901c913567e1589dcaaaea6702089c96377740f099fcdf76d6df936fe731f"
+    "sha256": "222dac74b6a42af8602f5cf4cd1dd45a4008f6b1e6cd47e96de3ec91cded653d"
+  },
+  "bar": {
+    "file": "models/tangible-pixel-cube/demo/bar.html",
+    "sha256": "d8ca70ac37d14772f7857311ebde3ff35df7ef757031277abd9efa8f055537a8"
   },
   "inputs": [
     {
@@ -17,7 +21,7 @@
     },
     {
       "file": "models/tangible-pixel-cube/firmware.py",
-      "sha256": "c40f01c318617af1ee507eaad1dc465f7a32da1c4761bbf92cbcd8d3ed1dbdd8"
+      "sha256": "292dfb6b3d500ee33b1cdf05ee6308974dab35bf545c40fb98051833aea3f2e9"
     }
   ],
   "simulateReportSourceHashesMatch": {
@@ -347,69 +351,10 @@
     "w": "save trim to EEPROM"
   },
   "compile": {
-    "sourceSha256": "355901c913567e1589dcaaaea6702089c96377740f099fcdf76d6df936fe731f",
+    "sourceSha256": "222dac74b6a42af8602f5cf4cd1dd45a4008f6b1e6cd47e96de3ec91cded653d",
     "target": "arduino:avr:uno",
-    "status": "compiled",
-    "pass": true,
-    "compiledAt": "2026-10-14T09:56:02.933790+00:00",
-    "cli": {
-      "file": "D:\\Projects\\model-lab-c4-2-temp\\arduino\\cli\\arduino-cli.exe",
-      "executableSha256": "1017de89179c3167e6b8a38ca6cc4091fa69a3cf97aafa7810f01423003f5571"
-    },
-    "config": "D:\\Projects\\model-lab-c4-2-temp\\arduino\\arduino-cli.yaml",
-    "workDirectory": "D:\\Projects\\model-lab-c4-2-temp\\arduino\\tangible-pixel-cube-compile",
-    "command": "D:\\Projects\\model-lab-c4-2-temp\\arduino\\cli\\arduino-cli.exe --config-file D:\\Projects\\model-lab-c4-2-temp\\arduino\\arduino-cli.yaml compile --fqbn arduino:avr:uno --build-path D:\\Projects\\model-lab-c4-2-temp\\arduino\\tangible-pixel-cube-compile\\production_build C:\\Users\\kouga\\Projects\\Web\\model-lab\\models\\tangible-pixel-cube\\demo",
-    "compileExitCode": 0,
-    "compileElapsedMs": 2515,
-    "stderrBytes": 0,
-    "flashBytes": 7166,
-    "flashMaximumBytes": 32256,
-    "flashPercent": 22,
-    "ramBytes": 312,
-    "ramRemainingBytes": 1736,
-    "ramMaximumBytes": 2048,
-    "ramPercent": 15,
-    "hex": {
-      "file": "D:\\Projects\\model-lab-c4-2-temp\\arduino\\tangible-pixel-cube-compile\\production_build\\demo.ino.hex",
-      "sha256": "286e7c6c21077741349be99b8be5a16fa17a1e2315ad15079033efc70e453481",
-      "sizeBytes": 20169
-    },
-    "phaseTrimBoundary": [
-      {
-        "trimDeg": -10,
-        "expectedCompile": true,
-        "compileExitCode": 0,
-        "boundaryDiagnosticDetected": false,
-        "pass": true,
-        "elapsedMs": 10625
-      },
-      {
-        "trimDeg": 10,
-        "expectedCompile": true,
-        "compileExitCode": 0,
-        "boundaryDiagnosticDetected": false,
-        "pass": true,
-        "elapsedMs": 6547
-      },
-      {
-        "trimDeg": -11,
-        "expectedCompile": false,
-        "compileExitCode": 1,
-        "boundaryDiagnosticDetected": true,
-        "pass": true,
-        "elapsedMs": 2140
-      },
-      {
-        "trimDeg": 11,
-        "expectedCompile": false,
-        "compileExitCode": 1,
-        "boundaryDiagnosticDetected": true,
-        "pass": true,
-        "elapsedMs": 844
-      }
-    ],
-    "globalPathModified": false,
-    "hardwareTested": false
+    "status": "not-compiled",
+    "reason": "公式 Arduino CLI の場所が分からない（C4-2 の demo_compile_report.json が無く、--cli / --config 未指定）"
   },
   "hardwareTested": false,
   "hardwareLimitation": "マイコンへの書き込みと SG92R の通電は未実施。位相補正 PHASE_TRIM_DEG は実物で決める。"
