@@ -71,13 +71,21 @@ const bar = document.querySelector(".bar");
 DATA.tables.forEach((t, k) => {
   const el = document.createElement("div");
   el.className = "tick"; el.dataset.k = k;
-  const frac = (t.deg - DATA.min) / (DATA.max - DATA.min);
-  // range の摘みは両端で半幅ぶん内側に寄る。目盛りも同じ補正をかける
-  el.style.left = `calc(${frac * 100}% + ${(0.5 - frac) * 16}px)`;
   el.innerHTML = `${k}<br>${t.name}<br>${t.deg}°`;
   el.onclick = () => setAngle(t.deg);
   bar.appendChild(el);
 });
+function placeTicks() {
+  const lo = Number(slider.min), hi = Number(slider.max);
+  document.querySelectorAll(".tick").forEach(el => {
+    const t = DATA.tables[el.dataset.k];
+    const frac = (t.deg - lo) / (hi - lo);
+    el.style.display = frac < -0.001 || frac > 1.001 ? "none" : "";
+    // range の摘みは両端で半幅ぶん内側に寄る。目盛りも同じ補正をかける
+    el.style.left = `calc(${frac * 100}% + ${(0.5 - frac) * 16}px)`;
+  });
+}
+placeTicks();
 
 function nearest(deg) {
   let best = 0;
@@ -105,7 +113,25 @@ function render(deg) {
   $("gridNote").textContent = on ? "天面の画素の高さ（mm）。上が奥（Y）、右が +X。" : `表${k} の高さ（mm）。バーが表の上にあるときだけ、この高さになります。`;
 }
 
-async function send(text) { if (writer) await writer.write(new TextEncoder().encode(text)); }
+let bridge = false;
+async function send(text) {
+  if (bridge) { fetch("/send", { method: "POST", body: text }).catch(() => {}); return; }
+  if (writer) await writer.write(new TextEncoder().encode(text));
+}
+
+// bar_bridge.py から開いたときは、ブラウザの代わりにその PC 側がシリアルを持つ（Web Serial が使えない環境用）
+async function tryBridge() {
+  if (!location.protocol.startsWith("http")) return false;
+  let limit;
+  try { const r = await fetch("/ping"); if (!r.ok) return false; limit = Number(await r.text()); } catch (e) { return false; }
+  bridge = true;
+  if (limit > 0) { slider.min = DATA.flat - limit; slider.max = DATA.flat + limit; placeTicks(); }
+  $("status").textContent = "接続中（PC のブリッジ経由）。バーを動かしてください"; $("status").className = "on";
+  $("connect").style.display = "none";
+  ["slider", "flat", "trimMinus", "trimPlus", "trimSave"].forEach(id => $(id).disabled = false);
+  return true;
+}
+tryBridge();
 
 function setAngle(deg) {
   slider.value = deg;
