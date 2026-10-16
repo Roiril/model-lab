@@ -1,6 +1,6 @@
 {
  "model": "tangible-pixel-cube",
- "generatedAt": "2026-10-15T11:02:06",
+ "generatedAt": "2026-10-16T18:00:53",
  "pass": true,
  "blocking": [],
  "harness": {
@@ -8,7 +8,7 @@
   "stamp": "e81958ee6cd94fa6d5ba5c2bc4c8447cd632c08acb97f9bb697922edb475deee",
   "stampedAt": "2026-10-15T10:58:57"
  },
- "blenderSeconds": 184.8,
+ "blenderSeconds": 174.6,
  "declared": {
   "waivers": {
    "print.slice": "依頼 ④「スライスは不要」"
@@ -3164,11 +3164,12 @@
   "models/tangible-pixel-cube/build/motion.json": "ed564e9a7b8adec570718c348ea0cc87a245fb198cde090d6cdafaef9b377c1e",
   "models/tangible-pixel-cube/build/assembly.json": "2904f6d0314fc7569c28d389dd90c95336aae4933844fd5f1197f8aadcb61964",
   "models/tangible-pixel-cube/assembly.py": "0c5c6a3a2f6d6326f505a3aba8a22bb8c38c0950f2f9a51b54a6e4556c5d4b09",
+  "models/tangible-pixel-cube/bar_bridge.py": "0e40040510de4882d2299d97fd18594f9d0b7be57097717fbb84e19cdcb63677",
   "models/tangible-pixel-cube/cams.py": "023f6e6eef3915cb2121ca638043af4326da7aa04c75153a6bd1f535589e0919",
   "models/tangible-pixel-cube/compile_demo.py": "b857893dcd5247447ab00d42bf33f7b3e81f8efb5bf98d8c28d2425ad4029257",
   "models/tangible-pixel-cube/design_check.py": "466ad77ef4ab483256bdd18fa04eb1df73f9a349df4a95259b917b987e065208",
   "models/tangible-pixel-cube/drive.py": "9898a849deac07ed923f7d44c9a5cb25b9921e28e8379eedbdb7954da5246110",
-  "models/tangible-pixel-cube/firmware.py": "c40f01c318617af1ee507eaad1dc465f7a32da1c4761bbf92cbcd8d3ed1dbdd8",
+  "models/tangible-pixel-cube/firmware.py": "fbf55437ec7abe4382a5f88e82a50e022ea469182ee77aabe639fdf01fc9349e",
   "models/tangible-pixel-cube/kinematics.py": "0b11bb9bb7f242feadf5730d70bd434ec9440b7ba4c58fee27efaf66301cd7ea",
   "models/tangible-pixel-cube/model.py": "6a4b07a5eee9d9b1daeca3a98ad25ea6ce8011063ba83b2e06a8ce74fa92c5f2",
   "models/tangible-pixel-cube/motion.py": "2f8722d2e745e03449ed526f18f57f09e13736293baa5115ca1827bc9c1b3e5c",
