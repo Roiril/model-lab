@@ -8,6 +8,10 @@
 //   size() -> {width, height}                 canvas の CSS 寸法
 //   geomInfo(mesh, {smooth}) / hasGeomInfo(mesh)   Worker で作る溶接・隣接の情報（キャッシュ）
 //   viewPreset は ["x","y","z"] の配列（視点→対象の向き、モデル座標）も受ける
+//   pick(x, y, {includeGhost}) は透過した部品を素通りする（includeGhost:true で拾う）。隠した部品は常に拾わない
+//   pickParts(x, y) -> [{file, mode, distance}]   カーソルの下にある部品を手前から（透過も含む。右クリックメニュー用）
+//   getSliceMeshes() -> [Mesh]                      断面で切る部品（隠した部品を除く）
+//   partMode(file) -> "normal" | "ghost" | "hidden"
 //   dispose()
 
 import * as THREE from "three";
@@ -15,6 +19,7 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { CSS2DRenderer, CSS2DObject } from "three/addons/renderers/CSS2DRenderer.js";
 import { computeBoundsTree, disposeBoundsTree, acceleratedRaycast } from "three-mesh-bvh";
 import { themePalette, watchTheme } from "../shared/workspace.mjs";
+import { GHOST_EDGE_OPACITY, GHOST_OPACITY, modeOf, pickTargets, sliceTargets } from "./part-modes.js";
 
 THREE.BufferGeometry.prototype.computeBoundsTree = computeBoundsTree;
 THREE.BufferGeometry.prototype.disposeBoundsTree = disposeBoundsTree;
@@ -198,6 +203,7 @@ export function createViewport(container, store) {
   const frameCbs = new Set();
   const geomCache = new WeakMap();  // geometry -> { promise, result, smooth }
   const faceOutlines = new Map();   // Mesh -> 輪郭の LineSegments
+  const partEdges = new Map();      // Mesh -> 透過中の稜線（薄い線）
 
   const invalidate = () => { dirty = true; };
   controls.addEventListener("change", invalidate);
@@ -316,6 +322,7 @@ export function createViewport(container, store) {
     lineColor = palette.line;
     lineStrong = palette.mute;
     scene.background.set(bgColor);
+    for (const lines of partEdges.values()) lines.material.color.set(inkColor);
     if (printPlate) {
       printPlate.userData.floor.material.color.set(cardColor);
       printPlate.userData.frame.material.color.set(palette.mute);
@@ -535,6 +542,56 @@ export function createViewport(container, store) {
     mat.clippingPlanes = null;
   }
 
+  // --- 部品の見え方（通常 / 透過 / 非表示）---
+  // 透過: 半透明で深度を書かない（奥の部品が見える）。稜線だけ薄く残す。レイキャストの対象から外す（pick）。
+  // 非表示: 描かず、レイキャストにも断面にも入れない。モデルの範囲（modelBox）は変えない（表示が跳ねないように）。
+  const PART_EDGE_MAX_TRIANGLES = 150000;   // これを超える部品は稜線を作らない（作るのに時間がかかる）
+  function disposePartEdges(mesh) {
+    const lines = partEdges.get(mesh);
+    if (!lines) return;
+    lines.parent?.remove(lines);
+    lines.geometry.dispose();
+    clipMaterials.delete(lines.material);
+    lines.material.dispose();
+    partEdges.delete(mesh);
+  }
+  function ensurePartEdges(mesh) {
+    let lines = partEdges.get(mesh);
+    if (lines) { lines.visible = true; return; }
+    if (mesh.userData.triangles > PART_EDGE_MAX_TRIANGLES) return;
+    const material = new THREE.LineBasicMaterial({
+      color: new THREE.Color(inkColor), transparent: true, opacity: GHOST_EDGE_OPACITY, depthWrite: false,
+    });
+    material.clippingPlanes = clipArr;
+    clipMaterials.add(material);
+    lines = new THREE.LineSegments(new THREE.EdgesGeometry(mesh.geometry, 35), material);
+    lines.name = "part-edges";
+    lines.raycast = () => {};
+    lines.renderOrder = 2;
+    mesh.add(lines);
+    partEdges.set(mesh, lines);
+  }
+  function applyPartMode(mesh, mode) {
+    mesh.userData.partMode = mode;
+    mesh.visible = mode !== "hidden";
+    const mat = mesh.material;
+    const ghostOn = mode === "ghost";
+    const changed = mat.transparent !== ghostOn;
+    mat.transparent = ghostOn;
+    mat.opacity = ghostOn ? GHOST_OPACITY : 1;
+    mat.depthWrite = !ghostOn;
+    if (changed) mat.needsUpdate = true;
+    mesh.renderOrder = ghostOn ? 1 : 0;
+    if (ghostOn) ensurePartEdges(mesh);
+    else { const lines = partEdges.get(mesh); if (lines) lines.visible = false; }
+  }
+  function applyPartModes() {
+    const modes = store.state.partModes || {};
+    for (const m of meshes) applyPartMode(m, modeOf(modes, m.userData.file));
+    invalidate();
+  }
+  const partMode = (file) => modeOf(store.state.partModes, file);
+
   // --- Worker（溶接・隣接）---
   let worker = null;
   let workerSeq = 0;
@@ -620,6 +677,7 @@ export function createViewport(container, store) {
 
   function disposeMesh(mesh) {
     disposeFaceOutline(mesh);
+    disposePartEdges(mesh);
     mesh.geometry.disposeBoundsTree && mesh.geometry.disposeBoundsTree();
     mesh.geometry.dispose();
     if (mesh.material) { clipMaterials.delete(mesh.material); mesh.material.dispose(); }
@@ -718,6 +776,7 @@ export function createViewport(container, store) {
       meshes.push(mesh);
       modelRoot.add(mesh);
     }
+    applyPartModes();
     syncFaceOutlines();
     store.set({ frame });
     updatePlacement();
@@ -849,27 +908,47 @@ export function createViewport(container, store) {
     const l = Math.hypot(x, y, z) || 1;
     return [x / l, y / l, z / l];
   }
-  function pick(clientX, clientY) {
-    if (!meshes.length) return null;
+  // カーソルの下の部品へ光線を飛ばし、手前から順の当たりを返す。clip 中は隠れている側を除く
+  function rayHits(clientX, clientY, targets, firstHitOnly) {
+    if (!targets.length) return [];
     const rect = canvas.getBoundingClientRect();
-    if (rect.width < 1 || rect.height < 1) return null;
+    if (rect.width < 1 || rect.height < 1) return [];
     _ndc.set(((clientX - rect.left) / rect.width) * 2 - 1, -((clientY - rect.top) / rect.height) * 2 + 1);
     camera.updateMatrixWorld();
     raycaster.setFromCamera(_ndc, camera);
-    raycaster.firstHitOnly = !clip;
-    const hits = raycaster.intersectObjects(meshes, false);
-    for (const h of hits) {
+    raycaster.firstHitOnly = firstHitOnly && !clip;
+    const out = [];
+    for (const h of raycaster.intersectObjects(targets, false)) {
       const p = toModel(h.point);
       if (clip) {
         const d = (p[0] - clip.origin[0]) * clip.normal[0] + (p[1] - clip.origin[1]) * clip.normal[1] + (p[2] - clip.origin[2]) * clip.normal[2];
         if (d > 1e-6) continue;                         // 隠れている側
       }
-      return {
-        mesh: h.object, file: h.object.userData.file, faceIndex: h.faceIndex,
-        point: p, normal: faceNormal(h.object, h.faceIndex),
-      };
+      out.push({ hit: h, point: p });
     }
-    return null;
+    return out;
+  }
+  function pick(clientX, clientY, { includeGhost = false } = {}) {
+    if (!meshes.length) return null;
+    const first = rayHits(clientX, clientY, pickTargets(meshes, { includeGhost }), true)[0];
+    if (!first) return null;
+    const h = first.hit;
+    return {
+      mesh: h.object, file: h.object.userData.file, faceIndex: h.faceIndex,
+      point: first.point, normal: faceNormal(h.object, h.faceIndex),
+    };
+  }
+  // カーソルの下にある部品を手前から 1 つずつ（透過した部品も含む。隠した部品は含まない）
+  function pickParts(clientX, clientY) {
+    const seen = new Set();
+    const out = [];
+    for (const { hit } of rayHits(clientX, clientY, pickTargets(meshes, { includeGhost: true }), false)) {
+      const file = hit.object.userData.file;
+      if (seen.has(file)) continue;
+      seen.add(file);
+      out.push({ file, mode: modeOf(store.state.partModes, file), distance: hit.distance });
+    }
+    return out;
   }
 
   function toScreen(p) {
@@ -1039,12 +1118,14 @@ export function createViewport(container, store) {
 
   // 断面などで平面の向きが変わったら、片側を隠す平面もモデルの動きに合わせ直す
   const offMesh = store.on("mesh:loaded", () => applyClip());
+  const offPartModes = store.on("change:partModes", applyPartModes);
   const offFaceOutlines = store.on("change:showFaceOutlines", syncFaceOutlines);
 
   function dispose() {
     cancelAnimationFrame(raf);
     ro.disconnect();
     offMesh();
+    offPartModes();
     offFaceOutlines();
     stopThemeWatch();
     canvas.removeEventListener("pointermove", onMove);
@@ -1063,7 +1144,10 @@ export function createViewport(container, store) {
   return {
     THREE, renderer, scene, camera, controls, canvas, modelRoot, overlay, labels,
     loadSTLs, setPreviewGroup, setPrintPlate,
+    resize,   // app.js の layoutChanged が呼ぶ。無いと window の resize を自分で発火して自分の listener を呼び続ける
     getMeshes: () => meshes,
+    getSliceMeshes: () => sliceTargets(meshes),
+    pickParts, partMode,
     setGhost, getGhostGeometry,
     pick, toModel, toWorld, modelBox,
     viewPreset, frameModelBox, cameraInfo, cameraAxes,

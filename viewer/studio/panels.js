@@ -8,6 +8,7 @@ import { createCatalog } from "./catalog.js";
 import { createWorkspaceNav } from "../shared/workspace.mjs";
 import { requestDetailUrl, requestImages, requestShapeDetails, requestTitle } from "./request-view.js";
 import { planePosition } from "./frames.js";
+import { PART_MODES, PART_MODE_LABELS, countPartModes, modeOf } from "./part-modes.js";
 
 // --- 小さな DOM 道具 ----------------------------------------------------------
 
@@ -465,12 +466,12 @@ export function createPanels({ store, ctx }) {
     switch (s.tool) {
       case "faces":
         return s.faceMode === "brush"
-          ? "ドラッグで面を塗る。Shift で追加、Alt で外す。B で塗り広げに戻す"
-          : "クリックで滑らかにつながった面を選ぶ。Shift で追加、Alt で外す。B でブラシ";
-      case "pin": return "面をクリックしてピンを立てる。メモを書いて追加します";
-      case "measure": return "2 点をクリックして距離を測る。Shift で X・Y・Z のどれかに揃える";
+          ? "ドラッグで面を塗る。Shift で追加、Alt で外す。B で塗り広げに戻す。右クリックで外装を透過できます"
+          : "クリックで滑らかにつながった面を選ぶ。Shift で追加、Alt で外す。B でブラシ。右クリックで外装を透過できます";
+      case "pin": return "面をクリックしてピンを立てる。メモを書いて追加します。右クリックで外装を透過できます";
+      case "measure": return "2 点をクリックして距離を測る。Shift で X・Y・Z のどれかに揃える。右クリックで外装を透過できます";
       case "section": return "断面を選び、移動や回転で位置を整える。新しい断面も追加できます";
-      default: return "ドラッグで回す。右ドラッグで動かす。ホイールで拡大縮小。数字キーで視点を切り替え";
+      default: return "ドラッグで回す。右ドラッグで動かす。ホイールで拡大縮小。数字キーで視点を切り替え。右クリックか T で部品を透過";
     }
   }
   function syncWarn() {
@@ -1055,8 +1056,29 @@ export function createPanels({ store, ctx }) {
           ctx.setParts(next);
         },
       }, h("span", { class: "check" }, on ? icon("check", "sm") : null), h("span", { class: "menu-name mono" }, name));
-      el.append(row);
+      const item = h("div", { class: "part-item" }, row);
+      if (on) {
+        // 読み込み済みの部品は、通常 / 透過 / 隠す を切り替えられる（3D の右クリックと同じ状態）
+        const mode = modeOf(store.state.partModes, name);
+        const seg = h("div", { class: "seg", role: "group", "aria-label": `${name} の見え方` });
+        for (const v of PART_MODES) {
+          const b = h("button", {
+            type: "button", class: "seg-btn", "aria-pressed": String(mode === v), "data-part": name,
+            onclick: () => store.setPartMode(name, v),
+          }, PART_MODE_LABELS[v]);
+          seg.append(b);
+        }
+        item.append(seg);
+      }
+      el.append(item);
       options.push(row);
+    }
+    const modeCount = countPartModes(store.state.partModes, parts.shown);
+    if (modeCount.ghost + modeCount.hidden > 0) {
+      const back = h("button", { type: "button", class: "menu-row reset", role: "menuitem", tabindex: "-1", "data-part": "__modes", onclick: () => store.resetPartModes() },
+        icon("reset", "sm"), "透過・隠した部品をすべて戻す");
+      el.append(back);
+      options.push(back);
     }
     if (parts.custom || store.state.layout?.kind === "plate") {
       const resetLabel = store.state.layout?.kind === "plate" ? "配置済みパーツを全表示" : "自動で選ぶ";
@@ -1267,6 +1289,7 @@ export function createPanels({ store, ctx }) {
   // ===========================================================================
   store.on("items", onItems);
   store.on("change:activeItemId", () => markActive(true));
+  store.on("change:partModes", () => { if (menuEl) renderPartsMenu(); });
   store.on("change:activeSectionId", renderHint);
   store.on("change:tool", () => { syncRail(); renderHint(); });
   store.on("change:frame", () => { syncRail(); renderHint(); });

@@ -4,6 +4,7 @@
 import { uvToModel } from "./frames.js";
 import { sampleShape } from "./sketch.js";
 import { plateLayoutSnapshot, platePartForFile } from "./layout.js";
+import { partModesForRequest } from "./part-modes.js";
 
 const POLYLINE_STEP = 0.5; // mm
 
@@ -52,6 +53,8 @@ export async function buildRequest({ store, viewport, sections, sketch }) {
   const images = {};
   const fileInfos = store.state.files || [];
   const files = viewport.getMeshes().map((m) => meshFileInfo(m, fileInfos, layout));
+  // 送る時点の部品の見え方（透過・非表示にしていた STL）。受け手が同じ見え方で view.png を読める
+  const partModes = partModesForRequest(store.state.partModes, files.map((f) => f.file));
 
   // 3D の見た目（指示の重ね描き込み）
   try {
@@ -110,6 +113,7 @@ export async function buildRequest({ store, viewport, sections, sketch }) {
     frame,
     layout: plateLayoutSnapshot(layout),
     files,
+    partModes,
     camera: viewport.cameraInfo(),
     images: Object.keys(images),
     items,

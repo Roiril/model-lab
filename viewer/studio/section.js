@@ -190,7 +190,8 @@ export function createSections(viewport, store) {
     s.last = performance.now();
     const offset = item.offset || 0;
     let loops = [];
-    for (const m of viewport.getMeshes()) loops = loops.concat(sliceGeometry(m.geometry, item.plane, offset));
+    // 隠した部品は切らない（見えていない形の輪郭を出さない）。透過した部品は切る
+    for (const m of viewport.getSliceMeshes()) loops = loops.concat(sliceGeometry(m.geometry, item.plane, offset));
     let ghostLoops = [];
     const gg = viewport.getGhostGeometry();
     if (gg) ghostLoops = sliceGeometry(gg, item.plane, offset);
@@ -484,6 +485,11 @@ export function createSections(viewport, store) {
     store.on("change:tool", updateCursor),
     store.on("change:frame", () => { updateCursor(); syncClip(); }),
     store.on("mesh:loaded", () => {
+      version++;
+      for (const s of secs.values()) s.sig = "";
+      sync();
+    }),
+    store.on("change:partModes", () => {
       version++;
       for (const s of secs.values()) s.sig = "";
       sync();

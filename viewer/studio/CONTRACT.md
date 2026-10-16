@@ -192,6 +192,14 @@ export function sampleShape(shape, step = 0.5) -> [[u, v], ...]   // 図形を s
 - slice.js の輪郭は材料が左（外周は反時計回り、穴は時計回り）。sampleShape は閉じた図形の最後に始点を繰り返す
 - app.js は `window.__studio = { store, viewport, picking, sections, sketch }` を出す（動作確認用）
 
+## 4.2 部品の見え方（通常 / 透過 / 非表示。2026-10-16）
+
+- 状態は `store.state.partModes = { "<STL 名>": "ghost" | "hidden" }`（通常はキーを持たない）。変更は `store.setPartMode(file, mode)` / `setPartModes` / `resetPartModes`、読み込みは `loadPartModes()`（モデルを開くたび。保存先は localStorage `studio.partModes.<model>`。下書きや undo には入れない）。純関数は `part-modes.js`
+- viewport: `change:partModes` と STL 読み込みで反映する。透過 = 不透明度 0.2・深度書き込みオフ・稜線を薄く残す。非表示 = 描かない。`modelBox` は変えない
+- レイキャスト: `pick(x, y, {includeGhost})` は透過・非表示の部品を素通りする（picking / section の面・ピン・測定・断面の位置決めはすべて `pick` 経由）。`pickParts(x, y)` は透過も含めてカーソル下の部品を手前から返す（右クリックメニュー用）。`getSliceMeshes()` は断面で切る部品（非表示を除く。透過は切る）。`getMeshes()` は従来どおり全部
+- 操作: 3D の右クリック（動かさずに離す）でカーソル下の部品のメニュー、T でカーソル下の最も手前の部品を透過 ⇄ 通常、Shift+T で全部戻す（`part-menu.js`）。パーツ一覧（panels.js）の各行にも 3 択がある。部品を隠すと、その部品の未確定の面選択は外れる
+- 依頼: `request.partModes`（`bundle.js`）。いま読み込んでいる STL のうち通常でないものだけを `{file: "ghost"|"hidden"}` で入れる。後方互換のため無くても読める
+
 ## 5. 共通 workspace と見た目
 
 - `index.html` は `../shared/workspace.css` を Studio の CSS より先に読む。

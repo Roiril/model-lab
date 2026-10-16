@@ -1,4 +1,5 @@
 import { plateDraftKey } from "./layout.js";
+import { normalizePartModes, partModesKey, withPartMode } from "./part-modes.js";
 
 // Studio の状態と出来事の受け渡し。モジュール同士は直接呼び合わず、ここを通す。
 // 契約の説明は CONTRACT.md。ここを変えるときは CONTRACT.md も直す。
@@ -65,6 +66,7 @@ export const store = {
     intent: "note",         // 新しい図形は自由描画。旧図形の intent は各 shape に残す
     compare: null,           // 比較表示中 {label, url} | null
     showFaceOutlines: false, // 全三角形の輪郭を表示
+    partModes: {},          // 部品の見え方 { "<STL 名>": "ghost" | "hidden" }。通常はキー無し（モデルごとに保存）
     draft: { message: "", items: [] },
   },
 
@@ -190,6 +192,29 @@ export const store = {
       : { message: "", items: [] };
     this.set({ activeSectionId: null, activeItemId: null, selection: [], sectionTransform: "off" });
     this.emit("items", { reason: "load", id: null });
+  },
+
+  // --- 部品の見え方（モデル単位、localStorage。下書きや undo には含めない）---
+  setPartMode(file, mode) {
+    this.setPartModes(withPartMode(this.state.partModes, file, mode));
+  },
+  setPartModes(modes) {
+    this.set({ partModes: normalizePartModes(modes) });
+    this._savePartModes();
+  },
+  resetPartModes() { this.setPartModes({}); },
+  loadPartModes() {
+    let raw = null;
+    try { raw = JSON.parse(localStorage.getItem(partModesKey(this.state.model)) || "null"); } catch { raw = null; }
+    this.set({ partModes: normalizePartModes(raw) });
+  },
+  _savePartModes() {
+    if (!this.state.model) return;
+    try {
+      const key = partModesKey(this.state.model);
+      if (Object.keys(this.state.partModes).length) localStorage.setItem(key, JSON.stringify(this.state.partModes));
+      else localStorage.removeItem(key);
+    } catch { /* 無くても動く */ }
   },
 
   // 右下の状態表示とトースト

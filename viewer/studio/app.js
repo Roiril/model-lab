@@ -8,6 +8,8 @@ import { createPicking } from "./picking.js";
 import { createSections } from "./section.js";
 import { createSketch } from "./sketch.js";
 import { createPanels } from "./panels.js";
+import { createPartMenu } from "./part-menu.js";
+import { modeOf } from "./part-modes.js";
 import { buildRequest } from "./bundle.js";
 import { filesForModel, selectModelFile } from "./model-files.js";
 import { createLatestGate, plateManifestStale, validPlateManifest } from "./layout.js";
@@ -33,8 +35,9 @@ const viewport = createViewport(viewportEl, store);
 const picking = createPicking(viewport, store);
 const sections = createSections(viewport, store);
 const sketch = createSketch(sketchEl, store, { modelBox: () => viewport.modelBox() });
+const partMenu = createPartMenu(viewport, store, { chipHost: viewportEl });
 // 動作確認用（ブラウザのコンソールや自動操作から状態を読む）
-window.__studio = { store, viewport, picking, sections, sketch };
+window.__studio = { store, viewport, picking, sections, sketch, partMenu };
 
 // --- 状態（app だけが持つもの）--------------------------------------------------
 
@@ -402,6 +405,7 @@ async function openModel(name, { fromHistory = false, layoutKind = null } = {}) 
     modelName = name;
     store.set({ model: name, layout: { kind: "assembled" }, frame: "blender-mm", files: [], tool: "view", selection: [], selectionFile: null, activeItemId: null, activeSectionId: null, sectionTransform: "off" });
     store.loadDraft();
+    store.loadPartModes();
     if (!fromHistory) {
       const url = new URL(location.href);
       url.searchParams.set("model", name);
@@ -696,6 +700,14 @@ function syncSketch() {
   if (show || !wasHidden) layoutChanged();
 }
 
+// 選択中の面がある部品を隠したら、見えない面の選択は外す
+store.on("change:partModes", () => {
+  const file = store.state.selectionFile;
+  if (file && store.state.selection.length && modeOf(store.state.partModes, file) === "hidden") {
+    store.set({ selection: [] });
+    store.emit("popover:close");
+  }
+});
 store.on("change:activeSectionId", syncSketch);
 store.on("section:created", syncSketch);
 store.on("section:loops", ({ id }) => {
@@ -820,6 +832,12 @@ window.addEventListener("keydown", (e) => {
     case "p": setTool("pin"); break;
     case "m": setTool("measure"); break;
     case "s": setTool("section"); break;
+    case "t":
+      // カーソルの下の部品を透過 ⇄ 通常。Shift+T で透過・非表示をすべて戻す
+      if (e.repeat) break;
+      if (e.shiftKey) partMenu.resetAll();
+      else partMenu.toggleUnderCursor();
+      break;
     case "b":
       if (e.repeat || store.state.tool !== "faces") break;
       // 押して離すと切り替え、押し続けている間だけならブラシ（離すと元に戻る）

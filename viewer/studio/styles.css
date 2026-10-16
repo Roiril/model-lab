@@ -471,6 +471,14 @@ textarea.field { min-height: 30px; field-sizing: content; max-height: 160px; lin
 .menu-row:active { background: var(--accent-soft); }
 .menu-row .check { width: 16px; height: 16px; flex: none; color: var(--accent); }
 .menu-name { font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.part-chip { position: absolute; left: 10px; bottom: 10px; z-index: 5; }
+.part-item { display: flex; align-items: center; gap: 4px; }
+.part-item .menu-row { flex: 1 1 auto; min-width: 0; }
+.part-item .seg { flex: none; }
+.part-ctx { min-width: 300px; }
+.part-ctx .part-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 3px 8px; }
+.part-ctx .part-row .menu-name { min-width: 0; }
+.part-ctx .seg { flex: none; }
 .menu-row.reset { margin-top: 4px; border-top: 1px solid var(--line); border-radius: 0 0 var(--radius-sm) var(--radius-sm); color: var(--text-2); }
 
 .pal-backdrop {

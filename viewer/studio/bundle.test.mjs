@@ -4,6 +4,7 @@ import { buildRequest } from './bundle.js';
 let release;
 const pendingImage = new Promise(resolve => { release = resolve; });
 const state = {
+  partModes: { 'round-bot-studio-plate-plate-lid-3.stl': 'ghost', 'unloaded.stl': 'hidden' },
   model: 'round-bot', frame: 'stl-mm-zup', files: [],
   layout: {
     kind: 'plate', id: 'plate-sha', source3mf: 'round-bot-PLA.gcode.3mf', source3mfSha256: 'plate-sha',
@@ -49,4 +50,6 @@ assert.equal(request.items[1].sourceFile, 'round-bot-lid.stl');
 assert.equal(request.items[0].shapes[0].intent, 'target');
 assert.equal(request.items[0].shapes[0].text, '旧図形');
 assert.equal(request.items[0].shapes[0].note, '旧意図を維持');
-console.log('bundle: 19 assertions passed');
+// 送る時点で透過・非表示だった読み込み済みの STL を残す（読み込んでいない STL は書かない）
+assert.deepEqual(request.partModes, { 'round-bot-studio-plate-plate-lid-3.stl': 'ghost' });
+console.log('bundle: 20 assertions passed');

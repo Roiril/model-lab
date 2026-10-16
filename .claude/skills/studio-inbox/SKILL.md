@@ -42,6 +42,7 @@ Studio はユーザーとシュビーの共同編集 UI。ユーザーは 3D で
   - 図形の `intent`: **target 目標の線**（この形にしたい。`polyline3d` をそのまま輪郭・スプラインの制御に使える）/ **remove 削る**（囲った範囲を除く）/ **add 足す**（囲った範囲を盛る）/ **note メモ**（説明。形の指定ではない）
   - 全点は request.json の `items[i].shapes[j].polyline3d`
 - **出どころ**: `provenance.params` は依頼時の params.py の値。`provenance.overrides.appliedToStl` が true なら、ユーザーは Studio のスライダーで変えた値（`overrides.values`）で作った形を見ていた（params.py とずれている）。直す前にその差を確かめ、スライダーの値を params.py に取り込むべきか判断する
+- **部品の見え方**: `request.partModes` は `{"<STL 名>": "ghost"（透過）| "hidden"（非表示）}`。送信時に通常ではなかった STL だけが載る（キーが無い・空なら全部通常。古い依頼にも無い）。`view.png` と断面の輪郭は同じ見え方で作られている（隠した部品は輪郭に入らない）。指示の `file` が透過した部品の奥にある部品でも、指示は奥の部品に付いている
 - 全体メッセージと各指示のメモが最優先。座標は「どこか」を特定するための材料
 
 ## 4. 守ること
