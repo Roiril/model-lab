@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import {
-  countPartModes, modeOf, normalizePartModes, partModesForRequest, partModesKey, pickTargets, sliceTargets, toggledGhost, withPartMode,
+  countPartModes, modeOf, normalizePartModes, partKey, partModesForRequest, partModesKey, pickTargets, sliceTargets, toggledGhost, withPartMode,
 } from "./part-modes.js";
 
 const mesh = (file, partMode) => ({ userData: { file, ...(partMode ? { partMode } : {}) } });
@@ -41,4 +41,10 @@ assert.deepEqual(partModesForRequest({}, ["a.stl"]), {});
 assert.deepEqual(partModesForRequest(undefined, undefined), {});
 assert.deepEqual(countPartModes(modes, ["housing.stl", "cam.stl", "lid.stl"]), { ghost: 1, hidden: 1 });
 
-console.log("part-modes: 22 assertions passed");
+// 見え方のキー: 台帳の部品は部品 id、台帳が無い STL は STL 名
+assert.equal(partKey({ file: "a.stl", partId: "housing" }), "housing");
+assert.equal(partKey({ file: "a.stl" }), "a.stl");
+assert.equal(partKey(undefined), "");
+assert.deepEqual(partModesForRequest({ housing: "ghost", cam: "hidden" }, ["housing", "cam", "lid"]), { housing: "ghost", cam: "hidden" });
+
+console.log("part-modes: 26 assertions passed");

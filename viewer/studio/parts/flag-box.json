@@ -1,0 +1,116 @@
+{
+  "version": 1,
+  "model": "flag-box",
+  "source": "models/flag-box/build/manifest.json",
+  "sourceSha256": "06148264f8ebbe5a721f3a12de19f305b7ed8af5f8a47ffba5f220f44b20d96d",
+  "groups": [
+    {
+      "id": "key",
+      "label": "留め具",
+      "color": "#70796d"
+    },
+    {
+      "id": "other",
+      "label": "その他",
+      "color": "#d2d5d1"
+    }
+  ],
+  "parts": [
+    {
+      "id": "box",
+      "label": "箱",
+      "systemLabel": "箱",
+      "group": "other",
+      "kind": "printed",
+      "file": "flag-box-part-box.stl",
+      "sha256": "89035827fcfaa194f6c23e2c6f856d109e6f76c1065aa8e219a7a769a709f1f3",
+      "size": 11784,
+      "aliases": [],
+      "color": "#d2d5d1"
+    },
+    {
+      "id": "roof",
+      "label": "天板",
+      "systemLabel": "天板",
+      "group": "other",
+      "kind": "printed",
+      "file": "flag-box-part-roof.stl",
+      "sha256": "cab0b828377d6c4b438f224beb24402e274806075535b0df31badd80d347595c",
+      "size": 16784,
+      "aliases": [],
+      "color": "#e5e5df"
+    },
+    {
+      "id": "flag",
+      "label": "旗とホーン受け",
+      "systemLabel": "旗とホーン受け",
+      "group": "other",
+      "kind": "printed",
+      "file": "flag-box-part-flag.stl",
+      "sha256": "234828dfd545fa5415109ccaf7893a07a7991e231e9eb65a706b3eae04c343e8",
+      "size": 53484,
+      "aliases": [],
+      "color": "#bc5a39"
+    },
+    {
+      "id": "bearing_button",
+      "label": "軸受けボタン",
+      "systemLabel": "軸受けボタン",
+      "group": "other",
+      "kind": "printed",
+      "file": "flag-box-part-bearing_button.stl",
+      "sha256": "baa115df4d4fefe1fe67d7c2b8ecdbb2993530ec666ed807d4e7490f88e56b72",
+      "size": 44684,
+      "aliases": [],
+      "color": "#bc5a39"
+    },
+    {
+      "id": "key_left",
+      "label": "左の留め具",
+      "systemLabel": "左の留め具",
+      "group": "key",
+      "kind": "printed",
+      "file": "flag-box-part-key_left.stl",
+      "sha256": "08b9b1e4fad84e076902579519a7481e8041c2c018aad9d2c88b4a4363268454",
+      "size": 4284,
+      "aliases": [],
+      "color": "#70796d"
+    },
+    {
+      "id": "key_right",
+      "label": "右の留め具",
+      "systemLabel": "右の留め具",
+      "group": "key",
+      "kind": "printed",
+      "file": "flag-box-part-key_right.stl",
+      "sha256": "21d7f0849fe5c340ff3ead160a5da2aab3f3e95c78e6cf001f24cc1be6c695d2",
+      "size": 4284,
+      "aliases": [],
+      "color": "#70796d"
+    },
+    {
+      "id": "servo",
+      "label": "SG92R",
+      "systemLabel": "SG92R",
+      "group": "other",
+      "kind": "stock",
+      "file": "flag-box-part-servo.stl",
+      "sha256": "f2778bab84a77c03ddcf9edbdbcdecb0fe0628ece698746b606bac3684fe2eaf",
+      "size": 53384,
+      "aliases": [],
+      "color": "#356ca5"
+    },
+    {
+      "id": "horn",
+      "label": "付属ホーン",
+      "systemLabel": "付属ホーン",
+      "group": "other",
+      "kind": "stock",
+      "file": "flag-box-part-horn.stl",
+      "sha256": "1c41348facd7b4f6d6837dc47a8779a25dcf781b7b774e61135f5cebf4495d4c",
+      "size": 184784,
+      "aliases": [],
+      "color": "#303438"
+    }
+  ]
+}

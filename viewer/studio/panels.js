@@ -9,72 +9,11 @@ import { createWorkspaceNav } from "../shared/workspace.mjs";
 import { requestDetailUrl, requestImages, requestShapeDetails, requestTitle } from "./request-view.js";
 import { planePosition } from "./frames.js";
 import { PART_MODES, PART_MODE_LABELS, countPartModes, modeOf } from "./part-modes.js";
+import { h, add, $, icon, tip, kbd, composing } from "./dom.js";
+import { createPartsPanel } from "./parts-panel.js";
+import { itemPartText } from "./parts.js";
 
-// --- 小さな DOM 道具 ----------------------------------------------------------
-
-function h(tag, props, ...kids) {
-  const el = document.createElement(tag);
-  for (const [k, v] of Object.entries(props || {})) {
-    if (v === undefined || v === null || v === false) continue;
-    if (k === "class") el.className = v;
-    else if (k === "style") el.style.cssText = v;
-    else if (k.startsWith("on")) el.addEventListener(k.slice(2), v);
-    else if (k === "value" || k === "checked" || k === "disabled" || k === "hidden") el[k] = v;
-    else el.setAttribute(k, v === true ? "" : v);
-  }
-  add(el, kids);
-  return el;
-}
-function add(el, kids) {
-  for (const k of kids.flat(Infinity)) {
-    if (k === undefined || k === null || k === false) continue;
-    el.append(k.nodeType ? k : document.createTextNode(String(k)));
-  }
-  return el;
-}
-const $ = (sel) => document.querySelector(sel);
-
-// アイコン: 20px の枠、線 1.5px、自作。外部のアイコンフォントは使わない
-const ICONS = {
-  logo: '<path d="M10 2.5l6.5 3.6v7.8L10 17.5l-6.5-3.6V6.1z"/><path d="M3.5 6.1L10 9.8l6.5-3.7M10 9.8v7.7"/>',
-  view: '<path d="M2 10c2-3.4 4.6-5.2 8-5.2s6 1.8 8 5.2c-2 3.4-4.6 5.2-8 5.2S4 13.4 2 10z"/><circle cx="10" cy="10" r="2.4"/>',
-  faces: '<path d="M10 2.5l6.5 3.6v7.8L10 17.5l-6.5-3.6V6.1z"/><path d="M3.5 6.1L10 9.8l6.5-3.7M10 9.8v7.7"/><path d="M10 2.5L3.5 6.1 10 9.8l6.5-3.7z" fill="currentColor" fill-opacity=".22"/>',
-  pin: '<path d="M10 17.5s5-4.4 5-8.5a5 5 0 10-10 0c0 4.1 5 8.5 5 8.5z"/><circle cx="10" cy="9" r="1.8"/>',
-  measure: '<path d="M3 13.5L13.5 3 17 6.5 6.5 17z"/><path d="M5.5 11l1.6 1.6M8.25 8.25l1.6 1.6M11 5.5l1.6 1.6"/>',
-  section: '<path d="M2.5 11.5L10 8l7.5 3.5L10 15z" fill="currentColor" fill-opacity=".18"/><path d="M2.5 11.5L10 8l7.5 3.5L10 15z"/><path d="M10 2.5v5.5M10 15v2.5"/>',
-  close: '<path d="M5 5l10 10M15 5L5 15"/>',
-  trash: '<path d="M4.5 6h11M8 6V4h4v2M6 6l.7 10h6.6L14 6M8.5 9v4.5M11.5 9v4.5"/>',
-  chevron: '<path d="M5.5 8l4.5 4.5L14.5 8"/>',
-  search: '<circle cx="9" cy="9" r="5"/><path d="M13 13l4 4"/>',
-  send: '<path d="M17.5 2.5L2.5 8.5l5.5 2 2 5.5z"/><path d="M8 10.5l9.5-8"/>',
-  undo: '<path d="M7 4L3.5 7.5 7 11"/><path d="M3.5 7.5H12a4.5 4.5 0 010 9H8"/>',
-  redo: '<path d="M13 4l3.5 3.5L13 11"/><path d="M16.5 7.5H8a4.5 4.5 0 000 9h4"/>',
-  focus: '<circle cx="10" cy="10" r="3"/><path d="M10 2.5v3M10 14.5v3M2.5 10h3M14.5 10h3"/>',
-  plus: '<path d="M10 4v12M4 10h12"/>',
-  minus: '<path d="M4 10h12"/>',
-  copy: '<rect x="7" y="7" width="9" height="9" rx="1.5"/><path d="M13 7V5.5A1.5 1.5 0 0011.5 4h-6A1.5 1.5 0 004 5.5v6A1.5 1.5 0 005.5 13H7"/>',
-  reset: '<path d="M4 10a6 6 0 101.8-4.3"/><path d="M4 3.5v3.5h3.5"/>',
-  layers: '<path d="M10 3l7 3.5-7 3.5-7-3.5z"/><path d="M3 10l7 3.5 7-3.5M3 13.5l7 3.5 7-3.5"/>',
-  check: '<path d="M4.5 10.5l3.5 3.5 7.5-8"/>',
-  note: '<path d="M4 4.5h12v8H9l-3.5 3v-3H4z"/>',
-  build: '<path d="M6 4l10 6-10 6z"/>',
-  info: '<circle cx="10" cy="10" r="7"/><path d="M10 9v4.5M10 6.5v.2"/>',
-};
-function icon(name, cls = "") {
-  const span = document.createElement("span");
-  span.className = `ic ${cls}`.trim();
-  span.setAttribute("aria-hidden", "true");
-  span.innerHTML = `<svg viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${ICONS[name] || ""}</svg>`;
-  return span;
-}
-function tip(el, name, key) {
-  el.dataset.tip = name;
-  if (key) el.dataset.key = key;
-  if (!el.getAttribute("aria-label")) el.setAttribute("aria-label", key ? `${name} ${key}` : name);
-  return el;
-}
-function kbd(text) { return h("kbd", { class: "kbd" }, text); }
-
+// 小さな DOM 道具とアイコンは dom.js
 const num = (n) => String(Number(Number(n).toFixed(2)));
 const num1 = (n) => (Math.round(n * 10) / 10).toFixed(1);
 function fmtTime(iso) {
@@ -90,7 +29,6 @@ function fmtClock(iso) {
   return `${p(d.getHours())}:${p(d.getMinutes())}`;
 }
 function firstLine(s) { return String(s || "").split(/\r?\n/).find((l) => l.trim()) || ""; }
-function composing(e) { return e.isComposing || e.keyCode === 229; }
 function lsGet(key, fallback) {
   try { const v = localStorage.getItem(key); return v === null ? fallback : JSON.parse(v); } catch { return fallback; }
 }
@@ -295,6 +233,7 @@ export function createPanels({ store, ctx }) {
     outlinesBtn.setAttribute("aria-pressed", String(!!store.state.showFaceOutlines));
 
     const c = parts.candidates.length;
+    partsBtn.hidden = !!store.state.ledger;
     partsBtn.disabled = sending || layoutInfo.loading || c === 0;
     partsLabel.textContent = c > 1 ? `パーツ ${parts.shown.length}/${c}` : "パーツ";
     const plate = layoutInfo.kind === "plate";
@@ -466,10 +405,10 @@ export function createPanels({ store, ctx }) {
     switch (s.tool) {
       case "faces":
         return s.faceMode === "brush"
-          ? "ドラッグで面を塗る。Shift で追加、Alt で外す。B で塗り広げに戻す。右クリックで外装を透過できます"
-          : "クリックで滑らかにつながった面を選ぶ。Shift で追加、Alt で外す。B でブラシ。右クリックで外装を透過できます";
-      case "pin": return "面をクリックしてピンを立てる。メモを書いて追加します。右クリックで外装を透過できます";
-      case "measure": return "2 点をクリックして距離を測る。Shift で X・Y・Z のどれかに揃える。右クリックで外装を透過できます";
+          ? "ドラッグで面を塗る。Shift で追加、Alt で外す。B で塗り広げに戻す。右クリックで部品を透過できます"
+          : "クリックで滑らかにつながった面を選ぶ。Shift で追加、Alt で外す。B でブラシ。右クリックで部品を透過できます";
+      case "pin": return "面をクリックしてピンを立てる。メモを書いて追加します。右クリックで部品を透過できます";
+      case "measure": return "2 点をクリックして距離を測る。Shift で X・Y・Z のどれかに揃える。右クリックで部品を透過できます";
       case "section": return "断面を選び、移動や回転で位置を整える。新しい断面も追加できます";
       default: return "ドラッグで回す。右ドラッグで動かす。ホイールで拡大縮小。数字キーで視点を切り替え。右クリックか T で部品を透過";
     }
@@ -492,14 +431,16 @@ export function createPanels({ store, ctx }) {
   const inspector = $("#inspector");
   const tabNotesBtn = h("button", { type: "button", role: "tab", id: "tab-notes-btn", "aria-controls": "tab-notes", onclick: () => setTab("notes") },
     "指示", h("span", { class: "tab-count", hidden: true }));
-  const tabParamsBtn = h("button", { type: "button", role: "tab", id: "tab-params-btn", "aria-controls": "tab-params", onclick: () => setTab("params") }, "寸法・設定");
-  const tabButtons = [tabNotesBtn, tabParamsBtn];
+  const tabPartsBtn = h("button", { type: "button", role: "tab", id: "tab-parts-btn", "aria-controls": "tab-parts", hidden: true, onclick: () => setTab("parts") }, "部品");
+  const tabParamsBtn = h("button", { type: "button", role: "tab", id: "tab-params-btn", "aria-controls": "tab-params", onclick: () => setTab("params") }, "寸法");
+  const tabButtons = [["notes", tabNotesBtn], ["parts", tabPartsBtn], ["params", tabParamsBtn]];
+  const partsUi = createPartsPanel({ store, getFiles: () => parts.shown });
   const tabCount = tabNotesBtn.querySelector(".tab-count");
 
   // 指示タブ
   const itemList = h("div", { class: "cards" });
   const draftCount = h("span", { class: "sec-count" }, "");
-  const messageBox = h("textarea", { class: "field msg", rows: "3", placeholder: "形全体について伝えたいことを書く", "aria-label": "自由メモ" });
+  const messageBox = h("textarea", { class: "field msg", rows: "3", placeholder: "形全体について伝えたいことを書く" });
   messageBox.addEventListener("input", () => { store.setMessage(messageBox.value); syncTopbar(); });
   const sendNote = h("p", { class: "send-note", "data-state": "unknown" }, "");
   const sendBtn2 = h("button", { type: "button", class: "btn primary block", onclick: () => ctx.send() }, icon("send", "sm"), "シュビーに送る", kbd("Ctrl Enter"));
@@ -509,48 +450,61 @@ export function createPanels({ store, ctx }) {
     h("div", { class: "scroll" },
       h("div", { class: "sec-head" }, h("h2", {}, "下書き"), draftCount),
       itemList,
-      h("div", { class: "msg-box" }, h("label", { class: "field-label" }, "自由メモ", messageBox), h("div", { class: "studio-state" }, listenerPill, statusEl), sendNote),
+      h("div", { class: "msg-box" }, h("label", { class: "field-label" }, "自由メモ", messageBox)),
       h("div", { class: "sec-head" }, h("h2", {}, "これまでの依頼"), reqCount),
       reqList),
-    h("div", { class: "send-actions" }, sendBtn2));
+    h("div", { class: "send-actions" }, h("div", { class: "studio-state" }, listenerPill, statusEl), sendNote, sendBtn2));
+  const partsPanel = h("div", { class: "tabpanel", id: "tab-parts", role: "tabpanel", "aria-labelledby": "tab-parts-btn", hidden: true }, partsUi.el);
 
-  function setTab(t) {
-    tab = t;
-    tabNotesBtn.setAttribute("aria-selected", String(t === "notes"));
-    tabParamsBtn.setAttribute("aria-selected", String(t === "params"));
-    tabNotesBtn.tabIndex = t === "notes" ? 0 : -1;
-    tabParamsBtn.tabIndex = t === "params" ? 0 : -1;
-    notesPanel.hidden = t !== "notes";
-    paramsPanel.hidden = t !== "params";
+  // 部品タブは、台帳があるか STL が複数あるときだけ出す
+  function syncPartsTab() {
+    tabPartsBtn.hidden = !partsUi.hasList();
+    if (tabPartsBtn.hidden && tab === "parts") setTab("notes");
   }
-  for (const [index, button] of tabButtons.entries()) {
+  function setTab(t) {
+    if (t === "parts" && tabPartsBtn.hidden) t = "notes";
+    tab = t;
+    const panelsByTab = { notes: notesPanel, parts: partsPanel, params: paramsPanel };
+    for (const [id, button] of tabButtons) {
+      button.setAttribute("aria-selected", String(t === id));
+      button.tabIndex = t === id ? 0 : -1;
+      panelsByTab[id].hidden = t !== id;
+    }
+  }
+  for (const [, button] of tabButtons) {
     button.addEventListener("keydown", (e) => {
+      const visible = tabButtons.filter(([, b]) => !b.hidden);
+      const index = visible.findIndex(([, b]) => b === button);
       let next = index;
-      if (e.key === "ArrowRight") next = (index + 1) % tabButtons.length;
-      else if (e.key === "ArrowLeft") next = (index - 1 + tabButtons.length) % tabButtons.length;
+      if (e.key === "ArrowRight") next = (index + 1) % visible.length;
+      else if (e.key === "ArrowLeft") next = (index - 1 + visible.length) % visible.length;
       else if (e.key === "Home") next = 0;
-      else if (e.key === "End") next = tabButtons.length - 1;
+      else if (e.key === "End") next = visible.length - 1;
       else return;
       e.preventDefault();
-      setTab(next === 0 ? "notes" : "params");
-      tabButtons[next].focus();
+      setTab(visible[next][0]);
+      visible[next][1].focus();
     });
   }
 
   // --- 下書きの指示カード ---
+  // 指示が当たった部品の名前（台帳があるときだけ。無ければ null）
+  const partText = (it) => itemPartText(it, store.state.ledger, store.state.partNames);
   function itemSummary(it, pinNo) {
+    const part = partText(it);
     switch (it.type) {
       case "faces": {
         const n = (it.summary && it.summary.faceCount) ?? (it.faceIds ? it.faceIds.length : 0);
         const th = it.summary && it.summary.thickness;
         const action = actionText(it);
-        return {
-          t1: `面 ${n.toLocaleString("ja-JP")} 枚${action ? ` · ${action}` : ""}`,
-          t2: th ? `今の肉厚 ${num1(th.min)}〜${num1(th.median)} mm` : "",
-        };
+        const thText = th ? `今の肉厚 ${num1(th.min)}〜${num1(th.median)} mm` : "";
+        if (part) {
+          return { t1: `${part} の面`, t2: [`${n.toLocaleString("ja-JP")} 枚`, action, thText].filter(Boolean).join(" · ") };
+        }
+        return { t1: `面 ${n.toLocaleString("ja-JP")} 枚${action ? ` · ${action}` : ""}`, t2: thText };
       }
-      case "pin": return { t1: `ピン ${pinNo}`, t2: "" };
-      case "measure": return { t1: `計測 ${num1(it.distance || 0)} mm`, t2: "" };
+      case "pin": return { t1: part ? `${part} のピン ${pinNo}` : `ピン ${pinNo}`, t2: "" };
+      case "measure": return { t1: `計測 ${num1(it.distance || 0)} mm`, t2: part || "" };
       case "section": {
         const axis = it.plane && it.plane.axis;
         const label = axis === "view" ? "視線" : (axis || "").toUpperCase();
@@ -632,6 +586,10 @@ export function createPanels({ store, ctx }) {
     }
     renderItems();
   }
+  const rerenderItems = () => {
+    if (itemList.contains(document.activeElement)) { pendingItems = true; return; }
+    renderItems();
+  };
   itemList.addEventListener("focusout", () => { if (pendingItems) setTimeout(() => { if (pendingItems && !itemList.contains(document.activeElement)) renderItems(); }, 0); });
 
   function syncSendNote(on) {
@@ -837,8 +795,8 @@ export function createPanels({ store, ctx }) {
     h("div", { class: "params-foot" }, h("div", { class: "row2" }, resetBtn, copyBtn), exportBtn));
 
   inspector.append(
-    h("div", { class: "tabs", role: "tablist" }, tabNotesBtn, tabParamsBtn),
-    notesPanel, paramsPanel);
+    h("div", { class: "tabs", role: "tablist", "aria-label": "右のパネル" }, tabNotesBtn, tabPartsBtn, tabParamsBtn),
+    notesPanel, partsPanel, paramsPanel);
 
   function rangeFor(c) {
     const v = c.value;
@@ -1188,8 +1146,12 @@ export function createPanels({ store, ctx }) {
     const count = h("span", {});
     const area = h("span", { class: "muted mono" });
     const thickness = h("div", { class: "pop-sub" });
+    const partLine = h("div", { class: "pop-part" });
     const updateSelection = (next) => {
       p = next;
+      const pt = partText({ type: "faces", file: p.file });
+      partLine.hidden = !pt;
+      partLine.textContent = pt ? `部品: ${pt}` : "";
       const sum = p.summary || {};
       const n = sum.faceCount ?? p.faceIds?.length ?? 0;
       count.textContent = `面 ${n.toLocaleString("ja-JP")} 枚`;
@@ -1202,6 +1164,7 @@ export function createPanels({ store, ctx }) {
       h("div", { class: "pop-head" },
         h("span", { class: "dot", style: `--c:${SELECTION_COLOR}` }),
         count, area),
+      partLine,
       thickness,
       note,
       h("div", { class: "pop-foot faces-foot" },
@@ -1228,8 +1191,10 @@ export function createPanels({ store, ctx }) {
       setTab("notes");
       markActive(true);
     };
+    const pinPart = partText({ type: "pin", file: p.file });
     const el = h("div", { class: "popover", role: "region", "aria-label": "ピンのメモ" },
       h("div", { class: "pop-head" }, icon("pin", "sm"), h("b", {}, `ピン ${no}`)),
+      pinPart ? h("div", { class: "pop-part" }, `部品: ${pinPart}`) : null,
       note,
       popFoot(cancelPopover, confirm));
     el.addEventListener("keydown", (e) => handlePopoverKeydown(e, { cancel: cancelPopover, confirm, enterTargets: [note] }));
@@ -1290,6 +1255,8 @@ export function createPanels({ store, ctx }) {
   store.on("items", onItems);
   store.on("change:activeItemId", () => markActive(true));
   store.on("change:partModes", () => { if (menuEl) renderPartsMenu(); });
+  store.on("change:partNames", rerenderItems);
+  store.on("change:ledger", () => { rerenderItems(); syncPartsTab(); syncTopbar(); });
   store.on("change:activeSectionId", renderHint);
   store.on("change:tool", () => { syncRail(); renderHint(); });
   store.on("change:frame", () => { syncRail(); renderHint(); });
@@ -1351,6 +1318,7 @@ export function createPanels({ store, ctx }) {
     setLayout(info) {
       layoutInfo = { ...layoutInfo, ...info };
       if (layoutInfo.loading) closeMenu();
+      syncPartsTab();
       syncTopbar();
       syncRail();
       renderHint();
@@ -1369,6 +1337,8 @@ export function createPanels({ store, ctx }) {
     setParts(p) {
       parts = { candidates: p.candidates || [], shown: p.shown || [], custom: !!p.custom };
       syncTopbar();
+      syncPartsTab();
+      partsUi.refresh();
       if (menuEl) renderPartsMenu();
     },
     setRequests(list) {

@@ -42,7 +42,9 @@ C1・C2（Codex 製）と C4-3 タンジブル画素キューブ（Claude 製）
 
 build/ の契約（`viewer/lattice/CONTRACT.md` と同じ形。Studio の物理検証・組み立てタブもこれを読む）:
 
-- `manifest.json`: 部品表。`print` があれば刷る部品（刷る向きの STL）。無ければ既製部品
+- `manifest.json`: 部品表。`print` があれば刷る部品（刷る向きの STL）。無ければ既製部品。
+  **`label` に人が分かる日本語の名前を必ず書く**。書き出したら `py -3.11 tools/studio_parts.py <名前>` で Studio の部品台帳を作る
+  （ユーザーとの呼び名のすり合わせ。`.agent/rules/model-request.md` §7「部品の呼び名」）
 - `motion.json`: サーボ角ごとの全部品の姿勢。刻みは 2.5° 以下
 - `assembly.json`: 組立工程ごとの姿勢の列。最後は全部品が単位行列（組んだ位置）。1 フレームの移動は 1mm・5° 以下
 

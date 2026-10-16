@@ -652,7 +652,7 @@ export function createPicking(viewport, store) {
       const a = measureA.a;
       const file = measureA.file;
       clearRubber();
-      store.addItem({ type: "measure", file, a, b, distance: Math.round(distance(a, b) * 100) / 100 });
+      store.addItem({ type: "measure", file, fileB: hit.file, a, b, distance: Math.round(distance(a, b) * 100) / 100 });
     }
   }
 

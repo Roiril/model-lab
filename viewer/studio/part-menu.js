@@ -4,7 +4,7 @@
 //   3D の左下: 透過・隠している部品の数と「すべて戻す」
 // 右ドラッグ（視点の移動）は今までどおり。状態は store.state.partModes、反映は viewport.js。
 
-import { PART_MODES, PART_MODE_LABELS, countPartModes, modeOf, toggledGhost } from "./part-modes.js";
+import { PART_MODES, PART_MODE_LABELS, countPartModes, modeOf, partKey, toggledGhost } from "./part-modes.js";
 
 const CLICK_PX = 4;
 
@@ -19,7 +19,8 @@ function el(tag, props = {}, ...kids) {
   return node;
 }
 
-export function createPartMenu(viewport, store, { chipHost } = {}) {
+// labelOf(key, file) -> 画面に出す部品の名前（台帳があれば日本語の名前）。無ければ STL 名
+export function createPartMenu(viewport, store, { chipHost, labelOf = (key, file) => file } = {}) {
   const { canvas } = viewport;
 
   // ---- 左下の印（透過・隠している部品があるときだけ）-------------------------------
@@ -29,7 +30,7 @@ export function createPartMenu(viewport, store, { chipHost } = {}) {
     el("button", { type: "button", class: "link", onclick: () => store.resetPartModes() }, "すべて戻す"));
   if (chipHost) chipHost.append(chip);
 
-  function loadedFiles() { return viewport.getMeshes().map((m) => m.userData.file); }
+  function loadedFiles() { return viewport.getMeshes().map((m) => partKey(m.userData)); }
   function syncChip() {
     const { ghost, hidden } = countPartModes(store.state.partModes, loadedFiles());
     chip.hidden = ghost + hidden === 0;
@@ -46,6 +47,7 @@ export function createPartMenu(viewport, store, { chipHost } = {}) {
     if (!menu) return;
     menu.remove();
     menu = null;
+    store.hoverParts([]);
   }
 
   function renderMenu(x, y) {
@@ -55,16 +57,21 @@ export function createPartMenu(viewport, store, { chipHost } = {}) {
     const m = el("div", { class: "menu part-ctx", role: "group", "aria-label": "この位置の部品" });
     m.append(el("div", { class: "menu-head" }, hits.length ? "この位置の部品（手前から）" : "この位置に部品はありません"));
     for (const hit of hits) {
-      const mode = modeOf(store.state.partModes, hit.file);
-      const seg = el("div", { class: "seg", role: "group", "aria-label": `${hit.file} の見え方` });
+      const mode = modeOf(store.state.partModes, hit.key);
+      const name = labelOf(hit.key, hit.file);
+      const seg = el("div", { class: "seg", role: "group", "aria-label": `${name} の見え方` });
       for (const v of PART_MODES) {
         const b = el("button", {
           type: "button", class: "seg-btn", "aria-pressed": String(mode === v),
-          onclick: () => { store.setPartMode(hit.file, v); renderMenu(x, y); },
+          onclick: () => { store.setPartMode(hit.key, v); renderMenu(x, y); },
         }, PART_MODE_LABELS[v]);
         seg.append(b);
       }
-      m.append(el("div", { class: "part-row" }, el("span", { class: "menu-name mono", title: hit.file }, hit.file), seg));
+      const nameEl = el("span", { class: "menu-name", title: name }, name);
+      const row = el("div", { class: "part-row" }, nameEl, seg);
+      row.addEventListener("pointerenter", () => store.hoverParts([hit.key]));
+      row.addEventListener("pointerleave", () => store.hoverParts([]));
+      m.append(row);
     }
     const { ghost, hidden } = countPartModes(store.state.partModes, loadedFiles());
     if (ghost + hidden > 0) {
@@ -124,7 +131,7 @@ export function createPartMenu(viewport, store, { chipHost } = {}) {
     if (!cursor || store.state.frame === "preview-m-yup") return false;
     const first = viewport.pickParts(cursor.x, cursor.y)[0];
     if (!first) return false;
-    store.setPartMode(first.file, toggledGhost(first.mode));
+    store.setPartMode(first.key, toggledGhost(first.mode));
     return true;
   }
 

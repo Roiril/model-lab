@@ -5,6 +5,7 @@
 (Claude Code が自動で積み上げる。手動で中身を書く必要はない)
 
 - [起動中の Blender にはブースが入っている](blender-live-booth-scene.md) — MCP 経由で clear_scene すると全部消える。Cube.005 は姿勢の指定
+- [部品は台帳の呼び名で呼ぶ](feedback-part-names.md) — id・ファイル名を主語にしない。ユーザーの付け直しは part-names.json へ
 - [住人の箱を参考にしない](feedback-no-mystery-box-reference.md) — 形と機構だけが対象。Studio の物理検証・組み立てタブは使い、新モデルの検証もそこで見せる
 - [SG92Rホーンの左右と実物の組立結果](sg92r-horn-orientation.md) — Bは左右逆装着で中心がずれた。向きを直すと組めた。C1は逆装着できず組立と回転に成功
 - [タンジブル画素キューブの方式と歯車列の落とし穴](tangible-pixel-cube-design.md) — 円盤カム ROM は 100mm に入らない。位相 2δ/CD と遊びの鎖。旧格子の表示データは書き換えない

@@ -9,7 +9,9 @@ import { createSections } from "./section.js";
 import { createSketch } from "./sketch.js";
 import { createPanels } from "./panels.js";
 import { createPartMenu } from "./part-menu.js";
-import { modeOf } from "./part-modes.js";
+import { createPartHover } from "./part-hover.js";
+import { modeOf, partKey } from "./part-modes.js";
+import { groupOf, ledgerUrl, normalizeLedger, partById, partName } from "./parts.js";
 import { buildRequest } from "./bundle.js";
 import { filesForModel, selectModelFile } from "./model-files.js";
 import { createLatestGate, plateManifestStale, validPlateManifest } from "./layout.js";
@@ -35,9 +37,20 @@ const viewport = createViewport(viewportEl, store);
 const picking = createPicking(viewport, store);
 const sections = createSections(viewport, store);
 const sketch = createSketch(sketchEl, store, { modelBox: () => viewport.modelBox() });
-const partMenu = createPartMenu(viewport, store, { chipHost: viewportEl });
+
+// 部品の名前。台帳があれば日本語の名前（同じ名前が複数あれば群名を添える）、無ければ STL 名
+function describePart(key, file) {
+  const ledger = store.state.ledger;
+  const part = partById(ledger, key);
+  if (!part) return { name: file || key };
+  const g = groupOf(ledger, part);
+  return { name: partName(ledger, store.state.partNames, part), group: g ? g.label : "" };
+}
+const partMenu = createPartMenu(viewport, store, { chipHost: viewportEl, labelOf: (key, file) => describePart(key, file).name });
+const partHover = createPartHover(viewport, store, { host: viewportEl, describe: describePart });
+store.on("change:partHover", (keys) => viewport.setHoverParts(keys));
 // 動作確認用（ブラウザのコンソールや自動操作から状態を読む）
-window.__studio = { store, viewport, picking, sections, sketch, partMenu };
+window.__studio = { store, viewport, picking, sections, sketch, partMenu, partHover };
 
 // --- 状態（app だけが持つもの）--------------------------------------------------
 
@@ -61,6 +74,7 @@ let loadSeq = 0;
 let fitSketchFor = null;
 let plateManifest = null;
 let plateStale = false;
+let ledger = null;           // 部品台帳（parts.js の normalizeLedger の戻り値）| null。組立表示で使う
 let layoutLoading = false;
 let layoutSeq = 0;
 let pendingSectionCopy = null;
@@ -82,9 +96,18 @@ function pickStl(name, files) {
   return selectModelFile(name, files, models.map((m) => m.name));
 }
 
-// 自動で選ぶ表示対象。preview があり、このモデルの STL が無いときは STL を出さない
+// 台帳の部品のうち、exports に STL がある物（台帳の並び順）
+function ledgerFiles() {
+  if (!ledger) return [];
+  const have = new Set(stlNames);
+  return ledger.parts.filter((p) => have.has(p.file)).map((p) => p.file);
+}
+
+// 自動で選ぶ表示対象。台帳があれば部品の STL 全部。preview があり、このモデルの STL が無いときは STL を出さない
 function autoNames() {
   if (!modelName) return [];
+  const fromLedger = ledgerFiles();
+  if (fromLedger.length) return fromLedger;
   const pick = pickStl(modelName, stlNames);
   if (!pick) return [];
   const matched = headsFor(modelName, stlNames).length > 0;
@@ -99,6 +122,32 @@ async function refreshStls() {
   } catch (e) {
     console.error(e);
     store.status(`STL の一覧を読めませんでした: ${e.message}`, "err");
+  }
+}
+
+// 部品台帳（viewer/studio/parts/<model>.json）。404 は台帳なし。形が違う・STL が 1 つも無いときも台帳なしとして扱う
+async function refreshLedger(name = modelName) {
+  let next = null;
+  try {
+    const res = await fetch(ledgerUrl(name), { cache: "no-cache" });
+    if (res.status !== 404) {
+      if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
+      next = normalizeLedger(await res.json(), name);
+      if (!next) throw new Error("部品の名前表の形式が正しくありません");
+    }
+  } catch (e) {
+    console.error("[parts ledger]", e);
+    store.status(`部品の名前表を読めませんでした: ${e.message}`, "err");
+  }
+  if (name !== modelName) return;
+  ledger = next;
+  if (ledger && !ledgerFiles().length) {
+    store.status("部品の名前表はありますが、部品の STL が見つかりません。tools/studio_parts.py で書き出してください", "err");
+    ledger = null;
+  } else if (ledger) {
+    const have = new Set(stlNames);
+    const missing = ledger.parts.filter((p) => !have.has(p.file)).length;
+    if (missing) store.status(`部品の STL が ${missing} 個足りません。tools/studio_parts.py で書き出し直してください`, "err");
   }
 }
 
@@ -202,11 +251,18 @@ async function showStl(names, { fit = false, layout = store.state.layout } = {})
   }
   const seq = ++loadSeq;
   const t0 = performance.now();
-  const label = list.length > 1 ? `${list.length} 個の STL` : list[0];
+  // 台帳の部品は組立の表示だけで使う（印刷プレートの派生 STL は台帳に無い）
+  const useLedger = !!ledger && layout?.kind !== "plate" && list.some((n) => ledger.byFile.has(n));
+  const label = useLedger ? `${list.length} 個の部品` : list.length > 1 ? `${list.length} 個の STL` : list[0];
   store.status(`${label} を読み込み中…`, "busy");
   try {
-    const items = list.map((n) => ({ name: n, url: `/exports/${encodeURIComponent(n)}?v=${mtimeOf(n)}` }));
+    const items = list.map((n) => {
+      const part = useLedger ? ledger.byFile.get(n) : null;
+      // 台帳の STL は必ず mm。単位を推定しない
+      return { name: n, url: `/exports/${encodeURIComponent(n)}?v=${mtimeOf(n)}`, ...(part ? { partId: part.id, unitScale: 1, color: part.color } : {}) };
+    });
     const frame = layout?.kind === "plate" ? "plate-mm" : "blender-mm";
+    store.set({ ledger: useLedger ? ledger : null });
     const loaded = await viewport.loadSTLs(items, { fit, frame });
     if (seq !== loadSeq || !loaded) return false;
     shownFiles = list.slice();
@@ -306,7 +362,7 @@ async function showPreview({ fit = false } = {}) {
       clearCompare();
       store.set({ selection: [], tool: "view" });
     }
-    store.set({ frame: "preview-m-yup", files: [] });
+    store.set({ frame: "preview-m-yup", files: [], ledger: null });
     syncPanels();
     store.status("プレビューを更新しました", "ok");
   } catch (e) {
@@ -406,6 +462,9 @@ async function openModel(name, { fromHistory = false, layoutKind = null } = {}) 
     store.set({ model: name, layout: { kind: "assembled" }, frame: "blender-mm", files: [], tool: "view", selection: [], selectionFile: null, activeItemId: null, activeSectionId: null, sectionTransform: "off" });
     store.loadDraft();
     store.loadPartModes();
+    store.loadPartNames();
+    ledger = null;
+    store.set({ ledger: null, partHover: [] });
     if (!fromHistory) {
       const url = new URL(location.href);
       url.searchParams.set("model", name);
@@ -443,6 +502,8 @@ async function openModel(name, { fromHistory = false, layoutKind = null } = {}) 
 
     await refreshStls();
     if (seq !== openSeq) return false;
+    await refreshLedger(name);
+    if (seq !== openSeq) return false;
     await refreshPlateManifest(name);
     if (seq !== openSeq) return false;
 
@@ -452,7 +513,7 @@ async function openModel(name, { fromHistory = false, layoutKind = null } = {}) 
     } else {
       const names = autoNames();
       if (names.length) {
-      const matched = headsFor(name, stlNames).length > 0;
+      const matched = headsFor(name, stlNames).length > 0 || ledgerFiles().length > 0;
       if (!matched) store.toast(`${name} の STL が見つからないので、いちばん新しい STL（${names[0]}）を表示しています`);
       await showStl(names, { fit: true });
       } else if (previewBuild) {
@@ -489,6 +550,7 @@ async function handleStlUpdate() {
   if (!modelName || opening) return;
   const oldManifest = plateManifest;
   await refreshStls();
+  await refreshLedger(modelName);
   await refreshPlateManifest(modelName);
   const plate = store.state.layout?.kind === "plate";
   if (plate && plateStale) {
@@ -703,7 +765,8 @@ function syncSketch() {
 // 選択中の面がある部品を隠したら、見えない面の選択は外す
 store.on("change:partModes", () => {
   const file = store.state.selectionFile;
-  if (file && store.state.selection.length && modeOf(store.state.partModes, file) === "hidden") {
+  const mesh = file ? viewport.getMeshes().find((m) => m.userData.file === file) : null;
+  if (mesh && store.state.selection.length && modeOf(store.state.partModes, partKey(mesh.userData)) === "hidden") {
     store.set({ selection: [] });
     store.emit("popover:close");
   }

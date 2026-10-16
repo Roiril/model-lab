@@ -9,9 +9,11 @@
 //   geomInfo(mesh, {smooth}) / hasGeomInfo(mesh)   Worker で作る溶接・隣接の情報（キャッシュ）
 //   viewPreset は ["x","y","z"] の配列（視点→対象の向き、モデル座標）も受ける
 //   pick(x, y, {includeGhost}) は透過した部品を素通りする（includeGhost:true で拾う）。隠した部品は常に拾わない
-//   pickParts(x, y) -> [{file, mode, distance}]   カーソルの下にある部品を手前から（透過も含む。右クリックメニュー用）
+//   pickParts(x, y) -> [{key, file, mode, distance}]   カーソルの下にある部品を手前から（透過も含む。右クリックメニュー用）。key は部品の見え方のキー
 //   getSliceMeshes() -> [Mesh]                      断面で切る部品（隠した部品を除く）
-//   partMode(file) -> "normal" | "ghost" | "hidden"
+//   partMode(key) -> "normal" | "ghost" | "hidden"
+//   setHoverParts([key]) / 一覧や 3D で指している部品を強調する。隠した部品も強調の間だけ薄く見せる（拾う対象にはしない）
+//   loadSTLs の items は {name, url, partId?, unitScale?, color?}。台帳の部品は partId を渡す（mesh.userData.partId）。unitScale を渡すと推定しない
 //   dispose()
 
 import * as THREE from "three";
@@ -19,7 +21,7 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { CSS2DRenderer, CSS2DObject } from "three/addons/renderers/CSS2DRenderer.js";
 import { computeBoundsTree, disposeBoundsTree, acceleratedRaycast } from "three-mesh-bvh";
 import { themePalette, watchTheme } from "../shared/workspace.mjs";
-import { GHOST_EDGE_OPACITY, GHOST_OPACITY, modeOf, pickTargets, sliceTargets } from "./part-modes.js";
+import { GHOST_EDGE_OPACITY, GHOST_OPACITY, modeOf, partKey, pickTargets, sliceTargets } from "./part-modes.js";
 
 THREE.BufferGeometry.prototype.computeBoundsTree = computeBoundsTree;
 THREE.BufferGeometry.prototype.disposeBoundsTree = disposeBoundsTree;
@@ -28,6 +30,8 @@ THREE.Mesh.prototype.raycast = acceleratedRaycast;
 const MM = 0.001;                 // モデル座標（mm）→ three（m）
 const DEFAULT_COLOR = "#c9ced6";
 const GHOST_COLOR = "#9db4ff";
+const HOT_GHOST_OPACITY = 0.5;      // 指している間の、透過・隠した部品の不透明度
+const HOT_EMISSIVE = 0.5;           // 指している部品の発光の強さ
 const PLACED_RE = /print|plate|split/i;
 
 // --- STL ----------------------------------------------------------------
@@ -131,6 +135,7 @@ export function createViewport(container, store) {
   let inkColor = initialTheme.ink;
   let lineColor = initialTheme.line;
   let lineStrong = initialTheme.mute;
+  let accentColor = initialTheme.accentStrong || initialTheme.accent;
 
   // --- renderer / scene / camera ---
   const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
@@ -321,6 +326,8 @@ export function createViewport(container, store) {
     inkColor = palette.ink;
     lineColor = palette.line;
     lineStrong = palette.mute;
+    accentColor = palette.accentStrong || palette.accent;
+    for (const m of meshes) if (m.userData.partHover) m.material.emissive.set(accentColor);
     scene.background.set(bgColor);
     for (const lines of partEdges.values()) lines.material.color.set(inkColor);
     if (printPlate) {
@@ -454,10 +461,10 @@ export function createViewport(container, store) {
       metalness: m.metalness != null ? m.metalness : 0.0,
     };
   }
-  function makeMaterial() {
+  function makeMaterial(color) {
     const c = cfgMaterial();
     const mat = new THREE.MeshStandardMaterial({
-      color: new THREE.Color(c.color), roughness: c.roughness, metalness: c.metalness,
+      color: new THREE.Color(color || c.color), roughness: c.roughness, metalness: c.metalness,
       flatShading: true, side: THREE.FrontSide,
     });
     mat.clippingPlanes = clipArr;
@@ -571,15 +578,21 @@ export function createViewport(container, store) {
     mesh.add(lines);
     partEdges.set(mesh, lines);
   }
+  // 指している部品（hover）: 発光で強調する。透過は濃く、隠した部品は薄く出す。レイキャストは partMode のまま（隠した部品は拾わない）
+  let hoverKeys = new Set();
   function applyPartMode(mesh, mode) {
+    const hot = hoverKeys.has(partKey(mesh.userData));
     mesh.userData.partMode = mode;
-    mesh.visible = mode !== "hidden";
+    mesh.userData.partHover = hot;
+    mesh.visible = mode !== "hidden" || hot;
     const mat = mesh.material;
-    const ghostOn = mode === "ghost";
+    const ghostOn = mode === "ghost" || (mode === "hidden" && hot);
     const changed = mat.transparent !== ghostOn;
     mat.transparent = ghostOn;
-    mat.opacity = ghostOn ? GHOST_OPACITY : 1;
+    mat.opacity = ghostOn ? (hot ? HOT_GHOST_OPACITY : GHOST_OPACITY) : 1;
     mat.depthWrite = !ghostOn;
+    mat.emissive.set(hot ? accentColor : "#000000");
+    mat.emissiveIntensity = hot ? HOT_EMISSIVE : 0;
     if (changed) mat.needsUpdate = true;
     mesh.renderOrder = ghostOn ? 1 : 0;
     if (ghostOn) ensurePartEdges(mesh);
@@ -587,10 +600,16 @@ export function createViewport(container, store) {
   }
   function applyPartModes() {
     const modes = store.state.partModes || {};
-    for (const m of meshes) applyPartMode(m, modeOf(modes, m.userData.file));
+    for (const m of meshes) applyPartMode(m, modeOf(modes, partKey(m.userData)));
     invalidate();
   }
-  const partMode = (file) => modeOf(store.state.partModes, file);
+  function setHoverParts(keys) {
+    const next = new Set(keys || []);
+    if (next.size === hoverKeys.size && [...next].every((k) => hoverKeys.has(k))) return;
+    hoverKeys = next;
+    applyPartModes();
+  }
+  const partMode = (key) => modeOf(store.state.partModes, key);
 
   // --- Worker（溶接・隣接）---
   let worker = null;
@@ -759,7 +778,7 @@ export function createViewport(container, store) {
         const buf = await fetchSTL(f.url);
         if (gen !== loadGen) return null;
         const pos = parseSTL(buf);
-        loaded.push({ name: f.name, pos, unitScale: inferUnitScale(pos) });
+        loaded.push({ name: f.name, pos, unitScale: f.unitScale ?? inferUnitScale(pos), partId: f.partId || null, color: f.color || null });
       } catch (e) {
         console.error(`[viewport] ${f.name}`, e);
         store.status(`${f.name} を読めませんでした: ${e.message}`, "err");
@@ -772,7 +791,8 @@ export function createViewport(container, store) {
     clearPreview();
     clearMeshes();
     for (const l of loaded) {
-      const mesh = buildMesh(l.name, l.pos, l.unitScale, makeMaterial());
+      const mesh = buildMesh(l.name, l.pos, l.unitScale, makeMaterial(l.color));
+      if (l.partId) { mesh.userData.partId = l.partId; mesh.userData.placed = false; }   // 台帳の部品は組み立てた位置
       meshes.push(mesh);
       modelRoot.add(mesh);
     }
@@ -944,9 +964,10 @@ export function createViewport(container, store) {
     const out = [];
     for (const { hit } of rayHits(clientX, clientY, pickTargets(meshes, { includeGhost: true }), false)) {
       const file = hit.object.userData.file;
-      if (seen.has(file)) continue;
-      seen.add(file);
-      out.push({ file, mode: modeOf(store.state.partModes, file), distance: hit.distance });
+      const key = partKey(hit.object.userData);
+      if (seen.has(key)) continue;
+      seen.add(key);
+      out.push({ key, file, mode: modeOf(store.state.partModes, key), distance: hit.distance });
     }
     return out;
   }
@@ -1147,7 +1168,7 @@ export function createViewport(container, store) {
     resize,   // app.js の layoutChanged が呼ぶ。無いと window の resize を自分で発火して自分の listener を呼び続ける
     getMeshes: () => meshes,
     getSliceMeshes: () => sliceTargets(meshes),
-    pickParts, partMode,
+    pickParts, partMode, setHoverParts,
     setGhost, getGhostGeometry,
     pick, toModel, toWorld, modelBox,
     viewPreset, frameModelBox, cameraInfo, cameraAxes,

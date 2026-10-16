@@ -5,6 +5,7 @@ import { uvToModel } from "./frames.js";
 import { sampleShape } from "./sketch.js";
 import { plateLayoutSnapshot, platePartForFile } from "./layout.js";
 import { partModesForRequest } from "./part-modes.js";
+import { partNamesForRequest, partRefForFile, withPartRefs } from "./parts.js";
 
 const POLYLINE_STEP = 0.5; // mm
 
@@ -22,7 +23,7 @@ function plateProvenance(layout, file) {
   };
 }
 
-function meshFileInfo(mesh, fileInfos, layout) {
+function meshFileInfo(mesh, fileInfos, layout, ledger, names) {
   const file = mesh.userData.file;
   const unitScale = mesh.userData.unitScale ?? 1;
   let bbox = mesh.userData.bbox || null;
@@ -38,7 +39,7 @@ function meshFileInfo(mesh, fileInfos, layout) {
   }
   const placed = mesh.userData.placed ?? /print|plate|split/i.test(file || "");
   const info = fileInfos.find((f) => f.name === file);
-  return { file, unitScale, bbox, placed: !!placed, mtime: info ? info.mtime : null, ...plateProvenance(layout, file) };
+  return { file, unitScale, bbox, placed: !!placed, mtime: info ? info.mtime : null, ...(partRefForFile(ledger, names, file) || {}), ...plateProvenance(layout, file) };
 }
 
 // 戻り値: { request, images } | null（指示もメッセージも無いときは送らないので null）
@@ -52,11 +53,16 @@ export async function buildRequest({ store, viewport, sections, sketch }) {
 
   const images = {};
   const fileInfos = store.state.files || [];
-  const files = viewport.getMeshes().map((m) => meshFileInfo(m, fileInfos, layout));
-  // 送る時点の部品の見え方（透過・非表示にしていた STL）。受け手が同じ見え方で view.png を読める
-  const partModes = partModesForRequest(store.state.partModes, files.map((f) => f.file));
+  const ledger = store.state.ledger || null;
+  const names = store.state.partNames || {};
+  const files = viewport.getMeshes().map((m) => meshFileInfo(m, fileInfos, layout, ledger, names));
+  // 送る時点の部品の見え方（透過・非表示にしていた部品）。キーは台帳の部品 id（台帳が無ければ STL 名）。受け手が同じ見え方で view.png を読める
+  const partModes = partModesForRequest(store.state.partModes, files.map((f) => f.partId || f.file));
+  // ユーザーが付け直した呼び名（台帳の名前と違うものだけ）。受け手が models/<name>/part-names.json に書き戻す
+  const partNames = partNamesForRequest(names, ledger);
 
-  // 3D の見た目（指示の重ね描き込み）
+  // 3D の見た目（指示の重ね描き込み）。一覧で指して強調している部品は、強調を外して撮る
+  if (viewport.setHoverParts) viewport.setHoverParts([]);
   try {
     images["view.png"] = viewport.screenshot();
   } catch (e) {
@@ -71,6 +77,7 @@ export async function buildRequest({ store, viewport, sections, sketch }) {
     const it = clone(src);
     delete it.faceIds; // ビューワー内だけで使う。要約（summary）だけを送る
     Object.assign(it, plateProvenance(layout, it.file));
+    Object.assign(it, withPartRefs(it, ledger, names)); // 部品の id と名前（当たった部品）
 
     if (it.type === "section") {
       sectionNo += 1;
@@ -114,6 +121,7 @@ export async function buildRequest({ store, viewport, sections, sketch }) {
     layout: plateLayoutSnapshot(layout),
     files,
     partModes,
+    ...(Object.keys(partNames).length ? { partNames } : {}),
     camera: viewport.cameraInfo(),
     images: Object.keys(images),
     items,

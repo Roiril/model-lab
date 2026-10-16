@@ -103,6 +103,14 @@
 
 ## 7. 見せ方
 
+### 部品の呼び名（2026-10-16 ユーザー指示）
+
+部品が 2 つ以上あるモデルは、**部品ごとに人が分かる日本語の名前**を最初から持たせる。ユーザーとシュビーが同じ名前で部品を呼ぶため。
+
+- `build/manifest.json` の `parts[].label` に書く（例: `housing` →「外装（底と四方の壁）」、`cam_2_2` →「板カム 列2 行2」）。似た部品が多いなら `build/ui.json` の `legendGroups` でまとめ方も書く
+- `py -3.11 tools/studio_parts.py <name>` で Studio の部品台帳（`viewer/studio/parts/<name>.json`）を書き出す。Studio の部品一覧・透過・印は、この名前で出る
+- ユーザーが Studio で名前を付け直したら、依頼に `partNames` が来る。`models/<name>/part-names.json` に書き戻して台帳を作り直す。**以後の会話・報告・返信はその呼び名を使う**（id やファイル名を主語にしない）
+
 - Studio を `http://localhost:3000/?model=<name>` で開いた状態で渡す（CLAUDE.md「ユーザーへの見せ方」）
 - 動く部品か組み立て工程があるモデルは、Studio の「物理検証」「組み立て」タブに登録し、検証結果をそこから見られるようにする
   （`viewer/shared/workspace.mjs` の `WORKSPACE_PAGES`。実例は `viewer/lid-cube/`）

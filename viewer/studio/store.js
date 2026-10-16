@@ -1,5 +1,6 @@
 import { plateDraftKey } from "./layout.js";
 import { normalizePartModes, partModesKey, withPartMode } from "./part-modes.js";
+import { normalizePartNames, partNamesKey, withPartName } from "./parts.js";
 
 // Studio の状態と出来事の受け渡し。モジュール同士は直接呼び合わず、ここを通す。
 // 契約の説明は CONTRACT.md。ここを変えるときは CONTRACT.md も直す。
@@ -66,7 +67,10 @@ export const store = {
     intent: "note",         // 新しい図形は自由描画。旧図形の intent は各 shape に残す
     compare: null,           // 比較表示中 {label, url} | null
     showFaceOutlines: false, // 全三角形の輪郭を表示
-    partModes: {},          // 部品の見え方 { "<STL 名>": "ghost" | "hidden" }。通常はキー無し（モデルごとに保存）
+    partModes: {},          // 部品の見え方 { "<キー>": "ghost" | "hidden" }。キーは台帳の部品 id（台帳が無ければ STL 名）。通常はキー無し（モデルごとに保存）
+    ledger: null,           // 表示中の部品台帳（parts.js の normalizeLedger の戻り値）。台帳を使っていなければ null
+    partNames: {},          // ユーザーの呼び名 { "<部品 id>": {label} }（モデルごとに保存）
+    partHover: [],          // 一覧と 3D で指している部品のキー（表示だけの状態。強調と名前の表示に使う）
     draft: { message: "", items: [] },
   },
 
@@ -213,6 +217,37 @@ export const store = {
     try {
       const key = partModesKey(this.state.model);
       if (Object.keys(this.state.partModes).length) localStorage.setItem(key, JSON.stringify(this.state.partModes));
+      else localStorage.removeItem(key);
+    } catch { /* 無くても動く */ }
+  },
+
+  // 指している部品（表示だけ）。同じ内容なら何も出さない
+  hoverParts(keys) {
+    const next = Array.isArray(keys) ? keys : keys ? [keys] : [];
+    const cur = this.state.partHover;
+    if (next.length === cur.length && next.every((k, i) => k === cur[i])) return;
+    this.set({ partHover: next });
+  },
+
+  // --- ユーザーの呼び名（モデル単位、localStorage。下書きや undo には含めない）---
+  setPartName(part, text) {
+    this.set({ partNames: withPartName(this.state.partNames, part, text) });
+    this._savePartNames();
+  },
+  resetPartNames() {
+    this.set({ partNames: {} });
+    this._savePartNames();
+  },
+  loadPartNames() {
+    let raw = null;
+    try { raw = JSON.parse(localStorage.getItem(partNamesKey(this.state.model)) || "null"); } catch { raw = null; }
+    this.set({ partNames: normalizePartNames(raw) });
+  },
+  _savePartNames() {
+    if (!this.state.model) return;
+    try {
+      const key = partNamesKey(this.state.model);
+      if (Object.keys(this.state.partNames).length) localStorage.setItem(key, JSON.stringify(this.state.partNames));
       else localStorage.removeItem(key);
     } catch { /* 無くても動く */ }
   },

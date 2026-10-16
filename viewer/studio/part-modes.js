@@ -10,6 +10,9 @@ export const GHOST_EDGE_OPACITY = 0.3;  // 輪郭線の濃さ
 
 export function partModesKey(model) { return `studio.partModes.${model}`; }
 
+// 見え方のキー。台帳の部品は部品 id（mesh.userData.partId）、台帳が無い STL は STL 名
+export function partKey(userData) { return (userData && (userData.partId || userData.file)) || ""; }
+
 export function modeOf(modes, file) {
   const m = modes && modes[file];
   return m === "ghost" || m === "hidden" ? m : "normal";

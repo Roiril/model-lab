@@ -1,11 +1,12 @@
 import { isPlateDerivedFile } from "./layout.js";
+import { isPartDerivedFile } from "./parts.js";
 
 // Keep a missing model from silently showing a different model's geometry.
 export const normalizeModelName = (s) => String(s).toLowerCase().replace(/-/g, "_");
 export function filesForModel(name, files, modelNames = []) {
   const want = normalizeModelName(name);
   return files.filter((file) => {
-    if (isPlateDerivedFile(file)) return false;
+    if (isPlateDerivedFile(file) || isPartDerivedFile(file)) return false;
     const f = normalizeModelName(file);
     if (!(f === `${want}.stl` || f.startsWith(`${want}_`))) return false;
     return !modelNames.some((other) => {

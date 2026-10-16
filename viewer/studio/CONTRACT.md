@@ -194,11 +194,11 @@ export function sampleShape(shape, step = 0.5) -> [[u, v], ...]   // 図形を s
 
 ## 4.2 部品の見え方（通常 / 透過 / 非表示。2026-10-16）
 
-- 状態は `store.state.partModes = { "<STL 名>": "ghost" | "hidden" }`（通常はキーを持たない）。変更は `store.setPartMode(file, mode)` / `setPartModes` / `resetPartModes`、読み込みは `loadPartModes()`（モデルを開くたび。保存先は localStorage `studio.partModes.<model>`。下書きや undo には入れない）。純関数は `part-modes.js`
+- 状態は `store.state.partModes = { "<キー>": "ghost" | "hidden" }`（通常はキーを持たない）。**キーは部品台帳（§7）があれば部品 id、台帳が無ければ STL 名**（`part-modes.js` の `partKey(mesh.userData)`）。変更は `store.setPartMode(file, mode)` / `setPartModes` / `resetPartModes`、読み込みは `loadPartModes()`（モデルを開くたび。保存先は localStorage `studio.partModes.<model>`。下書きや undo には入れない）。純関数は `part-modes.js`
 - viewport: `change:partModes` と STL 読み込みで反映する。透過 = 不透明度 0.2・深度書き込みオフ・稜線を薄く残す。非表示 = 描かない。`modelBox` は変えない
-- レイキャスト: `pick(x, y, {includeGhost})` は透過・非表示の部品を素通りする（picking / section の面・ピン・測定・断面の位置決めはすべて `pick` 経由）。`pickParts(x, y)` は透過も含めてカーソル下の部品を手前から返す（右クリックメニュー用）。`getSliceMeshes()` は断面で切る部品（非表示を除く。透過は切る）。`getMeshes()` は従来どおり全部
-- 操作: 3D の右クリック（動かさずに離す）でカーソル下の部品のメニュー、T でカーソル下の最も手前の部品を透過 ⇄ 通常、Shift+T で全部戻す（`part-menu.js`）。パーツ一覧（panels.js）の各行にも 3 択がある。部品を隠すと、その部品の未確定の面選択は外れる
-- 依頼: `request.partModes`（`bundle.js`）。いま読み込んでいる STL のうち通常でないものだけを `{file: "ghost"|"hidden"}` で入れる。後方互換のため無くても読める
+- レイキャスト: `pick(x, y, {includeGhost})` は透過・非表示の部品を素通りする（picking / section の面・ピン・測定・断面の位置決めはすべて `pick` 経由）。`pickParts(x, y)` は透過も含めてカーソル下の部品を手前から返す（`[{key, file, mode, distance}]`。右クリックメニュー用）。`getSliceMeshes()` は断面で切る部品（非表示を除く。透過は切る）。`getMeshes()` は従来どおり全部
+- 操作: 3D の右クリック（動かさずに離す）でカーソル下の部品のメニュー、T でカーソル下の最も手前の部品を透過 ⇄ 通常、Shift+T で全部戻す（`part-menu.js`）。右パネルの「部品」タブ（§8）にも 3 択がある。台帳が無く STL が複数あるモデルでは、上部「パーツ」メニューの各行にも 3 択がある。部品を隠すと、その部品の未確定の面選択は外れる
+- 依頼: `request.partModes`（`bundle.js`）。いま読み込んでいる部品のうち通常でないものだけを `{キー: "ghost"|"hidden"}` で入れる（台帳があれば部品 id、無ければ STL 名）。後方互換のため無くても読める
 
 ## 5. 共通 workspace と見た目
 
@@ -243,3 +243,70 @@ font: var(--fs-sm)/1.5 var(--font-ui); 数値は var(--font-mono)
 - 組立表示の STL 候補から `-studio-plate-` を含む派生 STL を除く。印刷プレート表示の候補は manifest の parts だけ
 - `request.layout` は組立なら `{kind:"assembled"}`。印刷プレートなら `{kind:"plate",id,source3mf,source3mfSha256,manifestVersion:1}`
 - 印刷プレートの `request.files` と各 item には、該当 part の `sourcePart / objectId / buildTransform / sourceFile` を写す。files には `sha256` も写す
+
+## 7. 部品台帳（部品を人の分かる名前で扱う。2026-10-16）
+
+シュビーとユーザーが同じ名前で部品を呼ぶためのデータ。モデル名ではなく**部品の名前**で透過・非表示・指示の対象を選べるようにする。書き出しは `py -3.11 tools/studio_parts.py [<model> ...]`（引数なしなら `models/*/build/manifest.json` を持つ全モデル）。
+
+- 台帳は `GET /viewer/studio/parts/<model>.json`（`cache:"no-cache"`）。404 は台帳なしとして扱い、従来どおり `exports/` の STL を名前で拾う。台帳は 1 モデル 1 ファイル。ビューワーは読むだけ
+- 部品の STL は `GET /exports/<file>`。`/api/stls` の一覧にも `<model>-part-<id>.stl` として並ぶ。**組立の STL 候補を選ぶ規則からは `-part-` を含む名前を除く**（台帳に載る部品として扱う。`-studio-plate-` と同じ扱い）
+- 台帳が見つかったら、組立表示は「まとめた 1 個の STL」ではなく `parts[].file` を全部読んで重ねる。座標は組み立てた位置のままの mm（STL の生の値）。台帳の STL は必ず mm なので、単位を bbox から推定せず `unitScale` は 1 に固定する
+
+```
+{ "version": 1, "model": "<name>", "source": "models/<name>/build/manifest.json", "sourceSha256": "...",
+  "groups": [ {"id": "pixel", "label": "画素", "color": "#e69f00"} ],
+  "parts": [ {"id": "housing", "label": "外装（底と四方の壁）", "systemLabel": "外装（底と四方の壁）",
+              "group": "shell", "kind": "printed", "file": "<name>-part-housing.stl",
+              "sha256": "...", "size": 143484, "aliases": [], "color": "#d8d4cc"} ] }
+```
+
+| キー | 型 | 意味 |
+|---|---|---|
+| `version` | 1 | 形の版 |
+| `model` | string | モデル名 |
+| `source` / `sourceSha256` | string | 元の manifest.json と、その中身の SHA-256 |
+| `groups[]` | `{id, label, color}` | 部品の群。`label` は日本語。`color` は `#rrggbb`。並びは表示順。部品が 1 個も無い群は出さない |
+| `parts[]` | 配列 | manifest の `parts` と同じ並び。全部の部品が `groups` のどれかに属す |
+| `parts[].id` | string | 部品の id（manifest の id そのまま。`front/panel` のように `/` を含むことがある） |
+| `parts[].label` | string | **画面に出す名前**。ユーザーの呼び名があればそれ、なければ `systemLabel` |
+| `parts[].systemLabel` | string | シュビーが付けた名前（manifest の label）。常にある。ユーザーの呼び名と並べて見せるときに使う |
+| `parts[].group` | string | `groups[].id` のどれか |
+| `parts[].kind` | `"printed"` / `"stock"` / `"jig"` | 印刷する部品 / 買ってくる既製部品（サーボなど。manifest に `print` が無い、または `stock:true`）/ 組立のときだけ使う治具（`jig:true`） |
+| `parts[].file` | string | `exports/` にある組立姿勢の STL 名。`<model>-part-<id>.stl`（id の `/` は `__`） |
+| `parts[].sha256` / `size` | string / number | その STL の SHA-256 とバイト数。ファイルが古いかの照合に使う |
+| `parts[].aliases` | string[] | ユーザーが別の呼び方をしていた語。検索・突き合わせ用。無ければ空 |
+| `parts[].color` | `#rrggbb`（任意） | manifest の色。無い部品はキーが無い |
+
+- **群の作り方**: `models/<model>/build/ui.json` の `legendGroups` があればそれ（先に載せた群が優先。`id` は prefix か部品 id の共通の先頭から作る）。群に入らなかった部品は `jig`（組立治具）・`stock`（既製部品）・`shell`（外装）・`other`（その他）に入る。`legendGroups` が無いモデルは部品 id の接頭辞（`front/panel` の `front`、または 2 個以上が共有する `key_left` の `key`）で作り、日本語名は `tools/studio_parts.py` の `PREFIX_LABELS`。接頭辞を持たない部品は `other`
+- **ユーザーの呼び名**: `models/<model>/part-names.json` = `{ "<id>": { "label": "ユーザーの呼び名", "aliases": ["別の呼び方"] } }`。どちらのキーも省略できる。ファイルが無ければ全部シュビーの名前。ユーザーが名付けたときに作る（雛形は置かない）。台帳を書き出すと `label` が置き換わり、元の名前が `systemLabel` に残る。manifest に無い id や使えないキーは書き出しが失敗する
+- 同じ `label` の部品がある（F1 の「空の面板」など）。選ぶ画面では群の名前を添えて見分けること
+- 台帳は `part-names.json` や manifest.json を変えたら書き出し直す。台帳の `sourceSha256` と manifest.json の SHA-256 が違えば古い
+
+## 8. 部品の呼び名と右パネル（2026-10-16）
+
+シュビーとユーザーが同じ名前で部品を呼ぶための画面側の約束。台帳の形は §7。純関数は `parts.js`、画面は `parts-panel.js`（右の「部品」タブ）と `part-hover.js`（3D のカーソルのそば）、共有の DOM 道具は `dom.js`。
+
+### 組立表示と台帳
+
+- 組立表示で台帳が見つかったら、`parts[].file` を全部読む。`viewport.loadSTLs` の項目は `{name, url, partId, unitScale: 1, color}`。mesh には `userData.partId` が付く（`placed` は false）。`store.state.ledger` が表示中の台帳（`normalizeLedger` の戻り値。印刷プレート・プレビュー・台帳なしでは null）
+- 台帳の STL が `exports/` に 1 つも無ければ台帳なしとして従来の選び方に戻す。一部が無ければ状態表示で知らせ、あるものだけ読む
+- 組立の STL 候補から `-part-` を含む名前を除く（`model-files.js`）。台帳があるモデルでは上部の「パーツ」メニューを隠す
+
+### 呼び名
+
+- ユーザーの呼び名は `store.state.partNames = { "<部品 id>": {label} }`（モデルごとに localStorage `studio.partNames.<model>`。下書きや undo には入れない）。`store.setPartName(part, text)` / `resetPartNames()` / `loadPartNames()`。台帳の `label` と同じ名前にすると上書きが消える
+- 画面に出す名前は 呼び名 > 台帳の `label`。台帳の `systemLabel`（シュビーの名前）が違えば「シュビー: …」と小さく併記する。同じ名前の部品が複数あれば群名を添える（メニュー・カーソルのそば・下書き。`partName()`）
+- 依頼 `request.partNames = { "<部品 id>": {label, systemLabel} }`。台帳の `label` と違うものだけ入る（無ければキー自体が無い）。`systemLabel` は台帳の `systemLabel`。受け手は `models/<name>/part-names.json` の `{id: {label}}` に書き戻し、`py -3.11 tools/studio_parts.py <model>` で台帳を書き出し直す
+
+### 依頼の印
+
+- `request.items[]` の各指示（faces / pin / measure / section）に、当たった部品を足す: `partId`（台帳の部品 id）、`partLabel`（いまの呼び名）、呼び名がシュビーの名前と違えば `partSystemLabel`。`file` は今までどおり残る
+- 計測は 2 点目の部品が 1 点目と違うときだけ `partIdB` / `partLabelB` を足す。下書きの measure 指示は `fileB`（2 点目の STL 名）を持つ
+- `request.files[]` にも `partId` / `partLabel`（台帳の部品のとき）。台帳が無い・当たらなければ、どのキーも付かない
+- 送るときは 3D の強調（一覧で指している部品）を外してから `view.png` を撮る
+
+### 右パネル（`#inspector`）
+
+- タブは「指示」「部品」「寸法」。「部品」は台帳があるか、組立の STL が複数あるときだけ出す。「指示」の下には送信欄（在席と処理状態・送るボタン）を 1 つだけ置く
+- 部品タブ: 群ごとの木（開閉は localStorage `studio.partGroups.<model>`。部品数が 6 以下の群は最初から開く）、行ごとに 通常 / 透過 / 隠す、群ごとの一括切り替え、名前・別名・id・群名での絞り込み、行の鉛筆かダブルクリックで呼び名の書き換え（Enter で決める、Esc でやめる）。台帳が無いモデルは読み込み中の STL 名を平らに並べ、書き換えはできない
+- 指している部品: `store.state.partHover`（部品のキーの配列。`store.hoverParts(keys)`）。一覧の行・群の上、3D のカーソルの下（クリックで指示が付く部品）のどちらでも立つ。`viewport.setHoverParts(keys)` が 3D で強調する（隠した部品も指している間だけ薄く見せる。拾う対象にはしない）。3D では `part-hover.js` がカーソルのそばに名前と群名を出す
