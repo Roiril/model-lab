@@ -2,16 +2,16 @@
   "version": 1,
   "model": "tangible-pixel-cube",
   "kind": "plate",
-  "id": "5242f0d848a8bb76b1d18dc274c42dc3dd1eb66d9bda7178527b88da926d4f41",
+  "id": "e4c089a8c2a586ec4c00a462afcc5b8dcec055ff30fa730e104e45fb1d7038ff",
   "source3mf": "tangible-pixel-cube-h2d-layout.3mf",
-  "source3mfSha256": "5242f0d848a8bb76b1d18dc274c42dc3dd1eb66d9bda7178527b88da926d4f41",
+  "source3mfSha256": "e4c089a8c2a586ec4c00a462afcc5b8dcec055ff30fa730e104e45fb1d7038ff",
   "bed": {
     "width": 300.0,
     "depth": 320.0
   },
   "parts": [
     {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-housing-1.stl",
+      "file": "tangible-pixel-cube-studio-plate-e4c089a8c2a5-print-housing-1.stl",
       "sourcePart": "tangible-pixel-cube-print-housing",
       "sourceFile": "tangible-pixel-cube-print-housing.stl",
       "objectId": "1",
@@ -29,8 +29,8 @@
         53.0,
         0.0
       ],
-      "sha256": "23c5d3073218e293cf530972f0c991aa4ad564e6e7610b67a6cae8a3128075dd",
-      "size": 143484,
+      "sha256": "da788e958dbbabd346ca0e2bb17a6cf4f5aca754582f2561ddb5909728157b19",
+      "size": 247784,
       "bbox": {
         "min": [
           5.0,
@@ -45,13 +45,13 @@
       },
       "source": {
         "file": "tangible-pixel-cube-print-housing.stl",
-        "sha256": "d6ce34f21126db7fbd3adb55b41283e0b4cdde0074c0ff164b7b6b5abc581ed9",
-        "size": 143484,
-        "mtime": 1792141392364.6294
+        "sha256": "e4c0809350d5c2ef263ab661f8747029fa73dab86b94f4ab7b77ac3871f88869",
+        "size": 247784,
+        "mtime": 1792218264258.6484
       }
     },
     {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-bezel-2.stl",
+      "file": "tangible-pixel-cube-studio-plate-e4c089a8c2a5-print-bezel-2.stl",
       "sourcePart": "tangible-pixel-cube-print-bezel",
       "sourceFile": "tangible-pixel-cube-print-bezel.stl",
       "objectId": "2",
@@ -69,8 +69,8 @@
         153.0,
         0.0
       ],
-      "sha256": "d7d21e6719706cef2e323618165827e343726f0983c34bb9c6b390b943d3dc2a",
-      "size": 53684,
+      "sha256": "5e9a4cda4df01165a52d4eceac44d0e7b349b0221fe75042a98c26ab10838296",
+      "size": 55384,
       "bbox": {
         "min": [
           5.0,
@@ -85,13 +85,13 @@
       },
       "source": {
         "file": "tangible-pixel-cube-print-bezel.stl",
-        "sha256": "42f728be59076f2d00b5d21f118b6e566f1315b85be6e9e47f2f81bb8ccbf6b0",
-        "size": 53684,
-        "mtime": 1792141392380.135
+        "sha256": "d9541b1ac99cc7ca1ac4a16e264ece340e55f604f64d7b06b633ac7f1b541442",
+        "size": 55384,
+        "mtime": 1792218264289.2427
       }
     },
     {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-guide_plate-3.stl",
+      "file": "tangible-pixel-cube-studio-plate-e4c089a8c2a5-print-guide_plate-3.stl",
       "sourcePart": "tangible-pixel-cube-print-guide_plate",
       "sourceFile": "tangible-pixel-cube-print-guide_plate.stl",
       "objectId": "3",
@@ -105,12 +105,12 @@
         0.0,
         0.0,
         1.0,
-        50.75,
+        50.2,
         250.8,
         0.0
       ],
-      "sha256": "6da4e660fa24b8f1edea139489b94087456e70dd7ece82570fa82c7ba793b795",
-      "size": 138684,
+      "sha256": "2eb561be7b7318e774f9bd4150af6e49d8193b264e990bd71ce120a53546fb4a",
+      "size": 91484,
       "bbox": {
         "min": [
           5.0,
@@ -118,20 +118,20 @@
           0.0
         ],
         "max": [
-          96.5,
+          95.4000015258789,
           296.6000061035156,
-          29.100000381469727
+          19.899999618530273
         ]
       },
       "source": {
         "file": "tangible-pixel-cube-print-guide_plate.stl",
-        "sha256": "227eb7eef359e00075855c6026495b977709c16324ea7d39c2916de70244e80a",
-        "size": 138684,
-        "mtime": 1792141392398.2446
+        "sha256": "17a647ed5906f5e3b003fb0c5bb2fbbecea6093e5b0a89c30be29c0c8ae380cd",
+        "size": 91484,
+        "mtime": 1792218264304.2722
       }
     },
     {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-phase_comb-4.stl",
+      "file": "tangible-pixel-cube-studio-plate-e4c089a8c2a5-print-phase_comb-4.stl",
       "sourcePart": "tangible-pixel-cube-print-phase_comb",
       "sourceFile": "tangible-pixel-cube-print-phase_comb.stl",
       "objectId": "4",
@@ -145,12 +145,12 @@
         0.0,
         0.0,
         1.0,
-        48.0,
-        307.2,
+        44.0,
+        303.9,
         0.0
       ],
-      "sha256": "57979aa7983031460324d03f990b5ed2a80613d66302b35e96648370a79a23dd",
-      "size": 15084,
+      "sha256": "8fd4e514a011ca481e1daa200f27c209de3f0decf5ba138504167c7d6557a5b3",
+      "size": 15384,
       "bbox": {
         "min": [
           5.0,
@@ -158,22 +158,22 @@
           0.0
         ],
         "max": [
-          91.0,
-          313.79998779296875,
-          2.9000000953674316
+          83.0,
+          307.20001220703125,
+          2.200000047683716
         ]
       },
       "source": {
         "file": "tangible-pixel-cube-print-phase_comb.stl",
-        "sha256": "02312fad1ad0d78644011f7fd33aa994ee5494dd37034b5eebb6deebb7b19d50",
-        "size": 15084,
-        "mtime": 1792141392408.1567
+        "sha256": "e6ee14783604a24f473e480e4fc9c676e19dfd0d29eb29c22b45238c4b7cdcb5",
+        "size": 15384,
+        "mtime": 1792218264326.9695
       }
     },
     {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-shaft_0-5.stl",
-      "sourcePart": "tangible-pixel-cube-print-shaft_0",
-      "sourceFile": "tangible-pixel-cube-print-shaft_0.stl",
+      "file": "tangible-pixel-cube-studio-plate-e4c089a8c2a5-print-camshaft_0-5.stl",
+      "sourcePart": "tangible-pixel-cube-print-camshaft_0",
+      "sourceFile": "tangible-pixel-cube-print-camshaft_0.stl",
       "objectId": "5",
       "buildTransform": [
         1.0,
@@ -185,12 +185,12 @@
         0.0,
         0.0,
         1.0,
-        112.175,
-        8.1754,
+        120.0,
+        20.0,
         0.0
       ],
-      "sha256": "a1210bcf27d453afe50e8a3545b36a85c97d9be295092629239589db66a038af",
-      "size": 12284,
+      "sha256": "d2f35561b35b3f3c72cec1fad1dee3b570d38217c9a9e901ff6bdd3928d820c6",
+      "size": 1298684,
       "bbox": {
         "min": [
           105.0,
@@ -198,22 +198,22 @@
           0.0
         ],
         "max": [
-          119.3499984741211,
-          11.350799560546875,
-          5.5
+          135.0,
+          35.0,
+          90.19999694824219
         ]
       },
       "source": {
-        "file": "tangible-pixel-cube-print-shaft_0.stl",
-        "sha256": "f22aa9af99de292458282ede5cc15634a4aa335a043a35abd648450ca070a21a",
-        "size": 12284,
-        "mtime": 1792141392424.1543
+        "file": "tangible-pixel-cube-print-camshaft_0.stl",
+        "sha256": "d68b700d79c5305ddf5e8d6f8bb09fff344d3eaee5ce1bc6160be03c9d51481b",
+        "size": 1298684,
+        "mtime": 1792218264340.8052
       }
     },
     {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-shaft_1-6.stl",
-      "sourcePart": "tangible-pixel-cube-print-shaft_1",
-      "sourceFile": "tangible-pixel-cube-print-shaft_1.stl",
+      "file": "tangible-pixel-cube-studio-plate-e4c089a8c2a5-print-camshaft_1-6.stl",
+      "sourcePart": "tangible-pixel-cube-print-camshaft_1",
+      "sourceFile": "tangible-pixel-cube-print-camshaft_1.stl",
       "objectId": "6",
       "buildTransform": [
         1.0,
@@ -225,35 +225,35 @@
         0.0,
         0.0,
         1.0,
-        127.575,
-        8.1754,
+        154.0,
+        20.0,
         0.0
       ],
-      "sha256": "080de5d4a2b2c0dd48418980b058a9d09a9befda30c62fb95b18f767d9ae430b",
-      "size": 12284,
+      "sha256": "93eb116849d4fbdc18dce9ebaa39af7767f5292d6d4b193a730b85547194ff9e",
+      "size": 1334384,
       "bbox": {
         "min": [
-          123.3499984741211,
+          139.0,
           5.0,
           0.0
         ],
         "max": [
-          131.8000030517578,
-          11.350799560546875,
-          5.5
+          169.0,
+          35.0,
+          90.19999694824219
         ]
       },
       "source": {
-        "file": "tangible-pixel-cube-print-shaft_1.stl",
-        "sha256": "c6a98dbbc4c52420c107121f6d72f84587b517f86188addfba51befa7fa6f16a",
-        "size": 12284,
-        "mtime": 1792141392441.7249
+        "file": "tangible-pixel-cube-print-camshaft_1.stl",
+        "sha256": "bd222c5bf313b846f67c15163197bd2b54c1b0bbfbbb2056907fcb033e038044",
+        "size": 1334384,
+        "mtime": 1792218264436.1423
       }
     },
     {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-shaft_2-7.stl",
-      "sourcePart": "tangible-pixel-cube-print-shaft_2",
-      "sourceFile": "tangible-pixel-cube-print-shaft_2.stl",
+      "file": "tangible-pixel-cube-studio-plate-e4c089a8c2a5-print-camshaft_2-7.stl",
+      "sourcePart": "tangible-pixel-cube-print-camshaft_2",
+      "sourceFile": "tangible-pixel-cube-print-camshaft_2.stl",
       "objectId": "7",
       "buildTransform": [
         1.0,
@@ -265,35 +265,35 @@
         0.0,
         0.0,
         1.0,
-        142.975,
-        8.1754,
+        188.0,
+        20.0,
         0.0
       ],
-      "sha256": "4f1e750da574d791d50ae6003b3cdec5230800280a7a6df46979a6dbb7256a50",
-      "size": 12284,
+      "sha256": "34958021f3857cd5433bd4d6a84763545880e647cca5270755028c5b34d499dd",
+      "size": 1256584,
       "bbox": {
         "min": [
-          135.8000030517578,
+          173.0,
           5.0,
           0.0
         ],
         "max": [
-          150.14999389648438,
-          11.350799560546875,
-          5.5
+          203.0,
+          35.0,
+          90.19999694824219
         ]
       },
       "source": {
-        "file": "tangible-pixel-cube-print-shaft_2.stl",
-        "sha256": "0006b0689d088743e15f238765c618fafbe27191fd6550414a17b806ea536295",
-        "size": 12284,
-        "mtime": 1792141392455.6206
+        "file": "tangible-pixel-cube-print-camshaft_2.stl",
+        "sha256": "94907f233caef9785c85b527268d42ae211a7db60210f536b66c9f88dfd4f783",
+        "size": 1256584,
+        "mtime": 1792218264540.8416
       }
     },
     {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-shaft_3-8.stl",
-      "sourcePart": "tangible-pixel-cube-print-shaft_3",
-      "sourceFile": "tangible-pixel-cube-print-shaft_3.stl",
+      "file": "tangible-pixel-cube-studio-plate-e4c089a8c2a5-print-camshaft_3-8.stl",
+      "sourcePart": "tangible-pixel-cube-print-camshaft_3",
+      "sourceFile": "tangible-pixel-cube-print-camshaft_3.stl",
       "objectId": "8",
       "buildTransform": [
         1.0,
@@ -305,35 +305,35 @@
         0.0,
         0.0,
         1.0,
-        158.375,
-        8.1754,
+        222.0,
+        20.0,
         0.0
       ],
-      "sha256": "5f097a77b50aac0c4ff4314bf6f82d6b57d1a5c0e19a048f18bef4b20568d33e",
-      "size": 12284,
+      "sha256": "009ed4bc4660397f260163218769759a5dde94f2320364bf6dfd649349a4baff",
+      "size": 1320584,
       "bbox": {
         "min": [
-          154.14999389648438,
+          207.0,
           5.0,
           0.0
         ],
         "max": [
-          162.60000610351562,
-          11.350799560546875,
-          5.5
+          237.0,
+          35.0,
+          90.19999694824219
         ]
       },
       "source": {
-        "file": "tangible-pixel-cube-print-shaft_3.stl",
-        "sha256": "e3b91a7538a672ea08372712deab5e97eb02dd95aec1db005ce2ca31d0fe17cb",
-        "size": 12284,
-        "mtime": 1792141392474.2964
+        "file": "tangible-pixel-cube-print-camshaft_3.stl",
+        "sha256": "5fd9c7aafe7311cceacf1d93a16bd266efa973da308853aef32383171eefd833",
+        "size": 1320584,
+        "mtime": 1792218264634.3628
       }
     },
     {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-shaft_4-9.stl",
-      "sourcePart": "tangible-pixel-cube-print-shaft_4",
-      "sourceFile": "tangible-pixel-cube-print-shaft_4.stl",
+      "file": "tangible-pixel-cube-studio-plate-e4c089a8c2a5-print-camshaft_4-9.stl",
+      "sourcePart": "tangible-pixel-cube-print-camshaft_4",
+      "sourceFile": "tangible-pixel-cube-print-camshaft_4.stl",
       "objectId": "9",
       "buildTransform": [
         1.0,
@@ -345,33 +345,33 @@
         0.0,
         0.0,
         1.0,
-        173.775,
-        8.1754,
+        256.0,
+        20.0,
         0.0
       ],
-      "sha256": "5ef84bcaf881e31c3a4a7d78cbe4aca793ee77c4fd60ef2c3bcc95e3cbdb8552",
-      "size": 12284,
+      "sha256": "ff32d56e59a7c845893b47dfa232425c43d4cac32c810d3f92ae308a17365593",
+      "size": 1334784,
       "bbox": {
         "min": [
-          166.60000610351562,
+          241.0,
           5.0,
           0.0
         ],
         "max": [
-          180.9499969482422,
-          11.350799560546875,
-          5.5
+          271.0,
+          35.0,
+          90.19999694824219
         ]
       },
       "source": {
-        "file": "tangible-pixel-cube-print-shaft_4.stl",
-        "sha256": "b36945514c45a2b0e9a96e3de2e4c101861cb20bbeb7ab673c89e2f90650396d",
-        "size": 12284,
-        "mtime": 1792141392484.802
+        "file": "tangible-pixel-cube-print-camshaft_4.stl",
+        "sha256": "cd654d6f487e2137f057320dfe1220feb13cb52799778aa38934a65c9c03866b",
+        "size": 1334784,
+        "mtime": 1792218264736.208
       }
     },
     {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-pixel_0_0-10.stl",
+      "file": "tangible-pixel-cube-studio-plate-e4c089a8c2a5-print-pixel_0_0-10.stl",
       "sourcePart": "tangible-pixel-cube-print-pixel_0_0",
       "sourceFile": "tangible-pixel-cube-print-pixel_0_0.stl",
       "objectId": "10",
@@ -386,32 +386,32 @@
         0.0,
         1.0,
         113.2,
-        25.3508,
+        49.0,
         0.0
       ],
-      "sha256": "9e0d1705342676b4c244795dbee58326a281b87eaa4d805f4bbffdc5fa6b6ccc",
-      "size": 7484,
+      "sha256": "3d60ddfc85657792b9fe2d04fe000e18bc0d504eeca1d86a6eef834dab773085",
+      "size": 7584,
       "bbox": {
         "min": [
           105.0,
-          15.350799560546875,
+          39.0,
           0.0
         ],
         "max": [
           121.4000015258789,
-          35.350799560546875,
+          59.0,
           36.099998474121094
         ]
       },
       "source": {
         "file": "tangible-pixel-cube-print-pixel_0_0.stl",
-        "sha256": "acf0c6a95e39f5759bac9f3eed540b05091c261dfd9f1d72dd5ea4a239ff7a65",
-        "size": 7484,
-        "mtime": 1792141392496.8074
+        "sha256": "b5775087b9a3f24811b216817578a7127a6466b6f3cac8c25b454ae3e8272897",
+        "size": 7584,
+        "mtime": 1792218264836.9001
       }
     },
     {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-pixel_1_0-11.stl",
+      "file": "tangible-pixel-cube-studio-plate-e4c089a8c2a5-print-pixel_1_0-11.stl",
       "sourcePart": "tangible-pixel-cube-print-pixel_1_0",
       "sourceFile": "tangible-pixel-cube-print-pixel_1_0.stl",
       "objectId": "11",
@@ -426,32 +426,32 @@
         0.0,
         1.0,
         133.6,
-        25.3508,
+        49.0,
         0.0
       ],
-      "sha256": "60d752b671c16738fe90064e45ea57a7a832a62dbd0a98437339d7615572df37",
-      "size": 7484,
+      "sha256": "e08c1753486d2a130b07f035ec12678fa7f370bf6f57bac0e8aa2550269758ea",
+      "size": 7584,
       "bbox": {
         "min": [
           125.4000015258789,
-          15.350799560546875,
+          39.0,
           0.0
         ],
         "max": [
           141.8000030517578,
-          35.350799560546875,
+          59.0,
           36.099998474121094
         ]
       },
       "source": {
         "file": "tangible-pixel-cube-print-pixel_1_0.stl",
-        "sha256": "c83cac33c7ad9c088b04fabebeecbc16f0ba379bea07711c52047d0f01302137",
-        "size": 7484,
-        "mtime": 1792141392511.8093
+        "sha256": "54e827f4b1a17032dd11bd76df69112a37e1e0d24051a24b41efd0125424c010",
+        "size": 7584,
+        "mtime": 1792218264839.9011
       }
     },
     {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-pixel_2_0-12.stl",
+      "file": "tangible-pixel-cube-studio-plate-e4c089a8c2a5-print-pixel_2_0-12.stl",
       "sourcePart": "tangible-pixel-cube-print-pixel_2_0",
       "sourceFile": "tangible-pixel-cube-print-pixel_2_0.stl",
       "objectId": "12",
@@ -466,32 +466,32 @@
         0.0,
         1.0,
         154.0,
-        25.3508,
+        49.0,
         0.0
       ],
-      "sha256": "99ef44196801ac4e545200c320368185b4b40d0dc442927b86ff8555aa0199c0",
-      "size": 7484,
+      "sha256": "9fc9c6d65d1a39e4f780927aae693441510b23afc7ed8a6035a7504282e218f0",
+      "size": 7584,
       "bbox": {
         "min": [
           145.8000030517578,
-          15.350799560546875,
+          39.0,
           0.0
         ],
         "max": [
           162.1999969482422,
-          35.350799560546875,
+          59.0,
           36.099998474121094
         ]
       },
       "source": {
         "file": "tangible-pixel-cube-print-pixel_2_0.stl",
-        "sha256": "8b3091f51a29c60f16746358a31eca2001c8e853bd7b29619a2818ff4903004d",
-        "size": 7484,
-        "mtime": 1792141392513.8083
+        "sha256": "ee5a9b3b50744166ff9fb5bf80c711729b378e5f2d63a86599915a78900eb186",
+        "size": 7584,
+        "mtime": 1792218264843.9028
       }
     },
     {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-pixel_3_0-13.stl",
+      "file": "tangible-pixel-cube-studio-plate-e4c089a8c2a5-print-pixel_3_0-13.stl",
       "sourcePart": "tangible-pixel-cube-print-pixel_3_0",
       "sourceFile": "tangible-pixel-cube-print-pixel_3_0.stl",
       "objectId": "13",
@@ -506,32 +506,32 @@
         0.0,
         1.0,
         174.4,
-        25.3508,
+        49.0,
         0.0
       ],
-      "sha256": "5687e53c3ef53b972d0623965173fc25698ed6c38cdb130062e9576d4a5e1b9f",
-      "size": 7484,
+      "sha256": "066f87073614d61f82b645656d849642eade9c1a6f3415f5972042776dc755e2",
+      "size": 7584,
       "bbox": {
         "min": [
           166.1999969482422,
-          15.350799560546875,
+          39.0,
           0.0
         ],
         "max": [
           182.60000610351562,
-          35.350799560546875,
+          59.0,
           36.099998474121094
         ]
       },
       "source": {
         "file": "tangible-pixel-cube-print-pixel_3_0.stl",
-        "sha256": "524188e452a2ca2ae4356ce9402f01d8247070fba94cfa0aecc391639331ca91",
-        "size": 7484,
-        "mtime": 1792141392529.3655
+        "sha256": "77f54745049eb95556f9a7ecf254f96dba91f63ab7a2cf7b1f7e8e0caeb91719",
+        "size": 7584,
+        "mtime": 1792218264846.4326
       }
     },
     {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-pixel_4_0-14.stl",
+      "file": "tangible-pixel-cube-studio-plate-e4c089a8c2a5-print-pixel_4_0-14.stl",
       "sourcePart": "tangible-pixel-cube-print-pixel_4_0",
       "sourceFile": "tangible-pixel-cube-print-pixel_4_0.stl",
       "objectId": "14",
@@ -546,32 +546,32 @@
         0.0,
         1.0,
         194.8,
-        25.3508,
+        49.0,
         0.0
       ],
-      "sha256": "bde28749e72f025b4cfc56858b3fd08d65362c05536bbd660eb1493c2e8f394e",
-      "size": 7484,
+      "sha256": "eed3e2bf3cacd6235fc399947c9041bbc092d9bef893ef7503eaa0ef65ae518d",
+      "size": 7584,
       "bbox": {
         "min": [
           186.60000610351562,
-          15.350799560546875,
+          39.0,
           0.0
         ],
         "max": [
           203.0,
-          35.350799560546875,
+          59.0,
           36.099998474121094
         ]
       },
       "source": {
         "file": "tangible-pixel-cube-print-pixel_4_0.stl",
-        "sha256": "d4b7d7d502c29b2d4ee29583f2e6dd31ee84cef84d72e7b688c3b8aae3ae9381",
-        "size": 7484,
-        "mtime": 1792141392532.3516
+        "sha256": "52ef261593f3296553c5401f1a754515d6e731fd25aa7b62fd3c1d97168e19e8",
+        "size": 7584,
+        "mtime": 1792218264859.5886
       }
     },
     {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-pixel_0_1-15.stl",
+      "file": "tangible-pixel-cube-studio-plate-e4c089a8c2a5-print-pixel_0_1-15.stl",
       "sourcePart": "tangible-pixel-cube-print-pixel_0_1",
       "sourceFile": "tangible-pixel-cube-print-pixel_0_1.stl",
       "objectId": "15",
@@ -586,32 +586,32 @@
         0.0,
         1.0,
         215.2,
-        25.3508,
+        49.0,
         0.0
       ],
-      "sha256": "e15380753d1fc1d12a81af700bc539114599d12335efcf65e08663d869125099",
-      "size": 8484,
+      "sha256": "cfba5435e8d7636661769f0f03a98edae6dd6e8fc091976dd97f8e95e46c7660",
+      "size": 8284,
       "bbox": {
         "min": [
           207.0,
-          15.350799560546875,
+          39.0,
           0.0
         ],
         "max": [
           223.39999389648438,
-          35.350799560546875,
+          59.0,
           36.099998474121094
         ]
       },
       "source": {
         "file": "tangible-pixel-cube-print-pixel_0_1.stl",
-        "sha256": "79f64b4f2ab67211e8da4ebe706a67614b50622784725649fa18269fcac82e5e",
-        "size": 8484,
-        "mtime": 1792141392539.9954
+        "sha256": "8d7d71caa4db49433ee2ae6966d153167293f6df63a45e169f702aaac063534e",
+        "size": 8284,
+        "mtime": 1792218264862.588
       }
     },
     {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-pixel_1_1-16.stl",
+      "file": "tangible-pixel-cube-studio-plate-e4c089a8c2a5-print-pixel_1_1-16.stl",
       "sourcePart": "tangible-pixel-cube-print-pixel_1_1",
       "sourceFile": "tangible-pixel-cube-print-pixel_1_1.stl",
       "objectId": "16",
@@ -626,32 +626,32 @@
         0.0,
         1.0,
         235.6,
-        25.3508,
+        49.0,
         0.0
       ],
-      "sha256": "56cd6476347859269ef90f4c9ba8c9f65596c088df1b8342a78180776ef703a2",
-      "size": 8484,
+      "sha256": "fa9838c6f6aa8d0b6f2a576071a5a889c3dadf0167bea18bf5c1ec31097ecafd",
+      "size": 8284,
       "bbox": {
         "min": [
           227.39999389648438,
-          15.350799560546875,
+          39.0,
           0.0
         ],
         "max": [
           243.8000030517578,
-          35.350799560546875,
+          59.0,
           36.099998474121094
         ]
       },
       "source": {
         "file": "tangible-pixel-cube-print-pixel_1_1.stl",
-        "sha256": "660fbb175eeb0c5564e62f88e553c28ac81b2d0d0e062edf94e2ddbbbb556b33",
-        "size": 8484,
-        "mtime": 1792141392553.2808
+        "sha256": "c7400d1f0366f870b4c563ab2823d66c824840309693346270135cb592766eeb",
+        "size": 8284,
+        "mtime": 1792218264874.7683
       }
     },
     {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-pixel_2_1-17.stl",
+      "file": "tangible-pixel-cube-studio-plate-e4c089a8c2a5-print-pixel_2_1-17.stl",
       "sourcePart": "tangible-pixel-cube-print-pixel_2_1",
       "sourceFile": "tangible-pixel-cube-print-pixel_2_1.stl",
       "objectId": "17",
@@ -666,32 +666,32 @@
         0.0,
         1.0,
         256.0,
-        25.3508,
+        49.0,
         0.0
       ],
-      "sha256": "c2c1a53fac90b61a9a08ba70d2e46ae70dd87fb58f1fc3c130de09c8006ffcae",
-      "size": 8484,
+      "sha256": "316cd1c9d6451355d361ff75d3c0f6aa1534f46a0c8fd60afda215dffed65e96",
+      "size": 8284,
       "bbox": {
         "min": [
           247.8000030517578,
-          15.350799560546875,
+          39.0,
           0.0
         ],
         "max": [
           264.20001220703125,
-          35.350799560546875,
+          59.0,
           36.099998474121094
         ]
       },
       "source": {
         "file": "tangible-pixel-cube-print-pixel_2_1.stl",
-        "sha256": "41184ba14b2d20b3f4d00343b455fc4a5138d1ef2e3f37c0bcb110bcfcf4fa6f",
-        "size": 8484,
-        "mtime": 1792141392565.3079
+        "sha256": "1df237d5b711e18b5a4648650bbb911da60a1891a7a5a512f268fcc31edbddc9",
+        "size": 8284,
+        "mtime": 1792218264889.2637
       }
     },
     {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-pixel_3_1-18.stl",
+      "file": "tangible-pixel-cube-studio-plate-e4c089a8c2a5-print-pixel_3_1-18.stl",
       "sourcePart": "tangible-pixel-cube-print-pixel_3_1",
       "sourceFile": "tangible-pixel-cube-print-pixel_3_1.stl",
       "objectId": "18",
@@ -706,32 +706,32 @@
         0.0,
         1.0,
         276.4,
-        25.3508,
+        49.0,
         0.0
       ],
-      "sha256": "421fcb98206e92b5f5f5d0a57a2e1d717833197b4fd76911e15cad3aa828a883",
-      "size": 8484,
+      "sha256": "c7d0a6a6676c0a302c2a7da2568f24afc1fdee9e63ad3d6c0c54b0c622b150da",
+      "size": 8284,
       "bbox": {
         "min": [
           268.20001220703125,
-          15.350799560546875,
+          39.0,
           0.0
         ],
         "max": [
           284.6000061035156,
-          35.350799560546875,
+          59.0,
           36.099998474121094
         ]
       },
       "source": {
         "file": "tangible-pixel-cube-print-pixel_3_1.stl",
-        "sha256": "38b551811006764ccf652dd13c18e791595ccee27846f39ba616b1ad843a584a",
-        "size": 8484,
-        "mtime": 1792141392575.3071
+        "sha256": "d62ae3976e1c16940d6d4382d6fa957f40bf258c9d959f2152998e0a61522ef1",
+        "size": 8284,
+        "mtime": 1792218264905.7266
       }
     },
     {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-pixel_4_1-19.stl",
+      "file": "tangible-pixel-cube-studio-plate-e4c089a8c2a5-print-pixel_4_1-19.stl",
       "sourcePart": "tangible-pixel-cube-print-pixel_4_1",
       "sourceFile": "tangible-pixel-cube-print-pixel_4_1.stl",
       "objectId": "19",
@@ -746,32 +746,32 @@
         0.0,
         1.0,
         113.2,
-        49.3508,
+        73.0,
         0.0
       ],
-      "sha256": "cac3363a8cdefb62558870bf711af3eba281b68e4ef33def4322b7c8fb194845",
-      "size": 8484,
+      "sha256": "3a54327d1016079fb22b000e19a24acd038c82317cc6f0f76da096c71a9f6dff",
+      "size": 8284,
       "bbox": {
         "min": [
           105.0,
-          39.350799560546875,
+          63.0,
           0.0
         ],
         "max": [
           121.4000015258789,
-          59.350799560546875,
+          83.0,
           36.099998474121094
         ]
       },
       "source": {
         "file": "tangible-pixel-cube-print-pixel_4_1.stl",
-        "sha256": "0430df5e6f103942edbea4a28949e3c0bdcb42e823808bf6d3c6de278036fda0",
-        "size": 8484,
-        "mtime": 1792141392585.0684
+        "sha256": "ff5a93e03beb6b8292f968902bbe8e59484bc19d120fd6941c9f0c75c9f6670d",
+        "size": 8284,
+        "mtime": 1792218264919.993
       }
     },
     {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-pixel_0_2-20.stl",
+      "file": "tangible-pixel-cube-studio-plate-e4c089a8c2a5-print-pixel_0_2-20.stl",
       "sourcePart": "tangible-pixel-cube-print-pixel_0_2",
       "sourceFile": "tangible-pixel-cube-print-pixel_0_2.stl",
       "objectId": "20",
@@ -786,32 +786,32 @@
         0.0,
         1.0,
         133.6,
-        49.3508,
+        73.0,
         0.0
       ],
-      "sha256": "e7f1b13fefbc0c102c847a47e5ad99303884b47192f0594db52ffd7d1b2bac4e",
-      "size": 7484,
+      "sha256": "fb5d47c56d3469a6ee9bffbcc0115bcd8bb4d6140625cb9cdb71d5cbc2774372",
+      "size": 7584,
       "bbox": {
         "min": [
           125.4000015258789,
-          39.350799560546875,
+          63.0,
           0.0
         ],
         "max": [
           141.8000030517578,
-          59.350799560546875,
+          83.0,
           36.099998474121094
         ]
       },
       "source": {
         "file": "tangible-pixel-cube-print-pixel_0_2.stl",
-        "sha256": "28ad3d524fff8b1e3edcaec74b13d569a05bcc693a1e4b4422abce7b811a5a45",
-        "size": 7484,
-        "mtime": 1792141392601.601
+        "sha256": "eee490a60626164122ff237dcf19074c564eb0bf1597eb882035d1420b1ea18b",
+        "size": 7584,
+        "mtime": 1792218264933.608
       }
     },
     {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-pixel_1_2-21.stl",
+      "file": "tangible-pixel-cube-studio-plate-e4c089a8c2a5-print-pixel_1_2-21.stl",
       "sourcePart": "tangible-pixel-cube-print-pixel_1_2",
       "sourceFile": "tangible-pixel-cube-print-pixel_1_2.stl",
       "objectId": "21",
@@ -826,32 +826,32 @@
         0.0,
         1.0,
         154.0,
-        49.3508,
+        73.0,
         0.0
       ],
-      "sha256": "074378e82cf2407eddac0bbe60d8938719bbdc7c68a1d1fa6d20fe1f1694ab45",
-      "size": 7484,
+      "sha256": "605d0980b52addf6e19ed8b4f867556ba058e8434c6e51add8dbd7552ccece63",
+      "size": 7584,
       "bbox": {
         "min": [
           145.8000030517578,
-          39.350799560546875,
+          63.0,
           0.0
         ],
         "max": [
           162.1999969482422,
-          59.350799560546875,
+          83.0,
           36.099998474121094
         ]
       },
       "source": {
         "file": "tangible-pixel-cube-print-pixel_1_2.stl",
-        "sha256": "766b77e9eed0aea717e54a9dee6764986ee7620fc38a79c139f57bd6e781d25c",
-        "size": 7484,
-        "mtime": 1792141392618.61
+        "sha256": "a2282566bdaef9b377060611681ed05614fa4673ceacf56fa2695b90396d0465",
+        "size": 7584,
+        "mtime": 1792218264936.6099
       }
     },
     {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-pixel_2_2-22.stl",
+      "file": "tangible-pixel-cube-studio-plate-e4c089a8c2a5-print-pixel_2_2-22.stl",
       "sourcePart": "tangible-pixel-cube-print-pixel_2_2",
       "sourceFile": "tangible-pixel-cube-print-pixel_2_2.stl",
       "objectId": "22",
@@ -866,32 +866,32 @@
         0.0,
         1.0,
         174.4,
-        49.3508,
+        73.0,
         0.0
       ],
-      "sha256": "dd1ca5867e718fe0af86dbbf795e1e8b4852875e13e99a72c6c7c2a153e922e1",
-      "size": 7484,
+      "sha256": "94a60240b765ae7922a30466e242163977c8af52642238b8b5f399d20bc01872",
+      "size": 7584,
       "bbox": {
         "min": [
           166.1999969482422,
-          39.350799560546875,
+          63.0,
           0.0
         ],
         "max": [
           182.60000610351562,
-          59.350799560546875,
+          83.0,
           36.099998474121094
         ]
       },
       "source": {
         "file": "tangible-pixel-cube-print-pixel_2_2.stl",
-        "sha256": "0f8843f4c671a8ebccefe67b0013881018e8269d48ab706a5dd62e04a332f9f0",
-        "size": 7484,
-        "mtime": 1792141392620.6057
+        "sha256": "f659b1ac0a13be632ec62610c83af2f81d1166da13fc47ea2f37731ae8d78df9",
+        "size": 7584,
+        "mtime": 1792218264938.6099
       }
     },
     {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-pixel_3_2-23.stl",
+      "file": "tangible-pixel-cube-studio-plate-e4c089a8c2a5-print-pixel_3_2-23.stl",
       "sourcePart": "tangible-pixel-cube-print-pixel_3_2",
       "sourceFile": "tangible-pixel-cube-print-pixel_3_2.stl",
       "objectId": "23",
@@ -906,32 +906,32 @@
         0.0,
         1.0,
         194.8,
-        49.3508,
+        73.0,
         0.0
       ],
-      "sha256": "e7376c9bbdbaa26198e6f7500cba2a7e5bf707a7f53bb364022159a12a3a80ca",
-      "size": 7484,
+      "sha256": "6a28c0aebd3b53cb41dbb1e7077f9da7bad552758d6fe4673c37aba8dd0148c0",
+      "size": 7584,
       "bbox": {
         "min": [
           186.60000610351562,
-          39.350799560546875,
+          63.0,
           0.0
         ],
         "max": [
           203.0,
-          59.350799560546875,
+          83.0,
           36.099998474121094
         ]
       },
       "source": {
         "file": "tangible-pixel-cube-print-pixel_3_2.stl",
-        "sha256": "ed773666a947a6153697e1341f95925eb49e207bdc6d2d68456114c929d93e34",
-        "size": 7484,
-        "mtime": 1792141392630.1826
+        "sha256": "d267fc1ce898a051ea101612b9b3586b43ca77a0fb5d4f9204f0d59c1d759094",
+        "size": 7584,
+        "mtime": 1792218264940.875
       }
     },
     {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-pixel_4_2-24.stl",
+      "file": "tangible-pixel-cube-studio-plate-e4c089a8c2a5-print-pixel_4_2-24.stl",
       "sourcePart": "tangible-pixel-cube-print-pixel_4_2",
       "sourceFile": "tangible-pixel-cube-print-pixel_4_2.stl",
       "objectId": "24",
@@ -946,32 +946,32 @@
         0.0,
         1.0,
         215.2,
-        49.3508,
+        73.0,
         0.0
       ],
-      "sha256": "c643f3ac6dda17cff872e9268bedfd50489ce143ccb6c15ca769a4d4d10d6ea8",
-      "size": 7484,
+      "sha256": "3df892837b58d6c793223f6437199af9cc56bcf2ab96e939bceef514093f7531",
+      "size": 7584,
       "bbox": {
         "min": [
           207.0,
-          39.350799560546875,
+          63.0,
           0.0
         ],
         "max": [
           223.39999389648438,
-          59.350799560546875,
+          83.0,
           36.099998474121094
         ]
       },
       "source": {
         "file": "tangible-pixel-cube-print-pixel_4_2.stl",
-        "sha256": "f806ccb7d7e7d78c3d775245846da3ae5bd2da939004fb6580d706189f8724b2",
-        "size": 7484,
-        "mtime": 1792141392635.1948
+        "sha256": "8baa9e45e18595834d74647e219d4b5499a05e8f682b07139e019fa95a4715dc",
+        "size": 7584,
+        "mtime": 1792218264943.8743
       }
     },
     {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-pixel_0_3-25.stl",
+      "file": "tangible-pixel-cube-studio-plate-e4c089a8c2a5-print-pixel_0_3-25.stl",
       "sourcePart": "tangible-pixel-cube-print-pixel_0_3",
       "sourceFile": "tangible-pixel-cube-print-pixel_0_3.stl",
       "objectId": "25",
@@ -986,32 +986,32 @@
         0.0,
         1.0,
         235.6,
-        49.3508,
+        73.0,
         0.0
       ],
-      "sha256": "5f7b35bf9a7fae79c1d3fe852799acceadd80ef62f9ea8ae0e5db80a21ebf0ce",
-      "size": 8484,
+      "sha256": "9226ca8b344a0c0778727161968a6acd5f9abf7a610fb99065968ad5952141fe",
+      "size": 8284,
       "bbox": {
         "min": [
           227.39999389648438,
-          39.350799560546875,
+          63.0,
           0.0
         ],
         "max": [
           243.8000030517578,
-          59.350799560546875,
+          83.0,
           36.099998474121094
         ]
       },
       "source": {
         "file": "tangible-pixel-cube-print-pixel_0_3.stl",
-        "sha256": "2e68ab4d1b681ce1f249a4bef7b1842b7c5fd99afcb81846b739c234cbd3f9ed",
-        "size": 8484,
-        "mtime": 1792141392645.6992
+        "sha256": "5dda047e40c941e50680406e2db12fe122f56e1e153f5fc7cd498ebba79df8c6",
+        "size": 8284,
+        "mtime": 1792218264946.3174
       }
     },
     {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-pixel_1_3-26.stl",
+      "file": "tangible-pixel-cube-studio-plate-e4c089a8c2a5-print-pixel_1_3-26.stl",
       "sourcePart": "tangible-pixel-cube-print-pixel_1_3",
       "sourceFile": "tangible-pixel-cube-print-pixel_1_3.stl",
       "objectId": "26",
@@ -1026,32 +1026,32 @@
         0.0,
         1.0,
         256.0,
-        49.3508,
+        73.0,
         0.0
       ],
-      "sha256": "06a915de8d4e8ad2d1ee7aabf1ef1c3df5b956703bfcf8bda2ccc3a55db50de8",
-      "size": 8484,
+      "sha256": "96f16a2562c1616f4fa92213d9690401711426be0e2fcc021523843b8b9927b6",
+      "size": 8284,
       "bbox": {
         "min": [
           247.8000030517578,
-          39.350799560546875,
+          63.0,
           0.0
         ],
         "max": [
           264.20001220703125,
-          59.350799560546875,
+          83.0,
           36.099998474121094
         ]
       },
       "source": {
         "file": "tangible-pixel-cube-print-pixel_1_3.stl",
-        "sha256": "778b56da56631aa9d3b5e0b4c6f62aa2667722e4ccdf4a54db6f41e89af6288c",
-        "size": 8484,
-        "mtime": 1792141392661.569
+        "sha256": "f6442e7499a0406caf0b743b8766ce0024ecfaec4bc1fa3a60be58aa233d3d4a",
+        "size": 8284,
+        "mtime": 1792218264959.5647
       }
     },
     {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-pixel_2_3-27.stl",
+      "file": "tangible-pixel-cube-studio-plate-e4c089a8c2a5-print-pixel_2_3-27.stl",
       "sourcePart": "tangible-pixel-cube-print-pixel_2_3",
       "sourceFile": "tangible-pixel-cube-print-pixel_2_3.stl",
       "objectId": "27",
@@ -1066,32 +1066,32 @@
         0.0,
         1.0,
         276.4,
-        49.3508,
+        73.0,
         0.0
       ],
-      "sha256": "082697145c1d19c62c589a1469865a74878da593c65c752730814727e0bab54e",
-      "size": 8484,
+      "sha256": "ec48b92657aef92e0a63d6eca90a688fb23a7e6888c3f278038cca559a9b878e",
+      "size": 8284,
       "bbox": {
         "min": [
           268.20001220703125,
-          39.350799560546875,
+          63.0,
           0.0
         ],
         "max": [
           284.6000061035156,
-          59.350799560546875,
+          83.0,
           36.099998474121094
         ]
       },
       "source": {
         "file": "tangible-pixel-cube-print-pixel_2_3.stl",
-        "sha256": "7c838d6af1d0d3257b068ce7675542b9d42ce42c340037b5a689e35dad89510e",
-        "size": 8484,
-        "mtime": 1792141392670.3206
+        "sha256": "22bbb81d3d6e15974ba16fb0bfee882e839aa1c0652fb8f54839f1b31b32e6dc",
+        "size": 8284,
+        "mtime": 1792218264973.5686
       }
     },
     {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-pixel_3_3-28.stl",
+      "file": "tangible-pixel-cube-studio-plate-e4c089a8c2a5-print-pixel_3_3-28.stl",
       "sourcePart": "tangible-pixel-cube-print-pixel_3_3",
       "sourceFile": "tangible-pixel-cube-print-pixel_3_3.stl",
       "objectId": "28",
@@ -1106,32 +1106,32 @@
         0.0,
         1.0,
         113.2,
-        73.3508,
+        97.0,
         0.0
       ],
-      "sha256": "80618e9631311014e570c623839ce35f69a9edf5f4f975302e2fb6bf7e649a7a",
-      "size": 8484,
+      "sha256": "724e1825c828af5bcaf417bef3492527786c872a2ab3fce871db0a93588e1476",
+      "size": 8284,
       "bbox": {
         "min": [
           105.0,
-          63.350799560546875,
+          87.0,
           0.0
         ],
         "max": [
           121.4000015258789,
-          83.35079956054688,
+          107.0,
           36.099998474121094
         ]
       },
       "source": {
         "file": "tangible-pixel-cube-print-pixel_3_3.stl",
-        "sha256": "ca0fa8ad3194597289478eec53b782b60907cd09f941f33e541c26203618a68f",
-        "size": 8484,
-        "mtime": 1792141392680.3215
+        "sha256": "9a5fc3e4e3adb65771959fcd2818b47215f34444d25135a6413c1ddfa2a89993",
+        "size": 8284,
+        "mtime": 1792218264986.6611
       }
     },
     {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-pixel_4_3-29.stl",
+      "file": "tangible-pixel-cube-studio-plate-e4c089a8c2a5-print-pixel_4_3-29.stl",
       "sourcePart": "tangible-pixel-cube-print-pixel_4_3",
       "sourceFile": "tangible-pixel-cube-print-pixel_4_3.stl",
       "objectId": "29",
@@ -1146,32 +1146,32 @@
         0.0,
         1.0,
         133.6,
-        73.3508,
+        97.0,
         0.0
       ],
-      "sha256": "59b3b9dc7788bb597acd678cd2b2286dc512d1fd777370274e584ae9b8d43a4a",
-      "size": 8484,
+      "sha256": "490668c20fad36069da017bc9368602a0d4683de9b832d3239fa2c9985023bb0",
+      "size": 8284,
       "bbox": {
         "min": [
           125.4000015258789,
-          63.350799560546875,
+          87.0,
           0.0
         ],
         "max": [
           141.8000030517578,
-          83.35079956054688,
+          107.0,
           36.099998474121094
         ]
       },
       "source": {
         "file": "tangible-pixel-cube-print-pixel_4_3.stl",
-        "sha256": "14000d2399ba2ded8d7e3aca686bc08ed78a3dd2990b2400954ca2ca35eaf251",
-        "size": 8484,
-        "mtime": 1792141392689.8467
+        "sha256": "49fb084c711bc66293be9a8d00b5d4dabb389c9162cc7c8b19cfc1f6960e0428",
+        "size": 8284,
+        "mtime": 1792218265002.8562
       }
     },
     {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-pixel_0_4-30.stl",
+      "file": "tangible-pixel-cube-studio-plate-e4c089a8c2a5-print-pixel_0_4-30.stl",
       "sourcePart": "tangible-pixel-cube-print-pixel_0_4",
       "sourceFile": "tangible-pixel-cube-print-pixel_0_4.stl",
       "objectId": "30",
@@ -1186,32 +1186,32 @@
         0.0,
         1.0,
         154.0,
-        73.3508,
+        97.0,
         0.0
       ],
-      "sha256": "52a3f0b6f1ee6079002de406dacc807efb11695f26fbe3bb8046039a666c11bc",
-      "size": 7484,
+      "sha256": "b7d266560896379247edc0bb7266070039a0972af4c3b90d544df4e18879523b",
+      "size": 7584,
       "bbox": {
         "min": [
           145.8000030517578,
-          63.350799560546875,
+          87.0,
           0.0
         ],
         "max": [
           162.1999969482422,
-          83.35079956054688,
+          107.0,
           36.099998474121094
         ]
       },
       "source": {
         "file": "tangible-pixel-cube-print-pixel_0_4.stl",
-        "sha256": "96d46ea3fe0914da76dd5ee00531d8498476a32183479ce80d3a87d12727727e",
-        "size": 7484,
-        "mtime": 1792141392698.8413
+        "sha256": "2fee9d093987538e6d2a61a48d455ec854d8fc5e8e7e31972fe984c7f77ca84f",
+        "size": 7584,
+        "mtime": 1792218265018.4607
       }
     },
     {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-pixel_1_4-31.stl",
+      "file": "tangible-pixel-cube-studio-plate-e4c089a8c2a5-print-pixel_1_4-31.stl",
       "sourcePart": "tangible-pixel-cube-print-pixel_1_4",
       "sourceFile": "tangible-pixel-cube-print-pixel_1_4.stl",
       "objectId": "31",
@@ -1226,32 +1226,32 @@
         0.0,
         1.0,
         174.4,
-        73.3508,
+        97.0,
         0.0
       ],
-      "sha256": "084b877e9779cdf6e4cdce1fbd96c02ae50e65a53bc6514636a8a56670a9e8fe",
-      "size": 7484,
+      "sha256": "07f2317bfbe42682d3fdcc8c8d1b05c9c06e96160263f72196d4fbcf972531a8",
+      "size": 7584,
       "bbox": {
         "min": [
           166.1999969482422,
-          63.350799560546875,
+          87.0,
           0.0
         ],
         "max": [
           182.60000610351562,
-          83.35079956054688,
+          107.0,
           36.099998474121094
         ]
       },
       "source": {
         "file": "tangible-pixel-cube-print-pixel_1_4.stl",
-        "sha256": "952210ed220295ae5e0bdaa72cfae0e46919d6b975ba6a5adf1073844fc70faf",
-        "size": 7484,
-        "mtime": 1792141392713.8657
+        "sha256": "e8ac9c199d2e395a001541885685bff72b3530f793dadb835130ae33def14dbc",
+        "size": 7584,
+        "mtime": 1792218265022.4617
       }
     },
     {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-pixel_2_4-32.stl",
+      "file": "tangible-pixel-cube-studio-plate-e4c089a8c2a5-print-pixel_2_4-32.stl",
       "sourcePart": "tangible-pixel-cube-print-pixel_2_4",
       "sourceFile": "tangible-pixel-cube-print-pixel_2_4.stl",
       "objectId": "32",
@@ -1266,32 +1266,32 @@
         0.0,
         1.0,
         194.8,
-        73.3508,
+        97.0,
         0.0
       ],
-      "sha256": "b32903e4bb73b24138d2e362df0e09b347fba5c3e345ab584cd3b38cdfe47c6b",
-      "size": 7484,
+      "sha256": "28333e5f980ab652be9194188afaca504d589325812ae0c30188b8bcb25f7cbc",
+      "size": 7584,
       "bbox": {
         "min": [
           186.60000610351562,
-          63.350799560546875,
+          87.0,
           0.0
         ],
         "max": [
           203.0,
-          83.35079956054688,
+          107.0,
           36.099998474121094
         ]
       },
       "source": {
         "file": "tangible-pixel-cube-print-pixel_2_4.stl",
-        "sha256": "4f69e67028d5dbc02db89cd8d35245ac87d081f3ef2c9c6083e6342b56c9f438",
-        "size": 7484,
-        "mtime": 1792141392724.6965
+        "sha256": "2b9210d9362333c54451e8e6e14352afceb29fa4bb07a0749e16ae961a1cc04f",
+        "size": 7584,
+        "mtime": 1792218265025.4622
       }
     },
     {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-pixel_3_4-33.stl",
+      "file": "tangible-pixel-cube-studio-plate-e4c089a8c2a5-print-pixel_3_4-33.stl",
       "sourcePart": "tangible-pixel-cube-print-pixel_3_4",
       "sourceFile": "tangible-pixel-cube-print-pixel_3_4.stl",
       "objectId": "33",
@@ -1306,32 +1306,32 @@
         0.0,
         1.0,
         215.2,
-        73.3508,
+        97.0,
         0.0
       ],
-      "sha256": "1105bea68852a40223a82a73b75605a7eb0630ad4b8beaae634ddda8efc9d128",
-      "size": 7484,
+      "sha256": "2574987c948f29a0ba40d6343f8d4f7d7527bf0dc7722388fd99aed126fa3f74",
+      "size": 7584,
       "bbox": {
         "min": [
           207.0,
-          63.350799560546875,
+          87.0,
           0.0
         ],
         "max": [
           223.39999389648438,
-          83.35079956054688,
+          107.0,
           36.099998474121094
         ]
       },
       "source": {
         "file": "tangible-pixel-cube-print-pixel_3_4.stl",
-        "sha256": "92568f64424a0958a03a947a344c20cc225e7ecd66471d811616901ead43a9cf",
-        "size": 7484,
-        "mtime": 1792141392733.2034
+        "sha256": "9409e629a7dbcb80b6665cd435db7295076f4b48c8c740977fd739e9cace620e",
+        "size": 7584,
+        "mtime": 1792218265028.4597
       }
     },
     {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-pixel_4_4-34.stl",
+      "file": "tangible-pixel-cube-studio-plate-e4c089a8c2a5-print-pixel_4_4-34.stl",
       "sourcePart": "tangible-pixel-cube-print-pixel_4_4",
       "sourceFile": "tangible-pixel-cube-print-pixel_4_4.stl",
       "objectId": "34",
@@ -1346,34 +1346,34 @@
         0.0,
         1.0,
         235.6,
-        73.3508,
+        97.0,
         0.0
       ],
-      "sha256": "58c55a6c062a0cb01241be449b95269a5efa4b4e9910d70634926c4c69ed66e9",
-      "size": 7484,
+      "sha256": "1721c43ec415d2dd716a428cc58ac1abcffb347d4916db335afe0f75b932460c",
+      "size": 7584,
       "bbox": {
         "min": [
           227.39999389648438,
-          63.350799560546875,
+          87.0,
           0.0
         ],
         "max": [
           243.8000030517578,
-          83.35079956054688,
+          107.0,
           36.099998474121094
         ]
       },
       "source": {
         "file": "tangible-pixel-cube-print-pixel_4_4.stl",
-        "sha256": "fd39dd14ee571e9a77c3c7ef21a83569b204bdc0852808bcee15d18acc3a30f6",
-        "size": 7484,
-        "mtime": 1792141392735.2034
+        "sha256": "3071a9c72255df09ac193495c43171c3337fc1308e4b79d9ea82d55c65b282ae",
+        "size": 7584,
+        "mtime": 1792218265030.9753
       }
     },
     {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-cam_0_0-35.stl",
-      "sourcePart": "tangible-pixel-cube-print-cam_0_0",
-      "sourceFile": "tangible-pixel-cube-print-cam_0_0.stl",
+      "file": "tangible-pixel-cube-studio-plate-e4c089a8c2a5-print-horn_coupler-35.stl",
+      "sourcePart": "tangible-pixel-cube-print-horn_coupler",
+      "sourceFile": "tangible-pixel-cube-print-horn_coupler.stl",
       "objectId": "35",
       "buildTransform": [
         1.0,
@@ -1385,35 +1385,35 @@
         0.0,
         0.0,
         1.0,
-        113.2608,
-        96.0817,
+        125.2972,
+        130.9406,
         0.0
       ],
-      "sha256": "7b35a41b6df1e294e75b0900c7bba9c4141842c2a81cbfd3a363da736dc3411d",
-      "size": 213984,
+      "sha256": "30f50ce0d1a9e6f3248de6e8c927218d2932037d8ed35259a30ca7eaf3a87c45",
+      "size": 150784,
       "bbox": {
         "min": [
           105.0,
-          87.35079956054688,
+          111.0,
           0.0
         ],
         "max": [
-          121.52159881591797,
-          104.8125991821289,
-          19.799999237060547
+          145.5944061279297,
+          150.88119506835938,
+          5.300000190734863
         ]
       },
       "source": {
-        "file": "tangible-pixel-cube-print-cam_0_0.stl",
-        "sha256": "625b40c66143752c8f7eca32e11c16769bd573ac6ac2c427f13878528a88139b",
-        "size": 213984,
-        "mtime": 1792141392744.2236
+        "file": "tangible-pixel-cube-print-horn_coupler.stl",
+        "sha256": "3eb6259d966b64358438585ab235f398b0cc6f5583b3c347299e8977a5d335d0",
+        "size": 150784,
+        "mtime": 1792218265034.0906
       }
     },
     {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-cam_1_0-36.stl",
-      "sourcePart": "tangible-pixel-cube-print-cam_1_0",
-      "sourceFile": "tangible-pixel-cube-print-cam_1_0.stl",
+      "file": "tangible-pixel-cube-studio-plate-e4c089a8c2a5-print-gear_0-36.stl",
+      "sourcePart": "tangible-pixel-cube-print-gear_0",
+      "sourceFile": "tangible-pixel-cube-print-gear_0.stl",
       "objectId": "36",
       "buildTransform": [
         1.0,
@@ -1425,35 +1425,35 @@
         0.0,
         0.0,
         1.0,
-        133.7456,
-        95.7873,
+        159.0774,
+        120.4448,
         0.0
       ],
-      "sha256": "b5a3271b9c5d92467fe45228d45c54ce5c8c037194de97ae24a67f85b78da2c6",
-      "size": 208984,
+      "sha256": "16e621ee1ed8c29384c504ace0db3ff0321ccd503d16d9456cd985679948c1aa",
+      "size": 201184,
       "bbox": {
         "min": [
-          125.52159881591797,
-          87.35079956054688,
+          149.5944061279297,
+          111.0,
           0.0
         ],
         "max": [
-          141.9696044921875,
-          104.22380065917969,
-          19.799999237060547
+          168.56039428710938,
+          129.8896026611328,
+          5.0
         ]
       },
       "source": {
-        "file": "tangible-pixel-cube-print-cam_1_0.stl",
-        "sha256": "8b025e2a3cd33870bda47c5776f85e69740479349d2388beaf4569d4d96f5cdc",
-        "size": 208984,
-        "mtime": 1792141392761.4448
+        "file": "tangible-pixel-cube-print-gear_0.stl",
+        "sha256": "597ca7896c558ef008b4a607349029b3fdf446dc5a6fac6ebcf71b4cccb7e1e9",
+        "size": 201184,
+        "mtime": 1792218265055.9648
       }
     },
     {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-cam_2_0-37.stl",
-      "sourcePart": "tangible-pixel-cube-print-cam_2_0",
-      "sourceFile": "tangible-pixel-cube-print-cam_2_0.stl",
+      "file": "tangible-pixel-cube-studio-plate-e4c089a8c2a5-print-gear_1-37.stl",
+      "sourcePart": "tangible-pixel-cube-print-gear_1",
+      "sourceFile": "tangible-pixel-cube-print-gear_1.stl",
       "objectId": "37",
       "buildTransform": [
         1.0,
@@ -1465,35 +1465,35 @@
         0.0,
         0.0,
         1.0,
-        154.1696,
-        95.436,
+        182.0434,
+        120.4448,
         0.0
       ],
-      "sha256": "6090c1f3dcdfbbd525dbe5881542a87eda35ff63afbf1882d13dd64c434ec17f",
-      "size": 218384,
+      "sha256": "6adba027c3952c2463271e1684da1e48d33c3c3e3e3abd5b22a0bf9b361daa4a",
+      "size": 201184,
       "bbox": {
         "min": [
-          145.9696044921875,
-          87.35079956054688,
+          172.56039428710938,
+          111.0,
           0.0
         ],
         "max": [
-          162.36959838867188,
-          103.52120208740234,
-          19.799999237060547
+          191.52639770507812,
+          129.8896026611328,
+          5.0
         ]
       },
       "source": {
-        "file": "tangible-pixel-cube-print-cam_2_0.stl",
-        "sha256": "b78265809c37aba793196b6cca1ba7f5470430adc9e33198c15adf0de4a1fd5a",
-        "size": 218384,
-        "mtime": 1792141392784.365
+        "file": "tangible-pixel-cube-print-gear_1.stl",
+        "sha256": "f2d895f9cd5b6dad5acf89797593b7cf4e54ca377e5dafdbdf765c45dd638229",
+        "size": 201184,
+        "mtime": 1792218265083.7063
       }
     },
     {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-cam_3_0-38.stl",
-      "sourcePart": "tangible-pixel-cube-print-cam_3_0",
-      "sourceFile": "tangible-pixel-cube-print-cam_3_0.stl",
+      "file": "tangible-pixel-cube-studio-plate-e4c089a8c2a5-print-gear_2-38.stl",
+      "sourcePart": "tangible-pixel-cube-print-gear_2",
+      "sourceFile": "tangible-pixel-cube-print-gear_2.stl",
       "objectId": "38",
       "buildTransform": [
         1.0,
@@ -1505,35 +1505,35 @@
         0.0,
         0.0,
         1.0,
-        174.5936,
-        95.7873,
+        205.0094,
+        120.4448,
         0.0
       ],
-      "sha256": "f914d33f0c259d1beef4fd9df91e85b1df00493ae0d8439b8a7795390bae3321",
-      "size": 227184,
+      "sha256": "530e695547bd799590a10b09853f801418fa04c1fd3be3142783b382cf12a372",
+      "size": 201184,
       "bbox": {
         "min": [
-          166.36959838867188,
-          87.35079956054688,
+          195.52639770507812,
+          111.0,
           0.0
         ],
         "max": [
-          182.81759643554688,
-          104.22380065917969,
-          19.799999237060547
+          214.49240112304688,
+          129.8896026611328,
+          5.0
         ]
       },
       "source": {
-        "file": "tangible-pixel-cube-print-cam_3_0.stl",
-        "sha256": "cdfbd042d80f3101751f8db9e84b74100970767be96c93d432079c96aa9360c8",
-        "size": 227184,
-        "mtime": 1792141392805.3748
+        "file": "tangible-pixel-cube-print-gear_2.stl",
+        "sha256": "0ca9c1f6283d15b6e3d0d8ab8314e6c3be990a3bc0b732110c44df9662c5a100",
+        "size": 201184,
+        "mtime": 1792218265113.9673
       }
     },
     {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-cam_4_0-39.stl",
-      "sourcePart": "tangible-pixel-cube-print-cam_4_0",
-      "sourceFile": "tangible-pixel-cube-print-cam_4_0.stl",
+      "file": "tangible-pixel-cube-studio-plate-e4c089a8c2a5-print-gear_3-39.stl",
+      "sourcePart": "tangible-pixel-cube-print-gear_3",
+      "sourceFile": "tangible-pixel-cube-print-gear_3.stl",
       "objectId": "39",
       "buildTransform": [
         1.0,
@@ -1545,35 +1545,35 @@
         0.0,
         0.0,
         1.0,
-        195.0784,
-        96.0817,
+        227.9754,
+        120.4448,
         0.0
       ],
-      "sha256": "32fc57384e2e366fe6094ab27e31dbb3e11b287a48d4335512c46524cf75bdb5",
-      "size": 206284,
+      "sha256": "c1175c03abd17354820e27a394f0f6fd66126c69a31a870097d66a7c1bd1e069",
+      "size": 201184,
       "bbox": {
         "min": [
-          186.81759643554688,
-          87.35079956054688,
+          218.49240112304688,
+          111.0,
           0.0
         ],
         "max": [
-          203.33920288085938,
-          104.8125991821289,
-          7.449999809265137
+          237.45840454101562,
+          129.8896026611328,
+          5.0
         ]
       },
       "source": {
-        "file": "tangible-pixel-cube-print-cam_4_0.stl",
-        "sha256": "aa37f02af51300063369d0cced81c0a6c001317429d225c1631ad498cfe21b72",
-        "size": 206284,
-        "mtime": 1792141392826.3928
+        "file": "tangible-pixel-cube-print-gear_3.stl",
+        "sha256": "98446c77f4767bb9563289660206a2fd471d9cb8cf3341872979627bdcd75777",
+        "size": 201184,
+        "mtime": 1792218265138.6104
       }
     },
     {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-cam_0_1-40.stl",
-      "sourcePart": "tangible-pixel-cube-print-cam_0_1",
-      "sourceFile": "tangible-pixel-cube-print-cam_0_1.stl",
+      "file": "tangible-pixel-cube-studio-plate-e4c089a8c2a5-print-gear_4-40.stl",
+      "sourcePart": "tangible-pixel-cube-print-gear_4",
+      "sourceFile": "tangible-pixel-cube-print-gear_4.stl",
       "objectId": "40",
       "buildTransform": [
         1.0,
@@ -1585,35 +1585,35 @@
         0.0,
         0.0,
         1.0,
-        215.5632,
-        95.7873,
+        250.9414,
+        120.4448,
         0.0
       ],
-      "sha256": "5c1189c06c7599fe62f2f3a9fac51ca335c9ae726416c245a2e221eeed47db94",
-      "size": 228784,
+      "sha256": "3e594a75bd8bc11abcf1dfdd289d7a327e1eee2ab43ad112837001937f02d839",
+      "size": 201184,
       "bbox": {
         "min": [
-          207.33920288085938,
-          87.35079956054688,
+          241.45840454101562,
+          111.0,
           0.0
         ],
         "max": [
-          223.78720092773438,
-          104.22380065917969,
-          19.799999237060547
+          260.4244079589844,
+          129.8896026611328,
+          5.0
         ]
       },
       "source": {
-        "file": "tangible-pixel-cube-print-cam_0_1.stl",
-        "sha256": "17a7a9c858fb21c3946b813a6429905d13c01a58f13522b2d0bc1e1838a8bc60",
-        "size": 228784,
-        "mtime": 1792141392842.8813
+        "file": "tangible-pixel-cube-print-gear_4.stl",
+        "sha256": "8bef62ffcde2523249ea21eb6b06347c1e4493caf2dc4703540474644f9a9b2c",
+        "size": 201184,
+        "mtime": 1792218265164.564
       }
     },
     {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-cam_1_1-41.stl",
-      "sourcePart": "tangible-pixel-cube-print-cam_1_1",
-      "sourceFile": "tangible-pixel-cube-print-cam_1_1.stl",
+      "file": "tangible-pixel-cube-studio-plate-e4c089a8c2a5-print-bearing_cap_px-41.stl",
+      "sourcePart": "tangible-pixel-cube-print-bearing_cap_px",
+      "sourceFile": "tangible-pixel-cube-print-bearing_cap_px.stl",
       "objectId": "41",
       "buildTransform": [
         1.0,
@@ -1625,35 +1625,35 @@
         0.0,
         0.0,
         1.0,
-        235.9872,
-        95.436,
+        268.8894,
+        150.95,
         0.0
       ],
-      "sha256": "b8318712574c62ac6ef7254a0456d146a99b82ad2e76b6068042a8fa174e6092",
-      "size": 177184,
+      "sha256": "125e28ecdc44962eaf764b676ab118c7a9a23aaf0ba23e00b0415c80e62b9c77",
+      "size": 30684,
       "bbox": {
         "min": [
-          227.78720092773438,
-          87.35079956054688,
+          264.4244079589844,
+          111.0,
           0.0
         ],
         "max": [
-          244.18719482421875,
-          103.52120208740234,
-          19.799999237060547
+          273.3544006347656,
+          190.89999389648438,
+          2.0999999046325684
         ]
       },
       "source": {
-        "file": "tangible-pixel-cube-print-cam_1_1.stl",
-        "sha256": "ac0accc04d4c66cbf0fe7dd89d3ed2fc3a65953063f552fd6b060701f31aea72",
-        "size": 177184,
-        "mtime": 1792141392867.9104
+        "file": "tangible-pixel-cube-print-bearing_cap_px.stl",
+        "sha256": "f0cec38c37404676086d87b041c6743a2cf1f44faaac65b7062a11a920ca2534",
+        "size": 30684,
+        "mtime": 1792218265192.7383
       }
     },
     {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-cam_2_1-42.stl",
-      "sourcePart": "tangible-pixel-cube-print-cam_2_1",
-      "sourceFile": "tangible-pixel-cube-print-cam_2_1.stl",
+      "file": "tangible-pixel-cube-studio-plate-e4c089a8c2a5-print-bearing_cap_mx-42.stl",
+      "sourcePart": "tangible-pixel-cube-print-bearing_cap_mx",
+      "sourceFile": "tangible-pixel-cube-print-bearing_cap_mx.stl",
       "objectId": "42",
       "buildTransform": [
         1.0,
@@ -1665,35 +1665,35 @@
         0.0,
         0.0,
         1.0,
-        256.4198,
-        95.5345,
+        280.5694,
+        153.55,
         0.0
       ],
-      "sha256": "578407dd69f4ee5b6cec7f083611c40276dddda27cf1e2f4648835f3f2770b84",
-      "size": 174384,
+      "sha256": "3b245d5f8e303b53828c935bcc132e45214e4cdce22cd5a4b6a1cba829c89edd",
+      "size": 33784,
       "bbox": {
         "min": [
-          248.18719482421875,
-          87.35079956054688,
+          277.3544006347656,
+          111.0,
           0.0
         ],
         "max": [
-          264.65240478515625,
-          103.71820068359375,
-          19.799999237060547
+          283.7843933105469,
+          196.10000610351562,
+          2.0999999046325684
         ]
       },
       "source": {
-        "file": "tangible-pixel-cube-print-cam_2_1.stl",
-        "sha256": "388999fd7af9b5139d984c57a20c0591b13bd817d53db65ae00321bc5cfe12b2",
-        "size": 174384,
-        "mtime": 1792141392884.1006
+        "file": "tangible-pixel-cube-print-bearing_cap_mx.stl",
+        "sha256": "e1762d51aabf30bdd727a88d2d55c62987f3c94be8eb3fc34756084d4af043e2",
+        "size": 33784,
+        "mtime": 1792218265208.872
       }
     },
     {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-cam_3_1-43.stl",
-      "sourcePart": "tangible-pixel-cube-print-cam_3_1",
-      "sourceFile": "tangible-pixel-cube-print-cam_3_1.stl",
+      "file": "tangible-pixel-cube-studio-plate-e4c089a8c2a5-print-servo_clip_0-43.stl",
+      "sourcePart": "tangible-pixel-cube-print-servo_clip_0",
+      "sourceFile": "tangible-pixel-cube-print-servo_clip_0.stl",
       "objectId": "43",
       "buildTransform": [
         1.0,
@@ -1705,35 +1705,35 @@
         0.0,
         0.0,
         1.0,
-        276.8945,
-        95.7873,
+        111.05,
+        208.75,
         0.0
       ],
-      "sha256": "155286e0d8f160131946b0e8b72630c225a877d2026d82c4c84779d3614ad26b",
-      "size": 184784,
+      "sha256": "dcb09f841fe3ace79097986fc3f856a188bb54a04a6b567bfda98fe3cfdede2d",
+      "size": 5884,
       "bbox": {
         "min": [
-          268.65240478515625,
-          87.35079956054688,
+          105.0,
+          200.10000610351562,
           0.0
         ],
         "max": [
-          285.1365966796875,
-          104.22380065917969,
-          19.799999237060547
+          117.0999984741211,
+          217.39999389648438,
+          4.0
         ]
       },
       "source": {
-        "file": "tangible-pixel-cube-print-cam_3_1.stl",
-        "sha256": "e5977d0f8afb75999f19487cd491e2eb0f9a1e06b2c031effeaff6eef2fe6f35",
-        "size": 184784,
-        "mtime": 1792141392896.6174
+        "file": "tangible-pixel-cube-print-servo_clip_0.stl",
+        "sha256": "de0c2e28f8e45ef6974f0129ca45c9659e6074de7cb6dc82a61b57fd45170ce2",
+        "size": 5884,
+        "mtime": 1792218265226.593
       }
     },
     {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-cam_4_1-44.stl",
-      "sourcePart": "tangible-pixel-cube-print-cam_4_1",
-      "sourceFile": "tangible-pixel-cube-print-cam_4_1.stl",
+      "file": "tangible-pixel-cube-studio-plate-e4c089a8c2a5-print-servo_clip_1-44.stl",
+      "sourcePart": "tangible-pixel-cube-print-servo_clip_1",
+      "sourceFile": "tangible-pixel-cube-print-servo_clip_1.stl",
       "objectId": "44",
       "buildTransform": [
         1.0,
@@ -1745,941 +1745,21 @@
         0.0,
         0.0,
         1.0,
-        113.224,
-        117.2491,
-        0.0
-      ],
-      "sha256": "3eb0edbf853ff80130bef7b9ee7d52d15d037af824f5420357a6b287dc10b234",
-      "size": 224284,
-      "bbox": {
-        "min": [
-          105.0,
-          108.8125991821289,
-          0.0
-        ],
-        "max": [
-          121.447998046875,
-          125.68560028076172,
-          13.350000381469727
-        ]
-      },
-      "source": {
-        "file": "tangible-pixel-cube-print-cam_4_1.stl",
-        "sha256": "5ba835f7da845ba5d0dea41ef2a5b28cbfe69b5b5c6ecddf59a4b953c6999d93",
-        "size": 224284,
-        "mtime": 1792141392919.6677
-      }
-    },
-    {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-cam_0_2-45.stl",
-      "sourcePart": "tangible-pixel-cube-print-cam_0_2",
-      "sourceFile": "tangible-pixel-cube-print-cam_0_2.stl",
-      "objectId": "45",
-      "buildTransform": [
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        133.648,
-        116.9963,
-        0.0
-      ],
-      "sha256": "13a407ae8014cbdfb420c1495c7a30a5e3d53bb9b128c0750bf2de784a1fbb51",
-      "size": 242784,
-      "bbox": {
-        "min": [
-          125.447998046875,
-          108.8125991821289,
-          0.0
-        ],
-        "max": [
-          141.84800720214844,
-          125.18000030517578,
-          19.799999237060547
-        ]
-      },
-      "source": {
-        "file": "tangible-pixel-cube-print-cam_0_2.stl",
-        "sha256": "162d6bcdd2f051b2969423d7825e5b23f3429dcf3ada8a40549cbef21de71e2e",
-        "size": 242784,
-        "mtime": 1792141392940.1953
-      }
-    },
-    {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-cam_1_2-46.stl",
-      "sourcePart": "tangible-pixel-cube-print-cam_1_2",
-      "sourceFile": "tangible-pixel-cube-print-cam_1_2.stl",
-      "objectId": "46",
-      "buildTransform": [
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        154.0705,
-        116.8978,
-        0.0
-      ],
-      "sha256": "4b191ed0a538acf80de1b66bf119dc9af5d770607fa82f1c8ac2d61eb01a5fad",
-      "size": 164584,
-      "bbox": {
-        "min": [
-          145.84800720214844,
-          108.8125991821289,
-          0.0
-        ],
-        "max": [
-          162.29299926757812,
-          124.98300170898438,
-          19.799999237060547
-        ]
-      },
-      "source": {
-        "file": "tangible-pixel-cube-print-cam_1_2.stl",
-        "sha256": "553eaf61813c33a4af0a3404215ab96ad1b307d13e06e7ab15b0eb60b62d5f87",
-        "size": 164584,
-        "mtime": 1792141392955.1946
-      }
-    },
-    {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-cam_2_2-47.stl",
-      "sourcePart": "tangible-pixel-cube-print-cam_2_2",
-      "sourceFile": "tangible-pixel-cube-print-cam_2_2.stl",
-      "objectId": "47",
-      "buildTransform": [
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        174.5479,
-        117.0126,
-        0.0
-      ],
-      "sha256": "233be76c6e3282a560a99f605459ce38f2aa77224db9f730dac9992850449729",
-      "size": 135984,
-      "bbox": {
-        "min": [
-          166.29299926757812,
-          108.8125991821289,
-          0.0
-        ],
-        "max": [
-          182.80279541015625,
-          125.21260070800781,
-          19.799999237060547
-        ]
-      },
-      "source": {
-        "file": "tangible-pixel-cube-print-cam_2_2.stl",
-        "sha256": "b614c631bf82fe37f56ff67de554c8df2402ca275d05e5bd50e0cf9205affbeb",
-        "size": 135984,
-        "mtime": 1792141392970.5461
-      }
-    },
-    {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-cam_3_2-48.stl",
-      "sourcePart": "tangible-pixel-cube-print-cam_3_2",
-      "sourceFile": "tangible-pixel-cube-print-cam_3_2.stl",
-      "objectId": "48",
-      "buildTransform": [
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        195.0573,
-        117.4127,
-        0.0
-      ],
-      "sha256": "30237710012defe1c9b05c96157f518e7fceb48f423b4af8aa38e52758ae3784",
-      "size": 152384,
-      "bbox": {
-        "min": [
-          186.80279541015625,
-          108.8125991821289,
-          0.0
-        ],
-        "max": [
-          203.31179809570312,
-          126.01280212402344,
-          19.799999237060547
-        ]
-      },
-      "source": {
-        "file": "tangible-pixel-cube-print-cam_3_2.stl",
-        "sha256": "faba46c451c17607d59f4c01300d471b5b9411785b1dd67f216cf34388cbccda",
-        "size": 152384,
-        "mtime": 1792141392985.7217
-      }
-    },
-    {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-cam_4_2-49.stl",
-      "sourcePart": "tangible-pixel-cube-print-cam_4_2",
-      "sourceFile": "tangible-pixel-cube-print-cam_4_2.stl",
-      "objectId": "49",
-      "buildTransform": [
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        215.5466,
-        117.2491,
-        0.0
-      ],
-      "sha256": "3efbd9d3cac3fa22a73afb5a41d641099c3c5b088f60d6f6c9e0645f8c277386",
-      "size": 200084,
-      "bbox": {
-        "min": [
-          207.31179809570312,
-          108.8125991821289,
-          0.0
-        ],
-        "max": [
-          223.78140258789062,
-          125.68560028076172,
-          7.449999809265137
-        ]
-      },
-      "source": {
-        "file": "tangible-pixel-cube-print-cam_4_2.stl",
-        "sha256": "ce0b73e8e77b9c22fc1df840b6bab9a9a25074c6178d0388ce45f537cce96e47",
-        "size": 200084,
-        "mtime": 1792141393000.2585
-      }
-    },
-    {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-cam_0_3-50.stl",
-      "sourcePart": "tangible-pixel-cube-print-cam_0_3",
-      "sourceFile": "tangible-pixel-cube-print-cam_0_3.stl",
-      "objectId": "50",
-      "buildTransform": [
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        236.0054,
-        117.2491,
-        0.0
-      ],
-      "sha256": "8c62794b882eb47b0191d2dd9f22cea3f90c6e40f8d8c6bccd49dda38e8f6d32",
-      "size": 237384,
-      "bbox": {
-        "min": [
-          227.78140258789062,
-          108.8125991821289,
-          0.0
-        ],
-        "max": [
-          244.22940063476562,
-          125.68560028076172,
-          19.799999237060547
-        ]
-      },
-      "source": {
-        "file": "tangible-pixel-cube-print-cam_0_3.stl",
-        "sha256": "90a1bb41265965a7da284981ae3b40ede0cb4475be31a766add9102ea31c60cd",
-        "size": 237384,
-        "mtime": 1792141393019.7725
-      }
-    },
-    {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-cam_1_3-51.stl",
-      "sourcePart": "tangible-pixel-cube-print-cam_1_3",
-      "sourceFile": "tangible-pixel-cube-print-cam_1_3.stl",
-      "objectId": "51",
-      "buildTransform": [
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        256.4527,
-        116.9963,
-        0.0
-      ],
-      "sha256": "ca43ce4176cd76cc11b7f5f41b4dd6851867dddf07ed1416fd6da0baa64e7e6d",
-      "size": 179184,
-      "bbox": {
-        "min": [
-          248.22940063476562,
-          108.8125991821289,
-          0.0
-        ],
-        "max": [
-          264.6759948730469,
-          125.18000030517578,
-          19.799999237060547
-        ]
-      },
-      "source": {
-        "file": "tangible-pixel-cube-print-cam_1_3.stl",
-        "sha256": "7371f706f116524c62b16ed5099b22a86467ce57bcee508d1660cf8eb874562d",
-        "size": 179184,
-        "mtime": 1792141393039.5686
-      }
-    },
-    {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-cam_2_3-52.stl",
-      "sourcePart": "tangible-pixel-cube-print-cam_2_3",
-      "sourceFile": "tangible-pixel-cube-print-cam_2_3.stl",
-      "objectId": "52",
-      "buildTransform": [
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        276.9239,
-        117.2491,
-        0.0
-      ],
-      "sha256": "9c88a2f91d147a0f0c6b67c7c4e54c5bac3a7d7ccdf6f048dad6df36e9b3fe71",
-      "size": 176784,
-      "bbox": {
-        "min": [
-          268.6759948730469,
-          108.8125991821289,
-          0.0
-        ],
-        "max": [
-          285.17181396484375,
-          125.68560028076172,
-          19.799999237060547
-        ]
-      },
-      "source": {
-        "file": "tangible-pixel-cube-print-cam_2_3.stl",
-        "sha256": "17ce422a5ddaa1a399fe39b3e1fb77b7951689b4a8e30e3b12585c39a78fec08",
-        "size": 176784,
-        "mtime": 1792141393061.3
-      }
-    },
-    {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-cam_3_3-53.stl",
-      "sourcePart": "tangible-pixel-cube-print-cam_3_3",
-      "sourceFile": "tangible-pixel-cube-print-cam_3_3.stl",
-      "objectId": "53",
-      "buildTransform": [
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        113.2494,
-        138.6129,
-        0.0
-      ],
-      "sha256": "aab4148d9a6b250c64f05595e0fd384c7d59659ec7dd762f326ccb7993e32f01",
-      "size": 186184,
-      "bbox": {
-        "min": [
-          105.0,
-          130.01280212402344,
-          0.0
-        ],
-        "max": [
-          121.4988021850586,
-          147.21299743652344,
-          19.799999237060547
-        ]
-      },
-      "source": {
-        "file": "tangible-pixel-cube-print-cam_3_3.stl",
-        "sha256": "436e22d0dbc75dde7c09de553cd3097423f83f82ad8ae5923aa9a51941a4f0b1",
-        "size": 186184,
-        "mtime": 1792141393079.753
-      }
-    },
-    {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-cam_4_3-54.stl",
-      "sourcePart": "tangible-pixel-cube-print-cam_4_3",
-      "sourceFile": "tangible-pixel-cube-print-cam_4_3.stl",
-      "objectId": "54",
-      "buildTransform": [
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        133.7228,
-        138.4493,
-        0.0
-      ],
-      "sha256": "2495b72d04caf1b1d38e30df8bdea3b5d511c9a620ba9b90d96df1fa5bb542e5",
-      "size": 232884,
-      "bbox": {
-        "min": [
-          125.4988021850586,
-          130.01280212402344,
-          0.0
-        ],
-        "max": [
-          141.94679260253906,
-          146.88580322265625,
-          13.350000381469727
-        ]
-      },
-      "source": {
-        "file": "tangible-pixel-cube-print-cam_4_3.stl",
-        "sha256": "938a3e53d391f856ad537ac97757f6b844b59b08a3666011f630f47bbf172151",
-        "size": 232884,
-        "mtime": 1792141393099.2488
-      }
-    },
-    {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-cam_0_4-55.stl",
-      "sourcePart": "tangible-pixel-cube-print-cam_0_4",
-      "sourceFile": "tangible-pixel-cube-print-cam_0_4.stl",
-      "objectId": "55",
-      "buildTransform": [
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        154.2076,
-        138.7437,
-        0.0
-      ],
-      "sha256": "3012ef71c0ba951fd2b9d0ea1679b92df1992979d52d9db32df82e2ecaa22d0a",
-      "size": 207684,
-      "bbox": {
-        "min": [
-          145.94679260253906,
-          130.01280212402344,
-          0.0
-        ],
-        "max": [
-          162.46839904785156,
-          147.47459411621094,
-          19.799999237060547
-        ]
-      },
-      "source": {
-        "file": "tangible-pixel-cube-print-cam_0_4.stl",
-        "sha256": "a9e3a03a926b5239a316f1310d8f83d5e6535f9436828fafac5c209f073ceb1a",
-        "size": 207684,
-        "mtime": 1792141393119.2524
-      }
-    },
-    {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-cam_1_4-56.stl",
-      "sourcePart": "tangible-pixel-cube-print-cam_1_4",
-      "sourceFile": "tangible-pixel-cube-print-cam_1_4.stl",
-      "objectId": "56",
-      "buildTransform": [
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        174.6924,
-        138.4493,
-        0.0
-      ],
-      "sha256": "95d74fda3efd9b853da2a2f5e6a203f1799430282839ec7316de25466afdf22a",
-      "size": 202684,
-      "bbox": {
-        "min": [
-          166.46839904785156,
-          130.01280212402344,
-          0.0
-        ],
-        "max": [
-          182.91639709472656,
-          146.88580322265625,
-          19.799999237060547
-        ]
-      },
-      "source": {
-        "file": "tangible-pixel-cube-print-cam_1_4.stl",
-        "sha256": "45efa5157aab44ec80df8d52bf2d71939c0e4c943671b58753d73394fea8d461",
-        "size": 202684,
-        "mtime": 1792141393140.508
-      }
-    },
-    {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-cam_2_4-57.stl",
-      "sourcePart": "tangible-pixel-cube-print-cam_2_4",
-      "sourceFile": "tangible-pixel-cube-print-cam_2_4.stl",
-      "objectId": "57",
-      "buildTransform": [
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        195.1598,
-        138.6129,
-        0.0
-      ],
-      "sha256": "79f38b809fd9a5ca04fffcf2086568cee1eb58a0f4b0a2aa17a7dedbf14fe091",
-      "size": 192284,
-      "bbox": {
-        "min": [
-          186.91639709472656,
-          130.01280212402344,
-          0.0
-        ],
-        "max": [
-          203.4031982421875,
-          147.21299743652344,
-          19.799999237060547
-        ]
-      },
-      "source": {
-        "file": "tangible-pixel-cube-print-cam_2_4.stl",
-        "sha256": "c8ef4cccdefbea22f80da7f770a6ce2e679372ddd555a55a86ab0063753e10da",
-        "size": 192284,
-        "mtime": 1792141393162.5117
-      }
-    },
-    {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-cam_3_4-58.stl",
-      "sourcePart": "tangible-pixel-cube-print-cam_3_4",
-      "sourceFile": "tangible-pixel-cube-print-cam_3_4.stl",
-      "objectId": "58",
-      "buildTransform": [
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        215.6272,
-        138.4493,
-        0.0
-      ],
-      "sha256": "735eb8d1917426aeef38da9a8d7d25c3a840c21788a792fa1477212cfe1081b5",
-      "size": 220884,
-      "bbox": {
-        "min": [
-          207.4031982421875,
-          130.01280212402344,
-          0.0
-        ],
-        "max": [
-          223.8511962890625,
-          146.88580322265625,
-          19.799999237060547
-        ]
-      },
-      "source": {
-        "file": "tangible-pixel-cube-print-cam_3_4.stl",
-        "sha256": "84ce11135ed03efae4a656b2a90543dcba4df8335e5f01fa8391f8576238d300",
-        "size": 220884,
-        "mtime": 1792141393182.4556
-      }
-    },
-    {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-cam_4_4-59.stl",
-      "sourcePart": "tangible-pixel-cube-print-cam_4_4",
-      "sourceFile": "tangible-pixel-cube-print-cam_4_4.stl",
-      "objectId": "59",
-      "buildTransform": [
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        236.112,
-        138.7437,
-        0.0
-      ],
-      "sha256": "08af6bf15a7e98545b9aecfb8be53be8e2bc9aa880d8c302be25884c2f0cc663",
-      "size": 199984,
-      "bbox": {
-        "min": [
-          227.8511962890625,
-          130.01280212402344,
-          0.0
-        ],
-        "max": [
-          244.372802734375,
-          147.47459411621094,
-          7.449999809265137
-        ]
-      },
-      "source": {
-        "file": "tangible-pixel-cube-print-cam_4_4.stl",
-        "sha256": "e8048d55585635982d4fde0374b470937d12f800f548ed8456fc86e370de0467",
-        "size": 199984,
-        "mtime": 1792141393207.5083
-      }
-    },
-    {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-horn_coupler-60.stl",
-      "sourcePart": "tangible-pixel-cube-print-horn_coupler",
-      "sourceFile": "tangible-pixel-cube-print-horn_coupler.stl",
-      "objectId": "60",
-      "buildTransform": [
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        125.2972,
-        171.4152,
-        0.0
-      ],
-      "sha256": "0742803a7c0c0929e45878b1909408c5fb2d54d0540b3de93d953cd899fd47ae",
-      "size": 212484,
-      "bbox": {
-        "min": [
-          105.0,
-          151.47459411621094,
-          0.0
-        ],
-        "max": [
-          145.5944061279297,
-          191.35580444335938,
-          5.300000190734863
-        ]
-      },
-      "source": {
-        "file": "tangible-pixel-cube-print-horn_coupler.stl",
-        "sha256": "8d4800f2aa7285e3282e567100c6c03375fcd44cca40a8336bcddb53e3f4f455",
-        "size": 212484,
-        "mtime": 1792141393225.449
-      }
-    },
-    {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-gear_0-61.stl",
-      "sourcePart": "tangible-pixel-cube-print-gear_0",
-      "sourceFile": "tangible-pixel-cube-print-gear_0.stl",
-      "objectId": "61",
-      "buildTransform": [
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        159.0774,
-        160.9194,
-        0.0
-      ],
-      "sha256": "b643e19b445b376ecd13790b93670782c4ee32684a25d962f764486de1832c2d",
-      "size": 191884,
-      "bbox": {
-        "min": [
-          149.5944061279297,
-          151.47459411621094,
-          0.0
-        ],
-        "max": [
-          168.56039428710938,
-          170.36419677734375,
-          4.599999904632568
-        ]
-      },
-      "source": {
-        "file": "tangible-pixel-cube-print-gear_0.stl",
-        "sha256": "1c53a5e129d264e197be63e359fc72452536178d57e9dbd5c44ef423668efe40",
-        "size": 191884,
-        "mtime": 1792141393250.4727
-      }
-    },
-    {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-gear_1-62.stl",
-      "sourcePart": "tangible-pixel-cube-print-gear_1",
-      "sourceFile": "tangible-pixel-cube-print-gear_1.stl",
-      "objectId": "62",
-      "buildTransform": [
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        182.0434,
-        160.9194,
-        0.0
-      ],
-      "sha256": "cc95a8977e040b5203a3b91f52ed25a2f98fd25d1f51a461f5fcde4c32cf63a7",
-      "size": 191884,
-      "bbox": {
-        "min": [
-          172.56039428710938,
-          151.47459411621094,
-          0.0
-        ],
-        "max": [
-          191.52639770507812,
-          170.36419677734375,
-          4.599999904632568
-        ]
-      },
-      "source": {
-        "file": "tangible-pixel-cube-print-gear_1.stl",
-        "sha256": "0937c0427b1ed2a2d28b393f0715ac839fa333643d638811dbf5df65438691f3",
-        "size": 191884,
-        "mtime": 1792141393268.4802
-      }
-    },
-    {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-gear_2-63.stl",
-      "sourcePart": "tangible-pixel-cube-print-gear_2",
-      "sourceFile": "tangible-pixel-cube-print-gear_2.stl",
-      "objectId": "63",
-      "buildTransform": [
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        205.0094,
-        160.9194,
-        0.0
-      ],
-      "sha256": "0e5391bb4f5e106c7642c70ade197a71e6b738efa1d3844c20f8070d4a96c782",
-      "size": 191884,
-      "bbox": {
-        "min": [
-          195.52639770507812,
-          151.47459411621094,
-          0.0
-        ],
-        "max": [
-          214.49240112304688,
-          170.36419677734375,
-          4.599999904632568
-        ]
-      },
-      "source": {
-        "file": "tangible-pixel-cube-print-gear_2.stl",
-        "sha256": "3ae65d3c24e17ef32c58fcfba37081faae29f7619e48d7737b1dd414e78379b1",
-        "size": 191884,
-        "mtime": 1792141393287.0073
-      }
-    },
-    {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-gear_3-64.stl",
-      "sourcePart": "tangible-pixel-cube-print-gear_3",
-      "sourceFile": "tangible-pixel-cube-print-gear_3.stl",
-      "objectId": "64",
-      "buildTransform": [
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        227.9754,
-        160.9194,
-        0.0
-      ],
-      "sha256": "2049f718570480b8794429b256690af7e93f1fc5afb09a5d10962a4265747ce6",
-      "size": 191884,
-      "bbox": {
-        "min": [
-          218.49240112304688,
-          151.47459411621094,
-          0.0
-        ],
-        "max": [
-          237.45840454101562,
-          170.36419677734375,
-          4.599999904632568
-        ]
-      },
-      "source": {
-        "file": "tangible-pixel-cube-print-gear_3.stl",
-        "sha256": "43b17a195d2da50de399f69c7e55b0e262bf833d043ad3d3ec019e0eba4a7f2b",
-        "size": 191884,
-        "mtime": 1792141393308.0063
-      }
-    },
-    {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-gear_4-65.stl",
-      "sourcePart": "tangible-pixel-cube-print-gear_4",
-      "sourceFile": "tangible-pixel-cube-print-gear_4.stl",
-      "objectId": "65",
-      "buildTransform": [
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        250.9414,
-        160.9194,
-        0.0
-      ],
-      "sha256": "59e2d77ddf0e49093b85b80e034e9b5ade141269f748a01057a4eeb569c538ec",
-      "size": 191884,
-      "bbox": {
-        "min": [
-          241.45840454101562,
-          151.47459411621094,
-          0.0
-        ],
-        "max": [
-          260.4244079589844,
-          170.36419677734375,
-          4.599999904632568
-        ]
-      },
-      "source": {
-        "file": "tangible-pixel-cube-print-gear_4.stl",
-        "sha256": "75e2bb4143c03e577df7f3a4d02e84b1726b9e74258e8ba9a4b436b9b2bced5d",
-        "size": 191884,
-        "mtime": 1792141393320.0142
-      }
-    },
-    {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-servo_clip_0-66.stl",
-      "sourcePart": "tangible-pixel-cube-print-servo_clip_0",
-      "sourceFile": "tangible-pixel-cube-print-servo_clip_0.stl",
-      "objectId": "66",
-      "buildTransform": [
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        111.05,
-        204.0058,
-        0.0
-      ],
-      "sha256": "6654bf8d67cf0bea9757ea06b02f912a27dcca0092c1952d4614992e9e4e3b81",
-      "size": 5884,
-      "bbox": {
-        "min": [
-          105.0,
-          195.35580444335938,
-          0.0
-        ],
-        "max": [
-          117.0999984741211,
-          212.6558074951172,
-          4.0
-        ]
-      },
-      "source": {
-        "file": "tangible-pixel-cube-print-servo_clip_0.stl",
-        "sha256": "de0c2e28f8e45ef6974f0129ca45c9659e6074de7cb6dc82a61b57fd45170ce2",
-        "size": 5884,
-        "mtime": 1792141393339.7837
-      }
-    },
-    {
-      "file": "tangible-pixel-cube-studio-plate-5242f0d848a8-print-servo_clip_1-67.stl",
-      "sourcePart": "tangible-pixel-cube-print-servo_clip_1",
-      "sourceFile": "tangible-pixel-cube-print-servo_clip_1.stl",
-      "objectId": "67",
-      "buildTransform": [
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
         127.15,
-        204.0058,
+        208.75,
         0.0
       ],
-      "sha256": "385a5f846899f159d539d4db1039886e513bc4d07d2717704167154534c877b5",
+      "sha256": "cf536455f7c5312f07e699c5d812b851d8186e82d3f4e8ea1a5f0651011af39b",
       "size": 5884,
       "bbox": {
         "min": [
           121.0999984741211,
-          195.35580444335938,
+          200.10000610351562,
           0.0
         ],
         "max": [
           133.1999969482422,
-          212.6558074951172,
+          217.39999389648438,
           4.0
         ]
       },
@@ -2687,7 +1767,7 @@
         "file": "tangible-pixel-cube-print-servo_clip_1.stl",
         "sha256": "3ef20b7cf4edd7175438d4aad709a6724b3f315da9b118373db26c45e0596458",
         "size": 5884,
-        "mtime": 1792141393353.4802
+        "mtime": 1792218265231.1077
       }
     }
   ]

@@ -3,7 +3,7 @@
     py -3.11 models/tangible-pixel-cube/motion.py [--step 1.0]
 
 寸法と運動学は params.py / kinematics.py / cams.py / patterns.py を読む（値を書き写さない）。
-- 軸 j（行 j）の gear_j / cam_i_j（5 枚）/ shaft_j（-X 端の部品）は数珠つなぎで 1 つの剛体。Y=axis_y(j), Z=Zc を通る X 軸まわりに axis_angle 度回る
+- 軸 j（行 j）の camshaft_j（胴 Ø10 + カム 5 枚の一体）と gear_j は 1 つの剛体。Y=axis_y(j), Z=Zc を通る X 軸まわりに axis_angle 度回る
 - horn_coupler と sg92r_horn はサーボ軸（Y=0, Z=Zs）の X 軸まわりに servo_delta 度回る
 - pixel_i_j は Z だけ動く。高さは cams.py のカムの支持関数 h*（接点の高さ。表どおりの高さを作る実カム）
 - housing / bezel / guide_plate / sg92r は動かない（単位行列）。phase_comb（組立治具）は運動表に入れない
@@ -29,17 +29,16 @@ MM = 1000.0
 STEP_DEG = 1.0                      # motion.json のサーボ角の刻み（度）
 DURATION_S = 3.0                    # 記録用。片道の目安時間（simulate.py と同じ）
 
-STATIC_PARTS = ("housing", "bezel", "guide_plate", "sg92r", "servo_clip_0", "servo_clip_1")
+STATIC_PARTS = ("housing", "bezel", "guide_plate", "sg92r", "servo_clip_0", "servo_clip_1", "bearing_cap_px", "bearing_cap_mx")
 SERVO_PARTS = ("sg92r_horn", "horn_coupler")          # サーボ軸まわり
 PHASE_JIG = "phase_comb"                               # 運動表には入れない
 
 
 def part_ids():
-    """運動表に載る部品 id。params.PART_IDS（親が決めた正本）に EXTRA_PART_IDS（C クリップ）を足し、phase_comb を除く"""
+    """運動表に載る部品 id。params.PART_IDS（親が決めた正本）に EXTRA_PART_IDS（servo_clip）を足し、phase_comb を除く"""
     base = list(getattr(P, "PART_IDS", None) or (
         ["housing", "bezel", "guide_plate", "sg92r", "sg92r_horn", "horn_coupler"]
-        + [f"shaft_{j}" for j in range(P.N)] + [f"gear_{j}" for j in range(P.N)]
-        + [f"cam_{i}_{j}" for j in range(P.N) for i in range(P.N)]
+        + [f"camshaft_{j}" for j in range(P.N)] + [f"gear_{j}" for j in range(P.N)]
         + [f"pixel_{i}_{j}" for j in range(P.N) for i in range(P.N)]))
     base += list(getattr(P, "EXTRA_PART_IDS", []))
     out = []
@@ -56,10 +55,8 @@ def classify(pid):
     if pid in SERVO_PARTS:
         return ("servo",)
     parts = pid.split("_")
-    if parts[0] in ("shaft", "gear") and len(parts) == 2 and parts[1].isdigit():
+    if parts[0] in ("camshaft", "gear") and len(parts) == 2 and parts[1].isdigit():
         return ("axis", int(parts[1]))
-    if parts[0] == "cam" and len(parts) == 3 and parts[1].isdigit() and parts[2].isdigit():
-        return ("axis", int(parts[2]))
     if parts[0] == "pixel" and len(parts) == 3 and parts[1].isdigit() and parts[2].isdigit():
         return ("pixel", int(parts[1]), int(parts[2]))
     raise ValueError(f"動き方が分からない部品 id: {pid}（motion.py の classify に足す）")
@@ -94,7 +91,7 @@ def build_cams():
 
 
 def axis_of_part(pid):
-    """軸まわりに回る部品（shaft_j / gear_j / cam_i_j）の j。それ以外は None"""
+    """軸まわりに回る部品（camshaft_j / gear_j）の j。それ以外は None"""
     kind = classify(pid)
     return kind[1] if kind[0] == "axis" else None
 

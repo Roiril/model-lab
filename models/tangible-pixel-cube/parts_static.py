@@ -1,4 +1,4 @@
-"""静止部品の形（bpy）。housing / bezel / guide_plate / sg92r / sg92r_horn。
+"""静止部品の形（bpy）。housing / bezel / guide_plate / sg92r / sg92r_horn / servo_clip_0, 1 / bearing_cap_px, mx。
 
 build_static() -> dict[id, Object]   組立姿勢、単位 m、オブジェクト名 = id
 PRINT_POSE                          各 id の刷る向き（回転オイラー XYZ 度・理由・サポートの場所）
@@ -47,7 +47,8 @@ ZS = mm(P.SERVO_AXIS_Z)                    # サーボ出力軸の高さ（24.2�
 XS0 = mm(P.SERVO_BODY_X0)                  # サーボ本体の底面の X（native z 0。10.2）
 PITCH = mm(P.PITCH)                        # 17
 AXIS_Y = [mm(K.axis_y(j)) for j in range(P.N)]
-CAM_X = [[mm(K.cam_x(i, j)) for i in range(P.N)] for j in range(P.N)]   # [j][i]
+CAM_X = [[mm(K.cam_x(i, j)) for i in range(P.N)] for j in range(P.N)]   # [j][i] カム（と足）の中心 X
+STEM_X = [[mm(K.stem_x(i, j)) for i in range(P.N)] for j in range(P.N)]   # [j][i] 茎（と角穴）の中心 X。足は茎から FOOT_ECC_MAX まで偏心して自分のカムの真上に載る
 
 # --- 外観 -------------------------------------------------------------------------------------
 # 外の稜はすべて 1.0mm の 45 度面取り。ベッドに接する稜（外装の底、ベゼルの上面）も同じ。
@@ -55,18 +56,38 @@ CAM_X = [[mm(K.cam_x(i, j)) for i in range(P.N)] for j in range(P.N)]   # [j][i]
 CHAMFER = 1.0
 FIT = 0.2                                  # 嵌め合いの片側の隙間（回さない・滑らせない面。CLAUDE.md 0.2〜0.4 の下限）
 
-# --- 軸受け（両端の壁に付ける帯）--------------------------------------------------------------
-PAD_X0 = mm(P.PAD_X0)                      # 帯の内面（43.8）
+# --- 軸受け（両端の壁の帯と U 溝）-------------------------------------------------------------------
+# +X は Ø5（P.JOURNAL_D）、-X は Ø10（P.JOURNAL_MX_D）の軸受け。帯（パッド）は端壁の内側 1.0mm の出っ張りで、軸ごとに U 溝を切る。
+# U 溝は端壁へ P.U_DIG（1.0）掘る（溝の底 |X| = 46.0。壁は 2.0 残す）。溝の上は外装の上端まで通した縦の溝（スリット）で、
+# 軸の端（|X| 45.4 まで）と押さえ棒の爪が上から入る。口は 45 度 x 1.5 のじょうご（上の口と、パッドの内面の円錐）。
+PAD_X0 = mm(P.PAD_X0)                      # 帯の内面（44.0。軸の肩との隙間は片側 0.4）
 PAD_X1 = mm(P.PAD_X1)                      # 帯の外面 = 端壁の内面（45）
-PAD_TOP = ZC + mm(P.PAD_TOP_ABOVE)         # 帯の上面（54.65 = Zc + 2.95。位相合わせ治具の耳が座る）。栓の下端 54.3 は 0.35 低く、溝の中へ入る
-PAD_BOT = ZC - mm(P.PAD_BOT)               # 帯の下端（46.7）
-PAD_UNDER = PAD_X1 - PAD_X0                # 帯の下の 45 度の面取りの高さ（1.2。張り出しが 45 度を超えない）
-U_W = mm(P.U_SLOT_W)                       # U 溝の幅（6.8）
-U_MOUTH = 0.6                              # U 溝の入口の面取り（0.6、45 度。軸が落ちやすい）
-U_DEEP = 0.0                               # U 溝そのものは壁へ掘り込まない（溝の底は壁の内面 45 と同じ面）
-U_RECESS_D = 1.0                           # 栓の外側の肉（厚み 1.85 を確保する分）が入る縦の溝の、壁の内面からの深さ。壁は 2.0mm 残る（栓の外面 45.75 に 0.25 の隙間）
-U_RECESS_TOP_Z = ZC + 6.3                  # 栓の外側の部分の上端の目安（58.0。栓は 57.8 まで、上は 45 度で丸める）
+U_FLOOR_X = PAD_X1 + mm(P.U_DIG)           # U 溝の底の |X|（46.0）
+U_FUNNEL = mm(P.U_FUNNEL)                  # じょうごの 45 度の面取り（1.5）
+PAD_CHAMFER = mm(P.PAD_CHAMFER)            # パッドの内縁の面取り（1.0、45 度）。軸の窓（PAD_GUIDE_HALF の幅）だけ。肩が 45 度の面で導かれる
+PAD_GUIDE_DEG = 45.0                       # 軸の窓の導く面の水平からの角（度）。高さ PAD_CHAMFER（1.0）。60 度と 35 度も試したが、組立の導きの判定（0.05 刻みの滑り）は 1.2 度と 16.7 度で、45 度（15.6 度）より良くならなかった
+PAD_CHAMFER_WEB = 0.5                      # 軸の間の帯（押さえ棒の柱が座る所）の内縁の面取り（0.5）。1.0 だと帯の上面の平らが無くなり棒が座らない
+SLIT_TOP_CHAMFER = 0.4                     # スリットの底の上の縁（外装の上端）の 45 度の面取り（0.4）。軸の端が X へ 0.4 ずれて落ちたときに滑り込む量だけ。1.0 にすると外側の面取りと出会って上の縁が薄くなる（外側の肉 1.1）。0.4 なら外側の面取りの面から内側の底への肉は 2.1 のまま
+SLIT_LEAD = 0.5                            # スリットの縁（壁の内面）の 45 度の面取り。軸の端と爪を入れやすくする
+PAD_MEAT = 1.7                             # じょうごの円錐の下に残すパッドの肉（1.7。1.2 以上）。パッドの下端は円錐の底の下 1.7
 FN = 48                                    # 円の分割数（外接円で作り、隙間を割らない）
+
+
+def _side(sign):
+    """端の側ごとの軸受けの寸法（mm）。sign = +1: +X（Ø5）、-1: -X（Ø10）"""
+    if sign > 0:
+        w, up, top_above = mm(P.U_SLOT_W), mm(P.U_SLOT_UP), mm(P.PAD_TOP_ABOVE)
+        fbot, fw = mm(P.CAP_FINGER_BOT_PX), mm(P.CAP_FINGER_W_PX)
+    else:
+        w, up, top_above = mm(P.U_SLOT_MX_W), mm(P.U_SLOT_UP_MX), mm(P.PAD_TOP_ABOVE_MX)
+        fbot, fw = mm(P.CAP_FINGER_BOT_MX), mm(P.CAP_FINGER_W_MX)
+    return {"W": w, "UP": up, "TOP": ZC + top_above, "BOT": ZC + up - (w / 2 + U_FUNNEL) - PAD_MEAT,
+            "FBOT": fbot, "FW": fw}
+
+
+SIDES = {+1: _side(+1), -1: _side(-1)}
+PAD_TOP = {sg: v["TOP"] for sg, v in SIDES.items()}     # 帯の上面（+X 54.65 / -X 57.15）。押さえ棒がここに座る
+PAD_UNDER = PAD_X1 - PAD_X0                # 帯の下の 45 度の面取りの高さ（1.0。張り出しが 45 度を超えない）
 
 # --- 案内板を受ける壁の出っ張り（±Y の壁）--------------------------------------------------------
 PLATE_Z0 = mm(P.PLATE_Z0)                  # 板の下面（63.5）
@@ -80,38 +101,25 @@ SLOT_X = mm(P.SLOT_X)                      # 足の溝の X 幅（5.0）
 SLOT_Y = mm(P.SLOT_Y)                      # 足の溝の Y 長（20.8）
 HOLE_MOUTH = 0.4                           # ベッド側（板の上面 = 画素が上から入る側）の穴の縁の面取り。最初の層の膨らみで 0.2mm の隙間が潰れず、25 個の画素を同時に入れやすい。桟は面で 0.8 残る
 
-# --- 板の落下止め（軸受けの上へ入る栓。軸ごと・両端）-------------------------------------------------------
-# 軸の丸の上端（軸が溝の底に載ったとき Zc-0.05+2.5）の 0.15（Zc+2.5 から HOLD_GAP = 0.1、溝の底の隙間 0.05 を足した値）上に栓の下端を置く
-# （params.HOLD_PLUG_BOT = 54.3）。中央軸は半円歯車の噛み合いの分離力（約 1N）で上へ押されるので、浮きは 0.15 に抑える。
-# 栓は U 溝（幅 5.2）の壁の間へ入る（幅 4.6）。厚みは 1.2 以上にする: 下の部分は歯車の部品のボス（Ø9.5、肩 43.6、遊び込みの +X 面 43.8、回して上端 Zc+4.75 = 56.45）の外側
-# X 43.9 から、板の端 44.8 を越えて 45.4 まで（厚み 1.5）。板の端から外へ出る 0.6 は、壁の窪み（U_RECESS_D）に入れる。
-# 上の部分（Z 57.8 から上。鍔の上端から 0.6）は歯車の歯先（X 42.6）の外側 42.9 から 44.8 まで（厚み 1.9）
-PLUG_BOT = mm(P.HOLD_PLUG_BOT)             # 54.3
-PLUG_W = 4.6                               # 栓の Y 幅（溝 5.2、板の左右の遊び ±0.2 を許す）
-PLUG_X_LO = 43.9                           # 下の部分の内面
-PLUG_X_OUT = 45.75                         # 下の部分の外面（板の端 44.8 から 0.95 出る）。内面 43.9 から厚み 1.85
-PLUG_STEP_Z = ZC + 6.1                     # これより上（57.8）は内面を PLUG_X_UP まで太らせる
-PLUG_X_UP = 42.9                           # 上の部分の内面（厚み 1.9 以上）。栓の高さ 9.2（54.3 から板の下面 63.5）÷ 最小の厚み 1.85 = 4.97（5 以下）
-U_UP = mm(P.U_SLOT_UP)                     # U 溝の丸い底の中心の持ち上げ（0.05）。溝の底は Zc-2.55。軸の丸（R2.5）が載って中心が Zc - 0.05
-
 # --- 案内板を外装へ直接留める舌（板の X 端。軸の間の窓に 4 本）------------------------------------------------------
-# 板の下面は外装の出っ張り（Z 63.5）に載り、板の上面から PLATE_PLAY_Z = 0.05 上（Z 83.45 = params.PLATE_LIP_BOT）に、端壁の窪みの天井がある。
+# 板の下面は外装の出っ張り（Z 63.5）に載り、板の上面から PLATE_PLAY_Z（0.07）上（Z 83.47 = params.PLATE_LIP_BOT）に、端壁の窪みの天井がある。
 # 板の端の舌（X 43.6..44.8 の厚み 1.2、Y 長 9.8、高さ 4）は、両側を切り込んで根元だけ板につなぎ、面内（XY）でしなる = 刷るとき層に沿う。
-# 舌の先の爪が端壁の窪みに入り、爪の上面（水平から 15 度）が窪みの天井の 0.05 下に来る。上下の遊びは 0.05（板が X に ±0.2 動くと 0.05 ± 0.054）
+# 舌の先の爪が端壁の窪みに入り、爪の上面（水平から 15 度）が窪みの天井の 0.07 下に来る。
+# 旧: 軸の落下止めの栓が案内板に付いていた。押さえ棒（bearing_cap_px / mx）が軸を押さえるので栓は廃止した。
 TONGUE_T = 1.2                             # 舌の厚み
-TONGUE_L = 9.8                             # 舌の長さ（Y）。根元は -Y 側
+TONGUE_L = 9.8                             # 舌の長さ（Y）。根元は Y の外側、先は中央（Y=0）側
 TONGUE_H = 4.0                             # 舌の高さ（Z）。板の上面から下へ
 TONGUE_SLIT = 0.6                          # 舌の側面と下面の切り込みの幅
-TONGUE_YC = (-8.0, 8.0)                    # 窓の中心 Y（軸 0 と ±17 の栓の縦溝（Y ±2.6）の間）。+Y 側の舌は先が +Y、-Y 側は先が -Y（爪の窪みと縦溝の間の壁を 1.2 以上に取る）
+TONGUE_YC = (-8.5, 8.5)                    # 爪（と窪み）の中心 Y。軸の間（軸 0 と ±17 の間）の壁の、スリットから 1.2 以上離れた所
+HOOK_HALF = 1.2                            # 爪の Y の半幅（爪の長さ 2.4）
 HOOK_H = 0.4                               # 爪の出っ張り（板の端から 0.4）。壁の内面に対する食い込み 0.4 - 0.2 = 0.2、板が壁へ 0.2 寄ると 0.4
-HOOK_Y0, HOOK_Y1 = 2.4, 4.8                # 爪の Y の範囲（窓の中心から舌の先の向きへ 2.4..4.8。長さ 2.4）
 HOOK_TOP_SLOPE = math.tan(math.radians(15.0))   # 爪の上面の傾き（外へ下がる 15 度）。持ち上げると壁の天井が爪を内へ押す = 工具なしで引き抜ける
 HOOK_TIP_H = 1.2                           # 爪の先の垂直な面の高さ（1.2）。爪の肉を 1.2 以上にする（先を刃先にしない）
 POCKET_PLATE_DEPTH = 0.5                   # 端壁の窪みの深さ（0.5。壁は 2.5mm 残る）
-POCKET_PLATE_PAD = 0.3                     # 窪みの Y の余裕（爪の両側 0.3）。窪みの端と栓の縦溝の間に壁 1.3 が残る
-# 舌のひずみ: 根元（先と逆の端）から爪の中心まで a = 4.9 + 3.6 = 8.5、たわみ δ = 0.4 + 板の寄り 0.2 = 0.6（最悪）→ ε = 3tδ/(2a²) = 3x1.2x0.6/(2x8.5²) = 1.5%（PLA 2% 以下）。
+POCKET_PLATE_PAD = 0.3                     # 窪みの Y の余裕（爪の両側 0.3）。窪みの端とスリットの縁の間に壁 1.2 が残る
+# 舌のひずみ: 根元から爪の中心まで a = 8.5、たわみ δ = 0.4 + 板の寄り 0.2 = 0.6（最悪）→ ε = 3tδ/(2a²) = 3x1.2x0.6/(2x8.5²) = 1.5%（PLA 2% 以下）。
 # 通常は δ = 0.4 で 1.0%。曲げ剛性 k = 3EI/a³ = 3x3000x(4x1.2³/12)/8.5³ = 8.4N/mm → 落とし込み 1 本 3.4N（4 本で 14N）。
-# 引き抜き: 壁の窪みの天井が爪を内へ押す力 = kδ/tan15 = 8.4x0.2/0.268 = 6.3N/本（4 本で 25N）。軸の押し上げ（約 1N）の 25 倍
+# 引き抜き: 壁の窪みの天井が爪を内へ押す力 = kδ/tan15 = 8.4x0.2/0.268 = 6.3N/本（4 本で 25N）
 
 # --- ベゼルの爪（ベゼルの縁が、壁の内側の窪みに嵌まる）--------------------------------------------------
 LIP_T = 2.0                                # 縁の厚み（2.0）。立てて刷る高さ 9.6 を太さの 5 倍以内（4.8 倍）にする。画素のつば（片側 42.2）まで 0.6 以上空く
@@ -121,14 +129,14 @@ BARB_H = 0.35                              # 爪の出っ張り（0.35）。壁�
 #   ε=3tδ/(2L^2)=3x3x0.15/(2x92)=0.7%（最悪の見積り。実際は ±Y 壁と底が壁を支えるので 1 桁小さい）。PLA の 2% 以下。押し込む力 ≈ 3EI/L^3 x δ x 幅 = 3x3000x(14x27/12)/884 x 0.15 = 17N/本（6 本で約 100N の最悪。実際は支えられた壁で 1 桁小さい）
 BARB_FLAT = 1.2                            # 爪の平らな頂の高さ（1.2）。両側は 45 度の斜面
 BARB_Z = 88.0                              # 爪の中心の高さ。ピクセルのつばの上面（+3 のとき 92.4）とベゼルの下面 93 の間には入らず、ベゼルの縁にある
-BARB_L = 14.0                              # 爪の長さ（14、Y 方向）
-BARB_Y = (-26.0, 0.0, 26.0)                # 爪の Y。±X の縁それぞれ 3 つ
+BARB_L = 2.2                               # 爪の長さ（2.2、Y 方向）。スリット（押さえ棒の溝）の間の壁にしか置けないので短い。4 か所 x 2 端
+BARB_Y = (-25.5, -8.5, 8.5, 25.5)          # 爪の Y（軸の間の壁。スリットの縁から 1.2 以上）。±X の縁それぞれ 4 つ
 POCKET_DEPTH = 0.6                         # 壁の窪みの深さ（0.6）。端壁は 2.4mm 残る
-POCKET_L = 16.0                            # 窪みの長さ（16。爪 14 に片側 1.0 の余裕）
-FINGER_W = 10.0                            # 指の掛かりの幅（Y 方向、10）
-FINGER_Y = (-8.5, 8.5)                     # 同 Y の位置（各端壁に 2 つ）。栓の縦溝（軸 0・±17 の Y ±2.6）とピンの溝（Y ±2.5）から離す: 残る壁は全域で 2.0
+POCKET_L = 3.0                             # 窪みの長さ（3.0。爪 2.2 に片側 0.4）。窪みの端とスリットの縁の間に壁 1.2 が残る
+FINGER_W = 4.0                             # 指の掛かりの幅（Y 方向、4）
+FINGER_Y = (-8.5, 8.5)                     # 同 Y の位置（各端壁に 2 つ）。スリット（Y ±2.7 / ±5.3 と 17 おき）から 1.5 以上離す: 残る壁は全域で 2.0
 FINGER_H = 1.6                             # 同 高さ
-FINGER_D = 1.0                             # 同 深さ。端壁（3mm）に 2.0mm 残る（他の溝と重ならないので全域で 2.0）
+FINGER_D = 1.0                             # 同 深さ。端壁（3mm）に 2.0mm 残る（スリットは 46.0 までなので、外の窪みとの間に 1.0 の壁が残る箇所は無い）
 
 # --- サーボの受け -------------------------------------------------------------------------------
 BODY_Y0 = mm(P.SG.BODY_CENTER_X - P.SG.BODY_L / 2)          # 本体の -Y 面（-16.5）
@@ -159,6 +167,59 @@ WIN_SIDE_H = WIN_H                         # 窓の垂直な辺の高さ（7.0 =
 # （params の RECV_BAR_R 20.6 = 長腕 18 + 肉 2.6 が底から 0.6 浮く高さ Zs を決めている。parts_moving.horn_to_uv も長腕 = -Z）。
 # 本体の向きは変えず、ホーンだけ出力軸まわりに +90 度。ホーンの 20 山（18 度刻み）の 5 山ぶんなので付け直せる向き
 HORN_ROT_DEG = 90.0
+
+# --- 軸受けの押さえ棒 bearing_cap_px / bearing_cap_mx（端の壁ごとに 1 本。5 本の軸を一度に押さえる）-----------------------------
+# 上から差す: 棒の爪（タブ）が、軸ごとのスリット（U 溝の上の縦の溝）へ入り、棒の下面がパッドの上面に突き当たって止まる。
+# 棒 = 背骨（Y に通した薄い板、壁の内面の手前に 0.1 空けて立つ）+ 軸ごとのタブ（スリットへ入る。軸の丸の上 HOLD_GAP に下端が届く）。
+# 棒の Y の両端の面に潰しリブ（各端 2 本、高さ CAP_RIB_H）が立ち、外装の Y 止め（端壁の内面から出るブロック）の面を軽く押す。上は案内板が CAP_COVER_GAP で覆う。
+# 平置き（内面を下）で刷る。背骨とタブの内面を同じ平面（|X| 43.7）にそろえ、層の積み方に張り出しが出ないようにする。
+CAP_X_BACK = mm(P.CAP_PX_X0 + P.CAP_T)     # 棒の背面（タブの外面）の |X|（45.8）
+CAP_X_NEAR = mm(P.CAP_PX_X0)               # 軸の近くのタブの内面の |X|（44.2。パッドの内面 44.0 から 0.2、軸の肩の遊び込み 44.0 から 0.2）
+CAP_X_IN = 43.7                            # 背骨とタブの内面の |X|（43.7。背骨の厚み 1.2）。軸の近くだけ 44.2 まで逃がす（下の CAP_RELIEF）
+CAP_X_SPINE_BACK = 44.9                    # 背骨の背面の |X|（44.9。壁の内面 45.0 から 0.1 空ける）
+CAP_TOP = mm(P.CAP_TOP_Z)                  # 棒の上面（63.2）
+CAP_RIB_H = mm(P.CAP_RIB_H)                # 端面の潰しリブの高さ（0.25）。外装の Y 止めの面は棒の端から 0.2 の所なので 0.05 食い込む（軽い圧入）
+CAP_RIB_X = (44.0,)                        # 端面のリブの X（背骨 43.7..44.9 の内側 43.7..44.3。1 端に 1 本、幅 0.6）。爪は外側（CAP_SNAP_X）で、爪の通る面は逃がす
+CAP_RIB_MARGIN_Z = 0.3                     # リブの上下の端を梁の端から離す量
+CAP_RIB_W = 0.6                            # リブの幅（潰しリブの例外 0.6）
+CAP_Y_MARGIN = 3.0                         # 端のタブの外側へ背骨が出る量（3.0。端の爪のしなる腕と、外装の Y 止めのブロックを置く）
+# 上向きの抜け止め（スナップ）: 棒の Y の両端に、縦の細い腕（Y 厚み 1.2、X 幅 1.2）が下がり、その端面の爪（出っ張り CAP_SNAP_B）が、外装の Y 止めの
+# ブロックの面の窪み（天井が下向きの段）へ座りの位置で掛かる。腕は上（棒の上面から 1.7 下）で梁につながり、Y へしなる。
+# 爪の上面は外へ 20 度下がる: 上へ引くと窪みの天井が爪を内へ押し、腕がしなって外れる（指の掛かりで引く）。上向きの遊びは窪みの天井と爪の上面の 0.05。
+# 爪の下は 45 度の斜面で、押し込むと外装の Y 止めの面（棒の端から CAP_SNAP_FACE）に当たって腕がしなって乗り越える。
+CAP_SNAP_B = 0.45                          # 爪の出っ張り（0.45）。しなる量 δ = 0.45 - 0.30 = 0.15
+CAP_SNAP_FACE = 0.30                       # 外装の Y 止めの面の、棒の端からの距離（0.30。潰しリブの逃げ。リブの高さ 0.25 + 0.05）
+CAP_SNAP_PLAY = 0.05                       # 上向きの遊び（窪みの天井と爪の上面の隙間、鉛直）
+CAP_SNAP_SLOPE = math.tan(math.radians(20.0))   # 爪の上面の傾き（外へ下がる 20 度）
+CAP_END_BACK = 45.7                        # 端の腕の背面の |X|（45.7。端の腕だけ背骨より外へ 0.8 広げ、外装の壁の凹み（スリットの外側への延長）へ入れる。壁の底 46.0 から 0.3）
+CAP_SNAP_X = (44.5, 45.7)                  # 爪の X（幅 1.2）。リブ（43.7..44.3）と、外装の潰しの面（43.7..44.3、幅 0.6）から 0.2 空く
+CAP_SNAP_ARM = 1.2                         # 腕の Y 厚み（1.2）
+CAP_SNAP_SLIT = 0.6                        # 腕と梁を分ける縦の隙間の幅
+CAP_SNAP_ROOT = 1.7                        # 腕の付け根の梁の高さ（棒の上面から 1.7）
+# 腕のひずみ: +X は腕の下端 Z 57.1（爪の下端）から付け根 61.5 まで L = 4.4、-X は 57.3 から 61.5 まで L = 4.2。しなり δ = 0.15 のとき
+# ε = 3tδ/(2L²) = 3 x 1.2 x 0.15 / (2 x 4.2²) = 1.5%（PLA 2% 以下。+X は爪を 0.3 上げて L 4.1、1.6%）。押し込む力 3EIδ/L³ = 3 x 3000 x (1.2 x 1.2³/12) x 0.15 / 4.2³ = 3.3N（-X、1 本）。
+# 外す力 = 押し込む力 / tan20 = 約 9N（-X）、+X は 2.5N。軸の押し上げ（約 1N）を超える。
+CAP_ARCH_HALF = {+1: 5.0, -1: 6.9}         # 軸の近くの背骨の抜き（アーチ）の半幅。+X: ボスの半径 4.75 + 0.25、-X: じょうごの半径 6.8 + 0.1
+CAP_ARCH_TOP = {+1: ZC + 4.75 + 0.5, -1: ZC + 7.0}   # アーチの上端。+X: 歯車のボス（Ø9.5）の上端 + 0.5。-X: 円錐のすその上端の目安
+
+
+def _snap_geom(sg):
+    """端のスナップの高さ（mm）: 腕の下端、爪の下端・上端、潰しリブの下端、潰しリブが擦る範囲の上端"""
+    atop = CAP_ARCH_TOP[sg]
+    arm_bot = atop if sg > 0 else SIDES[sg]["TOP"]          # +X: 梁の下端（ボスの上）。-X: パッドの上面まで腕が下がる
+    zb0 = arm_bot + (0.45 if sg > 0 else 0.15)           # +X は腕の下端から爪の上面まで 1.2 以上取る（腕の下端が薄くならない）。ひずみ +X 1.6%（L 4.1）
+    zt = zb0 + CAP_SNAP_B + 0.3
+    zr0 = max(atop + CAP_RIB_MARGIN_Z, zt + 0.3)
+    zk = zr0 + mm(getattr(P, "CAP_RIB_L", 0.002))
+    return {"arm_bot": arm_bot, "zb0": zb0, "zt": zt, "zr0": zr0, "zk": zk}
+# タブの内側の下の角の 45 度の面取り（-X だけ）: 奇数行（軸 1・3）の最初のカムの -X 側の円錐のすそが、パッドの内面の外（|X| 44.2..44.7）で半径 Zc+5.1〜5.6
+# まで張り出し、タブの下の角（|X| 44.2、Zc+5.12）に 0.28mm3 食い込む（実 STL の全角度の掃引で測った）。面取りで避ける（0.4。タブの下の肉を 1.2 以上に保つ上限。完全に避けるには円錐が 0.1 小さい必要がある）。
+# 副作用: タブの下面が軸の端の上に載る |X| の範囲が 44.2..45.4 から 45.0..45.4 に減る。円錐の張り出しは cams.py の cam 0 の上限が決める
+CAP_NEAR_CHAMFER = {+1: 0.0, -1: 0.4}
+CAP_PULL_W, CAP_PULL_H = 5.0, 1.5          # 指の掛かり（背骨を貫く穴）の大きさ（Y x Z）。背骨の梁の上から 1.6 下に置く
+CAP_PULL_Y = (-25.5, -8.5, 8.5, 25.5)      # 同 Y（軸の間）
+CAP_SEAT_MARK = 0.4                        # 壁の内面の、座りの目印の V 溝の深さ（0.4）。棒の上面（63.2）が V 溝の下端と面一になれば座っている
+# 棒の下面の高さ: +X の背骨は PAD_TOP[+1] = 54.65、タブの爪は 54.32（軸の丸の上端 + HOLD_GAP）。-X は 57.15 / 56.82。
 
 # --- SG92R の押さえクリップ（servo_clip_0 = -Y の耳、servo_clip_1 = +Y の耳）-----------------------------------------
 # 耳を挟む柵と底の受けの上から被せる U 字のクリップ。上の板が耳の上端（Z 30.2）の 0.2 上に掛かって耳の浮きを 0.2 に止め、両脚の内側の爪が
@@ -259,6 +320,19 @@ def cyl_x(cy, cz, r, x0, x1, name="c"):
     return prism(circle_pts(cy, cz, r), "x", x0, x1, name)
 
 
+def cone_x(cy, cz, r0, r1, x0, x1, name="cone"):
+    """X 軸に沿う円錐台（x0 で半径 r0、x1 で半径 r1。外接円）"""
+    a = circle_pts(cy, cz, r0)
+    b = circle_pts(cy, cz, r1)
+    n = len(a)
+    verts = [(x0, u, v) for u, v in a] + [(x1, u, v) for u, v in b]
+    faces = [list(range(n)), list(range(2 * n - 1, n - 1, -1))]
+    for i in range(n):
+        j = (i + 1) % n
+        faces.append([i, j, n + j, n + i])
+    return _from_pydata(name, verts, faces)
+
+
 def mirror_poly(poly):
     return [(-u, v) for u, v in poly][::-1]
 
@@ -305,6 +379,18 @@ def _clean(ob, dist=1e-4):
     ob.data.update()
 
 
+def _tidy(ob):
+    """Boolean の後の掃除: 同一平面の面を結合して、一直線上の頂点（面積 0 の三角形のもと）を溶かす。面積 0 と自己交差を残さない"""
+    bm = bmesh.new()
+    bm.from_mesh(ob.data)
+    bmesh.ops.dissolve_limit(bm, angle_limit=math.radians(0.01), verts=bm.verts, edges=bm.edges, use_dissolve_boundaries=False)
+    bmesh.ops.triangulate(bm, faces=bm.faces, quad_method="BEAUTY", ngon_method="BEAUTY")
+    bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
+    bm.to_mesh(ob.data)
+    bm.free()
+    ob.data.update()
+
+
 def bevel(ob, pick, width):
     """pick(v0, v1) が True の辺を width の 45 度の面取りにする"""
     bm = bmesh.new()
@@ -334,11 +420,11 @@ def finish(ob, name):
 # housing
 # =============================================================================================
 def _tongue_y(yc):
-    """舌の Y の配置。(向き d, 根元 Y, 先 Y, 爪の Y 範囲)。先は窓の中心から d 向きへ TONGUE_L / 2、根元は反対側"""
-    d = 1.0 if yc > 0 else -1.0
-    y_root, y_free = yc - d * TONGUE_L / 2, yc + d * TONGUE_L / 2
-    hy0, hy1 = sorted((yc + d * HOOK_Y0, yc + d * HOOK_Y1))
-    return d, y_root, y_free, hy0, hy1
+    """舌の Y の配置。(根元から先へ向かう向き d, 根元 Y, 先 Y, 爪の Y の範囲)。爪は先の端にあり、中心が yc。先は中央（Y=0）側、根元は外側"""
+    sg = 1.0 if yc > 0 else -1.0
+    y_free = yc - sg * HOOK_HALF
+    y_root = y_free + sg * TONGUE_L
+    return -sg, y_root, y_free, yc - HOOK_HALF, yc + HOOK_HALF
 
 
 def _servo_block_y(side):
@@ -393,10 +479,16 @@ def build_housing():
     adds = []
 
     # --- 軸受けの帯（±X の壁の内側。5 本の軸の U 溝を切る）---------------------------------------------
-    # 帯の断面（X-Z）: 内面 43.8、上面 Zc+3.45、下は壁へ向かって 45 度（張り出しが 45 度を超えない）。壁へ 0.5 食い込ませて結合
-    pad = [(PAD_X0, PAD_BOT), (PAD_X0, PAD_TOP), (PAD_X1 + 0.5, PAD_TOP), (PAD_X1 + 0.5, PAD_BOT - PAD_UNDER - 0.5)]
-    adds.append(prism(pad, "y", -IY - 0.5, IY + 0.5, "pad_p"))
-    adds.append(prism(mirror_poly(pad), "y", -IY - 0.5, IY + 0.5, "pad_m"))
+    # 帯の断面（X-Z）: 内面 44.0、上面は +X が Zc+2.95、-X が Zc+5.45。内縁（内面と上面の角）は 0.5 の 45 度の面取り。
+    # 下は壁へ向かって 45 度（張り出しが 45 度を超えない）。下端はじょうごの円錐の下に肉 1.7 を残す高さ。壁へ 0.5 食い込ませて結合
+    for sg in (+1, -1):
+        v = SIDES[sg]
+        top, bot = v["TOP"], v["BOT"]
+        pad = [(PAD_X0, bot), (PAD_X0, top - PAD_CHAMFER_WEB), (PAD_X0 + PAD_CHAMFER_WEB, top), (PAD_X1 + 0.5, top),
+               (PAD_X1 + 0.5, bot - PAD_UNDER - 0.5)]
+        if sg < 0:
+            pad = mirror_poly(pad)
+        adds.append(prism(pad, "y", -IY - 0.5, IY + 0.5, "pad_p" if sg > 0 else "pad_m"))
 
     # --- 案内板を受ける出っ張り（±Y の壁）。上面が板の下面。下は 45 度 -----------------------------------------
     ledge = [(LEDGE_OUT, PLATE_Z0), (IY + 0.5, PLATE_Z0), (IY + 0.5, PLATE_Z0 - LEDGE_W - (IY + 0.5 - LEDGE_OUT)), (LEDGE_OUT, PLATE_Z0 - LEDGE_W)]
@@ -464,25 +556,102 @@ def build_housing():
     for xa, xb in RIB_UNDER_X:
         adds.append(box(xa, xb, BODY_Y0 + 0.5, BODY_Y1 - 0.5, FLOOR - 0.5, EAR_Z0 - RIB_UNDER_GAP, "under_rib"))
 
+    # --- 押さえ棒の Y 止め（端壁の内面から出るブロック。棒の Y の両端の面を受け、爪の窪みを持つ）-----------------------------
+    # 面は棒の端から CAP_SNAP_FACE（0.30）。潰しリブの擦る範囲（座りの最後の 2.0mm）だけ 0.20 に張り出す（リブの高さ 0.25 に対し 0.05 食い込む）。
+    # 窪み（天井が下向きの段）は cuts 側で切る
+    for sg in (+1, -1):
+        v = SIDES[sg]
+        ys = AXIS_Y[-1] + v["FW"] / 2 + CAP_Y_MARGIN
+        g = _snap_geom(sg)
+        xa, xb = sorted((sg * CAP_X_IN, sg * (PAD_X1 + 0.5)))
+        xc0, xc1 = sorted((sg * CAP_X_IN, sg * (CAP_RIB_X[0] + CAP_RIB_W / 2)))      # 潰しの面はリブの X の範囲だけ（爪が通る X は面を 0.30 に逃がす = 爪のしなりは 0.15 だけ）
+        for sy in (-1, +1):
+            ya, yb = sorted((sy * (ys + CAP_SNAP_FACE), sy * (IY + 0.5)))
+            adds.append(box(xa, xb, ya, yb, v["TOP"], CAP_TOP, "y_stop"))
+            ya, yb = sorted((sy * (ys + CAP_RIB_H - 0.05), sy * (ys + CAP_SNAP_FACE + 0.5)))
+            adds.append(box(xc0, xc1, ya, yb, g["zr0"] - 0.1, g["zk"], "y_crush"))
     union(base, adds, "adds")
 
     cuts = []
 
-    # --- 軸の U 溝（5 本 x 2 端）。上が開く。入口は 45 度の面取り -------------------------------------------
-    for j in range(P.N):
-        yj = AXIS_Y[j]
-        for sign in (-1, +1):
-            xa, xb = (PAD_X0 - 0.5, PAD_X1 + U_DEEP) if sign > 0 else (-PAD_X1 - U_DEEP, -PAD_X0 + 0.5)
-            cuts.append(box(xa, xb, yj - U_W / 2, yj + U_W / 2, ZC + U_UP, PAD_TOP + 0.5, "u_box"))
-            cuts.append(cyl_x(yj, ZC + U_UP, U_W / 2, xa, xb, "u_round"))     # 底は Zc - 3.25。軸の丸（R3.2）が載って中心が Zc - 0.05
-            top = PAD_TOP
-            mouth = [(yj - U_W / 2, top - U_MOUTH), (yj + U_W / 2, top - U_MOUTH),
-                     (yj + U_W / 2 + U_MOUTH + 0.5, top + 0.5), (yj - U_W / 2 - U_MOUTH - 0.5, top + 0.5)]
-            cuts.append(prism(mouth, "x", xa, xb, "u_mouth"))
-            # 栓の外側の肉（板の端 44.8 から 45.4）の縦の溝。壁の内面から 0.7、溝の中心から外装の上端まで通す（案内板を上から降ろすとき栓の外側が壁を通る）。天井が無い
-            ra_, rb_ = (IX - 0.1, IX + U_RECESS_D) if sign > 0 else (-IX - U_RECESS_D, -IX + 0.1)
-            z_r = ZC + U_UP
-            cuts.append(box(ra_, rb_, yj - U_W / 2, yj + U_W / 2, z_r, Z_SEAM + 1.0, "u_recess"))
+    # --- 軸の U 溝（5 本 x 2 端）。上が開く。底は |X| 46.0（端壁を 1.0 掘る）。口は 45 度 x 1.5 のじょうご ------------------------
+    # (1) 溝本体: 幅 W の縦の溝 + 丸い底。外装の上端まで通す（パッドより上は壁の内面から 46.0 までのスリット = 押さえ棒の爪と軸の端が上から入る）
+    # (2) 上の口: パッドの上面の縁を 45 度に 1.5 広げる（軸を上から落とすとき案内する）
+    # (3) パッドの内面の円錐: 軸（Ø5 / Ø10）の肩と円錐のすそが入る 45 度のじょうご。内面で半径 W/2 + 1.5、壁の内面（|X| 45）で W/2 + 0.5
+    # (4) スリットの縁（壁の内面）の 0.5 の面取り
+    for sg in (+1, -1):
+        v = SIDES[sg]
+        w, up, top = v["W"], v["UP"], v["TOP"]
+        for j in range(P.N):
+            yj = AXIS_Y[j]
+            xa, xb = (PAD_X0 - 0.5, U_FLOOR_X) if sg > 0 else (-U_FLOOR_X, -PAD_X0 + 0.5)
+            cuts.append(box(xa, xb, yj - w / 2, yj + w / 2, ZC + up, Z_SEAM + 1.0, "u_box"))
+            cuts.append(cyl_x(yj, ZC + up, w / 2, xa, xb, "u_round"))      # 底は Zc + up - W/2。軸の丸が載って中心が Zc - U_FLOOR_CLR
+            mouth = [(yj - w / 2, top - U_FUNNEL), (yj + w / 2, top - U_FUNNEL),
+                     (yj + w / 2 + U_FUNNEL + 0.5, top + 0.5), (yj - w / 2 - U_FUNNEL - 0.5, top + 0.5)]
+            xm0, xm1 = (PAD_X0 - 0.5, PAD_X1) if sg > 0 else (-PAD_X1, -PAD_X0 + 0.5)      # 終端は壁の内面（|X| 45）。壁へ突き出すと溝の幅が広がる（軸の端が入る |X| 45..45.4 が W より広くなり、軸の Y の遊びが増える）。面一の薄片は _tidy で消す
+            cuts.append(prism(mouth, "x", xm0, xm1, "u_mouth"))
+            r_in = w / 2 + U_FUNNEL                                         # 内面（|X| 44.0）での円錐の半径
+            if sg > 0:
+                cuts.append(cone_x(yj, ZC + up, r_in + 0.5, r_in - (PAD_X1 - PAD_X0), PAD_X0 - 0.5, PAD_X1, "u_funnel"))
+            else:
+                cuts.append(cone_x(yj, ZC + up, r_in - (PAD_X1 - PAD_X0), r_in + 0.5, -PAD_X1, -PAD_X0 + 0.5, "u_funnel"))
+            e_lo = 0.0 if j == 0 else SLIT_LEAD + 0.5          # 最も外の軸の外側は面取りしない（押さえ棒の Y 止めのブロックを薄くしない）
+            e_hi = 0.0 if j == P.N - 1 else SLIT_LEAD + 0.5
+            # (5) スリットの底の上の縁（外装の上端、|X| 46.0）の 45 度の面取り 1.0。軸の端（+X の Ø5 の端面が X へずれて落ちるとき）が 45 度の面で導かれる
+            tri = [(U_FLOOR_X - 0.5, Z_SEAM - SLIT_TOP_CHAMFER - 0.5), (U_FLOOR_X + SLIT_TOP_CHAMFER + 0.5, Z_SEAM + 0.5), (U_FLOOR_X - 0.5, Z_SEAM + 0.5)]
+            if sg < 0:
+                tri = [(-x, z) for x, z in tri][::-1]
+            cuts.append(prism(tri, "y", yj - w / 2, yj + w / 2, "slit_top_chamfer"))
+            lead = [(PAD_X1 - 0.5, yj - w / 2 - e_lo), (PAD_X1 - 0.5, yj + w / 2 + e_hi),
+                    (PAD_X1 + SLIT_LEAD, yj + w / 2), (PAD_X1 + SLIT_LEAD, yj - w / 2)]
+            if sg < 0:
+                lead = [(-x, y) for x, y in lead]
+            cuts.append(prism(lead, "z", top - 0.5, Z_SEAM + 1.0, "slit_lead"))
+
+    # --- パッドの内縁の面取り 1.0（45 度）: 軸の窓（軸の中心から PAD_GUIDE_HALF の幅）だけ -------------------------------------
+    for sg in (+1, -1):
+        v = SIDES[sg]
+        top = v["TOP"]
+        half = 4.85 if sg > 0 else 6.3          # 窓の半幅。+X: 肩（ボス R4.75）+ 0.1。-X: じょうごの半径（6.8）から 0.35 内側（口の縁と面が重ならない）
+        run = PAD_CHAMFER / math.tan(math.radians(PAD_GUIDE_DEG))                 # 面の水平方向の幅（45 度なら高さと同じ）
+        wedge = [(PAD_X0 - 0.5, top - PAD_CHAMFER - 0.5 * math.tan(math.radians(PAD_GUIDE_DEG))), (PAD_X0 + run, top), (PAD_X0 + run, top + 0.5), (PAD_X0 - 0.5, top + 0.5)]
+        if sg < 0:
+            wedge = mirror_poly(wedge)
+        for j in range(P.N):
+            cuts.append(prism(wedge, "y", AXIS_Y[j] - half, AXIS_Y[j] + half, "pad_guide"))
+
+    # --- 押さえ棒の座りの目印（端壁の内面の V 溝。棒の上面 63.2 が V 溝の下端と面一なら座っている）-------------------------
+    for sg in (+1, -1):
+        vee = [(PAD_X1 - CAP_SEAT_MARK, CAP_TOP - CAP_SEAT_MARK), (PAD_X1 + CAP_SEAT_MARK, CAP_TOP + CAP_SEAT_MARK), (PAD_X1 - CAP_SEAT_MARK, CAP_TOP + 3 * CAP_SEAT_MARK)]   # 45 度の V（下の斜面が壁の内面に当たる点が棒の上面の高さ）
+        if sg < 0:
+            vee = [(-x, z) for x, z in vee][::-1]
+        cuts.append(prism(vee, "y", -(AXIS_Y[-1] + 3.0), AXIS_Y[-1] + 3.0, "seat_mark"))
+
+    # --- 押さえ棒の爪の窪み（Y 止めのブロックの面。天井は爪の上面と平行で 0.05 上、下向きの段）-------------------------------
+    for sg in (+1, -1):
+        v = SIDES[sg]
+        ys = AXIS_Y[-1] + v["FW"] / 2 + CAP_Y_MARGIN
+        g = _snap_geom(sg)
+        t0, t1 = CAP_SNAP_FACE - 0.2, CAP_SNAP_FACE + 0.2           # 面から -0.2（外）〜 +0.2（奥）。奥の底は爪の先（出っ張り 0.45）から 0.05
+
+        def ceil(t):
+            return g["zt"] + CAP_SNAP_PLAY + CAP_SNAP_SLOPE * (CAP_SNAP_B - t)
+        for sy in (-1, +1):
+            pts = [(sy * (ys + t0), ceil(t0)), (sy * (ys + t1), ceil(t1)), (sy * (ys + t1), g["zb0"] - 0.2), (sy * (ys + t0), g["zb0"] - 0.2)]
+            if sy < 0:
+                pts = pts[::-1]
+            xa, xb = sorted((sg * (CAP_X_IN - 0.1), sg * (CAP_END_BACK + 0.1)))      # 窪みの X は内面（ブロックの端）から爪の背面の外まで通す（爪の手前に薄い板を残さない）
+            # (Y, Z) の多角形を X 方向に押し出す
+            cuts.append(prism(pts, "x", xa, xb, "snap_pocket"))
+            # 端の腕が入る壁の凹み（最も外のスリットの外側への延長。底 |X| 46.0 = 壁の残り 2.0）。Y 止めの面まで
+            y_a, y_b = sorted((sy * (AXIS_Y[-1] + v["W"] / 2 - 0.1), sy * (ys + CAP_SNAP_FACE)))
+            xr0, xr1 = sorted((sg * (PAD_X1 - 0.1), sg * U_FLOOR_X))
+            cuts.append(box(xr0, xr1, y_a, y_b, v["TOP"], Z_SEAM + 1.0, "arm_recess"))
+            # ブロックの上（棒が座りの手前 12mm より上を下りる間）は、爪が壁に触れないよう Y 止めの面を 0.2 引く（面は爪の先から 0.05 外）
+            y_c, y_d = sorted((sy * (ys + CAP_SNAP_FACE), sy * (ys + CAP_SNAP_B + 0.05)))
+            xs0, xs1 = sorted((sg * (PAD_X1 - 0.1), sg * U_FLOOR_X))
+            cuts.append(box(xs0, xs1, y_c, y_d, CAP_TOP + 0.3, Z_SEAM + 1.0, "arm_clear"))
 
     # --- 押さえクリップの爪が嵌まる窪み（受けの両側面。天井は 45 度）----------------------------------------------
     for side in (-1, +1):
@@ -543,6 +712,7 @@ def build_housing():
     cuts.append(prism(groove, "x", IX - 0.5, mm(P.RECV_PIN_X1) + 0.3, "pin_groove"))
 
     cut(base, cuts, "features")
+    _tidy(base)
     return finish(base, "housing")
 
 
@@ -552,16 +722,7 @@ def build_housing():
 def build_guide_plate():
     px, py = IX - FIT, IY - FIT                         # 板の X, Y の半分（44.8, 45.8）
     plate = box(-px, px, -py, py, PLATE_Z0, PLATE_Z1, "guide_plate")
-    # 落下止め: 軸受けの U 溝の上へ入る栓（軸ごと、両端）
     adds = []
-    for j in range(P.N):
-        yj = AXIS_Y[j]
-        for sign in (-1, +1):
-            def bx(x0, x1, z0, z1, nm):
-                xa, xb = sorted((sign * x0, sign * x1))
-                return box(xa, xb, yj - PLUG_W / 2, yj + PLUG_W / 2, z0, z1, nm)
-            adds.append(bx(PLUG_X_LO, px, PLUG_BOT, PLATE_Z0 + 0.5, "plug"))                       # 下から板まで（厚み 0.9 + 外の部分）
-            adds.append(bx(px - 0.3, PLUG_X_OUT, PLUG_BOT, PLATE_Z0 + 0.1, "plug_out"))              # 板の端の外へ出る部分（壁の縦溝に入る。板の下面まで通す）
     # 舌の爪（板の端から出る。上面は外へ下がる 15 度、先は垂直に HOOK_TIP_H、下は 45 度の斜面）
     for sign in (-1, +1):
         for yc in TONGUE_YC:
@@ -574,7 +735,7 @@ def build_guide_plate():
                 hp = hp[::-1]
             d, _, _, hy0, hy1 = _tongue_y(yc)
             adds.append(prism(hp, "y", hy0, hy1, "hook"))
-    union(plate, adds, "plugs")
+    union(plate, adds, "hooks")
     # 舌の切り込み: 側面（X 43.0..43.6）と先の端（Y）と下面を切って、根元（-Y 側）だけ板につなぐ
     tcut = []
     zt0 = PLATE_Z1 - TONGUE_H
@@ -595,13 +756,18 @@ def build_guide_plate():
     cuts = []
     for j in range(P.N):
         for i in range(P.N):
-            cx, cy = CAM_X[j][i], AXIS_Y[j]
-            cuts.append(box(cx - HOLE_W / 2, cx + HOLE_W / 2, cy - HOLE_W / 2, cy + HOLE_W / 2, PLATE_Z0 - 0.5, PLATE_Z1 + 0.5, "hole"))
-            cuts.append(box(cx - SLOT_X / 2, cx + SLOT_X / 2, cy - SLOT_Y / 2, cy + SLOT_Y / 2, PLATE_Z0 - 0.5, PLATE_Z1 + 0.5, "slot"))
+            hx, cx, cy = STEM_X[j][i], CAM_X[j][i], AXIS_Y[j]               # 角穴は茎の中心、足の溝はカム（足）の中心
+            sx0, sx1 = cx - SLOT_X / 2, cx + SLOT_X / 2
+            if cx > hx:
+                sx1 += 0.05                      # 足の溝の外側の縁と角穴の縁が一致するので 0.05 だけずらす（面一の boolean を避ける）
+            else:
+                sx0 -= 0.05
+            cuts.append(box(hx - HOLE_W / 2, hx + HOLE_W / 2, cy - HOLE_W / 2, cy + HOLE_W / 2, PLATE_Z0 - 0.5, PLATE_Z1 + 0.5, "hole"))
+            cuts.append(box(sx0, sx1, cy - SLOT_Y / 2, cy + SLOT_Y / 2, PLATE_Z0 - 0.5, PLATE_Z1 + 0.5, "slot"))
             # ベッド側（板の上面）の縁の面取り。茎（9）と足（4.6 x 20）が通る穴を、最初の層の膨らみから守る
             m = HOLE_MOUTH
-            cuts.append(frustum_z(cx, cy, HOLE_W, HOLE_W, HOLE_W + 2 * (m + 0.5), HOLE_W + 2 * (m + 0.5), PLATE_Z1 - m, PLATE_Z1 + 0.5, "hole_m"))
-            cuts.append(frustum_z(cx, cy, SLOT_X, SLOT_Y, SLOT_X + 2 * (m + 0.5), SLOT_Y + 2 * (m + 0.5), PLATE_Z1 - m, PLATE_Z1 + 0.5, "slot_m"))
+            cuts.append(frustum_z(hx, cy, HOLE_W, HOLE_W, HOLE_W + 2 * (m + 0.5), HOLE_W + 2 * (m + 0.5), PLATE_Z1 - m, PLATE_Z1 + 0.5, "hole_m"))
+            cuts.append(frustum_z((sx0 + sx1) / 2, cy, sx1 - sx0, SLOT_Y, sx1 - sx0 + 2 * (m + 0.5), SLOT_Y + 2 * (m + 0.5), PLATE_Z1 - m, PLATE_Z1 + 0.5, "slot_m"))
     cut(plate, cuts, "holes")
     return finish(plate, "guide_plate")
 
@@ -702,6 +868,78 @@ def build_sg92r_horn():
 
 
 # =============================================================================================
+# bearing_cap_px / bearing_cap_mx（軸受けの押さえ棒）
+# =============================================================================================
+def _mirror_x(ob):
+    bm = bmesh.new()
+    bm.from_mesh(ob.data)
+    bmesh.ops.transform(bm, matrix=Matrix.Diagonal((-1.0, 1.0, 1.0, 1.0)), verts=bm.verts)
+    bmesh.ops.reverse_faces(bm, faces=bm.faces)
+    bm.to_mesh(ob.data)
+    bm.free()
+    ob.data.update()
+
+
+def build_bearing_cap(sign):
+    """押さえ棒（+X: bearing_cap_px、-X: bearing_cap_mx）。|X| の座標で +X 側を作り、-X は X を反転する。
+    形（|X|）: 背骨 43.7..44.9（厚み 1.2）の梁 + 軸の間の柱、軸ごとのタブ 43.7..45.8（軸の近くの下側は 44.2..45.8 に逃がす）、タブの背面に潰しリブ"""
+    v = SIDES[sign]
+    name = "bearing_cap_px" if sign > 0 else "bearing_cap_mx"
+    pt, fbot, fw = v["TOP"], v["FBOT"], v["FW"]
+    ah, atop = CAP_ARCH_HALF[sign], CAP_ARCH_TOP[sign]
+    ys = AXIS_Y[-1] + fw / 2 + CAP_Y_MARGIN                 # 背骨の Y の半長
+    xi, xs, xn, xb = CAP_X_IN, CAP_X_SPINE_BACK, CAP_X_NEAR, CAP_X_BACK
+    parts = []
+    base = box(xi, xs, -ys, ys, atop, CAP_TOP, name)        # 梁（アーチの上端から棒の上面まで）
+    # 軸の間の柱（パッドの上面に座る）
+    for j in range(P.N - 1):
+        y0, y1 = AXIS_Y[j] + ah, AXIS_Y[j + 1] - ah
+        parts.append(box(xi, xs, y0, y1, pt, atop + 0.1, "post"))
+    for j in range(P.N):
+        yj = AXIS_Y[j]
+        # タブ: 上側は内面 43.7、下側（軸の肩・歯車のボスが近い所）は 44.2。背面は 45.8
+        parts.append(box(xi, xb, yj - fw / 2, yj + fw / 2, atop - 0.3, CAP_TOP, "tab_up"))
+        c = CAP_NEAR_CHAMFER[sign]
+        if c > 0:
+            low = [(xn + c, fbot), (xb, fbot), (xb, atop), (xn, atop), (xn, fbot + c)]     # 内側の下の角を 45 度に落とす（隣の行の円錐のすそを避ける）
+            parts.append(prism(low, "y", yj - fw / 2, yj + fw / 2, "tab_low"))
+        else:
+            parts.append(box(xn, xb, yj - fw / 2, yj + fw / 2, fbot, atop, "tab_low"))
+    # 端: 腕（縦の細い板）+ 爪 + 潰しリブ。腕は梁から縦の隙間で分け、上でつなぐ
+    g = _snap_geom(sign)
+    z_root = CAP_TOP - CAP_SNAP_ROOT
+    for sy in (-1, +1):
+        ya, yb = sorted((sy * (ys - CAP_SNAP_ARM), sy * ys))
+        parts.append(box(xi, CAP_END_BACK, ya, yb, g["arm_bot"], CAP_TOP, "arm"))      # 腕（X 43.7..45.7、Y 厚み 1.2）。-X は梁の下のパッドの上面まで延ばす
+        # 爪（Y 外向きに CAP_SNAP_B。下は 45 度、上は外へ 20 度下がる）
+        zb0, zt = g["zb0"], g["zt"]
+        poly = [(-0.2, zb0), (0.0, zb0), (CAP_SNAP_B, zb0 + CAP_SNAP_B), (CAP_SNAP_B, zt), (0.0, zt + CAP_SNAP_B * CAP_SNAP_SLOPE),
+                (-0.2, zt + (CAP_SNAP_B + 0.2) * CAP_SNAP_SLOPE)]
+        pts = [(sy * (ys + t), z) for t, z in poly]
+        if sy < 0:
+            pts = pts[::-1]
+        parts.append(prism(pts, "x", CAP_SNAP_X[0], CAP_SNAP_X[1], "snap"))
+        # 潰しリブ: 端面に 2 本（縦、X 44.0 と 44.6、幅 0.6、高さ CAP_RIB_H）。外装の Y 止めの面を軽く押す（座りの最後の 2.0mm だけ）
+        for xr in CAP_RIB_X:
+            parts.append(box(xr - CAP_RIB_W / 2, xr + CAP_RIB_W / 2, min(sy * (ys - 0.05), sy * (ys + CAP_RIB_H)), max(sy * (ys - 0.05), sy * (ys + CAP_RIB_H)),
+                             g["zr0"], CAP_TOP - CAP_RIB_MARGIN_Z, "rib"))
+    union(base, parts, "cap")
+    # 指の掛かり: 梁を X に貫く穴（梁の上から 1.6 下）
+    cuts = []
+    for yc in CAP_PULL_Y:
+        cuts.append(box(xi - 0.5, xs + 0.2, yc - CAP_PULL_W / 2, yc + CAP_PULL_W / 2, CAP_TOP - 1.6 - CAP_PULL_H, CAP_TOP - 1.6, "pull"))
+    # 腕と梁を分ける縦の隙間（X に貫く）
+    for sy in (-1, +1):
+        ya, yb = sorted((sy * (ys - CAP_SNAP_ARM - CAP_SNAP_SLIT), sy * (ys - CAP_SNAP_ARM)))
+        cuts.append(box(xi - 0.5, xs + 0.5, ya, yb, g["arm_bot"] - 0.1, z_root, "arm_slit"))
+    cut(base, cuts, "pull")
+    if sign < 0:
+        _mirror_x(base)
+    _tidy(base)
+    return finish(base, name)
+
+
+# =============================================================================================
 # servo_clip
 # =============================================================================================
 def build_servo_clip(side):
@@ -735,6 +973,8 @@ def build_static():
         "sg92r_horn": build_sg92r_horn(),
         "servo_clip_0": build_servo_clip(-1),
         "servo_clip_1": build_servo_clip(+1),
+        "bearing_cap_px": build_bearing_cap(+1),
+        "bearing_cap_mx": build_bearing_cap(-1),
     }
 
 
@@ -742,8 +982,8 @@ def build_static():
 PRINT_POSE = {
     "housing": {
         "rot_deg": [0, 0, 0],
-        "reason": "底（Z=0）をベッドに置く。外装の 5 面（底・±X・±Y）は接地か垂直。内側の張り出し（軸受けの帯・案内板の受け・窪み・天井）は"
-                  "すべて 45 度の斜面か、見えない面の短い橋（配線の窓の天井 5mm）",
+        "reason": "底（Z=0）をベッドに置く。外装の 5 面（底・±X・±Y）は接地か垂直。内側の張り出し（軸受けの帯の下・U 溝のじょうご・案内板の受け・"
+                  "座りの目印の V 溝・配線の窓の尖り屋根）はすべて 45 度の斜面。水平に近い下向き面は舌の爪の窪みの天井（15 度、見えない面）だけ",
         "support": "なし",
     },
     "bezel": {
@@ -753,7 +993,7 @@ PRINT_POSE = {
     },
     "guide_plate": {
         "rot_deg": [180, 0, 0],
-        "reason": "板の上面（画素側）をベッドに置く。落下止めは上へ立つ。穴の縁の面取り 0.3 がベッド側に来て、最初の層の膨らみから穴の隙間を守る",
+        "reason": "板の上面（画素側）をベッドに置く。舌の爪は上へ立つ。穴の縁の面取り 0.4 がベッド側に来て、最初の層の膨らみから穴の隙間を守る",
         "support": "なし",
     },
     "servo_clip_0": {
@@ -764,6 +1004,17 @@ PRINT_POSE = {
     "servo_clip_1": {
         "rot_deg": [90, 0, 0],
         "reason": "servo_clip_0 と同じ（Y 面を下にして寝かせる）",
+        "support": "なし",
+    },
+    "bearing_cap_px": {
+        "rot_deg": [0, -90, 0],
+        "reason": "内面（-X 向きの平面、|X| 43.7）をベッドに置いて平置き。タブの背面とリブが上へ立つ。軸の近くの下側は内面が 0.5 引っ込む（橋 5mm 以下、見えない面）。"
+                  "梁の指の掛かりの穴は上下に抜けるので張り出さない",
+        "support": "なし",
+    },
+    "bearing_cap_mx": {
+        "rot_deg": [0, 90, 0],
+        "reason": "bearing_cap_px と同じ（内面は +X 向きの平面。X を反転した形なので 90 度の向きで平置き）",
         "support": "なし",
     },
     "sg92r": None,
@@ -787,4 +1038,6 @@ VISIBLE_FACE = {
     "guide_plate": lambda c, n: False,
     "servo_clip_0": lambda c, n: False,
     "servo_clip_1": lambda c, n: False,
+    "bearing_cap_px": lambda c, n: False,
+    "bearing_cap_mx": lambda c, n: False,
 }

@@ -135,6 +135,42 @@ if cams is not None:
     lat = max(c["lateral_max_mm"] for row in cams for c in row)
     check("d5 接点の横ずれ <= 足の半幅 - 1mm", lat <= C.LATERAL_MAX_MM, f"最大 {lat:.2f} mm（上限 {C.LATERAL_MAX_MM:.1f}）")
 
+# --- (e) 隣の行のカムの円錐の制約（表の組）---------------------------------------------------------
+def tables_with(edits):
+    t = [[[0.0] * P.N for _ in range(P.N)] for _ in range(P.K)]
+    for (k, j, i), v in edits.items():
+        t[k][j][i] = v
+    return t
+
+
+lim_a, lim_b, _, _ = C.cone_pair_limits_mm()
+# 通す側: 同じ列の隣の行の和が上限ちょうど / 斜めの和が上限ちょうど
+C.check_tables(tables_with({(3, 2, 2): 3.0, (3, 1, 2): lim_a - 3.0}))
+check("e1 同じ列の隣の行の和が上限ちょうどは通る", True, f"上限 {lim_a:.2f}")
+C.check_tables(tables_with({(3, 1, 2): 3.0, (3, 2, 1): lim_b - 3.0}))
+check("e2 斜めの隣の行の和が上限ちょうどは通る", True, f"上限 {lim_b:.2f}")
+# 止める側
+must_fail("e3 同じ列の隣の行の和が上限 + 0.1", lambda: C.check_tables(tables_with({(3, 2, 2): 3.0, (3, 1, 2): lim_a - 3.0 + 0.1})))
+must_fail("e4 斜めの隣の行の和が上限 + 0.1", lambda: C.check_tables(tables_with({(3, 1, 2): 3.0, (3, 2, 1): lim_b - 3.0 + 0.1})))
+lim0 = C.first_cam_neg_row_height_max_mm()
+C.check_tables(tables_with({(3, 1, 0): lim0}))
+check("e5 奇数行の cam 0 が上限ちょうどは通る", True, f"上限 {lim0:.2f}")
+must_fail("e6 奇数行の cam 0 が上限 + 0.1（-X のじょうごに収まらない）", lambda: C.check_tables(tables_with({(3, 1, 0): lim0 + 0.1})))
+C.check_tables(tables_with({(3, 0, 0): 3.0, (3, 2, 0): 3.0}))
+check("e7 偶数行の cam 0 は +3 でも通る（円錐は -X のパッドから遠い）", True)
+# 実際の輪郭で測った隙間（cone_check）: 上限ちょうどの表が当たらない
+import cone_check as CC
+cams_edge = C.build_all(tables_with({(3, 2, 2): 3.0, (3, 1, 2): lim_a - 3.0}), w=P.DWELL_HALF_DEG)
+r_nom = CC.adjacent_rows_clearance(cams_edge, rel_shifts=(0.0,), rows=[1])
+r_slk = CC.adjacent_rows_clearance(cams_edge, rel_shifts=(-2 * P.AXIAL_DRIFT * 1000, 0.0, 2 * P.AXIAL_DRIFT * 1000), rows=[1])
+vn, vs = r_nom[1][0], r_slk[1][0]
+check("e8 上限ちょうどの表: 実輪郭の隙間は遊びを入れて >= 0（当たらない）", vs >= 0.0, f"設計位置 {'>= 0.6' if vn > 1e8 else round(float(vn), 3)} mm、遊び込み {round(float(vs), 3)} mm")
+# 上限を 1.0 超えた表: 実輪郭でも遊び込みで当たる（制約が意味を持つこと = 通す側だけでなく止める側の確認）
+cams_bad = C.build_all(tables_with({(3, 2, 2): 3.0}), w=P.DWELL_HALF_DEG)
+cams_bad[1][2] = C.build_cam([0.0, 0.0, 0.0, lim_a - 3.0 + 1.0, 0.0], 1, 2, check=False)
+r_bad = CC.adjacent_rows_clearance(cams_bad, rel_shifts=(-2 * P.AXIAL_DRIFT * 1000, 0.0, 2 * P.AXIAL_DRIFT * 1000), rows=[1])
+check("e9 上限 + 1.0 の表を cams.py を迂回して作ると、実輪郭で食い込む（計器が当たりを検出できる）", r_bad[1][0] < 0.0, f"遊び込み {round(float(r_bad[1][0]), 3)} mm")
+
 print()
 if fails:
     print("FAILED:", ", ".join(fails))

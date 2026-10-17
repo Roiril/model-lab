@@ -26,8 +26,8 @@
   "note": "スライスはしていない（G-code なし）。Bambu Studio で開いて切る。時間は Bambu Studio で確認"
  },
  "mass_formula": "スライスせずに PLA の質量を見込む（Bambu Studio「0.20mm Standard @BBL X1C」の既定: 壁 2 周、上 5 層、下 3 層、充填 15%）。\n\n    殻の体積 V_s = min(V, sum_i A_i t_i)。面 i の殻の厚み t_i = t_side |n_xy| + t_cap |n_z|\n    （t_side = 壁の線幅の和 0.42 + 0.45 = 0.87、t_cap = 上向きなら 5 x 0.2 = 1.0、下向きなら 3 x 0.2 = 0.6）。\n    質量 m = density (V_s + infill (V - V_s)) / 1000 [g]（density は Bambu PLA Basic の 1.26 g/cm3、V は mm3）。\n    薄い部品は殻が重なって数えすぎるので V で頭打ちにしている（上側の見込み）。solid_g は全部中実の上限。",
- "mass_total_pla_g": 310.1,
- "mass_total_solid_upper_g": 450.8,
+ "mass_total_pla_g": 320.5,
+ "mass_total_solid_upper_g": 482.9,
  "plates": [
   {
    "kind": "main",
@@ -47,14 +47,14 @@
     "PETG": "prints/tangible-pixel-cube/tangible-pixel-cube-plate1-shell-PETG.3mf"
    },
    "plate_tool_log": [
-    "[plate] housing: 96.0 x 96.0 x 93.0mm / 三角形 2,868",
-    "[plate] bezel: 96.0 x 96.0 x 12.4mm / 三角形 1,072",
-    "[plate] guide_plate: 91.5 x 91.6 x 29.1mm / 三角形 2,772",
-    "[plate] horn_coupler: 40.6 x 39.9 x 5.3mm / 三角形 4,248",
-    "[plate] phase_comb: 13.2 x 86.0 x 2.9mm / 三角形 300",
+    "[plate] housing: 96.0 x 96.0 x 93.0mm / 三角形 4,954",
+    "[plate] bezel: 96.0 x 96.0 x 12.4mm / 三角形 1,106",
+    "[plate] guide_plate: 90.4 x 91.6 x 19.9mm / 三角形 1,828",
+    "[plate] horn_coupler: 40.6 x 39.9 x 5.3mm / 三角形 3,014",
+    "[plate] phase_comb: 6.6 x 78.0 x 2.2mm / 三角形 306",
     "[plate] 重なり なし / はみ出し なし / 除外域 なし",
     "[plate] 占める広さ 198 x 194mm / 最大高さ 93.0mm → 入る（x1c 256 x 256 x 250）",
-    "[plate] C:\\Users\\kouga\\Projects\\Web\\model-lab\\exports\\tpc-plate1-shell.3mf (107,296 バイト / 5 部品 / フィラメント 1)"
+    "[plate] C:\\Users\\kouga\\Projects\\Web\\model-lab\\exports\\tpc-plate1-shell.3mf (105,644 バイト / 5 部品 / フィラメント 1)"
    ],
    "verify": {
     "PLA": {
@@ -62,7 +62,7 @@
      "names_match": true,
      "min_gap_between_boxes_mm": 6.0,
      "closest_pair": [
-      "housing",
+      "guide_plate",
       "phase_comb"
      ],
      "overlap": false,
@@ -96,7 +96,7 @@
      "names_match": true,
      "min_gap_between_boxes_mm": 6.0,
      "closest_pair": [
-      "housing",
+      "guide_plate",
       "phase_comb"
      ],
      "overlap": false,
@@ -126,8 +126,8 @@
      "has_gcode": false
     }
    },
-   "mass_pla_g": 197.9,
-   "mass_solid_upper_g": 297.4,
+   "mass_pla_g": 195.1,
+   "mass_solid_upper_g": 292.5,
    "tallest_part_mm": 93.0
   },
   {
@@ -168,34 +168,34 @@
     "PETG": "prints/tangible-pixel-cube/tangible-pixel-cube-plate2-pixels-PETG.3mf"
    },
    "plate_tool_log": [
-    "[plate] pixel_0_0: 16.4 x 20.0 x 36.1mm / 三角形 148",
-    "[plate] pixel_1_0: 16.4 x 20.0 x 36.1mm / 三角形 148",
-    "[plate] pixel_2_0: 16.4 x 20.0 x 36.1mm / 三角形 148",
-    "[plate] pixel_3_0: 16.4 x 20.0 x 36.1mm / 三角形 148",
-    "[plate] pixel_4_0: 16.4 x 20.0 x 36.1mm / 三角形 148",
-    "[plate] pixel_0_1: 16.4 x 20.0 x 36.1mm / 三角形 168",
-    "[plate] pixel_1_1: 16.4 x 20.0 x 36.1mm / 三角形 168",
-    "[plate] pixel_2_1: 16.4 x 20.0 x 36.1mm / 三角形 168",
-    "[plate] pixel_3_1: 16.4 x 20.0 x 36.1mm / 三角形 168",
-    "[plate] pixel_4_1: 16.4 x 20.0 x 36.1mm / 三角形 168",
-    "[plate] pixel_0_2: 16.4 x 20.0 x 36.1mm / 三角形 148",
-    "[plate] pixel_1_2: 16.4 x 20.0 x 36.1mm / 三角形 148",
-    "[plate] pixel_2_2: 16.4 x 20.0 x 36.1mm / 三角形 148",
-    "[plate] pixel_3_2: 16.4 x 20.0 x 36.1mm / 三角形 148",
-    "[plate] pixel_4_2: 16.4 x 20.0 x 36.1mm / 三角形 148",
-    "[plate] pixel_0_3: 16.4 x 20.0 x 36.1mm / 三角形 168",
-    "[plate] pixel_1_3: 16.4 x 20.0 x 36.1mm / 三角形 168",
-    "[plate] pixel_2_3: 16.4 x 20.0 x 36.1mm / 三角形 168",
-    "[plate] pixel_3_3: 16.4 x 20.0 x 36.1mm / 三角形 168",
-    "[plate] pixel_4_3: 16.4 x 20.0 x 36.1mm / 三角形 168",
-    "[plate] pixel_0_4: 16.4 x 20.0 x 36.1mm / 三角形 148",
-    "[plate] pixel_1_4: 16.4 x 20.0 x 36.1mm / 三角形 148",
-    "[plate] pixel_2_4: 16.4 x 20.0 x 36.1mm / 三角形 148",
-    "[plate] pixel_3_4: 16.4 x 20.0 x 36.1mm / 三角形 148",
-    "[plate] pixel_4_4: 16.4 x 20.0 x 36.1mm / 三角形 148",
+    "[plate] pixel_0_0: 16.4 x 20.0 x 36.1mm / 三角形 150",
+    "[plate] pixel_1_0: 16.4 x 20.0 x 36.1mm / 三角形 150",
+    "[plate] pixel_2_0: 16.4 x 20.0 x 36.1mm / 三角形 150",
+    "[plate] pixel_3_0: 16.4 x 20.0 x 36.1mm / 三角形 150",
+    "[plate] pixel_4_0: 16.4 x 20.0 x 36.1mm / 三角形 150",
+    "[plate] pixel_0_1: 16.4 x 20.0 x 36.1mm / 三角形 164",
+    "[plate] pixel_1_1: 16.4 x 20.0 x 36.1mm / 三角形 164",
+    "[plate] pixel_2_1: 16.4 x 20.0 x 36.1mm / 三角形 164",
+    "[plate] pixel_3_1: 16.4 x 20.0 x 36.1mm / 三角形 164",
+    "[plate] pixel_4_1: 16.4 x 20.0 x 36.1mm / 三角形 164",
+    "[plate] pixel_0_2: 16.4 x 20.0 x 36.1mm / 三角形 150",
+    "[plate] pixel_1_2: 16.4 x 20.0 x 36.1mm / 三角形 150",
+    "[plate] pixel_2_2: 16.4 x 20.0 x 36.1mm / 三角形 150",
+    "[plate] pixel_3_2: 16.4 x 20.0 x 36.1mm / 三角形 150",
+    "[plate] pixel_4_2: 16.4 x 20.0 x 36.1mm / 三角形 150",
+    "[plate] pixel_0_3: 16.4 x 20.0 x 36.1mm / 三角形 164",
+    "[plate] pixel_1_3: 16.4 x 20.0 x 36.1mm / 三角形 164",
+    "[plate] pixel_2_3: 16.4 x 20.0 x 36.1mm / 三角形 164",
+    "[plate] pixel_3_3: 16.4 x 20.0 x 36.1mm / 三角形 164",
+    "[plate] pixel_4_3: 16.4 x 20.0 x 36.1mm / 三角形 164",
+    "[plate] pixel_0_4: 16.4 x 20.0 x 36.1mm / 三角形 150",
+    "[plate] pixel_1_4: 16.4 x 20.0 x 36.1mm / 三角形 150",
+    "[plate] pixel_2_4: 16.4 x 20.0 x 36.1mm / 三角形 150",
+    "[plate] pixel_3_4: 16.4 x 20.0 x 36.1mm / 三角形 150",
+    "[plate] pixel_4_4: 16.4 x 20.0 x 36.1mm / 三角形 150",
     "[plate] 重なり なし / はみ出し なし / 除外域 なし",
     "[plate] 占める広さ 218 x 72mm / 最大高さ 36.1mm → 入る（x1c 256 x 256 x 250）",
-    "[plate] C:\\Users\\kouga\\Projects\\Web\\model-lab\\exports\\tpc-plate2-pixels.3mf (10,380 バイト / 25 部品 / フィラメント 1)"
+    "[plate] C:\\Users\\kouga\\Projects\\Web\\model-lab\\exports\\tpc-plate2-pixels.3mf (10,585 バイト / 25 部品 / フィラメント 1)"
    ],
    "verify": {
     "PLA": {
@@ -274,45 +274,22 @@
   {
    "kind": "main",
    "id": "plate3-mechanism",
-   "title": "カム 25・軸の端 5・歯車の部品 5・押さえクリップ 2",
-   "reason": "カム・軸の端・歯車の部品・クリップは低い部品で、かたまりで刷れる。全部品の外接面積は合計およそ 4.7 万 mm2、部品間 6mm の間隔を足すと約 6.7 万 mm2 で、プレートの実効面積（余白 10mm と除外域を除いて約 4.9 万 mm2）の1.4 倍。1 枚には入らない",
-   "n_parts": 37,
+   "title": "カム軸 5（立てて刷る）・歯車 5・押さえ棒 2・押さえクリップ 2",
+   "reason": "カム軸は -X 端を下にして立てて刷る（高さ 90mm、折り取る円盤 Ø30 込み）。全部品の外接面積は合計およそ 4.5 万 mm2、部品間 6mm の間隔を足すと約 6.1 万 mm2 で、プレートの実効面積（余白 10mm と除外域を除いて約 4.9 万 mm2）の1.2 倍。1 枚には入らない。立てて刷るカム軸は高さが同じなので、まとめて同じ層を進める",
+   "n_parts": 14,
    "parts": [
-    "cam_0_0",
-    "cam_1_0",
-    "cam_2_0",
-    "cam_3_0",
-    "cam_4_0",
-    "cam_0_1",
-    "cam_1_1",
-    "cam_2_1",
-    "cam_3_1",
-    "cam_4_1",
-    "cam_0_2",
-    "cam_1_2",
-    "cam_2_2",
-    "cam_3_2",
-    "cam_4_2",
-    "cam_0_3",
-    "cam_1_3",
-    "cam_2_3",
-    "cam_3_3",
-    "cam_4_3",
-    "cam_0_4",
-    "cam_1_4",
-    "cam_2_4",
-    "cam_3_4",
-    "cam_4_4",
-    "shaft_0",
-    "shaft_1",
-    "shaft_2",
-    "shaft_3",
-    "shaft_4",
+    "camshaft_0",
+    "camshaft_1",
+    "camshaft_2",
+    "camshaft_3",
+    "camshaft_4",
     "gear_0",
     "gear_1",
     "gear_2",
     "gear_3",
     "gear_4",
+    "bearing_cap_px",
+    "bearing_cap_mx",
     "servo_clip_0",
     "servo_clip_1"
    ],
@@ -321,66 +298,43 @@
     "PETG": "prints/tangible-pixel-cube/tangible-pixel-cube-plate3-mechanism-PETG.3mf"
    },
    "plate_tool_log": [
-    "[plate] cam_0_0: 16.5 x 17.5 x 19.8mm / 三角形 4,278",
-    "[plate] cam_1_0: 16.4 x 16.9 x 19.8mm / 三角形 4,178",
-    "[plate] cam_2_0: 16.4 x 16.2 x 19.8mm / 三角形 4,366",
-    "[plate] cam_3_0: 16.4 x 16.9 x 19.8mm / 三角形 4,542",
-    "[plate] cam_4_0: 16.5 x 17.5 x 7.5mm / 三角形 4,124",
-    "[plate] cam_0_1: 16.4 x 16.9 x 19.8mm / 三角形 4,574",
-    "[plate] cam_1_1: 16.4 x 16.2 x 19.8mm / 三角形 3,542",
-    "[plate] cam_2_1: 16.5 x 16.4 x 19.8mm / 三角形 3,486",
-    "[plate] cam_3_1: 16.5 x 16.9 x 19.8mm / 三角形 3,694",
-    "[plate] cam_4_1: 16.4 x 16.9 x 13.4mm / 三角形 4,484",
-    "[plate] cam_0_2: 16.4 x 16.4 x 19.8mm / 三角形 4,854",
-    "[plate] cam_1_2: 16.4 x 16.2 x 19.8mm / 三角形 3,290",
-    "[plate] cam_2_2: 16.5 x 16.4 x 19.8mm / 三角形 2,718",
-    "[plate] cam_3_2: 16.5 x 17.2 x 19.8mm / 三角形 3,046",
-    "[plate] cam_4_2: 16.5 x 16.9 x 7.5mm / 三角形 4,000",
-    "[plate] cam_0_3: 16.4 x 16.9 x 19.8mm / 三角形 4,746",
-    "[plate] cam_1_3: 16.4 x 16.4 x 19.8mm / 三角形 3,582",
-    "[plate] cam_2_3: 16.5 x 16.9 x 19.8mm / 三角形 3,534",
-    "[plate] cam_3_3: 16.5 x 17.2 x 19.8mm / 三角形 3,722",
-    "[plate] cam_4_3: 16.4 x 16.9 x 13.4mm / 三角形 4,656",
-    "[plate] cam_0_4: 16.5 x 17.5 x 19.8mm / 三角形 4,152",
-    "[plate] cam_1_4: 16.4 x 16.9 x 19.8mm / 三角形 4,052",
-    "[plate] cam_2_4: 16.5 x 17.2 x 19.8mm / 三角形 3,844",
-    "[plate] cam_3_4: 16.4 x 16.9 x 19.8mm / 三角形 4,416",
-    "[plate] cam_4_4: 16.5 x 17.5 x 7.5mm / 三角形 3,998",
-    "[plate] shaft_0: 14.4 x 6.4 x 5.5mm / 三角形 244",
-    "[plate] shaft_1: 8.5 x 6.4 x 5.5mm / 三角形 244",
-    "[plate] shaft_2: 14.4 x 6.4 x 5.5mm / 三角形 244",
-    "[plate] shaft_3: 8.5 x 6.4 x 5.5mm / 三角形 244",
-    "[plate] shaft_4: 14.4 x 6.4 x 5.5mm / 三角形 244",
-    "[plate] gear_0: 19.0 x 18.9 x 4.6mm / 三角形 3,836",
-    "[plate] gear_1: 19.0 x 18.9 x 4.6mm / 三角形 3,836",
-    "[plate] gear_2: 19.0 x 18.9 x 4.6mm / 三角形 3,836",
-    "[plate] gear_3: 19.0 x 18.9 x 4.6mm / 三角形 3,836",
-    "[plate] gear_4: 19.0 x 18.9 x 4.6mm / 三角形 3,836",
+    "[plate] camshaft_0: 30.0 x 30.0 x 90.2mm / 三角形 25,972",
+    "[plate] camshaft_1: 30.0 x 30.0 x 90.2mm / 三角形 26,686",
+    "[plate] camshaft_2: 30.0 x 30.0 x 90.2mm / 三角形 25,130",
+    "[plate] camshaft_3: 30.0 x 30.0 x 90.2mm / 三角形 26,410",
+    "[plate] camshaft_4: 30.0 x 30.0 x 90.2mm / 三角形 26,694",
+    "[plate] gear_0: 19.0 x 18.9 x 5.0mm / 三角形 4,022",
+    "[plate] gear_1: 19.0 x 18.9 x 5.0mm / 三角形 4,022",
+    "[plate] gear_2: 19.0 x 18.9 x 5.0mm / 三角形 4,022",
+    "[plate] gear_3: 19.0 x 18.9 x 5.0mm / 三角形 4,022",
+    "[plate] gear_4: 19.0 x 18.9 x 5.0mm / 三角形 4,022",
+    "[plate] bearing_cap_px: 8.9 x 79.9 x 2.1mm / 三角形 612",
+    "[plate] bearing_cap_mx: 6.4 x 85.1 x 2.1mm / 三角形 674",
     "[plate] servo_clip_0: 12.1 x 17.3 x 4.0mm / 三角形 116",
     "[plate] servo_clip_1: 12.1 x 17.3 x 4.0mm / 三角形 116",
     "[plate] 重なり なし / はみ出し なし / 除外域 なし",
-    "[plate] 占める広さ 227 x 87mm / 最大高さ 19.8mm → 入る（x1c 256 x 256 x 250）",
-    "[plate] C:\\Users\\kouga\\Projects\\Web\\model-lab\\exports\\tpc-plate3-mechanism.3mf (1,255,483 バイト / 37 部品 / フィラメント 1)"
+    "[plate] 占める広さ 226 x 110mm / 最大高さ 90.2mm → 入る（x1c 256 x 256 x 250）",
+    "[plate] C:\\Users\\kouga\\Projects\\Web\\model-lab\\exports\\tpc-plate3-mechanism.3mf (1,734,848 バイト / 14 部品 / フィラメント 1)"
    ],
    "verify": {
     "PLA": {
-     "objects": 37,
+     "objects": 14,
      "names_match": true,
      "min_gap_between_boxes_mm": 6.0,
      "closest_pair": [
-      "cam_0_0",
-      "cam_4_0"
+      "servo_clip_0",
+      "servo_clip_1"
      ],
      "overlap": false,
      "off_bed": [],
      "in_exclusion_zone": [],
      "xy_extent_mm": [
-      14.5,
-      84.4,
-      241.5,
-      171.6
+      14.8,
+      73.0,
+      241.2,
+      183.0
      ],
-     "max_height_mm": 19.8,
+     "max_height_mm": 90.2,
      "filament_type": [
       "PLA"
      ],
@@ -398,23 +352,23 @@
      "has_gcode": false
     },
     "PETG": {
-     "objects": 37,
+     "objects": 14,
      "names_match": true,
      "min_gap_between_boxes_mm": 6.0,
      "closest_pair": [
-      "cam_0_0",
-      "cam_4_0"
+      "servo_clip_0",
+      "servo_clip_1"
      ],
      "overlap": false,
      "off_bed": [],
      "in_exclusion_zone": [],
      "xy_extent_mm": [
-      14.5,
-      84.4,
-      241.5,
-      171.6
+      14.8,
+      73.0,
+      241.2,
+      183.0
      ],
-     "max_height_mm": 19.8,
+     "max_height_mm": 90.2,
      "filament_type": [
       "PETG"
      ],
@@ -432,21 +386,20 @@
      "has_gcode": false
     }
    },
-   "mass_pla_g": 33.4,
-   "mass_solid_upper_g": 41.8,
-   "tallest_part_mm": 19.8
+   "mass_pla_g": 46.5,
+   "mass_solid_upper_g": 78.9,
+   "tallest_part_mm": 90.2
   },
   {
    "kind": "trial",
    "id": "trial1-rotating",
    "title": "試し刷り 1: 回す・噛み合わせる部分",
-   "reason": "受けとホーン、数珠つなぎの継ぎ目（軸の端 shaft_2 の雄スタブ → カム 0_2 の雌穴、カム 0_2 のスタブ → カム 4_2 の雌穴、カム 4_2 のスタブ → 歯車の部品の雌穴）。実物（SG92R とホーン）が要るのは受けだけ",
-   "n_parts": 5,
+   "reason": "受けとホーン、カム軸 1 本（行 2）の全体（立てて刷る。円盤の折り取りと軸受けの端面の跡、すその面）、カム軸の +X 端（雄スタブ）と歯車の雌穴の継ぎ目。実物（SG92R とホーン）が要るのは受けだけ",
+   "n_parts": 4,
    "parts": [
     "horn_coupler",
-    "shaft_2",
-    "cam_0_2",
-    "cam_4_2",
+    "camshaft_2",
+    "camshaft_2_gear_end",
     "gear_2"
    ],
    "files": {
@@ -454,34 +407,33 @@
     "PETG": "prints/tangible-pixel-cube/tangible-pixel-cube-trial1-rotating-PETG.3mf"
    },
    "plate_tool_log": [
-    "[plate] horn_coupler: 40.6 x 39.9 x 5.3mm / 三角形 4,248",
-    "[plate] shaft_2: 14.4 x 6.4 x 5.5mm / 三角形 244",
-    "[plate] cam_0_2: 16.4 x 16.4 x 19.8mm / 三角形 4,854",
-    "[plate] cam_4_2: 16.5 x 16.9 x 7.5mm / 三角形 4,000",
-    "[plate] gear_2: 19.0 x 18.9 x 4.6mm / 三角形 3,836",
+    "[plate] horn_coupler: 40.6 x 39.9 x 5.3mm / 三角形 3,014",
+    "[plate] camshaft_2: 30.0 x 30.0 x 90.2mm / 三角形 25,130",
+    "[plate] camshaft_2_gear_end: 16.9 x 16.5 x 13.8mm / 三角形 6,290",
+    "[plate] gear_2: 19.0 x 18.9 x 5.0mm / 三角形 4,022",
     "[plate] 重なり なし / はみ出し なし / 除外域 なし",
-    "[plate] 占める広さ 131 x 40mm / 最大高さ 19.8mm → 入る（x1c 256 x 256 x 250）",
-    "[plate] C:\\Users\\kouga\\Projects\\Web\\model-lab\\exports\\tpc-trial1-rotating.3mf (184,153 バイト / 5 部品 / フィラメント 1)"
+    "[plate] 占める広さ 124 x 40mm / 最大高さ 90.2mm → 入る（x1c 256 x 256 x 250）",
+    "[plate] C:\\Users\\kouga\\Projects\\Web\\model-lab\\exports\\tpc-trial1-rotating.3mf (437,439 バイト / 4 部品 / フィラメント 1)"
    ],
    "verify": {
     "PLA": {
-     "objects": 5,
+     "objects": 4,
      "names_match": true,
      "min_gap_between_boxes_mm": 6.0,
      "closest_pair": [
-      "cam_4_2",
-      "cam_0_2"
+      "gear_2",
+      "camshaft_2_gear_end"
      ],
      "overlap": false,
      "off_bed": [],
      "in_exclusion_zone": [],
      "xy_extent_mm": [
-      62.6,
+      65.8,
       108.1,
-      193.4,
+      190.2,
       147.9
      ],
-     "max_height_mm": 19.8,
+     "max_height_mm": 90.2,
      "filament_type": [
       "PLA"
      ],
@@ -499,23 +451,23 @@
      "has_gcode": false
     },
     "PETG": {
-     "objects": 5,
+     "objects": 4,
      "names_match": true,
      "min_gap_between_boxes_mm": 6.0,
      "closest_pair": [
-      "cam_4_2",
-      "cam_0_2"
+      "gear_2",
+      "camshaft_2_gear_end"
      ],
      "overlap": false,
      "off_bed": [],
      "in_exclusion_zone": [],
      "xy_extent_mm": [
-      62.6,
+      65.8,
       108.1,
-      193.4,
+      190.2,
       147.9
      ],
-     "max_height_mm": 19.8,
+     "max_height_mm": 90.2,
      "filament_type": [
       "PETG"
      ],
@@ -533,18 +485,21 @@
      "has_gcode": false
     }
    },
-   "mass_pla_g": 5.6,
-   "mass_solid_upper_g": 6.5,
-   "tallest_part_mm": 19.8
+   "mass_pla_g": 12.4,
+   "mass_solid_upper_g": 20.1,
+   "tallest_part_mm": 90.2
   },
   {
    "kind": "trial",
    "id": "trial2-shell-guide-pixel",
-   "title": "試し刷り 2: 外装・案内・画素・ベゼル",
-   "reason": "外装の U 溝と柵、案内板の十字穴・舌と画素、ベゼルの窓と爪と外装の端壁の窪み。どれも小片で、軸の丸・サーボの耳・画素の頭と足を実際に当てて確かめる",
-   "n_parts": 10,
+   "title": "試し刷り 2: 外装・軸受け・案内・画素・ベゼル",
+   "reason": "外装の軸受けの溝（-X の Ø10 とじょうご、+X の Ø5）と押さえ棒の指、サーボの耳の溝と柵、案内板の十字穴・舌と画素、ベゼルの窓と爪と外装の端壁の窪み。どれも小片で、軸の丸・サーボの耳・画素の頭と足を実際に当てて確かめる",
+   "n_parts": 13,
    "parts": [
-    "housing_Uslot_shaft1_plusX",
+    "housing_Uslot_minusX_row2",
+    "housing_Uslot_plusX_row1",
+    "bearing_cap_mx_row2",
+    "bearing_cap_px_row2",
     "housing_servo_block_minusY",
     "servo_clip_0",
     "guide_plate_cell_2_2",
@@ -560,37 +515,40 @@
     "PETG": "prints/tangible-pixel-cube/tangible-pixel-cube-trial2-shell-guide-pixel-PETG.3mf"
    },
    "plate_tool_log": [
-    "[plate] housing_Uslot_shaft1_plusX: 4.2 x 17.0 x 14.0mm / 三角形 360",
-    "[plate] housing_servo_block_minusY: 11.0 x 8.6 x 26.2mm / 三角形 244",
+    "[plate] housing_Uslot_minusX_row2: 21.5 x 18.0 x 4.0mm / 三角形 568",
+    "[plate] housing_Uslot_plusX_row1: 21.0 x 17.0 x 4.0mm / 三角形 558",
+    "[plate] bearing_cap_mx_row2: 6.4 x 16.0 x 2.1mm / 三角形 204",
+    "[plate] bearing_cap_px_row2: 8.9 x 16.0 x 2.1mm / 三角形 186",
+    "[plate] housing_servo_block_minusY: 11.0 x 8.6 x 26.2mm / 三角形 242",
     "[plate] servo_clip_0: 12.1 x 17.3 x 4.0mm / 三角形 116",
-    "[plate] guide_plate_cell_2_2: 23.0 x 26.0 x 8.0mm / 三角形 410",
-    "[plate] guide_plate_tongue_plusX: 7.2 x 15.0 x 11.4mm / 三角形 198",
-    "[plate] pixel_2_2_top: 16.4 x 16.4 x 16.0mm / 三角形 126",
-    "[plate] pixel_2_2_foot: 4.3 x 20.0 x 6.1mm / 三角形 36",
+    "[plate] guide_plate_cell_2_2: 23.0 x 26.0 x 8.0mm / 三角形 334",
+    "[plate] guide_plate_tongue_plusX: 4.2 x 15.0 x 11.4mm / 三角形 150",
+    "[plate] pixel_2_2_top: 16.4 x 16.4 x 16.0mm / 三角形 122",
+    "[plate] pixel_2_2_foot: 4.3 x 20.0 x 6.1mm / 三角形 34",
     "[plate] bezel_window_2_2: 19.0 x 19.0 x 3.0mm / 三角形 412",
-    "[plate] bezel_barb_plusX: 7.0 x 24.0 x 10.0mm / 三角形 256",
-    "[plate] housing_endwall_pockets_plusX: 3.0 x 32.0 x 13.0mm / 三角形 236",
+    "[plate] bezel_barb_plusX: 7.0 x 9.0 x 10.0mm / 三角形 218",
+    "[plate] housing_endwall_pockets_plusX: 3.0 x 10.2 x 13.0mm / 三角形 114",
     "[plate] 重なり なし / はみ出し なし / 除外域 なし",
-    "[plate] 占める広さ 161 x 32mm / 最大高さ 26.2mm → 入る（x1c 256 x 256 x 250）",
-    "[plate] C:\\Users\\kouga\\Projects\\Web\\model-lab\\exports\\tpc-trial2-shell-guide-pixel.3mf (21,352 バイト / 10 部品 / フィラメント 1)"
+    "[plate] 占める広さ 230 x 26mm / 最大高さ 26.2mm → 入る（x1c 256 x 256 x 250）",
+    "[plate] C:\\Users\\kouga\\Projects\\Web\\model-lab\\exports\\tpc-trial2-shell-guide-pixel.3mf (29,364 バイト / 13 部品 / フィラメント 1)"
    ],
    "verify": {
     "PLA": {
-     "objects": 10,
+     "objects": 13,
      "names_match": true,
      "min_gap_between_boxes_mm": 6.0,
      "closest_pair": [
-      "bezel_window_2_2",
+      "housing_Uslot_minusX_row2",
       "servo_clip_0"
      ],
      "overlap": false,
      "off_bed": [],
      "in_exclusion_zone": [],
      "xy_extent_mm": [
-      47.4,
-      112.0,
-      208.6,
-      144.0
+      13.1,
+      115.0,
+      242.9,
+      141.0
      ],
      "max_height_mm": 26.2,
      "filament_type": [
@@ -610,21 +568,21 @@
      "has_gcode": false
     },
     "PETG": {
-     "objects": 10,
+     "objects": 13,
      "names_match": true,
      "min_gap_between_boxes_mm": 6.0,
      "closest_pair": [
-      "bezel_window_2_2",
+      "housing_Uslot_minusX_row2",
       "servo_clip_0"
      ],
      "overlap": false,
      "off_bed": [],
      "in_exclusion_zone": [],
      "xy_extent_mm": [
-      47.4,
-      112.0,
-      208.6,
-      144.0
+      13.1,
+      115.0,
+      242.9,
+      141.0
      ],
      "max_height_mm": 26.2,
      "filament_type": [
@@ -644,239 +602,89 @@
      "has_gcode": false
     }
    },
-   "mass_pla_g": 11.0,
-   "mass_solid_upper_g": 14.7,
+   "mass_pla_g": 11.3,
+   "mass_solid_upper_g": 15.0,
    "tallest_part_mm": 26.2
   }
  ],
  "mass_by_part": {
   "housing": {
-   "volume_cm3": 123.34,
-   "shell_cm3": 82.485,
-   "mass_g": 111.65,
-   "solid_g": 155.41
+   "volume_cm3": 121.335,
+   "shell_cm3": 82.353,
+   "mass_g": 111.13,
+   "solid_g": 152.88
   },
   "bezel": {
-   "volume_cm3": 16.178,
-   "shell_cm3": 16.14,
-   "mass_g": 20.34,
-   "solid_g": 20.38
+   "volume_cm3": 16.142,
+   "shell_cm3": 16.105,
+   "mass_g": 20.3,
+   "solid_g": 20.34
   },
   "guide_plate": {
-   "volume_cm3": 93.225,
-   "shell_cm3": 41.405,
-   "mass_g": 61.96,
-   "solid_g": 117.46
+   "volume_cm3": 91.92,
+   "shell_cm3": 40.303,
+   "mass_g": 60.54,
+   "solid_g": 115.82
   },
-  "shaft_0": {
-   "volume_cm3": 0.351,
-   "shell_cm3": 0.324,
-   "mass_g": 0.41,
-   "solid_g": 0.44
+  "camshaft_0": {
+   "volume_cm3": 11.608,
+   "shell_cm3": 5.435,
+   "mass_g": 8.01,
+   "solid_g": 14.63
   },
-  "shaft_1": {
-   "volume_cm3": 0.204,
-   "shell_cm3": 0.204,
-   "mass_g": 0.26,
-   "solid_g": 0.26
+  "camshaft_1": {
+   "volume_cm3": 11.21,
+   "shell_cm3": 5.328,
+   "mass_g": 7.83,
+   "solid_g": 14.13
   },
-  "shaft_2": {
-   "volume_cm3": 0.351,
-   "shell_cm3": 0.324,
-   "mass_g": 0.41,
-   "solid_g": 0.44
+  "camshaft_2": {
+   "volume_cm3": 11.383,
+   "shell_cm3": 5.359,
+   "mass_g": 7.89,
+   "solid_g": 14.34
   },
-  "shaft_3": {
-   "volume_cm3": 0.204,
-   "shell_cm3": 0.204,
-   "mass_g": 0.26,
-   "solid_g": 0.26
+  "camshaft_3": {
+   "volume_cm3": 11.324,
+   "shell_cm3": 5.376,
+   "mass_g": 7.9,
+   "solid_g": 14.27
   },
-  "shaft_4": {
-   "volume_cm3": 0.351,
-   "shell_cm3": 0.324,
-   "mass_g": 0.41,
-   "solid_g": 0.44
+  "camshaft_4": {
+   "volume_cm3": 11.732,
+   "shell_cm3": 5.48,
+   "mass_g": 8.09,
+   "solid_g": 14.78
   },
   "gear_0": {
-   "volume_cm3": 0.56,
-   "shell_cm3": 0.56,
-   "mass_g": 0.71,
-   "solid_g": 0.71
+   "volume_cm3": 0.615,
+   "shell_cm3": 0.615,
+   "mass_g": 0.77,
+   "solid_g": 0.77
   },
   "gear_1": {
-   "volume_cm3": 0.56,
-   "shell_cm3": 0.56,
-   "mass_g": 0.71,
-   "solid_g": 0.71
+   "volume_cm3": 0.615,
+   "shell_cm3": 0.615,
+   "mass_g": 0.77,
+   "solid_g": 0.77
   },
   "gear_2": {
-   "volume_cm3": 0.56,
-   "shell_cm3": 0.56,
-   "mass_g": 0.71,
-   "solid_g": 0.71
+   "volume_cm3": 0.615,
+   "shell_cm3": 0.615,
+   "mass_g": 0.77,
+   "solid_g": 0.77
   },
   "gear_3": {
-   "volume_cm3": 0.56,
-   "shell_cm3": 0.56,
-   "mass_g": 0.71,
-   "solid_g": 0.71
+   "volume_cm3": 0.615,
+   "shell_cm3": 0.615,
+   "mass_g": 0.77,
+   "solid_g": 0.77
   },
   "gear_4": {
-   "volume_cm3": 0.56,
-   "shell_cm3": 0.56,
-   "mass_g": 0.71,
-   "solid_g": 0.71
-  },
-  "cam_0_0": {
-   "volume_cm3": 1.225,
-   "shell_cm3": 0.876,
-   "mass_g": 1.17,
-   "solid_g": 1.54
-  },
-  "cam_1_0": {
-   "volume_cm3": 1.187,
-   "shell_cm3": 0.852,
-   "mass_g": 1.14,
-   "solid_g": 1.5
-  },
-  "cam_2_0": {
-   "volume_cm3": 1.131,
-   "shell_cm3": 0.827,
-   "mass_g": 1.1,
-   "solid_g": 1.42
-  },
-  "cam_3_0": {
-   "volume_cm3": 1.186,
-   "shell_cm3": 0.855,
-   "mass_g": 1.14,
-   "solid_g": 1.49
-  },
-  "cam_4_0": {
-   "volume_cm3": 0.919,
-   "shell_cm3": 0.674,
-   "mass_g": 0.9,
-   "solid_g": 1.16
-  },
-  "cam_0_1": {
-   "volume_cm3": 1.187,
-   "shell_cm3": 0.852,
-   "mass_g": 1.14,
-   "solid_g": 1.5
-  },
-  "cam_1_1": {
-   "volume_cm3": 1.134,
-   "shell_cm3": 0.823,
-   "mass_g": 1.1,
-   "solid_g": 1.43
-  },
-  "cam_2_1": {
-   "volume_cm3": 1.157,
-   "shell_cm3": 0.839,
-   "mass_g": 1.12,
-   "solid_g": 1.46
-  },
-  "cam_3_1": {
-   "volume_cm3": 1.192,
-   "shell_cm3": 0.856,
-   "mass_g": 1.14,
-   "solid_g": 1.5
-  },
-  "cam_4_1": {
-   "volume_cm3": 1.027,
-   "shell_cm3": 0.746,
-   "mass_g": 0.99,
-   "solid_g": 1.29
-  },
-  "cam_0_2": {
-   "volume_cm3": 1.148,
-   "shell_cm3": 0.836,
-   "mass_g": 1.11,
-   "solid_g": 1.45
-  },
-  "cam_1_2": {
-   "volume_cm3": 1.137,
-   "shell_cm3": 0.828,
-   "mass_g": 1.1,
-   "solid_g": 1.43
-  },
-  "cam_2_2": {
-   "volume_cm3": 1.142,
-   "shell_cm3": 0.84,
-   "mass_g": 1.12,
-   "solid_g": 1.44
-  },
-  "cam_3_2": {
-   "volume_cm3": 1.201,
-   "shell_cm3": 0.867,
-   "mass_g": 1.16,
-   "solid_g": 1.51
-  },
-  "cam_4_2": {
-   "volume_cm3": 0.883,
-   "shell_cm3": 0.656,
-   "mass_g": 0.87,
-   "solid_g": 1.11
-  },
-  "cam_0_3": {
-   "volume_cm3": 1.186,
-   "shell_cm3": 0.855,
-   "mass_g": 1.14,
-   "solid_g": 1.49
-  },
-  "cam_1_3": {
-   "volume_cm3": 1.156,
-   "shell_cm3": 0.837,
-   "mass_g": 1.12,
-   "solid_g": 1.46
-  },
-  "cam_2_3": {
-   "volume_cm3": 1.188,
-   "shell_cm3": 0.859,
-   "mass_g": 1.14,
-   "solid_g": 1.5
-  },
-  "cam_3_3": {
-   "volume_cm3": 1.206,
-   "shell_cm3": 0.868,
-   "mass_g": 1.16,
-   "solid_g": 1.52
-  },
-  "cam_4_3": {
-   "volume_cm3": 1.026,
-   "shell_cm3": 0.749,
-   "mass_g": 1.0,
-   "solid_g": 1.29
-  },
-  "cam_0_4": {
-   "volume_cm3": 1.225,
-   "shell_cm3": 0.874,
-   "mass_g": 1.17,
-   "solid_g": 1.54
-  },
-  "cam_1_4": {
-   "volume_cm3": 1.187,
-   "shell_cm3": 0.85,
-   "mass_g": 1.14,
-   "solid_g": 1.5
-  },
-  "cam_2_4": {
-   "volume_cm3": 1.206,
-   "shell_cm3": 0.865,
-   "mass_g": 1.15,
-   "solid_g": 1.52
-  },
-  "cam_3_4": {
-   "volume_cm3": 1.186,
-   "shell_cm3": 0.854,
-   "mass_g": 1.14,
-   "solid_g": 1.49
-  },
-  "cam_4_4": {
-   "volume_cm3": 0.919,
-   "shell_cm3": 0.673,
-   "mass_g": 0.89,
-   "solid_g": 1.16
+   "volume_cm3": 0.615,
+   "shell_cm3": 0.615,
+   "mass_g": 0.77,
+   "solid_g": 0.77
   },
   "pixel_0_0": {
    "volume_cm3": 3.541,
@@ -1028,17 +836,29 @@
    "mass_g": 3.15,
    "solid_g": 4.46
   },
+  "bearing_cap_px": {
+   "volume_cm3": 0.893,
+   "shell_cm3": 0.893,
+   "mass_g": 1.12,
+   "solid_g": 1.12
+  },
+  "bearing_cap_mx": {
+   "volume_cm3": 0.824,
+   "shell_cm3": 0.824,
+   "mass_g": 1.04,
+   "solid_g": 1.04
+  },
   "horn_coupler": {
-   "volume_cm3": 2.178,
-   "shell_cm3": 1.927,
-   "mass_g": 2.48,
-   "solid_g": 2.74
+   "volume_cm3": 2.241,
+   "shell_cm3": 1.975,
+   "mass_g": 2.54,
+   "solid_g": 2.82
   },
   "phase_comb": {
-   "volume_cm3": 1.157,
-   "shell_cm3": 1.157,
-   "mass_g": 1.46,
-   "solid_g": 1.46
+   "volume_cm3": 0.505,
+   "shell_cm3": 0.505,
+   "mass_g": 0.64,
+   "solid_g": 0.64
   },
   "servo_clip_0": {
    "volume_cm3": 0.298,
@@ -1054,11 +874,23 @@
   }
  },
  "trial_mass_by_piece": {
+  "bearing_cap_mx_row2": {
+   "volume_cm3": 0.157,
+   "shell_cm3": 0.157,
+   "mass_g": 0.2,
+   "solid_g": 0.2
+  },
+  "bearing_cap_px_row2": {
+   "volume_cm3": 0.18,
+   "shell_cm3": 0.18,
+   "mass_g": 0.23,
+   "solid_g": 0.23
+  },
   "bezel_barb_plusX": {
-   "volume_cm3": 0.789,
-   "shell_cm3": 0.736,
-   "mass_g": 0.94,
-   "solid_g": 0.99
+   "volume_cm3": 0.295,
+   "shell_cm3": 0.295,
+   "mass_g": 0.37,
+   "solid_g": 0.37
   },
   "bezel_window_2_2": {
    "volume_cm3": 0.318,
@@ -1066,53 +898,59 @@
    "mass_g": 0.4,
    "solid_g": 0.4
   },
-  "cam_0_2": {
-   "volume_cm3": 1.148,
-   "shell_cm3": 0.836,
-   "mass_g": 1.11,
-   "solid_g": 1.45
+  "camshaft_2": {
+   "volume_cm3": 11.383,
+   "shell_cm3": 5.359,
+   "mass_g": 7.89,
+   "solid_g": 14.34
   },
-  "cam_4_2": {
-   "volume_cm3": 0.883,
-   "shell_cm3": 0.656,
-   "mass_g": 0.87,
-   "solid_g": 1.11
+  "camshaft_2_gear_end": {
+   "volume_cm3": 1.758,
+   "shell_cm3": 0.818,
+   "mass_g": 1.21,
+   "solid_g": 2.22
   },
   "gear_2": {
-   "volume_cm3": 0.56,
-   "shell_cm3": 0.56,
-   "mass_g": 0.71,
-   "solid_g": 0.71
+   "volume_cm3": 0.615,
+   "shell_cm3": 0.615,
+   "mass_g": 0.77,
+   "solid_g": 0.77
   },
   "guide_plate_cell_2_2": {
-   "volume_cm3": 2.918,
-   "shell_cm3": 1.897,
-   "mass_g": 2.58,
-   "solid_g": 3.68
+   "volume_cm3": 2.876,
+   "shell_cm3": 1.861,
+   "mass_g": 2.54,
+   "solid_g": 3.62
   },
   "guide_plate_tongue_plusX": {
-   "volume_cm3": 0.886,
-   "shell_cm3": 0.666,
-   "mass_g": 0.88,
-   "solid_g": 1.12
+   "volume_cm3": 0.612,
+   "shell_cm3": 0.568,
+   "mass_g": 0.72,
+   "solid_g": 0.77
   },
   "horn_coupler": {
-   "volume_cm3": 2.178,
-   "shell_cm3": 1.927,
-   "mass_g": 2.48,
-   "solid_g": 2.74
+   "volume_cm3": 2.241,
+   "shell_cm3": 1.975,
+   "mass_g": 2.54,
+   "solid_g": 2.82
   },
-  "housing_Uslot_shaft1_plusX": {
-   "volume_cm3": 0.822,
-   "shell_cm3": 0.642,
-   "mass_g": 0.84,
-   "solid_g": 1.04
+  "housing_Uslot_minusX_row2": {
+   "volume_cm3": 1.114,
+   "shell_cm3": 0.928,
+   "mass_g": 1.2,
+   "solid_g": 1.4
+  },
+  "housing_Uslot_plusX_row1": {
+   "volume_cm3": 1.101,
+   "shell_cm3": 0.855,
+   "mass_g": 1.12,
+   "solid_g": 1.39
   },
   "housing_endwall_pockets_plusX": {
-   "volume_cm3": 1.088,
-   "shell_cm3": 0.979,
-   "mass_g": 1.25,
-   "solid_g": 1.37
+   "volume_cm3": 0.385,
+   "shell_cm3": 0.359,
+   "mass_g": 0.46,
+   "solid_g": 0.48
   },
   "housing_servo_block_minusY": {
    "volume_cm3": 1.698,
@@ -1137,12 +975,6 @@
    "shell_cm3": 0.298,
    "mass_g": 0.38,
    "solid_g": 0.38
-  },
-  "shaft_2": {
-   "volume_cm3": 0.351,
-   "shell_cm3": 0.324,
-   "mass_g": 0.41,
-   "solid_g": 0.44
   }
  }
 }

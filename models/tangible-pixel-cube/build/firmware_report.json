@@ -4,20 +4,20 @@
   "generator": "models/tangible-pixel-cube/firmware.py",
   "source": {
     "file": "models/tangible-pixel-cube/demo/demo.ino",
-    "sha256": "eb57ac82808c5a572565516b0bdec9ac5520920988593be4d99505bf61763d4b"
+    "sha256": "406c2bd7f3b031ad6abbeeffd0637ca846738bd41ab71e0ba249932abba4d071"
   },
   "bar": {
     "file": "models/tangible-pixel-cube/demo/bar.html",
-    "sha256": "f80197ff383ab665d46b88788b3b24bf7afd2598f292a7b7ecb70505ef92d702"
+    "sha256": "73330d901190ef5252373e6ca71ef50c2acf7fbcd3221d288481be269b7407db"
   },
   "inputs": [
     {
       "file": "models/tangible-pixel-cube/patterns.py",
-      "sha256": "c91d560ab93641d34294f80ed2ee9fb6ae227110dcf05927b29fad96aee8974a"
+      "sha256": "bdd5540777c3476d96280b7a7e8e5974cf985a679aa1564d6edd18ef8e8d93aa"
     },
     {
       "file": "models/tangible-pixel-cube/params.py",
-      "sha256": "ee52c39ee13203ea7fcc022ae1eae270079e204b31ba31931a82a95143a54dfa"
+      "sha256": "b4ed61d12a21ccc8ef970503057f7e453ebef313c378eb51ade033720ea169a4"
     },
     {
       "file": "models/tangible-pixel-cube/firmware.py",
@@ -202,23 +202,23 @@
         ],
         [
           0.5,
+          0.8,
           1.0,
-          1.5,
-          1.0,
+          0.8,
           0.5
         ],
         [
           0.5,
-          1.5,
+          1.0,
           3.0,
-          1.5,
+          1.0,
           0.5
         ],
         [
           0.5,
+          0.8,
           1.0,
-          1.5,
-          1.0,
+          0.8,
           0.5
         ],
         [
@@ -318,7 +318,7 @@
     ],
     "simulateReport": {
       "file": "models/tangible-pixel-cube/build/simulate_report.json",
-      "sha256": "471e0371324c08da251e745660336ca57c5d3ece585bdf346e69e53fee9109b0"
+      "sha256": "aea2085628b25378bff419e2a6c1c2c4441ce357503c0deeb18a2d4f8c756490"
     },
     "marginFactor": 1.3,
     "verifiedInSimulation": {
@@ -351,7 +351,14 @@
     "w": "save trim to EEPROM"
   },
   "compile": {
-    "status": "not-compiled"
+    "sourceSha256": "406c2bd7f3b031ad6abbeeffd0637ca846738bd41ab71e0ba249932abba4d071",
+    "target": "arduino:avr:uno",
+    "status": "not-compiled",
+    "reason": "この PC に Servo ライブラリが無い（C4-2 が D: に隔離していた Arduino 環境が外れている）。新しいライブラリは入れていない。CLI 自体は C:/Users/kouga/arduino-cli-home/cli にあり、arduino:avr 1.8.8 は入っている",
+    "lastAttempt": {
+      "cli": "C:/Users/kouga/arduino-cli-home/cli/arduino-cli.exe",
+      "error": "fatal error: Servo.h: No such file or directory"
+    }
   },
   "hardwareTested": false,
   "hardwareLimitation": "マイコンへの書き込みと SG92R の通電は未実施。位相補正 PHASE_TRIM_DEG は実物で決める。"

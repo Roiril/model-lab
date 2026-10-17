@@ -40,6 +40,7 @@ import kinematics as K  # noqa: E402
 import patterns as PT  # noqa: E402
 from solid_volume import closed_boundary_volume  # noqa: E402
 
+CAP_RIB_ENGAGE_MM = 0.05          # 押さえ棒の Y 端のリブが、外装の Y 止めのブロックの面へ食い込む量（0.05。リブの高さ 0.25 - 隙間 0.2。親の仕様）
 VOLUME_FLOOR_MM3 = 0.001          # 共通体積の床。これを超えれば接触・干渉とみなす（校正で固定）
 WIN_MOUTH_IN_MM = 0.4             # ベゼルの窓の下縁（画素が入る側）の 45 度の面取り（parts_static.WIN_MOUTH_IN）
 SERVO_DEGS = [10.0 + k for k in range(161)]   # 10..170 度、1 度刻み（motion.json と同じ）
@@ -614,17 +615,13 @@ def meter_calibration(meter):
 # =============================================================================================
 def group_of(name):
     """部品 id の動き方。独立に params の id 規則から決める（motion.py を読まない）"""
-    if name in ("housing", "bezel", "guide_plate", "sg92r") or name.startswith("servo_clip_"):
+    if name in ("housing", "bezel", "guide_plate", "sg92r", "bearing_cap_px", "bearing_cap_mx") or name.startswith("servo_clip_"):
         return ("static",)
     if name in ("horn_coupler", "sg92r_horn"):
         return ("servo",)
     parts = name.split("_")
-    if parts[0] in ("shaft", "gear") and len(parts) == 2:
+    if parts[0] in ("camshaft", "gear") and len(parts) == 2:
         return ("axis", int(parts[1]))
-    if parts[:2] == ["shaft", "clip"]:
-        return ("axis", int(parts[2]))
-    if parts[0] == "cam":
-        return ("axis", int(parts[2]))
     if parts[0] == "pixel":
         return ("pixel", int(parts[1]), int(parts[2]))
     raise ValueError(f"動き方の分からない部品: {name}")
@@ -728,33 +725,132 @@ def hex_rib_regions(axis_j, x0, x1):
 
 
 def joint_seams(j):
-    """軸 j の数珠つなぎの継ぎ目（雌, 雄）。+X の歯車の部品から順に: 歯車の雌穴 <- カム 4 の雄スタブ、カム 4 の雌穴 <- カム 3、...、
-    カム 1 の雌穴 <- カム 0、カム 0 の雌穴 <- -X の端の部品 shaft_j のスタブ。歯車からカム 0 までは 5 継ぎ目"""
-    order = [f"gear_{j}"] + [f"cam_{i}_{j}" for i in range(P.N - 1, -1, -1)] + [f"shaft_{j}"]
-    return [(order[k], order[k + 1]) for k in range(len(order) - 1)]
+    """軸 j の継ぎ目（雌, 雄）。camshaft_j（胴 + カム 5 枚の一体）の +X の六角スタブを、別部品 gear_j の雌穴へ差す 1 か所だけ"""
+    return [(f"gear_{j}", f"camshaft_{j}")]
+
+
+def volume_beyond_plane(tris, axis, value, sign):
+    """閉じた三角形メッシュ（(T,3,3)）の、平面 axis = value の sign 側（sign * (x - value) >= 0）にある部分の体積。
+    三角形を平面で切り、平面上の点を原点にした四面体の符号付き体積を足す（切り口は原点を含む平面なので体積に効かない）"""
+    origin = np.zeros(3)
+    origin[axis] = value
+    total = 0.0
+    for tri in np.asarray(tris, dtype=float):
+        d = sign * (tri[:, axis] - value)
+        poly = []
+        for k in range(3):
+            a, b = tri[k], tri[(k + 1) % 3]
+            da, db = d[k], d[(k + 1) % 3]
+            if da >= 0:
+                poly.append(a)
+            if (da >= 0) != (db >= 0):
+                poly.append(a + (b - a) * (da / (da - db)))
+        for k in range(1, len(poly) - 1):
+            p0, p1, p2 = poly[0] - origin, poly[k] - origin, poly[k + 1] - origin
+            total += float(np.dot(p0, np.cross(p1, p2))) / 6.0
+    return abs(total)
+
+
+def _y_intervals(bvh, x, z, y_start, limit=60):
+    """鉛直でない柱（X = x, Z = z の Y 方向の直線）が閉じたメッシュの内側にいる Y の区間の一覧。光線を Y 方向へ繰り返し撃って交点を並べ、2 つずつ組にする"""
+    hits = []
+    origin = Vector((x, y_start, z))
+    direction = Vector((0.0, 1.0, 0.0))
+    for _ in range(limit):
+        hit = bvh.ray_cast(origin, direction)
+        if hit[0] is None:
+            break
+        hits.append(hit[0].y)
+        origin = hit[0] + direction * 2e-3        # float32 の BVH なので十分大きく進める（最小の特徴は 0.05mm）
+    return [(hits[k], hits[k + 1]) for k in range(0, len(hits) - 1, 2)]
+
+
+def _interval_overlap(a_list, b_list, lo, hi):
+    """2 組の区間の重なりの合計の長さを、[lo, hi] に切って求める"""
+    total = 0.0
+    for a0, a1 in a_list:
+        for b0, b1 in b_list:
+            left, right = max(a0, b0, lo), min(a1, b1, hi)
+            if right > left:
+                total += right - left
+    return total
+
+
+def cap_rib_overlap_by_sampling(cap, housing, engage, dx=0.025, dz=0.05, band=0.6):
+    """押さえ棒の Y 端のリブと外装の Y 止めのブロックの重なり体積（mm3）を、Boolean を使わず格子標本で求める。
+    棒の X・Z の範囲を dx x dz の柱に分け、各柱で Y 方向の直線が棒の内側にいる区間と外装の内側にいる区間（光線で求めた交点を 2 つずつ組にする）の重なりの
+    長さを、棒の Y の両端から内側 band の範囲で足す。Y の分解能は光線の交点の位置そのもの（格子ではない）。
+    リブの先端が棒の Y の端の面ではない（爪が先に出る）形にも使える。柱の位置はわずかにずらして、面の辺に光線が当たらないようにする。
+    engage は使わない（過去の呼び出しとの互換のため残した）"""
+    bvh_cap = _bvh_of(cap.verts, cap.faces)
+    bvh_housing = _bvh_of(housing.verts, housing.faces)
+    y_start = float(min(cap.lo[1], housing.lo[1])) - 1.0
+    y_lo, y_hi = float(cap.lo[1]), float(cap.hi[1])
+    xs = np.arange(float(cap.lo[0]) + dx * 0.37, float(cap.hi[0]), dx)
+    zs = np.arange(float(cap.lo[2]) + dz * 0.41, float(cap.hi[2]), dz)
+    total = 0.0
+    for x in xs:
+        for z in zs:
+            cap_iv = _y_intervals(bvh_cap, float(x), float(z), y_start)
+            if not cap_iv:
+                continue
+            housing_iv = _y_intervals(bvh_housing, float(x), float(z), y_start)
+            if not housing_iv:
+                continue
+            total += _interval_overlap(cap_iv, housing_iv, y_hi - band, y_hi + 0.1)
+            total += _interval_overlap(cap_iv, housing_iv, y_lo - 0.1, y_lo + band)
+    return total * dx * dz
 
 
 def designed_overlaps(scene):
-    """{(a, b): 仕様}。a < b の順。仕様 = {kind, regions, components, minMm3, maxMm3, theoryMm3}。
-    許すのは継ぎ目の雌穴の潰しリブだけ（場所 = 雌の部品の -X 面から穴の深さの範囲 x 六角の 3 面のリブ位置、個数 3、量 = 理論値）。
-    リブは差し込みの最後の 2.8mm（歯車の部品は 2.4）だけ。雌穴の -X 側の縁の面取り FIRST_LAYER_CHAMFER だけ短くなりうるので、
-    量の下限は（深さ - 面取り）、上限は深さの理論値"""
+    """{(a, b): 仕様}。a < b の順。仕様 = {kind, regions, components, minMm3, maxMm3, theoryMm3}。許すのは次の 3 種類だけ。
+    (1) 歯車と胴の継ぎ目の雌穴の潰しリブ: 場所と量は parts_moving.gear_hole() の口・底・リブの始まりから求める（リブの手前は 45 度の傾き）、個数 3
+        （雌穴の口の面取りと手前の空きにはリブが無い。リブの端の面取り分だけ短くなりうるので下限は理論値の 90%）
+    (2) 押さえ棒の Y 端の潰しリブ: 場所 = 棒の Y の両端の薄い板、量 = 棒の STL のうち Y 端の面から CAP_RIB_ENGAGE_MM 内側の平面より外の体積（±20%）
+    (3) 正本 SG92R の本体とホーン（別関数）"""
     specs = {}
     crush = P.HEX_RIB_CRUSH * 1000.0
     width = P.HEX_RIB_W * 1000.0
-    chamfer = P.FIRST_LAYER_CHAMFER * 1000.0
+    # 雌穴の寸法は形の側（parts_moving.gear_hole()）から読む: 口の X、底の X、リブの始まりの X、リブの長さ（口の面取りの奥から底まで）
+    import parts_moving as PM
+    hole = PM.gear_hole()
+    rib_len, rib_x0, x_bot = hole["rib_len"], hole["rib_x0"], hole["x_bot"]
+    clr = P.SHAFT_BORE_CLR * 1000.0
+    rib_h = P.HEX_RIB_H * 1000.0
+    ramp = rib_h - clr                      # リブの手前の端は 45 度の傾き。穴の面から clr だけ下がった所（スタブの面）に届くまで重ならない
+    # 1 本のリブがスタブの面へ食い込む体積 = 幅 x [傾き部分の三角形 0.5 x ramp x min(ramp, crush) + 平らな部分 crush x (長さ - 傾きの長さ)]
+    ramp_overlap = min(ramp, crush)
+    per_rib = width * (0.5 * ramp_overlap * ramp_overlap + crush * max(0.0, rib_len - rib_h))
     for j in range(P.N):
         for female, male in joint_seams(j):
-            depth = (P.JOINT_ENGAGE_GEAR if female.startswith("gear_") else P.JOINT_ENGAGE_CAM) * 1000.0
-            x0 = float(scene.solids[female].lo[0])
-            full = P.HEX_RIB_FACES * width * crush * depth
-            short = P.HEX_RIB_FACES * width * crush * (depth - chamfer)
+            theory = P.HEX_RIB_FACES * per_rib
             specs[tuple(sorted((female, male)))] = {
                 "kind": "joint-crush-ribs", "female": female, "male": male,
-                "regions": hex_rib_regions(j, x0 - 0.02, x0 + depth + 0.02),
-                "components": P.HEX_RIB_FACES, "theoryMm3": short, "theoryFullDepthMm3": full,
-                "minMm3": short * 0.98, "maxMm3": full * 1.02,
-                "basis": f"継ぎ目の雌穴の潰しリブ 3 本 x 幅 0.6 x 潰し代 0.18 x 長さ（穴の深さ {depth:.1f}、面取り分 {chamfer:.1f} まで短くなりうる）"}
+                "regions": hex_rib_regions(j, rib_x0 - 0.02, x_bot + 0.02),
+                "components": P.HEX_RIB_FACES, "theoryMm3": theory,
+                "minMm3": theory * 0.9, "maxMm3": theory * 1.02,
+                "holeMm": hole,
+                "basis": (f"継ぎ目の雌穴の潰しリブ 3 本の食い込み（gear_hole(): 口 X {hole['x_mouth']:.1f}、底 X {x_bot:.1f}、リブ X {rib_x0:.1f}..{x_bot:.1f} 長さ {rib_len:.1f}）。"
+                          f"1 本 = 幅 {width:.1f} x（傾き部分 0.5 x {ramp_overlap:.2f}^2 + 平ら部分 {crush:.2f} x {max(0.0, rib_len - rib_h):.2f}）")}
+    # 押さえ棒の潰しリブ: 棒の Y の両端の面（各端 2 本）が、外装の端壁の内面に足した Y 止めのブロックの面へ CAP_RIB_ENGAGE_MM だけ食い込む。
+    # 理論値 = 棒の STL のうち、Y の両端の面から CAP_RIB_ENGAGE_MM 内側の平面より外にある体積（実形状から求める）。場所 = 棒の Y の両端の薄い板
+    # （Z は棒を上へ 1.5mm 動かして擦れる分まで広げる。擦り合わせの接触を、棒を動かす検査で数えないため）
+    for name in ("bearing_cap_px", "bearing_cap_mx"):
+        if name not in scene.solids:
+            continue
+        solid = scene.solids[name]
+        y_lo, y_hi = float(solid.lo[1]), float(solid.hi[1])
+        e = CAP_RIB_ENGAGE_MM
+        theory = cap_rib_overlap_by_sampling(solid, scene.solids["housing"], e)
+        x0, x1 = float(solid.lo[0]) - 0.1, float(solid.hi[0]) + 0.1
+        z0, z1 = float(solid.lo[2]) - 0.1 - 1.5, float(solid.hi[2]) + 0.1 + 1.5
+        regions = [[[x0, y_hi - 0.5, z0], [x1, y_hi + 0.1, z1]], [[x0, y_lo - 0.1, z0], [x1, y_lo + 0.5, z1]]]
+        specs[tuple(sorted((name, "housing")))] = {
+            "kind": "cap-end-ribs", "regions": regions, "components": None, "theoryMm3": theory,
+            "minMm3": theory * 0.8, "maxMm3": theory * 1.2 + 0.01,
+            "basis": (f"押さえ棒の Y 端のリブ（各端 2 本、高さ {P.CAP_RIB_H * 1000:.2f}、食い込み {e:.2f}）。棒の STL と外装の STL の両方の内側にある点の格子標本"
+                      f"（X 0.025・Z 0.05 の柱ごとに Y 方向の光線で内側の区間を求めて重なりの長さを足す。Y の端から内側 0.6 の範囲）から求めた体積 {theory:.3f}mm3 を理論値とする。"
+                      "Boolean とは別の方法。相手は外装の端壁の内面に足した Y 止めのブロックで、ブロックの実寸は外装 STL から読むので形の変更に追従する")}
     return specs
 
 
@@ -956,20 +1052,80 @@ def foot_footprint(solid):
 
 
 def shaft_vertical_play():
-    """カム軸が U 溝の中で上下する遊びが、画素の高さへそのまま足される量（軸と一緒にカムが動くので画素は剛体の並進分だけずれる）。
-    溝の底に載ったとき（重力）は -U_FLOOR_CLR、上の栓まで浮いたときは +HOLD_GAP、さらに軸が案内板を押し上げると +PLATE_PLAY_Z。
-    表の高さの許容 ±0.1 との比較（図面の位置の軸の中心 = 0）"""
+    """カム軸が U 溝の中で上下する遊びが、画素の高さへそのまま足される量（カム軸は一体なので画素は剛体の並進分だけずれる）。
+    溝の底に載ったとき（重力）は -U_FLOOR_CLR、上の押さえ棒の指まで浮いたときは +(HOLD_GAP - U_FLOOR_CLR)（指は溝の底に載った状態から HOLD_GAP 上）。
+    表の高さの許容 ±0.1 との比較（図面の位置の軸の中心 = 0）。案内板は経由しない"""
     settled = -(P.U_SLOT_W * 500.0 - P.U_SLOT_UP * 1000.0 - P.JOURNAL_D * 500.0)
-    plug = P.HOLD_GAP * 1000.0
-    pushed = plug + P.PLATE_PLAY_Z * 1000.0
+    capped = (P.HOLD_GAP - P.U_FLOOR_CLR + P.CAP_LIFT) * 1000.0
     tol = 0.1
-    return {"settledShiftMm": settled, "floatedToPlugShiftMm": plug, "floatedPushingPlateShiftMm": pushed, "tableToleranceMm": tol,
-            "settledWithinTolerance": bool(abs(settled) <= tol + 1e-9), "plugWithinTolerance": bool(abs(plug) <= tol + 1e-9),
-            "pushingPlateWithinTolerance": bool(abs(pushed) <= tol + 1e-9),
-            "note": (f"軸が溝の底に載っていれば画素は表より {abs(settled):.2f} 低い、栓まで浮くと {plug:.2f} 高い（どちらも許容 ±{tol} の内）。"
-                     f"軸が案内板を押し上げる分まで入れると {pushed:.2f} 高く、許容を超える。"
-                     "浮くのは歯車の分離力が画素と軸の重さを超えるときで、実機で確かめる。+Z 側の停止の余裕 0.6（斜面で 1.2）は十分"),
+    return {"settledShiftMm": settled, "floatedToCapShiftMm": capped, "tableToleranceMm": tol,
+            "settledWithinTolerance": bool(abs(settled) <= tol + 1e-9), "capWithinTolerance": bool(abs(capped) <= tol + 1e-9),
+            "note": (f"軸が溝の底に載っていれば画素は表より {abs(settled):.2f} 低い、押さえ棒の指まで浮くと {capped:.2f} 高い（許容 ±{tol}）。"
+                     "押さえ棒は外装に座るので、案内板の遊びは鎖に入らない。浮くのは歯車の分離力が画素と軸の重さを超えるときで、実機で確かめる。"
+                     "+Z 側の停止の余裕 0.6（斜面で 1.2）は十分"),
             "limit": "公称 STL の幾何。実際の軸の位置は摩擦と荷重で決まるので実機未確認"}
+
+
+def section_x_range(tris, z):
+    """水平面 Z = z で切った断面（三角形の辺と平面の交点）の X の範囲。交点が無ければ None"""
+    tris = np.asarray(tris, dtype=float)
+    xs = []
+    for k in range(3):
+        a, b = tris[:, k], tris[:, (k + 1) % 3]
+        da, db = a[:, 2] - z, b[:, 2] - z
+        hit = (da * db < 0) | (da == 0)
+        if not hit.any():
+            continue
+        t = np.where(db[hit] != da[hit], da[hit] / (da[hit] - db[hit]), 0.0)
+        xs.append(a[hit, 0] + t * (b[hit, 0] - a[hit, 0]))
+    if not xs:
+        return None
+    xs = np.concatenate(xs)
+    return float(xs.min()), float(xs.max())
+
+
+def tower_layout(tris, stem_x_mm, fractions=(0.15, 0.3, 0.5, 0.7, 0.85)):
+    """画素の茎（角筒）の X の位置と幅を、茎の高さ範囲（足の上端 + 0.5 から つばの下 - 0.5）を fractions で切った断面の X 範囲で測る。
+    茎の側面には上下の端にしか頂点が無いので、頂点の範囲では測らない。照合: 中心 = stem_x ±0.02、幅 = TOWER_W ±0.05
+    通気穴や溝の高さでは外面の一部が欠けて細く出うるので、断面の過半数（3 か所以上）が合えば合格とする。戻り: {sections, medianCenterMm, medianWidthMm, matching, pass}"""
+    z0 = P.CAM_TOP_FLUSH * 1000.0 + P.FOOT_H * 1000.0 + 0.5
+    z1 = P.FLANGE_BOT_FLUSH * 1000.0 - 0.5
+    sections = []
+    for f in fractions:
+        z = z0 + (z1 - z0) * f
+        rng = section_x_range(tris, z)
+        if rng is None:
+            continue
+        center, width = (rng[0] + rng[1]) / 2.0, rng[1] - rng[0]
+        sections.append({"zMm": z, "xMinMm": rng[0], "xMaxMm": rng[1], "centerMm": center, "widthMm": width,
+                         "match": bool(abs(center - stem_x_mm) <= 0.02 and abs(width - P.TOWER_W * 1000.0) <= 0.05)})
+    matching = sum(1 for row in sections if row["match"])
+    centers = sorted(row["centerMm"] for row in sections)
+    widths = sorted(row["widthMm"] for row in sections)
+    med = lambda v: v[len(v) // 2] if v else None
+    return {"sections": sections, "medianCenterMm": med(centers), "medianWidthMm": med(widths), "matching": matching,
+            "pass": bool(len(sections) >= 3 and matching >= 3 and matching * 2 > len(sections))}
+
+
+def tower_layout_calibration(scene):
+    """正例: pixel_2_2 の茎が stem_x に一致。負例: 茎を 0.8mm ずらした形（STL の三角形を X に 0.8 動かす）、幅を 1mm 細めた形は不合格"""
+    solid = scene.solids["pixel_2_2"]
+    stem = K.stem_x(2, 2) * 1000.0
+    ok = tower_layout(solid.tris, stem)
+    moved = solid.tris.copy()
+    moved[:, :, 0] += 0.8
+    shifted = tower_layout(moved, stem)
+    # 幅の負例: 茎の高さ範囲の頂点だけ X を中心へ 0.5 寄せて細くした形
+    narrow = solid.tris.copy()
+    z0 = P.CAM_TOP_FLUSH * 1000.0 + P.FOOT_H * 1000.0 + 0.2
+    z1 = P.FLANGE_BOT_FLUSH * 1000.0 - 0.2
+    sel = (narrow[:, :, 2] > z0) & (narrow[:, :, 2] < z1)
+    narrow[:, :, 0] = np.where(sel, stem + (narrow[:, :, 0] - stem) * (P.TOWER_W * 1000.0 - 1.0) / (P.TOWER_W * 1000.0), narrow[:, :, 0])
+    thin = tower_layout(narrow, stem)
+    return {"correct": {"pass": ok["pass"], "medianCenterMm": ok["medianCenterMm"], "medianWidthMm": ok["medianWidthMm"], "sections": len(ok["sections"])},
+            "shifted0.8mm": {"pass": shifted["pass"], "medianCenterMm": shifted["medianCenterMm"]},
+            "narrowed1mm": {"pass": thin["pass"], "medianWidthMm": thin["medianWidthMm"]},
+            "pass": bool(ok["pass"] and not shifted["pass"] and not thin["pass"])}
 
 
 def cam_foot_check(scene, log=print):
@@ -979,6 +1135,7 @@ def cam_foot_check(scene, log=print):
     - 表の停止角で表どおりの高さ（±0.1mm）"""
     flush_z = P.CAM_TOP_FLUSH * 1000.0
     rows = []
+    layouts = []
     worst_penetration, worst_float = 0.0, 0.0
     not_own = []
     table_rows = []
@@ -989,8 +1146,16 @@ def cam_foot_check(scene, log=print):
         candidates = [name for name in scene.names if scene.groups[name][0] == "axis" and abs(scene.groups[name][1] - j) <= 1]
         for i in range(P.N):
             pixel = f"pixel_{i}_{j}"
-            cam = f"cam_{i}_{j}"
+            cam = f"camshaft_{j}"
             foot = foot_footprint(scene.solids[pixel])
+            # 足の X の中央 = 自分のカムの X（kinematics.cam_x）、茎の中央 = kinematics.stem_x（足は茎から偏心して自分のカムの真上に載る）
+            foot_center = (foot["x"][0] + foot["x"][1]) / 2.0
+            tower = tower_layout(scene.solids[pixel].tris, K.stem_x(i, j) * 1000.0)
+            layout = {"footCenterXMm": foot_center, "camXMm": K.cam_x(i, j) * 1000.0,
+                      "stemCenterXMm": tower["medianCenterMm"], "stemXMm": K.stem_x(i, j) * 1000.0, "stemWidthMm": tower["medianWidthMm"],
+                      "stemSectionsMatching": f"{tower['matching']}/{len(tower['sections'])}"}
+            layout["pass"] = bool(abs(foot_center - layout["camXMm"]) <= 0.02 and tower["pass"])
+            layouts.append({"pixel": pixel, **layout})
             rect = (foot["x"][0], foot["x"][1], foot["y"][0], foot["y"][1])
             subsets = {}
             for name in candidates:
@@ -1046,8 +1211,13 @@ def cam_foot_check(scene, log=print):
         log(f"  足と接触 行 {j} 完了 {time.time() - started:.0f}s")
     table_worst = max(abs(row["errorMm"]) for row in table_rows)
     footprint_ok = all(abs(row["foot"]["areaMm2"] - row["foot"]["rectangleAreaMm2"]) < 1e-3 for row in rows)
-    passed = bool(worst_penetration <= 0.01 and worst_float <= 0.05 and not not_own and table_worst <= 0.1 and footprint_ok)
+    tower_cal = tower_layout_calibration(scene)
+    layout_ok = bool(all(row["pass"] for row in layouts) and tower_cal["pass"])
+    passed = bool(worst_penetration <= 0.01 and worst_float <= 0.05 and not not_own and table_worst <= 0.1 and footprint_ok and layout_ok)
     return {
+        "footAndStemLayout": {"pixels": layouts, "pass": layout_ok,
+                              "rule": "足の X の中央 = cam_x（頂点の範囲、±0.02）、茎は高さ範囲の 5 か所の断面（辺と平面の交点）の X 範囲: 中心 = stem_x ±0.02、幅 = TOWER_W ±0.05、過半数が合うこと",
+                              "calibration": tower_cal},
         "pixels": len(rows), "servoDegs": len(SERVO_DEGS), "sampling": "足の下面の矩形（X 4.6 x Y 20）の真上から見た最高点。上向きの三角形の頂点・矩形の辺との交点・矩形の角の 3 種類の候補から厳密に求める（格子の刻みによる取りこぼし無し）",
         "flushFootBottomZMm": flush_z,
         "footBottomZMm": sorted({round(row["foot"]["zMm"], 4) for row in rows}),
@@ -1113,6 +1283,129 @@ def pixel_limits(meter, scene):
             "method": ("画素 1 つだけを +Z（+3 の姿勢）と -Z（-3 の姿勢）へ動かし、ベゼル・案内板との共通体積が床を超える最初の移動量を二分探索。"
                        "ベゼルを 200mm 退避した負例で接触が消えること。"),
             "pass": all(row["pass"] for row in rows)}
+
+
+def _bvh_of(vertices, faces):
+    return BVHTree.FromPolygons([tuple(v) for v in vertices.tolist()], faces.tolist(), epsilon=0.0)
+
+
+def min_surface_distance(va, bvh_a, vb, bvh_b, cutoff=3.0, mask_a=None, mask_b=None):
+    """2 つの閉じた表面の最短距離の推定（mm）。両方向で「頂点 -> 相手の面」の最短距離を取る（cutoff を超える頂点は数えない）。
+    推定は真の距離以上: 辺と辺が斜めに交わる最近点は頂点にならないので、頂点が粗い面どうしでは大きく出る。
+    カムの輪郭は 0.5° 刻み（外周で約 0.1mm）の頂点で密なので、円錐と板の最短距離はこの推定で 0.01mm 以内に収まる（校正で確かめる）。
+    返り値: (距離 or None（cutoff 以内に無い）)"""
+    best = None
+    for verts, bvh_other, mask in ((va, bvh_b, mask_a), (vb, bvh_a, mask_b)):
+        points = verts if mask is None else verts[mask]
+        for point in points:
+            hit = bvh_other.find_nearest(Vector(point), cutoff)
+            if hit[0] is not None and (best is None or hit[3] < best):
+                best = hit[3]
+    return best
+
+
+def cone_clearance_calibration():
+    """最短距離の推定を、答えの分かる形で校正する。面と面（0.35mm 離した立方体）、正多角柱どうし（円錐と板に近い、軸 17mm の間の円柱 2 本）、接触と食い込み"""
+    cube = cube_solid("cc_a", (0, 0, 0), 2.0)
+    rows = {}
+
+    def distance(solid_a, matrix_a, solid_b, matrix_b):
+        va, vb = solid_a.posed(matrix_a), solid_b.posed(matrix_b)
+        return min_surface_distance(va, _bvh_of(va, solid_a.faces), vb, _bvh_of(vb, solid_b.faces))
+
+    rows["faceGap0.35"] = {"measured": distance(cube, np.eye(4), cube, translation_np(2.35)), "expected": 0.35, "tolerance": 1e-4}
+    rows["cornerGap"] = {"measured": distance(cube, np.eye(4), cube, translation_np(2.3, 2.3, 2.3)),
+                         "expected": math.sqrt(3) * 0.3, "tolerance": 1e-4}
+    # 円柱（96 角形、外接円の半径 8.2）2 本を Y 方向 17mm で置く: 多角形どうしの最短距離を頂点ごとに解析的に求めた値と比べる
+    def prism(name, radius, cy, n=96):
+        ang = np.arange(n) * 2 * np.pi / n
+        ring = np.stack([radius * np.cos(ang), radius * np.sin(ang)], axis=1)
+        bottom = np.column_stack([np.full(n, 0.0), ring[:, 0], ring[:, 1] + 0.0])
+        top = np.column_stack([np.full(n, 4.0), ring[:, 0], ring[:, 1]])
+        verts = np.vstack([bottom, top])
+        verts[:, 1] += cy
+        tris = []
+        for k in range(n):
+            a, b = k, (k + 1) % n
+            tris += [(a, n + b, n + a), (a, b, n + b)]
+        for k in range(1, n - 1):
+            tris += [(0, k + 1, k), (n, n + k, n + k + 1)]
+        return Solid(name, verts[np.array(tris)])
+    cyl_a, cyl_b = prism("cyl_a", 8.2, 0.0), prism("cyl_b", 8.2, 17.0)
+    measured = distance(cyl_a, np.eye(4), cyl_b, np.eye(4))
+    chord = 8.2 * np.cos(np.pi / 96)         # 多角形の辺の中点の半径。頂点どうしが向き合う向き（角度 90°）では 8.2 + 8.2
+    expected = 17.0 - 2 * 8.2                 # 頂点が向き合う（頂点は 90° にある: k = 24）
+    rows["polygonCylinders"] = {"measured": measured, "expected": expected, "tolerance": 1e-4, "edgeMidRadius": chord}
+    rows["touching"] = {"measured": distance(cube, np.eye(4), cube, translation_np(2.0)), "expected": 0.0, "tolerance": 1e-4}
+    for row in rows.values():
+        row["pass"] = abs(row["measured"] - row["expected"]) <= row["tolerance"]
+    rows["pass"] = all(row["pass"] for row in rows.values())
+    return rows
+
+
+def adjacent_cone_clearance(scene, theta_step=2, log=print):
+    """隣の行のカム軸（camshaft_j と camshaft_{j+1}。軸の間 17mm）の円錐・板・胴の最小隙間を、実 STL で測る。
+    サーボ 10〜170°（theta_step 刻み。表の停止角を含む）、隣の行の相対の軸方向の遊び（片側 AXIAL_DRIFT の 2 倍 = ±0.8 を -0.8, -0.4, 0, +0.4, +0.8）を全部入れる。
+    - 隙間 = 両表面の最短距離の推定（min_surface_distance）。遊び 0 の最小が design_check と同じ下限 CONE_CLEAR_NOMINAL（0.35）以上
+      （推定の頂点間隔による差を見込んで 0.02mm の許容）、遊び込みの全てで BVH の三角形交差が無い（最小隙間 > 0 = CONE_CLEAR_SLACK 以上）
+    - 食い込みの判定は交差の有無（BVH）。隙間は cutoff 3mm 以内に面が無ければ 3mm 以上"""
+    drift = 2 * P.AXIAL_DRIFT * 1000.0
+    shifts = (-drift, -drift / 2.0, 0.0, drift / 2.0, drift)
+    thetas = [float(t) for t in range(int(SERVO_DEGS[0]), int(SERVO_DEGS[-1]) + 1, theta_step)]
+    for table in P.TABLE_THETA:
+        if float(table) not in thetas:
+            thetas.append(float(table))
+    thetas.sort()
+    nominal_limit = P.CONE_CLEAR_NOMINAL * 1000.0
+    slack_limit = P.CONE_CLEAR_SLACK * 1000.0
+    rows = []
+    worst_nominal, worst_slack = None, None
+    contacts = 0
+    started = time.time()
+    for j in range(P.N - 1):
+        a_name, b_name = f"camshaft_{j}", f"camshaft_{j + 1}"
+        solid_a, solid_b = scene.solids[a_name], scene.solids[b_name]
+        axis_b = np.array([K.axis_y(j + 1) * 1000.0, P.CAM_AXIS_Z * 1000.0])
+        axis_a = np.array([K.axis_y(j) * 1000.0, P.CAM_AXIS_Z * 1000.0])
+        reach = (P.CAM_RMAX * 1000.0 + 3.5)
+        pair = {"pair": [a_name, b_name], "nominalMinMm": None, "slackMinMm": None, "contactPoses": 0, "poses": 0}
+        for theta in thetas:
+            va = solid_a.posed(scene.matrix(a_name, theta))
+            bvh_a = _bvh_of(va, solid_a.faces)
+            mask_a = np.hypot(va[:, 1] - axis_b[0], va[:, 2] - axis_b[1]) <= reach
+            for shift in shifts:
+                vb = solid_b.posed(translation_np(shift) @ scene.matrix(b_name, theta))
+                bvh_b = _bvh_of(vb, solid_b.faces)
+                mask_b = np.hypot(vb[:, 1] - axis_a[0], vb[:, 2] - axis_a[1]) <= reach
+                touching = bool(bvh_a.overlap(bvh_b))
+                distance = None if touching else min_surface_distance(va, bvh_a, vb, bvh_b, cutoff=3.0, mask_a=mask_a, mask_b=mask_b)
+                value = -1.0 if touching else (3.0 if distance is None else distance)
+                pair["poses"] += 1
+                if touching:
+                    pair["contactPoses"] += 1
+                    contacts += 1
+                if shift == 0.0 and (pair["nominalMinMm"] is None or value < pair["nominalMinMm"]):
+                    pair["nominalMinMm"] = value
+                    if worst_nominal is None or value < worst_nominal["valueMm"]:
+                        worst_nominal = {"valueMm": value, "pair": pair["pair"], "servoDeg": theta, "shiftMm": shift}
+                if pair["slackMinMm"] is None or value < pair["slackMinMm"]:
+                    pair["slackMinMm"] = value
+                    if worst_slack is None or value < worst_slack["valueMm"]:
+                        worst_slack = {"valueMm": value, "pair": pair["pair"], "servoDeg": theta, "shiftMm": shift}
+        rows.append(pair)
+        log(f"  円錐の隙間 {a_name}-{b_name} 完了 {time.time() - started:.0f}s 最小（遊び 0）{pair['nominalMinMm']:.3f} 遊び込み {pair['slackMinMm']:.3f}")
+    nominal_min = min(row["nominalMinMm"] for row in rows)
+    slack_min = min(row["slackMinMm"] for row in rows)
+    passed = bool(nominal_min >= nominal_limit - 0.02 and contacts == 0 and slack_min > slack_limit)
+    return {"pairs": rows, "thetaDegs": [thetas[0], thetas[-1], len(thetas)], "shiftsMm": list(shifts),
+            "nominalMinMm": nominal_min, "nominalLimitMm": nominal_limit, "nominalToleranceMm": 0.02,
+            "slackMinMm": slack_min, "slackLimitMm": slack_limit, "contactPoses": contacts,
+            "worstNominal": worst_nominal, "worstWithSlack": worst_slack,
+            "method": ("2 本のカム軸（実 STL）を、サーボ角と相対の軸方向のずれの全組み合わせの姿勢で置き、BVH で三角形の交差（接触）を調べ、"
+                       "交差が無い姿勢では両表面の最短距離を頂点から相手の面への最近傍で推定する。負 = 食い込み。"
+                       "design_check の下限と同じ: 遊び 0 の最小 >= 0.35、遊び込みの最小 > 0"),
+            "limit": "最短距離は頂点から面への推定（辺と辺が斜めに交わる最近点は頂点に無い）。校正で円柱 2 本と立方体の既知の距離に 1e-4 で一致",
+            "pass": passed}
 
 
 def part_calibration(meter, scene):
@@ -1230,9 +1523,10 @@ def main():
     input_pass = bool(evidence_summary["calibrationPass"] and not evidence_summary["missingFiles"]
                       and classification["pass"])
     scene = Scene()
+    calibration["coneDistance"] = cone_clearance_calibration()
     calibration["realPartDetection"] = part_calibration(meter, scene)
-    if not calibration["realPartDetection"]["pass"]:
-        failed = ["realPartDetection"]
+    if not (calibration["realPartDetection"]["pass"] and calibration["coneDistance"]["pass"]):
+        failed = [key for key in ("realPartDetection", "coneDistance") if not calibration[key]["pass"]]
         write_json(BUILD / "verify_report.json", {"version": 1, "model": "tangible-pixel-cube",
                                                    "calibration": calibration, "overall": {"pass": False, "failures": ["実部品での校正に失敗"]}})
         raise SystemExit("part calibration failed: " + ", ".join(failed))
@@ -1246,7 +1540,7 @@ def main():
     canonical = canonical_servo_allowance()
     designed, violations = classify_interference(rows, specs, canonical)
     present_specs = {tuple(row["parts"]) for row in designed}
-    missing_designed = [list(key) for key in sorted(specs) if key not in present_specs]
+    missing_designed = [list(key) for key in sorted(specs) if key not in present_specs and specs[key].get("minMm3", 0.0) > 0.0]
     for key in missing_designed:
         violations.append({"parts": key, "reason": "設計した潰しリブの重なりが無い（リブが効かない）"})
     designed_keys = {tuple(row["parts"]) for row in designed}
@@ -1281,6 +1575,8 @@ def main():
         "pass": bool(not violations and agreement["pass"])}
     log("カムと画素の足")
     camfoot = cam_foot_check(scene, log)
+    log("隣の行の円錐の隙間")
+    cone = adjacent_cone_clearance(scene, log=log)
     log("画素の上下の限界")
     limits = pixel_limits(meter, scene)
     end_hashes = source_hashes(stl_paths)
@@ -1298,6 +1594,8 @@ def main():
         failures.append("干渉: 設計した重なり以外の共通体積、または省略の不一致がある")
     if not camfoot["pass"]:
         failures.append("カムと足: 食い込み・浮き・載っている部品・表の高さのいずれかが範囲外")
+    if not cone["pass"]:
+        failures.append(f"隣の行の円錐の隙間: 遊び 0 の最小 {cone['nominalMinMm']:.3f}mm（下限 {cone['nominalLimitMm']:.2f}）、遊び込みの最小 {cone['slackMinMm']:.3f}mm（下限 {cone['slackLimitMm']:.2f} を超えること）")
     if not limits["pass"]:
         failures.append("画素の上下の限界の隙間が設計値と合わない")
     if not integrity["pass"]:
@@ -1308,7 +1606,7 @@ def main():
         "inputIntegrity": {"booleanEvidence": "build/boolean_evidence.json", "summary": evidence_summary,
                            "classification": classification, "pass": input_pass},
         "motionConsistency": consistency,
-        "interference": interference, "camFoot": camfoot, "pixelLimits": limits,
+        "interference": interference, "camFoot": camfoot, "coneClearance": cone, "pixelLimits": limits,
         "sourceIntegrity": integrity,
         "overall": {"pass": not failures, "failures": failures,
                     "elapsedSeconds": round(time.time() - started, 1),

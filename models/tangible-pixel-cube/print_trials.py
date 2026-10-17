@@ -10,6 +10,7 @@
 出力: prints/tangible-pixel-cube/trial/<名前>.stl と trial_pieces.json（切り出しの箱・確かめること）
 """
 import json
+import math
 import os
 import shutil
 import sys
@@ -26,6 +27,7 @@ sys.stdout.reconfigure(encoding="utf-8")
 import print_kit as K  # noqa: E402
 import params as P  # noqa: E402
 import parts_static as S  # noqa: E402
+import kinematics as KN  # noqa: E402
 
 BUILD = os.path.join(HERE, "build")
 OUT = os.path.join(ROOT, "prints", "tangible-pixel-cube", "trial")
@@ -47,32 +49,58 @@ _PX = S.PLATE_Z1  # 案内板の上面（mm）
 _HW = P.HOLE_W * 1000 / 2
 _FX0, _FX1, _FY0, _FY1 = foot_box(0.3)
 
+_J2_X_CUT = (KN.cam_x_range(3, 2)[1] + KN.cam_x_range(4, 2)[0]) / 2 * 1000      # 行 2 のカム軸を、カム 3 と 4 の間の胴で切る X（mm）
+_XS = P.U_SLOT_W * 500 + 0.3                                                      # +X の U 溝の半幅（余裕 0.3）
+_XM = P.U_SLOT_MX_W * 500 + 0.3                                                   # -X の U 溝の半幅（余裕 0.3）
+_CAP_Z1 = P.CAP_TOP_Z * 1000
+_YT = S.TONGUE_YC[0]                                                              # -Y 側の舌の爪の中心 Y
+_d, _yr, _yf, _hy0, _hy1 = S._tongue_y(_YT)
+_TG = (None, min(_yr, _yf + _d * S.TONGUE_SLIT), max(_yr, _yf + _d * S.TONGUE_SLIT))   # 舌の Y の範囲（根元から先の切り込みの端まで）
+
 # 組立姿勢の座標（mm）。box = (x0, x1, y0, y1, z0, z1)。plate = どの試し刷りのプレートへ載せるか。
-# targets = 狙った場所の箱（組立姿勢）。box が全部含み（切る面には 0.3mm 以上の余裕）、元の部品に形がある（三角形が掛かる）ことを流すたびに確かめる
+# targets = 狙った場所の箱（組立姿勢）。box が全部含み（切る面には 0.3mm 以上の余裕）、元の部品に形がある（三角形が掛かる）ことを流すたびに確かめる。
+# 寸法は params から作る（書き写さない）。形の細部の名前（parts_static）は、形が変わっても動くよう params だけで狙いを書く
 TRIALS = [
     # --- 試し刷り 1: 回す・噛み合わせる部分
     {"name": "horn_coupler", "src": "horn_coupler", "box": None, "plate": 1, "targets": [],
      "checks": f"ホーン（SG92R 付属）が受けのポケットに嵌まるか（ホーンとの隙間 片側 {mm1(P.HORN_CLR)}mm、口の面取り {mm1(P.FIRST_LAYER_CHAMFER)}mm）。"
                f"半円歯車（{P.SERVO_Z} 歯）と中央の軸の歯車（{P.CHAIN_Z} 歯）の噛み合い。支えのピン Ø{mm1(P.RECV_PIN_D)}"},
-    # 数珠つなぎの継ぎ目（雄の六角スタブ → 次の部品の雌の六角穴）。部品そのものが小さいので切らずに全部を刷る
-    {"name": "shaft_2", "src": "shaft_2", "box": None, "plate": 1, "targets": [],
-     "checks": f"軸の -X 端の部品。雄スタブ（六角 AF{mm1(P.STUB_AF)}、切り落とし面 = 向きを決める）の先が、次のカム（cam_0_2）の雌穴（二面幅 {mm1(P.SHAFT_BORE_AF)}）へ "
-               f"{mm1(P.JOINT_ENGAGE_CAM)}mm 入るか。-X の丸い軸受け Ø{mm1(P.JOURNAL_D)}（外装の U 溝 幅 {mm1(P.U_SLOT_W)} へ落ちるか）。位相合わせ治具の六角部"},
-    {"name": "cam_0_2", "src": "cam_0_2", "box": None, "plate": 1, "targets": [],
-     "checks": f"カム 1 枚（板 {mm1(P.CAM_T)}）。-X 側の雌穴（二面幅 {mm1(P.SHAFT_BORE_AF)}、深さ {mm1(P.JOINT_ENGAGE_CAM)}、潰しリブ 幅{mm1(P.HEX_RIB_W)}・潰し代{mm1(P.HEX_RIB_CRUSH)}、"
-               f"穴の口の面取り {mm1(P.FIRST_LAYER_CHAMFER)}）に shaft_2 のスタブが入る固さ（潰しリブが擦る長さ 2.4〜2.8mm）。+X のスタブは cam_4_2 の雌穴へ。回転ガタ"},
-    {"name": "cam_4_2", "src": "cam_4_2", "box": None, "plate": 1, "targets": [],
-     "checks": f"カム 1 枚（端のカム）。雌穴に cam_0_2 のスタブが入る固さ。+X のスタブ（六角 AF{mm1(P.STUB_AF)}）は gear_2 の雌穴（深さ {mm1(P.JOINT_ENGAGE_GEAR)}）へ。"
-               "切り落とし面の向きが違うと入らないこと（鏡像・60° おきの回しで弾く）"},
+    {"name": "camshaft_2", "src": "camshaft_2", "box": None, "plate": 1, "targets": [],
+     "checks": f"カム軸 1 本（行 2）の全体。-X 端を下にして立てて刷る。各カムの下側は {P.CAM_SKIRT_DEG:.0f}° のすそ（サポート無し）。胴 Ø{mm1(P.CAMSHAFT_BODY_D)}、"
+               f"-X の軸受け Ø{mm1(P.JOURNAL_MX_D)}、+X の雄スタブ（六角 AF{mm1(P.STUB_AF)}）。刷るときだけの円盤（Ø{mm1(P.PRINT_FOOT_D)}、厚み {mm1(P.PRINT_FOOT_T)}、"
+               f"リブ {P.PRINT_FOOT_RIBS} 本）を手で折り取り、-X の軸受けの端面に残る跡（上限 {mm1(P.PRINT_FOOT_RESIDUE_MAX)}mm）が外装の溝に当たらないか。"
+               "立てて刷ったときの揺れ・倒れ・すその面の荒れ"},
+    {"name": "camshaft_2_gear_end", "src": "camshaft_2", "box": (_J2_X_CUT, 44.0, -13.0, 13.0, P.CAM_AXIS_Z * 1000 - 13.0, P.CAM_AXIS_Z * 1000 + 13.0), "plate": 1,
+     "targets": [("カム 4 と雄スタブ", (KN.cam_x_range(4, 2)[0] * 1000, P.GEAR_HUB_X0 * 1000 + P.JOINT_ENGAGE_GEAR * 1000 - 0.3,
+                                      -P.CAM_RMAX * 1000, P.CAM_RMAX * 1000, P.CAM_AXIS_Z * 1000 - P.CAM_RMAX * 1000, P.CAM_AXIS_Z * 1000 + P.CAM_RMAX * 1000))],
+     "checks": f"カム軸の +X 端（最後のカムと雄スタブ。胴の途中で切った小片。下の面は切り口で、元と同じ向きに立てて刷る）。雄スタブ（六角 AF{mm1(P.STUB_AF)}、"
+               f"切り落とし面 = 向きを決める）が gear_2 の雌穴（二面幅 {mm1(P.SHAFT_BORE_AF)}、深さ {mm1(P.JOINT_ENGAGE_GEAR)}）へ入る固さと向き"},
     {"name": "gear_2", "src": "gear_2", "box": None, "plate": 1, "targets": [],
-     "checks": f"歯車の部品（{P.CHAIN_Z} 歯、歯幅 {mm1(P.GEAR_T)}、ボス Ø{mm1(P.GEAR_BOSS_D)} 厚み {mm1(P.GEAR_BOSS_T)}、+X の丸い軸受け Ø{mm1(P.JOURNAL_D)}）。"
-               f"-X 向きの雌穴（二面幅 {mm1(P.SHAFT_BORE_AF)}、深さ {mm1(P.JOINT_ENGAGE_GEAR)}、潰しリブ）に cam_4_2 のスタブが入る固さ。歯車どうしの噛み合い（2 枚並べて回す）"},
-    # --- 試し刷り 2: 外装・案内・画素
-    {"name": "housing_Uslot_shaft1_plusX", "src": "housing", "box": (43.0, 48.1, -25.5, -8.5, 44.5, 58.5), "plate": 2,
-     "targets": [("U 溝・帯・栓の縦溝", (P.PAD_X0 * 1000, S.IX + S.U_RECESS_D, -17.0 - 2.9, -17.0 + 2.9, _ZC - 5.0, S.U_RECESS_TOP_Z))],
-     "checks": f"外装の U 溝（幅 {mm1(P.U_SLOT_W)}、軸の丸 Ø{mm1(P.JOURNAL_D)}）へ軸の +X 端の丸が落ちるか。帯の 45 度面取り。"
-               f"案内板の栓（隙間 {mm1(P.HOLD_GAP)}）が入る縦溝（深さ {S.U_RECESS_D}、壁は {S.HALF - S.IX - S.U_RECESS_D:.1f}mm 残る）"},
-    {"name": "housing_servo_block_minusY", "src": "housing", "box": (21.4, 32.4, -25.0, -16.4, 0.0, 28.0), "plate": 2,
+     "checks": f"歯車 gear_j（{P.CHAIN_Z} 歯、歯幅 {mm1(P.GEAR_T)}、-X のハブ Ø{mm1(P.CAMSHAFT_BODY_D)} 厚み {mm1(P.GEAR_HUB_T)}、+X のボス Ø{mm1(P.GEAR_BOSS_D)}、"
+               f"+X の丸い軸受け Ø{mm1(P.JOURNAL_D)}）。-X 向きの雌穴（二面幅 {mm1(P.SHAFT_BORE_AF)}、深さ {mm1(P.JOINT_ENGAGE_GEAR)}、潰しリブ 長さ {mm1(P.JOINT_RIB_LEN)}）に"
+               "雄スタブが入る固さ。歯車どうしの噛み合い（2 枚並べて回す）"},
+    # --- 試し刷り 2: 外装・軸受け・案内・画素
+    {"name": "housing_Uslot_minusX_row2", "src": "housing", "lay": -1, "box": (-48.1, -42.5, -9.0, 9.0, P.CAM_AXIS_Z * 1000 - 9.0, _CAP_Z1 + 1.0), "plate": 2,
+     "targets": [("-X の U 溝（Ø10 の軸受け）・じょうご・パッド", (-(P.PAD_X1 + P.U_DIG) * 1000, -P.PAD_X0 * 1000, -_XM, _XM,
+                                                       P.CAM_AXIS_Z * 1000 - P.PAD_BOT_MX * 1000, P.CAM_AXIS_Z * 1000 + P.PAD_TOP_ABOVE_MX * 1000))],
+     "checks": f"外装 -X の端壁の U 溝（幅 {mm1(P.U_SLOT_MX_W)}、カム軸の Ø{mm1(P.JOURNAL_MX_D)} の軸受けが落ちる）と口の 45° のじょうご（{mm1(P.U_FUNNEL)}）、"
+               f"パッド（内面 X {mm1(P.PAD_X0)}、軸の肩との隙間 {mm1(P.AXIAL_DRIFT)}）。押さえ棒 bearing_cap_mx の溝（棒の厚み {mm1(P.CAP_T)}）。"
+               "カム軸の -X 端が入って回り、棒で押さえられるか"},
+    {"name": "housing_Uslot_plusX_row1", "src": "housing", "lay": +1, "box": (43.0, 48.1, -25.5, -8.5, P.CAM_AXIS_Z * 1000 - 8.5, _CAP_Z1 + 1.0), "plate": 2,
+     "targets": [("+X の U 溝（Ø5 の軸受け）・じょうご・パッド", (P.PAD_X0 * 1000, (P.PAD_X1 + P.U_DIG) * 1000, -17.0 - _XS, -17.0 + _XS,
+                                                      P.CAM_AXIS_Z * 1000 - P.PAD_BOT * 1000, P.CAM_AXIS_Z * 1000 + P.PAD_TOP_ABOVE * 1000))],
+     "checks": f"外装 +X の端壁の U 溝（幅 {mm1(P.U_SLOT_W)}、歯車 gear_j の Ø{mm1(P.JOURNAL_D)} の軸受けが落ちる）と口のじょうご、パッド（内面 X {mm1(P.PAD_X0)}）。"
+               f"押さえ棒 bearing_cap_px の溝（隙間 {mm1(P.HOLD_GAP)}）。軸受けが入って回るか"},
+    {"name": "bearing_cap_mx_row2", "src": "bearing_cap_mx", "box": (-46.5, -43.5, -8.0, 8.0, P.CAM_AXIS_Z * 1000, 64.5), "plate": 2,
+     "targets": [("-X の指", (P.CAP_MX_X0 * 1000, P.CAP_MX_X0 * 1000 + P.CAP_T * 1000, -P.CAP_FINGER_W_MX * 500, P.CAP_FINGER_W_MX * 500,
+                              P.CAP_FINGER_BOT_MX * 1000, _CAP_Z1))],
+     "checks": f"押さえ棒 -X の行 2 の指 1 本ぶん（棒の厚み {mm1(P.CAP_T)}、指の幅 {mm1(P.CAP_FINGER_W_MX)}、背面の潰しリブ {mm1(P.CAP_RIB_H)}）。外装の -X の溝へ上から差して座るか、"
+               f"圧入の固さ、指の下端と軸の隙間 {mm1(P.HOLD_GAP)}"},
+    {"name": "bearing_cap_px_row2", "src": "bearing_cap_px", "box": (43.5, 46.5, -8.0, 8.0, P.CAM_AXIS_Z * 1000, 64.5), "plate": 2,
+     "targets": [("+X の指", (P.CAP_PX_X0 * 1000, P.CAP_PX_X0 * 1000 + P.CAP_T * 1000, -P.CAP_FINGER_W_PX * 500, P.CAP_FINGER_W_PX * 500,
+                              P.CAP_FINGER_BOT_PX * 1000, _CAP_Z1))],
+     "checks": f"押さえ棒 +X の行 2 の指 1 本ぶん（棒の厚み {mm1(P.CAP_T)}、指の幅 {mm1(P.CAP_FINGER_W_PX)}、背面の潰しリブ {mm1(P.CAP_RIB_H)}）。外装の +X の溝へ上から差して座るか、圧入の固さ"},
+    {"name": "housing_servo_block_minusY", "src": "housing", "box": (21.4, 32.4, -25.0, -16.4, -1.0, 28.0), "plate": 2,
      "targets": [("耳の受け（柵・奥の壁）", (S.BLOCK_X0, S.BLOCK_X1, S._servo_block_y(-1)[0], S._servo_block_y(-1)[1], S.FLOOR, S.FENCE_TOP))],
      "checks": f"サーボの取付耳（-Y 側）を挟む溝（柵の厚み {S.EAR_FENCE_T}、耳との隙間 片側 {S.EAR_GAP}、リブは{'あり' if getattr(S, 'EAR_RIB_H', 0) else '無し'}）。"
                f"実物の SG92R の耳が入るか、がたつきと抜けやすさ。押さえクリップ用の側面の窪み（深さ {S.CLIP_GROOVE_D}）"},
@@ -82,10 +110,10 @@ TRIALS = [
      "targets": [("十字穴", (-_HW - 0.3, _HW + 0.3, _FY0, _FY1, 76.0, _PX))],
      "checks": f"案内板の十字穴（茎の穴 {mm1(P.HOLE_W)} 角、足の溝 {mm1(P.SLOT_X)} x {mm1(P.SLOT_Y)}）へ画素の茎と足（{mm1(P.FOOT_X)} x {mm1(P.FOOT_Y)}）が通るか。"
                f"板の上面側の穴の縁の面取り {S.HOLE_MOUTH}。隣の溝との桟（params: 2 x {mm1(P.ROW_SHIFT)} - {mm1(P.SLOT_X)}）"},
-    {"name": "guide_plate_tongue_plusX", "src": "guide_plate", "box": (38.0, 45.5, -16.0, -1.0, 72.0, 83.6), "plate": 2,
-     "targets": [("舌と爪（-Y 側）", (S.IX - S.FIT - S.TONGUE_T - S.TONGUE_SLIT, S.IX - S.FIT + S.HOOK_H, -8.0 - S.TONGUE_L / 2 - S.TONGUE_SLIT,
-                                  -8.0 + S.TONGUE_L / 2, _PX - S.TONGUE_H - S.TONGUE_SLIT, _PX))],
-     "checks": f"案内板の舌（厚み {S.TONGUE_T}、長さ {S.TONGUE_L}、切り込み {S.TONGUE_SLIT}、根元だけ板につながる）と爪（出 {S.HOOK_H}、先の面 {S.HOOK_TIP_H}）。"
+    {"name": "guide_plate_tongue_plusX", "src": "guide_plate", "box": (41.0, 45.5, -19.0, -4.0, 72.0, 83.6), "plate": 2,
+     "targets": [("舌と爪（-Y 側）", (S.IX - S.FIT - S.TONGUE_T - S.TONGUE_SLIT, S.IX - S.FIT + S.HOOK_H, _TG[1], _TG[2],
+                                  _PX - S.TONGUE_H - S.TONGUE_SLIT, _PX))],
+     "checks": f"案内板の舌（厚み {S.TONGUE_T}、長さ {S.TONGUE_L}、切り込み {S.TONGUE_SLIT}、根元は外側・先は中央側、根元だけ板につながる）と爪（出 {S.HOOK_H}、長さ {2 * S.HOOK_HALF:.1f}、先の面 {S.HOOK_TIP_H}）。"
                f"端壁の窪み（深さ {S.POCKET_PLATE_DEPTH}）へ入れて、面内でしなる量と引き抜く力"},
     {"name": "pixel_2_2_top", "src": "pixel_2_2", "box": (-10.0, 10.0, -12.0, 12.0, 80.0, 96.1), "plate": 2,
      "targets": [("頭・つば・茎の先", (-P.FLANGE_W * 500, P.FLANGE_W * 500, -P.FLANGE_W * 500, P.FLANGE_W * 500, 80.5, P.BEZEL_Z1 * 1000))],
@@ -98,16 +126,16 @@ TRIALS = [
      "targets": [("窓と桟", (-P.WINDOW * 500 - 0.3, P.WINDOW * 500 + 0.3, -P.WINDOW * 500 - 0.3, P.WINDOW * 500 + 0.3, P.BEZEL_Z0 * 1000, P.BEZEL_Z1 * 1000))],
      "checks": f"ベゼルの窓 {mm1(P.WINDOW)}mm と桟 {mm1(P.BEZEL_BAR)}mm（params.PRINT_EXCEPTIONS: "
                f"{'bezel_bar_1.6 を例外として許可' if 'bezel_bar_1.6' in P.PRINT_EXCEPTIONS else '例外なし'}）の見た目と固さ。窓の上縁の面取り {S.WIN_MOUTH}、下縁 {S.WIN_MOUTH_IN}"},
-    {"name": "bezel_barb_plusX", "src": "bezel", "box": (41.0, 48.1, -12.0, 12.0, 86.0, 96.1), "plate": 2,
-     "targets": [("縁と爪", (S.IX - 3.0, S.IX, -S.BARB_L / 2, S.BARB_L / 2, S.BARB_Z - S.BARB_FLAT / 2 - S.BARB_H, S.BARB_Z + S.BARB_FLAT / 2 + S.BARB_H))],
-     "checks": f"ベゼルの縁（厚み {S.LIP_T}）の爪（±X の縁、出 {S.BARB_H}、壁への食い込み {S.BARB_H - S.FIT:.2f}mm、長さ {S.BARB_L:.0f}）。"
+    {"name": "bezel_barb_plusX", "src": "bezel", "box": (41.0, 48.1, 4.0, 13.0, 86.0, 96.1), "plate": 2,
+     "targets": [("縁と爪", (S.IX - 3.0, S.IX, 8.5 - S.BARB_L / 2, 8.5 + S.BARB_L / 2, S.BARB_Z - S.BARB_FLAT / 2 - S.BARB_H, S.BARB_Z + S.BARB_FLAT / 2 + S.BARB_H))],
+     "checks": f"ベゼルの縁（厚み {S.LIP_T}）の爪（±X の縁、出 {S.BARB_H}、壁への食い込み {S.BARB_H - S.FIT:.2f}mm、長さ {S.BARB_L:.1f}）。"
                "下の housing_endwall_pockets_plusX の窪みへ嵌まる固さ"},
-    {"name": "housing_endwall_pockets_plusX", "src": "housing", "box": (42.5, 48.1, -16.0, 16.0, 80.0, 93.1), "plate": 2,
-     "targets": [("ベゼルの爪の窪み", (S.IX, S.IX + S.POCKET_DEPTH, -S.POCKET_L / 2, S.POCKET_L / 2, S.BARB_Z - S.BARB_FLAT / 2 - S.POCKET_DEPTH, S.BARB_Z + S.BARB_FLAT / 2 + S.POCKET_DEPTH)),
-                 ("案内板の爪の窪み（+Y）", (S.IX, S.IX + S.POCKET_PLATE_DEPTH, 8.0 + S.HOOK_Y0 - S.POCKET_PLATE_PAD, 8.0 + S.HOOK_Y1 + S.POCKET_PLATE_PAD, 82.6, 83.4)),
-                 ("指の掛かり（+Y）", (S.HALF - S.FINGER_D, S.HALF, 8.5 - S.FINGER_W / 2, 8.5 + S.FINGER_W / 2, S.Z_SEAM - S.FINGER_H, S.Z_SEAM))],
-     "checks": f"+X 端壁（{S.HALF - S.IX:.0f}mm）の窪み 2 種: ベゼルの爪の窪み（深さ {S.POCKET_DEPTH}、壁は {S.HALF - S.IX - S.POCKET_DEPTH:.1f} 残る、z{S.BARB_Z:.0f}）と"
-               f"案内板の爪の窪み（深さ {S.POCKET_PLATE_DEPTH}、y±{abs(S.TONGUE_YC[1]):.0f} 付近）。外側の指の掛かり（深さ {S.FINGER_D}、残り {S.HALF - S.IX - S.FINGER_D:.1f}）"},
+    {"name": "housing_endwall_pockets_plusX", "src": "housing", "box": (42.5, 48.1, 3.4, 13.6, 80.0, 93.1), "plate": 2,
+     "targets": [("ベゼルの爪の窪み", (S.IX, S.IX + S.POCKET_DEPTH, 8.5 - S.POCKET_L / 2, 8.5 + S.POCKET_L / 2, S.BARB_Z - S.BARB_FLAT / 2 - S.POCKET_DEPTH, S.BARB_Z + S.BARB_FLAT / 2 + S.POCKET_DEPTH)),
+                 ("案内板の爪の窪み（+Y）", (S.IX, S.IX + S.POCKET_PLATE_DEPTH, S._tongue_y(S.TONGUE_YC[1])[3] - S.POCKET_PLATE_PAD, S._tongue_y(S.TONGUE_YC[1])[4] + S.POCKET_PLATE_PAD, 82.6, 83.4)),
+                 ("指の掛かり（+Y）", (S.HALF - S.FINGER_D, S.HALF, S.FINGER_Y[1] - S.FINGER_W / 2, S.FINGER_Y[1] + S.FINGER_W / 2, S.Z_SEAM - S.FINGER_H, S.Z_SEAM))],
+     "checks": f"+X 端壁（{S.HALF - S.IX:.0f}mm）の窪み 3 種（y {S.TONGUE_YC[1]:g} の軸の間）: ベゼルの爪の窪み（深さ {S.POCKET_DEPTH}、長さ {S.POCKET_L}、壁は {S.HALF - S.IX - S.POCKET_DEPTH:.1f} 残る、z{S.BARB_Z:.0f}）、"
+               f"案内板の爪の窪み（深さ {S.POCKET_PLATE_DEPTH}）、外側の指の掛かり（幅 {S.FINGER_W}、深さ {S.FINGER_D}、残り {S.HALF - S.IX - S.FINGER_D:.1f}）"},
 ]
 
 
@@ -196,15 +224,20 @@ def main():
         print(f"  {spec['name']}")
         check_targets(spec, A)
         out_path = os.path.join(OUT, f"{spec['name']}.stl")
+        mt = K.match_print(A, Pr)                      # 印刷用の支え（カム軸の円盤）が付く部品は三角形が多い
+        if mt["matched_fraction"] < 0.97 or mt["det"] <= 0 or mt["residual_mm"] > 1e-3:
+            raise SystemExit(f"{src}: 刷る向きへの対応が崩れている（一致 {mt['matched_fraction']:.3f}、残差 {mt['residual_mm']}）")
+        R, t = mt["R"], mt["t"]
         if spec["box"] is None:
             shutil.copyfile(os.path.join(BUILD, f"print_{src}.stl"), out_path)
             T = Pr
-            R, t, resid, _, _, det = K.rigid_fit(A, Pr)
-            note = "切らずに刷る向きの STL を写した"
+            note = "切らずに刷る向きの STL を写した" + (f"（印刷用の支え {int(mt['support_mask'].sum())} 面を含む）" if mt["support_mask"].any() else "")
         else:
-            R, t, resid, _, _, det = K.rigid_fit(A, Pr)
-            if resid > 1e-3 or det < 0:
-                raise SystemExit(f"{src}: 刷る向きへの対応が崩れている（残差 {resid}）")
+            lay = spec.get("lay", 0)
+            if lay:                                       # 壁の小片は、外側の面（±X）を下にして寝かせる（壁の厚みだけで立てると倒れる。溝は内側の面に開いているので寝かせても張り出さない）
+                th_ = math.radians(90.0 * lay)
+                Lm = np.array([[math.cos(th_), 0.0, math.sin(th_)], [0.0, 1.0, 0.0], [-math.sin(th_), 0.0, math.cos(th_)]])
+                R = Lm @ R
             C = box_cut(A, spec["box"])
             if len(C) == 0:
                 raise SystemExit(f"{spec['name']}: 切り出しが空")

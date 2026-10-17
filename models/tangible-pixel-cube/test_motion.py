@@ -80,7 +80,9 @@ def check_ids(doc, cams):
         if got != want:
             bad.append((f["servo_deg"], sorted(got ^ want)[:5]))
             break
-    return not bad and "phase_comb" not in doc["frames"][0]["transforms"] and len(want) >= 66, f"{len(want)} 部品、phase_comb は無し"
+    # 部品数は params の部品表で決まる（一体カム軸で 66 → 45 に減った）。空の部品表を通さないよう、画素 25 個は必ず含む
+    pixels = sum(1 for i in want if i.startswith("pixel_"))
+    return not bad and "phase_comb" not in doc["frames"][0]["transforms"] and pixels == P.N * P.N, f"{len(want)} 部品（画素 {pixels}）、phase_comb は無し"
 
 
 def check_finite_rigid(doc, cams):
@@ -165,7 +167,7 @@ def check_axis_alternation(doc, cams):
         d = K.servo_delta(f["servo_deg"])
         if abs(d) < 1e-9:
             continue
-        ang = [wrap(angle_of(f["transforms"][f"shaft_{j}"])) for j in range(N)]
+        ang = [wrap(angle_of(f["transforms"][f"camshaft_{j}"])) for j in range(N)]
         if abs(d) * P.G_RATIO < 179.0:        # 折り返す前の範囲だけ符号を見る
             for j in range(N - 1):
                 if ang[j] * ang[j + 1] >= 0:
@@ -184,7 +186,7 @@ def check_speed_ratio(doc, cams):
     worst_servo = 0.0
     for a, b in zip(frames, frames[1:]):
         dth = b["servo_deg"] - a["servo_deg"]
-        d2 = wrap(angle_of(b["transforms"]["shaft_2"]) - angle_of(a["transforms"]["shaft_2"]))
+        d2 = wrap(angle_of(b["transforms"]["camshaft_2"]) - angle_of(a["transforms"]["camshaft_2"]))
         worst = max(worst, abs(d2 / dth - P.AXIS_DIR[2] * P.G_RATIO))
         ds = wrap(angle_of(b["transforms"]["horn_coupler"]) - angle_of(a["transforms"]["horn_coupler"]))
         worst_servo = max(worst_servo, abs(ds / dth - 1.0))
@@ -269,28 +271,28 @@ def corrupt(doc, kind):
     mid = len(d["frames"]) // 2 + 3
     t = d["frames"][mid]["transforms"]
     if kind == "scale":                 # 拡大（剛体でなくなる）
-        t["shaft_1"][0] *= 1.01
+        t["camshaft_1"][0] *= 1.01
     elif kind == "pixel_z":             # 画素の Z が実カムからずれる
         t["pixel_2_3"][14] += 0.2
     elif kind == "direction":           # 軸 1 の回転が逆（隣と同じ向きになる）
         a = -math.radians(K.axis_angle(d["frames"][mid]["servo_deg"], 1))
         c, s = math.cos(a), math.sin(a)
         y0, z0 = K.axis_y(1) * MM, P.CAM_AXIS_Z * MM
-        t["shaft_1"][5], t["shaft_1"][6], t["shaft_1"][9], t["shaft_1"][10] = c, s, -s, c
-        t["shaft_1"][13], t["shaft_1"][14] = y0 - (c * y0 - s * z0), z0 - (s * y0 + c * z0)
+        t["camshaft_1"][5], t["camshaft_1"][6], t["camshaft_1"][9], t["camshaft_1"][10] = c, s, -s, c
+        t["camshaft_1"][13], t["camshaft_1"][14] = y0 - (c * y0 - s * z0), z0 - (s * y0 + c * z0)
     elif kind == "ratio":               # 中央軸の増速比が違う（g の代わりに 2.0）
         for f in d["frames"]:
             a = math.radians(P.AXIS_DIR[2] * 2.0 * K.servo_delta(f["servo_deg"]))
             c, s = math.cos(a), math.sin(a)
             y0, z0 = K.axis_y(2) * MM, P.CAM_AXIS_Z * MM
-            m = f["transforms"]["shaft_2"]
+            m = f["transforms"]["camshaft_2"]
             m[5], m[6], m[9], m[10] = c, s, -s, c
             m[13], m[14] = y0 - (c * y0 - s * z0), z0 - (s * y0 + c * z0)
     elif kind == "stale":               # 古い入力から作られた motion.json
         key = next(iter(d["sourceSha256"]))
         d["sourceSha256"][key] = "0" * 64
     elif kind == "missing_part":
-        del d["frames"][mid]["transforms"]["cam_0_0"]
+        del d["frames"][mid]["transforms"]["camshaft_0"]
     return d
 
 

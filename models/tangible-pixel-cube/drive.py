@@ -137,6 +137,19 @@ def six_directions(ctx, members, fixed, expected, retainers, maximum=3.0, coarse
         region = (locations or {}).get(name)
         if region is not None and result["components"]:
             located = V.components_inside(result["components"], region, tolerance=0.05)
+        # 期待した接触が探索範囲 maximum の中に無いとき: 範囲を広げて探し、止まらないのが「保持の相手が無い」からか「探索範囲が足りない」からかを区別する
+        extended = None
+        if travel is None and want is not None:
+            ext_max = max(5.0, maximum * 3.0)
+            wide = first_contact_group(ctx.meter, members, lambda t, v=vector: V.translation_np(*(np.asarray(v) * t)),
+                                       fixed, ext_max, 0.1, allowed)
+            extended = {"searchedToMm": ext_max, "travelMm": wide["travel"],
+                        "contactedPairs": sorted({f"{a}|{b}" for a, b in wide["pairs"]}),
+                        "contactComponentsBoundsMm": bounds_of(wide["components"]),
+                        "reason": ("探索範囲 %.2fmm の外で %s に %.3fmm で当たる（探索範囲が足りないのではなく、期待した止まりが無く、その先の別の面で止まる）"
+                                   % (maximum, "/".join(sorted({b for _a, b in wide["pairs"]})), wide["travel"])
+                                   if wide["travel"] is not None else
+                                   "%.1fmm 先まで保持の相手が無い（固定側のどの部品にも当たらない）" % ext_max)}
         # 負例: この方向の保持相手だけを退避させる
         removal = None
         removed_names = retainers.get(name, [])
@@ -149,13 +162,13 @@ def six_directions(ctx, members, fixed, expected, retainers, maximum=3.0, coarse
                                       reduced, maximum, coarse, allowed)
             # 相手を外すと、その接触が消える（None）か、さらに先の別の部品に当たる（0.1mm 以上遠い）こと
             removal = {"removed": removed_names, "travelMm": neg["travel"],
-                       "pass": bool(neg["travel"] is None or neg["travel"] >= travel + 0.1)}
+                       "pass": bool(neg["travel"] is None or round(neg["travel"], 2) >= round(travel + 0.1, 2))}
         rows.append({"direction": name, "label": name, "contact": {"contactTravelMm": travel},
                      "expectedMm": None if want == "contact" else want, "travelMm": travel,
                      "contactedPairs": sorted({f"{a}|{b}" for a, b in result["pairs"]}),
                      "contactComponentsBoundsMm": bounds_of(result["components"]),
                      "matchesExpected": bool(matches), "locatedAtExpectedRegion": bool(located),
-                     "retainerRemovedNegative": removal,
+                     "retainerRemovedNegative": removal, "noContactWithinSearch": travel is None, "extendedSearch": extended,
                      "pass": bool(matches and located and (removal is None or removal["pass"]))})
     return rows
 
@@ -501,7 +514,7 @@ def key_interface(ctx):
 SLOT_WALL_Y = (P.U_SLOT_W - P.JOURNAL_D) * 500.0              # 0.2
 SLOT_ARC_UP = P.U_SLOT_UP * 1000.0                              # 0.15
 SETTLED_Z = -(P.U_SLOT_W * 500.0 - SLOT_ARC_UP - P.JOURNAL_D * 500.0)   # -0.05
-FLOAT_Z = (P.HOLD_GAP + P.PLATE_PLAY_Z) * 1000.0                # 軸を上へ押すと、栓の隙間のあと案内板が上下の遊びの分だけ一緒に上がる（0.1 + 0.05）
+FLOAT_Z = (P.HOLD_GAP - P.U_FLOOR_CLR + P.CAP_LIFT) * 1000.0                # 軸を上へ押すと、押さえ棒の指に当たるまで（図面の位置から HOLD_GAP - U_FLOOR_CLR = 0.12）。押さえ棒は外装に座るので案内板は経由しない
 POSITIONS = {
     "settled": (0.0, SETTLED_Z),
     "floated": (0.0, FLOAT_Z),
@@ -633,13 +646,13 @@ def design_terms():
     servo = P.SERVO_ERR_DEG * G
     vernier_step = 360.0 / (20 * 38 / math.gcd(20, 38))
     vernier = vernier_step / 2.0 * G
-    joint_each, joints = P.JOINT_ERR_DEG, P.N          # 継ぎ目 1 つの遊び x 歯車からカム 0 までの継ぎ目の数（5）
+    joint_each, joints = P.JOINT_ERR_DEG, 1            # 継ぎ目 1 つの遊び x 継ぎ目の数（camshaft_j と gear_j の 1 か所だけ）
     joint_total = joint_each * joints
     lash_one = math.degrees(P.GEAR_LASH * 1000.0 / (P.CHAIN_GEAR_PD * 500.0))
     meshes = [3, 2, 1, 2, 3]
     chain_meshes = [2, 1, 0, 1, 2]
     # design_check の (a) 隣り合う軸の高さの差 = 床 + 栓 + 案内板の遊び。1 噛合あたり degrees(δ / R)
-    delta_a = (P.U_FLOOR_CLR + P.HOLD_GAP + P.PLATE_PLAY_Z) * 1000.0
+    delta_a = (P.U_FLOOR_CLR + P.HOLD_GAP + P.CAP_LIFT) * 1000.0       # design_check と同じ: 溝の底 + 押さえ棒の隙間 + 押さえ棒の浮き（案内板の遊びは入らない）
     ph_a = math.degrees(delta_a / (P.CHAIN_GEAR_PD * 500.0))
     # (b)+(c) 中央軸と受けの Y のずれ = U 溝の Y 隙間 + ホーンとの隙間
     ph_sector = math.degrees((P.U_SLOT_Y_CLR + P.HORN_CLR) * 1000.0 / (P.CHAIN_GEAR_PD * 500.0))
@@ -717,48 +730,85 @@ def phase_budget(link_results, horn_half_play_deg):
             "infeasiblePositionTuples": verdict["infeasiblePositionTuples"],
             "minimumMarginDeg": verdict["minimumMarginDeg"],
             "minimumMarginGravitySettledDeg": scenarios["gravitySettled"]["minimumMarginDeg"],
-            "jointNote": "継ぎ目の遊び = JOINT_ERR_DEG x 5（歯車からカム 0 までの継ぎ目の数。最悪のカム 0 に合わせ、全軸に同じ値を足す）"}
+            "jointNote": "継ぎ目の遊び = JOINT_ERR_DEG x 1（camshaft_j と gear_j の 1 か所だけ。カムは胴と一体なのでカムごとの継ぎ目は無い）"}
 
 
 # =============================================================================================
 # 5. 軸の保持
 # =============================================================================================
 def axis_members(ctx, j):
-    names = [f"shaft_{j}", f"gear_{j}"] + [f"cam_{i}_{j}" for i in range(P.N)]
+    names = [f"camshaft_{j}", f"gear_{j}"]
     return [(name, ctx.solid(name), ctx.pose[name]) for name in names]
+
+
+# 継ぎ目（camshaft_j のスタブと gear_j の雌穴）の合格基準。歯車は平歯車なので継ぎ目を引き離す軸方向の力はほぼ 0。継ぎ目が開くのは、
+# 軸方向の遊び（合計 0.8）が全部そこに集まる最悪の場合だけ。そのときの残りの差し込みが JOINT_MIN_REMAINING_MM 以上、かつ停動トルクでの
+# 六角の面圧（3 面が当たるとして、残りの差し込み長さで計算）が PLA の許容（降伏 35MPa の 1/3）以下。
+JOINT_MIN_REMAINING_MM = 1.0
+PLA_YIELD_MPA = 35.0
+PLA_ALLOWABLE_MPA = PLA_YIELD_MPA / 3.0
+JOINT_FACES = 3
+# 軸にかかる停動トルク: 増速（サーボの歯 38 -> 軸の歯 17）なのでトルクは 1/g に下がる。依頼の「0.245Nm x 増速比」は 5 倍の過大見積りなので、
+# 判定は 1/g（物理）で行い、依頼どおりの x g も参考値として併記する（どちらでも負例は fail になる）。
+JOINT_TORQUE_BASIS = "divide_by_g"
+
+
+def joint_pressure(remaining_mm):
+    """継ぎ目の六角の面圧（MPa）。3 面が当たり、各面の力は軸の中心から AF/2 の腕で受けるとして F = T / (3 x AF/2)、面積 = 面の長さ（AF/sqrt3）x 残りの差し込み長さ。
+    戻り: {pressureMpa（判定: T = 停動 / g）, pressureAtTimesGMpa（参考: T = 停動 x g）, ...}"""
+    af = P.STUB_AF * 1000.0
+    face_len = af / math.sqrt(3.0)
+    arm = af / 2.0
+    t_axis = P.SERVO_STALL_NM * 1000.0 / G                    # N mm
+    t_times_g = P.SERVO_STALL_NM * 1000.0 * G
+    if remaining_mm is None or remaining_mm <= 0:
+        return {"pressureMpa": None, "pressureAtTimesGMpa": None, "axisTorqueNmm": t_axis, "axisTorqueTimesGNmm": t_times_g}
+    area = face_len * remaining_mm
+    return {"pressureMpa": t_axis / (JOINT_FACES * arm) / area, "pressureAtTimesGMpa": t_times_g / (JOINT_FACES * arm) / area,
+            "axisTorqueNmm": t_axis, "axisTorqueTimesGNmm": t_times_g, "faceLengthMm": face_len, "armMm": arm}
+
+
+def joint_verdict(remaining_mm):
+    """残りの差し込み長さ remaining_mm の継ぎ目が基準を満たすか（0.001mm に丸めて比べる）"""
+    load = joint_pressure(remaining_mm)
+    ok = bool(remaining_mm is not None and round(remaining_mm, 3) >= JOINT_MIN_REMAINING_MM
+              and load["pressureMpa"] is not None and load["pressureMpa"] <= PLA_ALLOWABLE_MPA)
+    return {"pass": ok, **load}
 
 
 def shaft_chain_engagement(ctx, j):
     """数珠つなぎの軸 j の軸方向。両端のパッドの間（肩から肩 87.2、パッド間 87.6）で、継ぎ目が開ける量の合計（余り）と、
-    その余りが 1 つの継ぎ目に全部集まったときの差し込み長さの残り（基準 2.0mm 以上）を測る。
+    その余りが 1 つの継ぎ目に全部集まったときの差し込み長さの残り（基準: 1.0mm 以上かつ停動での六角の面圧が許容以下）を測る。
     余り = 歯車の部品を +X へ動かして +X のパッドに当たるまで + -X の端の部品を -X へ動かして -X のパッドに当たるまで（外装だけが相手）"""
     meter = ctx.meter
     housing = ctx.at("housing")
-    gear, end = f"gear_{j}", f"shaft_{j}"
-    t_g = V.first_contact(meter, ctx.solid(gear), V.linear_step(ctx.pose[gear], (1, 0, 0)), housing, maximum=1.0, coarse=0.025)["travel"]
-    t_s = V.first_contact(meter, ctx.solid(end), V.linear_step(ctx.pose[end], (-1, 0, 0)), housing, maximum=1.0, coarse=0.025)["travel"]
+    gear, end = f"gear_{j}", f"camshaft_{j}"
+    t_g = V.first_contact(meter, ctx.solid(gear), V.linear_step(ctx.pose[gear], (1, 0, 0)), housing, maximum=3.0, coarse=0.025)["travel"]
+    t_s = V.first_contact(meter, ctx.solid(end), V.linear_step(ctx.pose[end], (-1, 0, 0)), housing, maximum=3.0, coarse=0.025)["travel"]
     slack = None if t_g is None or t_s is None else t_g + t_s
 
-    def shoulder(name, sign):
-        # 肩の位置: 丸い軸受け（半径 JOURNAL_D/2）より外側の頂点の X の端
-        pts = ctx.solid(name).verts
-        radial = np.hypot(pts[:, 1] - K.axis_y(j) * 1000.0, pts[:, 2] - ZC)
-        far = pts[radial > P.JOURNAL_D * 500.0 + 0.1]
-        return float(far[:, 0].max() if sign > 0 else far[:, 0].min())
-    chain_length = shoulder(gear, +1) - shoulder(end, -1)
+    design_pad_gap = 2 * P.PAD_X0 * 1000.0                      # 設計のパッドの内面の間
+    design_slack = 2 * P.AXIAL_DRIFT * 1000.0                    # 設計の余り（片側 AXIAL_DRIFT x 2）
     seams = []
     for female, male in V.joint_seams(j):
         f_solid, m_solid = ctx.solid(female), ctx.solid(male)
         depth = float(m_solid.verts[:, 0].max() - f_solid.verts[:, 0].min())     # 雄の +X 端（スタブの先）- 雌の -X 面 = 差し込み長さ
         remaining = None if slack is None else depth - slack
         nominal = meter.common(m_solid, ctx.pose[male], f_solid, ctx.pose[female])[0]
-        opened = meter.common(m_solid, V.translation_np(-(slack or 0.0), 0, 0) @ ctx.pose[male], f_solid, ctx.pose[female])[0]
+        opened, opened_components, _ = meter.common(m_solid, V.translation_np(-(slack or 0.0), 0, 0) @ ctx.pose[male], f_solid, ctx.pose[female])
         pulled = meter.common(m_solid, V.translation_np(-(depth + 0.5), 0, 0) @ ctx.pose[male], f_solid, ctx.pose[female])[0]
+        # 最悪の位置（遊びが全部集まった位置）で潰しリブがまだ当たっている長さ（成分の X の幅の平均。保持力の目安。実機未確認）
+        widths = [hi[0] - lo[0] for lo, hi in opened_components]
+        rib_length = float(sum(widths) / len(widths)) if widths else 0.0
+        verdict = joint_verdict(remaining)
+        negative = joint_verdict(0.3)                       # 負例: 残りの差し込みを 0.3mm にした形は不合格になること
         seams.append({"female": female, "male": male, "insertionMm": depth, "remainingAtFullSlackMm": remaining,
                       "ribOverlapSeatedMm3": nominal, "ribOverlapAtFullSlackMm3": opened, "ribOverlapPulledOutMm3": pulled,
-                      "pass": bool(remaining is not None and round(remaining, 3) >= 2.0 and opened > FLOOR and pulled <= FLOOR)})
-    return {"gearToPadMm": t_g, "endToPadMm": t_s, "slackMm": slack, "shoulderToShoulderMm": chain_length,
-            "padToPadMm": None if slack is None else chain_length + slack, "seams": seams,
+                      "ribEngagedLengthAtFullSlackMm": rib_length, "ribComponentsAtFullSlack": len(widths),
+                      "load": verdict, "negativeRemaining0.3mmRejected": not negative["pass"],
+                      "pass": bool(verdict["pass"] and opened > FLOOR and pulled <= FLOOR and not negative["pass"])})
+    return {"gearToPadMm": t_g, "endToPadMm": t_s, "slackMm": slack, "designSlackMm": design_slack, "designPadGapMm": design_pad_gap,
+            "endContactParts": "camshaft の -X 端 -> 外装（パッドか溝の底かは contactBounds）", "seams": seams,
             "pass": bool(slack is not None and all(row["pass"] for row in seams))}
 
 
@@ -766,20 +816,22 @@ def shaft_retention(ctx):
     """カム軸 j（歯車・カム 5 枚・端の部品を 1 つの剛体として）を ±X/±Y/±Z へ動かし、外装と案内板との初接触を測る。
     動かす前の姿勢は図面の位置（軸の中心 = Zc、サーボ 90 度）。軸方向は継ぎ目ごとの差し込み長さの残りも測る"""
     drift = P.AXIAL_DRIFT * 1000.0
-    slot_r, journal_r, arc_up = P.U_SLOT_W * 500.0, P.JOURNAL_D * 500.0, P.U_SLOT_UP * 1000.0
-    # 図面の位置では軸の中心が丸い溝の底の中心より arc_up 下にあるので、左右の初接触は壁の隙間ではなく円弧の隙間
-    side = math.sqrt((slot_r - journal_r) ** 2 - arc_up ** 2)
-    up = P.HOLD_GAP * 1000.0                           # 図面の位置（軸の中心 = Zc）からの栓の隙間
+    # 図面の位置では軸の中心が丸い溝の底の中心より arc_up 下にあるので、左右の初接触は壁の隙間ではなく円弧の隙間。+X（Ø5、溝 5.4）と -X（Ø10、溝 10.6）の小さい方が先に当たる
+    side_px = math.sqrt((P.U_SLOT_W * 500.0 - P.JOURNAL_D * 500.0) ** 2 - (P.U_SLOT_UP * 1000.0) ** 2)
+    side_mx = math.sqrt((P.U_SLOT_MX_W * 500.0 - P.JOURNAL_MX_D * 500.0) ** 2 - (P.U_SLOT_UP_MX * 1000.0) ** 2)
+    side = min(side_px, side_mx)
+    up = (P.HOLD_GAP - P.U_FLOOR_CLR) * 1000.0         # 図面の位置（軸の中心 = Zc）から押さえ棒の指まで（指は溝の底に載った状態から HOLD_GAP 上）
     down = P.U_FLOOR_CLR * 1000.0
     results = []
     for j in range(P.N):
         y0 = K.axis_y(j) * 1000.0
-        ends = [[[43.5, y0 - 6.5, ZC - 6.0], [45.1, y0 + 6.5, ZC + 6.0]],
-                [[-45.1, y0 - 6.5, ZC - 6.0], [-43.5, y0 + 6.5, ZC + 6.0]]]
+        ends = [[[43.5, y0 - 6.5, ZC - 6.0], [46.1, y0 + 6.5, ZC + 6.0]],
+                [[-46.1, y0 - 6.5, ZC - 6.0], [-43.5, y0 + 6.5, ZC + 6.0]]]
         rows = six_directions(
-            ctx, axis_members(ctx, j), ctx.at("housing", "guide_plate"),
+            ctx, axis_members(ctx, j), ctx.at("housing", "bearing_cap_px", "bearing_cap_mx", "guide_plate"),
             {"+X": drift, "-X": drift, "+Y": side, "-Y": side, "+Z": up, "-Z": down},
-            {"+X": ["housing"], "-X": ["housing"], "+Y": ["housing"], "-Y": ["housing"], "+Z": ["guide_plate"], "-Z": ["housing"]},
+            {"+X": ["housing"], "-X": ["housing"], "+Y": ["housing"], "-Y": ["housing"],
+             "+Z": ["bearing_cap_px", "bearing_cap_mx"], "-Z": ["housing"]},
             maximum=1.0, coarse=0.025, tolerance=0.03,
             locations={"+X": [ends[0]], "-X": [ends[1]], "+Y": ends, "-Y": ends, "+Z": ends, "-Z": ends})
         chain = shaft_chain_engagement(ctx, j)
@@ -787,19 +839,33 @@ def shaft_retention(ctx):
                         "pass": all(row["pass"] for row in rows) and chain["pass"]})
     worst = {name: [row["travelMm"] for result in results for row in result["directions"] if row["direction"] == name]
              for name in DIRS}
-    remaining = [seam["remainingAtFullSlackMm"] for result in results for seam in result["chainAxial"]["seams"]]
-    slacks = [result["chainAxial"]["slackMm"] for result in results]
+
+    def span(values):
+        found = [v for v in values if v is not None]
+        if not found:
+            return "接触なし"
+        text = f"{min(found):.3f}〜{max(found):.3f}" if len(found) == len(values) else f"{min(found):.3f}〜{max(found):.3f}（{len(values) - len(found)} 本は接触なし）"
+        return text
+    missing = sorted({(row["direction"], row["extendedSearch"]["reason"]) for result in results for row in result["directions"] if row.get("extendedSearch")})
+    missing_text = "".join(f" {d}: {r}。" for d, r in missing)
+    remaining = [seam["remainingAtFullSlackMm"] for result in results for seam in result["chainAxial"]["seams"] if seam["remainingAtFullSlackMm"] is not None] or [0.0]
+    slacks = [result["chainAxial"]["slackMm"] for result in results if result["chainAxial"]["slackMm"] is not None] or [0.0]
     play = {"upMm": up, "downMm": down, "totalVerticalPlayMm": up + down}
     return interface(
         "shaft-retention", "カム軸の保持（両端のパッド・継ぎ目の差し込み・U 溝の左右・栓と溝の底）", all(result["pass"] for result in results),
         ("5 本の軸を、歯車・カム 5 枚・端の部品の剛体として動かした初接触（mm）: " +
-         "、".join(f"{name} {min(values):.3f}〜{max(values):.3f}" for name, values in worst.items()) +
-         f"。図面の位置からの設計値は軸方向 {drift:.2f}（肩とパッド）・左右 {side:.3f}（溝の丸い底の円弧）・上 {up:.2f}（栓）・下 {down:.2f}（溝の底）。"
+         "、".join(f"{name} {span(values)}" for name, values in worst.items()) + "。" + missing_text +
+         f"。図面の位置からの設計値は軸方向 {drift:.2f}（肩とパッド）・左右 {side:.3f}（溝の丸い底の円弧。+X {side_px:.3f}、-X {side_mx:.3f} の小さい方）・上 {up:.2f}（押さえ棒の指）・下 {down:.2f}（溝の底）。"
          f"上下の遊びの合計 {up + down:.2f}mm。"
          f"軸方向は両端のパッドで挟まれ、継ぎ目が開ける量の合計は {min(slacks):.3f}〜{max(slacks):.3f}mm。それが 1 つの継ぎ目に集まっても"
-         f"差し込み長さは {min(remaining):.2f}mm 残る（基準 2.0 以上、30 継ぎ目）。"),
+         f"差し込み長さは {min(remaining):.2f}mm 残る（基準 {JOINT_MIN_REMAINING_MM:.1f} 以上、かつ停動での六角の面圧が許容 {PLA_ALLOWABLE_MPA:.1f}MPa 以下）。"
+         f"その位置の面圧 {max([sm['load']['pressureMpa'] for r_ in results for sm in r_['chainAxial']['seams'] if sm['load']['pressureMpa'] is not None] or [float('nan')]):.1f}MPa（軸の停動トルク = 0.245Nm / g、"
+         f"依頼どおり x g にすると {max([sm['load']['pressureAtTimesGMpa'] for r_ in results for sm in r_['chainAxial']['seams'] if sm['load']['pressureAtTimesGMpa'] is not None] or [float('nan')]):.1f}MPa）。"
+         f"潰しリブが最悪の位置でまだ当たっている長さ {min(sm['ribEngagedLengthAtFullSlackMm'] for r_ in results for sm in r_['chainAxial']['seams']):.2f}mm"
+         f"（座りは {max(sm['insertionMm'] for r_ in results for sm in r_['chainAxial']['seams']):.1f}mm の穴の最後の部分。保持力の目安、実機未確認）。"
+         f"負例（残り 0.3mm）は全継ぎ目で不合格になる。"),
         axes=results, directions=results[2]["directions"], verticalPlay=play,
-        note=("保持相手は外装と案内板。回転部品（歯車・カム）どうしや画素は数えない。負例: 方向ごとの保持相手だけを退避させると接触が消える。"
+        note=("保持相手は外装と押さえ棒（案内板も固定側に置いたが、先に当たるのは外装と押さえ棒）。回転部品どうしや画素は数えない。負例: 方向ごとの保持相手だけを退避させると接触が消える（さらに先の別の部品に当たるなら 0.1mm 以上遠い）。"
               "継ぎ目は雌穴の潰しリブの重なりが開き量の最大でも残ること、引き抜くと消えることで確かめた。潰しリブの引き抜き力は実物未確認"))
 
 
@@ -855,25 +921,6 @@ def boolean_difference(solid, boxes, name):
     return V.Solid(name, tris)
 
 
-def plate_claw_boxes(plate):
-    """案内板の爪 4 本（板の X 端から出る舌の爪）を、STL から探した切り取り用の直方体にする。
-    板の端面（|x| の最大）より 0.02 以上外へ出る頂点のうち Z > 82 のもの（栓の外へ出る部分は Z が低いので入らない）を、X と Y の符号でまとめる"""
-    px = 45.0 - P.PLATE_SIDE_PLAY * 1000.0          # 板の端面（外装の端壁の内面 45 から壁の隙間 0.2 だけ内）。栓の外へ出る部分は 45.4 まで出るので最大値は使わない
-    pts = plate.verts
-    selected = (np.abs(pts[:, 0]) > px + 0.02) & (pts[:, 2] > 82.0)
-    boxes = []
-    for sx in (-1, 1):
-        for sy in (-1, 1):
-            m = selected & (np.sign(pts[:, 0]) == sx) & (np.sign(pts[:, 1]) == sy)
-            if not m.any():
-                continue
-            chosen = pts[m]
-            x_a, x_b = sx * (px - 0.001), sx * (px + 1.5)
-            boxes.append([[min(x_a, x_b), chosen[:, 1].min() - 0.05, chosen[:, 2].min() - 0.05],
-                          [max(x_a, x_b), chosen[:, 1].max() + 0.05, chosen[:, 2].max() + 0.05]])
-    return px, boxes
-
-
 def first_contact_multi(meter, members, fixed, maximum, coarse, allowed=None, refine=14):
     """members = [(名前, Solid, 基準姿勢, onset)]。t が onset を超えた分だけ +Z へ動く（軸が案内板を押し上げる経路）。
     戻り: 最初に固定側へ当たる t"""
@@ -919,59 +966,99 @@ def tip_radius(solid, y0, z0, x_range, polar_deg=None, polar_half=40.0):
     return float(np.hypot(dy, dz).max())
 
 
+CAP_LIFT_MAX_MM = P.CAP_LIFT * 1000.0   # 押さえ棒の上向きの浮きの設計値（0.05mm）。合格は設計値 + 0.01 以下
+
+
+def cap_rib_regions(ctx):
+    """押さえ棒の Y 端の潰しリブが外装の Y 止めのブロックと擦れる領域。座りの姿勢で棒と外装が重なる成分（設計したリブの重なり）の外接箱を、
+    X ±0.02・Y ±0.03 に絞り、Z だけ ±1.0 に広げる（棒を上へ動かすとリブが面を擦って滑る）。棒の爪とブロックの下向きの段の接触はこの外にあるので数える"""
+    cached = getattr(ctx, "_cap_regions", None)
+    if cached is not None:
+        return cached or None
+    regions = []
+    for name in ("bearing_cap_px", "bearing_cap_mx"):
+        volume, components, _ = ctx.meter.common(ctx.solid(name), ctx.pose[name], ctx.solid("housing"), ctx.pose["housing"])
+        for lo, hi in components:
+            regions.append([[lo[0] - 0.02, lo[1] - 0.03, lo[2] - 1.0], [hi[0] + 0.02, hi[1] + 0.03, hi[2] + 1.0]])
+    ctx._cap_regions = regions
+    return regions or None
+
+
+def cap_without_claws(ctx, name):
+    """負例用の押さえ棒: Y の両端 1.5mm の板（潰しリブと上向きの爪を含む）を切り取った形（Boolean MANIFOLD）"""
+    solid = ctx.solid(name)
+    lo, hi = solid.lo, solid.hi
+    boxes = [[[float(lo[0]) - 1, float(hi[1]) - 1.5, float(lo[2]) - 1], [float(hi[0]) + 1, float(hi[1]) + 1, float(hi[2]) + 1]],
+             [[float(lo[0]) - 1, float(lo[1]) - 1, float(lo[2]) - 1], [float(hi[0]) + 1, float(lo[1]) + 1.5, float(hi[2]) + 1]]]
+    return boolean_difference(solid, boxes, name + "_noclaw")
+
+
 def upward_chain(ctx):
-    """軸を上へ押したとき、軸 -> 栓 -> 案内板 -> 案内板の爪 -> 外装 の順に各界面の初接触を測り、外装に当たるまでの合計を求める。
-    案内板を一緒に押し上げる経路を含む。爪を外した案内板（STL から爪を切り取った負例）と外装を外した負例で、接触が消えることを測る。
-    最後に、その浮きでの歯先の重なりの残り（受け - 中央軸、軸どうし）を実 STL の歯先半径から求める"""
+    """軸を上へ押したとき、軸 -> 押さえ棒 -> 外装 の順に各界面の初接触を測り、外装に当たるまでの合計を求める。案内板は経由しない。
+    - 軸 -> 押さえ棒の指: 図面の位置から HOLD_GAP - U_FLOOR_CLR
+    - 押さえ棒 -> 外装: 棒だけを上へ動かして最初に当たる部品が外装であること（案内板が先に当たったら不合格）
+    - 合計: 軸と棒を一緒に上へ動かし（棒は軸が指に当たった後から）、外装に当たるまで。案内板を足しても同じ値のこと（案内板を経由しない）
+    - 負例: 押さえ棒を外した軸は、外装・案内板に 1mm 上がるまで当たらない。外装を外すと棒は当たらない
+    最後に、その持ち上がりでの歯先の重なりの残り（受け - 中央軸、軸どうし）を実 STL の歯先半径から求める"""
     meter = ctx.meter
-    plate = ctx.solid("guide_plate")
-    px, boxes = plate_claw_boxes(plate)
-    noclaw = boolean_difference(plate, boxes, "guide_plate_noclaw")
-    removed_volume = solid_volume(plate) - solid_volume(noclaw)
-    # 界面 2: 案内板 -> 爪 -> 外装（板を単独で上へ）
-    plate_alone = V.first_contact(meter, plate, V.linear_step(I4, (0, 0, 1)), ctx.at("housing"), maximum=1.0, coarse=0.01)
-    claw_region = [[[43.5, -60.0, 80.0], [46.0, 60.0, 86.0]], [[-46.0, -60.0, 80.0], [-43.5, 60.0, 86.0]]]
-    plate_located = V.components_inside(plate_alone["components"], claw_region, tolerance=0.05) if plate_alone["components"] else False
-    noclaw_alone = V.first_contact(meter, noclaw, V.linear_step(I4, (0, 0, 1)), ctx.at("housing"), maximum=1.0, coarse=0.05)
-    housing_gone = V.first_contact(meter, plate, V.linear_step(I4, (0, 0, 1)), ctx.away(["housing"], (0, 0, 1)), maximum=1.0, coarse=0.05)
-    t2 = plate_alone["travel"]
-    expected_t2 = P.PLATE_PLAY_Z * 1000.0
-    plate_ok = bool(removed_volume > 0.5 and len(boxes) == 4 and t2 is not None and abs(t2 - expected_t2) <= 0.04 and plate_located
-                    and (noclaw_alone["travel"] is None or noclaw_alone["travel"] >= t2 + 0.1) and housing_gone["travel"] is None)
+    caps = ("bearing_cap_px", "bearing_cap_mx")
+    # 界面 2: 押さえ棒 -> 外装（棒だけを上へ。外装と案内板を固定側に置き、最初に当たる部品を見る）
+    cap_rows = []
+    for name in caps:
+        alone = V.first_contact(meter, ctx.solid(name), V.linear_step(ctx.pose[name], (0, 0, 1)), ctx.at("housing", "guide_plate"), maximum=1.0, coarse=0.01,
+                                allowed=cap_rib_regions(ctx))
+        gone = V.first_contact(meter, ctx.solid(name), V.linear_step(ctx.pose[name], (0, 0, 1)), ctx.away(["housing", "guide_plate"], (0, 0, 1)), maximum=1.0, coarse=0.05)
+        partners = sorted(set(alone.get("parts", [])))
+        # 負例: 爪（と Y 端のリブ）を切り取った棒は、同じ姿勢から上へ動かすと浮きが増える（案内板まで届く）
+        noclaw = V.first_contact(meter, cap_without_claws(ctx, name), V.linear_step(ctx.pose[name], (0, 0, 1)), ctx.at("housing", "guide_plate"),
+                                 maximum=1.0, coarse=0.01, allowed=cap_rib_regions(ctx))
+        increase = None if alone["travel"] is None else (1.0 if noclaw["travel"] is None else noclaw["travel"] - alone["travel"])
+        cap_rows.append({"cap": name, "upTravelMm": alone["travel"], "firstContactParts": partners,
+                         "contactBoundsMm": bounds_of(alone["components"]), "wallsRemovedTravelMm": gone["travel"],
+                         "liftLimitMm": CAP_LIFT_MAX_MM + 0.01, "clawRemovedUpTravelMm": noclaw["travel"],
+                         "clawRemovedFirstContactParts": sorted(set(noclaw.get("parts", []))), "clawRemovedLiftIncreaseMm": increase,
+                         "pass": bool(alone["travel"] is not None and partners == ["housing"] and gone["travel"] is None
+                                      and alone["travel"] <= CAP_LIFT_MAX_MM + 0.01 and increase is not None and increase >= 0.1)})
+    t2 = {row["cap"]: row["upTravelMm"] for row in cap_rows}
     rows = []
-    expected_t1 = P.HOLD_GAP * 1000.0
+    expected_t1 = (P.HOLD_GAP - P.U_FLOOR_CLR) * 1000.0
     settled_to_nominal = P.U_FLOOR_CLR * 1000.0
     for j in range(P.N):
         members = axis_members(ctx, j)
-        # 界面 1: 軸（群）-> 栓（案内板）
-        r1 = first_contact_group(meter, members, lambda t: V.translation_np(0, 0, t), ctx.at("guide_plate"), maximum=1.0, coarse=0.01)
+        r1 = first_contact_group(meter, members, lambda t: V.translation_np(0, 0, t), ctx.at(*caps), maximum=1.0, coarse=0.01)
         t1 = r1["travel"]
         onset = t1 if t1 is not None else 0.0
-        # 界面 1+2+3: 軸が案内板を押し上げる経路。外装に当たるまでの合計
-        multi = [(n, s, b, 0.0) for n, s, b in members] + [("guide_plate", plate, ctx.pose["guide_plate"], onset)]
-        total = first_contact_multi(meter, multi, ctx.at("housing"), maximum=1.0, coarse=0.01)
-        multi_noclaw = [(n, s, b, 0.0) for n, s, b in members] + [("guide_plate_noclaw", noclaw, ctx.pose["guide_plate"], onset)]
-        total_noclaw = first_contact_multi(meter, multi_noclaw, ctx.at("housing"), maximum=1.0, coarse=0.05)
-        multi_gone = first_contact_multi(meter, multi, ctx.away(["housing"], (0, 0, 1)), maximum=1.0, coarse=0.05)
-        with_bezel = first_contact_multi(meter, multi, ctx.at("housing", "bezel"), maximum=1.0, coarse=0.01)
+        cap_members = [(n, ctx.solid(n), ctx.pose[n], onset) for n in caps]
+        multi = [(n, s_, b, 0.0) for n, s_, b in members] + cap_members
+        total = first_contact_multi(meter, multi, ctx.at("housing"), maximum=1.0, coarse=0.01, allowed=cap_rib_regions(ctx))
+        with_plate = first_contact_multi(meter, multi, ctx.at("housing", "guide_plate"), maximum=1.0, coarse=0.01, allowed=cap_rib_regions(ctx))
+        no_caps = first_contact_multi(meter, [(n, s_, b, 0.0) for n, s_, b in members], ctx.at("housing", "guide_plate"), maximum=1.0, coarse=0.05)
+        housing_gone = first_contact_multi(meter, multi, ctx.away(["housing"], (0, 0, 1)), maximum=1.0, coarse=0.05, allowed=cap_rib_regions(ctx))
         t_total = total["travel"]
-        located = V.components_inside(total["components"], claw_region, tolerance=0.05) if total["components"] else False
-        expected_total = expected_t1 + expected_t2
-        ok = bool(t1 is not None and abs(t1 - expected_t1) <= 0.03 and t_total is not None
-                  and abs(t_total - expected_total) <= 0.04 and t2 is not None and abs(t_total - (t1 + t2)) <= 0.02 and located
-                  and (total_noclaw["travel"] is None or total_noclaw["travel"] >= t_total + 0.1) and multi_gone["travel"] is None
-                  and with_bezel["travel"] is not None and abs(with_bezel["travel"] - t_total) <= 0.005)
-        rows.append({"axis": j, "shaftToPlugMm": t1, "plateToHousingClawMm": t2, "totalFromDrawingPositionMm": t_total,
+        # 押さえ棒の上の止まりが外装ではなく案内板のとき（形が「案内板を経由しない」になっていない）: 案内板も一緒に押し上げる経路を測る
+        # （軸 -> 棒 -> 案内板 -> 案内板の爪 -> 外装）。数値は報告し、判定は「経由しない」を満たさないので不合格のまま
+        via_plate = None
+        cap_plate = [row_["upTravelMm"] for row_ in cap_rows if row_["firstContactParts"] == ["guide_plate"]]
+        if t_total is None and cap_plate and t1 is not None:
+            plate_member = [("guide_plate", ctx.solid("guide_plate"), ctx.pose["guide_plate"], t1 + min(cap_plate))]
+            via_plate = first_contact_multi(meter, multi + plate_member, ctx.at("housing"), maximum=1.5, coarse=0.01, allowed=cap_rib_regions(ctx))["travel"]
+        expected_total = None if None in t2.values() or t1 is None else t1 + min(t2.values())
+        ok = bool(t1 is not None and abs(t1 - expected_t1) <= 0.03 and t_total is not None and expected_total is not None
+                  and abs(t_total - expected_total) <= 0.02
+                  and with_plate["travel"] is not None and abs(with_plate["travel"] - t_total) <= 0.005
+                  and (no_caps["travel"] is None or no_caps["travel"] >= t_total + 0.1) and housing_gone["travel"] is None)
+        rows.append({"axis": j, "shaftToCapMm": t1, "capToHousingMm": t2, "totalFromDrawingPositionMm": t_total,
                      "totalFromSettledMm": None if t_total is None else t_total + settled_to_nominal,
+                     "viaGuidePlateTotalMm": via_plate,
                      "firstContactPairsTotal": sorted({f"{a}|{b}" for a, b in total["pairs"]}),
-                     "contactBoundsMm": bounds_of(total["components"]), "locatedAtClaws": bool(located),
-                     "clawRemovedTotalMm": total_noclaw["travel"], "housingRemovedTotalMm": multi_gone["travel"],
-                     "withBezelAddedTotalMm": with_bezel["travel"], "pass": ok})
+                     "contactBoundsMm": bounds_of(total["components"]),
+                     "withGuidePlateAddedTotalMm": with_plate["travel"],
+                     "capsRemovedTotalMm": no_caps["travel"], "housingRemovedTotalMm": housing_gone["travel"], "pass": ok})
     # 浮きでの歯先の重なりの残り
     sector = ctx.solid("horn_coupler")
     r_sector = tip_radius(sector, 0.0, ZS, (P.RECV_X0 * 1000.0, P.RECV_X0 * 1000.0 + P.RECV_GEAR_T * 1000.0), polar_deg=90.0)
     r_gear = [tip_radius(ctx.solid(f"gear_{j}"), K.axis_y(j) * 1000.0, ZC, (P.GEAR_X0 * 1000.0, P.GEAR_X1 * 1000.0)) for j in range(P.N)]
-    lift = max(row["totalFromDrawingPositionMm"] for row in rows)             # 図面の位置から外装に当たるまでの最大の持ち上がり
+    lift = max(((row["totalFromDrawingPositionMm"] if row["totalFromDrawingPositionMm"] is not None else row["viaGuidePlateTotalMm"]) or 0.0) for row in rows)       # 図面の位置から外装に当たるまでの最大の持ち上がり
     coupler_down = P.HORN_CLR * 1000.0
     y_play = 2 * P.U_SLOT_Y_CLR * 1000.0
     cd_sector = math.hypot(P.U_SLOT_Y_CLR * 1000.0 + P.HORN_CLR * 1000.0, P.SERVO_CD * 1000.0 + lift + coupler_down)
@@ -982,25 +1069,33 @@ def upward_chain(ctx):
         remaining_chain.append({"pair": f"{a}-{b}", "remainingMm": r_gear[a] + r_gear[b] - cd})
     remaining = min([remaining_sector] + [item["remainingMm"] for item in remaining_chain])
     tooth_ok = remaining >= 0.6
-    passed = bool(plate_ok and all(row["pass"] for row in rows) and tooth_ok)
-    totals = [row["totalFromDrawingPositionMm"] for row in rows]
-    noclaw_text = noclaw_alone["travel"] if noclaw_alone["travel"] is not None else "接触なし"
+    passed = bool(all(row["pass"] for row in cap_rows) and all(row["pass"] for row in rows) and tooth_ok)
+    totals = [row["totalFromDrawingPositionMm"] for row in rows if row["totalFromDrawingPositionMm"] is not None]
+    via_totals = [row["viaGuidePlateTotalMm"] for row in rows if row["viaGuidePlateTotalMm"] is not None]
+    t1s = [row["shaftToCapMm"] for row in rows if row["shaftToCapMm"] is not None]
+    no_caps_text = "、".join(str(row["capsRemovedTotalMm"]) if row["capsRemovedTotalMm"] is not None else "接触なし" for row in rows[:1])
+    cap_text = "、".join(
+        "{} が {}mm で {}".format(row["cap"], row["upTravelMm"] if row["upTravelMm"] is not None else "当たらない",
+                                  "/".join(row["firstContactParts"]) or "接触なし") for row in cap_rows)
+    claw_text = "、".join(
+        "{} は爪を切り取ると {}mm（浮きが {} 増える）".format(row["cap"], row["clawRemovedUpTravelMm"] if row["clawRemovedUpTravelMm"] is not None else "当たらない",
+                                                        "%.3f" % row["clawRemovedLiftIncreaseMm"] if row["clawRemovedLiftIncreaseMm"] is not None else "-") for row in cap_rows)
+    head = (f"軸を上へ押すと、押さえ棒の指に当たるまで {min(t1s):.3f}〜{max(t1s):.3f}mm（設計 {expected_t1:.2f}）。" if t1s
+            else "軸が押さえ棒に当たらない。")
+    total_text = (f"軸が棒を押し上げて外装に当たるまでの合計 {min(totals):.3f}〜{max(totals):.3f}mm（図面の位置から。溝の底からは +{settled_to_nominal:.2f}）。"
+                  if totals else
+                  ("棒の上の止まりは外装ではなく案内板（案内板を経由しない形になっていない）。案内板も押し上げて外装の爪に当たるまでの合計 "
+                   f"{min(via_totals):.3f}〜{max(via_totals):.3f}mm（図面の位置から。溝の底からは +{settled_to_nominal:.2f}）。" if via_totals else "合計は測れなかった。"))
+    detail = (head + "押さえ棒は " + cap_text + f"（浮きの上限 {CAP_LIFT_MAX_MM:.2f}）。" + claw_text + "。" + total_text + f"押さえ棒を外すと {no_caps_text}、外装を外すと接触なし。"
+              f"その持ち上がり {lift:.2f}mm での歯先の重なりの残り: 受け-中央軸 {remaining_sector:.2f}mm、軸どうし {min(i['remainingMm'] for i in remaining_chain):.2f}mm"
+              f"（基準 0.6 以上、歯先半径 受け {r_sector:.2f}・歯車 {min(r_gear):.2f}〜{max(r_gear):.2f}）。")
     return interface(
-        "axis-upward-chain", "軸の上向きの遊びの鎖（軸 -> 栓 -> 案内板 -> 案内板の爪 -> 外装）", passed,
-        (f"軸を上へ押すと、栓に当たるまで {min(r['shaftToPlugMm'] for r in rows):.3f}〜{max(r['shaftToPlugMm'] for r in rows):.3f}mm"
-         f"（設計 {expected_t1:.2f}）。案内板は爪が外装の窪みの天井に当たるまで {t2:.3f}mm（設計 {expected_t2:.2f}、ベゼルを経由しない）。"
-         f"軸が案内板を押し上げて外装に当たるまでの合計 {min(totals):.3f}〜{max(totals):.3f}mm（図面の位置から。溝の底からは +{settled_to_nominal:.2f}）。"
-         f"爪を切り取った案内板では {noclaw_text}、外装を外すと接触なし。"
-         f"その持ち上がり {lift:.2f}mm での歯先の重なりの残り: 受け-中央軸 {remaining_sector:.2f}mm、軸どうし {min(i['remainingMm'] for i in remaining_chain):.2f}mm"
-         f"（基準 0.6 以上、歯先半径 受け {r_sector:.2f}・歯車 {min(r_gear):.2f}〜{max(r_gear):.2f}）。"),
-        axes=rows, plateAlone={"firstContact": plate_alone, "expectedMm": expected_t2, "locatedAtClaws": bool(plate_located),
-                               "clawRemovedTravelMm": noclaw_alone["travel"], "housingRemovedTravelMm": housing_gone["travel"],
-                               "pass": plate_ok},
-        clawCutBoxesMm=boxes, clawRemovedVolumeMm3=removed_volume, plateEndXMm=px,
+        "axis-upward-chain", "軸の上向きの遊びの鎖（軸 -> 押さえ棒 -> 外装。案内板は経由しない）", passed, detail,
+        axes=rows, caps=cap_rows,
         toothOverlap={"sectorTipRadiusMm": r_sector, "gearTipRadiiMm": r_gear, "liftMm": lift, "couplerDownMm": coupler_down,
                       "remainingSectorMm": remaining_sector, "remainingChain": remaining_chain, "limitMm": 0.6, "pass": bool(tooth_ok)},
-        note=("負例の爪なし案内板は STL から爪の部分（板の端面より外で Z > 82）を Boolean（MANIFOLD）で切り取って作った。"
-              "歯先の重なりの残りは、歯先半径の和 - 中心距離（浮き・受けの沈み・U 溝の Y の遊びを同時に最大に取る）。爪の撓みと着脱力は実物未確認"))
+        note=("案内板を固定側に足しても合計が変わらないこと（案内板を経由しない）を確かめた。歯先の重なりの残りは、歯先半径の和 - 中心距離"
+              "（浮き・受けの沈み・U 溝の Y の遊びを同時に最大に取る）。押さえ棒の圧入の保持力は実物未確認"))
 
 
 # =============================================================================================
@@ -1115,7 +1210,7 @@ def pixel_retention(ctx):
                 maximum=0.6, coarse=0.025, tolerance=0.05, only=("+X", "-X", "+Y", "-Y"))
             up = six_directions(ctx, members, ctx.at("bezel"), {"+Z": up_gap}, {"+Z": ["bezel"]},
                                 maximum=6.0, coarse=0.1, tolerance=0.05, only=("+Z",))
-            down = six_directions(ctx, members, ctx.at(f"cam_{i}_{j}"), {"-Z": 0.0}, {"-Z": [f"cam_{i}_{j}"]},
+            down = six_directions(ctx, members, ctx.at(f"camshaft_{j}"), {"-Z": 0.0}, {"-Z": [f"camshaft_{j}"]},
                                   maximum=1.0, coarse=0.05, tolerance=0.05, only=("-Z",))
             directions = lateral + up + down
             rows.append({"pixel": name, "directions": directions, "pass": all(row["pass"] for row in directions)})
@@ -1220,7 +1315,8 @@ def main():
     chain = upward_chain(ctx)
     interfaces.append(chain)
     log("停止時の高さの誤差")
-    shift_up = max(row["totalFromDrawingPositionMm"] for row in chain["axes"])
+    shift_up = max((row["totalFromDrawingPositionMm"] if row["totalFromDrawingPositionMm"] is not None else (row["viaGuidePlateTotalMm"] or 0.0))
+                   for row in chain["axes"])
     shift_down = P.U_FLOOR_CLR * 1000.0
     stop = stop_height_error(ctx, budget, shift_up, shift_down)
     stop_doubled = stop_height_error(ctx, budget, shift_up, shift_down, factor=2.0)
@@ -1328,18 +1424,21 @@ def stop_height_error(ctx, budget, shift_up, shift_down, factor=1.0, scenario="m
     for j in range(P.N):
         y0 = K.axis_y(j) * 1000.0
         for i in range(P.N):
-            # カム i は歯車から (5 - i) 個の継ぎ目。予算の合計は最悪のカム 0（5 継ぎ目）なので、カム i は継ぎ目 i 個ぶん（JOINT_ERR_DEG x i）小さい
-            dj = factor * max(0.0, total_by_axis[j] - P.JOINT_ERR_DEG * i)
+            # カムは胴と一体（継ぎ目は camshaft_j と gear_j の 1 か所だけ）なので、位相誤差は軸ごとの予算をそのまま使う
+            dj = factor * total_by_axis[j]
             offsets = np.unique(np.concatenate([np.arange(-dj, dj, 0.25), [dj], [-dj], [0.0]]))
-            cam = ctx.solid(f"cam_{i}_{j}")
+            cam = ctx.solid(f"camshaft_{j}")
             foot = V.foot_footprint(ctx.solid(f"pixel_{i}_{j}"))
             rect = (foot["x"][0], foot["x"][1], foot["y"][0], foot["y"][1])
+            overlap = (cam.tris[:, :, 0].max(axis=1) >= rect[0]) & (cam.tris[:, :, 0].min(axis=1) <= rect[1])
+            sub = cam.tris[overlap]                       # 足と X が重なる三角形だけ（軸まわりの回転は X を変えない）
             for k, theta in enumerate(P.TABLE_THETA):
                 phi = K.axis_angle(theta, j)
                 expected = PT.TABLES[k][j][i]
                 diffs = []
                 for off in offsets:
-                    tris = cam.posed_tris(V.rot_x_np(phi + float(off), y0, ZC))
+                    matrix = V.rot_x_np(phi + float(off), y0, ZC)
+                    tris = sub @ matrix[:3, :3].T + matrix[:3, 3]
                     diffs.append(V.top_max_in_rect(tris, rect) - flush_z - expected)
                 lo, hi = min(diffs), max(diffs)
                 total = max(abs(lo - shift_down), abs(hi + shift_up))

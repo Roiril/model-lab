@@ -1,4 +1,4 @@
-"""全部品（shaft_clip は廃止。部品表は build/manifest.json）を Bambu Lab H2D の 1 枚のプレートに刷る向きで並べ、配置だけの 3mf を書く（スライスしない）。
+"""全部品（部品表は build/manifest.json。カム軸 camshaft_j は立てて刷る）を Bambu Lab H2D の 1 枚のプレートに刷る向きで並べ、配置だけの 3mf を書く（スライスしない）。
 
     py -3.11 models/tangible-pixel-cube/plate_h2d.py
 
@@ -31,10 +31,9 @@ LEFT = ["housing", "bezel", "guide_plate", "phase_comb"]
 ROTATE_Z90 = {"phase_comb"}   # 13.2 x 86 の治具を Z まわりに 90° 回し、左の列の下に置く
 # 右の領域に並べる順（棚ごと）。同じ種類を同じ棚にまとめる
 RIGHT_GROUPS = [
-    ["shaft_0", "shaft_1", "shaft_2", "shaft_3", "shaft_4"],
+    [f"camshaft_{j}" for j in range(5)],        # 立てて刷る（円盤 Ø30、高さ約 90mm）。H2D の高さ 325 以内
     [f"pixel_{i}_{j}" for j in range(5) for i in range(5)],
-    [f"cam_{i}_{j}" for j in range(5) for i in range(5)],
-    ["horn_coupler", "gear_0", "gear_1", "gear_2", "gear_3", "gear_4"],
+    ["horn_coupler", "gear_0", "gear_1", "gear_2", "gear_3", "gear_4", "bearing_cap_px", "bearing_cap_mx"],
     ["servo_clip_0", "servo_clip_1"],
 ]
 

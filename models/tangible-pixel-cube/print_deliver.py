@@ -54,8 +54,8 @@ BED = (256.0, 256.0, 250.0)
 EXCLUDE = (18.0, 28.0)
 
 pixels = [f"pixel_{i}_{j}" for j in range(5) for i in range(5)]
-cams = [f"cam_{i}_{j}" for j in range(5) for i in range(5)]
-shafts = [f"shaft_{j}" for j in range(5)]
+camshafts = [f"camshaft_{j}" for j in range(5)]
+caps = ["bearing_cap_px", "bearing_cap_mx"]
 gears = [f"gear_{j}" for j in range(5)]
 servo_clips = ["servo_clip_0", "servo_clip_1"]
 
@@ -68,22 +68,23 @@ PLATES = [
     {"id": "plate2-pixels", "title": "画素 25 個", "parts": pixels,
      "reason": "画素は 36mm の高さで 25 個。1 層ごとに 25 個を順に積むので時間の大半を占める。物体ごとに止められる設定"
                "（exclude_object）で、失敗した 1 個だけ外して続けられる。足の向きがそろうので配置も単純"},
-    {"id": "plate3-mechanism", "title": "カム 25・軸の端 5・歯車の部品 5・押さえクリップ 2",
-     "parts": cams + shafts + gears + servo_clips,
+    {"id": "plate3-mechanism", "title": "カム軸 5（立てて刷る）・歯車 5・押さえ棒 2・押さえクリップ 2",
+     "parts": camshafts + gears + caps + servo_clips,
      "reason": "@AREA@"},
 ]
 
 TRIAL_PLATES = [
     {"id": "trial1-rotating", "title": "試し刷り 1: 回す・噛み合わせる部分",
-     "parts": ["horn_coupler", "shaft_2", "cam_0_2", "cam_4_2", "gear_2"],
-     "reason": "受けとホーン、数珠つなぎの継ぎ目（軸の端 shaft_2 の雄スタブ → カム 0_2 の雌穴、カム 0_2 のスタブ → カム 4_2 の雌穴、"
-               "カム 4_2 のスタブ → 歯車の部品の雌穴）。実物（SG92R とホーン）が要るのは受けだけ"},
-    {"id": "trial2-shell-guide-pixel", "title": "試し刷り 2: 外装・案内・画素・ベゼル",
-     "parts": ["housing_Uslot_shaft1_plusX", "housing_servo_block_minusY", "servo_clip_0", "guide_plate_cell_2_2",
+     "parts": ["horn_coupler", "camshaft_2", "camshaft_2_gear_end", "gear_2"],
+     "reason": "受けとホーン、カム軸 1 本（行 2）の全体（立てて刷る。円盤の折り取りと軸受けの端面の跡、すその面）、"
+               "カム軸の +X 端（雄スタブ）と歯車の雌穴の継ぎ目。実物（SG92R とホーン）が要るのは受けだけ"},
+    {"id": "trial2-shell-guide-pixel", "title": "試し刷り 2: 外装・軸受け・案内・画素・ベゼル",
+     "parts": ["housing_Uslot_minusX_row2", "housing_Uslot_plusX_row1", "bearing_cap_mx_row2", "bearing_cap_px_row2",
+               "housing_servo_block_minusY", "servo_clip_0", "guide_plate_cell_2_2",
                "guide_plate_tongue_plusX", "pixel_2_2_top", "pixel_2_2_foot", "bezel_window_2_2", "bezel_barb_plusX",
                "housing_endwall_pockets_plusX"],
-     "reason": "外装の U 溝と柵、案内板の十字穴・舌と画素、ベゼルの窓と爪と外装の端壁の窪み。どれも小片で、軸の丸・サーボの耳・"
-               "画素の頭と足を実際に当てて確かめる"},
+     "reason": "外装の軸受けの溝（-X の Ø10 とじょうご、+X の Ø5）と押さえ棒の指、サーボの耳の溝と柵、案内板の十字穴・舌と画素、"
+               "ベゼルの窓と爪と外装の端壁の窪み。どれも小片で、軸の丸・サーボの耳・画素の頭と足を実際に当てて確かめる"},
 ]
 
 
@@ -233,9 +234,10 @@ def run():
     area = sum(review["parts"][i]["size_mm"][0] * review["parts"][i]["size_mm"][1] for i in print_ids)
     area_gap = sum((review["parts"][i]["size_mm"][0] + 6.0) * (review["parts"][i]["size_mm"][1] + 6.0) for i in print_ids)
     usable = (BED[0] - 20.0) * (BED[1] - 20.0 - EXCLUDE[1])
-    PLATES[2]["reason"] = (f"カム・軸の端・歯車の部品・クリップは低い部品で、かたまりで刷れる。全部品の外接面積は合計およそ {area / 1e4:.1f} 万 mm2、"
+    tall = max(review["parts"][i]["size_mm"][2] for i in camshafts)
+    PLATES[2]["reason"] = (f"カム軸は -X 端を下にして立てて刷る（高さ {tall:.0f}mm、折り取る円盤 Ø30 込み）。全部品の外接面積は合計およそ {area / 1e4:.1f} 万 mm2、"
                            f"部品間 6mm の間隔を足すと約 {area_gap / 1e4:.1f} 万 mm2 で、プレートの実効面積（余白 10mm と除外域を除いて約 {usable / 1e4:.1f} 万 mm2）の"
-                           f"{area_gap / usable:.1f} 倍。1 枚には入らない")
+                           f"{area_gap / usable:.1f} 倍。1 枚には入らない。立てて刷るカム軸は高さが同じなので、まとめて同じ層を進める")
 
     # プロファイル（継承を解いて平らにする）
     m = resolve("machine", MACHINE)

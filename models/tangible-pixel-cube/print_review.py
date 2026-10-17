@@ -53,6 +53,8 @@ THIN_AREA_MIN = 0.5      # 肉厚の塊として数える面積（mm2）
 WALL_TOL = 0.01          # 肉厚の判定の許容（メッシュの丸め・標本の位置。1.2 ちょうどを 1.2 未満に誤判定しない）
 THIN_FACE_MIN = 0.2      # 肉厚を測る面の最小面積（mm2）。細長い三角形の重心が縁に寄る誤検出を避ける
 CHAMFER_MIN = 0.15       # 第 1 層（z=0.1）の食い込み幅（0.3mm の 45 度面取りで約 0.2、0.25mm で 0.15）
+SUPPORT_FAMILIES = ("camshaft",)   # 印刷用の支え（折り取る円盤とリブ）が付く部品の族
+RESIDUE_TOL = 0.02       # 折り取り跡の上限 PRINT_FOOT_RESIDUE_MAX への許容（mm）
 HOLE_MATING_MAX = 40.0   # この大きさ以下の穴は何かが嵌まる穴として数える（mm）
 
 # 組立姿勢の座標で、外から見える面
@@ -80,8 +82,8 @@ def vis_none(c, n):
 VISIBLE = {"housing": vis_housing, "bezel": vis_bezel}
 
 # 部品の役割（肉厚の基準を選ぶ）。load = 力・トルクを伝える。flex = しなって使う（薄くてよい）。
-ROLE = {"housing": "exterior", "bezel": "exterior", "guide_plate": "guide", "shaft": "load", "gear": "load",
-        "cam": "load", "pixel": "guide", "horn_coupler": "load", "servo_clip": "flex",
+ROLE = {"housing": "exterior", "bezel": "exterior", "guide_plate": "guide", "camshaft": "load", "gear": "load",
+        "pixel": "guide", "horn_coupler": "load", "servo_clip": "flex", "bearing_cap": "guide",
         "phase_comb": "jig"}
 
 
@@ -90,13 +92,13 @@ LOAD_REGIONS = {
     "housing": {
         "サーボ取付耳の受け（-Y 側の柵と奥の壁）": lambda a: (a[:, 0] > 21.0) & (a[:, 0] < 32.0) & (a[:, 1] > -25.0) & (a[:, 1] < -16.5) & (a[:, 2] < 28),
         "サーボ取付耳の受け（+Y 側の柵と奥の壁）": lambda a: (a[:, 0] > 21.0) & (a[:, 0] < 32.0) & (a[:, 1] > 6.5) & (a[:, 1] < 15.0) & (a[:, 2] < 28),
-        "軸受け（±X 端壁と帯の U 溝まわり）": lambda a: (np.abs(a[:, 0]) > 43.7) & (np.abs(a[:, 1]) < 45.5) & (a[:, 2] > 44.0) & (a[:, 2] < 58.0),
+        "軸受け（±X 端壁と帯の U 溝まわり）": lambda a: (np.abs(a[:, 0]) > 43.7) & (np.abs(a[:, 1]) < 45.5) & (a[:, 2] > 40.0) & (a[:, 2] < 63.5),
     },
 }
 
 
 def family(pid):
-    for key in ("servo_clip", "guide_plate", "horn_coupler", "phase_comb"):
+    for key in ("servo_clip", "guide_plate", "horn_coupler", "phase_comb", "bearing_cap"):
         if pid.startswith(key) or pid == key:
             return key
     return pid.split("_")[0]
@@ -115,15 +117,27 @@ def exception_fns(fam, enabled, P):
     if fam == "bezel" and "bezel_bar_1.6" in enabled:
         # 窓と窓の桟。見える面の肉厚 1.55〜2.0（桟 1.6mm）。1.2 未満はここでは許さない
         fns["bezel_bar_1.6"] = lambda pts, a, th, vis: vis & (th >= 1.55) & (th < WALL_EXTERIOR - 5e-3)
-    if fam == "cam" and "cam_label_engraving" in enabled:
-        # +X 面（刷るとき上）の彫り: 深さ CAM_LABEL_DEPTH の帯
-        top, depth = P.CAM_T * 1000.0, P.CAM_LABEL_DEPTH * 1000.0
-        fns["cam_label_engraving"] = lambda pts, a, th, vis: (pts[:, 2] >= top - depth - 0.15) & (pts[:, 2] <= top + 0.05)
+    if fam == "camshaft" and "cam_label_engraving" in enabled:
+        # カム板の +X 面の彫り: 板の +X 面から深さ CAM_LABEL_DEPTH の帯（組立姿勢の X。板の位置は kinematics.cam_x_range）。1.2 未満に限る
+        import kinematics as KN
+        depth = P.CAM_LABEL_DEPTH * 1000.0
+        bands = [KN.cam_x_range(i, j)[1] * 1000.0 for i in range(P.N) for j in range(P.N)]
+        bands = np.array(sorted(set(round(b, 3) for b in bands)))
+
+        def label_fn(pts, a, th, vis, bands=bands, depth=depth):
+            d = bands[None, :] - a[:, 0][:, None]
+            return ((d >= -0.05) & (d <= depth + 0.15)).any(axis=1) & (th < WALL_MIN)
+        fns["cam_label_engraving"] = label_fn
     if fam == "housing" and "finger_catch_1.4" in enabled:
         # 端壁の外側の指の掛かり（幅 FINGER_W 12、ベゼルの継ぎ目 Z=93 の下 1.6）の面。1.2 未満はここでは許さない
         fns["finger_catch_1.4"] = lambda pts, a, th, vis: (vis & (np.abs(a[:, 0]) >= 46.5) & (a[:, 2] >= 90.5)
                                                            & (np.abs(a[:, 1]) <= 6.5) & (th >= WALL_MIN))
-    if fam in ("cam", "gear", "housing") and "crush_rib_0.6" in enabled:
+    if fam == "housing" and "slit_mouth_rim_1.7" in enabled:
+        # 端壁の上端（Z 92.6〜93）で、外側の 1.0 の面取りとスリットの口の 0.4 の面取りが出会う縁。1 層ぶんの縁で、
+        # 肉厚 1.7〜2.0 だけを許す（2.0 の外装の規則に限る。1.7 未満と、上端より下は許さない）。口の面取りは軸を導く面（48°）
+        fns["slit_mouth_rim_1.7"] = lambda pts, a, th, vis: (vis & (np.abs(a[:, 0]) >= 47.0) & (a[:, 2] >= 92.6)
+                                                             & (th >= 1.7) & (th < 2.0))
+    if fam in ("camshaft", "gear", "housing", "bearing_cap") and "crush_rib_0.6" in enabled:
         # 潰しリブ（幅 0.6）。肉厚 0.55〜0.65 の標本だけ（1.2 未満の規則に限る）
         fns["crush_rib_0.6"] = lambda pts, a, th, vis: (th >= 0.55) & (th <= 0.65)
     if fam in ("gear", "horn_coupler") and "gear_tooth_tip_1.1" in enabled:
@@ -145,18 +159,54 @@ def bbox_asm(lo, hi, R, t):
     return [[round(float(v), 1) for v in a.min(axis=0)], [round(float(v), 1) for v in a.max(axis=0)]]
 
 
-def analyze(S, visible, role, R=None, t=None, with_slices=True, regions=None, exceptions=None, cut_fn=None):
-    """刷る向きの Solid S（z が上）と、面ごとの見える真偽から、全項目を測る。"""
+def support_geometry(S, mask, P):
+    """折り取る印刷用の支え（円盤とリブ）の印 mask から、円盤の直径・中心・高さを測る。params の値と突き合わせる材料。"""
+    T = S.T[mask]
+    lo, hi = T.reshape(-1, 3).min(axis=0), T.reshape(-1, 3).max(axis=0)
+    return {"faces": int(mask.sum()), "area_mm2": round(float(S.area[mask].sum()), 1),
+            "disc_width_mm": [round(float(hi[0] - lo[0]), 2), round(float(hi[1] - lo[1]), 2)],
+            "disc_top_param_mm": round(P.PRINT_FOOT_T * 1000, 2), "z_end_param_mm": round((P.PRINT_FOOT_T + P.PRINT_FOOT_GAP) * 1000, 2),
+            "z_range_mm": [round(float(lo[2]), 2), round(float(hi[2]), 2)],
+            "center_xy_mm": [round(float((lo[0] + hi[0]) / 2), 2), round(float((lo[1] + hi[1]) / 2), 2)]}
+
+
+def analyze(S, visible, role, R=None, t=None, with_slices=True, regions=None, exceptions=None, cut_fn=None, support=None):
+    """刷る向きの Solid S（z が上）と、面ごとの見える真偽から、全項目を測る。
+
+    support = {"mask": 面ごとの真偽（折り取る印刷用の支え）, "disc_top": mm, "z_end": mm} を渡すと、その面は製品ではないので
+    肉厚・張り出しに数えず、製品の端面とリブの継ぎ目（折り取る所）を別に測る。"""
     if R is None:
         R, t = np.eye(3), np.zeros(3)
     out = {"topology": S.topology(), "volume_cm3": round(S.volume() / 1000.0, 3),
            "size_mm": [round(float(v), 2) for v in (S.hi - S.lo)]}
     out["components"] = S.component_rows()
     out["mass_pla"] = K.estimate_mass(S)
+    skip = support["mask"] if support else None
     # --- 張り出し
     oh = K.overhang_clusters(S, visible)
+    interface = []
+    if support:
+        P_ = P_PARAMS
+        sg = support_geometry(S, support["mask"], P_)
+        cx, cy = sg["center_xy_mm"]
+        keep = []
+        for row in oh:
+            g = row["_faces"]
+            (x0, y0, z0_), (x1, y1, z1_) = row["bbox_mm"]
+            on_end = (abs(z0_ - support["z_end"]) < 0.06 and abs(z1_ - support["z_end"]) < 0.06
+                      and max(abs(x0 - cx), abs(x1 - cx), abs(y0 - cy), abs(y1 - cy)) <= P_.JOURNAL_MX_D * 500 + 0.6)
+            if on_end:
+                row["print_support_interface"] = True
+                row["bridge_width_mm"] = round(K.interface_bridge(S, g, support["disc_top"], support["z_end"]), 2)
+                interface.append(row)
+            elif support["mask"][g].all():
+                continue                                          # 支えだけの面（折り取る）は製品の張り出しではない
+            else:
+                keep.append(row)
+        oh = keep + interface
     for row in oh:
         row["bbox_asm_mm"] = bbox_asm(row["bbox_mm"][0], row["bbox_mm"][1], R, t)
+        row.pop("_faces", None)
     out["overhang"] = {
         "clusters": oh,
         "total_area_mm2": round(sum(r["area_mm2"] for r in oh), 3),
@@ -168,7 +218,7 @@ def analyze(S, visible, role, R=None, t=None, with_slices=True, regions=None, ex
     # --- 見える面の浅い上向き斜面（層の段）。参考値
     out["terrace_visible"] = K.terrace_faces(S, visible)
     # --- 肉厚（面を細かく割った点から内側へ光線）
-    fld = K.thickness_field(S, min_face=THIN_FACE_MIN)
+    fld = K.thickness_field(S, min_face=THIN_FACE_MIN, skip=skip)
     th, valid, pts, w = fld["th"], fld["valid"], fld["pts"], fld["w"]
     vis_s = visible[fld["fidx"]]
 
@@ -222,9 +272,16 @@ def analyze(S, visible, role, R=None, t=None, with_slices=True, regions=None, ex
     out["wall"]["cut_edge"] = cut_edge
     # --- ベッド
     out["bed"] = K.bed_contact(S)
+    if support:
+        res = K.support_residue(S, support["disc_top"], support["z_end"])
+        _, rib_loops = K.section_area(S, 0.5 * (support["disc_top"] + support["z_end"]))
+        res["ribs"] = len(rib_loops)
+        out["support"] = dict(sg, residue=res, bed_footprint_caliper_mm=out["bed"]["footprint_caliper_mm"],
+                              height_over_caliper_with_disc=out["bed"]["height_over_caliper"])
     # --- 層ごとの島（細い形）と第 1 層の面取り
     if with_slices:
-        sl = K.slice_layers(S, ratio_limit=SLENDER_MAX)
+        sl = K.slice_layers(S, ratio_limit=SLENDER_MAX,
+                            support_base=({"z_end": support["z_end"], "width": out["bed"]["footprint_caliper_mm"]} if support else None))
         for row in sl["slender"]:
             row["span_asm_mm"] = bbox_asm([row["span_mm"][0][0], row["span_mm"][0][1], row["z_mm"]],
                                           [row["span_mm"][1][0], row["span_mm"][1][1], row["z_mm"]], R, t)
@@ -426,6 +483,81 @@ def calibrate():
     _, _, res, dmin, _, det = K.rigid_fit(A, Pm)
     add("鏡像は det < 0 / 残差が出る", "det<0", round(det, 3), det < 0 or res > 0.1)
 
+    # --- 折り取る印刷用の支え（円盤 + リブ 4 本 + 立てて刷る胴）
+    def rib_mesh(width_profile):
+        """x 方向のリブ（x 1.5..4.6）を 90 度ずつ回した 4 本。width_profile = YZ の多角形。"""
+        one = K.extrude_poly(width_profile, 1.5, 4.6)
+        out = []
+        for k in range(4):
+            a = math.pi / 2 * k
+            ca, sa = math.cos(a), math.sin(a)
+            r = one.copy()
+            x, y = r[:, :, 0].copy(), r[:, :, 1].copy()
+            r[:, :, 0], r[:, :, 1] = x * ca - y * sa, x * sa + y * ca
+            out.append(r)
+        return np.concatenate(out)
+
+    def camshaft_like(profile, body_h=60.0, with_ribs=True):
+        disc = revolve([(0, 0), (15, 0), (15, 1.2), (0, 1.2)])
+        body = revolve([(0, 2.2), (5, 2.2), (5, 2.2 + body_h), (0, 2.2 + body_h)])
+        parts_ = [disc, body]
+        if with_ribs:
+            parts_.append(rib_mesh(profile))
+        T = np.concatenate([_fix_orientation(x) for x in parts_])
+        mask = np.zeros(len(T), dtype=bool)
+        mask[:len(parts_[0])] = True                               # 円盤
+        if with_ribs:
+            mask[len(parts_[0]) + len(parts_[1]):] = True          # リブ
+        return T, mask
+    v_neck = [(-0.4, 1.2), (0.4, 1.2), (0.4, 1.9), (0.2, 2.2), (-0.2, 2.2), (-0.4, 1.9)]
+    straight = [(-0.4, 1.2), (0.4, 1.2), (0.4, 2.2), (-0.4, 2.2)]
+    taper = [(-0.4, 1.2), (0.4, 1.2), (0.2, 2.2), (-0.2, 2.2)]
+    for name, prof, want in (("首が 0.3mm の V 字（0.8 -> 0.4）", v_neck, "ok"), ("首が無い真っすぐなリブ", straight, "no_neck"),
+                             ("隙間いっぱいのテーパー（首が 1mm）", taper, "long")):
+        T, mask = camshaft_like(prof)
+        S = K.Solid(T)
+        rs = K.support_residue(S, 1.2, 2.2)
+        if want == "ok":
+            add(f"支えのリブ: {name} は残り <= 0.35・首の断面比 <= 0.7", [0.3, 0.5], [rs["residue_max_mm"], rs["neck_ratio"]],
+                0.2 <= rs["residue_max_mm"] <= 0.35 and rs["neck_ratio"] <= 0.7)
+        elif want == "no_neck":
+            add(f"支えのリブ: {name} は首の断面比が 0.7 を超えて引っかかる", "> 0.7", rs["neck_ratio"], rs["neck_ratio"] > 0.7)
+        else:
+            add(f"支えのリブ: {name} は残りが 0.5 を超えて引っかかる", "> 0.5", rs["residue_max_mm"], rs["residue_max_mm"] > 0.5)
+    T, mask = camshaft_like(v_neck)
+    S = K.Solid(T)
+    sup = {"mask": mask, "disc_top": 1.2, "z_end": 2.2}
+    a_ = analyze(S, np.zeros(len(T), dtype=bool), "load", support=sup)
+    add("円盤付きの立てた胴（高さ 58.8、太さ 10、円盤 30）は細い形で引っかからない", [], len(a_["slices"]["slender"]), not a_["slices"]["slender"])
+    sl_no = K.slice_layers(S, ratio_limit=SLENDER_MAX)
+    add("同じ形を円盤の支えと見なさずに測ると細い形で引っかかる（比 5.9）", "引っかかる", len(sl_no["slender"]), len(sl_no["slender"]) > 0)
+    add("円盤込みの高さ / 接地 = 約 2.1（62.2 / 30）", 2.07, a_["bed"]["height_over_caliper"], abs(a_["bed"]["height_over_caliper"] - 62.2 / 30.0) < 0.2)
+    ifc = [r for r in a_["overhang"]["clusters"] if r.get("print_support_interface")]
+    add("製品の端面（Ø10）とリブの継ぎ目を支えの継ぎ目として別に数え、リブの間の自由な橋は 10mm 以内",
+        "< 10", [r["bridge_width_mm"] for r in ifc], bool(ifc) and all(r["bridge_width_mm"] < 6.5 for r in ifc))
+    add("支えの面（円盤とリブ）は製品の張り出し・肉厚に数えない", "出ない", [len(a_["overhang"]["fail_bridge"]), len(a_["wall"]["under_1_2"])],
+        not a_["overhang"]["fail_bridge"] and not a_["wall"]["under_1_2"])
+    add("支えの円盤の直径・厚みを面から測る", [30.0, 1.2], [min(a_["support"]["disc_width_mm"]), a_["support"]["z_range_mm"][1] - 1.0],
+        abs(min(a_["support"]["disc_width_mm"]) - 30.0) < 0.1)
+    T0, mask0 = camshaft_like(v_neck, with_ribs=False)
+    S0 = K.Solid(T0)
+    clusters0 = K.overhang_clusters(S0, np.zeros(len(T0), dtype=bool))
+    row0 = [r for r in clusters0 if abs(r["z_mm"][0] - 2.2) < 0.06 and r["area_mm2"] > 50]
+    b0 = K.interface_bridge(S0, row0[0]["_faces"], 1.2, 2.2) if row0 else None
+    add("リブが無ければ端面の橋は 10mm 近い（計器が 10mm を出せる）", "9.5 以上", b0, b0 is not None and b0 > 9.5)
+    # --- 組立姿勢と刷る向きの対応（支えの分だけ三角形が多い）
+    Lm = K.extrude_poly([(0, 0), (6, 0), (6, 3), (3, 3), (3, 8), (0, 8)], 0, 5)
+    Rq = np.array([[0.0, 0.0, 1.0], [1.0, 0.0, 0.0], [0.0, 1.0, 0.0]])
+    Pq = Lm @ Rq.T + np.array([3.0, 4.0, 1.0])
+    extra = K.box_solid(20, 30, 0, 10, 0, 1.2)
+    mt = K.match_print(Lm, np.concatenate([Pq, extra]))
+    add("支えが付いた刷る向きでも、回転を見つけて支えの面だけを印づける", [12, True],
+        [int(mt["support_mask"].sum()), bool(np.allclose(mt["R"], Rq))],
+        int(mt["support_mask"].sum()) == 12 and np.allclose(mt["R"], Rq) and mt["matched_fraction"] > 0.99)
+    other = K.extrude_poly([(0, 0), (9, 0), (9, 2), (0, 2)], 0, 3)
+    mt2 = K.match_print(Lm, other)
+    add("別の形を渡すと対応が成立しない", "< 0.97", round(mt2["matched_fraction"], 3), mt2["matched_fraction"] < 0.97)
+
     ok = all(c["pass"] for c in cases)
     return {"ok": ok, "cases": cases}
 
@@ -468,19 +600,30 @@ def main():
     for pid in print_ids:
         A = K.read_stl(os.path.join(BUILD, f"{pid}.stl"))
         P = K.read_stl(os.path.join(BUILD, f"print_{pid}.stl"))
-        same_n = len(A) == len(P)
-        if not same_n:
-            corr[pid] = {"same_triangle_count": False, "pass": False}
-            continue
-        R, t, resid, dmin, ratio, det = K.rigid_fit(A, P)
-        corr[pid] = {"same_triangle_count": True, "triangles": int(len(A)), "max_vertex_residual_mm": round(resid, 6),
-                     "min_normal_dot": round(dmin, 6), "area_ratio": [round(ratio[0], 5), round(ratio[1], 5)],
-                     "det": round(det, 6),
-                     "pass": bool(resid < 1e-3 and dmin > 0.9999 and det > 0 and 0.999 < ratio[0] and ratio[1] < 1.001)}
-        SA = K.Solid(A, pid)
         fam = family(pid)
-        vis = VISIBLE.get(fam, vis_pixel if fam == "pixel" else vis_none)(SA.c, SA.n)
+        mt = K.match_print(A, P)
+        R, t = mt["R"], mt["t"]
+        n_sup = int(mt["support_mask"].sum())
+        expect_support = fam in SUPPORT_FAMILIES
+        corr[pid] = {"method": mt["method"], "triangles_assembly": int(len(A)), "triangles_print": int(len(P)),
+                     "max_vertex_residual_mm": round(float(mt["residual_mm"]), 6),
+                     "min_normal_dot": round(float(mt["normal_dot_min"]), 6),
+                     "area_ratio": [round(float(mt["area_ratio"][0]), 5), round(float(mt["area_ratio"][1]), 5)],
+                     "det": round(float(mt["det"]), 6), "matched_vertex_fraction": round(mt["matched_fraction"], 5),
+                     "print_only_faces": n_sup,
+                     "pass": bool(mt["det"] > 0 and mt["residual_mm"] < 1e-3 and mt["normal_dot_min"] > 0.9999
+                                  and 0.999 < mt["area_ratio"][0] and mt["area_ratio"][1] < 1.001
+                                  and mt["matched_fraction"] >= 0.97
+                                  and ((n_sup > 0) if expect_support else (n_sup == 0)))}
+        if not corr[pid]["pass"]:
+            continue
+        SA = K.Solid(A, pid)
+        vis_a = VISIBLE.get(fam, vis_pixel if fam == "pixel" else vis_none)(SA.c, SA.n)
         S = K.Solid(P, pid)
+        if n_sup:                                           # 印刷にだけ付く面（円盤とリブ）は見えない。製品の面の見える印は、組立姿勢の面の位置で引く
+            vis = np.zeros(len(P), dtype=bool)
+        else:
+            vis = vis_a
         key = hashlib.sha1(np.round(P, 3).tobytes() + vis.tobytes() + ROLE[fam].encode()).hexdigest()
         if key in cache:
             res = cache[key][1]
@@ -488,9 +631,12 @@ def main():
         else:
             if S.lo[2] < -1e-3 or S.lo[2] > 1e-3:
                 raise SystemExit(f"{pid}: 刷る向きの最下点が z=0 でない ({S.lo[2]})")
-            res = analyze(S, vis, ROLE[fam], R, t, regions=LOAD_REGIONS.get(fam), exceptions=exception_fns(fam, EXC_ENABLED, P_PARAMS))
-            res["visible_area_mm2"] = round(float(SA.area[vis].sum()), 2)
-            res["visible_faces"] = int(vis.sum())
+            sup = ({"mask": mt["support_mask"], "disc_top": P_PARAMS.PRINT_FOOT_T * 1000, "z_end": (P_PARAMS.PRINT_FOOT_T + P_PARAMS.PRINT_FOOT_GAP) * 1000}
+                   if n_sup else None)
+            res = analyze(S, vis, ROLE[fam], R, t, regions=LOAD_REGIONS.get(fam), exceptions=exception_fns(fam, EXC_ENABLED, P_PARAMS),
+                          support=sup)
+            res["visible_area_mm2"] = round(float(SA.area[vis_a].sum()), 2)
+            res["visible_faces"] = int(vis_a.sum())
             cache[key] = (pid, res)
             same_as = None
             print(f"  {pid:14s} {time.time() - t0:6.1f}s  張り出し {res['overhang']['total_area_mm2']:8.2f}mm2"
@@ -513,7 +659,8 @@ def main():
     # 肉厚 3.0mm 未満の部品ごとの応力判定の割り当て（部品に当たる項目が全部通ったときだけ許可）
     judge_for = {"gear": [judge_names["gear"], judge_names["stub"], judge_names["boss"]],
                  "horn_coupler": [judge_names["horn_coupler"], "受けのホーンのポケットの壁（厚み 1.6）"],
-                 "cam": [judge_names["cam"], judge_names["stub"]], "shaft": [judge_names["stub"], judge_names["boss"]]}
+                 "camshaft": [judge_names["body"], judge_names["stub"], judge_names["boss"]],
+                 "bearing_cap": [judge_names["cap"]]}
     REGION_JUDGE = {"軸受け（±X 端壁と帯の U 溝まわり）": judge_names["housing_bearing"],
                     "サーボ取付耳の受け（-Y 側の柵と奥の壁）": judge_names["housing_fence"],
                     "サーボ取付耳の受け（+Y 側の柵と奥の壁）": judge_names["housing_fence"]}
@@ -527,6 +674,21 @@ def main():
         for r in p["slices"]["slender"]:
             fails.append({"rule": "立てて刷る細い形（高さ > 太さ x 5）", "part": pid, "value": r})
         fam_ = p["family"]
+        sp = p.get("support")
+        if sp:
+            P_ = P_PARAMS
+            rs = sp["residue"]
+            dw = min(sp["disc_width_mm"])
+            if rs["residue_max_mm"] > P_.PRINT_FOOT_RESIDUE_MAX * 1000 + RESIDUE_TOL:
+                fails.append({"rule": "折り取り跡が上限を超える", "part": pid, "value": rs})
+            if rs["neck_ratio"] is None or rs["neck_ratio"] > 0.7:
+                fails.append({"rule": "リブに首が無い（折れる位置が端面に決まらない）", "part": pid, "value": rs})
+            if rs["ribs"] != P_.PRINT_FOOT_RIBS:
+                fails.append({"rule": "リブの本数が params と違う", "part": pid, "value": rs})
+            if abs(dw - P_.PRINT_FOOT_D * 1000) > 0.3:
+                fails.append({"rule": "円盤の直径が params と違う", "part": pid, "value": sp})
+            if (sp["height_over_caliper_with_disc"] or 99) > SLENDER_MAX:
+                fails.append({"rule": "高さ / 接地（円盤込み）が 5 を超える", "part": pid, "value": sp})
         for rule_key, by_exc in p["wall"].get("allowed", {}).items():
             for ex, rows in by_exc.items():
                 for r in rows:
@@ -600,8 +762,18 @@ def main():
                 for ax, val in planes:
                     near |= np.abs(a[:, ax] - val) < CUT_NEAR
                 return near
+            sup = None
+            if t["box_asm_mm"] is None and fam_t in SUPPORT_FAMILIES:            # 支えごと写した小片（カム軸）
+                A_src = K.read_stl(os.path.join(BUILD, f"{t['src']}.stl"))
+                mt = K.match_print(A_src, T)
+                if mt["support_mask"].any() and mt["matched_fraction"] >= 0.97:
+                    sup = {"mask": mt["support_mask"], "disc_top": P_PARAMS.PRINT_FOOT_T * 1000,
+                           "z_end": (P_PARAMS.PRINT_FOOT_T + P_PARAMS.PRINT_FOOT_GAP) * 1000}
+                    R, tt = mt["R"], mt["t"]
+                    vis = np.zeros(len(T), dtype=bool)
             res = analyze(S, vis, ROLE[fam_t], R, tt, regions=LOAD_REGIONS.get(fam_t),
-                          exceptions=exception_fns(fam_t, EXC_ENABLED, P_PARAMS), cut_fn=cut_fn if cut_planes else None)
+                          exceptions=exception_fns(fam_t, EXC_ENABLED, P_PARAMS), cut_fn=cut_fn if cut_planes else None,
+                          support=sup)
             res["src"], res["plate"], res["checks"], res["file"] = t["src"], t["plate"], t["checks"], t["file"]
             res["family"], res["cut_planes_asm"] = fam_t, cut_planes
             res["first_layer_mating_without_chamfer"] = mating_failures(fam_t, res["first_layer"])

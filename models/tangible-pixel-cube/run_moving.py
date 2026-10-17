@@ -25,7 +25,8 @@ import params as P  # noqa: E402
 import parts_moving as PM  # noqa: E402
 
 OUT = os.path.join(HERE, "build", "moving_check")
-OVERHANG_COS = math.cos(math.radians(45.0))        # 45 度ちょうどの面は数えない（1e-4 の余裕）
+OVERHANG_TOL_DEG = 0.25                            # 45 度ちょうどの面（面取り・円錐）が、float32 の丸めで 45 度をわずかに割って見える分の許容（度）
+OVERHANG_COS = math.cos(math.radians(45.0 - OVERHANG_TOL_DEG))   # これより寝た下向き面（水平から 44.75 度未満）を張り出しに数える
 
 
 def write_json(path, data):
@@ -94,22 +95,28 @@ def rotated_print_mesh(ob, euler_deg):
     return me
 
 
-def overhang(me):
+def overhang(me, bridged=None):
     """刷る向きのメッシュ（m）の、水平から 45 度より寝た下向き面の面積（mm2）。ベッドに接する面は除く。
-    返り値: (面積, 場所の一覧)。場所 = 高さごと（水平面）または傾き面の塊 {z_mm, area_mm2, bbox_mm}"""
+    bridged = (z_mm, r_mm, cx_mm, cy_mm): 円盤とリブで支えた端面（水平な下向き面で、高さ z、中心から半径 r 以内）は別に数える。
+    返り値: (面積（bridged を除く）, 場所の一覧) か、bridged を渡したときは (面積, 場所の一覧, bridged の面積)。
+    場所 = 高さごと（水平面）または傾き面の塊 {z_mm, area_mm2, bbox_mm}"""
     zmin = min(v.co.z for v in me.vertices)
     total = 0.0
+    bridged_area = 0.0
     groups = {}
     for p in me.polygons:
         nz = p.normal.z
-        if nz >= -OVERHANG_COS - 1e-4:
+        if nz >= -OVERHANG_COS:
             continue
         zs = [me.vertices[i].co.z for i in p.vertices]
         if nz < -0.999 and max(zs) - zmin < 1e-6:
             continue                                    # ベッドに接する面
         a = p.area * 1e6
-        total += a
         c = p.center * 1000.0
+        if bridged is not None and nz < -0.999 and abs(c.z - bridged[0]) < 0.02 and math.hypot(c.x - bridged[2], c.y - bridged[3]) <= bridged[1]:
+            bridged_area += a
+            continue
+        total += a
         key = ("flat", round(c.z, 1)) if nz < -0.999 else ("slope", round(math.degrees(math.acos(min(1.0, -nz))), 0))   # 傾き = 法線と真下の角 = 水平からの角
         g = groups.setdefault(key, {"area": 0.0, "lo": [1e9] * 3, "hi": [-1e9] * 3})
         g["area"] += a
@@ -123,6 +130,8 @@ def overhang(me):
         out.append({"kind": kind, "z_mm" if kind == "flat" else "angle_from_horizontal_deg": val,
                     "area_mm2": round(g["area"], 3),
                     "bbox_mm": [[round(x, 2) for x in g["lo"]], [round(x, 2) for x in g["hi"]]]})
+    if bridged is not None:
+        return total, out, bridged_area
     return total, out
 
 
@@ -190,15 +199,21 @@ def mesh_defects(me, scale=1.0):
     co = np.array([v.co[:] for v in bm.verts], dtype=float)
     tris = np.array([[v.index for v in f.verts] for f in bm.faces], dtype=int)
     bm.free()
-    # 箱の重なりで候補を絞る（BVH の overlap は同一平面の重なりを返さないので自前）
+    # 箱の重なりで候補を絞る（BVH の overlap は同一平面の重なりを返さないので自前）。X の下端で並べて、X が重なる範囲だけ見る（掃引）
     lo = np.minimum(np.minimum(co[tris[:, 0]], co[tris[:, 1]]), co[tris[:, 2]]) - COPLANAR_MM
     hi = np.maximum(np.maximum(co[tris[:, 0]], co[tris[:, 1]]), co[tris[:, 2]]) + COPLANAR_MM
+    srt = np.argsort(lo[:, 0], kind="stable")
+    lo_s, hi_s = lo[srt], hi[srt]
+    ends = np.searchsorted(lo_s[:, 0], hi_s[:, 0], side="right")
     pl = []
-    for i in range(len(tris) - 1):
-        m = (lo[i + 1:] <= hi[i]).all(axis=1) & (hi[i + 1:] >= lo[i]).all(axis=1)
-        idx = np.nonzero(m)[0]
+    for a in range(len(srt) - 1):
+        e = ends[a]
+        if e <= a + 1:
+            continue
+        m = (lo_s[a + 1:e, 1:] <= hi_s[a, 1:]).all(axis=1) & (hi_s[a + 1:e, 1:] >= lo_s[a, 1:]).all(axis=1)
+        idx = np.nonzero(m)[0] + a + 1
         if len(idx):
-            pl.append(np.stack([np.full(len(idx), i), idx + i + 1], axis=1))
+            pl.append(np.stack([np.full(len(idx), srt[a]), srt[idx]], axis=1))
     pairs = np.concatenate(pl) if pl else np.zeros((0, 2), dtype=int)
     A, B, C = co[tris[:, 0]], co[tris[:, 1]], co[tris[:, 2]]
     nrm = np.cross(B - A, C - A)
@@ -271,16 +286,20 @@ def _profile_solid(profile, length, name):
 
 
 def calibrate_overhang():
-    """45 度ちょうどの面取り = 0、水平の張り出し = 面積が出る、40 度（寝ている）= 出る、50 度（立っている）= 0"""
+    """45 度ちょうどの面取り = 0、水平の張り出し = 面積が出る、40・44 度（寝ている）= 出る、44.9・50 度（立っている）= 0"""
     length = 20.0
     cases = {}
     t40, t50 = math.tan(math.radians(40.0)), math.tan(math.radians(50.0))
+    t44, t449 = math.tan(math.radians(44.0)), math.tan(math.radians(44.9))
     shapes = {
         "chamfer_45": ([(0, 0), (10, 0), (10, 5), (15, 10), (15, 12), (-5, 12), (-5, 10), (0, 5)], 0.0),
         "ledge_horizontal": ([(0, 0), (10, 0), (10, 10), (15, 10), (15, 12), (-5, 12), (-5, 10), (0, 10)], 2 * 5.0 * length),
         "slope_40": ([(0, 0), (10, 0), (10, 5), (15, 5 + 5 * t40), (15, 14), (-5, 14), (-5, 5 + 5 * t40), (0, 5)],
                      2 * (5.0 / math.cos(math.radians(40.0))) * length),
         "slope_50": ([(0, 0), (10, 0), (10, 5), (15, 5 + 5 * t50), (15, 14), (-5, 14), (-5, 5 + 5 * t50), (0, 5)], 0.0),
+        "slope_44": ([(0, 0), (10, 0), (10, 5), (15, 5 + 5 * t44), (15, 14), (-5, 14), (-5, 5 + 5 * t44), (0, 5)],
+                     2 * (5.0 / math.cos(math.radians(44.0))) * length),                       # 許容 0.25 度の外（44 度）は数える
+        "slope_44.9": ([(0, 0), (10, 0), (10, 5), (15, 5 + 5 * t449), (15, 14), (-5, 14), (-5, 5 + 5 * t449), (0, 5)], 0.0),   # 許容の内（丸めの分）は数えない
     }
     for name, (prof, expect) in shapes.items():
         ob = _profile_solid(prof, length, "cal_" + name)
@@ -405,7 +424,7 @@ def check_gear_mesh():
             "states": rows, "pass": bool(worst_pen == 0 and worst_gap > 0.0 and engaged < 0.2)}
 
 
-# --- 嵌め合い（組立姿勢の実形状で、鍵・リブ・溝・治具が意図どおりに効くか）-----------------------------------------------
+# --- 嵌め合い（組立姿勢の実形状で、鍵・リブ・D 面・治具が意図どおりに効くか）---------------------------------------------
 def _copy_obj(ob, mat=None):
     """ob（m）のコピーを mm にして、mat（mm の座標で書いた変換）で動かす。boolean は m の小さな座標では薄い食い込みの体積がぶれるので mm で行う"""
     c = ob.copy()
@@ -438,14 +457,25 @@ def about_axis(j, deg, mirror=False):
     return m @ Matrix.Translation((0, -y, -z))
 
 
-def joint_scan(parts, owner, holder, depth, j, deg=0.0, mirror=False):
-    """継ぎ目の差し込み: owner の雄スタブを、holder の雌穴へ深さ s まで差したときの共通体積 V(s)（mm3）。depth = 全部差した深さ（組立の姿勢）。
-    owner を X 方向に (depth - s) だけ引き戻して測る（deg / mirror なら軸まわりの向きも変える）。
+def crop_x(ob, x0, x1, name):
+    """ob（m）の X が x0..x1（mm）の部分だけを切り出した新しいオブジェクト（m）。実形状のスタブ・軸受けを、本体の重い boolean なしで繰り返し使うため"""
+    c = _copy_obj(ob)
+    box = PM.box3(x0, x1, -200.0, 200.0, -50.0, 300.0, "crop_box")
+    boolean(c, box, "INTERSECT")
+    c.data.transform(Matrix.Scale(0.001, 4))
+    c.data.update()
+    c.name = name
+    return c
+
+
+def joint_scan(owner, holder, depth, j, deg=0.0, mirror=False):
+    """継ぎ目の差し込み: owner（camshaft の雄スタブの切り出し）を、holder（gear_j の雌穴）へ深さ s まで差したときの共通体積 V(s)（mm3）。
+    depth = 全部差した深さ（組立の姿勢）。owner を X 方向に (depth - s) だけ引き戻して測る（deg / mirror なら軸まわりの向きも変える）。
     返り値: 全部差したときの V、V が出始める深さ s0（これより浅いと隙間で入る）、擦る長さ = depth - s0"""
     base = about_axis(j, deg, mirror)
 
     def V(sd):
-        return inter_mm3(parts[holder], parts[owner], Matrix.Translation((-(depth - sd), 0, 0)) @ base)
+        return inter_mm3(holder, owner, Matrix.Translation((-(depth - sd), 0, 0)) @ base)
     v_full = V(depth)
     if V(0.0) > 1e-4:
         s0 = 0.0
@@ -462,88 +492,242 @@ def joint_scan(parts, owner, holder, depth, j, deg=0.0, mirror=False):
 
 
 def check_fits(parts):
-    """実形状どうしの共通体積（mm3、mm の座標で計算）。数珠つなぎの継ぎ目の差し込み: 意図した食い込みは潰しリブだけ
-    （3 本 x 0.18 x 0.6 x 面取りを除いた穴の深さ）。押し始めは隙間で入り（V = 0）、リブが擦るのは穴の最後の部分だけ。
-    間違った向き（60 度おき・鏡像）は、スタブの角が穴の出っ張りに当たって、穴の口のすぐ奥で止まる"""
-    w, crush = PM.mm(P.HEX_RIB_W), PM.mm(P.HEX_RIB_CRUSH)
+    """実形状どうしの共通体積（mm3、mm の座標で計算）。
+    (1) 継ぎ目（camshaft_j の雄スタブ ⇔ gear_j の雌穴）の差し込み: 押し始めは隙間で入り（V = 0）、リブが擦るのは穴の最後の部分だけ。
+        意図した食い込みはリブだけ（3 本 x 幅 0.6 x 潰し代 x 長さ。リブの手前の端の 45 度の傾きを含む）。
+    (2) 鍵: 鏡像・60 度おきの向きは、スタブの角が穴の出っ張りに当たって口のすぐ奥で止まる。
+    (3) 治具: -X の軸受けの D 面に歯が落ちる。φ0 で当たらず、ずれた向き（1 歯ずれ 21.18 度ほか）では櫛が浮く。
+    (4) 継ぎ目以外で当たらない（受けと歯車、画素とカム軸）"""
     out = {}
-    joints = (("cam_0_2", "cam_1_2", PM.mm(P.JOINT_ENGAGE_CAM), 2), ("cam_3_2", "cam_4_2", PM.mm(P.JOINT_ENGAGE_CAM), 2),
-              ("cam_4_2", "gear_2", PM.mm(P.JOINT_ENGAGE_GEAR), 2), ("shaft_2", "cam_0_2", PM.mm(P.JOINT_ENGAGE_CAM), 2),
-              ("shaft_1", "cam_0_1", PM.mm(P.JOINT_ENGAGE_CAM), 1), ("cam_4_1", "gear_1", PM.mm(P.JOINT_ENGAGE_GEAR), 1),
-              ("cam_4_0", "gear_0", PM.mm(P.JOINT_ENGAGE_GEAR), 0), ("shaft_4", "cam_0_4", PM.mm(P.JOINT_ENGAGE_CAM), 4))
-    rows = {}
     ok = True
-    for owner, holder, depth, j in joints:
-        v_full, s0, rub = joint_scan(parts, owner, holder, depth, j)
-        expect_v = 3 * crush * w * (depth - PM.FIRST_LAYER)
-        rows[f"{owner}->{holder}"] = {"insert_depth_mm": round(depth, 3), "rib_start_depth_mm": round(s0, 3), "rib_rub_length_mm": round(rub, 3),
-                                      "volume_full_mm3": round(v_full, 4), "volume_expected_mm3": round(expect_v, 4)}
-        ok &= abs(v_full - expect_v) < 0.02 and abs(rub - (depth - PM.FIRST_LAYER)) < 0.15
+    w, crush, h = PM.mm(P.HEX_RIB_W), PM.mm(P.HEX_RIB_CRUSH), PM.mm(P.HEX_RIB_H)
+    gh = PM.gear_hole()
+    depth = gh["depth"]                              # 穴の深さ（2.0）
+    rib_len = gh["rib_len"]                           # リブの長さ（口の面取りの奥から底まで）
+    clr = PM.mm(P.SHAFT_BORE_CLR)
+    ramp = h                                             # 45 度の傾き（高さ h を長さ h で上がる）
+    expect_v = 3 * w * (crush * (rib_len - ramp) + crush * crush / 2)       # 隙間 clr を超えた分（ramp のうち clr を超える所は 45 度の三角）
+    stubs = {}
+    for j in range(P.N):
+        stubs[j] = crop_x(parts[f"camshaft_{j}"], PM.GEAR_X0 - 1.0, gh["x_bot"] + 0.5, f"stub_{j}")
+    rows = {}
+    for j in range(P.N):
+        v_full, s0, rub = joint_scan(stubs[j], parts[f"gear_{j}"], depth, j)
+        rows[f"camshaft_{j}->gear_{j}"] = {"insert_depth_mm": round(depth, 3), "rib_start_depth_mm": round(s0, 3), "rib_rub_length_mm": round(rub, 3),
+                                           "volume_full_mm3": round(v_full, 4), "volume_expected_mm3": round(expect_v, 4)}
+        # リブが擦るのは最後の rib_len 以内（手前 depth - rib_len = 0.8mm は隙間で入る）。擦り始めは傾きが隙間を超えた所
+        ok &= abs(v_full - expect_v) < 0.02 and rub <= rib_len + 0.05 and s0 >= depth - rib_len + clr - 0.05 and rib_len <= PM.mm(P.JOINT_RIB_LEN) + 1e-6
     out["joints"] = rows
     out["rub_length_max_mm"] = max(r["rib_rub_length_mm"] for r in rows.values())
-    # 間違った向き（カムの継ぎ目と歯車の継ぎ目）
+    out["free_insert_mm"] = min(r["rib_start_depth_mm"] for r in rows.values())
     wrong = {}
-    for owner, holder, depth, j in (("cam_0_2", "cam_1_2", PM.mm(P.JOINT_ENGAGE_CAM), 2), ("cam_4_2", "gear_2", PM.mm(P.JOINT_ENGAGE_GEAR), 2)):
+    for j in (2, 1):
         res = {}
         for k in range(1, 6):
-            v_full, s0, _ = joint_scan(parts, owner, holder, depth, j, deg=60.0 * k)
+            v_full, s0, _ = joint_scan(stubs[j], parts[f"gear_{j}"], depth, j, deg=60.0 * k)
             res[f"rot{60 * k}"] = {"volume_full_mm3": round(v_full, 3), "blocked_at_depth_mm": round(s0, 3)}
-        v_full, s0, _ = joint_scan(parts, owner, holder, depth, j, mirror=True)
+        v_full, s0, _ = joint_scan(stubs[j], parts[f"gear_{j}"], depth, j, mirror=True)
         res["mirror"] = {"volume_full_mm3": round(v_full, 3), "blocked_at_depth_mm": round(s0, 3)}
-        wrong[f"{owner}->{holder}"] = res
+        wrong[f"camshaft_{j}->gear_{j}"] = res
         ok &= all(r["volume_full_mm3"] > 1.0 and r["blocked_at_depth_mm"] <= 0.6 for r in res.values())
     out["wrong_orientation"] = wrong
     out["wrong_min_volume_mm3"] = min(r["volume_full_mm3"] for res in wrong.values() for r in res.values())
     out["wrong_max_blocked_depth_mm"] = max(r["blocked_at_depth_mm"] for res in wrong.values() for r in res.values())
-    # 継ぎ目以外では当たらない（同じ行の隣どうし以外、治具と軸、受けと歯車、画素とカム）
-    out["comb_in_shaft"] = {f"shaft_{j}": round(inter_mm3(parts["phase_comb"], parts[f"shaft_{j}"]), 4) for j in range(P.N)}
-    out["non_adjacent_in_row_2"] = round(max(inter_mm3(parts[f"cam_{a}_2"], parts[f"cam_{b}_2"]) for a in range(P.N) for b in range(a + 2, P.N)), 4)
-    out["cam_gear_non_adjacent"] = round(max(inter_mm3(parts[f"cam_{a}_2"], parts["gear_2"]) for a in range(4)), 4)
-    out["coupler_in_gear_2"] = round(inter_mm3(parts["horn_coupler"], parts["gear_2"]), 4)
-    out["pixel_2_2_in_cams"] = round(max(inter_mm3(parts["pixel_2_2"], parts[f"cam_{i}_{j}"]) for j in range(P.N) for i in range(P.N)), 4)
-    # 治具: 間違った向きの軸は、軸の角が切り欠きの出っ張りに当たる。当たりが消えるまで櫛を上げた量（mm）= 浮き。正しい向きは 0
-    def lift_needed(mat):
+    for pc in stubs.values():
+        PM.drop(pc)
+
+    # 治具と D 面: 軸受けの切り出し（X -45.6..-43.0）と櫛。櫛の浮き = 当たりが消えるまで上げた量
+    xs0, xs1 = -PM.JOURNAL_MX_END - 0.2, -PM.mm(P.PAD_X0) + 1.0
+    bearings = {j: crop_x(parts[f"camshaft_{j}"], xs0, xs1, f"bearing_{j}") for j in range(P.N)}
+    comb = parts["phase_comb"]
+
+    def lift_needed(piece, mat):
         lo_, hi_ = 0.0, 8.0
-        if inter_mm3(parts["phase_comb"], parts["shaft_2"], mat) <= 1e-4:
+        if inter_mm3(comb, piece, mat) <= 1e-4:
             return 0.0
         for _ in range(9):
             mid = (lo_ + hi_) / 2
-            if inter_mm3(parts["phase_comb"], parts["shaft_2"], Matrix.Translation((0, 0, -mid)) @ mat) > 1e-4:
+            if inter_mm3(comb, piece, Matrix.Translation((0, 0, -mid)) @ mat) > 1e-4:
                 lo_ = mid
             else:
                 hi_ = mid
         return hi_
-    lift = {"correct": lift_needed(Matrix.Identity(4))}
-    for k in range(1, 6):
-        lift[f"rot{60 * k}"] = lift_needed(about_axis(2, 60.0 * k))
-    lift["mirror"] = lift_needed(about_axis(2, 0.0, mirror=True))
-    out["comb_lift_mm"] = {k: round(v, 3) for k, v in lift.items()}
-    lift_ok = lift["correct"] == 0.0 and min(v for k, v in lift.items() if k != "correct") >= 0.1
-    ok &= (all(v < 0.001 for v in out["comb_in_shaft"].values()) and out["non_adjacent_in_row_2"] < 0.001
-           and out["cam_gear_non_adjacent"] < 0.001 and out["coupler_in_gear_2"] < 0.001 and out["pixel_2_2_in_cams"] < 0.001 and lift_ok)
+    out["comb_in_bearings_mm3"] = {f"camshaft_{j}": round(inter_mm3(comb, bearings[j]), 4) for j in range(P.N)}
+    pitch_deg = 360.0 / P.CHAIN_Z
+    tests = {"correct": 0.0, "+5": 5.0, "-5": -5.0, "+1tooth": pitch_deg, "-1tooth": -pitch_deg, "+2teeth": 2 * pitch_deg, "-2teeth": -2 * pitch_deg,
+             "+60": 60.0, "+120": 120.0, "+180": 180.0, "-120": -120.0, "-60": -60.0}
+    lift = {}
+    for name, deg in tests.items():
+        lift[name] = round(max(lift_needed(bearings[j], about_axis(j, deg)) for j in (0, 1, 2)), 3)
+    out["comb_lift_mm"] = lift                           # D 面は左右対称（鏡像は同じ形）なので、向きの自由度は回転だけ
+    wrong_keys = [k for k in lift if k not in ("correct", "+5", "-5")]
+    lift_ok = lift["correct"] == 0.0 and min(lift[k] for k in wrong_keys) >= 0.1
+    for pc in bearings.values():
+        PM.drop(pc)
+
+    # 継ぎ目以外で当たらない
+    out["coupler_in_gear_2"] = round(inter_mm3(parts["horn_coupler"], parts["gear_2"]), 4)
+    out["coupler_in_camshaft_2"] = round(inter_mm3(parts["horn_coupler"], parts["camshaft_2"]), 4)
+    out["pixel_2_2_in_camshafts"] = round(max(inter_mm3(parts["pixel_2_2"], parts[f"camshaft_{j}"]) for j in range(P.N)), 4)
+    out["gear_in_camshaft_same_row"] = round(max(inter_mm3(parts[f"gear_{j}"], parts[f"camshaft_{j}"]) for j in (0, 2)), 4)
+    ok &= (all(v < 0.001 for v in out["comb_in_bearings_mm3"].values()) and out["coupler_in_gear_2"] < 0.001 and out["coupler_in_camshaft_2"] < 0.001
+           and out["pixel_2_2_in_camshafts"] < 0.001 and lift_ok)
+    out["comb_lift_pass"] = bool(lift_ok)
     out["pass"] = bool(ok)
     return out
 
 
 def check_alignment(parts):
-    """画素の足の中心 X = カム板の中心 X、画素の頭の中心 X = 列の X、カム番号の向き（刷る向きで上 = 組立の +Z）の確認"""
-    foot_err = head_err = 0.0
+    """画素の足の中心 X = カムの板の中心 X、茎の中心 = stem_x、頭の中心 = 列の X（25 個）。カム軸の刷る向き（-X が下）"""
+    foot_err = head_err = stem_err = 0.0
     z_foot_top = PM.mm(P.CAM_TOP_FLUSH) + PM.mm(P.FOOT_FLAT) + 0.01
+    z_tb = PM.mm(P.CAM_TOP_FLUSH) + PM.mm(P.FOOT_H)               # 茎の下端の面（角の頂点がある）
     for j in range(P.N):
         for i in range(P.N):
-            cam = parts[f"cam_{i}_{j}"].data
-            plate_c = min(v.co.x for v in cam.vertices) * 1000.0 + PM.CAM_T / 2
             pix = parts[f"pixel_{i}_{j}"].data
             fx = [v.co.x * 1000.0 for v in pix.vertices if v.co.z * 1000.0 < z_foot_top]
             hx = [v.co.x * 1000.0 for v in pix.vertices if v.co.z * 1000.0 > PM.mm(P.FLANGE_TOP_FLUSH) + 0.01]
-            foot_err = max(foot_err, abs((min(fx) + max(fx)) / 2 - plate_c))
+            tx = [v.co.x * 1000.0 for v in pix.vertices if abs(v.co.z * 1000.0 - z_tb) < 0.01]
+            foot_err = max(foot_err, abs((min(fx) + max(fx)) / 2 - PM.mm(K.cam_x(i, j))))
             head_err = max(head_err, abs((min(hx) + max(hx)) / 2 - PM.mm(K.col_x(i))))
-    rot = Euler([math.radians(a) for a in PM.PRINT_POSE["cam_2_2"]["euler_deg"]], "XYZ").to_matrix()
-    up, right, plate_up = rot @ Vector((0, 0, 1)), rot @ Vector((0, 1, 0)), rot @ Vector((1, 0, 0))
-    ok = (foot_err < 1e-3 and head_err < 1e-3 and plate_up.z > 0.999 and up.y > 0.999 and right.x > 0.999)
-    return {"foot_vs_cam_x_error_mm": round(foot_err, 5), "head_vs_column_x_error_mm": round(head_err, 5),
-            "cam_print_dir_of_assembly_+Z": [round(c, 3) for c in up], "cam_print_dir_of_assembly_+Y": [round(c, 3) for c in right],
-            "cam_print_dir_of_assembly_+X": [round(c, 3) for c in plate_up], "pass": bool(ok)}
+            stem_err = max(stem_err, abs((min(tx) + max(tx)) / 2 - PM.mm(K.stem_x(i, j))))
+            # 茎の断面（高さ 78 の平面で切る。頂点だけで測ると、特徴（通気穴・溝）の頂点だけが拾われて細く見える）の X の範囲 = 中心 stem_x、幅 TOWER_W
+            bm = bmesh.new()
+            bm.from_mesh(pix)
+            bmesh.ops.bisect_plane(bm, geom=bm.verts[:] + bm.edges[:] + bm.faces[:], plane_co=(0, 0, 0.078), plane_no=(0, 0, 1), clear_inner=True, clear_outer=True)
+            sx = [v.co.x * 1000.0 for v in bm.verts]
+            bm.free()
+            stem_err = max(stem_err, abs((min(sx) + max(sx)) / 2 - PM.mm(K.stem_x(i, j))), abs((max(sx) - min(sx)) - PM.mm(P.TOWER_W)))
+    rot = Euler([math.radians(a) for a in PM.PRINT_POSE["camshaft_2"]["euler_deg"]], "XYZ").to_matrix()
+    up = rot @ Vector((1, 0, 0))                          # 組立の +X が刷るときどちらを向くか
+    ok = (foot_err < 1e-3 and head_err < 1e-3 and stem_err < 1e-3 and up.z > 0.999)
+    return {"foot_vs_cam_x_error_mm": round(foot_err, 5), "stem_vs_stem_x_error_mm": round(stem_err, 5), "head_vs_column_x_error_mm": round(head_err, 5),
+            "camshaft_print_dir_of_assembly_+X": [round(c, 3) for c in up], "pass": bool(ok)}
+
+
+def min_wall_thickness(me, skip_below=1e-3):
+    """メッシュ（m）の最小肉厚（mm）: 各面の中心から材料の中へ光線を飛ばし、向かい側の面までの距離の最小。小さい面（面積 1e-3mm2 未満）は除く"""
+    from mathutils.bvhtree import BVHTree
+    bm = bmesh.new()
+    bm.from_mesh(me)
+    bm.faces.ensure_lookup_table()
+    bm.normal_update()
+    tree = BVHTree.FromBMesh(bm)
+    best = (1e9, None)
+    for f in bm.faces:
+        if f.calc_area() * 1e6 < skip_below:
+            continue
+        c, n = f.calc_center_median(), f.normal
+        loc, nrm, _, dist = tree.ray_cast(c - n * 1e-7, -n)
+        if loc is not None and nrm.dot(n) < -0.5 and dist * 1000.0 < best[0]:       # 向かい側は反対向きの面（その外向きの法線が光線と同じ向き = -n）
+            best = (dist * 1000.0, tuple(round(v * 1000.0, 2) for v in c))
+    bm.free()
+    return best
+
+
+def _tri_arrays(ob):
+    """ob（m）の頂点（mm）と三角形の配列（n-gon は三角形化したコピーで）"""
+    me = ob.data.copy()
+    bm = bmesh.new()
+    bm.from_mesh(me)
+    bmesh.ops.triangulate(bm, faces=bm.faces)
+    bm.to_mesh(me)
+    bm.free()
+    co = np.array([v.co[:] for v in me.vertices], dtype=float) * 1000.0
+    tr = np.array([[v for v in p.vertices] for p in me.polygons], dtype=int)
+    bpy.data.meshes.remove(me)
+    return co, tr
+
+
+def check_static_clearances(parts):
+    """静止部品（parts_static の実形状）との隙間。
+    (1) 位相合わせ治具（組立姿勢）と外装 housing の共通体積と最短距離。
+    (2) 奇数行の camshaft のすそ（胴 R5.02 より外の頂点）と -X の押さえ棒 bearing_cap_mx の最短距離。サーボ -180..170 度の全周と、軸方向の遊び ±AXIAL_DRIFT"""
+    import parts_static as S
+    from mathutils.bvhtree import BVHTree
+    out = {}
+    housing = S.build_housing()
+    cap = S.build_bearing_cap(-1)
+    comb = parts["phase_comb"]
+    out["comb_housing_volume_mm3"] = round(inter_mm3(comb, housing), 4)
+    hco, htr = _tri_arrays(housing)
+    th = BVHTree.FromPolygons([tuple(v) for v in hco], [tuple(t) for t in htr])
+    cco, _ = _tri_arrays(comb)
+    seat = PM.ZC + PM.mm(P.PAD_TOP_ABOVE_MX)
+    dmin = min(th.find_nearest(Vector(v))[3] for v in cco if abs(v[2] - seat) > 0.05)        # 耳がパッドの上面に座る面（設計した接触）は除く
+    out["comb_housing_min_distance_mm"] = round(dmin, 3)               # 耳の座を除く
+    kco, ktr = _tri_arrays(cap)
+    tc = BVHTree.FromPolygons([tuple(v) for v in kco], [tuple(t) for t in ktr])
+    drift = PM.mm(P.AXIAL_DRIFT)
+    rows = {}
+    worst_all = 1e9
+    for j in (1, 3):
+        sco, _ = _tri_arrays(parts[f"camshaft_{j}"])
+        y, z = PM.axis_y(j), PM.ZC
+        rad = np.hypot(sco[:, 1] - y, sco[:, 2] - z)
+        skirt = np.nonzero((rad > PM.mm(P.CAMSHAFT_BODY_D) / 2 + 0.02) & (sco[:, 0] < -41.0))[0]
+        best = (1e9, None)
+        for dx in (-drift, 0.0, drift):
+            for phi in range(-180, 180, 10):
+                c, s_ = math.cos(math.radians(phi)), math.sin(math.radians(phi))
+                yy, zz = sco[skirt, 1] - y, sco[skirt, 2] - z
+                pts = np.stack([sco[skirt, 0] + dx, y + c * yy - s_ * zz, z + s_ * yy + c * zz], axis=1)
+                for q in pts[(pts[:, 2] > z + 3.0)]:
+                    d = tc.find_nearest(Vector(q))[3]
+                    if d < best[0]:
+                        best = (d, (dx, phi))
+        rows[f"camshaft_{j}"] = {"skirt_to_cap_min_mm": round(best[0], 3), "at_axial_shift_and_phi": best[1],
+                                 "skirt_most_minus_x_mm": round(float(sco[skirt][:, 0].min()), 3)}
+        worst_all = min(worst_all, best[0])
+    out["skirt_vs_bearing_cap_mx"] = rows
+    # 軸方向の止まり: camshaft_j + gear_j（一体）を ±X へ動かしたときの、外装 housing との初接触の動き（mm）。共通体積が出始める所を二分法で探す
+    hm = _copy_obj(housing)
+    stops = {}
+    for j in (1, 2):
+        pair = [parts[f"camshaft_{j}"], parts[f"gear_{j}"]]
+
+        def penetrates(d):
+            tot = 0.0
+            for ob in pair:
+                c = _copy_obj(ob, Matrix.Translation((d, 0, 0)))
+                ca = hm.copy()
+                ca.data = hm.data.copy()
+                bpy.context.collection.objects.link(ca)
+                boolean(ca, c, "INTERSECT")
+                tot += volume(ca) if len(ca.data.polygons) else 0.0
+                PM.drop(ca)
+            return tot > 1e-4
+        res = {}
+        for name, sign in (("minus_x", -1.0), ("plus_x", +1.0)):
+            lo_, hi_ = 0.0, 1.2
+            if penetrates(0.0):
+                res[name] = 0.0
+                continue
+            if not penetrates(sign * hi_):
+                res[name] = None
+                continue
+            for _ in range(8):
+                mid = (lo_ + hi_) / 2
+                if penetrates(sign * mid):
+                    hi_ = mid
+                else:
+                    lo_ = mid
+            res[name] = round(hi_, 3)
+        stops[f"row_{j}"] = res
+    PM.drop(hm)
+    out["axial_first_contact_mm"] = stops
+    contacts = [v for r in stops.values() for v in r.values()]
+    contact_ok = all(v is not None and abs(v - PM.mm(P.AXIAL_DRIFT)) <= 0.05 for v in contacts)
+    out["skirt_to_cap_min_mm"] = round(worst_all, 3)
+    # 軸方向の止まり: -X の軸受けの端と溝の底の隙間（遊びを入れる前）。+X の肩とパッドの内面の隙間 AXIAL_DRIFT が先に決まること
+    out["axial_stop"] = {"bearing_end_to_groove_bottom_mm": round(PM.mm(P.PAD_X1) + PM.mm(P.U_DIG) - PM.JOURNAL_MX_END, 3),
+                         "bearing_overlap_with_slot_mm": round(PM.JOURNAL_MX_END - PM.mm(P.PAD_X0), 3),
+                         "shoulder_to_pad_mm": round(PM.mm(P.PAD_X0) - PM.mm(P.SHAFT_HALF_L), 3), "design_drift_mm": PM.mm(P.AXIAL_DRIFT)}
+    out["pass"] = bool(out["comb_housing_volume_mm3"] < 1e-4 and out["comb_housing_min_distance_mm"] >= 0.3 - 1e-6 and worst_all >= 0.3
+                       and out["axial_stop"]["bearing_overlap_with_slot_mm"] >= 1.0 - 1e-6 and contact_ok)
+    for ob in (housing, cap):
+        PM.drop(ob)
+    return out
 
 
 def check_coupler_walls(parts):
@@ -573,21 +757,18 @@ def check_coupler_walls(parts):
     # 受けの本体（支えのピン以外）の +X 端と、+X のパッドの帯の内面（PAD_X0）の隙間。上から降りるとき帯を擦らない
     body_x1 = max(v.co.x for v in rc.data.vertices if math.hypot(v.co.y, v.co.z) > PM.mm(P.RECV_PIN_D) / 2 + 0.05)
     band_gap = PM.mm(P.PAD_X0) - body_x1
-    # 受けの掃く範囲（サーボ軸まわりの半径 20.6）に、カム（回転円の半径 = 輪郭の最大）・ハブ・歯車・鍔（外接円）が掛かる部品と、受けの -X 面との X の隙間。
-    # 軸の遊び 0.2 が受けへ寄る向きに効いた値も出す
+    # 受けの掃く範囲（サーボ軸まわりの半径 20.6）に回転円が掛かるカムの板（+X 面）と、受けの -X 面との X の隙間。軸方向の遊び片側 AXIAL_DRIFT を引いた値も出す
     x_min = min(v.co.x for v in rc.data.vertices)
     zs, zc = PM.ZS, PM.ZC
     cam_gap, cam_at = 1e9, None
     for j in range(P.N):
         for i in range(P.N):
-            cam = parts[f"cam_{i}_{j}"].data
-            xs = [v.co.x * 1000.0 for v in cam.vertices]
-            plate_x1 = min(xs) + PM.CAM_T
-            rmax = max(math.hypot(v.co.y * 1000.0 - PM.axis_y(j), v.co.z * 1000.0 - zc) for v in cam.vertices)
+            plate_x1 = PM.cam_x(i, j) + PM.CAM_T / 2
+            rmax = float(np.hypot(*PM.cam_contour(i, j).T).max())
             if math.hypot(PM.axis_y(j), zc - zs) - PM.mm(P.RECV_BAR_R) - rmax < 0:       # 回転円どうしが重なりうる
                 gap = x_min - plate_x1
                 if gap < cam_gap:
-                    cam_gap, cam_at = gap, f"cam_{i}_{j}"
+                    cam_gap, cam_at = gap, f"camshaft_{j} cam {i}"
     PM.drop(rc)
     wmin = min(walls)
     cmin = min(ceil)
@@ -599,10 +780,151 @@ def check_coupler_walls(parts):
             "pass": bool(wmin[0] + 1e-3 >= 1.2 and cmin[0] >= 1.2 and band_gap >= 0.5)}
 
 
+def check_cone_clearance(parts):
+    """隣の行の camshaft どうし（Y が 17 離れる）の実形状の最短距離（mm）。サーボ 10..170 度と表の角度で、2 本を逆回りに（歯車 1:1）回し、
+    B の X のずれを設計位置 0 と軸方向の遊び ±2 x AXIAL_DRIFT（片側 0.4 の 2 本分 = 0.8）で測る。
+    頂点から相手の面までの距離（最も近い面の法線で内外を判定。食い込みは負）の、両方向の最小"""
+    from mathutils.bvhtree import BVHTree
+    thetas = sorted(set([float(t) for t in range(10, 171, 10)] + [float(t) for t in P.TABLE_THETA]))
+    slack = 2 * PM.mm(P.AXIAL_DRIFT)
+    shifts = (0.0, -slack, slack)
+    res = {}
+    mesh = {}
+    for j in range(P.N):
+        me = parts[f"camshaft_{j}"].data
+        co = np.array([v.co[:] for v in me.vertices], dtype=float) * 1000.0
+        tr = np.array([[v for v in p.vertices] for p in me.polygons if len(p.vertices) == 3], dtype=int)
+        quads = [p for p in me.polygons if len(p.vertices) != 3]
+        if quads:
+            bm = bmesh.new()
+            bm.from_mesh(me)
+            bmesh.ops.triangulate(bm, faces=bm.faces)
+            tr = np.array([[v.index for v in f.verts] for f in bm.faces], dtype=int)
+            bm.free()
+        mesh[j] = (co, tr)
+
+    def placed(j, phi, dx):
+        co, tr = mesh[j]
+        y, z = PM.axis_y(j), PM.ZC
+        c, s_ = math.cos(math.radians(phi)), math.sin(math.radians(phi))
+        yy, zz = co[:, 1] - y, co[:, 2] - z
+        out = np.stack([co[:, 0] + dx, y + c * yy - s_ * zz, z + s_ * yy + c * zz], axis=1)
+        return out
+
+    def inside_parity(tree, q):
+        """q が tree の閉じた面の内側か（2 本の光線の交点の数の偶奇。2 本とも奇数なら内側）。面の法線の向きに頼らない（辺の上では法線の判定が不定）"""
+        votes = 0
+        for dv in (Vector((1.0, 0.1234, 0.0567)), Vector((0.0432, 1.0, 0.3141)), Vector((0.2718, 0.0871, 1.0))):
+            d = dv.normalized()
+            o = q.copy()
+            n = 0
+            while True:
+                loc, nrm, idx, dist = tree.ray_cast(o, d)
+                if loc is None:
+                    break
+                n += 1
+                o = loc + d * 1e-4
+            votes += n % 2
+        return votes >= 2
+
+    def signed_min(src, tree, axis_other, others_r):
+        d = np.hypot(src[:, 1] - axis_other[0], src[:, 2] - axis_other[1])
+        sel = np.nonzero(d < others_r)[0]
+        best = 1e9
+        for k in sel:
+            q = Vector(src[k])
+            loc, nrm, _, dist = tree.find_nearest(q)
+            if loc is None or dist >= best and dist >= 1.5:
+                continue
+            if dist < 1.5 and inside_parity(tree, q):
+                dist = -dist
+            best = min(best, dist)
+        return best
+    worst_all = {"nominal": (1e9, None), "slack": (1e9, None)}
+    per_pair = {}
+    for j in range(P.N - 1):
+        pn, ps = (1e9, None), (1e9, None)
+        for th in thetas:
+            pa, pb = K.axis_angle(th, j), K.axis_angle(th, j + 1)
+            for dx in shifts:
+                A = placed(j, pa, 0.0)
+                B = placed(j + 1, pb, dx)
+                ta = BVHTree.FromPolygons([tuple(v) for v in A], [tuple(t) for t in mesh[j][1]], epsilon=0.0)
+                tb = BVHTree.FromPolygons([tuple(v) for v in B], [tuple(t) for t in mesh[j + 1][1]], epsilon=0.0)
+                reach = 13.0
+                d = min(signed_min(A, tb, (PM.axis_y(j + 1), PM.ZC), reach), signed_min(B, ta, (PM.axis_y(j), PM.ZC), reach))
+                if dx == 0.0:
+                    if d < pn[0]:
+                        pn = (d, (th, dx))
+                else:
+                    if d < ps[0]:
+                        ps = (d, (th, dx))
+        per_pair[f"{j}-{j + 1}"] = {"nominal_min_mm": round(pn[0], 3), "nominal_at_servo_deg": pn[1][0],
+                                    "with_axial_play_min_mm": round(min(pn[0], ps[0]), 3), "slack_at": [ps[1][0], ps[1][1]]}
+        for key, v in (("nominal", pn), ("slack", ps)):
+            if v[0] < worst_all[key][0]:
+                worst_all[key] = (v[0], f"pair {j}-{j + 1}")
+    res["pairs"] = per_pair
+    res["nominal_min_mm"] = round(worst_all["nominal"][0], 3)
+    res["with_axial_play_min_mm"] = round(min(worst_all["nominal"][0], worst_all["slack"][0]), 3)
+    res["design_limits_mm"] = {"nominal": PM.mm(P.CONE_CLEAR_NOMINAL), "with_axial_play": PM.mm(P.CONE_CLEAR_SLACK)}
+    res["servo_angles_tested"] = thetas
+    res["pass"] = bool(res["nominal_min_mm"] >= PM.mm(P.CONE_CLEAR_NOMINAL) - 0.1 and res["with_axial_play_min_mm"] >= PM.mm(P.CONE_CLEAR_SLACK) + 0.0)
+    return res
+
+
+def check_camshaft_print(print_parts, parts):
+    """camshaft_j を -X 端を下にして立てて刷る形（刷るときだけの円盤つき）の確認: 高さ / 接地、連結成分、サポートの要らなさ（端面以外の下向き面 0）"""
+    out = {}
+    rows = {}
+    ok = True
+    td = PM.mm(P.PRINT_FOOT_T)
+    gap = PM.mm(P.PRINT_FOOT_GAP)
+    for j in range(P.N):
+        pid = f"camshaft_{j}"
+        pme = rotated_print_mesh(print_parts[pid], PM.PRINT_POSE[pid]["euler_deg"])
+        zs = np.array([v.co.z for v in pme.vertices]) * 1000.0
+        xy = np.array([(v.co.x, v.co.y) for v in pme.vertices]) * 1000.0
+        bottom = xy[zs < 0.35]
+        foot_w = float(min(np.ptp(bottom[:, 0]), np.ptp(bottom[:, 1])))
+        height = float(zs.max() - zs.min())
+        area, where, bridged = overhang(pme, bridged=(td + gap, PM.mm(P.CAMSHAFT_BODY_D) / 2 + 0.05, 0.0, 0.0))
+        bare = rotated_print_mesh(parts[pid], PM.PRINT_POSE[pid]["euler_deg"])
+        height_bare = float(max(v.co.z for v in bare.vertices) - min(v.co.z for v in bare.vertices)) * 1000.0
+        width_bare = float(min(np.ptp([v.co.x for v in bare.vertices]), np.ptp([v.co.y for v in bare.vertices]))) * 1000.0
+        # すその -X の端を SKIRT_X_MIN で止めた cam の、板の下面の水平な縁（下向き）。印刷の高さ z = 板の下面の X - 円盤の下面の X
+        z_foot_bottom = -PM.JOURNAL_MX_END - gap - td
+        ledge_z = [PM.cam_x(i, j) - PM.CAM_T / 2 - z_foot_bottom for i in range(P.N)
+                   if f"{i}_{j}" in PM.INFO.get("skirt_chamfer_height_max_mm", {})] if pid == f"camshaft_{j}" else []
+        ledge = sum(w["area_mm2"] for w in where if w["kind"] == "flat" and any(abs(w["z_mm"] - z) < 0.06 for z in ledge_z))
+        other = area - ledge
+        co_a = np.array([v.co[:] for v in parts[pid].data.vertices], dtype=float) * 1000.0
+        rad = np.hypot(co_a[:, 1] - PM.axis_y(j), co_a[:, 2] - PM.ZC)
+        skirt_min_x = float(co_a[rad > PM.mm(P.CAMSHAFT_BODY_D) / 2 + 0.005][:, 0].min())      # 胴（R5）より外にある材料の最も -X の位置
+        rows[pid] = {"height_mm": round(height, 3), "skirt_most_minus_x_mm": round(skirt_min_x, 3),
+                     "skirt_ledge_area_mm2": round(ledge, 3), "skirt_chamfer_height_max_mm": PM.INFO.get("skirt_chamfer_height_max_mm", {}), "rim_width_left_mm": PM.INFO.get("rim_width_left_mm", {}),
+                     "downward_area_other_than_ledge_mm2": round(other, 4), "footprint_mm": round(foot_w, 3), "height_over_footprint": round(height / foot_w, 3),
+                     "bare_height_mm": round(height_bare, 3), "bare_min_width_mm": round(width_bare, 3), "bare_ratio": round(height_bare / width_bare, 3),
+                     "components": components(pme), "downward_area_excluding_foot_end_face_mm2": round(area, 4),
+                     "downward_where": where, "foot_end_face_area_mm2": round(bridged, 3)}
+        ok &= (height / foot_w <= 5.0 and rows[pid]["components"] == 1 and area < 1e-3 and skirt_min_x >= PM.SKIRT_X_MIN - 0.02
+               and all(v >= 2.5 - 1e-6 for v in PM.INFO.get("rim_width_left_mm", {}).values()))
+        bpy.data.meshes.remove(pme)
+        bpy.data.meshes.remove(bare)
+    out["camshafts"] = rows
+    out["foot"] = {"disk_d_mm": PM.mm(P.PRINT_FOOT_D), "disk_t_mm": td, "gap_mm": gap, "ribs": P.PRINT_FOOT_RIBS, "rib_w_mm": PM.mm(P.PRINT_FOOT_RIB_W),
+                   "neck_w_mm": PM.mm(P.PRINT_FOOT_NECK), "residue_after_break_mm": PM.mm(P.PRINT_FOOT_RESIDUE_MAX)}
+    out["pass"] = bool(ok)
+    return out
+
+
 # --- 本体 --------------------------------------------------------------------------------------------------------
 def main():
     t0 = time.time()
     os.makedirs(OUT, exist_ok=True)
+    for f in os.listdir(OUT):                       # 前の構成の STL（廃止した部品）を残さない
+        if f.endswith(".stl"):
+            os.remove(os.path.join(OUT, f))
     clear_scene()
     report = {"units": "mm / mm2 / cm3", "calibration": {}, "parts": {}}
 
@@ -615,9 +937,13 @@ def main():
         raise RuntimeError("overhang() の校正が合わない。部品の数字を信じない")
 
     parts = PM.build_moving()
-    print(f"built {len(parts)} parts in {time.time() - t0:.1f}s")
+    variants = PM.build_print_variants()
+    print(f"built {len(parts)} parts (+ {len(variants)} print variants) in {time.time() - t0:.1f}s")
     ids = PM.part_ids()
     assert sorted(parts) == sorted(ids), "build_moving() の返りが part_ids() と違う"
+    assert sorted(ids) == sorted(i for i in P.PART_IDS if i in ids), "part_ids() に params.PART_IDS に無い id がある"
+    assert all(i in ids for i in P.PART_IDS if not i.startswith(("housing", "bezel", "guide_plate", "sg92r", "bearing_cap"))), \
+        "params.PART_IDS の動く部品が build_moving() に無い"
     bad, defects = [], []
     si_total = za_total = 0
     for pid in ids:
@@ -627,31 +953,39 @@ def main():
         export_stl(ob, os.path.join(OUT, f"{pid}.stl"))
         za_file = stl_zero_area(os.path.join(OUT, f"{pid}.stl"))
         pose = PM.PRINT_POSE[pid]
-        pme = rotated_print_mesh(ob, pose["euler_deg"])
+        pob_src = variants.get(pid, ob)                  # 刷る形が違う部品（円盤つきの camshaft_j）はそちら
+        pme = rotated_print_mesh(pob_src, pose["euler_deg"])
         pob = bpy.data.objects.new(f"print_{pid}", pme)
         bpy.context.collection.objects.link(pob)
         export_stl(pob, os.path.join(OUT, f"print_{pid}.stl"))
         za_file += stl_zero_area(os.path.join(OUT, f"print_{pid}.stl"))
-        area, where = overhang(pme)
+        if pid in variants:
+            area, where, bridged = overhang(pme, bridged=(PM.mm(P.PRINT_FOOT_T) + PM.mm(P.PRINT_FOOT_GAP), PM.mm(P.CAMSHAFT_BODY_D) / 2 + 0.05, 0.0, 0.0))
+        else:
+            area, where = overhang(pme)
+            bridged = None
         plo, phi = bbox_mm(pme)
         nm = nonmanifold(ob)
         cc = components(me)
+        cc_print = components(pme)
+        nm_print = nonmanifold(pob_src)
         si_a, za_a = mesh_defects(me, 1000.0)
         si_p, za_p = mesh_defects(pme, 1000.0)
         entry = {
             "bbox_assembly_mm": [round(float(x), 3) for x in (hi - lo)],
             "bbox_assembly_min_mm": [round(float(x), 3) for x in lo], "bbox_assembly_max_mm": [round(float(x), 3) for x in hi],
             "volume_cm3": round(volume(ob) * 1e6, 4),
-            "nonmanifold_edges": nm, "components": cc,
+            "nonmanifold_edges": nm, "components": cc, "print_nonmanifold_edges": nm_print, "print_components": cc_print,
             "self_intersections": {"assembly": si_a, "print": si_p}, "zero_area_triangles": {"assembly": za_a, "print": za_p, "stl_files": za_file},
             "faces": len(me.polygons),
             "print": {"euler_deg": list(pose["euler_deg"]), "bbox_mm": [round(float(x), 3) for x in (phi - plo)],
                       "overhang_area_mm2": round(area, 3), "overhang_where": where,
+                      "foot_end_face_area_mm2": None if bridged is None else round(bridged, 3),
                       "reason": pose["reason"], "support": pose["support"]},
         }
         report["parts"][pid] = entry
-        if nm or cc != 1:
-            bad.append((pid, nm, cc))
+        if nm or cc != 1 or nm_print or cc_print != 1:
+            bad.append((pid, nm, cc, nm_print, cc_print))
         if si_a or si_p or za_a or za_p or za_file:
             defects.append((pid, si_a, si_p, za_a, za_p, za_file))
         si_total += si_a + si_p
@@ -660,18 +994,23 @@ def main():
         bpy.data.meshes.remove(pme)
 
     report["alignment"] = check_alignment(parts)
+    report["camshaft_print"] = check_camshaft_print(variants, parts)
     report["fits"] = check_fits(parts)
+    report["cone_clearance"] = check_cone_clearance(parts)
     report["horn_rejection"] = check_horn_rejection()
     report["coupler_walls"] = check_coupler_walls(parts)
     report["gear_mesh"] = check_gear_mesh()
-    report["shaft_len_mm"] = PM.INFO.get("shaft_len_mm")
-    report["cam_label_pos_mm"] = PM.INFO.get("cam_label_pos_mm")
-    report["cam_stub_len_mm"] = PM.INFO.get("cam_stub_len_mm")
+    report["camshaft_label"] = PM.INFO.get("camshaft_label")
+    report["comb_layout"] = PM.INFO.get("comb")
+    report["static_clearances"] = check_static_clearances(parts)
+    mt = min_wall_thickness(parts["phase_comb"].data)
+    report["comb_min_wall_mm"] = {"thickness_mm": round(mt[0], 3), "at_xyz_mm": mt[1], "pass": bool(mt[0] >= 1.2 - 1e-6)}
+    report["cam_skirt_end_x_mm"] = PM.INFO.get("cam_skirt_end_x_mm")
     report["summary"] = {
         "parts": len(ids), "all_manifold_single_component": not bad, "bad": bad,
         "self_intersections_total": si_total, "zero_area_triangles_total": za_total, "defect_parts": defects,
         "defects_pass": bool(si_total == 0 and za_total == 0),
-        "overhang_calibration_ok": cal_ok, "horn_rejection_pass": report["horn_rejection"]["pass"], "fits_pass": report["fits"]["pass"], "coupler_walls_pass": report["coupler_walls"]["pass"], "alignment_pass": report["alignment"]["pass"],
+        "overhang_calibration_ok": cal_ok, "camshaft_print_pass": report["camshaft_print"]["pass"], "comb_min_wall_mm": report["comb_min_wall_mm"]["thickness_mm"], "static_pass": report["static_clearances"]["pass"], "comb_housing_mm3": report["static_clearances"]["comb_housing_volume_mm3"], "skirt_cap_min_mm": report["static_clearances"]["skirt_to_cap_min_mm"], "cone_pass": report["cone_clearance"]["pass"], "horn_rejection_pass": report["horn_rejection"]["pass"], "fits_pass": report["fits"]["pass"], "coupler_walls_pass": report["coupler_walls"]["pass"], "alignment_pass": report["alignment"]["pass"],
         "gear_mesh_pass": report["gear_mesh"]["pass"], "seconds": round(time.time() - t0, 1),
     }
     write_json(os.path.join(OUT, "report.json"), report)

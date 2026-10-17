@@ -1,6 +1,6 @@
 {
  "model": "tangible-pixel-cube",
- "generatedAt": "2026-10-16T18:00:53",
+ "generatedAt": "2026-10-17T15:45:30",
  "pass": true,
  "blocking": [],
  "harness": {
@@ -8,7 +8,7 @@
   "stamp": "e81958ee6cd94fa6d5ba5c2bc4c8447cd632c08acb97f9bb697922edb475deee",
   "stampedAt": "2026-10-15T10:58:57"
  },
- "blenderSeconds": 174.6,
+ "blenderSeconds": 247.6,
  "declared": {
   "waivers": {
    "print.slice": "依頼 ④「スライスは不要」"
@@ -18,262 +18,111 @@
     "type": "press_fit",
     "pairs": [
      [
-      "cam_4_0",
+      "camshaft_0",
       "gear_0"
      ],
      [
-      "cam_4_1",
+      "camshaft_1",
       "gear_1"
      ],
      [
-      "cam_4_2",
+      "camshaft_2",
       "gear_2"
      ],
      [
-      "cam_4_3",
+      "camshaft_3",
       "gear_3"
      ],
      [
-      "cam_4_4",
+      "camshaft_4",
       "gear_4"
      ]
     ],
-    "insertion_mm": 2.4,
-    "basis": "継ぎ目の雌穴の潰しリブ 3 本（潰し 0.18mm）。当たるのは差し込みの最後の 2.4mm だけ（params.JOINT_ENGAGE_*）"
-   },
-   {
-    "type": "press_fit",
-    "pairs": [
-     [
-      "cam_0_0",
-      "cam_1_0"
-     ],
-     [
-      "cam_0_0",
-      "shaft_0"
-     ],
-     [
-      "cam_0_1",
-      "cam_1_1"
-     ],
-     [
-      "cam_0_1",
-      "shaft_1"
-     ],
-     [
-      "cam_0_2",
-      "cam_1_2"
-     ],
-     [
-      "cam_0_2",
-      "shaft_2"
-     ],
-     [
-      "cam_0_3",
-      "cam_1_3"
-     ],
-     [
-      "cam_0_3",
-      "shaft_3"
-     ],
-     [
-      "cam_0_4",
-      "cam_1_4"
-     ],
-     [
-      "cam_0_4",
-      "shaft_4"
-     ],
-     [
-      "cam_1_0",
-      "cam_2_0"
-     ],
-     [
-      "cam_1_1",
-      "cam_2_1"
-     ],
-     [
-      "cam_1_2",
-      "cam_2_2"
-     ],
-     [
-      "cam_1_3",
-      "cam_2_3"
-     ],
-     [
-      "cam_1_4",
-      "cam_2_4"
-     ],
-     [
-      "cam_2_0",
-      "cam_3_0"
-     ],
-     [
-      "cam_2_1",
-      "cam_3_1"
-     ],
-     [
-      "cam_2_2",
-      "cam_3_2"
-     ],
-     [
-      "cam_2_3",
-      "cam_3_3"
-     ],
-     [
-      "cam_2_4",
-      "cam_3_4"
-     ],
-     [
-      "cam_3_0",
-      "cam_4_0"
-     ],
-     [
-      "cam_3_1",
-      "cam_4_1"
-     ],
-     [
-      "cam_3_2",
-      "cam_4_2"
-     ],
-     [
-      "cam_3_3",
-      "cam_4_3"
-     ],
-     [
-      "cam_3_4",
-      "cam_4_4"
-     ]
-    ],
-    "insertion_mm": 2.8,
-    "basis": "継ぎ目の雌穴の潰しリブ 3 本（潰し 0.18mm）。当たるのは差し込みの最後の 2.8mm だけ（params.JOINT_ENGAGE_*）"
+    "insertion_mm": 1.5,
+    "basis": "継ぎ目の雌穴の潰しリブ 3 本（潰し 0.18mm）。当たるのは差し込みの最後の 1.5mm だけ（gear_hole(): リブ長さ 1.5）"
    },
    {
     "type": "static_fit",
     "pairs": [
      [
-      "cam_0_0",
-      "cam_1_0"
-     ],
-     [
-      "cam_0_0",
-      "shaft_0"
-     ],
-     [
-      "cam_0_1",
-      "cam_1_1"
-     ],
-     [
-      "cam_0_1",
-      "shaft_1"
-     ],
-     [
-      "cam_0_2",
-      "cam_1_2"
-     ],
-     [
-      "cam_0_2",
-      "shaft_2"
-     ],
-     [
-      "cam_0_3",
-      "cam_1_3"
-     ],
-     [
-      "cam_0_3",
-      "shaft_3"
-     ],
-     [
-      "cam_0_4",
-      "cam_1_4"
-     ],
-     [
-      "cam_0_4",
-      "shaft_4"
-     ],
-     [
-      "cam_1_0",
-      "cam_2_0"
-     ],
-     [
-      "cam_1_1",
-      "cam_2_1"
-     ],
-     [
-      "cam_1_2",
-      "cam_2_2"
-     ],
-     [
-      "cam_1_3",
-      "cam_2_3"
-     ],
-     [
-      "cam_1_4",
-      "cam_2_4"
-     ],
-     [
-      "cam_2_0",
-      "cam_3_0"
-     ],
-     [
-      "cam_2_1",
-      "cam_3_1"
-     ],
-     [
-      "cam_2_2",
-      "cam_3_2"
-     ],
-     [
-      "cam_2_3",
-      "cam_3_3"
-     ],
-     [
-      "cam_2_4",
-      "cam_3_4"
-     ],
-     [
-      "cam_3_0",
-      "cam_4_0"
-     ],
-     [
-      "cam_3_1",
-      "cam_4_1"
-     ],
-     [
-      "cam_3_2",
-      "cam_4_2"
-     ],
-     [
-      "cam_3_3",
-      "cam_4_3"
-     ],
-     [
-      "cam_3_4",
-      "cam_4_4"
-     ],
-     [
-      "cam_4_0",
+      "camshaft_0",
       "gear_0"
      ],
      [
-      "cam_4_1",
+      "camshaft_1",
       "gear_1"
      ],
      [
-      "cam_4_2",
+      "camshaft_2",
       "gear_2"
      ],
      [
-      "cam_4_3",
+      "camshaft_3",
       "gear_3"
      ],
      [
-      "cam_4_4",
+      "camshaft_4",
       "gear_4"
      ]
     ],
-    "max_mm3": 1.0,
-    "basis": "組んだ後も潰しリブ 3 本 x 幅 0.6 x 潰し 0.18 x 長さ（最大 2.8）= 0.91mm3 が重なったまま残る"
+    "max_mm3": 0.4,
+    "basis": "組んだ後も潰しリブ 3 本が重なったまま残る。1 本 = 幅 0.6 x（傾き部分 0.5 x 0.18^2 + 平ら部分 0.18 x 1.12）で合計 0.392mm3（verify_report の理論値 0.392、許容 0.353〜0.400）"
+   },
+   {
+    "type": "press_fit",
+    "pairs": [
+     [
+      "bearing_cap_px",
+      "housing"
+     ],
+     [
+      "bearing_cap_mx",
+      "housing"
+     ]
+    ],
+    "insertion_mm": 2.0,
+    "basis": "押さえ棒の Y 端のリブ（各端 2 本、高さ 0.25、食い込み 0.05）が外装の Y 止めの面を擦る。擦るのは差し込みの最後の 2.0mm だけ（assembly_report の allowedInsertionWindowMm 2.0）"
+   },
+   {
+    "type": "static_fit",
+    "pairs": [
+     [
+      "bearing_cap_px",
+      "housing"
+     ],
+     [
+      "bearing_cap_mx",
+      "housing"
+     ]
+    ],
+    "max_mm3": 0.15,
+    "basis": "組んだ後も押さえ棒の Y 端のリブが重なったまま残る。理論値 0.120mm3（各端 2 本、食い込み 0.05）、許容 0.096〜0.154"
+   },
+   {
+    "type": "snap",
+    "pairs": [
+     [
+      "bearing_cap_px",
+      "housing"
+     ]
+    ],
+    "engage_mm": 12.0,
+    "strain_percent": 1.606,
+    "deflection_mm": 0.15,
+    "basis": "押さえ棒の爪（出っ張り 0.45）が外装の面に乗り上げて腕（長さ 4.1、厚さ 1.2）がしなる。しなり 0.15mm、梁の見積り 3tδ/(2L^2) でひずみ 1.606%（assembly_report capSnap）"
+   },
+   {
+    "type": "snap",
+    "pairs": [
+     [
+      "bearing_cap_mx",
+      "housing"
+     ]
+    ],
+    "engage_mm": 12.0,
+    "strain_percent": 1.531,
+    "deflection_mm": 0.15,
+    "basis": "押さえ棒の爪（出っ張り 0.45）が外装の面に乗り上げて腕（長さ 4.2、厚さ 1.2）がしなる。しなり 0.15mm、梁の見積り 3tδ/(2L^2) でひずみ 1.531%（assembly_report capSnap）"
    },
    {
     "type": "snap",
@@ -596,7 +445,7 @@
    "id": "parts.topology",
    "title": "全 STL が閉じて向きのそろった多様体か（面積 0 の三角形も無し）",
    "pass": true,
-   "summary": "136 個の STL を検査（既製部品の正本 1 個に面積 0 の三角形。閉じているので計器には使える）",
+   "summary": "90 個の STL を検査（既製部品の正本 1 個に面積 0 の三角形。閉じているので計器には使える）",
    "detail": {
     "failing": {},
     "referenceNotes": {
@@ -618,7 +467,7 @@
    "id": "parts.components",
    "title": "刷る STL の連結成分の数が宣言どおりか（既定 1）",
    "pass": true,
-   "summary": "刷る部品 67 点",
+   "summary": "刷る部品 44 点",
    "detail": {},
    "required": true,
    "waived": null
@@ -627,7 +476,7 @@
    "id": "parts.self_intersection",
    "title": "刷る STL に自己交差が無いか",
    "pass": true,
-   "summary": "刷る STL 67 点",
+   "summary": "刷る STL 44 点",
    "detail": {},
    "required": true,
    "waived": null
@@ -688,249 +537,65 @@
    "id": "motion.interference",
    "title": "動く全範囲で、許可の無い部品の組の共通体積が 0 か",
    "pass": true,
-   "summary": "68 部品・2278 組 x 161 姿勢（10.0〜170.0°、どの点も姿勢の間で 1.0mm 以内。補間 0）",
+   "summary": "45 部品・990 組 x 161 姿勢（10.0〜170.0°、どの点も姿勢の間で 1.0mm 以内。補間 0）",
    "detail": {
     "violations": [],
     "allowedContacts": [
      {
       "parts": [
-       "cam_0_0",
-       "cam_1_0"
+       "bearing_cap_mx",
+       "housing"
       ],
       "type": "static_fit",
-      "maxMm3": 0.8100053763023767
+      "maxMm3": 0.1200070190243423
      },
      {
       "parts": [
-       "cam_0_0",
-       "shaft_0"
+       "bearing_cap_px",
+       "housing"
       ],
       "type": "static_fit",
-      "maxMm3": 0.8100071149024152
+      "maxMm3": 0.1200070190243423
      },
      {
       "parts": [
-       "cam_0_1",
-       "cam_1_1"
-      ],
-      "type": "static_fit",
-      "maxMm3": 0.8100059546757427
-     },
-     {
-      "parts": [
-       "cam_0_1",
-       "shaft_1"
-      ],
-      "type": "static_fit",
-      "maxMm3": 0.8100035708420354
-     },
-     {
-      "parts": [
-       "cam_0_2",
-       "cam_1_2"
-      ],
-      "type": "static_fit",
-      "maxMm3": 0.8100048511221549
-     },
-     {
-      "parts": [
-       "cam_0_2",
-       "shaft_2"
-      ],
-      "type": "static_fit",
-      "maxMm3": 0.81000600642231
-     },
-     {
-      "parts": [
-       "cam_0_3",
-       "cam_1_3"
-      ],
-      "type": "static_fit",
-      "maxMm3": 0.8100093088277056
-     },
-     {
-      "parts": [
-       "cam_0_3",
-       "shaft_3"
-      ],
-      "type": "static_fit",
-      "maxMm3": 0.8100063667596613
-     },
-     {
-      "parts": [
-       "cam_0_4",
-       "cam_1_4"
-      ],
-      "type": "static_fit",
-      "maxMm3": 0.8100051928875995
-     },
-     {
-      "parts": [
-       "cam_0_4",
-       "shaft_4"
-      ],
-      "type": "static_fit",
-      "maxMm3": 0.8100063840816434
-     },
-     {
-      "parts": [
-       "cam_1_0",
-       "cam_2_0"
-      ],
-      "type": "static_fit",
-      "maxMm3": 0.8100082209123187
-     },
-     {
-      "parts": [
-       "cam_1_1",
-       "cam_2_1"
-      ],
-      "type": "static_fit",
-      "maxMm3": 0.8100051374277801
-     },
-     {
-      "parts": [
-       "cam_1_2",
-       "cam_2_2"
-      ],
-      "type": "static_fit",
-      "maxMm3": 0.8100062564038886
-     },
-     {
-      "parts": [
-       "cam_1_3",
-       "cam_2_3"
-      ],
-      "type": "static_fit",
-      "maxMm3": 0.8100077865274917
-     },
-     {
-      "parts": [
-       "cam_1_4",
-       "cam_2_4"
-      ],
-      "type": "static_fit",
-      "maxMm3": 0.8100065974473719
-     },
-     {
-      "parts": [
-       "cam_2_0",
-       "cam_3_0"
-      ],
-      "type": "static_fit",
-      "maxMm3": 0.8100072288102581
-     },
-     {
-      "parts": [
-       "cam_2_1",
-       "cam_3_1"
-      ],
-      "type": "static_fit",
-      "maxMm3": 0.8100050657063711
-     },
-     {
-      "parts": [
-       "cam_2_2",
-       "cam_3_2"
-      ],
-      "type": "static_fit",
-      "maxMm3": 0.8100050110668339
-     },
-     {
-      "parts": [
-       "cam_2_3",
-       "cam_3_3"
-      ],
-      "type": "static_fit",
-      "maxMm3": 0.8100073999457214
-     },
-     {
-      "parts": [
-       "cam_2_4",
-       "cam_3_4"
-      ],
-      "type": "static_fit",
-      "maxMm3": 0.810005605345484
-     },
-     {
-      "parts": [
-       "cam_3_0",
-       "cam_4_0"
-      ],
-      "type": "static_fit",
-      "maxMm3": 0.8100086132004813
-     },
-     {
-      "parts": [
-       "cam_3_1",
-       "cam_4_1"
-      ],
-      "type": "static_fit",
-      "maxMm3": 0.8100047509589806
-     },
-     {
-      "parts": [
-       "cam_3_2",
-       "cam_4_2"
-      ],
-      "type": "static_fit",
-      "maxMm3": 0.8100065010554081
-     },
-     {
-      "parts": [
-       "cam_3_3",
-       "cam_4_3"
-      ],
-      "type": "static_fit",
-      "maxMm3": 0.8100077092791387
-     },
-     {
-      "parts": [
-       "cam_3_4",
-       "cam_4_4"
-      ],
-      "type": "static_fit",
-      "maxMm3": 0.8100073300474357
-     },
-     {
-      "parts": [
-       "cam_4_0",
+       "camshaft_0",
        "gear_0"
       ],
       "type": "static_fit",
-      "maxMm3": 0.6804075877019913
+      "maxMm3": 0.3920422747126999
      },
      {
       "parts": [
-       "cam_4_1",
+       "camshaft_1",
        "gear_1"
       ],
       "type": "static_fit",
-      "maxMm3": 0.6804023278620401
+      "maxMm3": 0.39204238228145605
      },
      {
       "parts": [
-       "cam_4_2",
+       "camshaft_2",
        "gear_2"
       ],
       "type": "static_fit",
-      "maxMm3": 0.6804026415425255
+      "maxMm3": 0.39204194810046056
      },
      {
       "parts": [
-       "cam_4_3",
+       "camshaft_3",
        "gear_3"
       ],
       "type": "static_fit",
-      "maxMm3": 0.6804059449617117
+      "maxMm3": 0.3920431380893675
      },
      {
       "parts": [
-       "cam_4_4",
+       "camshaft_4",
        "gear_4"
       ],
       "type": "static_fit",
-      "maxMm3": 0.6804035546958296
+      "maxMm3": 0.3920416027464666
      },
      {
       "parts": [
@@ -949,51 +614,26 @@
    "id": "motion.torque",
    "title": "重力だけで見積もった必要トルクが停動トルクの 1/3 以下か",
    "pass": true,
-   "summary": "重力の必要トルク最大 8.3 mN·m（97.0°）/ 停動 0.245 N·m = 3.4%（摩擦・圧入・ばねは含まない下限の見積もり）",
+   "summary": "重力の必要トルク最大 7.9 mN·m（97.0°）/ 停動 0.245 N·m = 3.2%（摩擦・圧入・ばねは含まない下限の見積もり）",
    "detail": {
-    "peakNm": 0.00830142865863781,
+    "peakNm": 0.00789011559734476,
     "atServoDeg": 97.0,
     "stallNm": 0.245,
     "limitFraction": 0.3333333333333333,
     "massesG": {
-     "housing": 152.94,
-     "bezel": 20.06,
-     "guide_plate": 115.6,
-     "shaft_0": 0.44,
-     "shaft_1": 0.25,
-     "shaft_2": 0.44,
-     "shaft_3": 0.25,
-     "shaft_4": 0.44,
-     "gear_0": 0.69,
-     "gear_1": 0.69,
-     "gear_2": 0.69,
-     "gear_3": 0.69,
-     "gear_4": 0.69,
-     "cam_0_0": 1.52,
-     "cam_1_0": 1.47,
-     "cam_2_0": 1.4,
-     "cam_3_0": 1.47,
-     "cam_4_0": 1.14,
-     "cam_0_1": 1.47,
-     "cam_1_1": 1.41,
-     "cam_2_1": 1.43,
-     "cam_3_1": 1.48,
-     "cam_4_1": 1.27,
-     "cam_0_2": 1.42,
-     "cam_1_2": 1.41,
-     "cam_2_2": 1.42,
-     "cam_3_2": 1.49,
-     "cam_4_2": 1.1,
-     "cam_0_3": 1.47,
-     "cam_1_3": 1.43,
-     "cam_2_3": 1.47,
-     "cam_3_3": 1.5,
-     "cam_4_3": 1.27,
-     "cam_0_4": 1.52,
-     "cam_1_4": 1.47,
-     "cam_2_4": 1.5,
-     "cam_3_4": 1.47,
-     "cam_4_4": 1.14,
+     "housing": 150.46,
+     "bezel": 20.02,
+     "guide_plate": 113.98,
+     "camshaft_0": 13.34,
+     "camshaft_1": 12.84,
+     "camshaft_2": 13.06,
+     "camshaft_3": 12.98,
+     "camshaft_4": 13.49,
+     "gear_0": 0.76,
+     "gear_1": 0.76,
+     "gear_2": 0.76,
+     "gear_3": 0.76,
+     "gear_4": 0.76,
      "pixel_0_0": 4.39,
      "pixel_1_0": 4.39,
      "pixel_2_0": 4.39,
@@ -1019,8 +659,10 @@
      "pixel_2_4": 4.39,
      "pixel_3_4": 4.39,
      "pixel_4_4": 4.39,
-     "horn_coupler": 2.7,
-     "phase_comb": 1.43,
+     "bearing_cap_px": 1.11,
+     "bearing_cap_mx": 1.02,
+     "horn_coupler": 2.78,
+     "phase_comb": 0.63,
      "servo_clip_0": 0.37,
      "servo_clip_1": 0.37
     }
@@ -1086,16 +728,16 @@
         "servoDeg": 10.0,
         "unit": "deg",
         "limit": 5.0,
-        "back": 0.369019,
-        "ahead": 0.361816,
+        "back": 0.367126,
+        "ahead": 0.360168,
         "pass": true
        },
        {
         "servoDeg": 24.0,
         "unit": "deg",
         "limit": 5.0,
-        "back": 0.362244,
-        "ahead": 0.367218,
+        "back": 0.360718,
+        "ahead": 0.365204,
         "pass": true
        }
       ]
@@ -1112,16 +754,16 @@
         "servoDeg": 10.0,
         "unit": "deg",
         "limit": 5.0,
-        "back": 0.3685,
-        "ahead": 0.371399,
+        "back": 0.366974,
+        "ahead": 0.369202,
         "pass": true
        },
        {
         "servoDeg": 24.0,
         "unit": "deg",
         "limit": 5.0,
-        "back": 0.372162,
-        "ahead": 0.368378,
+        "back": 0.36969,
+        "ahead": 0.366821,
         "pass": true
        }
       ]
@@ -1138,16 +780,16 @@
         "servoDeg": 10.0,
         "unit": "deg",
         "limit": 5.0,
-        "back": 0.3685,
-        "ahead": 0.371429,
+        "back": 0.366974,
+        "ahead": 0.369232,
         "pass": true
        },
        {
         "servoDeg": 24.0,
         "unit": "deg",
         "limit": 5.0,
-        "back": 0.372162,
-        "ahead": 0.368408,
+        "back": 0.36969,
+        "ahead": 0.366852,
         "pass": true
        }
       ]
@@ -1164,16 +806,16 @@
         "servoDeg": 10.0,
         "unit": "deg",
         "limit": 5.0,
-        "back": 0.372131,
-        "ahead": 0.368286,
+        "back": 0.369629,
+        "ahead": 0.366821,
         "pass": true
        },
        {
         "servoDeg": 24.0,
         "unit": "deg",
         "limit": 5.0,
-        "back": 0.367737,
-        "ahead": 0.372223,
+        "back": 0.366089,
+        "ahead": 0.36969,
         "pass": true
        }
       ]
@@ -1190,23 +832,23 @@
         "servoDeg": 10.0,
         "unit": "deg",
         "limit": 5.0,
-        "back": 0.372131,
-        "ahead": 0.368286,
+        "back": 0.369629,
+        "ahead": 0.366852,
         "pass": true
        },
        {
         "servoDeg": 24.0,
         "unit": "deg",
         "limit": 5.0,
-        "back": 0.367706,
-        "ahead": 0.372192,
+        "back": 0.366058,
+        "ahead": 0.369659,
         "pass": true
        }
       ]
      },
      {
       "id": "cam-pixel_0_0",
-      "driver": "cam_0_0",
+      "driver": "camshaft_0",
       "driven": "pixel_0_0",
       "sides": "one_sided",
       "samples": 12,
@@ -1217,14 +859,14 @@
         "unit": "mm",
         "limit": 0.5,
         "back": null,
-        "ahead": 0.008447,
+        "ahead": 0.008499,
         "pass": true
        },
        {
         "servoDeg": 24.0,
         "unit": "mm",
         "limit": 0.5,
-        "back": 0.001291,
+        "back": 0.002112,
         "ahead": null,
         "pass": true
        }
@@ -1232,7 +874,7 @@
      },
      {
       "id": "cam-pixel_0_1",
-      "driver": "cam_0_1",
+      "driver": "camshaft_1",
       "driven": "pixel_0_1",
       "sides": "one_sided",
       "samples": 12,
@@ -1243,14 +885,14 @@
         "unit": "mm",
         "limit": 0.5,
         "back": null,
-        "ahead": 0.005994,
+        "ahead": 0.007916,
         "pass": true
        },
        {
         "servoDeg": 24.0,
         "unit": "mm",
         "limit": 0.5,
-        "back": 0.001288,
+        "back": 0.002667,
         "ahead": null,
         "pass": true
        }
@@ -1258,7 +900,7 @@
      },
      {
       "id": "cam-pixel_0_2",
-      "driver": "cam_0_2",
+      "driver": "camshaft_2",
       "driven": "pixel_0_2",
       "sides": "one_sided",
       "samples": 12,
@@ -1269,14 +911,14 @@
         "unit": "mm",
         "limit": 0.5,
         "back": null,
-        "ahead": 0.00621,
+        "ahead": 0.006439,
         "pass": true
        },
        {
         "servoDeg": 24.0,
         "unit": "mm",
         "limit": 0.5,
-        "back": 0.001324,
+        "back": 0.002502,
         "ahead": null,
         "pass": true
        }
@@ -1284,7 +926,7 @@
      },
      {
       "id": "cam-pixel_0_3",
-      "driver": "cam_0_3",
+      "driver": "camshaft_3",
       "driven": "pixel_0_3",
       "sides": "one_sided",
       "samples": 12,
@@ -1295,14 +937,14 @@
         "unit": "mm",
         "limit": 0.5,
         "back": null,
-        "ahead": 0.005994,
+        "ahead": 0.007916,
         "pass": true
        },
        {
         "servoDeg": 24.0,
         "unit": "mm",
         "limit": 0.5,
-        "back": 0.001288,
+        "back": 0.002667,
         "ahead": null,
         "pass": true
        }
@@ -1310,7 +952,7 @@
      },
      {
       "id": "cam-pixel_0_4",
-      "driver": "cam_0_4",
+      "driver": "camshaft_4",
       "driven": "pixel_0_4",
       "sides": "one_sided",
       "samples": 12,
@@ -1321,14 +963,14 @@
         "unit": "mm",
         "limit": 0.5,
         "back": null,
-        "ahead": 0.008447,
+        "ahead": 0.008499,
         "pass": true
        },
        {
         "servoDeg": 24.0,
         "unit": "mm",
         "limit": 0.5,
-        "back": 0.001288,
+        "back": 0.002109,
         "ahead": null,
         "pass": true
        }
@@ -1336,7 +978,7 @@
      },
      {
       "id": "cam-pixel_1_0",
-      "driver": "cam_1_0",
+      "driver": "camshaft_0",
       "driven": "pixel_1_0",
       "sides": "one_sided",
       "samples": 12,
@@ -1347,14 +989,14 @@
         "unit": "mm",
         "limit": 0.5,
         "back": null,
-        "ahead": 0.005994,
+        "ahead": 0.006348,
         "pass": true
        },
        {
         "servoDeg": 24.0,
         "unit": "mm",
         "limit": 0.5,
-        "back": 0.001291,
+        "back": 0.002112,
         "ahead": null,
         "pass": true
        }
@@ -1362,7 +1004,7 @@
      },
      {
       "id": "cam-pixel_1_1",
-      "driver": "cam_1_1",
+      "driver": "camshaft_1",
       "driven": "pixel_1_1",
       "sides": "one_sided",
       "samples": 12,
@@ -1373,14 +1015,14 @@
         "unit": "mm",
         "limit": 0.5,
         "back": null,
-        "ahead": 0.007983,
+        "ahead": 0.00806,
         "pass": true
        },
        {
         "servoDeg": 24.0,
         "unit": "mm",
         "limit": 0.5,
-        "back": 0.001352,
+        "back": 0.002393,
         "ahead": null,
         "pass": true
        }
@@ -1388,7 +1030,7 @@
      },
      {
       "id": "cam-pixel_1_2",
-      "driver": "cam_1_2",
+      "driver": "camshaft_2",
       "driven": "pixel_1_2",
       "sides": "one_sided",
       "samples": 12,
@@ -1399,14 +1041,14 @@
         "unit": "mm",
         "limit": 0.5,
         "back": null,
-        "ahead": 0.007983,
+        "ahead": 0.00806,
         "pass": true
        },
        {
         "servoDeg": 24.0,
         "unit": "mm",
         "limit": 0.5,
-        "back": 0.001352,
+        "back": 0.0021,
         "ahead": null,
         "pass": true
        }
@@ -1414,7 +1056,7 @@
      },
      {
       "id": "cam-pixel_1_3",
-      "driver": "cam_1_3",
+      "driver": "camshaft_3",
       "driven": "pixel_1_3",
       "sides": "one_sided",
       "samples": 12,
@@ -1425,14 +1067,14 @@
         "unit": "mm",
         "limit": 0.5,
         "back": null,
-        "ahead": 0.00621,
+        "ahead": 0.006436,
         "pass": true
        },
        {
         "servoDeg": 24.0,
         "unit": "mm",
         "limit": 0.5,
-        "back": 0.001324,
+        "back": 0.00231,
         "ahead": null,
         "pass": true
        }
@@ -1440,7 +1082,7 @@
      },
      {
       "id": "cam-pixel_1_4",
-      "driver": "cam_1_4",
+      "driver": "camshaft_4",
       "driven": "pixel_1_4",
       "sides": "one_sided",
       "samples": 12,
@@ -1451,14 +1093,14 @@
         "unit": "mm",
         "limit": 0.5,
         "back": null,
-        "ahead": 0.005994,
+        "ahead": 0.006348,
         "pass": true
        },
        {
         "servoDeg": 24.0,
         "unit": "mm",
         "limit": 0.5,
-        "back": 0.001288,
+        "back": 0.002109,
         "ahead": null,
         "pass": true
        }
@@ -1466,7 +1108,7 @@
      },
      {
       "id": "cam-pixel_2_0",
-      "driver": "cam_2_0",
+      "driver": "camshaft_0",
       "driven": "pixel_2_0",
       "sides": "one_sided",
       "samples": 12,
@@ -1477,14 +1119,14 @@
         "unit": "mm",
         "limit": 0.5,
         "back": null,
-        "ahead": 0.007983,
+        "ahead": 0.008124,
         "pass": true
        },
        {
         "servoDeg": 24.0,
         "unit": "mm",
         "limit": 0.5,
-        "back": 0.001355,
+        "back": 0.002307,
         "ahead": null,
         "pass": true
        }
@@ -1492,7 +1134,7 @@
      },
      {
       "id": "cam-pixel_2_1",
-      "driver": "cam_2_1",
+      "driver": "camshaft_1",
       "driven": "pixel_2_1",
       "sides": "one_sided",
       "samples": 12,
@@ -1503,14 +1145,14 @@
         "unit": "mm",
         "limit": 0.5,
         "back": null,
-        "ahead": 0.00621,
+        "ahead": 0.006357,
         "pass": true
        },
        {
         "servoDeg": 24.0,
         "unit": "mm",
         "limit": 0.5,
-        "back": 0.001324,
+        "back": 0.002411,
         "ahead": null,
         "pass": true
        }
@@ -1518,7 +1160,7 @@
      },
      {
       "id": "cam-pixel_2_2",
-      "driver": "cam_2_2",
+      "driver": "camshaft_2",
       "driven": "pixel_2_2",
       "sides": "one_sided",
       "samples": 12,
@@ -1529,14 +1171,14 @@
         "unit": "mm",
         "limit": 0.5,
         "back": null,
-        "ahead": 0.001349,
+        "ahead": 0.001773,
         "pass": true
        },
        {
         "servoDeg": 24.0,
         "unit": "mm",
         "limit": 0.5,
-        "back": 0.001288,
+        "back": 0.002048,
         "ahead": null,
         "pass": true
        }
@@ -1544,7 +1186,7 @@
      },
      {
       "id": "cam-pixel_2_3",
-      "driver": "cam_2_3",
+      "driver": "camshaft_3",
       "driven": "pixel_2_3",
       "sides": "one_sided",
       "samples": 12,
@@ -1554,7 +1196,7 @@
         "servoDeg": 10.0,
         "unit": "mm",
         "limit": 0.5,
-        "back": 0.005029,
+        "back": 0.005112,
         "ahead": null,
         "pass": true
        },
@@ -1563,14 +1205,14 @@
         "unit": "mm",
         "limit": 0.5,
         "back": null,
-        "ahead": 0.001331,
+        "ahead": 0.00174,
         "pass": true
        }
       ]
      },
      {
       "id": "cam-pixel_2_4",
-      "driver": "cam_2_4",
+      "driver": "camshaft_4",
       "driven": "pixel_2_4",
       "sides": "one_sided",
       "samples": 12,
@@ -1580,7 +1222,7 @@
         "servoDeg": 10.0,
         "unit": "mm",
         "limit": 0.5,
-        "back": 0.007599,
+        "back": 0.007822,
         "ahead": null,
         "pass": true
        },
@@ -1588,7 +1230,7 @@
         "servoDeg": 24.0,
         "unit": "mm",
         "limit": 0.5,
-        "back": 0.001239,
+        "back": 0.001416,
         "ahead": null,
         "pass": true
        }
@@ -1596,7 +1238,7 @@
      },
      {
       "id": "cam-pixel_3_0",
-      "driver": "cam_3_0",
+      "driver": "camshaft_0",
       "driven": "pixel_3_0",
       "sides": "one_sided",
       "samples": 12,
@@ -1607,14 +1249,14 @@
         "unit": "mm",
         "limit": 0.5,
         "back": null,
-        "ahead": 0.005994,
+        "ahead": 0.006348,
         "pass": true
        },
        {
         "servoDeg": 24.0,
         "unit": "mm",
         "limit": 0.5,
-        "back": 0.001291,
+        "back": 0.002112,
         "ahead": null,
         "pass": true
        }
@@ -1622,7 +1264,7 @@
      },
      {
       "id": "cam-pixel_3_1",
-      "driver": "cam_3_1",
+      "driver": "camshaft_1",
       "driven": "pixel_3_1",
       "sides": "one_sided",
       "samples": 12,
@@ -1632,7 +1274,7 @@
         "servoDeg": 10.0,
         "unit": "mm",
         "limit": 0.5,
-        "back": 0.005029,
+        "back": 0.00528,
         "ahead": null,
         "pass": true
        },
@@ -1641,14 +1283,14 @@
         "unit": "mm",
         "limit": 0.5,
         "back": null,
-        "ahead": 0.001328,
+        "ahead": 0.002704,
         "pass": true
        }
       ]
      },
      {
       "id": "cam-pixel_3_2",
-      "driver": "cam_3_2",
+      "driver": "camshaft_2",
       "driven": "pixel_3_2",
       "sides": "one_sided",
       "samples": 12,
@@ -1658,7 +1300,7 @@
         "servoDeg": 10.0,
         "unit": "mm",
         "limit": 0.5,
-        "back": 0.007599,
+        "back": 0.007822,
         "ahead": null,
         "pass": true
        },
@@ -1666,7 +1308,7 @@
         "servoDeg": 24.0,
         "unit": "mm",
         "limit": 0.5,
-        "back": 0.001239,
+        "back": 0.001816,
         "ahead": null,
         "pass": true
        }
@@ -1674,7 +1316,7 @@
      },
      {
       "id": "cam-pixel_3_3",
-      "driver": "cam_3_3",
+      "driver": "camshaft_3",
       "driven": "pixel_3_3",
       "sides": "one_sided",
       "samples": 12,
@@ -1684,7 +1326,7 @@
         "servoDeg": 10.0,
         "unit": "mm",
         "limit": 0.5,
-        "back": 0.007599,
+        "back": 0.007718,
         "ahead": null,
         "pass": true
        },
@@ -1692,7 +1334,7 @@
         "servoDeg": 24.0,
         "unit": "mm",
         "limit": 0.5,
-        "back": 0.001239,
+        "back": 0.001419,
         "ahead": null,
         "pass": true
        }
@@ -1700,7 +1342,7 @@
      },
      {
       "id": "cam-pixel_3_4",
-      "driver": "cam_3_4",
+      "driver": "camshaft_4",
       "driven": "pixel_3_4",
       "sides": "one_sided",
       "samples": 12,
@@ -1711,14 +1353,14 @@
         "unit": "mm",
         "limit": 0.5,
         "back": null,
-        "ahead": 0.005994,
+        "ahead": 0.006348,
         "pass": true
        },
        {
         "servoDeg": 24.0,
         "unit": "mm",
         "limit": 0.5,
-        "back": 0.001288,
+        "back": 0.002109,
         "ahead": null,
         "pass": true
        }
@@ -1726,7 +1368,7 @@
      },
      {
       "id": "cam-pixel_4_0",
-      "driver": "cam_4_0",
+      "driver": "camshaft_0",
       "driven": "pixel_4_0",
       "sides": "one_sided",
       "samples": 12,
@@ -1737,14 +1379,14 @@
         "unit": "mm",
         "limit": 0.5,
         "back": null,
-        "ahead": 0.008447,
+        "ahead": 0.008499,
         "pass": true
        },
        {
         "servoDeg": 24.0,
         "unit": "mm",
         "limit": 0.5,
-        "back": 0.001291,
+        "back": 0.002112,
         "ahead": null,
         "pass": true
        }
@@ -1752,7 +1394,7 @@
      },
      {
       "id": "cam-pixel_4_1",
-      "driver": "cam_4_1",
+      "driver": "camshaft_1",
       "driven": "pixel_4_1",
       "sides": "one_sided",
       "samples": 12,
@@ -1763,14 +1405,14 @@
         "unit": "mm",
         "limit": 0.5,
         "back": null,
-        "ahead": 0.005994,
+        "ahead": 0.006262,
         "pass": true
        },
        {
         "servoDeg": 24.0,
         "unit": "mm",
         "limit": 0.5,
-        "back": 0.001288,
+        "back": 0.002313,
         "ahead": null,
         "pass": true
        }
@@ -1778,7 +1420,7 @@
      },
      {
       "id": "cam-pixel_4_2",
-      "driver": "cam_4_2",
+      "driver": "camshaft_2",
       "driven": "pixel_4_2",
       "sides": "one_sided",
       "samples": 12,
@@ -1788,7 +1430,7 @@
         "servoDeg": 10.0,
         "unit": "mm",
         "limit": 0.5,
-        "back": 0.005029,
+        "back": 0.005417,
         "ahead": null,
         "pass": true
        },
@@ -1797,14 +1439,14 @@
         "unit": "mm",
         "limit": 0.5,
         "back": null,
-        "ahead": 0.001331,
+        "ahead": 0.001743,
         "pass": true
        }
       ]
      },
      {
       "id": "cam-pixel_4_3",
-      "driver": "cam_4_3",
+      "driver": "camshaft_3",
       "driven": "pixel_4_3",
       "sides": "one_sided",
       "samples": 12,
@@ -1815,14 +1457,14 @@
         "unit": "mm",
         "limit": 0.5,
         "back": null,
-        "ahead": 0.005994,
+        "ahead": 0.006262,
         "pass": true
        },
        {
         "servoDeg": 24.0,
         "unit": "mm",
         "limit": 0.5,
-        "back": 0.001288,
+        "back": 0.002316,
         "ahead": null,
         "pass": true
        }
@@ -1830,7 +1472,7 @@
      },
      {
       "id": "cam-pixel_4_4",
-      "driver": "cam_4_4",
+      "driver": "camshaft_4",
       "driven": "pixel_4_4",
       "sides": "one_sided",
       "samples": 12,
@@ -1841,14 +1483,14 @@
         "unit": "mm",
         "limit": 0.5,
         "back": null,
-        "ahead": 0.008447,
+        "ahead": 0.008499,
         "pass": true
        },
        {
         "servoDeg": 24.0,
         "unit": "mm",
         "limit": 0.5,
-        "back": 0.001288,
+        "back": 0.002109,
         "ahead": null,
         "pass": true
        }
@@ -1863,20 +1505,15 @@
    "id": "interface.retention",
    "title": "抜け止めごとに、外れる向きへ動かすと上限までに止まるか",
    "pass": true,
-   "summary": "抜け止め 10 個",
+   "summary": "抜け止め 12 個",
    "detail": {
     "failing": [],
     "all": [
      {
       "id": "shaft0-up",
       "parts": [
-       "shaft_0",
-       "gear_0",
-       "cam_0_0",
-       "cam_1_0",
-       "cam_2_0",
-       "cam_3_0",
-       "cam_4_0"
+       "camshaft_0",
+       "gear_0"
       ],
       "direction": [
        0.0,
@@ -1884,23 +1521,18 @@
        1.0
       ],
       "limitMm": 1.0,
-      "travelMm": 0.10968,
+      "travelMm": 0.076401,
       "stoppedBy": [
-       "guide_plate"
+       "bearing_cap_px"
       ],
-      "stoppedPart": "shaft_0",
+      "stoppedPart": "gear_0",
       "pass": true
      },
      {
       "id": "shaft1-up",
       "parts": [
-       "shaft_1",
-       "gear_1",
-       "cam_0_1",
-       "cam_1_1",
-       "cam_2_1",
-       "cam_3_1",
-       "cam_4_1"
+       "camshaft_1",
+       "gear_1"
       ],
       "direction": [
        0.0,
@@ -1908,23 +1540,18 @@
        1.0
       ],
       "limitMm": 1.0,
-      "travelMm": 0.10968,
+      "travelMm": 0.076401,
       "stoppedBy": [
-       "guide_plate"
+       "bearing_cap_px"
       ],
-      "stoppedPart": "shaft_1",
+      "stoppedPart": "gear_1",
       "pass": true
      },
      {
       "id": "shaft2-up",
       "parts": [
-       "shaft_2",
-       "gear_2",
-       "cam_0_2",
-       "cam_1_2",
-       "cam_2_2",
-       "cam_3_2",
-       "cam_4_2"
+       "camshaft_2",
+       "gear_2"
       ],
       "direction": [
        0.0,
@@ -1932,23 +1559,18 @@
        1.0
       ],
       "limitMm": 1.0,
-      "travelMm": 0.10968,
+      "travelMm": 0.076401,
       "stoppedBy": [
-       "guide_plate"
+       "bearing_cap_px"
       ],
-      "stoppedPart": "shaft_2",
+      "stoppedPart": "gear_2",
       "pass": true
      },
      {
       "id": "shaft3-up",
       "parts": [
-       "shaft_3",
-       "gear_3",
-       "cam_0_3",
-       "cam_1_3",
-       "cam_2_3",
-       "cam_3_3",
-       "cam_4_3"
+       "camshaft_3",
+       "gear_3"
       ],
       "direction": [
        0.0,
@@ -1956,23 +1578,18 @@
        1.0
       ],
       "limitMm": 1.0,
-      "travelMm": 0.10968,
+      "travelMm": 0.076401,
       "stoppedBy": [
-       "guide_plate"
+       "bearing_cap_px"
       ],
-      "stoppedPart": "shaft_3",
+      "stoppedPart": "gear_3",
       "pass": true
      },
      {
       "id": "shaft4-up",
       "parts": [
-       "shaft_4",
-       "gear_4",
-       "cam_0_4",
-       "cam_1_4",
-       "cam_2_4",
-       "cam_3_4",
-       "cam_4_4"
+       "camshaft_4",
+       "gear_4"
       ],
       "direction": [
        0.0,
@@ -1980,11 +1597,47 @@
        1.0
       ],
       "limitMm": 1.0,
-      "travelMm": 0.10968,
+      "travelMm": 0.076401,
       "stoppedBy": [
-       "guide_plate"
+       "bearing_cap_px"
       ],
-      "stoppedPart": "shaft_4",
+      "stoppedPart": "gear_4",
+      "pass": true
+     },
+     {
+      "id": "bearing-cap-px-up",
+      "parts": [
+       "bearing_cap_px"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.0,
+      "stoppedBy": [
+       "housing"
+      ],
+      "stoppedPart": "bearing_cap_px",
+      "pass": true
+     },
+     {
+      "id": "bearing-cap-mx-up",
+      "parts": [
+       "bearing_cap_mx"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       1.0
+      ],
+      "limitMm": 0.5,
+      "travelMm": 0.0,
+      "stoppedBy": [
+       "housing"
+      ],
+      "stoppedPart": "bearing_cap_mx",
       "pass": true
      },
      {
@@ -1998,7 +1651,7 @@
        1.0
       ],
       "limitMm": 0.5,
-      "travelMm": 0.450104,
+      "travelMm": 0.450378,
       "stoppedBy": [
        "housing"
       ],
@@ -2089,7 +1742,7 @@
    "id": "assembly.path",
    "title": "組立の各工程で、許可の範囲の外の当たりが無く、最後に全部品が組まれるか",
    "pass": true,
-   "summary": "16 工程（補間で足した姿勢 0）",
+   "summary": "17 工程（補間で足した姿勢 0）",
    "detail": {
     "violations": [],
     "boundaryErrors": [],
@@ -2098,11 +1751,89 @@
     "allowedContacts": [
      {
       "parts": [
+       "bearing_cap_mx",
+       "housing"
+      ],
+      "type": "snap",
+      "maxCommonMm3": 0.14483,
+      "maxRemainingTravelMm": 5.41,
+      "samples": 7,
+      "steps": [
+       "bearing-caps"
+      ]
+     },
+     {
+      "parts": [
+       "bearing_cap_mx",
+       "housing"
+      ],
+      "type": "press_fit",
+      "maxCommonMm3": 0.231858,
+      "maxRemainingTravelMm": 1.967,
+      "samples": 4,
+      "steps": [
+       "bearing-caps"
+      ]
+     },
+     {
+      "parts": [
+       "bearing_cap_mx",
+       "housing"
+      ],
+      "type": "static_fit",
+      "maxCommonMm3": 0.120007,
+      "maxRemainingTravelMm": 0.0,
+      "samples": 1,
+      "steps": [
+       "bearing-caps"
+      ]
+     },
+     {
+      "parts": [
+       "bearing_cap_px",
+       "housing"
+      ],
+      "type": "snap",
+      "maxCommonMm3": 0.144831,
+      "maxRemainingTravelMm": 5.41,
+      "samples": 7,
+      "steps": [
+       "bearing-caps"
+      ]
+     },
+     {
+      "parts": [
+       "bearing_cap_px",
+       "housing"
+      ],
+      "type": "press_fit",
+      "maxCommonMm3": 0.231859,
+      "maxRemainingTravelMm": 1.967,
+      "samples": 4,
+      "steps": [
+       "bearing-caps"
+      ]
+     },
+     {
+      "parts": [
+       "bearing_cap_px",
+       "housing"
+      ],
+      "type": "static_fit",
+      "maxCommonMm3": 0.120007,
+      "maxRemainingTravelMm": 0.0,
+      "samples": 1,
+      "steps": [
+       "bearing-caps"
+      ]
+     },
+     {
+      "parts": [
        "bezel",
        "housing"
       ],
       "type": "snap",
-      "maxCommonMm3": 13.122458,
+      "maxCommonMm3": 3.564123,
       "maxRemainingTravelMm": 5.366,
       "samples": 11,
       "steps": [
@@ -2111,812 +1842,137 @@
      },
      {
       "parts": [
-       "cam_0_0",
-       "cam_1_0"
+       "camshaft_0",
+       "gear_0"
       ],
       "type": "press_fit",
-      "maxCommonMm3": 0.651012,
-      "maxRemainingTravelMm": 2.453,
-      "samples": 5,
+      "maxCommonMm3": 0.250291,
+      "maxRemainingTravelMm": 0.875,
+      "samples": 2,
       "steps": [
-       "shafts-join"
+       "gears-onto-shafts"
       ]
      },
      {
       "parts": [
-       "cam_0_0",
-       "cam_1_0"
+       "camshaft_0",
+       "gear_0"
       ],
       "type": "static_fit",
-      "maxCommonMm3": 0.810014,
-      "maxRemainingTravelMm": 0.0,
-      "samples": 286,
-      "steps": [
-       "lower-shaft-0",
-       "shafts-join"
-      ]
-     },
-     {
-      "parts": [
-       "cam_0_0",
-       "shaft_0"
-      ],
-      "type": "press_fit",
-      "maxCommonMm3": 0.648633,
-      "maxRemainingTravelMm": 2.49,
-      "samples": 5,
-      "steps": [
-       "shafts-join"
-      ]
-     },
-     {
-      "parts": [
-       "cam_0_0",
-       "shaft_0"
-      ],
-      "type": "static_fit",
-      "maxCommonMm3": 0.809998,
+      "maxCommonMm3": 0.39204,
       "maxRemainingTravelMm": 0.0,
       "samples": 235,
       "steps": [
-       "lower-shaft-0",
-       "shafts-join"
+       "gears-onto-shafts",
+       "lower-shaft-0"
       ]
      },
      {
       "parts": [
-       "cam_0_1",
-       "cam_1_1"
+       "camshaft_1",
+       "gear_1"
       ],
       "type": "press_fit",
-      "maxCommonMm3": 0.651021,
-      "maxRemainingTravelMm": 2.453,
-      "samples": 5,
+      "maxCommonMm3": 0.250292,
+      "maxRemainingTravelMm": 0.875,
+      "samples": 2,
       "steps": [
-       "shafts-join"
+       "gears-onto-shafts"
       ]
      },
      {
       "parts": [
-       "cam_0_1",
-       "cam_1_1"
+       "camshaft_1",
+       "gear_1"
       ],
       "type": "static_fit",
-      "maxCommonMm3": 0.810007,
-      "maxRemainingTravelMm": 0.0,
-      "samples": 252,
-      "steps": [
-       "lower-shaft-1",
-       "shafts-join"
-      ]
-     },
-     {
-      "parts": [
-       "cam_0_1",
-       "shaft_1"
-      ],
-      "type": "press_fit",
-      "maxCommonMm3": 0.648637,
-      "maxRemainingTravelMm": 2.49,
-      "samples": 5,
-      "steps": [
-       "shafts-join"
-      ]
-     },
-     {
-      "parts": [
-       "cam_0_1",
-       "shaft_1"
-      ],
-      "type": "static_fit",
-      "maxCommonMm3": 0.810005,
+      "maxCommonMm3": 0.392043,
       "maxRemainingTravelMm": 0.0,
       "samples": 201,
       "steps": [
-       "lower-shaft-1",
-       "shafts-join"
+       "gears-onto-shafts",
+       "lower-shaft-1"
       ]
      },
      {
       "parts": [
-       "cam_0_2",
-       "cam_1_2"
+       "camshaft_2",
+       "gear_2"
       ],
       "type": "press_fit",
-      "maxCommonMm3": 0.651027,
-      "maxRemainingTravelMm": 2.453,
-      "samples": 5,
+      "maxCommonMm3": 0.250295,
+      "maxRemainingTravelMm": 0.875,
+      "samples": 2,
       "steps": [
-       "shafts-join"
+       "gears-onto-shafts"
       ]
      },
      {
       "parts": [
-       "cam_0_2",
-       "cam_1_2"
+       "camshaft_2",
+       "gear_2"
       ],
       "type": "static_fit",
-      "maxCommonMm3": 0.810036,
-      "maxRemainingTravelMm": 0.0,
-      "samples": 165,
-      "steps": [
-       "lower-shaft-2",
-       "shafts-join"
-      ]
-     },
-     {
-      "parts": [
-       "cam_0_2",
-       "shaft_2"
-      ],
-      "type": "press_fit",
-      "maxCommonMm3": 0.648648,
-      "maxRemainingTravelMm": 2.49,
-      "samples": 5,
-      "steps": [
-       "shafts-join"
-      ]
-     },
-     {
-      "parts": [
-       "cam_0_2",
-       "shaft_2"
-      ],
-      "type": "static_fit",
-      "maxCommonMm3": 0.810017,
+      "maxCommonMm3": 0.392048,
       "maxRemainingTravelMm": 0.0,
       "samples": 114,
       "steps": [
-       "lower-shaft-2",
-       "shafts-join"
+       "gears-onto-shafts",
+       "lower-shaft-2"
       ]
      },
      {
       "parts": [
-       "cam_0_3",
-       "cam_1_3"
+       "camshaft_3",
+       "gear_3"
       ],
       "type": "press_fit",
-      "maxCommonMm3": 0.65102,
-      "maxRemainingTravelMm": 2.453,
-      "samples": 5,
+      "maxCommonMm3": 0.25029,
+      "maxRemainingTravelMm": 0.875,
+      "samples": 2,
       "steps": [
-       "shafts-join"
+       "gears-onto-shafts"
       ]
      },
      {
       "parts": [
-       "cam_0_3",
-       "cam_1_3"
+       "camshaft_3",
+       "gear_3"
       ],
       "type": "static_fit",
-      "maxCommonMm3": 0.810004,
-      "maxRemainingTravelMm": 0.0,
-      "samples": 253,
-      "steps": [
-       "lower-shaft-3",
-       "shafts-join"
-      ]
-     },
-     {
-      "parts": [
-       "cam_0_3",
-       "shaft_3"
-      ],
-      "type": "press_fit",
-      "maxCommonMm3": 0.648637,
-      "maxRemainingTravelMm": 2.49,
-      "samples": 5,
-      "steps": [
-       "shafts-join"
-      ]
-     },
-     {
-      "parts": [
-       "cam_0_3",
-       "shaft_3"
-      ],
-      "type": "static_fit",
-      "maxCommonMm3": 0.810003,
+      "maxCommonMm3": 0.39204,
       "maxRemainingTravelMm": 0.0,
       "samples": 202,
       "steps": [
-       "lower-shaft-3",
-       "shafts-join"
+       "gears-onto-shafts",
+       "lower-shaft-3"
       ]
      },
      {
       "parts": [
-       "cam_0_4",
-       "cam_1_4"
+       "camshaft_4",
+       "gear_4"
       ],
       "type": "press_fit",
-      "maxCommonMm3": 0.65102,
-      "maxRemainingTravelMm": 2.453,
-      "samples": 5,
+      "maxCommonMm3": 0.250293,
+      "maxRemainingTravelMm": 0.875,
+      "samples": 2,
       "steps": [
-       "shafts-join"
+       "gears-onto-shafts"
       ]
      },
      {
       "parts": [
-       "cam_0_4",
-       "cam_1_4"
+       "camshaft_4",
+       "gear_4"
       ],
       "type": "static_fit",
-      "maxCommonMm3": 0.810028,
-      "maxRemainingTravelMm": 0.0,
-      "samples": 287,
-      "steps": [
-       "lower-shaft-4",
-       "shafts-join"
-      ]
-     },
-     {
-      "parts": [
-       "cam_0_4",
-       "shaft_4"
-      ],
-      "type": "press_fit",
-      "maxCommonMm3": 0.648643,
-      "maxRemainingTravelMm": 2.49,
-      "samples": 5,
-      "steps": [
-       "shafts-join"
-      ]
-     },
-     {
-      "parts": [
-       "cam_0_4",
-       "shaft_4"
-      ],
-      "type": "static_fit",
-      "maxCommonMm3": 0.810008,
+      "maxCommonMm3": 0.392044,
       "maxRemainingTravelMm": 0.0,
       "samples": 236,
       "steps": [
-       "lower-shaft-4",
-       "shafts-join"
-      ]
-     },
-     {
-      "parts": [
-       "cam_1_0",
-       "cam_2_0"
-      ],
-      "type": "press_fit",
-      "maxCommonMm3": 0.649904,
-      "maxRemainingTravelMm": 2.471,
-      "samples": 5,
-      "steps": [
-       "shafts-join"
-      ]
-     },
-     {
-      "parts": [
-       "cam_1_0",
-       "cam_2_0"
-      ],
-      "type": "static_fit",
-      "maxCommonMm3": 0.809999,
-      "maxRemainingTravelMm": 0.0,
-      "samples": 329,
-      "steps": [
-       "lower-shaft-0",
-       "shafts-join"
-      ]
-     },
-     {
-      "parts": [
-       "cam_1_1",
-       "cam_2_1"
-      ],
-      "type": "press_fit",
-      "maxCommonMm3": 0.649913,
-      "maxRemainingTravelMm": 2.471,
-      "samples": 5,
-      "steps": [
-       "shafts-join"
-      ]
-     },
-     {
-      "parts": [
-       "cam_1_1",
-       "cam_2_1"
-      ],
-      "type": "static_fit",
-      "maxCommonMm3": 0.810006,
-      "maxRemainingTravelMm": 0.0,
-      "samples": 295,
-      "steps": [
-       "lower-shaft-1",
-       "shafts-join"
-      ]
-     },
-     {
-      "parts": [
-       "cam_1_2",
-       "cam_2_2"
-      ],
-      "type": "press_fit",
-      "maxCommonMm3": 0.649919,
-      "maxRemainingTravelMm": 2.471,
-      "samples": 5,
-      "steps": [
-       "shafts-join"
-      ]
-     },
-     {
-      "parts": [
-       "cam_1_2",
-       "cam_2_2"
-      ],
-      "type": "static_fit",
-      "maxCommonMm3": 0.810016,
-      "maxRemainingTravelMm": 0.0,
-      "samples": 208,
-      "steps": [
-       "lower-shaft-2",
-       "shafts-join"
-      ]
-     },
-     {
-      "parts": [
-       "cam_1_3",
-       "cam_2_3"
-      ],
-      "type": "press_fit",
-      "maxCommonMm3": 0.649907,
-      "maxRemainingTravelMm": 2.471,
-      "samples": 5,
-      "steps": [
-       "shafts-join"
-      ]
-     },
-     {
-      "parts": [
-       "cam_1_3",
-       "cam_2_3"
-      ],
-      "type": "static_fit",
-      "maxCommonMm3": 0.810002,
-      "maxRemainingTravelMm": 0.0,
-      "samples": 296,
-      "steps": [
-       "lower-shaft-3",
-       "shafts-join"
-      ]
-     },
-     {
-      "parts": [
-       "cam_1_4",
-       "cam_2_4"
-      ],
-      "type": "press_fit",
-      "maxCommonMm3": 0.649911,
-      "maxRemainingTravelMm": 2.471,
-      "samples": 5,
-      "steps": [
-       "shafts-join"
-      ]
-     },
-     {
-      "parts": [
-       "cam_1_4",
-       "cam_2_4"
-      ],
-      "type": "static_fit",
-      "maxCommonMm3": 0.810008,
-      "maxRemainingTravelMm": 0.0,
-      "samples": 330,
-      "steps": [
-       "lower-shaft-4",
-       "shafts-join"
-      ]
-     },
-     {
-      "parts": [
-       "cam_2_0",
-       "cam_3_0"
-      ],
-      "type": "press_fit",
-      "maxCommonMm3": 0.654231,
-      "maxRemainingTravelMm": 2.404,
-      "samples": 5,
-      "steps": [
-       "shafts-join"
-      ]
-     },
-     {
-      "parts": [
-       "cam_2_0",
-       "cam_3_0"
-      ],
-      "type": "static_fit",
-      "maxCommonMm3": 0.809999,
-      "maxRemainingTravelMm": 0.0,
-      "samples": 363,
-      "steps": [
-       "lower-shaft-0",
-       "shafts-join"
-      ]
-     },
-     {
-      "parts": [
-       "cam_2_1",
-       "cam_3_1"
-      ],
-      "type": "press_fit",
-      "maxCommonMm3": 0.654235,
-      "maxRemainingTravelMm": 2.404,
-      "samples": 5,
-      "steps": [
-       "shafts-join"
-      ]
-     },
-     {
-      "parts": [
-       "cam_2_1",
-       "cam_3_1"
-      ],
-      "type": "static_fit",
-      "maxCommonMm3": 0.810007,
-      "maxRemainingTravelMm": 0.0,
-      "samples": 329,
-      "steps": [
-       "lower-shaft-1",
-       "shafts-join"
-      ]
-     },
-     {
-      "parts": [
-       "cam_2_2",
-       "cam_3_2"
-      ],
-      "type": "press_fit",
-      "maxCommonMm3": 0.654244,
-      "maxRemainingTravelMm": 2.404,
-      "samples": 5,
-      "steps": [
-       "shafts-join"
-      ]
-     },
-     {
-      "parts": [
-       "cam_2_2",
-       "cam_3_2"
-      ],
-      "type": "static_fit",
-      "maxCommonMm3": 0.810016,
-      "maxRemainingTravelMm": 0.0,
-      "samples": 242,
-      "steps": [
-       "lower-shaft-2",
-       "shafts-join"
-      ]
-     },
-     {
-      "parts": [
-       "cam_2_3",
-       "cam_3_3"
-      ],
-      "type": "press_fit",
-      "maxCommonMm3": 0.654231,
-      "maxRemainingTravelMm": 2.404,
-      "samples": 5,
-      "steps": [
-       "shafts-join"
-      ]
-     },
-     {
-      "parts": [
-       "cam_2_3",
-       "cam_3_3"
-      ],
-      "type": "static_fit",
-      "maxCommonMm3": 0.810003,
-      "maxRemainingTravelMm": 0.0,
-      "samples": 330,
-      "steps": [
-       "lower-shaft-3",
-       "shafts-join"
-      ]
-     },
-     {
-      "parts": [
-       "cam_2_4",
-       "cam_3_4"
-      ],
-      "type": "press_fit",
-      "maxCommonMm3": 0.654236,
-      "maxRemainingTravelMm": 2.404,
-      "samples": 5,
-      "steps": [
-       "shafts-join"
-      ]
-     },
-     {
-      "parts": [
-       "cam_2_4",
-       "cam_3_4"
-      ],
-      "type": "static_fit",
-      "maxCommonMm3": 0.810008,
-      "maxRemainingTravelMm": 0.0,
-      "samples": 364,
-      "steps": [
-       "lower-shaft-4",
-       "shafts-join"
-      ]
-     },
-     {
-      "parts": [
-       "cam_3_0",
-       "cam_4_0"
-      ],
-      "type": "press_fit",
-      "maxCommonMm3": 0.653719,
-      "maxRemainingTravelMm": 2.412,
-      "samples": 5,
-      "steps": [
-       "shafts-join"
-      ]
-     },
-     {
-      "parts": [
-       "cam_3_0",
-       "cam_4_0"
-      ],
-      "type": "static_fit",
-      "maxCommonMm3": 0.81,
-      "maxRemainingTravelMm": 0.0,
-      "samples": 389,
-      "steps": [
-       "lower-shaft-0",
-       "shafts-join"
-      ]
-     },
-     {
-      "parts": [
-       "cam_3_1",
-       "cam_4_1"
-      ],
-      "type": "press_fit",
-      "maxCommonMm3": 0.653723,
-      "maxRemainingTravelMm": 2.412,
-      "samples": 5,
-      "steps": [
-       "shafts-join"
-      ]
-     },
-     {
-      "parts": [
-       "cam_3_1",
-       "cam_4_1"
-      ],
-      "type": "static_fit",
-      "maxCommonMm3": 0.810007,
-      "maxRemainingTravelMm": 0.0,
-      "samples": 355,
-      "steps": [
-       "lower-shaft-1",
-       "shafts-join"
-      ]
-     },
-     {
-      "parts": [
-       "cam_3_2",
-       "cam_4_2"
-      ],
-      "type": "press_fit",
-      "maxCommonMm3": 0.653732,
-      "maxRemainingTravelMm": 2.412,
-      "samples": 5,
-      "steps": [
-       "shafts-join"
-      ]
-     },
-     {
-      "parts": [
-       "cam_3_2",
-       "cam_4_2"
-      ],
-      "type": "static_fit",
-      "maxCommonMm3": 0.810017,
-      "maxRemainingTravelMm": 0.0,
-      "samples": 268,
-      "steps": [
-       "lower-shaft-2",
-       "shafts-join"
-      ]
-     },
-     {
-      "parts": [
-       "cam_3_3",
-       "cam_4_3"
-      ],
-      "type": "press_fit",
-      "maxCommonMm3": 0.653717,
-      "maxRemainingTravelMm": 2.412,
-      "samples": 5,
-      "steps": [
-       "shafts-join"
-      ]
-     },
-     {
-      "parts": [
-       "cam_3_3",
-       "cam_4_3"
-      ],
-      "type": "static_fit",
-      "maxCommonMm3": 0.810002,
-      "maxRemainingTravelMm": 0.0,
-      "samples": 356,
-      "steps": [
-       "lower-shaft-3",
-       "shafts-join"
-      ]
-     },
-     {
-      "parts": [
-       "cam_3_4",
-       "cam_4_4"
-      ],
-      "type": "press_fit",
-      "maxCommonMm3": 0.653727,
-      "maxRemainingTravelMm": 2.412,
-      "samples": 5,
-      "steps": [
-       "shafts-join"
-      ]
-     },
-     {
-      "parts": [
-       "cam_3_4",
-       "cam_4_4"
-      ],
-      "type": "static_fit",
-      "maxCommonMm3": 0.81001,
-      "maxRemainingTravelMm": 0.0,
-      "samples": 390,
-      "steps": [
-       "lower-shaft-4",
-       "shafts-join"
-      ]
-     },
-     {
-      "parts": [
-       "cam_4_0",
-       "gear_0"
-      ],
-      "type": "press_fit",
-      "maxCommonMm3": 0.522458,
-      "maxRemainingTravelMm": 1.95,
-      "samples": 4,
-      "steps": [
-       "shafts-join"
-      ]
-     },
-     {
-      "parts": [
-       "cam_4_0",
-       "gear_0"
-      ],
-      "type": "static_fit",
-      "maxCommonMm3": 0.68041,
-      "maxRemainingTravelMm": 0.0,
-      "samples": 406,
-      "steps": [
-       "lower-shaft-0",
-       "shafts-join"
-      ]
-     },
-     {
-      "parts": [
-       "cam_4_1",
-       "gear_1"
-      ],
-      "type": "press_fit",
-      "maxCommonMm3": 0.522453,
-      "maxRemainingTravelMm": 1.95,
-      "samples": 4,
-      "steps": [
-       "shafts-join"
-      ]
-     },
-     {
-      "parts": [
-       "cam_4_1",
-       "gear_1"
-      ],
-      "type": "static_fit",
-      "maxCommonMm3": 0.680405,
-      "maxRemainingTravelMm": 0.0,
-      "samples": 372,
-      "steps": [
-       "lower-shaft-1",
-       "shafts-join"
-      ]
-     },
-     {
-      "parts": [
-       "cam_4_2",
-       "gear_2"
-      ],
-      "type": "press_fit",
-      "maxCommonMm3": 0.522458,
-      "maxRemainingTravelMm": 1.95,
-      "samples": 4,
-      "steps": [
-       "shafts-join"
-      ]
-     },
-     {
-      "parts": [
-       "cam_4_2",
-       "gear_2"
-      ],
-      "type": "static_fit",
-      "maxCommonMm3": 0.68041,
-      "maxRemainingTravelMm": 0.0,
-      "samples": 285,
-      "steps": [
-       "lower-shaft-2",
-       "shafts-join"
-      ]
-     },
-     {
-      "parts": [
-       "cam_4_3",
-       "gear_3"
-      ],
-      "type": "press_fit",
-      "maxCommonMm3": 0.522455,
-      "maxRemainingTravelMm": 1.95,
-      "samples": 4,
-      "steps": [
-       "shafts-join"
-      ]
-     },
-     {
-      "parts": [
-       "cam_4_3",
-       "gear_3"
-      ],
-      "type": "static_fit",
-      "maxCommonMm3": 0.680405,
-      "maxRemainingTravelMm": 0.0,
-      "samples": 373,
-      "steps": [
-       "lower-shaft-3",
-       "shafts-join"
-      ]
-     },
-     {
-      "parts": [
-       "cam_4_4",
-       "gear_4"
-      ],
-      "type": "press_fit",
-      "maxCommonMm3": 0.522458,
-      "maxRemainingTravelMm": 1.95,
-      "samples": 4,
-      "steps": [
-       "shafts-join"
-      ]
-     },
-     {
-      "parts": [
-       "cam_4_4",
-       "gear_4"
-      ],
-      "type": "static_fit",
-      "maxCommonMm3": 0.680409,
-      "maxRemainingTravelMm": 0.0,
-      "samples": 407,
-      "steps": [
-       "lower-shaft-4",
-       "shafts-join"
+       "gears-onto-shafts",
+       "lower-shaft-4"
       ]
      },
      {
@@ -2927,7 +1983,7 @@
       "type": "snap",
       "maxCommonMm3": 2.547461,
       "maxRemainingTravelMm": 10.82,
-      "samples": 22,
+      "samples": 20,
       "steps": [
        "guide-plate"
       ]
@@ -3001,10 +2057,10 @@
       "pass": true
      },
      {
-      "id": "shafts-join",
-      "frames": 180,
-      "checkedPoses": 180,
-      "moving": 35,
+      "id": "gears-onto-shafts",
+      "frames": 9,
+      "checkedPoses": 9,
+      "moving": 10,
       "violations": 0,
       "pass": true
      },
@@ -3012,7 +2068,7 @@
       "id": "lower-shaft-2",
       "frames": 113,
       "checkedPoses": 113,
-      "moving": 7,
+      "moving": 2,
       "violations": 0,
       "pass": true
      },
@@ -3020,7 +2076,7 @@
       "id": "lower-shaft-1",
       "frames": 200,
       "checkedPoses": 200,
-      "moving": 7,
+      "moving": 2,
       "violations": 0,
       "pass": true
      },
@@ -3028,7 +2084,7 @@
       "id": "lower-shaft-3",
       "frames": 201,
       "checkedPoses": 201,
-      "moving": 7,
+      "moving": 2,
       "violations": 0,
       "pass": true
      },
@@ -3036,7 +2092,7 @@
       "id": "lower-shaft-0",
       "frames": 234,
       "checkedPoses": 234,
-      "moving": 7,
+      "moving": 2,
       "violations": 0,
       "pass": true
      },
@@ -3044,7 +2100,7 @@
       "id": "lower-shaft-4",
       "frames": 235,
       "checkedPoses": 235,
-      "moving": 7,
+      "moving": 2,
       "violations": 0,
       "pass": true
      },
@@ -3061,6 +2117,14 @@
       "frames": 52,
       "checkedPoses": 52,
       "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "bearing-caps",
+      "frames": 62,
+      "checkedPoses": 62,
+      "moving": 2,
       "violations": 0,
       "pass": true
      },
@@ -3159,174 +2223,129 @@
   }
  ],
  "inputs": {
-  "models/tangible-pixel-cube/spec.json": "656e8a854549034b332e339c14f120b5d826d5777e615d894ebfe36b13c54049",
-  "models/tangible-pixel-cube/build/manifest.json": "86446b3ab8cb3b9faa35ab1a8b59ace1474bb6d6804d7da5c5d02c0128474356",
-  "models/tangible-pixel-cube/build/motion.json": "ed564e9a7b8adec570718c348ea0cc87a245fb198cde090d6cdafaef9b377c1e",
-  "models/tangible-pixel-cube/build/assembly.json": "2904f6d0314fc7569c28d389dd90c95336aae4933844fd5f1197f8aadcb61964",
-  "models/tangible-pixel-cube/assembly.py": "0c5c6a3a2f6d6326f505a3aba8a22bb8c38c0950f2f9a51b54a6e4556c5d4b09",
+  "models/tangible-pixel-cube/spec.json": "dbc53410c1e697b5ff719d23a2f17e62bfab3521b53851d720302c2a34044196",
+  "models/tangible-pixel-cube/build/manifest.json": "4dc0e0257db8e2a5ed47f64524b9abcc7204c807f0cad133fc802f2c70dd0312",
+  "models/tangible-pixel-cube/build/motion.json": "ce38d5332c81451e0829f79370dd12285e031b0ba3013bc64f3ca80de0549d88",
+  "models/tangible-pixel-cube/build/assembly.json": "c63e9f893471c2fd9bc2d0ddcf5c232f962ed84cea56744b1b76ce6689a14538",
+  "models/tangible-pixel-cube/assembly.py": "da6fbca8d3b46e2be58ff655378fc4274b4330c1dea677534e8bc4262f4b015b",
   "models/tangible-pixel-cube/bar_bridge.py": "0e40040510de4882d2299d97fd18594f9d0b7be57097717fbb84e19cdcb63677",
-  "models/tangible-pixel-cube/cams.py": "023f6e6eef3915cb2121ca638043af4326da7aa04c75153a6bd1f535589e0919",
+  "models/tangible-pixel-cube/cams.py": "175ee8b5d97d43e1ed67fa04e6ac9943996c1274dc9ee57d03e5baebee400375",
   "models/tangible-pixel-cube/compile_demo.py": "b857893dcd5247447ab00d42bf33f7b3e81f8efb5bf98d8c28d2425ad4029257",
-  "models/tangible-pixel-cube/design_check.py": "466ad77ef4ab483256bdd18fa04eb1df73f9a349df4a95259b917b987e065208",
-  "models/tangible-pixel-cube/drive.py": "9898a849deac07ed923f7d44c9a5cb25b9921e28e8379eedbdb7954da5246110",
+  "models/tangible-pixel-cube/cone_check.py": "6a0cbcead6531291d647857da7b79e84997b5f135adb8c76f2c5271b162162ea",
+  "models/tangible-pixel-cube/design_check.py": "f9d8a80ca07625605b4122dca70a996b00e802ca19bb29f1564ff1daf9371414",
+  "models/tangible-pixel-cube/drive.py": "aec24108a81596d0678d96c2c07fa6c1e82187bc28ef9e79870a084b06cf3d87",
   "models/tangible-pixel-cube/firmware.py": "fbf55437ec7abe4382a5f88e82a50e022ea469182ee77aabe639fdf01fc9349e",
-  "models/tangible-pixel-cube/kinematics.py": "0b11bb9bb7f242feadf5730d70bd434ec9440b7ba4c58fee27efaf66301cd7ea",
-  "models/tangible-pixel-cube/model.py": "6a4b07a5eee9d9b1daeca3a98ad25ea6ce8011063ba83b2e06a8ce74fa92c5f2",
-  "models/tangible-pixel-cube/motion.py": "2f8722d2e745e03449ed526f18f57f09e13736293baa5115ca1827bc9c1b3e5c",
-  "models/tangible-pixel-cube/params.py": "ee52c39ee13203ea7fcc022ae1eae270079e204b31ba31931a82a95143a54dfa",
-  "models/tangible-pixel-cube/parts_moving.py": "01a5090484364af4f3e3f752c6647100a7ee1232ca390bd9588f3ca691ad951a",
-  "models/tangible-pixel-cube/parts_static.py": "4ca62253c11b0248c1fb836b02f0f01e49a8e0391508e0e644fe8f042165d93c",
-  "models/tangible-pixel-cube/patterns.py": "c91d560ab93641d34294f80ed2ee9fb6ae227110dcf05927b29fad96aee8974a",
-  "models/tangible-pixel-cube/plate_h2d.py": "48a86bf62b98ed607c76cda70049a6299310a84a4b308978cc08721c1b295827",
-  "models/tangible-pixel-cube/print_deliver.py": "c864a7870fd544679c544516e30a28790de7243a9cea36a1753c689a00062c8d",
-  "models/tangible-pixel-cube/print_kit.py": "d698f505b8d45b1f6ec2aa9a9256319c7123cfec5fde98351402daffa80fc1f3",
-  "models/tangible-pixel-cube/print_loads.py": "7fa57cd0f78bdc8c4a4a857ac08ccd0c44f900c1eeac0b241c2c3fa33d435b0d",
-  "models/tangible-pixel-cube/print_review.py": "769d9eac6ac8cd2ad95f5425137a71d3945c84f4b353e9b350ab05085a2a4be9",
-  "models/tangible-pixel-cube/print_trials.py": "d086728df9c439adf5ffa3455c4d5b5cea7e79ec5fe4bf51612e0360661ecde9",
+  "models/tangible-pixel-cube/kinematics.py": "872945ecb5d8fd8070a7d31b1b3e762c57560e98382ebcdc0f6fe907678d0535",
+  "models/tangible-pixel-cube/model.py": "fe9ece3d93dfb843bf4f3c1d4fac34c2dbfaa6976311651b18463d84634e4a8e",
+  "models/tangible-pixel-cube/motion.py": "39305993895cd8ff9775df836c9b6b101d2911f6f03a58f8c881670e95f28919",
+  "models/tangible-pixel-cube/params.py": "b4ed61d12a21ccc8ef970503057f7e453ebef313c378eb51ade033720ea169a4",
+  "models/tangible-pixel-cube/parts_moving.py": "ba7aa78702a208e2835202055fdcbfc16df98ac1e5af5faf99d73a44ef743163",
+  "models/tangible-pixel-cube/parts_static.py": "f8437d8e538b901cfe4425751365cab446740bf4d307f8c2dcd657700e9376c3",
+  "models/tangible-pixel-cube/patterns.py": "bdd5540777c3476d96280b7a7e8e5974cf985a679aa1564d6edd18ef8e8d93aa",
+  "models/tangible-pixel-cube/plate_h2d.py": "a6b619216eff549fa3915bde4dd16313bbb3f7cbe2d39b47e84472e043319f16",
+  "models/tangible-pixel-cube/print_deliver.py": "008750a79aa13a45efd9de22dd8d0a08e9d1b288ebb08f454602e00500642e36",
+  "models/tangible-pixel-cube/print_kit.py": "dc778cfb918148370451347c1a04188f4e50119c277e008f4f3a0694001fa534",
+  "models/tangible-pixel-cube/print_loads.py": "9bf75e33dc32892443b10c5773fdf9fd6112a862260c2338612c040ca2f37bf1",
+  "models/tangible-pixel-cube/print_review.py": "1b4fc0eee7b036c59afbf98cec5fab6d4c81eb42c70c7dde2469f8d538e2d7bd",
+  "models/tangible-pixel-cube/print_trials.py": "05251d48dd47ffd94a5c5ae6691246008eb3c6156906a26cb783a60df18de333",
   "models/tangible-pixel-cube/report.py": "85b751a9e44ee8093c2cf001cfb58b939d91faa396d2d6abb8fa8308dccee3c3",
-  "models/tangible-pixel-cube/run_moving.py": "663f459f794dabc300199cd25ab3abd49856309c0dbc0d66733214b8f185e9c3",
-  "models/tangible-pixel-cube/simulate.py": "fc1880d0acdb858a5347c92df1d4aa16ee7ed74b4ad23f282b0513d564a5e0a2",
-  "models/tangible-pixel-cube/test_cams.py": "6c9de9804550166349c45c35790fcd851e57a3afa1043662996220da7dcccd15",
-  "models/tangible-pixel-cube/test_motion.py": "7edcab3f569b4d77f92915e7421aae78c5ec5195fa0332facca63933288131af",
-  "models/tangible-pixel-cube/verify.py": "5a2e93628a671ac3e280fd50b5771d005d7f93a60388918520da75a0e212d44a",
-  "models/tangible-pixel-cube/build/housing.stl": "92efe83ca1df3d5331a06805c07566dcc2f3cd28851ce8598012fdeb3594de33",
-  "models/tangible-pixel-cube/build/bezel.stl": "8d63d1a4e9aa7faaa62cb28ae9188e9c9c860bd6100c75c9fc383879c76190bc",
-  "models/tangible-pixel-cube/build/guide_plate.stl": "04362f3efc63ffb5cf41f27066fe5bc1b62cdbaaa56ac58090c847abcd2a34c0",
-  "models/tangible-pixel-cube/build/shaft_0.stl": "9345d918a6aad0cf2c50b948ea7107e5feec5a484188187297c307f7a8e13a9b",
-  "models/tangible-pixel-cube/build/shaft_1.stl": "183e99a748ac6f908e9def6e6957d185779748645c9380aba8708f7fcbe8af27",
-  "models/tangible-pixel-cube/build/shaft_2.stl": "0e5976cb8ad8d0d174b4144722b9f3507eb58002df5f6bf2490d0ddeb57abee1",
-  "models/tangible-pixel-cube/build/shaft_3.stl": "217d213fa6fd2911d14484f155f31fa3fb2808c086963c818e8997f5cdd3e160",
-  "models/tangible-pixel-cube/build/shaft_4.stl": "b093ae3a34854ea8600d40fb6b3635b615f8ff89adf0e0254d928b3bc03420a8",
-  "models/tangible-pixel-cube/build/gear_0.stl": "e9c380e3b7dba52157d784591f1a72662534a2bb70cf0f9f7603ba0220e3b8b1",
-  "models/tangible-pixel-cube/build/gear_1.stl": "cfa0062e36391d303d7401578801d4d4bc04a940887186ec65c2acfb3d97eaab",
-  "models/tangible-pixel-cube/build/gear_2.stl": "1fff852e870754806ed3a3991b064cacf7683ac765006beef948e2f1e0946a31",
-  "models/tangible-pixel-cube/build/gear_3.stl": "9703b75f48384097ced899d82b0d8da3511d310ac86df054a38f07febe08fa08",
-  "models/tangible-pixel-cube/build/gear_4.stl": "8c004aba2055185acaa7a73bd1d6f60cfe77ebb03a1a13d1239b774cd33bac50",
-  "models/tangible-pixel-cube/build/cam_0_0.stl": "8fce03610577e335a67a6c707665c863855414d73d227b6a22d57bc6c3105abc",
-  "models/tangible-pixel-cube/build/cam_1_0.stl": "bcc1293f2aa30bb5b5af9c0a0fabf6d613a52e503d4d04b643dbfd7ae7f253f5",
-  "models/tangible-pixel-cube/build/cam_2_0.stl": "9311862298077083e0a433d65e854d46c2dc2f8534a62a5a51d8ae8d7b3d9d28",
-  "models/tangible-pixel-cube/build/cam_3_0.stl": "2c66980a9bba2d255411989fd8dfee9bce8d0fdff823e3ceb753f223749a1bac",
-  "models/tangible-pixel-cube/build/cam_4_0.stl": "f4cf3bbcd31aa15802372b3411ab7d19dcf450f46ac849b9422e36c64de15353",
-  "models/tangible-pixel-cube/build/cam_0_1.stl": "942cb385ed24f93fa496fecd237d1d1f939ad2dd1c1bf5b7cca90192df8aae3d",
-  "models/tangible-pixel-cube/build/cam_1_1.stl": "9a76de2a3a99c952260d1a94d951084f85775a7257c4c23fe1c3ed0d16484beb",
-  "models/tangible-pixel-cube/build/cam_2_1.stl": "fd920678d11904e0b2a6ab8dd0cd7f8893dfd695b2850405ac051499365b4894",
-  "models/tangible-pixel-cube/build/cam_3_1.stl": "bed9e54b0dd7acee03a39f2f3e0a997a681e6a4a84c9723254249589084d7989",
-  "models/tangible-pixel-cube/build/cam_4_1.stl": "48f119b70855704f2c21f73e9d8f28506ffacc8ce4d8886ce9159cdedff46076",
-  "models/tangible-pixel-cube/build/cam_0_2.stl": "123726aa887dbf7950363e6cbe4a6aaa2d9d310572159bf6d94403f57ab8fc39",
-  "models/tangible-pixel-cube/build/cam_1_2.stl": "3c72491a4e7f2437eb5624958b0f21e2277a35dd53c038c3549b4525dc45c6cc",
-  "models/tangible-pixel-cube/build/cam_2_2.stl": "ac00c2df572c8948387e33f455e25cd4d3815bc0b15ed63a1d0dec05d7ee21ab",
-  "models/tangible-pixel-cube/build/cam_3_2.stl": "4197218b2834f74c85a652d27f2cf6ed15de80592d3b1b331a21f163131e95e5",
-  "models/tangible-pixel-cube/build/cam_4_2.stl": "cf4299d7504f3a979a8eb514a78422a808f1216f1d2e39677a6d57e4526e7aa0",
-  "models/tangible-pixel-cube/build/cam_0_3.stl": "1e34324c7a15df9f11470b23265ebeb51aa93af996166b808abefe9fa69f9963",
-  "models/tangible-pixel-cube/build/cam_1_3.stl": "1bdff8903189b7f30def991a0dcafc14f519d6af6c8f331a367244a896fd959d",
-  "models/tangible-pixel-cube/build/cam_2_3.stl": "6c4ff4366223fe320edf411e162de66ea68625c34293063e01882e496ca46cd2",
-  "models/tangible-pixel-cube/build/cam_3_3.stl": "f6f2b8dbc055f04c76fc05366efc98548606717c3766907f8af83f2caa9f0a69",
-  "models/tangible-pixel-cube/build/cam_4_3.stl": "163489ede4712637d1abeaa55a32171287bb7983102b5f2c192eda8f9051ad84",
-  "models/tangible-pixel-cube/build/cam_0_4.stl": "7c24f70a8dd8d68b4463abb96b779331704678850c7b91679c41befd6d310ef6",
-  "models/tangible-pixel-cube/build/cam_1_4.stl": "5dceb9022483cb08c929035af1be856bb53bda5ab4369d3e8c950ff7269d8290",
-  "models/tangible-pixel-cube/build/cam_2_4.stl": "8690484b0201d817979eb10ed1b0749095d0516b5f24ab408645406e3f387b7e",
-  "models/tangible-pixel-cube/build/cam_3_4.stl": "718e475f36f4a0ad01efd8dcea7a3fbd371e698cdf235994cb23b8e169b782d1",
-  "models/tangible-pixel-cube/build/cam_4_4.stl": "87f799a4ca736fd27a9eae8204fc2006e6de5dee8ef77d749b3831f43371ffdc",
-  "models/tangible-pixel-cube/build/pixel_0_0.stl": "5a266deece5f7c6cf505e125790f31bd294f2a1e40ce8e7b496980af3c79e2b9",
-  "models/tangible-pixel-cube/build/pixel_1_0.stl": "c23469aac7517957881db44a5606ae08c70e4263897af663dc663b0de14a3dd8",
-  "models/tangible-pixel-cube/build/pixel_2_0.stl": "eabd9569a49017ade71922386aec478ec6bf6e57e01bbdb852011c8197c969c0",
-  "models/tangible-pixel-cube/build/pixel_3_0.stl": "c4ebad53faba8fe0c4a8779b4173d98c2143ddf9df323e004d8a2958948a316e",
-  "models/tangible-pixel-cube/build/pixel_4_0.stl": "07a0508e682e0d47775f02744d18bae21a0e5c76ad231230cdc209d1f6749c15",
-  "models/tangible-pixel-cube/build/pixel_0_1.stl": "504d0270c351ba3376177cbb85e95f14384765f1ea9efbc0bc967a2380bd9e69",
-  "models/tangible-pixel-cube/build/pixel_1_1.stl": "533a20c570ca073c9f9b968d9bff47799e237ff39e5a33c4c6e22715f86a99ee",
-  "models/tangible-pixel-cube/build/pixel_2_1.stl": "cff07a9290e28798bdb9ecf7a2a52549eedd0f843a083c129c3ce9f4634d6b0e",
-  "models/tangible-pixel-cube/build/pixel_3_1.stl": "8f720a5a5b468a87f25b317f3abbe66433d8a4efed95afb5179e9c24b54e9ede",
-  "models/tangible-pixel-cube/build/pixel_4_1.stl": "5b4414e9c55e6bcc4976bcc44f205514d950e1f28134ba0d0c9f8a59e2d6e4d8",
-  "models/tangible-pixel-cube/build/pixel_0_2.stl": "cc4b1465185696df6ca980bdf21d3d1d0e890f9f4ad15f6ce46540e3e1391cca",
-  "models/tangible-pixel-cube/build/pixel_1_2.stl": "9c8cb2b60a02f181e45f9b9214f44a9a54c86916f8a3b62f2e5ffd57b40123d3",
-  "models/tangible-pixel-cube/build/pixel_2_2.stl": "ed800ba000e08a2f14504deefb1ab65a5691e03583293885f5168dff1c66f2d1",
-  "models/tangible-pixel-cube/build/pixel_3_2.stl": "a153e53d338bd6929950f683af666de6a408c231e8fd4f4759c7f8d58fbfc067",
-  "models/tangible-pixel-cube/build/pixel_4_2.stl": "6b8cede66d464b66afdff79b0fe0df5366e2eb8ad47f2be50878145d4355999d",
-  "models/tangible-pixel-cube/build/pixel_0_3.stl": "282dbead57c99dbf00ef22d99470057ac6fa36ff9412daa2c41318917502fc4a",
-  "models/tangible-pixel-cube/build/pixel_1_3.stl": "f6d9138ee58ca05302504e42a173a6cd232690a09d45ba4766102c9a3622ffba",
-  "models/tangible-pixel-cube/build/pixel_2_3.stl": "c25e6ac2322b960409f63d45a8218d8b1f7dade050689a498acc79a81d1a9ad0",
-  "models/tangible-pixel-cube/build/pixel_3_3.stl": "3248cb2612e0dcd03fcfb61a4f065cdbfbddcc1c1a47b6d8cf53333edc9ff965",
-  "models/tangible-pixel-cube/build/pixel_4_3.stl": "4ece6d8046ce93c65e47c1e5b027d98ef52fecbc137b567d1dc233ea778555bc",
-  "models/tangible-pixel-cube/build/pixel_0_4.stl": "5f566fb37ad2de24e894895d165f10e8307665559296af709673345503fce09a",
-  "models/tangible-pixel-cube/build/pixel_1_4.stl": "be005f9f3117bc5a4491b0c2f93bc145e50ca45c83f5acf8cc50aa550629919c",
-  "models/tangible-pixel-cube/build/pixel_2_4.stl": "78adac19526cc7df00e068a82911838ef477a000bb132fb3911904261eed5ef4",
-  "models/tangible-pixel-cube/build/pixel_3_4.stl": "3079f4e46d6a25e0ffa2da793808ef1b2edd4ea614c9eaf0706ea706a705f7e2",
-  "models/tangible-pixel-cube/build/pixel_4_4.stl": "dd5b3b89250792f257f5e0cdfd35abb7f07d392a8355a664f67934e7bae98b03",
-  "models/tangible-pixel-cube/build/horn_coupler.stl": "b97409aa7a699efb340d7f1858384d63a416ede470a4db1a708023001a0465fb",
-  "models/tangible-pixel-cube/build/phase_comb.stl": "61bc1d7662f475f477edd0e37ed91708f5cb72824fade8a1e9e22ece29ad9cec",
+  "models/tangible-pixel-cube/run_moving.py": "28771906056ce13fe4298509bc543a79e1825705b11426468dc2b8657917ab40",
+  "models/tangible-pixel-cube/simulate.py": "11a3b973b6036249fefbcd3aeea39f113aca524648f593116b0e368ddebdfb7c",
+  "models/tangible-pixel-cube/test_cams.py": "1202372abead3e9fe218cb4de592bea5ac839f312f214154cc0c2cb825734247",
+  "models/tangible-pixel-cube/test_motion.py": "3c618b7507ebf8d1d60278eb968265c5ccbe49351d955a5c9ddafa749b228068",
+  "models/tangible-pixel-cube/verify.py": "35e220286247099ee00c4fbd9f8443ae14003d035612fd629575592eb03eb5c7",
+  "models/tangible-pixel-cube/build/housing.stl": "ea8b975f3ea273223c93f802b8a64ec0e6a651a48d65662e6b07cfa1e86051b1",
+  "models/tangible-pixel-cube/build/bezel.stl": "c284841a865a60b29d04136addf09fe8fb013caefb893937ea326e443e72c355",
+  "models/tangible-pixel-cube/build/guide_plate.stl": "edf6ab6039d7ba79a3a20cf6204ef632e0e6efcb16faa05e5c628e77b3070136",
+  "models/tangible-pixel-cube/build/camshaft_0.stl": "4ee0243bc7b6ac69973a4798ff1c2625ee821354c39f1bb123d003b9440d775f",
+  "models/tangible-pixel-cube/build/camshaft_1.stl": "797d210261066ae3c0f7824d75cf6af22467ea76eb1cb28076d9cf90d421a6a4",
+  "models/tangible-pixel-cube/build/camshaft_2.stl": "420e90cd2c413f6eb27d7309856af0884e1253f6f86403c37400f008491beb1f",
+  "models/tangible-pixel-cube/build/camshaft_3.stl": "e70d973452caa5961745a6c6c9a73619ad5539a392804294466601d83f009527",
+  "models/tangible-pixel-cube/build/camshaft_4.stl": "268de2098403e3004814cda131bd6fa99ba517a55865c1c9021ef6e5edf46837",
+  "models/tangible-pixel-cube/build/gear_0.stl": "9dff29ac84b113df73071b724a070df34076d393518897a888da3b7b57553696",
+  "models/tangible-pixel-cube/build/gear_1.stl": "c6f0f61267ed030f86205b981f6565b8000eea9abbccec9ae615ea557ab20ecf",
+  "models/tangible-pixel-cube/build/gear_2.stl": "07db2f412afec92c074c818abe16a1838fa7a8484acea706e9c8fb6f2d0ff909",
+  "models/tangible-pixel-cube/build/gear_3.stl": "6297ca55bd9a151688309f3b8e212888f4f2fb314d8621104deaaff9f2342aa8",
+  "models/tangible-pixel-cube/build/gear_4.stl": "ca8acfe35f81566ebd9a9540dd117e5dbca1c7089f30946582ea8202e5fc415b",
+  "models/tangible-pixel-cube/build/pixel_0_0.stl": "264436ca27ff5780aa2048a548e6d3084053c39a40eb1a9b58e9bb7e5877f119",
+  "models/tangible-pixel-cube/build/pixel_1_0.stl": "3e6274bb7eddbf28b31706d8e34bbd230727e6d1e4a208d7c0c155a95856c1bd",
+  "models/tangible-pixel-cube/build/pixel_2_0.stl": "d85055c880a4c75af7560c2b03f76e386fb1a95420c3a98e4587b8478a05d486",
+  "models/tangible-pixel-cube/build/pixel_3_0.stl": "41e2dd0efb0513418ea3a451e807b2968bcb419d00f74fd14157bafc942c3ebc",
+  "models/tangible-pixel-cube/build/pixel_4_0.stl": "f60fb8792ef9928a7a29c97dc3b73343412e8cd49258cf0475ffa87f64e7c9f8",
+  "models/tangible-pixel-cube/build/pixel_0_1.stl": "0103a8a47edba00c9e8c30e75759faf29a79c7328d37c95b0e8357f93948b93b",
+  "models/tangible-pixel-cube/build/pixel_1_1.stl": "37757f128b673ba8d3b80b6985976ae6f6525a9c0ea6e9ca26c42d305dba823a",
+  "models/tangible-pixel-cube/build/pixel_2_1.stl": "5d6212681dfb22e0aea1d8a3a32f68f6ae7a64e602fc3c3405c555cd00315316",
+  "models/tangible-pixel-cube/build/pixel_3_1.stl": "66e6be7eda8acb52671c3426f764deb013e6f088f285ec411fa580dd166eec15",
+  "models/tangible-pixel-cube/build/pixel_4_1.stl": "62ea5d520564fdd05abe2b43e11afe952af293ca2a8a250963e58211c06d13e1",
+  "models/tangible-pixel-cube/build/pixel_0_2.stl": "ac6ea72638f711ea2b0d720e2a63c29d9041091c66e70e8d4ebab5f744eef9ca",
+  "models/tangible-pixel-cube/build/pixel_1_2.stl": "c9719c07f75c3c0d9721dae807ff476ecaabafa56cb085333bef4d6d9f0489fe",
+  "models/tangible-pixel-cube/build/pixel_2_2.stl": "99ef9146b22bcad3caabc32439e3c959216a47ae2a0cc4e3da77023a50325d24",
+  "models/tangible-pixel-cube/build/pixel_3_2.stl": "40887ad12dec4dbb9aa23bd3866d56770438957649accfe152a53724c2f5a0ae",
+  "models/tangible-pixel-cube/build/pixel_4_2.stl": "4c49309c94342d65caab5e1db9dc8962ffe378d165bc4ad5d2a9ab03a8e88b6a",
+  "models/tangible-pixel-cube/build/pixel_0_3.stl": "094aafde57754979bae726db5e5ba7b2f65fab684c91ba4a8af07a80758627fb",
+  "models/tangible-pixel-cube/build/pixel_1_3.stl": "6cca1f3987a1ca8768cd75fc67965a5c9027178602d823a1b9eaf5ad439c952b",
+  "models/tangible-pixel-cube/build/pixel_2_3.stl": "7eb59918dbefe453dda926c4ab38c1e5c12587cdff8f0503f5fc09a25892606f",
+  "models/tangible-pixel-cube/build/pixel_3_3.stl": "3fb6c51eeeaa7fcd9e4aae56bba11f70993510089935781bea723d377ac5ef43",
+  "models/tangible-pixel-cube/build/pixel_4_3.stl": "9852d635121e0139df8e61efeccd5fed2816151ee17ce9d242f50f57f21146fa",
+  "models/tangible-pixel-cube/build/pixel_0_4.stl": "715abe637057f9162fec6dd80c73fea51d4c219233a64c40dfa8b36214476d55",
+  "models/tangible-pixel-cube/build/pixel_1_4.stl": "66ec2af67d038a51c15707d9b050b0b0af4824fa43e786b244b26c20cd217330",
+  "models/tangible-pixel-cube/build/pixel_2_4.stl": "73e668bb09805a5cf1ab28da95456881c0e415a36ada91b506b16e206ba5ac01",
+  "models/tangible-pixel-cube/build/pixel_3_4.stl": "b52d2a8ea2082f3372000dbbcf615f405bd910b2215f38d680a11ca1bcd28d7a",
+  "models/tangible-pixel-cube/build/pixel_4_4.stl": "f6fe73523e875a16b880bc490e042f2e06ab934fba5783ca8a9013502da983a0",
+  "models/tangible-pixel-cube/build/bearing_cap_px.stl": "84dfba61c1042833ba896cac2c7b4cebc5f4f0a8851b312dad5676a898fd3479",
+  "models/tangible-pixel-cube/build/bearing_cap_mx.stl": "1954320271b062adcab42e3acd6c45b59dd40be602a09ac36af06b69f09298f1",
+  "models/tangible-pixel-cube/build/horn_coupler.stl": "d131796508942d8b8eb11c043d900fb032ff54c12c19b97473758e4529fb65cb",
+  "models/tangible-pixel-cube/build/phase_comb.stl": "555c842745b0e4680ec9d25a237e3d238b086aa5e8cb2830725ddc7d3ad3bb90",
   "models/tangible-pixel-cube/build/sg92r.stl": "fa1be513c7fa90bad991be893307450b839a424457064cffe2b8fa11fcb31366",
   "models/tangible-pixel-cube/build/sg92r_horn.stl": "cc587bc8ec9fb91f4a64cded910bdaf0a950e5e5b9417bdc0caf12a9e00211f9",
   "models/tangible-pixel-cube/build/servo_clip_0.stl": "e6229361acf5c7a97d023287163d331065d2a17a0a3c6bc4a7e956012cbdcae6",
   "models/tangible-pixel-cube/build/servo_clip_1.stl": "4c206873769d13f7893c1bc02e9a9af70ac0bebeb4c47526f59b918e311fceb9",
-  "models/tangible-pixel-cube/build/print_housing.stl": "d6ce34f21126db7fbd3adb55b41283e0b4cdde0074c0ff164b7b6b5abc581ed9",
-  "models/tangible-pixel-cube/build/print_bezel.stl": "42f728be59076f2d00b5d21f118b6e566f1315b85be6e9e47f2f81bb8ccbf6b0",
-  "models/tangible-pixel-cube/build/print_guide_plate.stl": "227eb7eef359e00075855c6026495b977709c16324ea7d39c2916de70244e80a",
-  "models/tangible-pixel-cube/build/print_shaft_0.stl": "f22aa9af99de292458282ede5cc15634a4aa335a043a35abd648450ca070a21a",
-  "models/tangible-pixel-cube/build/print_shaft_1.stl": "c6a98dbbc4c52420c107121f6d72f84587b517f86188addfba51befa7fa6f16a",
-  "models/tangible-pixel-cube/build/print_shaft_2.stl": "0006b0689d088743e15f238765c618fafbe27191fd6550414a17b806ea536295",
-  "models/tangible-pixel-cube/build/print_shaft_3.stl": "e3b91a7538a672ea08372712deab5e97eb02dd95aec1db005ce2ca31d0fe17cb",
-  "models/tangible-pixel-cube/build/print_shaft_4.stl": "b36945514c45a2b0e9a96e3de2e4c101861cb20bbeb7ab673c89e2f90650396d",
-  "models/tangible-pixel-cube/build/print_gear_0.stl": "1c53a5e129d264e197be63e359fc72452536178d57e9dbd5c44ef423668efe40",
-  "models/tangible-pixel-cube/build/print_gear_1.stl": "0937c0427b1ed2a2d28b393f0715ac839fa333643d638811dbf5df65438691f3",
-  "models/tangible-pixel-cube/build/print_gear_2.stl": "3ae65d3c24e17ef32c58fcfba37081faae29f7619e48d7737b1dd414e78379b1",
-  "models/tangible-pixel-cube/build/print_gear_3.stl": "43b17a195d2da50de399f69c7e55b0e262bf833d043ad3d3ec019e0eba4a7f2b",
-  "models/tangible-pixel-cube/build/print_gear_4.stl": "75e2bb4143c03e577df7f3a4d02e84b1726b9e74258e8ba9a4b436b9b2bced5d",
-  "models/tangible-pixel-cube/build/print_cam_0_0.stl": "625b40c66143752c8f7eca32e11c16769bd573ac6ac2c427f13878528a88139b",
-  "models/tangible-pixel-cube/build/print_cam_1_0.stl": "8b025e2a3cd33870bda47c5776f85e69740479349d2388beaf4569d4d96f5cdc",
-  "models/tangible-pixel-cube/build/print_cam_2_0.stl": "b78265809c37aba793196b6cca1ba7f5470430adc9e33198c15adf0de4a1fd5a",
-  "models/tangible-pixel-cube/build/print_cam_3_0.stl": "cdfbd042d80f3101751f8db9e84b74100970767be96c93d432079c96aa9360c8",
-  "models/tangible-pixel-cube/build/print_cam_4_0.stl": "aa37f02af51300063369d0cced81c0a6c001317429d225c1631ad498cfe21b72",
-  "models/tangible-pixel-cube/build/print_cam_0_1.stl": "17a7a9c858fb21c3946b813a6429905d13c01a58f13522b2d0bc1e1838a8bc60",
-  "models/tangible-pixel-cube/build/print_cam_1_1.stl": "ac0accc04d4c66cbf0fe7dd89d3ed2fc3a65953063f552fd6b060701f31aea72",
-  "models/tangible-pixel-cube/build/print_cam_2_1.stl": "388999fd7af9b5139d984c57a20c0591b13bd817d53db65ae00321bc5cfe12b2",
-  "models/tangible-pixel-cube/build/print_cam_3_1.stl": "e5977d0f8afb75999f19487cd491e2eb0f9a1e06b2c031effeaff6eef2fe6f35",
-  "models/tangible-pixel-cube/build/print_cam_4_1.stl": "5ba835f7da845ba5d0dea41ef2a5b28cbfe69b5b5c6ecddf59a4b953c6999d93",
-  "models/tangible-pixel-cube/build/print_cam_0_2.stl": "162d6bcdd2f051b2969423d7825e5b23f3429dcf3ada8a40549cbef21de71e2e",
-  "models/tangible-pixel-cube/build/print_cam_1_2.stl": "553eaf61813c33a4af0a3404215ab96ad1b307d13e06e7ab15b0eb60b62d5f87",
-  "models/tangible-pixel-cube/build/print_cam_2_2.stl": "b614c631bf82fe37f56ff67de554c8df2402ca275d05e5bd50e0cf9205affbeb",
-  "models/tangible-pixel-cube/build/print_cam_3_2.stl": "faba46c451c17607d59f4c01300d471b5b9411785b1dd67f216cf34388cbccda",
-  "models/tangible-pixel-cube/build/print_cam_4_2.stl": "ce0b73e8e77b9c22fc1df840b6bab9a9a25074c6178d0388ce45f537cce96e47",
-  "models/tangible-pixel-cube/build/print_cam_0_3.stl": "90a1bb41265965a7da284981ae3b40ede0cb4475be31a766add9102ea31c60cd",
-  "models/tangible-pixel-cube/build/print_cam_1_3.stl": "7371f706f116524c62b16ed5099b22a86467ce57bcee508d1660cf8eb874562d",
-  "models/tangible-pixel-cube/build/print_cam_2_3.stl": "17ce422a5ddaa1a399fe39b3e1fb77b7951689b4a8e30e3b12585c39a78fec08",
-  "models/tangible-pixel-cube/build/print_cam_3_3.stl": "436e22d0dbc75dde7c09de553cd3097423f83f82ad8ae5923aa9a51941a4f0b1",
-  "models/tangible-pixel-cube/build/print_cam_4_3.stl": "938a3e53d391f856ad537ac97757f6b844b59b08a3666011f630f47bbf172151",
-  "models/tangible-pixel-cube/build/print_cam_0_4.stl": "a9e3a03a926b5239a316f1310d8f83d5e6535f9436828fafac5c209f073ceb1a",
-  "models/tangible-pixel-cube/build/print_cam_1_4.stl": "45efa5157aab44ec80df8d52bf2d71939c0e4c943671b58753d73394fea8d461",
-  "models/tangible-pixel-cube/build/print_cam_2_4.stl": "c8ef4cccdefbea22f80da7f770a6ce2e679372ddd555a55a86ab0063753e10da",
-  "models/tangible-pixel-cube/build/print_cam_3_4.stl": "84ce11135ed03efae4a656b2a90543dcba4df8335e5f01fa8391f8576238d300",
-  "models/tangible-pixel-cube/build/print_cam_4_4.stl": "e8048d55585635982d4fde0374b470937d12f800f548ed8456fc86e370de0467",
-  "models/tangible-pixel-cube/build/print_pixel_0_0.stl": "acf0c6a95e39f5759bac9f3eed540b05091c261dfd9f1d72dd5ea4a239ff7a65",
-  "models/tangible-pixel-cube/build/print_pixel_1_0.stl": "c83cac33c7ad9c088b04fabebeecbc16f0ba379bea07711c52047d0f01302137",
-  "models/tangible-pixel-cube/build/print_pixel_2_0.stl": "8b3091f51a29c60f16746358a31eca2001c8e853bd7b29619a2818ff4903004d",
-  "models/tangible-pixel-cube/build/print_pixel_3_0.stl": "524188e452a2ca2ae4356ce9402f01d8247070fba94cfa0aecc391639331ca91",
-  "models/tangible-pixel-cube/build/print_pixel_4_0.stl": "d4b7d7d502c29b2d4ee29583f2e6dd31ee84cef84d72e7b688c3b8aae3ae9381",
-  "models/tangible-pixel-cube/build/print_pixel_0_1.stl": "79f64b4f2ab67211e8da4ebe706a67614b50622784725649fa18269fcac82e5e",
-  "models/tangible-pixel-cube/build/print_pixel_1_1.stl": "660fbb175eeb0c5564e62f88e553c28ac81b2d0d0e062edf94e2ddbbbb556b33",
-  "models/tangible-pixel-cube/build/print_pixel_2_1.stl": "41184ba14b2d20b3f4d00343b455fc4a5138d1ef2e3f37c0bcb110bcfcf4fa6f",
-  "models/tangible-pixel-cube/build/print_pixel_3_1.stl": "38b551811006764ccf652dd13c18e791595ccee27846f39ba616b1ad843a584a",
-  "models/tangible-pixel-cube/build/print_pixel_4_1.stl": "0430df5e6f103942edbea4a28949e3c0bdcb42e823808bf6d3c6de278036fda0",
-  "models/tangible-pixel-cube/build/print_pixel_0_2.stl": "28ad3d524fff8b1e3edcaec74b13d569a05bcc693a1e4b4422abce7b811a5a45",
-  "models/tangible-pixel-cube/build/print_pixel_1_2.stl": "766b77e9eed0aea717e54a9dee6764986ee7620fc38a79c139f57bd6e781d25c",
-  "models/tangible-pixel-cube/build/print_pixel_2_2.stl": "0f8843f4c671a8ebccefe67b0013881018e8269d48ab706a5dd62e04a332f9f0",
-  "models/tangible-pixel-cube/build/print_pixel_3_2.stl": "ed773666a947a6153697e1341f95925eb49e207bdc6d2d68456114c929d93e34",
-  "models/tangible-pixel-cube/build/print_pixel_4_2.stl": "f806ccb7d7e7d78c3d775245846da3ae5bd2da939004fb6580d706189f8724b2",
-  "models/tangible-pixel-cube/build/print_pixel_0_3.stl": "2e68ab4d1b681ce1f249a4bef7b1842b7c5fd99afcb81846b739c234cbd3f9ed",
-  "models/tangible-pixel-cube/build/print_pixel_1_3.stl": "778b56da56631aa9d3b5e0b4c6f62aa2667722e4ccdf4a54db6f41e89af6288c",
-  "models/tangible-pixel-cube/build/print_pixel_2_3.stl": "7c838d6af1d0d3257b068ce7675542b9d42ce42c340037b5a689e35dad89510e",
-  "models/tangible-pixel-cube/build/print_pixel_3_3.stl": "ca0fa8ad3194597289478eec53b782b60907cd09f941f33e541c26203618a68f",
-  "models/tangible-pixel-cube/build/print_pixel_4_3.stl": "14000d2399ba2ded8d7e3aca686bc08ed78a3dd2990b2400954ca2ca35eaf251",
-  "models/tangible-pixel-cube/build/print_pixel_0_4.stl": "96d46ea3fe0914da76dd5ee00531d8498476a32183479ce80d3a87d12727727e",
-  "models/tangible-pixel-cube/build/print_pixel_1_4.stl": "952210ed220295ae5e0bdaa72cfae0e46919d6b975ba6a5adf1073844fc70faf",
-  "models/tangible-pixel-cube/build/print_pixel_2_4.stl": "4f69e67028d5dbc02db89cd8d35245ac87d081f3ef2c9c6083e6342b56c9f438",
-  "models/tangible-pixel-cube/build/print_pixel_3_4.stl": "92568f64424a0958a03a947a344c20cc225e7ecd66471d811616901ead43a9cf",
-  "models/tangible-pixel-cube/build/print_pixel_4_4.stl": "fd39dd14ee571e9a77c3c7ef21a83569b204bdc0852808bcee15d18acc3a30f6",
-  "models/tangible-pixel-cube/build/print_horn_coupler.stl": "8d4800f2aa7285e3282e567100c6c03375fcd44cca40a8336bcddb53e3f4f455",
-  "models/tangible-pixel-cube/build/print_phase_comb.stl": "02312fad1ad0d78644011f7fd33aa994ee5494dd37034b5eebb6deebb7b19d50",
+  "models/tangible-pixel-cube/build/print_housing.stl": "e4c0809350d5c2ef263ab661f8747029fa73dab86b94f4ab7b77ac3871f88869",
+  "models/tangible-pixel-cube/build/print_bezel.stl": "d9541b1ac99cc7ca1ac4a16e264ece340e55f604f64d7b06b633ac7f1b541442",
+  "models/tangible-pixel-cube/build/print_guide_plate.stl": "17a647ed5906f5e3b003fb0c5bb2fbbecea6093e5b0a89c30be29c0c8ae380cd",
+  "models/tangible-pixel-cube/build/print_camshaft_0.stl": "d68b700d79c5305ddf5e8d6f8bb09fff344d3eaee5ce1bc6160be03c9d51481b",
+  "models/tangible-pixel-cube/build/print_camshaft_1.stl": "bd222c5bf313b846f67c15163197bd2b54c1b0bbfbbb2056907fcb033e038044",
+  "models/tangible-pixel-cube/build/print_camshaft_2.stl": "94907f233caef9785c85b527268d42ae211a7db60210f536b66c9f88dfd4f783",
+  "models/tangible-pixel-cube/build/print_camshaft_3.stl": "5fd9c7aafe7311cceacf1d93a16bd266efa973da308853aef32383171eefd833",
+  "models/tangible-pixel-cube/build/print_camshaft_4.stl": "cd654d6f487e2137f057320dfe1220feb13cb52799778aa38934a65c9c03866b",
+  "models/tangible-pixel-cube/build/print_gear_0.stl": "597ca7896c558ef008b4a607349029b3fdf446dc5a6fac6ebcf71b4cccb7e1e9",
+  "models/tangible-pixel-cube/build/print_gear_1.stl": "f2d895f9cd5b6dad5acf89797593b7cf4e54ca377e5dafdbdf765c45dd638229",
+  "models/tangible-pixel-cube/build/print_gear_2.stl": "0ca9c1f6283d15b6e3d0d8ab8314e6c3be990a3bc0b732110c44df9662c5a100",
+  "models/tangible-pixel-cube/build/print_gear_3.stl": "98446c77f4767bb9563289660206a2fd471d9cb8cf3341872979627bdcd75777",
+  "models/tangible-pixel-cube/build/print_gear_4.stl": "8bef62ffcde2523249ea21eb6b06347c1e4493caf2dc4703540474644f9a9b2c",
+  "models/tangible-pixel-cube/build/print_pixel_0_0.stl": "b5775087b9a3f24811b216817578a7127a6466b6f3cac8c25b454ae3e8272897",
+  "models/tangible-pixel-cube/build/print_pixel_1_0.stl": "54e827f4b1a17032dd11bd76df69112a37e1e0d24051a24b41efd0125424c010",
+  "models/tangible-pixel-cube/build/print_pixel_2_0.stl": "ee5a9b3b50744166ff9fb5bf80c711729b378e5f2d63a86599915a78900eb186",
+  "models/tangible-pixel-cube/build/print_pixel_3_0.stl": "77f54745049eb95556f9a7ecf254f96dba91f63ab7a2cf7b1f7e8e0caeb91719",
+  "models/tangible-pixel-cube/build/print_pixel_4_0.stl": "52ef261593f3296553c5401f1a754515d6e731fd25aa7b62fd3c1d97168e19e8",
+  "models/tangible-pixel-cube/build/print_pixel_0_1.stl": "8d7d71caa4db49433ee2ae6966d153167293f6df63a45e169f702aaac063534e",
+  "models/tangible-pixel-cube/build/print_pixel_1_1.stl": "c7400d1f0366f870b4c563ab2823d66c824840309693346270135cb592766eeb",
+  "models/tangible-pixel-cube/build/print_pixel_2_1.stl": "1df237d5b711e18b5a4648650bbb911da60a1891a7a5a512f268fcc31edbddc9",
+  "models/tangible-pixel-cube/build/print_pixel_3_1.stl": "d62ae3976e1c16940d6d4382d6fa957f40bf258c9d959f2152998e0a61522ef1",
+  "models/tangible-pixel-cube/build/print_pixel_4_1.stl": "ff5a93e03beb6b8292f968902bbe8e59484bc19d120fd6941c9f0c75c9f6670d",
+  "models/tangible-pixel-cube/build/print_pixel_0_2.stl": "eee490a60626164122ff237dcf19074c564eb0bf1597eb882035d1420b1ea18b",
+  "models/tangible-pixel-cube/build/print_pixel_1_2.stl": "a2282566bdaef9b377060611681ed05614fa4673ceacf56fa2695b90396d0465",
+  "models/tangible-pixel-cube/build/print_pixel_2_2.stl": "f659b1ac0a13be632ec62610c83af2f81d1166da13fc47ea2f37731ae8d78df9",
+  "models/tangible-pixel-cube/build/print_pixel_3_2.stl": "d267fc1ce898a051ea101612b9b3586b43ca77a0fb5d4f9204f0d59c1d759094",
+  "models/tangible-pixel-cube/build/print_pixel_4_2.stl": "8baa9e45e18595834d74647e219d4b5499a05e8f682b07139e019fa95a4715dc",
+  "models/tangible-pixel-cube/build/print_pixel_0_3.stl": "5dda047e40c941e50680406e2db12fe122f56e1e153f5fc7cd498ebba79df8c6",
+  "models/tangible-pixel-cube/build/print_pixel_1_3.stl": "f6442e7499a0406caf0b743b8766ce0024ecfaec4bc1fa3a60be58aa233d3d4a",
+  "models/tangible-pixel-cube/build/print_pixel_2_3.stl": "22bbb81d3d6e15974ba16fb0bfee882e839aa1c0652fb8f54839f1b31b32e6dc",
+  "models/tangible-pixel-cube/build/print_pixel_3_3.stl": "9a5fc3e4e3adb65771959fcd2818b47215f34444d25135a6413c1ddfa2a89993",
+  "models/tangible-pixel-cube/build/print_pixel_4_3.stl": "49fb084c711bc66293be9a8d00b5d4dabb389c9162cc7c8b19cfc1f6960e0428",
+  "models/tangible-pixel-cube/build/print_pixel_0_4.stl": "2fee9d093987538e6d2a61a48d455ec854d8fc5e8e7e31972fe984c7f77ca84f",
+  "models/tangible-pixel-cube/build/print_pixel_1_4.stl": "e8ac9c199d2e395a001541885685bff72b3530f793dadb835130ae33def14dbc",
+  "models/tangible-pixel-cube/build/print_pixel_2_4.stl": "2b9210d9362333c54451e8e6e14352afceb29fa4bb07a0749e16ae961a1cc04f",
+  "models/tangible-pixel-cube/build/print_pixel_3_4.stl": "9409e629a7dbcb80b6665cd435db7295076f4b48c8c740977fd739e9cace620e",
+  "models/tangible-pixel-cube/build/print_pixel_4_4.stl": "3071a9c72255df09ac193495c43171c3337fc1308e4b79d9ea82d55c65b282ae",
+  "models/tangible-pixel-cube/build/print_bearing_cap_px.stl": "f0cec38c37404676086d87b041c6743a2cf1f44faaac65b7062a11a920ca2534",
+  "models/tangible-pixel-cube/build/print_bearing_cap_mx.stl": "e1762d51aabf30bdd727a88d2d55c62987f3c94be8eb3fc34756084d4af043e2",
+  "models/tangible-pixel-cube/build/print_horn_coupler.stl": "3eb6259d966b64358438585ab235f398b0cc6f5583b3c347299e8977a5d335d0",
+  "models/tangible-pixel-cube/build/print_phase_comb.stl": "e6ee14783604a24f473e480e4fc9c676e19dfd0d29eb29c22b45238c4b7cdcb5",
   "models/tangible-pixel-cube/build/print_servo_clip_0.stl": "de0c2e28f8e45ef6974f0129ca45c9659e6074de7cb6dc82a61b57fd45170ce2",
   "models/tangible-pixel-cube/build/print_servo_clip_1.stl": "3ef20b7cf4edd7175438d4aad709a6724b3f315da9b118373db26c45e0596458",
-  "prints/tangible-pixel-cube/trial/horn_coupler.stl": "8d4800f2aa7285e3282e567100c6c03375fcd44cca40a8336bcddb53e3f4f455",
-  "prints/tangible-pixel-cube/trial/housing_servo_block_minusY.stl": "e95e260d6ad23fe41cd2099b9ca84142f0b851a766d311aed49058d9d8004faf",
+  "prints/tangible-pixel-cube/trial/horn_coupler.stl": "3eb6259d966b64358438585ab235f398b0cc6f5583b3c347299e8977a5d335d0",
+  "prints/tangible-pixel-cube/trial/housing_servo_block_minusY.stl": "43ee38985a559f62f5b51da309d733e0e7372d8344e7d6f157c218e9de1517f8",
   "tools/mechgate.py": "a04a4984d76cf8fa034fecbf79635d71513659919101b1cd6e61ff7bffba6f7b",
   "tools/mechgate_lib/__init__.py": "7f409f2f5490445952a8c8ccbcacc41dbe79c6e4d90eaf83d1eaf05c1a20ca93",
   "tools/mechgate_lib/limits.py": "0e544a9ae5e0495fdf009983bf0cca7696cea68c05349a92af08eb7ac3634f88",

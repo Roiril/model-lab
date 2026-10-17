@@ -244,12 +244,61 @@ def build_all(tables, thetas=None, theta_flat=None, w=None, step=None):
     """tables[k][j][i] = 表 k の画素 (列 i, 行 j) の高さ [mm]。cams[j][i] の 5x5 を返す。
     足りない表が 1 枚でもあれば CamError（どの画素かが文面に入る）"""
     Kn = len(tables)
+    check_tables(tables)
     cams = [[None] * P.N for _ in range(P.N)]
     for j in range(P.N):
         for i in range(P.N):
             hs = [tables[k][j][i] for k in range(Kn)]
             cams[j][i] = build_cam(hs, j, i, thetas=thetas, theta_flat=theta_flat, w=w, step=step)
     return cams
+
+
+def cone_pair_limits_mm():
+    """隣の行のカムの、最大高さの和の上限 (同じ列の組 A, 斜めの組 B)。mm。
+    隙間 = 17 - (R_a - t) - R_b = 17 - 2 x 8.2 + t - (h_a + h_b)。設計位置で >= CONE_CLEAR_NOMINAL、軸方向の遊び（相対 2 x AXIAL_DRIFT）を最悪に入れて >= CONE_CLEAR_SLACK"""
+    pitch = P.PITCH * 1000.0
+    rb = P.CAM_RB * 1000.0
+    diff = (P.ROW_SHIFT_POS - P.ROW_SHIFT_NEG) * 1000.0
+    t_a = diff - P.CAM_T * 1000.0
+    t_b = pitch - diff - P.CAM_T * 1000.0
+    base = pitch - 2 * rb
+    slack = 2 * P.AXIAL_DRIFT * 1000.0
+    out = []
+    for t in (t_a, t_b):
+        out.append(min(base + t - P.CONE_CLEAR_NOMINAL * 1000.0, base + t - slack - P.CONE_CLEAR_SLACK * 1000.0))
+    return out[0], out[1], t_a, t_b
+
+
+def first_cam_neg_row_height_max_mm():
+    """奇数行（-X へ 5.1 ずれる行）の cam 0 の高さの上限 (mm)。円錐がパッドの面（-PAD_X0）で、じょうご（半径 U 溝の半幅 + U_FUNNEL）に収まる条件。
+    軸が -X へ AXIAL_DRIFT 動いた最悪で、円錐の半径 = R - (x0 - AXIAL_DRIFT + PAD_X0)"""
+    x0 = K.cam_x_range(0, 1)[0] * 1000.0
+    t_pad = (x0 - P.AXIAL_DRIFT * 1000.0) + P.PAD_X0 * 1000.0
+    f_pad = (P.U_SLOT_MX_W / 2 + P.U_FUNNEL) * 1000.0
+    r_max = f_pad - P.FUNNEL_CLEAR * 1000.0 + t_pad
+    return r_max - P.CAM_RB * 1000.0
+
+
+def check_tables(tables):
+    """表の組の、隣の行のカムの制約。足りなければ CamError。
+    (1) 隣り合う行のカムの、全表での最大高さの和 <= cone_pair_limits_mm()
+    (2) 奇数行の cam 0 の最大高さ <= first_cam_neg_row_height_max_mm()"""
+    lim_a, lim_b, _, _ = cone_pair_limits_mm()
+    hmax = [[max(tables[k][j][i] for k in range(len(tables))) for i in range(P.N)] for j in range(P.N)]
+    for j in range(P.N - 1):
+        pos_j, neg_j = (j, j + 1) if j % 2 == 0 else (j + 1, j)
+        for i in range(P.N):
+            s = hmax[pos_j][i] + hmax[neg_j][i]                       # 同じ列: pos の円錐が neg の板へ（t = 4.25）
+            if s > lim_a + 1e-9:
+                raise CamError(f"隣の行のカム ({i},{pos_j}) と ({i},{neg_j}) の最大高さの和 {s:.2f} mm > 上限 {lim_a:.2f} mm（同じ列。円錐が食い込む）")
+            if i >= 1:
+                s = hmax[neg_j][i] + hmax[pos_j][i - 1]               # 斜め: neg の円錐が 1 つ -X の列の pos の板へ（t = 4.75）
+                if s > lim_b + 1e-9:
+                    raise CamError(f"隣の行のカム ({i},{neg_j}) と ({i - 1},{pos_j}) の最大高さの和 {s:.2f} mm > 上限 {lim_b:.2f} mm（斜め。円錐が食い込む）")
+    lim0 = first_cam_neg_row_height_max_mm()
+    for j in range(1, P.N, 2):
+        if hmax[j][0] > lim0 + 1e-9:
+            raise CamError(f"奇数行の最初のカム (0,{j}) の最大高さ {hmax[j][0]:.2f} mm > 上限 {lim0:.2f} mm（-X のパッドのじょうごに円錐が収まらない）")
 
 
 def write_json(cams, path, tables=None, names=None):
@@ -265,6 +314,11 @@ def write_json(cams, path, tables=None, names=None):
         "tables": tables,
         "names": names,
         "cams": [[cams[j][i] for i in range(P.N)] for j in range(P.N)],
+        "cam_x_mm": [[K.cam_x(i, j) * 1000.0 for i in range(P.N)] for j in range(P.N)],
+        "cam_thickness_mm": P.CAM_T * 1000.0,
+        "camshaft_body_d_mm": P.CAMSHAFT_BODY_D * 1000.0,
+        "skirt_deg": P.CAM_SKIRT_DEG,
+        "row_shift_mm": {"even": P.ROW_SHIFT_POS * 1000.0, "odd": P.ROW_SHIFT_NEG * 1000.0},
     }
     tmp = path + ".tmp"
     os.makedirs(os.path.dirname(path), exist_ok=True)

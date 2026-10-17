@@ -245,7 +245,7 @@ def inscribed_diameter(img, res, max_boundary=1500):
     return (best * 2.0 + 1.0) * res, (far + 1.0) * res
 
 
-def overhang_clusters(S, visible, layer=LAYER):
+def overhang_clusters(S, visible, layer=LAYER, skip=None):
     """刷る向き（z が上）で、水平から 45 度より寝た下向きの面の塊。ベッドに接する面は数えない。
 
     visible は面ごとの真偽（組立姿勢で外から見える面）。返り値は塊ごとの dict のリスト（面積の大きい順）。
@@ -255,6 +255,8 @@ def overhang_clusters(S, visible, layer=LAYER):
     down = (S.n[:, 2] < -COS_OVERHANG) & (S.area >= 0.01)         # 面積のほぼ 0 の細長い三角形は法線が不安定なので数えない
     on_bed = (zmax <= 0.01) | ((zmin <= 0.01) & (zmax <= layer + 1e-6))
     mask = down & ~on_bed
+    if skip is not None:                                          # 折り取る印刷用の支え（製品ではない）の面は数えない
+        mask &= ~skip
     rows = []
     for g in face_clusters(S, mask):
         T = S.T[g]
@@ -270,6 +272,7 @@ def overhang_clusters(S, visible, layer=LAYER):
         bridge, length = inscribed_diameter(img, res)
         angle = np.degrees(np.arccos(np.clip(-S.n[g, 2], 0.0, 1.0)))
         rows.append({
+            "_faces": g,
             "faces": int(len(g)), "area_mm2": round(area, 3), "visible_area_mm2": round(vis_area, 3),
             "incline_from_horizontal_deg": [round(float(angle.min()), 1), round(float(angle.max()), 1)],
             "z_mm": [round(float(T[:, :, 2].min()), 2), round(float(T[:, :, 2].max()), 2)],
@@ -303,13 +306,16 @@ def terrace_faces(S, visible):
 # =============================================================================================
 # 肉厚（光線）
 # =============================================================================================
-def sample_faces(S, min_face=0.2, big=3.0, spacing=1.0, budget=60000):
+def sample_faces(S, min_face=0.2, big=3.0, spacing=1.0, budget=60000, skip=None):
     """肉厚を測る点。面積 min_face（mm2）未満の細長い三角形は測らない（重心が縁に寄り、法線も不安定で偽の値が出る）。
 
     面積 big 以下の面は重心 1 点。それより大きい面は、細かい三角形に割った重心を並べる（大きな壁の面の裏の薄い所を見逃さない）。
     返り値: 点 pts、その面の法線 nrm、面番号 fidx、その点が代表する面積 w。
     """
-    idx = np.nonzero(S.area >= min_face)[0]
+    ok = S.area >= min_face
+    if skip is not None:                                          # 折り取る印刷用の支えの面は測らない
+        ok &= ~skip
+    idx = np.nonzero(ok)[0]
     small = idx[S.area[idx] <= big]
     large = idx[S.area[idx] > big]
     pts, nrm, fidx, w = [S.c[small]], [S.n[small]], [small], [S.area[small]]
@@ -594,11 +600,15 @@ def overlap(a, b):
     return False
 
 
-def slice_layers(S, layer=LAYER, ratio_limit=5.0):
+def slice_layers(S, layer=LAYER, ratio_limit=5.0, support_base=None):
     """全層を切り、島ごとの太さ（凸包の最小幅）と積み上がる高さを追う。
 
     h は、その島が「広い土台から立ち上がって」からの高さ。親の島（1 層下で重なるもの）の面積の半分未満になったら
     立ち上がり直し（柱が土台から生える）として h を 0 に戻す。親が無い島（ベッドの第 1 層以外）は空中から始まる島として数える。
+
+    support_base = {"z_end": 折り取る支え（円盤とリブ）の上端の高さ, "width": 円盤の直径} を渡すと、支えの層（z < z_end）の島は
+    細い形として数えず、その上に立つ島（親が支えの島）は太さを max(その層の太さ, 円盤の直径) で割る
+    （円盤で倒れない向きの立てて刷る部品。円盤の太さが効く、という物理の仮定を校正で確かめている）。
     """
     nl = int(math.ceil((S.hi[2] - 1e-6) / layer))
     prev = []
@@ -614,6 +624,11 @@ def slice_layers(S, layer=LAYER, ratio_limit=5.0):
         for isl in cur:
             parents = [p for p in prev if overlap(isl, p)]
             isl["floating"] = (k > 0 and not parents)
+            if support_base is not None:
+                if z < support_base["z_end"]:
+                    isl["support"] = True
+                else:
+                    isl["support"] = any(p.get("support") for p in parents)
             if not parents:
                 isl.update(h=layer, base=isl["caliper"], amax=isl["area"], wmax=isl["caliper"], z0=k * layer,
                            hl=layer, wref=isl["caliper"])
@@ -634,6 +649,10 @@ def slice_layers(S, layer=LAYER, ratio_limit=5.0):
                 floating.append({"z_mm": round(k * layer, 2), "area_mm2": round(isl["area"], 2),
                                  "at_mm": [round(float(v), 1) for v in isl["centroid"]]})
             w = max(isl["caliper"], 1e-6)
+            if support_base is not None and isl.get("support"):
+                if z < support_base["z_end"]:
+                    continue                                      # 支えそのもの（円盤とリブ）は数えない
+                w = max(w, support_base["width"])
             r = isl["h"] / w
             if r > peak["ratio"] and isl["h"] > 2.0:
                 peak = {"ratio": round(r, 2), "z_mm": round((k + 1) * layer, 2), "height_mm": round(isl["h"], 2),
@@ -746,6 +765,121 @@ def first_layer_chamfer(S, z_low=0.1):
             row["chamfer_mm"] = round(float(o_low - o_mid * (z_ref - z_low) / (z_ref - z_mid)), 3)
         rows.append(row)
     return rows
+
+
+# =============================================================================================
+# 組立姿勢と刷る向きの対応（印刷用の支えが付く部品）
+# =============================================================================================
+def _cube_rotations():
+    import itertools
+    out = []
+    for perm in itertools.permutations(range(3)):
+        for signs in itertools.product((1, -1), repeat=3):
+            m = np.zeros((3, 3))
+            for r, (c, sg) in enumerate(zip(perm, signs)):
+                m[r, c] = sg
+            if np.linalg.det(m) > 0:
+                out.append(m)
+    return out
+
+
+def _pack(v, q, off=0.0):
+    i = np.round((v + off) / q).astype(np.int64) + 40000
+    return (i[:, 0] * 80001 + i[:, 1]) * 80001 + i[:, 2]
+
+
+def _in_grid(points, ref, q=0.01):
+    """points の各点が ref のどれかの点と q 以内にあるか。格子を 1/3 ずつずらした 3 組のどれかで同じ升に入れば一致とする
+    （設計値が升の境目に乗っていても取りこぼさない）。"""
+    out = np.zeros(len(points), dtype=bool)
+    for off in (0.0, q / 3, 2 * q / 3):
+        out |= np.isin(_pack(points, q, off), _pack(ref, q, off))
+    return out
+
+
+def match_print(A, P):
+    """組立姿勢の三角形 A と刷る向きの三角形 P の対応。P の方が（折り取る支えの分だけ）多くてもよい。
+
+    三角形の数が同じなら並びで剛体変換を求める（rigid_fit）。違えば 24 通りの直角回転と頂点の一致で変換 P = R A + t を探し、
+    A の頂点が P に見つかる割合 matched_fraction と、P のうち A に無い三角形（= 印刷用の支え）の印 support_mask を返す。
+    """
+    if len(A) == len(P):
+        R, t, resid, dmin, ratio, det = rigid_fit(A, P)
+        if resid < 1e-3 and det > 0:
+            return {"method": "order", "R": R, "t": t, "residual_mm": resid, "matched_fraction": 1.0,
+                    "support_mask": np.zeros(len(P), dtype=bool), "normal_dot_min": dmin, "area_ratio": ratio, "det": det}
+    Av = np.unique(np.round(A.reshape(-1, 3), 4), axis=0)
+    Pv = np.unique(np.round(P.reshape(-1, 3), 4), axis=0)
+    best = None
+    rng = np.random.default_rng(0)
+    for Rm in _cube_rotations():
+        Ar = Av @ Rm.T
+        s1 = Ar[np.argmax(Ar[:, 0] * 1.0 + Ar[:, 1] * 0.37 + Ar[:, 2] * 0.11)]
+        s2 = Ar[np.argmin(Ar[:, 0] * 0.23 + Ar[:, 1] * 1.0 - Ar[:, 2] * 0.5)]
+        cand = Pv - s1
+        ok = _in_grid(s2 + cand, Pv)
+        for t in cand[ok][:200]:
+            probe = Ar[rng.integers(0, len(Ar), 400)] + t
+            frac = float(_in_grid(probe, Pv).mean())
+            if best is None or frac > best[0]:
+                best = (frac, Rm, t)
+    if best is None or best[0] < 0.5:
+        return {"method": "vote", "R": np.eye(3), "t": np.zeros(3), "residual_mm": float("inf"), "matched_fraction": 0.0,
+                "support_mask": np.ones(len(P), dtype=bool), "normal_dot_min": -1.0, "area_ratio": (0.0, 0.0), "det": 0.0}
+    _, Rm, t = best
+    frac = float(_in_grid(Av @ Rm.T + t, Pv).mean())
+    found = _in_grid(P.reshape(-1, 3), Av @ Rm.T + t).reshape(-1, 3)
+    support = ~found.all(axis=1)
+    return {"method": "vote", "R": Rm, "t": t, "residual_mm": 0.0, "matched_fraction": frac, "support_mask": support,
+            "normal_dot_min": 1.0, "area_ratio": (1.0, 1.0), "det": 1.0}
+
+
+# =============================================================================================
+# 折り取る印刷用の支え（円盤とリブ）
+# =============================================================================================
+def section_area(S, z):
+    loops, _ = slice_loops(S, z)
+    return sum(abs(shoelace(lp)) for lp in loops), loops
+
+
+def support_residue(S, disc_top, z_end, neck_zone=0.3, step=0.05):
+    """円盤の上面（disc_top）と製品の端面（z_end）の間をつなぐリブの断面積 A(z) から、折り取った後に端面へ残る出っ張りの上限を測る。
+
+    A_body = 隙間の中ほどの断面積。首 = z_end の neck_zone 以内で断面積が A_body の 0.95 を切る所。
+    residue_max = z_end - (A が A_body の 0.95 以上である最も高い z)（首のすその高さ。首のどこで折れても残るのはこれ以下）。
+    neck_ratio = 最小の断面積 / A_body（首が無ければ 1）。折れる位置が端面に決まるには neck_ratio が小さく、residue_max が neck_zone 以内。
+    """
+    zs = np.arange(disc_top + step, z_end - 0.01, step)
+    areas = np.array([section_area(S, float(z))[0] for z in zs])
+    mid = (zs >= disc_top + 0.1) & (zs <= z_end - neck_zone - 0.1)
+    a_body = float(np.median(areas[mid])) if mid.any() else float(areas.max())
+    full = np.nonzero(areas >= 0.95 * a_body)[0]
+    z_full = float(zs[full.max()]) if len(full) else float(zs[0])
+    return {"area_body_mm2": round(a_body, 3), "area_min_mm2": round(float(areas.min()), 3),
+            "neck_ratio": round(float(areas.min()) / a_body, 3) if a_body > 0 else None,
+            "residue_max_mm": round(z_end - z_full, 3), "z_min_area_mm": round(float(zs[int(np.argmin(areas))]), 2),
+            "samples": int(len(zs))}
+
+
+def interface_bridge(S, cluster_faces, disc_top, z_end, res=0.05):
+    """製品の端面（下向きの水平面）の、リブに支えられていない部分の最大の広がり（内接円の直径、mm）。"""
+    T = S.T[cluster_faces]
+    img, lo = rasterize_xy(T, res)
+    _, loops = section_area(S, 0.5 * (disc_top + z_end))
+    ny, nx = img.shape
+    gx, gy = np.meshgrid(lo[0] + (np.arange(nx) + 0.5) * res, lo[1] + (np.arange(ny) + 0.5) * res)
+    cells = np.stack([gx.reshape(-1), gy.reshape(-1)], axis=1)
+    rib = np.zeros(len(cells), dtype=bool)
+    for lp in loops:
+        if shoelace(lp) < 0:
+            lp = lp[::-1]
+        lo_l, hi_l = lp.min(axis=0), lp.max(axis=0)
+        near = (cells[:, 0] >= lo_l[0]) & (cells[:, 0] <= hi_l[0]) & (cells[:, 1] >= lo_l[1]) & (cells[:, 1] <= hi_l[1])
+        if near.any():
+            rib[np.nonzero(near)[0][pip(lp, cells[near])]] = True
+    free = img & ~rib.reshape(ny, nx)
+    bridge, _ = inscribed_diameter(free, res)
+    return bridge
 
 
 # =============================================================================================

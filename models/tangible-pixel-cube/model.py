@@ -323,14 +323,17 @@ LABELS = {
 }
 COLORS = [
     ("housing", "#d8d4cc"), ("bezel", "#bfc9d0"), ("guide_plate", "#9fb3bf"), ("sg92r_horn", "#f4f4f4"), ("sg92r", "#37474f"),
-    ("horn_coupler", "#a1887f"), ("phase_comb", "#ffd54f"), ("shaft_clip_", "#ab47bc"), ("servo_clip_", "#f06292"), ("shaft_", "#5c6bc0"), ("gear_", "#26a69a"),
-    ("cam_", "#ef5350"), ("pixel_", "#e69f00"),
+    ("horn_coupler", "#a1887f"), ("phase_comb", "#ffd54f"), ("servo_clip_", "#f06292"), ("bearing_cap_", "#8d6e63"),
+    ("camshaft_", "#5c6bc0"), ("gear_", "#26a69a"), ("pixel_", "#e69f00"),
 ]
 EXPLODE = [  # 組立姿勢からの分解の向きと量（mm）
     ("bezel", [0, 0, 110]), ("pixel_", [0, 0, 70]), ("guide_plate", [0, 0, 45]), ("phase_comb", [0, 0, 30]),
-    ("shaft_clip_", [0, 0, 20]), ("servo_clip_", [0, 0, 40]), ("shaft_", [0, 0, 20]), ("gear_", [0, 0, 20]), ("cam_", [0, 0, 20]),
+    ("bearing_cap_", [0, 0, 32]), ("servo_clip_", [0, 0, 40]), ("camshaft_", [0, 0, 20]), ("gear_", [0, 0, 20]),
     ("horn_coupler", [30, 0, 0]), ("sg92r_horn", [60, 0, 0]),
 ]
+
+
+LABELS.update({"bearing_cap_px": "軸受けの押さえ棒（+X）", "bearing_cap_mx": "軸受けの押さえ棒（-X）"})
 
 
 def label_of(pid):
@@ -339,14 +342,10 @@ def label_of(pid):
     p = pid.split("_")
     if pid.startswith("servo_clip_"):
         return f"サーボの押さえクリップ {p[-1]}"
-    if pid.startswith("shaft_clip_"):
-        return f"C クリップ {p[-1]}"
-    if p[0] == "shaft":
-        return f"カム軸 {p[1]}"
+    if p[0] == "camshaft":
+        return f"カム軸 行{p[1]}"
     if p[0] == "gear":
-        return f"歯車 {p[1]}"
-    if p[0] == "cam":
-        return f"カム 列{p[1]} 行{p[2]}"
+        return f"歯車 行{p[1]}"
     if p[0] == "pixel":
         return f"画素 列{p[1]} 行{p[2]}"
     return pid
@@ -378,6 +377,7 @@ def main():
     stock_ids = {"sg92r", "sg92r_horn"}
     jig_ids = {"phase_comb"}
     moving = load_moving()
+    variants = {}                                # id -> 刷る STL だけの形（組立姿勢の座標）。刷るときだけの円盤が付いた camshaft_j など
     moving_status = {"present": moving is not None, "built": False, "error": None if moving is not None else "parts_moving.py がありません"}
     if moving is not None:
         try:
@@ -398,6 +398,7 @@ def main():
             raise SystemExit(f"parts_moving と parts_static で id が重なっています: {sorted(dup)}")
         built.update(mv)
         if moving_status["built"]:
+            variants = dict(moving.build_print_variants()) if hasattr(moving, "build_print_variants") else {}
             poses.update(getattr(moving, "PRINT_POSE", {}) or {})
             visible_fns.update(getattr(moving, "VISIBLE_FACE", {}) or {})
             stock_ids |= set(getattr(moving, "STOCK_IDS", ()) or ())
@@ -425,13 +426,21 @@ def main():
         print_rel = None
         if pose is not None and pid not in stock_ids:
             rot = pose_of(pose)
-            Vp, R, t = print_transform(Va, rot)
+            if pid in variants:
+                Vv, Tv = tris_mm(variants[pid])
+                Vsrc, Tsrc = Vv, Tv                  # 刷る STL は組立姿勢の STL と形が違う（刷るときだけの円盤を含む）
+            else:
+                Vsrc, Tsrc = Va, Ta
+            Vp, R, t = print_transform(Vsrc, rot)
             pp = os.path.join(BUILD, f"print_{pid}.stl")
-            write_stl(pp, Vp, Ta)
+            write_stl(pp, Vp, Tsrc)
             Vq, Tq = stl_triangles(pp)
             oh = overhang(Vq, Tq, R, t, visible_fns.get(pid))
             rec["print"] = {"rot_deg": rot, "reason": pose.get("reason", ""), "support": pose.get("support", ""),
                             "bbox_mm": bbox_info(Vq), "overhang": oh}
+            if pid in variants:
+                rec["print"]["variant"] = True
+                rec["print"].update({k: v for k, v in topology(Vq, Tq).items() if k in ("non_manifold_edges", "components", "volume_cm3")})
             print_rel = f"build/print_{pid}.stl"
         else:
             rec["print"] = None
@@ -465,7 +474,8 @@ def main():
                 "外形 96mm の立方体。画素の出っ張り +3mm で 99mm（10cm 以下）",
                 "外の稜は 1.0mm の 45 度面取りにそろえ、外装とベゼルの継ぎ目だけ面取りせず 1 本の水平線にした",
                 "ベゼルは見える上面を下にして刷る。縁の爪（食い込み 0.25mm）が壁の内側の窪みに嵌まり、壁のたわみ（ひずみ 0.2% 未満）で着脱する",
-                "SG92R は取付耳を 2 枚の柵で挟んで落とし込む（潰しリブで保持、奥の壁で前後を止める）。ねじ・接着なし",
+                "SG92R は取付耳を 2 枚の柵（耳の溝は耳の厚み 2.0 + 片側 0.25）で挟んで落とし込み、上から印刷のクリップ 2 つを被せて上向きを止める。ねじ・接着なし",
+                "軸受けは +X が Ø5、-X が Ø10。端壁を 1.0 掘った U 溝（口は 45 度 x 1.5 のじょうご）に軸を上から落とし、端の壁ごとの押さえ棒（bearing_cap_px / mx）を上から差して軸の上 0.15 で押さえる。棒は 5 本の軸の上の爪がスリットへ入り、パッドの上面に突き当たって座る",
             ],
             "limitations": ["寸法の仮値（潰しリブの潰し代・柵の隙間・爪の食い込み）は実物で合わせる"],
             "n_parts": len(manifest_parts),
@@ -493,7 +503,7 @@ def main():
     shown = 0
     for pid in ids:
         r = report_parts[pid]
-        if pid.startswith(("pixel_", "cam_")) and shown > 6 and pid not in ("pixel_4_4", "cam_4_4"):
+        if pid.startswith("pixel_") and pid != "pixel_4_4":
             continue
         sz = r["assembly"]["size_mm"]
         oh = r["print"]["overhang"] if r["print"] else None

@@ -55,7 +55,10 @@ SERVO_STALL = P.SERVO_STALL_NM
 TORQUE_LIMIT = SERVO_STALL * P.TORQUE_FRAC  # 停動の 1/3
 HEIGHT_TOL_MM = 0.05                        # 表の停止角での高さの許容
 GEAR_ALPHA = math.radians(20.0)
-JOURNAL_R = P.JOURNAL_D / 2.0               # 軸受け部の半径（m）
+JOURNAL_R = P.JOURNAL_D / 2.0               # +X の軸受け（Ø5）の半径（m）
+JOURNAL_MX_R = P.JOURNAL_MX_D / 2.0         # -X の軸受け（Ø10）の半径（m）
+BEARING_PX_X = (P.SHAFT_HALF_L + P.JOURNAL_END) / 2.0     # +X の軸受けの荷重の中心 X（m）。-X は対称
+BEARING_SPAN = 2.0 * BEARING_PX_X
 STOP_RUN_SOURCES = (P.SERVO_MIN_DEG, P.SERVO_MAX_DEG)      # 表へ入る出発角（両側から止める）
 
 ROTATING_IDS = [pid for pid in M.part_ids() if M.classify(pid)[0] in ("axis", "servo")]     # 軸まわり・サーボ軸まわりに回る部品
@@ -127,17 +130,26 @@ def estimated_properties(pid, cams):
     if pid.startswith("pixel_"):
         return {"massKg": P.PIXEL_MASS_G / 1000.0 * FILL_FACTOR, "comM": [0.0, 0.0, 0.0],
                 "inertiaComKgm2": [0.0] * 6, "source": "estimate"}
-    if pid.startswith("shaft_"):
-        # -X 端の部品（数珠つなぎ）: 六角 X -43.6 .. 最も -X のカム面、と -X の丸い軸受け Ø、雄スタブは六角に含める。STL が無いときの見積もり
+    if pid.startswith("camshaft_"):
+        # 胴 Ø10（-X の軸受け端 -JOURNAL_END から gear_j のハブ面 GEAR_HUB_X0 まで）+ 板カム 5 枚（胴の外へ出る分）+ +X の Ø5 の軸受け。STL が無いときの見積もり
         j = int(pid.split("_")[1])
-        area, jh = hex_bore(P.SHAFT_AF * MM)
-        cam_face = min(K.cam_x(i, j) for i in range(N)) - P.CAM_T / 2.0
-        length = max(abs(cam_face) - P.SHAFT_HALF_L, 0.0) * MM + 4.0          # 六角部 + カムへ入るスタブ（4mm）
-        jl = (P.JOURNAL_END - P.SHAFT_HALF_L) * MM
-        ra = P.JOURNAL_D * MM / 2.0
-        vol = (area * length + math.pi * ra ** 2 * jl) * 1e-9
-        i_axis = rho * (jh * length + math.pi * ra ** 4 / 2.0 * jl) * 1e-15
-        return estimate_row(rho * vol, (0.0, K.axis_y(j), zc), i_axis, (K.axis_y(j), zc))
+        rb = P.CAMSHAFT_BODY_D * MM / 2.0
+        body_len = (P.GEAR_HUB_X0 + P.JOURNAL_END) * MM
+        vol_mm3 = math.pi * rb ** 2 * body_len
+        i_pol = math.pi * rb ** 4 / 2.0 * body_len                          # mm5（極二次モーメント x 長さ）
+        mx = my = 0.0
+        t = P.CAM_T * MM
+        for i in range(N):
+            area, cu, cv, jp = polygon_props(np.asarray(cams[j][i]["vertices"], dtype=float))
+            extra = max(area - math.pi * rb ** 2, 0.0)
+            j_extra = max(jp - math.pi * rb ** 4 / 2.0, 0.0)
+            vol_mm3 += extra * t
+            i_pol += j_extra * t
+            my += area * t * cu * (1.0 if extra > 0 else 0.0)      # 円の外の材料の一次モーメント = 輪郭全体の重心 x 面積（円は原点中心で寄与 0）
+            mx += area * t * cv * (1.0 if extra > 0 else 0.0)
+        m = rho * vol_mm3 * 1e-9
+        com = (0.0, K.axis_y(j) + (my / vol_mm3) / MM, zc + (mx / vol_mm3) / MM)
+        return estimate_row(m, ((P.GEAR_HUB_X0 - P.JOURNAL_END) / 2.0, com[1], com[2]), rho * i_pol * 1e-15, (K.axis_y(j), zc))
     if pid.startswith("gear_"):
         j = int(pid.split("_")[1])
         rp = P.CHAIN_GEAR_PD * MM / 2.0
@@ -146,18 +158,6 @@ def estimated_properties(pid, cams):
         vol = (math.pi * rp ** 2 - b_area) * t * 1e-9
         i_axis = rho * (math.pi * rp ** 4 / 2.0 - b_j) * t * 1e-15
         return estimate_row(rho * vol, ((P.GEAR_X0 + P.GEAR_X1) / 2.0, K.axis_y(j), zc), i_axis, (K.axis_y(j), zc))
-    if pid.startswith("cam_"):
-        _, i, j = pid.split("_")
-        i, j = int(i), int(j)
-        area, cu, cv, jp = polygon_props(np.asarray(cams[j][i]["vertices"], dtype=float))
-        b_area, b_j = hex_bore(P.SHAFT_BORE_AF * MM)
-        t = P.CAM_T * MM
-        solid = area - b_area
-        vol = solid * t * 1e-9
-        # 六角穴は原点中心。重心 = 輪郭の重心 x 輪郭の面積 / 残りの面積
-        com_u, com_v = cu * area / solid, cv * area / solid
-        i_axis = rho * (jp - b_j) * t * 1e-15
-        return estimate_row(rho * vol, (K.cam_x(i, j), K.axis_y(j) + com_u / MM, zc + com_v / MM), i_axis, (K.axis_y(j), zc))
     if pid == "horn_coupler":
         # 半円の歯車つきの受け: 半径 = 歯車のピッチ円、中心角 2 x 92 度、厚み = 受けの X 幅。歯の向きは +Z 側（サーボ 90 度）と仮定
         r = P.SERVO_GEAR_PD * MM / 2.0
@@ -299,10 +299,14 @@ def build_tables(cams, props, mu_c, mu_g, hashes):
     g = P.G_RATIO
     i_axes = np.zeros(N)
     w_rot = np.zeros(N)                    # 軸 j まわりの回転部の重さ（N）
+    r_rot = np.zeros(N)                    # 同、2 つの軸受けへの分担で重みを付けた軸受けの半径（m）
     for j in range(N):
         for name in [p for p in ROTATING_IDS if M.axis_of_part(p) == j]:
             i_axes[j] += axis_inertia(props[name], K.axis_y(j), P.CAM_AXIS_Z)
             w_rot[j] += props[name]["massKg"] * GRAV
+            share = float(np.clip((BEARING_PX_X - props[name]["comM"][0]) / BEARING_SPAN, 0.0, 1.0))
+            r_rot[j] += props[name]["massKg"] * GRAV * ((1.0 - share) * JOURNAL_R + share * JOURNAL_MX_R)
+        r_rot[j] = r_rot[j] / w_rot[j] if w_rot[j] > 0 else JOURNAL_R
     i_servo_parts = sum(axis_inertia(props[name], 0.0, P.SERVO_AXIS_Z) for name in ("horn_coupler", "sg92r_horn"))
     inertia_rest = i_servo_parts + g * g * float(i_axes.sum())
     gravity_rest = np.zeros(rows_n)
@@ -339,11 +343,19 @@ def build_tables(cams, props, mu_c, mu_g, hashes):
     m23 = t0[:, 3] + t0[:, 4]
     msv = t0.sum(axis=1)
     f_gear = fn * np.stack([m01, m01 + m12, m12 + m23 + msv, m23 + m34, m34], axis=1)
-    bear_pix = P.BEARING_MU * JOURNAL_R * (n3.sum(axis=2) + f_gear)
+    # 軸受けの荷重を 2 つの軸受け（+X Ø5、-X Ø10）に、軸の両端の単純支持でてこの比に分ける。-X の分担 = (X_px - x) / スパン
+    def mx_share(x):
+        return np.clip((BEARING_PX_X - x) / BEARING_SPAN, 0.0, 1.0)
+
+    share_pix = mx_share(np.array([[K.cam_x(i, jj) for i in range(N)] for jj in range(N)]))     # [j, i]
+    share_gear = float(mx_share((P.GEAR_X0 + P.GEAR_X1) / 2.0))
+    r_pix = (1.0 - share_pix) * JOURNAL_R + share_pix * JOURNAL_MX_R                          # [j, i] 荷重で重みを付けた半径
+    r_gear = (1.0 - share_gear) * JOURNAL_R + share_gear * JOURNAL_MX_R
+    bear_pix = P.BEARING_MU * ((n3 * r_pix[None, :, :]).sum(axis=2) + f_gear * r_gear)
     meshes = np.array([1 + abs(j - 2) for j in range(N)])
     eta_inv = P.GEAR_EFF ** (-meshes.astype(float))
     contact_friction = g * (((t_cons + t_cam + t_guide + bear_pix) * eta_inv[None, :]) - t_cons).sum(axis=1)
-    shaft_friction = g * float((P.BEARING_MU * JOURNAL_R * w_rot * eta_inv).sum())
+    shaft_friction = g * float((P.BEARING_MU * r_rot * w_rot * eta_inv).sum())
     servo_friction = common.SERVO_FRICTION + shaft_friction
 
     rows = []
@@ -373,7 +385,8 @@ def build_tables(cams, props, mu_c, mu_g, hashes):
             "stallTorqueNm": SERVO_STALL, "noLoadSpeedRadS": common.NO_LOAD_SPEED, "controlBandRad": common.CONTROL_BAND,
             "motorInertiaKgm2": common.MOTOR_INERTIA, "servoFrictionNm": rounded(servo_friction),
             "servoEquivalentFrictionNm": common.SERVO_FRICTION, "rotatingBearingFrictionNm": rounded(shaft_friction),
-            "camFrictionMu": mu_c, "guideFrictionMu": mu_g, "bearingFrictionMu": P.BEARING_MU, "gearEfficiencyPerMesh": P.GEAR_EFF,
+            "camFrictionMu": mu_c, "guideFrictionMu": mu_g, "bearingFrictionMu": P.BEARING_MU, "bearingRadiusPxM": JOURNAL_R, "bearingRadiusMxM": JOURNAL_MX_R,
+            "bearingMxShareOfGearForce": share_gear, "gearEfficiencyPerMesh": P.GEAR_EFF,
             "gRatio": g, "kappaModel": "plate_only",
             "gravityMS2": GRAV, "dtS": common.DT, "recordS": common.RECORD, "settleS": common.SETTLE, "contactToleranceN": 1.0e-8,
             "assumptions": {

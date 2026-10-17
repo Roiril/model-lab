@@ -17,6 +17,7 @@ import html
 import json
 import math
 import os
+import re
 import sys
 from pathlib import Path
 
@@ -161,6 +162,33 @@ CUBE_MM = P.CUBE * MM
 PEAK_MM = dci("外形の最大")["value"]
 N_PIXELS = P.N * P.N
 
+LABEL = {p["id"]: p["label"] for p in MF["parts"]}
+# 試し刷りの小片と、台帳に無い呼び名
+LABEL.update({
+    "camshaft_2_gear_end": "カム軸（行2）の+X端の小片",
+    "housing_Uslot_minusX_row2": "外装の−X端壁の軸受けの溝（行2）",
+    "housing_Uslot_plusX_row1": "外装の+X端壁の軸受けの溝（行1）",
+    "bearing_cap_mx_row2": "押さえ棒（−X）の行2の指",
+    "bearing_cap_px_row2": "押さえ棒（+X）の行2の指",
+    "housing_servo_block_minusY": "外装のサーボの耳の溝（−Y側）",
+    "guide_plate_cell_2_2": "案内板の1画素ぶん（列2・行2）",
+    "guide_plate_tongue_plusX": "案内板の舌（+X）",
+    "pixel_2_2_top": "画素の頭（列2・行2）",
+    "pixel_2_2_foot": "画素の足（列2・行2）",
+    "bezel_window_2_2": "ベゼルの窓1つぶん",
+    "bezel_barb_plusX": "ベゼルの縁の爪（+X）",
+    "housing_endwall_pockets_plusX": "外装の+X端壁の窪み",
+})
+_LABEL_RE = re.compile(r"(?<![A-Za-z0-9_])(" + "|".join(sorted((re.escape(k) for k in LABEL), key=len, reverse=True)) + r")(?![A-Za-z0-9_])")
+
+
+def jp(text):
+    """検査の原文に出る部品の id を、台帳の呼び名に置き換える（旧構成の言い回しも直す）"""
+    text = _LABEL_RE.sub(lambda m: LABEL[m.group(1)], str(text))
+    return (text.replace("栓まで", "押さえ棒の指まで").replace("栓と溝の底", "押さえ棒と溝の底").replace("horn-coupler", "受けとホーンの嵌合").replace("servo-clip-retention", "押さえクリップ自身の保持")
+            .replace("歯車・カム 5 枚・端の部品の剛体", "歯車とカム軸の剛体").replace("数珠つなぎの継ぎ目 5 個（5 軸 x 6）", "歯車との継ぎ目 5 個（5 軸 x 1）"))
+
+
 PARTS_PRINT = [p for p in MF["parts"] if p.get("print")]
 PARTS_STOCK = [p for p in MF["parts"] if not p.get("print")]
 PRINT_PARTS_REPORT = {k: v for k, v in MR["parts"].items() if v.get("print")}
@@ -237,8 +265,10 @@ SCEN = DR["phaseBudget"]["scenarios"]
 # 組立
 ASM_OK = bool(AR["pass"])
 CONTACTS = AR["designedContacts"]
-STRAIN_MAX = max(c["strainPercent"] for c in CONTACTS if c.get("strainPercent") is not None)
-STRAIN_ZONE = max((c for c in CONTACTS if c.get("strainPercent") is not None), key=lambda c: c["strainPercent"])["zone"]
+CAP_SNAP = {r["part"]: r["strainPercentAtMaxDepth"] for r in AR["capSnap"]["parts"]}
+_STRAINS = [(c["strainPercent"], c["zone"]) for c in CONTACTS if c.get("strainPercent") is not None] + [(v, k) for k, v in CAP_SNAP.items()]
+STRAIN_MAX, STRAIN_ZONE = max(_STRAINS)
+CAP_STRAIN_RANGE = (min(CAP_SNAP.values()), max(CAP_SNAP.values()))
 
 # 物理
 ST = SR["static"]
@@ -266,6 +296,7 @@ UNGROUNDED = [k for k, v in PR["parts"].items() if not all(c["grounded"] for c i
 EXC_COUNT = collections.Counter(x["exception"] for x in PR["allowed_exceptions"])
 PRINT_OK = PS["n_fail_entries"] == 0 and PS["n_trial_fail_entries"] == 0 and VISIBLE_OVERHANG == 0 and not SUPPORT_USED
 HOUSING_EXT_MIN = PR["parts"]["housing"]["wall"]["exterior_min_mm"]
+HOUSING_EXT_EXC = PR["parts"]["housing"]["wall"]["exterior_min_excluding_exceptions_mm"]
 PLATE_LAYOUT_OK = all(
     not v["overlap"] and not v["off_bed"] and not v["in_exclusion_zone"]
     for plate in PL["plates"] for v in plate["verify"].values())
@@ -299,32 +330,33 @@ def requirement_rows():
         f"{sg(P.H_MAX * MM)}mm からさらに {PIX['upGapMm'][0]:.2f}mm、{sg(P.H_MIN * MM)}mm からさらに {PIX['downGapMm'][0]:.2f}mm の余裕があります。",
         "verify_report.json（camFoot、pixelLimits）")
     add("依頼", "凹む場所を1種類に固定せず、後からプログラムで設計できる", "cond",
-        f"高さの表 {P.K} 枚を patterns.py に書くと、生成器 cams.py がカム {N_PIXELS} 枚を作ります。表を変えたらカムを刷り直します。"
+        f"高さの表 {P.K} 枚を patterns.py に書くと、生成器 cams.py がカム {N_PIXELS} 枚を作ります。表を変えたら、変えた行のカム軸（最大5本）を刷り直します。"
         f"実行時に画素を1枚ずつ自由に指定する方式ではありません。既定の表は全 {N_PIXELS} カムで、停止区間の高さ誤差が最大 {t_dev:.3f}mm です。",
         "cams.json、design_check.json（D カム）、README.md")
     # --- 依頼 ①〜⑤
     add("依頼", "① きれいに刷れる。サポートは見えなくてよい面だけ", "ok" if PRINT_OK else "ng",
         f"{len(PRINT_PARTS_REPORT)} 個すべてサポートなしです（使う部品 {len(SUPPORT_USED)} 個）。見える面の張り出し面積は全部品で {VISIBLE_OVERHANG:g}mm² です。"
-        f"刷る向きの精査で不合格は {PS['n_fail_entries']} 件です。橋は最長 {BRIDGE_MAX:g}mm です（{BRIDGE_PART}。見えない面）。基準は {PR['thresholds']['bridge_max_mm']:g}mm です。"
+        f"刷る向きの精査で不合格は {PS['n_fail_entries']} 件です。橋は最長 {BRIDGE_MAX:g}mm です（{LABEL[BRIDGE_PART]}。見えない面）。基準は {PR['thresholds']['bridge_max_mm']:g}mm です。"
+        f"カム軸は立てて刷ります。各カムの下は45°のすそで、サポートは要りません。刷るときだけの円盤を付け、高さ÷接地は {dci('同（-X 端に円盤')['value']:g} です（円盤なしだと {dci('円盤なし')['value'].split(' ')[0]} 倍）。円盤は刷った後に手で折り取ります。"
         "Bambu Studioでのスライス結果は未確認です。",
-        "print_review.json、model_report.json")
+        "print_review.json、model_report.json、design_check.json（I 印刷）")
     add("依頼", "② SG92Rの正確な寸法を使う", "cond",
         "models/sg92r-photo/params.py（ユーザー確定の正本）を、params.py が読み込みます。書き写していません。"
         "正本には仮値が残っています。出力スプラインの歯がありません。ギアカバーの径12mmは推定です。出力軸の高さ3.5mmは仮値です。配線の長さと出口の高さは仮置きです。",
         "params.py、models/sg92r-photo/README.md")
     add("依頼", "③ 組み立ては印刷部品だけ", "ok",
         f"印刷部品 {len(PARTS_PRINT)} 個と、SG92R・付属ホーンだけです（既製部品 {len(PARTS_STOCK)} 点）。ねじ、接着剤、結束バンドは使いません。"
-        "保持は継ぎ目の潰しリブ、スナップ、落とし込みで作ります。",
+        "保持は、歯車との継ぎ目の潰しリブ、押さえ棒の圧入とスナップ、爪、落とし込みで作ります。",
         "manifest.json")
-    kinds_n = [EXC_COUNT[k] for k in ("crush_rib_0.6", "gear_tooth_tip_1.1", "cam_label_engraving", "bezel_bar_1.6")]
+    exc_text = "、".join(f"{exception_name(k)} {n} 件" for k, n in EXC_COUNT.items())
     add("依頼", "④ 薄いと揺れる。PLA・PETGで刷る", "ok",
-        f"立てて刷る部品の高さと太さの比は最大 {SLENDER_MAX:g} です（{SLENDER_PART}。基準 {PR['thresholds']['slender_height_over_width']:g}）。"
-        f"肉厚が 1.2mm 未満の箇所は、例外4種だけを許可しました（潰しリブ {kinds_n[0]} 件、歯先 {kinds_n[1]} 件、番号の彫り {kinds_n[2]} 件、ベゼルの桟 {kinds_n[3]} 件）。"
+        f"立てて刷る部品の高さと太さの比は最大 {SLENDER_MAX:g} です（{LABEL[SLENDER_PART]}。基準 {PR['thresholds']['slender_height_over_width']:g}）。"
+        f"肉厚の規則に届かない箇所は、例外 {len(EXC_COUNT)} 種だけを許可しました（{exc_text}）。"
         f"力を受ける部位で 3mm 未満の {PS['n_load_judged_ok_entries']} 件は、荷重の計算で降伏の 1/2 以下と判定しました。",
         "print_review.json（thresholds、allowed_exceptions、load_judgement）")
     add("依頼", "⑤ 組み立てられるか（組立検証）", "ok" if ASM_OK else "ng",
         f"{len(AR['steps'])} 工程すべてで、先に入れた部品との共通体積が、許可した当たり以外 0 でした。逆順の分解も通ります。"
-        f"案内板が壁の片側へ 0.2mm 寄った最悪の姿勢 {len(AR['worstCase']['variants'])} 通りも通ります。",
+        f"軸が端壁の溝へ ±1.0mm ずれた姿勢、案内板とベゼルが壁の片側へ 0.2mm 寄った姿勢など、最悪の姿勢 {len(AR['worstCase']['variants'])} 通りも通ります。",
         "assembly_report.json")
     add("依頼", "⑤ 動くか（全範囲の干渉）", "ok" if VERIFY_OK else "ng",
         f"サーボ {IF['servoDegs'][0]:g}〜{IF['servoDegs'][1]:g}° を {IF['stepDeg']:g}° 刻みで（{IF['poseCount']} 姿勢）、部品の組 {IF['uniquePairs']} を実STLで測りました。"
@@ -343,11 +375,11 @@ def requirement_rows():
         + "未確認は付属ホーンのスプラインの嵌合です。",
         "drive_report.json")
     stop_note = (f"駆動検査の停止時の高さの誤差は最大 {STOP_HEIGHT['maximumErrorMm']:.3f}mm で、基準 {STOP_HEIGHT['limitMm']:g}mm の内側です。" if STOP_HEIGHT is not None else "")
-    add("依頼", "⑤ 動くか（軸の浮きによる画素の高さのずれ）", "ok" if vp["pushingPlateWithinTolerance"] else "cond",
-        f"軸が溝の底に載ると、画素は表より {abs(vp['settledShiftMm']):.2f}mm 低くなります。栓まで浮くと {vp['floatedToPlugShiftMm']:.2f}mm 高くなります（許容 ±{vp['tableToleranceMm']:g}mm の内側）。"
-        f"案内板を押し上げるまで浮くと {vp['floatedPushingPlateShiftMm']:.2f}mm 高くなり、この許容を超えます。" + stop_note
+    add("依頼", "⑤ 動くか（軸の浮きによる画素の高さのずれ）", "ok" if vp["capWithinTolerance"] else "cond",
+        f"軸が溝の底に載ると、画素は表より {abs(vp['settledShiftMm']):.2f}mm 低くなります。軸が押さえ棒の指まで浮くと、{vp['floatedToCapShiftMm']:.2f}mm 高くなり、許容 ±{vp['tableToleranceMm']:g}mm を超えます。"
+        f"浮きの鎖は、溝の底 0.03mm、押さえ棒との隙間 {P.HOLD_GAP * MM:.2f}mm、棒の浮き {P.CAP_LIFT * MM:.2f}mm を足した {dci('軸の浮きの鎖の合計')['value']:.2f}mm です（上限 {dci('軸の浮きの鎖の合計')['limit']:g}mm）。案内板は経由しません。" + stop_note
         + "浮くかどうかは、歯車の分離力と重さの釣り合いで決まります。実機で確かめます。",
-        "verify_report.json（camFoot.shaftVerticalPlay）、drive_report.json")
+        "verify_report.json（camFoot.shaftVerticalPlay）、design_check.json（I2）、drive_report.json")
     add("依頼", "⑤ 動くか（物理。トルクと動かし方）", "ok" if (SIM_CALC_OK and SIM_ALL_OK) else "cond",
         f"摩擦係数0.35で、必要トルクは最大 {ST['maximumRequiredTorqueNm'] * MM:.1f} mN·m です（停動 {STALL_MNM:g} の {ST['fractionOfStall'] * 100:.1f}%）。"
         f"0.45では {SENS['staticRequiredNm'] * MM:.1f} mN·m です。上限は停動の1/3の {TORQUE_LIMIT_MNM:.1f} です。"
@@ -368,20 +400,20 @@ def requirement_rows():
         f"見える面の張り出し面積は {VISIBLE_OVERHANG:g}mm² です。サポートを使う部品は {len(SUPPORT_USED)} 個です。",
         "model_report.json、print_review.json")
     add("§3 印刷", "横穴は涙形か天井を平らに。橋は10mm以内で見えない面だけ", "ok",
-        f"橋は最長 {BRIDGE_MAX:g}mm です（{BRIDGE_PART}）。見える橋がある部品は {sum(1 for v in PR['parts'].values() if v['overhang']['fail_visible'])} 個です。",
+        f"橋は最長 {BRIDGE_MAX:g}mm です（{LABEL[BRIDGE_PART]}）。見える橋がある部品は {sum(1 for v in PR['parts'].values() if v['overhang']['fail_visible'])} 個です。",
         "print_review.json")
     add("§3 印刷", "立てて刷る細い部分は高さを太さの5倍以内。接地が小さい部品は倒れない向きに", "ok",
-        f"高さと太さの比は最大 {SLENDER_MAX:g} です（{SLENDER_PART}）。重心が接地の外にある部品は {sum(1 for v in PR['parts'].values() if not v['bed']['com_over_footprint'])} 個です。",
+        f"高さと太さの比は最大 {SLENDER_MAX:g} です（{LABEL[SLENDER_PART]}）。カム軸は円盤を付けて、高さ÷接地が {dci('同（-X 端に円盤')['value']:g} です。重心が接地の外にある部品は {sum(1 for v in PR['parts'].values() if not v['bed']['com_over_footprint'])} 個です。",
         "print_review.json")
     add("§3 印刷", "肉厚: 外装2mm以上、力を受ける壁3mm以上、どこでも1.2mm以上", "cond",
-        f"外装の見える面の最小は {HOUSING_EXT_MIN:g}mm です。ベゼルの窓と窓の桟 {P.BEZEL_BAR * MM:g}mm は例外です。1.2mm 未満は、潰しリブ 0.6mm など荷重のかからない形だけです。"
+        f"外装の見える面の最小は {HOUSING_EXT_MIN:.2f}mm です（例外を除くと {HOUSING_EXT_EXC:g}mm）。例外は、ベゼルの窓と窓の桟 {P.BEZEL_BAR * MM:g}mm と、端壁の上端の縁 {HOUSING_EXT_MIN:.2f}mm です。1.2mm 未満は、潰しリブ 0.6mm など荷重のかからない形だけです。"
         f"力を受ける部位の 3mm 未満 {PS['n_load_judged_ok_entries']} 件は、荷重の計算で可と判定しました。",
         "print_review.json")
     add("§3 印刷", "隙間と面取り: 回る軸は片側0.2mm。ベッドに接する嵌め合いの縁に0.3mm面取り", "ok" if not NO_CHAMFER else "ng",
-        f"軸と穴の隙間は片側 {P.SHAFT_BORE_CLR * MM:g}mm です。面取りが欠けた部品は {len(NO_CHAMFER)} 個です（対象は画素の頭の縁、カム・歯車の穴の縁、受けのポケットの口）。",
+        f"軸と穴の隙間は片側 {P.SHAFT_BORE_CLR * MM:g}mm です。面取りが欠けた部品は {len(NO_CHAMFER)} 個です（対象は画素の頭の縁、カム軸の−X端の軸受けの端面、歯車の雌穴の口、受けのポケットの口）。",
         "print_review.json、params.py")
     add("§3 印刷", "スナップ・圧入は層に沿ってしなる向きで刷る", "ok",
-        "ベゼルの爪は端壁のたわみで、案内板の爪は舌の面内で、押さえクリップは脚の面内でしなります。刷る向きの理由は model_report.json に書きました。層に沿う向きは設計の確認で、実物の割れは未確認です。",
+        f"ベゼルの爪は端壁のたわみで、案内板の爪は舌の面内で、押さえクリップは脚の面内でしなります。押さえ棒の爪は腕がしなり（しなり 0.15mm、ひずみ {CAP_STRAIN_RANGE[0]:.1f}〜{CAP_STRAIN_RANGE[1]:.1f}%）、Y端のリブが軽く圧入されます。刷る向きの理由は model_report.json に書きました。層に沿う向きは設計の確認で、実物の割れは未確認です。",
         "model_report.json")
     add("§3 印刷", "非多様体エッジ0。一体の部品は連結成分1。空中に離れた部品がない", "ok" if (MESH_OK and not MULTI_COMP and not UNGROUNDED) else "ng",
         f"{MR['totals']['n_parts']} 部品で非多様体エッジは {MR['totals']['non_manifold_edges']} です。印刷部品 {PS['n_parts_reviewed']} 個のうち、連結成分が1でない部品は {len(MULTI_COMP)} 個、接地しない部品は {len(UNGROUNDED)} 個です。"
@@ -395,16 +427,16 @@ def requirement_rows():
         f"{len(AR['steps'])} 工程の経路は、検査で通ります。指の入る隙間と、爪を押し込む力は数値で見ていません。実物で確かめます。",
         "assembly_report.json")
     add("§4 組み立て", "壊さずに分解できる", "cond" if ASM_OK else "ng",
-        f"逆順の分解が通ります。スナップのひずみは最大 {STRAIN_MAX:.2f}% です（{STRAIN_ZONE}。PLAで2%以下）。着脱力は実物で確かめます。",
+        f"逆順の分解が通ります。スナップのひずみは最大 {STRAIN_MAX:.2f}% です（{zone_name(STRAIN_ZONE)}。PLAで2%以下）。着脱力は実物で確かめます。",
         "assembly_report.json（reverseDisassembly、designedContacts）")
     add("§4 組み立て", "後から入れる部品の通り道と、指の入る隙間が残る", "cond",
-        "通り道は、各工程の全姿勢で検査しました。軸は箱の外で7部品をつないでから、落とす向きを決めて下ろします。サーボ一式は -X へ 1.8mm 寄せます。指の隙間は未検査です。",
+        "通り道は、各工程の全姿勢で検査しました。軸は箱の外でカム軸に歯車を差してから、落とす向きを決めて下ろします。サーボ一式は -X へ 1.8mm 寄せます。指の隙間は未検査です。",
         "assembly_report.json（steps、rolling）")
     retention = ["shaft-retention", "axis-upward-chain", "servo-body-retention", "servo-clip-retention",
                  "guide-plate-retention", "bezel-retention", "pixel-guides"]
     ret_status = [DRIVE_IF[i]["status"] for i in retention if i in DRIVE_IF]
     add("§4 組み立て", "抜け止めは印刷部品の形で作る", "ok" if all(s == "pass" for s in ret_status) and len(ret_status) == len(retention) else "ng",
-        f"軸、サーボ、押さえクリップ、案内板、ベゼル、画素の六方向の保持 {len(ret_status)} 界面のうち、適合は {sum(s == 'pass' for s in ret_status)} です。保持相手を外すと接触が消えることも測りました。",
+        f"軸（両端のパッドと押さえ棒）、サーボ、押さえクリップ、案内板、ベゼル、画素の六方向の保持 {len(ret_status)} 界面のうち、適合は {sum(s == 'pass' for s in ret_status)} です。保持相手を外すと接触が消えることも測りました。",
         "drive_report.json")
 
     # --- §5 動く部品
@@ -440,7 +472,7 @@ def requirement_rows():
     add("§6 検証", "形: 外形が範囲内。非多様体エッジ0", "ok" if MESH_OK else "ng",
         f"外形は最大 {PEAK_MM:g}mm です。非多様体エッジは {MR['totals']['non_manifold_edges']} です。", "design_check.json、model_report.json")
     add("§6 検証", "動く範囲の干渉: 全範囲を2.5°刻み以下で共通体積0", "ok" if VERIFY_OK else "ng",
-        f"{IF['stepDeg']:g}° 刻み、{IF['poseCount']} 姿勢、{IF['uniquePairs']} 組を測りました。許可した当たり {len(IF['designedOverlaps'])} 件（潰しリブなど）は、場所と量を限定しています。治具 phase_comb だけを運動の検査から除きました（最終形に残らず、組立工程では検査しました）。",
+        f"{IF['stepDeg']:g}° 刻み、{IF['poseCount']} 姿勢、{IF['uniquePairs']} 組を測りました。許可した当たり {len(IF['designedOverlaps'])} 件（潰しリブなど）は、場所と量を限定しています。位相合わせ治具だけを運動の検査から除きました（最終形に残らず、組立工程では検査しました）。",
         "verify_report.json")
     add("§6 検証", "組み立ての経路: 各工程に経路。当たってよいのは設計した圧入とスナップだけ。ひずみ2%以下", "ok" if ASM_OK else "ng",
         f"{len(AR['steps'])} 工程です。設計した当たりは {len(CONTACTS)} 件で、ひずみは最大 {STRAIN_MAX:.2f}% です。", "assembly_report.json")
@@ -464,7 +496,7 @@ def calibration_rows():
                  len(vc), sum(1 for _, v in vc if v["pass"])))
     dc = DR["calibration"]
     rows.append(("駆動（drive.py）", "噛み合いの窓の端が解析値に合う。六方向の初接触が設計値に合う",
-                 "保持相手を外すと接触が消える。位相誤差の和が design_check と一致",
+                 "保持相手を外すと接触が消える。位相誤差の和が design_check と一致。押さえ棒のリブの許可窓、じょうごの計器、摩擦の斜面の計器",
                  len(dc), sum(1 for c in dc if c["pass"])))
     ac = AR["calibration"]["checks"]
     rows.append(("組立（assembly.py）", "当たらない経路（軸1を歯車が離れた高さで並進）は合格",
@@ -534,11 +566,29 @@ def decisions_table():
         (f"歯車 モジュール{P.GEAR_M * MM:g}、{P.CHAIN_Z}歯、歯幅 {P.GEAR_T * MM:g}mm",
          f"噛み合い率は {dci('噛み合い率 17T-17T')['value']:.2f} です。停動での歯の曲げ応力は {dci('歯の曲げ応力')['value']:.1f}MPa です（上限 {dci('歯の曲げ応力')['limit']:g}）。",
          join(code("GEAR_M"), "　", code("CHAIN_Z"), "　", code("GEAR_T"))),
-        (f"軸は数珠つなぎの7部品（歯車の部品、カム4〜0、端の部品）。継ぎ目は雄の六角スタブ（二面幅 {P.STUB_AF * MM:g}mm）と雌穴で、差し込む長さはカムが {P.JOINT_ENGAGE_CAM * MM:g}mm、歯車が {P.JOINT_ENGAGE_GEAR * MM:g}mm。潰しリブ{P.HEX_RIB_FACES}本は雌穴にだけ付ける",
-         f"長い六角軸に潰しリブのカムを通す方式は、実物を刷ると板カムが引っかかって通りませんでした。継ぎ目では、差し込みの最後の {P.JOINT_ENGAGE_GEAR * MM:g}〜{P.JOINT_ENGAGE_CAM * MM:g}mm だけがリブに擦れます。"
-         f"継ぎ目1つの引き抜き力は {dci('継ぎ目 1 つの引き抜き力')['value']:.0f}N です。鎖の全長はパッドの内面の間より {dci('鎖の全長')['value']:.1f}mm 短いだけなので、継ぎ目は抜けません。"
-         f"リブが無いと、継ぎ目の六角のガタが ±{key['hex_slack_if_ribs_fail_deg']:.2f}° ずつになり、5つ分で停止区間を超えます。潰し代は {P.HEX_RIB_CRUSH * MM:g}mm、継ぎ目1つの遊びは ±{P.JOINT_ERR_DEG:g}° と仮定しました。",
-         join(code("HEX_RIB_CRUSH"), "　", code("JOINT_ENGAGE_CAM"), "　", code("JOINT_ENGAGE_GEAR"), "　", code("STUB_AF"), "　", code("JOINT_ERR_DEG"))),
+        ("カム軸は、胴Ø10とカム5枚が一体。−X端を下にして立てて刷り、刷るときだけの円盤（Ø30）を付ける",
+         f"ユーザーの指摘で変えました。カムを1枚ずつ差す形は、取り付けづらく、軸がずれ、組むのが面倒でした。カムを胴と一体にして、各カムの下を45°のすそにし、サポートなしで刷れる形にしました。"
+         f"胴Ø10だけで立てると、高さ÷接地は {dci('円盤なし')['value'].split(' ')[0]} 倍で、基準の5を超えます。円盤を付けて {dci('同（-X 端に円盤')['value']:g} 倍にしました。折り取り跡は {P.PRINT_FOOT_RESIDUE_MAX * MM:g}mm 以下で、外装の溝の中の見えない面です。",
+         join(code("CAMSHAFT_BODY_D"), "　", code("PRINT_FOOT_D"), "　", code("PRINT_FOOT_RIB_W"), "　", code("PRINT_FOOT_NECK"))),
+        (f"歯車との継ぎ目は1か所。雌穴の深さ {P.JOINT_ENGAGE_GEAR * MM:g}mm、潰しリブは最後の {P.JOINT_RIB_LEN * MM:g}mm",
+         f"長い六角軸に潰しリブのカムを通す方式は、実物を刷ると板カムが引っかかって通りませんでした。継ぎ目を歯車との1か所だけにして、リブが擦る長さを短くしました。手前の {(P.JOINT_ENGAGE_GEAR - P.JOINT_RIB_LEN) * MM:g}mm は差し込みの案内です。"
+         f"継ぎ目の引き抜き力は {dci('継ぎ目の引き抜き力')['value']:.0f}N です。軸方向の遊びが1か所に集まっても、リブの掛かりは {dci('鎖が開いても残る')['value']:.1f}mm 残ります。"
+         f"リブが無いと、継ぎ目の六角のガタが ±{key['hex_slack_if_ribs_fail_deg']:.2f}° になります。潰し代は {P.HEX_RIB_CRUSH * MM:g}mm、継ぎ目の遊びは ±{P.JOINT_ERR_DEG:g}° と仮定しました。",
+         join(code("HEX_RIB_CRUSH"), "　", code("JOINT_ENGAGE_GEAR"), "　", code("JOINT_RIB_LEN"), "　", code("STUB_AF"), "　", code("JOINT_ERR_DEG"))),
+        (f"軸受けにゆとりを持たせる。+X の溝は幅 {P.U_SLOT_W * MM:g}mm、−X は幅 {P.U_SLOT_MX_W * MM:g}mm。口は 45° x {P.U_FUNNEL * MM:g}mm のじょうご。軸方向は片側 {P.AXIAL_DRIFT * MM:g}mm",
+         f"ユーザーの指摘で変えました。軸受けをどこまで入れれば正解か分からず、きつくて回らないことがありました。−X 側は軸受けの端と溝の底で、+X 側は歯車の肩とパッドで止まります。"
+         f"軸が反対側へ {P.AXIAL_DRIFT * MM:g}mm 動いた最悪でも、軸受けが溝にかかる長さは {dci('軸受けが溝にかかる長さの最小')['value']:g}mm 残ります。+X の溝の幅は、位相の誤差に効きます。",
+         join(code("U_SLOT_Y_CLR"), "　", code("U_SLOT_MX_CLR"), "　", code("U_FUNNEL"), "　", code("AXIAL_DRIFT"))),
+        ("軸受けを上から押さえる別部品（押さえ棒）を、端壁ごとに1本",
+         f"ユーザーの指摘で足しました。上向きの遊びは、溝の底 0.03mm、押さえ棒の指との隙間 {P.HOLD_GAP * MM:.2f}mm、棒の浮き {P.CAP_LIFT * MM:.2f}mm の合計 {dci('軸の浮きの鎖の合計')['value']:.2f}mm です（上限 {dci('軸の浮きの鎖の合計')['limit']:g}mm）。棒は外装に座るので、案内板は鎖に入りません。"
+         f"Y端のリブ（最後の2mmだけ擦る）と、スナップの爪（しなり 0.15mm、ひずみ {CAP_STRAIN_RANGE[0]:.1f}〜{CAP_STRAIN_RANGE[1]:.1f}%）で止めます。棒の上面が壁のV溝の下端にそろえば、座った印です。",
+         join(code("HOLD_GAP"), "　", code("CAP_LIFT"), "　", code("CAP_RIB_H"))),
+        (f"行ごとのカムの位置を互い違いにする（偶数行 {sg(P.ROW_SHIFT_POS * MM, 2)}mm、奇数行 {sg(P.ROW_SHIFT_NEG * MM, 2)}mm）",
+         f"同じ列の隣の行のカムの板どうしの隙間は {(P.ROW_SHIFT_POS - P.ROW_SHIFT_NEG - P.CAM_T) * MM:g}mm です。非対称にしたのは、各カムの−X側のすそ（45°の円錐）が、隣の行の板に当たらないようにするためです。案内板の穴と、画素の茎と足の位置は、このずれに合わせました。",
+         join(code("ROW_SHIFT_POS"), "　", code("ROW_SHIFT_NEG"))),
+        ("既定の表3（bump）は、中央の周りの4画素を +1.0mm に下げる",
+         "隣の行のカムの最大高さの和に上限があるためです（同じ列は 4.05mm 以下）。中央が +3mm のとき、隣の行は 1.0mm までです。",
+         code("patterns.py")),
         ("サーボの取付耳の溝は、耳の厚み + 片側 0.25mm。潰しリブは無し",
          "実物を刷ると、前の寸法（片側 0.2mm と潰しリブ 0.3mm）では耳がきつくて入りませんでした。実物で入った C1 と同じ寸法にしました。",
          code("parts_static.py の EAR_GAP")),
@@ -556,10 +606,10 @@ def decisions_table():
 def concession_list():
     items = []
     items.append(join(tag("strong", "画素の指定が実行時に自由ではありません。"),
-                      H(esc(f"SG92R 1台では、25画素を独立に動かす自由度が足りません。代わりに、表を {P.K} 枚まで機械（カムの形）に書き込み、サーボ角で表を選びます。表を変えるときはカムを刷り直します。"))))
+                      H(esc(f"SG92R 1台では、25画素を独立に動かす自由度が足りません。代わりに、表を {P.K} 枚まで機械（カムの形）に書き込み、サーボ角で表を選びます。表を変えるときは、変えた行のカム軸（最大5本）を刷り直します。"))))
     items.append(join(tag("strong", "天面を上にして置く専用です。"), H(esc("画素を重力でカムに載せるためです。横置きや逆さでは戻りません。電源を切った後の位置も保証しません。"))))
     items.append(join(tag("strong", "隣り合う表の高さの差に制約があります。"),
-                      H(esc(f"サーボ角で{P.TABLE_THETA[1] - P.TABLE_THETA[0]:g}°離れた表の同じ画素は、−3mm から +3mm へは動けません（−3mm なら次は +0.3mm までです）。端の表0と表4は一周して56°で隣り合い、さらに厳しくなります。どちらも生成器が拒否します。README.md に表があります。"))))
+                      H(esc(f"サーボ角で{P.TABLE_THETA[1] - P.TABLE_THETA[0]:g}°離れた表の同じ画素は、−3mm から +3mm へは動けません（−3mm なら次は +0.3mm までです）。端の表0と表4は一周して56°で隣り合い、さらに厳しくなります。隣の行のカムの最大高さの和にも上限があり（同じ列は 4.05mm 以下）、既定の表3の中央の周りは +1.0mm に下げました。どれも生成器が拒否します。README.md に表があります。"))))
     old_margin = SCEN.get("maximumPlay", {}).get("minimumMarginDeg")
     if STOP_HEIGHT is not None:
         why = (f"停止区間の余裕（1° 以上）から、停止時の高さの誤差（{STOP_HEIGHT['limitMm']:g}mm 以下）へ変えました。")
@@ -574,12 +624,14 @@ def concession_list():
         items.append(join(tag("strong", "歯車の位相の判定の基準。"),
                           H(esc("停止区間の余裕（1° 以上）から、停止時の高さの誤差（0.25mm 以下）へ変えます。drive_report.json に新しい基準の結果がないため、数値は載せられません。drive.py を流し直して、このファイルをもう一度流してください。"))))
     items.append(join(tag("strong", "肉厚の例外。"),
-                      H(esc(f"ベゼルの窓と窓の桟は {P.BEZEL_BAR * MM:g}mm で、外装の壁 2mm の規則に届きません。頭を小さくしないために認めました。"
+                      H(esc(f"ベゼルの窓と窓の桟は {P.BEZEL_BAR * MM:g}mm で、外装の壁 2mm の規則に届きません。頭を小さくしないために認めました。端壁の上端の縁（最小 {HOUSING_EXT_MIN:.2f}mm）は、外側の面取りと、押さえ棒の溝の口の面取り（軸を 48° で導く）が出会う縁で、2mm に届きません。"
                             "潰しリブ（幅 0.6mm）は、潰れて隙間を消すための形です。歯車の歯先（1.1mm 前後）は、歯の形の性質です。番号の彫りは、読めれば足ります。いずれも荷重の主経路ではありません。"))))
+    items.append(join(tag("strong", "カム軸に、円盤を折り取る手作業が残ります。"),
+                      H(esc("胴Ø10のカム軸を立てて刷るため、倒れない円盤を付けました。刷っただけでは完成せず、円盤を手で折り取ります。跡は外装の溝の中の見えない面に残ります。"))))
     items.append(join(tag("strong", "動かし方を制限しました。"),
                       H(esc(f"最速のステップ指令では、画素がカムから浮くことがあります。デモは1表 {FW['moveTiming']['minMoveMs']}ms 以上、5次関数の滑らかな立ち上がりと止まりで動かします。"))))
     items.append(join(tag("strong", "部品数。"),
-                      H(esc(f"印刷部品は {len(PARTS_PRINT)} 個です。画素ごとの独立した動きを取り、部品の少なさより組めることを優先しました。"))))
+                      H(esc(f"印刷部品は {len(PARTS_PRINT)} 個です。カムを1枚ずつ差す前の版（67個）から、カムを胴と一体にして減らしました。画素ごとの独立した動きを取り、組めることを優先しました。"))))
     items.append(join(tag("strong", "外形。"), H(esc(f"{CUBE_MM:g}mm にとどめました。10cm いっぱいにはせず、画素の出っ張り {sg(P.H_MAX * MM)}mm を足して {PEAK_MM:g}mm にしました。"))))
     return ulist(items)
 
@@ -588,21 +640,24 @@ def hardware_list():
     trial1 = next(p for p in PL["plates"] if p["id"] == "trial1-rotating")
     vp = CF["shaftVerticalPlay"]
     items = [
-        join(tag("strong", "試し刷り1（回す部分）。"), H(esc(f"{trial1['n_parts']} 片です。付属ホーンと実物のSG92Rを、受け（horn_coupler）に入れます。きつければ HORN_CLR を 0.05mm ずつ増やします。"
+        join(tag("strong", "試し刷り1（回す部分）。"), H(esc(f"{trial1['n_parts']} 片です。付属ホーンと実物のSG92Rを、受けに入れます。きつければ HORN_CLR を 0.05mm ずつ増やします。"
                                                     "ホーンが押し込めて、抜けず、がたつかなければ合格です。"))),
-        join(tag("strong", "軸の継ぎ目。"), H(esc(f"試し刷り1の shaft_2、cam_0_2、cam_4_2、gear_2 を順にさしてつなぎます。手で押し込める力で入り、回してもガタが見えず、持ち上げても抜けなければ合格です。"
-                                           f"位相誤差の予算は、潰し代 {P.HEX_RIB_CRUSH * MM:g}mm のリブが効く前提です（継ぎ目1つの遊びは ±{P.JOINT_ERR_DEG:g}° と仮定）。"))),
-        join(tag("strong", "取付耳の溝。"), H(esc("試し刷り2の housing_servo_block_minusY に、実物のSG92Rの耳を入れます。がたつかず、抜けやすくなければ合格です。"
+        join(tag("strong", "カム軸の立て刷り。"), H(esc("試し刷り1のカム軸（行2）の全体を、立てて刷ります。揺れず、倒れずに刷れるかを見ます。刷った後に円盤を手で折り取り、折り取り跡が軸受けの溝に当たらないか、すその面が荒れていないかを見ます。"))),
+        join(tag("strong", "歯車との継ぎ目。"), H(esc(f"試し刷り1のカム軸の+X端の小片と、歯車（行2）をつなぎます。手で押し込める力で入り、回してもガタが見えず、持ち上げても抜けなければ合格です。"
+                                           f"位相誤差の予算は、潰し代 {P.HEX_RIB_CRUSH * MM:g}mm のリブが効く前提です（継ぎ目の遊びは ±{P.JOINT_ERR_DEG:g}° と仮定）。"))),
+        join(tag("strong", "軸受けのゆとり。"), H(esc("試し刷り2の軸受けの溝（−X 端壁の行2と、+X 端壁の行1）に、カム軸と歯車の軸受けを入れて回します。きつくなく回れば合格です。きつければ U_SLOT_MX_CLR と U_SLOT_Y_CLR を 0.05mm ずつ広げます。"))),
+        join(tag("strong", "押さえ棒。"), H(esc("試し刷り2の押さえ棒の指を、外装の溝へ上から差します。軽く圧入されて座り、上面が壁のV溝の下端にそろえば合格です。指の下端と軸の丸の隙間も見ます。"))),
+        join(tag("strong", "取付耳の溝。"), H(esc("試し刷り2の外装のサーボの耳の溝に、実物のSG92Rの耳を入れます。がたつかず、抜けやすくなければ合格です。"
                                             "合わなければ parts_static.py の EAR_GAP（0.25mm）を 0.05mm ずつ変えます。"))),
         join(tag("strong", "スプライン。"), H(esc("付属ホーンをSG92Rの出力軸に付けます。正本にスプラインの歯がないので、嵌合と回転の伝わりを実物で確かめます。18° 刻みで付け直せるかも見ます。"))),
         join(tag("strong", "摩擦。"), H(esc(f"全部組んだら、サーボをつながずに軸を手で回します。画素がなめらかに上下し、止まらなければ合格です。計算は摩擦係数 {P.MU_CAM} と {P.MU_CAM_HI} の仮値を使っています。"))),
-        join(tag("strong", "爪の着脱力。"), H(esc("試し刷り2のベゼルの爪、案内板の舌、押さえクリップを着脱します。割れや白化が出ないかを見ます。"
-                                            f"計算上のひずみは最大 {STRAIN_MAX:.2f}% です（{STRAIN_ZONE}）。"))),
-        join(tag("strong", "画素の重力での落ち。"), H(esc(f"画素を指で持ち上げて離すと、カムまで落ちて止まります。引っかかれば不合格です。軸が案内板を押し上げる場合、画素は表より {vp['floatedPushingPlateShiftMm']:g}mm 高くなります"
+        join(tag("strong", "爪の着脱力。"), H(esc("試し刷り2のベゼルの爪、案内板の舌、押さえ棒の爪、押さえクリップを着脱します。割れや白化が出ないかを見ます。"
+                                            f"計算上のひずみは最大 {STRAIN_MAX:.2f}% です（{zone_name(STRAIN_ZONE)}）。"))),
+        join(tag("strong", "画素の重力での落ち。"), H(esc(f"画素を指で持ち上げて離すと、カムまで落ちて止まります。引っかかれば不合格です。軸が押さえ棒の指まで浮く場合、画素は表より {vp['floatedToCapShiftMm']:.2f}mm 高くなります"
                                                f"（許容 {vp['tableToleranceMm']:g}mm を超えます）。浮くのは歯車の分離力が画素と軸の重さを超えるときです。実機で確かめます。"))),
         join(tag("strong", "位相合わせ。"), H(esc(f"組み立てたら、位相合わせ治具が5本とも座るかを見ます。5本とも浮くときは、デモの + と − で 0.25° ずつ回して座る位置を探します。1本だけ浮く軸は 1 歯ずれているので置き直します。座ったら w で保存します。仕上げに、表1の中央（−3mm）と表3の中央（+3mm）が表どおりになる幅の中央へ、同じ + と − で合わせます。"
                                            f"許容は ±{FW['angles']['phaseTrimAllowedDeg'][1]:g}° です。"))),
-        join(tag("strong", "組み立て。"), H(esc(f"{len(AR['steps'])} 工程を実際に組みます。箱の外で軸を7部品つなぐ工程と、指が入る隙間と、サーボ一式を -X へ 1.8mm 寄せて下ろす動作を確かめます。"))),
+        join(tag("strong", "組み立て。"), H(esc(f"{len(AR['steps'])} 工程を実際に組みます。箱の外でカム軸に歯車を差す工程と、軸を落とす向き、押さえ棒を差す工程、指が入る隙間、サーボ一式を -X へ 1.8mm 寄せて下ろす動作を確かめます。"))),
         join(tag("strong", "通電。"), H(esc("4.8V の安定化電源で、表0から4まで順に動かします。各表で画素が表どおりに揃うか、擦れや引っかかりがないかを見ます。"))),
         join(tag("strong", "電源を切ったとき。"), H(esc("画素の位置が保たれるか、軸が回って画素が落ちるかを見ます。"))),
         join(tag("strong", "PETG。"), H(esc("PETGで刷った部品の嵌め合いが、固くならないかを見ます。"))),
@@ -613,17 +668,22 @@ def hardware_list():
 
 def exception_name(key):
     return {"crush_rib_0.6": "潰しリブ 0.6mm", "gear_tooth_tip_1.1": "歯先 1.1mm", "cam_label_engraving": "番号の彫り",
-            "bezel_bar_1.6": "ベゼルの桟 1.6mm", "finger_catch_1.4": "指の掛かり"}.get(key, key)
+            "bezel_bar_1.6": "ベゼルの桟 1.6mm", "finger_catch_1.4": "指の掛かり 1.4mm",
+            "slit_mouth_rim_1.7": "端壁の上端の縁 1.7mm"}.get(key, key)
 
 
 def overlap_name(kind):
-    return {"joint-crush-ribs": "潰しリブ（継ぎ目の雌穴）", "hex-crush-ribs": "潰しリブ（カムと歯車の穴）", "ear-crush-ribs": "潰しリブ（サーボの取付耳）",
+    return {"joint-crush-ribs": "潰しリブ（歯車の雌穴）", "cap-end-ribs": "押さえ棒のY端のリブ", "hex-crush-ribs": "潰しリブ（カムと歯車の穴）", "ear-crush-ribs": "潰しリブ（サーボの取付耳）",
             "canonical-servo-output-shaft": "SG92R の出力軸とホーン（正本の形）"}.get(kind, kind)
 
 
 def zone_name(zone):
-    if zone == "seam" or zone.startswith("rib:"):
-        return "潰しリブ（継ぎ目の雌穴）"
+    if zone.startswith("seam") or zone.startswith("rib:"):
+        return "潰しリブ（歯車の雌穴）"
+    if zone.startswith("bearing_cap_px"):
+        return "押さえ棒（+X）のリブと爪"
+    if zone.startswith("bearing_cap_mx"):
+        return "押さえ棒（−X）のリブと爪"
     if zone.startswith("servo_clip"):
         return "押さえクリップの爪"
     return {"bezel_barbs": "ベゼルの爪", "plate_hooks": "案内板の舌の爪", "ear_ribs": "柵の潰しリブ（取付耳）"}.get(zone, zone)
@@ -650,19 +710,18 @@ def verify_sections():
     vp = CF["shaftVerticalPlay"]
     out.append(table(("軸の上下の遊び", "画素の高さの変化", f"許容 ±{vp['tableToleranceMm']:g}mm"), (
         ("溝の底に載っている", f"{sg(vp['settledShiftMm'], 2)}mm", tol_chip(vp["settledWithinTolerance"])),
-        ("栓まで浮く", f"{sg(vp['floatedToPlugShiftMm'], 2)}mm", tol_chip(vp["plugWithinTolerance"])),
-        ("案内板を押し上げるまで浮く", f"{sg(vp['floatedPushingPlateShiftMm'], 2)}mm", tol_chip(vp["pushingPlateWithinTolerance"])),
+        ("押さえ棒の指まで浮く", f"{sg(vp['floatedToCapShiftMm'], 2)}mm", tol_chip(vp["capWithinTolerance"])),
     )))
-    out.append(para("verify_report.json の注記: " + vp["note"] + "（" + vp["limit"] + "）"))
+    out.append(para("verify_report.json の注記: " + jp(vp["note"]) + "（" + vp["limit"] + "）"))
     # 駆動界面
     out.append(tag("h3", "駆動の接続と保持"))
     out.append(para("実STLを動かして、保持相手との初接触までの移動量を六方向で測りました。保持相手を外した負例で、接触が消えることも測りました。"
                     + f"基準は「{DR['overall']['basis']}」です。"))
     out.append(table(("界面", "判定", "要点（最初の1文）"), [
-        (i["label"], chip(status_kind(i["status"])), i["detail"].split("。")[0] + "。") for i in DR["interfaces"]]))
-    out.append(details("界面ごとの検査の原文", ulist([f"{i['label']}: {i['detail']}" for i in DR["interfaces"]])))
+        (jp(i["label"]), chip(status_kind(i["status"])), jp(i["detail"]).split("。")[0] + "。") for i in DR["interfaces"]]))
+    out.append(details("界面ごとの検査の原文（部品の id は呼び名に置き換えてあります）", ulist([f"{jp(i['label'])}: {jp(i['detail'])}" for i in DR["interfaces"]])))
     if GEAR is not None:
-        out.append(para("歯車の噛み合いの詳細（drive_report.json の原文）: " + GEAR["detail"]))
+        out.append(para("歯車の噛み合いの詳細（drive_report.json の原文）: " + jp(GEAR["detail"])))
         if STOP_HEIGHT is not None:
             out.append(table(("条件", "停止時の高さの誤差の最大", "基準"), (
                 ("位相誤差と軸の上下の遊びの最大", f"{STOP_HEIGHT['maximumErrorMm']:.3f}mm", f"{STOP_HEIGHT['limitMm']:g}mm 以下"),
@@ -674,9 +733,10 @@ def verify_sections():
     out.append(para(f"位相誤差は、サーボの位置、ホーンの合わせ、継ぎ目の遊び（5つ）、バックラッシュ、軸の上下のずれを足して、最悪の軸（0と4）で {key['phase_sum_deg']:.2f}° です。"
                     f"停止区間の半幅 {key['dwell_half_deg']:g}° に対して、余裕は {key['phase_margin_deg']:.2f}° です（設計検査の基準は 1° 以上）。"))
     out.append(para(dci("位相誤差の内訳")["value"]))
-    chain = (("各軸の上向きの隙間の最大", "軸の上向きの隙間（栓の下端と軸の丸の上端）の最大"),
-             ("軸の浮きの鎖の合計", "軸の浮きの鎖の合計（溝の底、栓、案内板の遊び）"),
-             ("案内板の上下の遊び", "案内板の上下の遊び"),
+    chain = (("軸の上向きの隙間の最大", "軸の上向きの隙間の最大（押さえ棒との隙間 + 棒の浮き）"),
+             ("軸の浮きの鎖の合計", "軸の浮きの鎖の合計（溝の底、押さえ棒との隙間、棒の浮き。案内板は経由しない）"),
+             ("押さえ棒の指が軸受けにかかる長さの最小", "押さえ棒の指が軸受けにかかる長さの最小（軸が −X へ 0.4mm 動いた最悪）"),
+             ("軸受けが溝にかかる長さの最小", "軸受けが溝にかかる長さの最小（軸が反対側へ 0.4mm 動いた最悪）"),
              ("歯先の重なりの残り: 受け-中央軸", "歯先の重なりの残り（受けと中央の軸）"),
              ("歯先の重なりの残り: 隣の軸どうし", "歯先の重なりの残り（隣の軸どうし）"))
     chain_rows = [(label, f"{dci(f)['value']:.3g}", ("上限 " if dci(f)["kind"] == "max" else "下限 ") + f"{dci(f)['limit']:g}" + dci(f)["unit"], chip("ok" if dci(f)["pass"] else "ng"))
@@ -684,7 +744,7 @@ def verify_sections():
     out.append(table(("項目", "値", "基準", "判定"), chain_rows))
     pb = DR["phaseBudget"]
     out.append(table(("駆動検査の条件", "最悪の軸の余裕（停止区間 − 位相誤差）"),
-                     [(s["label"], f"{sg(s['minimumMarginDeg'], 2)}°") for s in SCEN.values()]))
+                     [(jp(s["label"]), f"{sg(s['minimumMarginDeg'], 2)}°") for s in SCEN.values()]))
     out.append(para(f"駆動検査が測った位相誤差の最悪は、設計検査の線形和との差が {sg(pb['differenceFromDesignLinearDeg'][0], 2)}° です（軸0）。"
                     "旧基準の余裕は参考値として残しました。判定は停止時の高さの誤差で行います。"))
     # 組立工程
@@ -697,14 +757,18 @@ def verify_sections():
         zones.setdefault(zone_name(c["zone"]), []).append(c)
     out.append(table(("設計した当たり", "件数", "最大の深さ", "ひずみ（最大）"), [
         (name, len(v), f"{max(x.get('maxDepthMm', 0) for x in v):.2f}mm",
-         (f"{max(x['strainPercent'] for x in v if x.get('strainPercent') is not None):.2f}%" if any(x.get("strainPercent") is not None for x in v) else "（圧入）"))
+         (f"{max(x['strainPercent'] for x in v if x.get('strainPercent') is not None):.2f}%" if any(x.get("strainPercent") is not None for x in v)
+          else (f"{CAP_SNAP[v[0]['zone'][:-5]]:.2f}%（爪）と圧入（リブ）" if v[0]["zone"][:-5] in CAP_SNAP else "（圧入）")))
         for name, v in zones.items()]))
     rolling = AR["rolling"]
     out.append(table(("軸", "構える角度", "噛み合う相手", "転がり始める高さ", "歯の最小の隙間"), [
         (f"軸{j}", f"{r['startAngleDeg']:+.2f}°", r["neighbor"], f"{r['rollsFromHeightMm']:g}mm",
          f"{(r.get('twoDimensionalDescent') or r.get('betweenFrames'))['minClearanceMm']:.3f}mm")
         for j, r in sorted(rolling.items())]))
-    out.append(para("軸1、軸3、軸0、軸4は、歯が隣の歯車に触れる高さから、軸が転がるように回しながら落とします。鉛直に落とすと歯が当たることを、負例で確かめました。"))
+    probes = AR["funnelCapture"]["probesByAxis"]["2"]
+    out.append(para("行1、行3、行0、行4のカム軸は、歯が隣の歯車に触れる高さから、軸が転がるように回しながら落とします。鉛直に落とすと歯が当たることを、負例で確かめました。"
+                    f"行2のカム軸は、落とし始めのXのずれを {len(probes)} 通り（" + "、".join(f"{k}mm" for k in probes) + f"）に振り、すべて詰まらずに最終位置へ着きました（{sum(1 for v in probes.values() if v['reached'])}/{len(probes)}）。"
+                    "軸受けの口のじょうごが導くのは、そのうち " + str(sum(1 for v in probes.values() if v["guided"])) + " 通りです。"))
     # 物理
     out.append(tag("h3", "物理"))
     out.append(para(f"1自由度の運動方程式で計算しました（サーボは、停動 {STALL_MNM:g}mN·m、無負荷 60°/0.1秒のトルク上限つき位置制御）。可動部の質量は、画素 {SR['massIntegration']['totals']['pixelsG']:.0f}g と回転部 {SR['massIntegration']['totals']['rotatingG']:.0f}g を合わせて {SR['massIntegration']['totals']['movingTotalG']:.0f}g です（実STLの体積積分。密度は PLA の 85%）。"))
@@ -729,18 +793,19 @@ def verify_sections():
                     + "、".join(f"{exception_name(k)} {v} 件" for k, v in EXC_COUNT.items()) + "です。"))
     out.append(table(("項目", "結果", "基準"), (
         ("見える面の張り出し", f"{VISIBLE_OVERHANG:g}mm²", "0"),
-        ("見えない面の橋", f"最長 {BRIDGE_MAX:g}mm（{BRIDGE_PART}）", f"{PR['thresholds']['bridge_max_mm']:g}mm 以内"),
-        ("立てて刷る細物の高さと太さの比", f"最大 {SLENDER_MAX:g}（{SLENDER_PART}）", f"{PR['thresholds']['slender_height_over_width']:g} 以内"),
-        ("外装の見える面の肉厚", f"最小 {HOUSING_EXT_MIN:g}mm", f"{PR['thresholds']['wall_exterior_mm']:g}mm 以上"),
+        ("見えない面の橋", f"最長 {BRIDGE_MAX:g}mm（{LABEL[BRIDGE_PART]}）", f"{PR['thresholds']['bridge_max_mm']:g}mm 以内"),
+        ("立てて刷る細物の高さと太さの比", f"最大 {SLENDER_MAX:g}（{LABEL[SLENDER_PART]}）", f"{PR['thresholds']['slender_height_over_width']:g} 以内"),
+        ("カム軸（立てて刷る）の高さ ÷ 接地の短辺", f"{dci('同（-X 端に円盤')['value']:g}（円盤を付けた形。円盤なしは {dci('円盤なし')['value'].split(' ')[0]}）", "5 以内"),
+        ("外装の見える面の肉厚", f"最小 {HOUSING_EXT_MIN:.2f}mm（例外を除くと {HOUSING_EXT_EXC:g}mm）", f"{PR['thresholds']['wall_exterior_mm']:g}mm 以上"),
         ("面取りが欠けた嵌め合いの縁", f"{len(NO_CHAMFER)} 個", "0"),
         ("連結成分が1でない部品／接地しない部品", f"{len(MULTI_COMP)} 個／{len(UNGROUNDED)} 個", "0"),
     )))
     return H("".join(esc(x) for x in out))
 
 
-def h2d_layout():
+def h2d_layout(name="tangible-pixel-cube-h2d-layout.3mf"):
     """H2D の1枚プレート（配置だけの3mf）の部品数と、部品が占める最大座標（mm）。無ければ None"""
-    path = PRINTS / "tangible-pixel-cube-h2d-layout.3mf"
+    path = PRINTS / name
     if not path.is_file():
         return None
     import zipfile
@@ -763,7 +828,7 @@ def plates_section():
     for plate in PL["plates"]:
         pla = Path(plate["files"]["PLA"]).name
         petg = Path(plate["files"]["PETG"]).name
-        rows.append((plate["id"], "本体" if plate["kind"] == "main" else "試し刷り", plate["n_parts"], f"{plate['mass_pla_g']:g}g", f"{plate['tallest_part_mm']:g}mm",
+        rows.append((plate["title"], "本体" if plate["kind"] == "main" else "試し刷り", plate["n_parts"], f"{plate['mass_pla_g']:g}g", f"{plate['tallest_part_mm']:g}mm",
                      H(f'<a href="../prints/{MODEL}/{esc(pla)}">PLA</a>　<a href="../prints/{MODEL}/{esc(petg)}">PETG</a>')))
     out = [table(("プレート", "種類", "部品数", "PLAの質量（見込み）", "最も高い部品", "3mf"), rows)]
     out.append(para(f"本体の合計は {PL['mass_total_pla_g']:g}g です（中実なら上限 {PL['mass_total_solid_upper_g']:g}g）。スライスしていないので、印刷時間は未算出です。"
@@ -771,6 +836,9 @@ def plates_section():
     h2d = h2d_layout()
     if h2d is not None:
         out.append(para(f"H2D では全 {h2d[0]} 部品が1枚に載ります（{h2d[4]}。配置だけで、スライスはしていません）。部品が占める最大座標は X {h2d[1]:.0f}、Y {h2d[2]:.0f}、高さ {h2d[3]:.0f}mm です。"))
+    reprint = h2d_layout("tangible-pixel-cube-h2d-reprint.3mf")
+    if reprint is not None:
+        out.append(para(f"前回渡した版から変わった {reprint[0]} 部品だけを並べた1枚もあります（{reprint[4]}。部品が占める最大座標は X {reprint[1]:.0f}、Y {reprint[2]:.0f}mm）。"))
     out.append(para(f"試し刷りの小片は {len(TR)} 個です。小片は prints/{MODEL}/trial/、全部品は prints/{MODEL}/parts/ にあります。"))
     return H("".join(esc(x) for x in out))
 
@@ -796,13 +864,13 @@ def build():
     lead = [
         para(f"{CUBE_MM:g} × {CUBE_MM:g} × {CUBE_MM:g}mm の立方体です。天面の {P.N} × {P.N} 枚の画素が、SG92R 1台で {sg(P.H_MIN * MM)}〜{sg(P.H_MAX * MM)}mm 上下します。"
              f"画素が出ると最大 {PEAK_MM:g}mm で、10cm 以下に収まります。"),
-        para(f"どの画素が動くかは、patterns.py の高さの表で決まります。表は {P.K} 枚です。サーボ角で表を選びます。表を変えるときは、カム {N_PIXELS} 枚を作り直して刷り直します。"),
+        para(f"どの画素が動くかは、patterns.py の高さの表で決まります。表は {P.K} 枚です。サーボ角で表を選びます。表を変えるときは、変えた行のカム軸（最大5本）を作り直して刷り直します。"),
         para("要件ごとの結果は、" + "、".join(summary_bits) + f"です（計 {len(rows)} 行）。"),
     ]
     if ng_rows:
-        lead.append(para("不適合の行は、" + "、".join(f"{r[1]}" for r in ng_rows) + "です。"))
+        lead.append(para("不適合の行は、" + "、".join(f"「{r[1]}」" for r in ng_rows) + "です。"))
     if unk_rows:
-        lead.append(para("未確認の行は、" + "、".join(f"{r[1]}" for r in unk_rows) + "です。"))
+        lead.append(para("未確認の行は、" + "、".join(f"「{r[1]}」" for r in unk_rows) + "です。"))
     if STALE:
         lead.append(para("次の検査結果は、現在の入力より古くなっています。" + "、".join(f"{k}（{v[0]}）" for k, v in STALE.items()) + "。検査を流し直してから、report.py をもう一度流します。"))
     lead_html = H('<div class="lead">' + "".join(esc(x) for x in lead) + "</div>")
@@ -875,8 +943,8 @@ td .chip{margin-left:0}
     sections.append(cal_table)
     sections.append(H("<h2>8. 渡すもの</h2>"))
     sections.append(plates_section())
-    sections.append(para(join(H(f'<a href="../models/{MODEL}/README.md">README.md</a>'), "（部品表、組み立て、試し刷りと調整、表の作り方）と、　",
-                               H(f'<a href="../models/{MODEL}/demo/demo.ino">demo.ino</a>'), "（Arduino のデモ）を渡します。")))
+    sections.append(para(join(H(f'<a href="../models/{MODEL}/README.md">README.md</a>'), "（部品表、組み立て、試し刷りと調整、表の作り方）を渡します。")))
+    sections.append(para(join(H(f'<a href="../models/{MODEL}/demo/demo.ino">demo.ino</a>'), " は Arduino のデモです。", H(f'<a href="../models/{MODEL}/demo/bar.html">demo/bar.html</a>'), " はバー操作の画面です。")))
     sections.append(para(f"Studio は http://localhost:3000/?model={MODEL} で開きます（物理検証と組み立ての表示は /viewer/lattice/index.html?model={MODEL} です）。"))
     sections.append(H("<h2>9. 生成に使った入力</h2>"))
     sections.append(para(f"この報告は report.py が作りました。生成時刻は {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')} です。"))
@@ -886,7 +954,8 @@ td .chip{margin-left:0}
         comp_text = (f"デモは Arduino Uno 向けに実コンパイルしました（Flash {comp['flashBytes']} / {comp['flashMaximumBytes']} bytes、RAM {comp['ramBytes']} / {comp['ramMaximumBytes']} bytes。"
                      f"PHASE_TRIM_DEG の ±10° は通り、±11° は範囲外として止まります）。")
     else:
-        comp_text = "デモの Arduino 向けコンパイルは未実施です（firmware_report.json の compile.status は " + str(comp.get("status")) + "）。"
+        comp_text = ("デモの Arduino 向けコンパイルは未実施です（firmware_report.json の compile.status は " + str(comp.get("status")) + "）。"
+                     + (f"理由は「{comp['reason']}」です。" if comp.get("reason") else ""))
     sections.append(para(comp_text + "マイコンへの書き込みと SG92R の通電は未実施です。", "note"))
 
     doc = (f'<!doctype html><html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'

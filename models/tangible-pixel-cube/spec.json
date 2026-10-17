@@ -95,262 +95,111 @@
    "type": "press_fit",
    "pairs": [
     [
-     "cam_4_0",
+     "camshaft_0",
      "gear_0"
     ],
     [
-     "cam_4_1",
+     "camshaft_1",
      "gear_1"
     ],
     [
-     "cam_4_2",
+     "camshaft_2",
      "gear_2"
     ],
     [
-     "cam_4_3",
+     "camshaft_3",
      "gear_3"
     ],
     [
-     "cam_4_4",
+     "camshaft_4",
      "gear_4"
     ]
    ],
-   "insertion_mm": 2.4,
-   "basis": "継ぎ目の雌穴の潰しリブ 3 本（潰し 0.18mm）。当たるのは差し込みの最後の 2.4mm だけ（params.JOINT_ENGAGE_*）"
-  },
-  {
-   "type": "press_fit",
-   "pairs": [
-    [
-     "cam_0_0",
-     "cam_1_0"
-    ],
-    [
-     "cam_0_0",
-     "shaft_0"
-    ],
-    [
-     "cam_0_1",
-     "cam_1_1"
-    ],
-    [
-     "cam_0_1",
-     "shaft_1"
-    ],
-    [
-     "cam_0_2",
-     "cam_1_2"
-    ],
-    [
-     "cam_0_2",
-     "shaft_2"
-    ],
-    [
-     "cam_0_3",
-     "cam_1_3"
-    ],
-    [
-     "cam_0_3",
-     "shaft_3"
-    ],
-    [
-     "cam_0_4",
-     "cam_1_4"
-    ],
-    [
-     "cam_0_4",
-     "shaft_4"
-    ],
-    [
-     "cam_1_0",
-     "cam_2_0"
-    ],
-    [
-     "cam_1_1",
-     "cam_2_1"
-    ],
-    [
-     "cam_1_2",
-     "cam_2_2"
-    ],
-    [
-     "cam_1_3",
-     "cam_2_3"
-    ],
-    [
-     "cam_1_4",
-     "cam_2_4"
-    ],
-    [
-     "cam_2_0",
-     "cam_3_0"
-    ],
-    [
-     "cam_2_1",
-     "cam_3_1"
-    ],
-    [
-     "cam_2_2",
-     "cam_3_2"
-    ],
-    [
-     "cam_2_3",
-     "cam_3_3"
-    ],
-    [
-     "cam_2_4",
-     "cam_3_4"
-    ],
-    [
-     "cam_3_0",
-     "cam_4_0"
-    ],
-    [
-     "cam_3_1",
-     "cam_4_1"
-    ],
-    [
-     "cam_3_2",
-     "cam_4_2"
-    ],
-    [
-     "cam_3_3",
-     "cam_4_3"
-    ],
-    [
-     "cam_3_4",
-     "cam_4_4"
-    ]
-   ],
-   "insertion_mm": 2.8,
-   "basis": "継ぎ目の雌穴の潰しリブ 3 本（潰し 0.18mm）。当たるのは差し込みの最後の 2.8mm だけ（params.JOINT_ENGAGE_*）"
+   "insertion_mm": 1.5,
+   "basis": "継ぎ目の雌穴の潰しリブ 3 本（潰し 0.18mm）。当たるのは差し込みの最後の 1.5mm だけ（gear_hole(): リブ長さ 1.5）"
   },
   {
    "type": "static_fit",
    "pairs": [
     [
-     "cam_0_0",
-     "cam_1_0"
-    ],
-    [
-     "cam_0_0",
-     "shaft_0"
-    ],
-    [
-     "cam_0_1",
-     "cam_1_1"
-    ],
-    [
-     "cam_0_1",
-     "shaft_1"
-    ],
-    [
-     "cam_0_2",
-     "cam_1_2"
-    ],
-    [
-     "cam_0_2",
-     "shaft_2"
-    ],
-    [
-     "cam_0_3",
-     "cam_1_3"
-    ],
-    [
-     "cam_0_3",
-     "shaft_3"
-    ],
-    [
-     "cam_0_4",
-     "cam_1_4"
-    ],
-    [
-     "cam_0_4",
-     "shaft_4"
-    ],
-    [
-     "cam_1_0",
-     "cam_2_0"
-    ],
-    [
-     "cam_1_1",
-     "cam_2_1"
-    ],
-    [
-     "cam_1_2",
-     "cam_2_2"
-    ],
-    [
-     "cam_1_3",
-     "cam_2_3"
-    ],
-    [
-     "cam_1_4",
-     "cam_2_4"
-    ],
-    [
-     "cam_2_0",
-     "cam_3_0"
-    ],
-    [
-     "cam_2_1",
-     "cam_3_1"
-    ],
-    [
-     "cam_2_2",
-     "cam_3_2"
-    ],
-    [
-     "cam_2_3",
-     "cam_3_3"
-    ],
-    [
-     "cam_2_4",
-     "cam_3_4"
-    ],
-    [
-     "cam_3_0",
-     "cam_4_0"
-    ],
-    [
-     "cam_3_1",
-     "cam_4_1"
-    ],
-    [
-     "cam_3_2",
-     "cam_4_2"
-    ],
-    [
-     "cam_3_3",
-     "cam_4_3"
-    ],
-    [
-     "cam_3_4",
-     "cam_4_4"
-    ],
-    [
-     "cam_4_0",
+     "camshaft_0",
      "gear_0"
     ],
     [
-     "cam_4_1",
+     "camshaft_1",
      "gear_1"
     ],
     [
-     "cam_4_2",
+     "camshaft_2",
      "gear_2"
     ],
     [
-     "cam_4_3",
+     "camshaft_3",
      "gear_3"
     ],
     [
-     "cam_4_4",
+     "camshaft_4",
      "gear_4"
     ]
    ],
-   "max_mm3": 1.0,
-   "basis": "組んだ後も潰しリブ 3 本 x 幅 0.6 x 潰し 0.18 x 長さ（最大 2.8）= 0.91mm3 が重なったまま残る"
+   "max_mm3": 0.4,
+   "basis": "組んだ後も潰しリブ 3 本が重なったまま残る。1 本 = 幅 0.6 x（傾き部分 0.5 x 0.18^2 + 平ら部分 0.18 x 1.12）で合計 0.392mm3（verify_report の理論値 0.392、許容 0.353〜0.400）"
+  },
+  {
+   "type": "press_fit",
+   "pairs": [
+    [
+     "bearing_cap_px",
+     "housing"
+    ],
+    [
+     "bearing_cap_mx",
+     "housing"
+    ]
+   ],
+   "insertion_mm": 2.0,
+   "basis": "押さえ棒の Y 端のリブ（各端 2 本、高さ 0.25、食い込み 0.05）が外装の Y 止めの面を擦る。擦るのは差し込みの最後の 2.0mm だけ（assembly_report の allowedInsertionWindowMm 2.0）"
+  },
+  {
+   "type": "static_fit",
+   "pairs": [
+    [
+     "bearing_cap_px",
+     "housing"
+    ],
+    [
+     "bearing_cap_mx",
+     "housing"
+    ]
+   ],
+   "max_mm3": 0.15,
+   "basis": "組んだ後も押さえ棒の Y 端のリブが重なったまま残る。理論値 0.120mm3（各端 2 本、食い込み 0.05）、許容 0.096〜0.154"
+  },
+  {
+   "type": "snap",
+   "pairs": [
+    [
+     "bearing_cap_px",
+     "housing"
+    ]
+   ],
+   "engage_mm": 12.0,
+   "strain_percent": 1.606,
+   "deflection_mm": 0.15,
+   "basis": "押さえ棒の爪（出っ張り 0.45）が外装の面に乗り上げて腕（長さ 4.1、厚さ 1.2）がしなる。しなり 0.15mm、梁の見積り 3tδ/(2L^2) でひずみ 1.606%（assembly_report capSnap）"
+  },
+  {
+   "type": "snap",
+   "pairs": [
+    [
+     "bearing_cap_mx",
+     "housing"
+    ]
+   ],
+   "engage_mm": 12.0,
+   "strain_percent": 1.531,
+   "deflection_mm": 0.15,
+   "basis": "押さえ棒の爪（出っ張り 0.45）が外装の面に乗り上げて腕（長さ 4.2、厚さ 1.2）がしなる。しなり 0.15mm、梁の見積り 3tδ/(2L^2) でひずみ 1.531%（assembly_report capSnap）"
   },
   {
    "type": "snap",
@@ -468,7 +317,7 @@
   {
    "id": "cam-pixel_0_0",
    "type": "drive",
-   "driver": "cam_0_0",
+   "driver": "camshaft_0",
    "driven": "pixel_0_0",
    "sides": "one_sided",
    "max_play_mm": 0.5
@@ -476,7 +325,7 @@
   {
    "id": "cam-pixel_0_1",
    "type": "drive",
-   "driver": "cam_0_1",
+   "driver": "camshaft_1",
    "driven": "pixel_0_1",
    "sides": "one_sided",
    "max_play_mm": 0.5
@@ -484,7 +333,7 @@
   {
    "id": "cam-pixel_0_2",
    "type": "drive",
-   "driver": "cam_0_2",
+   "driver": "camshaft_2",
    "driven": "pixel_0_2",
    "sides": "one_sided",
    "max_play_mm": 0.5
@@ -492,7 +341,7 @@
   {
    "id": "cam-pixel_0_3",
    "type": "drive",
-   "driver": "cam_0_3",
+   "driver": "camshaft_3",
    "driven": "pixel_0_3",
    "sides": "one_sided",
    "max_play_mm": 0.5
@@ -500,7 +349,7 @@
   {
    "id": "cam-pixel_0_4",
    "type": "drive",
-   "driver": "cam_0_4",
+   "driver": "camshaft_4",
    "driven": "pixel_0_4",
    "sides": "one_sided",
    "max_play_mm": 0.5
@@ -508,7 +357,7 @@
   {
    "id": "cam-pixel_1_0",
    "type": "drive",
-   "driver": "cam_1_0",
+   "driver": "camshaft_0",
    "driven": "pixel_1_0",
    "sides": "one_sided",
    "max_play_mm": 0.5
@@ -516,7 +365,7 @@
   {
    "id": "cam-pixel_1_1",
    "type": "drive",
-   "driver": "cam_1_1",
+   "driver": "camshaft_1",
    "driven": "pixel_1_1",
    "sides": "one_sided",
    "max_play_mm": 0.5
@@ -524,7 +373,7 @@
   {
    "id": "cam-pixel_1_2",
    "type": "drive",
-   "driver": "cam_1_2",
+   "driver": "camshaft_2",
    "driven": "pixel_1_2",
    "sides": "one_sided",
    "max_play_mm": 0.5
@@ -532,7 +381,7 @@
   {
    "id": "cam-pixel_1_3",
    "type": "drive",
-   "driver": "cam_1_3",
+   "driver": "camshaft_3",
    "driven": "pixel_1_3",
    "sides": "one_sided",
    "max_play_mm": 0.5
@@ -540,7 +389,7 @@
   {
    "id": "cam-pixel_1_4",
    "type": "drive",
-   "driver": "cam_1_4",
+   "driver": "camshaft_4",
    "driven": "pixel_1_4",
    "sides": "one_sided",
    "max_play_mm": 0.5
@@ -548,7 +397,7 @@
   {
    "id": "cam-pixel_2_0",
    "type": "drive",
-   "driver": "cam_2_0",
+   "driver": "camshaft_0",
    "driven": "pixel_2_0",
    "sides": "one_sided",
    "max_play_mm": 0.5
@@ -556,7 +405,7 @@
   {
    "id": "cam-pixel_2_1",
    "type": "drive",
-   "driver": "cam_2_1",
+   "driver": "camshaft_1",
    "driven": "pixel_2_1",
    "sides": "one_sided",
    "max_play_mm": 0.5
@@ -564,7 +413,7 @@
   {
    "id": "cam-pixel_2_2",
    "type": "drive",
-   "driver": "cam_2_2",
+   "driver": "camshaft_2",
    "driven": "pixel_2_2",
    "sides": "one_sided",
    "max_play_mm": 0.5
@@ -572,7 +421,7 @@
   {
    "id": "cam-pixel_2_3",
    "type": "drive",
-   "driver": "cam_2_3",
+   "driver": "camshaft_3",
    "driven": "pixel_2_3",
    "sides": "one_sided",
    "max_play_mm": 0.5
@@ -580,7 +429,7 @@
   {
    "id": "cam-pixel_2_4",
    "type": "drive",
-   "driver": "cam_2_4",
+   "driver": "camshaft_4",
    "driven": "pixel_2_4",
    "sides": "one_sided",
    "max_play_mm": 0.5
@@ -588,7 +437,7 @@
   {
    "id": "cam-pixel_3_0",
    "type": "drive",
-   "driver": "cam_3_0",
+   "driver": "camshaft_0",
    "driven": "pixel_3_0",
    "sides": "one_sided",
    "max_play_mm": 0.5
@@ -596,7 +445,7 @@
   {
    "id": "cam-pixel_3_1",
    "type": "drive",
-   "driver": "cam_3_1",
+   "driver": "camshaft_1",
    "driven": "pixel_3_1",
    "sides": "one_sided",
    "max_play_mm": 0.5
@@ -604,7 +453,7 @@
   {
    "id": "cam-pixel_3_2",
    "type": "drive",
-   "driver": "cam_3_2",
+   "driver": "camshaft_2",
    "driven": "pixel_3_2",
    "sides": "one_sided",
    "max_play_mm": 0.5
@@ -612,7 +461,7 @@
   {
    "id": "cam-pixel_3_3",
    "type": "drive",
-   "driver": "cam_3_3",
+   "driver": "camshaft_3",
    "driven": "pixel_3_3",
    "sides": "one_sided",
    "max_play_mm": 0.5
@@ -620,7 +469,7 @@
   {
    "id": "cam-pixel_3_4",
    "type": "drive",
-   "driver": "cam_3_4",
+   "driver": "camshaft_4",
    "driven": "pixel_3_4",
    "sides": "one_sided",
    "max_play_mm": 0.5
@@ -628,7 +477,7 @@
   {
    "id": "cam-pixel_4_0",
    "type": "drive",
-   "driver": "cam_4_0",
+   "driver": "camshaft_0",
    "driven": "pixel_4_0",
    "sides": "one_sided",
    "max_play_mm": 0.5
@@ -636,7 +485,7 @@
   {
    "id": "cam-pixel_4_1",
    "type": "drive",
-   "driver": "cam_4_1",
+   "driver": "camshaft_1",
    "driven": "pixel_4_1",
    "sides": "one_sided",
    "max_play_mm": 0.5
@@ -644,7 +493,7 @@
   {
    "id": "cam-pixel_4_2",
    "type": "drive",
-   "driver": "cam_4_2",
+   "driver": "camshaft_2",
    "driven": "pixel_4_2",
    "sides": "one_sided",
    "max_play_mm": 0.5
@@ -652,7 +501,7 @@
   {
    "id": "cam-pixel_4_3",
    "type": "drive",
-   "driver": "cam_4_3",
+   "driver": "camshaft_3",
    "driven": "pixel_4_3",
    "sides": "one_sided",
    "max_play_mm": 0.5
@@ -660,7 +509,7 @@
   {
    "id": "cam-pixel_4_4",
    "type": "drive",
-   "driver": "cam_4_4",
+   "driver": "camshaft_4",
    "driven": "pixel_4_4",
    "sides": "one_sided",
    "max_play_mm": 0.5
@@ -669,101 +518,93 @@
    "id": "shaft0-up",
    "type": "retention",
    "parts": [
-    "shaft_0",
-    "gear_0",
-    "cam_0_0",
-    "cam_1_0",
-    "cam_2_0",
-    "cam_3_0",
-    "cam_4_0"
+    "camshaft_0",
+    "gear_0"
    ],
    "direction": [
     0,
     0,
     1
    ],
-   "max_free_mm": 1.0,
-   "engage_depth_mm": 2.25
+   "max_free_mm": 1.0
   },
   {
    "id": "shaft1-up",
    "type": "retention",
    "parts": [
-    "shaft_1",
-    "gear_1",
-    "cam_0_1",
-    "cam_1_1",
-    "cam_2_1",
-    "cam_3_1",
-    "cam_4_1"
+    "camshaft_1",
+    "gear_1"
    ],
    "direction": [
     0,
     0,
     1
    ],
-   "max_free_mm": 1.0,
-   "engage_depth_mm": 2.25
+   "max_free_mm": 1.0
   },
   {
    "id": "shaft2-up",
    "type": "retention",
    "parts": [
-    "shaft_2",
-    "gear_2",
-    "cam_0_2",
-    "cam_1_2",
-    "cam_2_2",
-    "cam_3_2",
-    "cam_4_2"
+    "camshaft_2",
+    "gear_2"
    ],
    "direction": [
     0,
     0,
     1
    ],
-   "max_free_mm": 1.0,
-   "engage_depth_mm": 2.25
+   "max_free_mm": 1.0
   },
   {
    "id": "shaft3-up",
    "type": "retention",
    "parts": [
-    "shaft_3",
-    "gear_3",
-    "cam_0_3",
-    "cam_1_3",
-    "cam_2_3",
-    "cam_3_3",
-    "cam_4_3"
+    "camshaft_3",
+    "gear_3"
    ],
    "direction": [
     0,
     0,
     1
    ],
-   "max_free_mm": 1.0,
-   "engage_depth_mm": 2.25
+   "max_free_mm": 1.0
   },
   {
    "id": "shaft4-up",
    "type": "retention",
    "parts": [
-    "shaft_4",
-    "gear_4",
-    "cam_0_4",
-    "cam_1_4",
-    "cam_2_4",
-    "cam_3_4",
-    "cam_4_4"
+    "camshaft_4",
+    "gear_4"
    ],
    "direction": [
     0,
     0,
     1
    ],
-   "max_free_mm": 1.0,
-   "engage_depth_mm": 2.25
+   "max_free_mm": 1.0
+  },
+  {
+   "id": "bearing-cap-px-up",
+   "type": "retention",
+   "part": "bearing_cap_px",
+   "direction": [
+    0,
+    0,
+    1
+   ],
+   "max_free_mm": 0.5
+  },
+  {
+   "id": "bearing-cap-mx-up",
+   "type": "retention",
+   "part": "bearing_cap_mx",
+   "direction": [
+    0,
+    0,
+    1
+   ],
+   "max_free_mm": 0.5
   },
   {
    "id": "bezel-up",

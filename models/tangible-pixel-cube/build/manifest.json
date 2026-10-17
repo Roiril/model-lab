@@ -15,13 +15,14 @@
    "外形 96mm の立方体。画素の出っ張り +3mm で 99mm（10cm 以下）",
    "外の稜は 1.0mm の 45 度面取りにそろえ、外装とベゼルの継ぎ目だけ面取りせず 1 本の水平線にした",
    "ベゼルは見える上面を下にして刷る。縁の爪（食い込み 0.25mm）が壁の内側の窪みに嵌まり、壁のたわみ（ひずみ 0.2% 未満）で着脱する",
-   "SG92R は取付耳を 2 枚の柵で挟んで落とし込む（潰しリブで保持、奥の壁で前後を止める）。ねじ・接着なし"
+   "SG92R は取付耳を 2 枚の柵（耳の溝は耳の厚み 2.0 + 片側 0.25）で挟んで落とし込み、上から印刷のクリップ 2 つを被せて上向きを止める。ねじ・接着なし",
+   "軸受けは +X が Ø5、-X が Ø10。端壁を 1.0 掘った U 溝（口は 45 度 x 1.5 のじょうご）に軸を上から落とし、端の壁ごとの押さえ棒（bearing_cap_px / mx）を上から差して軸の上 0.15 で押さえる。棒は 5 本の軸の上の爪がスリットへ入り、パッドの上面に突き当たって座る"
   ],
   "limitations": [
    "寸法の仮値（潰しリブの潰し代・柵の隙間・爪の食い込み）は実物で合わせる"
   ],
-  "n_parts": 69,
-  "n_print": 67
+  "n_parts": 46,
+  "n_print": 44
  },
  "parts": [
   {
@@ -63,10 +64,10 @@
    ]
   },
   {
-   "id": "shaft_0",
-   "label": "カム軸 0",
-   "assembly": "build/shaft_0.stl",
-   "print": "build/print_shaft_0.stl",
+   "id": "camshaft_0",
+   "label": "カム軸 行0",
+   "assembly": "build/camshaft_0.stl",
+   "print": "build/print_camshaft_0.stl",
    "color": "#5c6bc0",
    "explode": [
     0,
@@ -75,10 +76,10 @@
    ]
   },
   {
-   "id": "shaft_1",
-   "label": "カム軸 1",
-   "assembly": "build/shaft_1.stl",
-   "print": "build/print_shaft_1.stl",
+   "id": "camshaft_1",
+   "label": "カム軸 行1",
+   "assembly": "build/camshaft_1.stl",
+   "print": "build/print_camshaft_1.stl",
    "color": "#5c6bc0",
    "explode": [
     0,
@@ -87,10 +88,10 @@
    ]
   },
   {
-   "id": "shaft_2",
-   "label": "カム軸 2",
-   "assembly": "build/shaft_2.stl",
-   "print": "build/print_shaft_2.stl",
+   "id": "camshaft_2",
+   "label": "カム軸 行2",
+   "assembly": "build/camshaft_2.stl",
+   "print": "build/print_camshaft_2.stl",
    "color": "#5c6bc0",
    "explode": [
     0,
@@ -99,10 +100,10 @@
    ]
   },
   {
-   "id": "shaft_3",
-   "label": "カム軸 3",
-   "assembly": "build/shaft_3.stl",
-   "print": "build/print_shaft_3.stl",
+   "id": "camshaft_3",
+   "label": "カム軸 行3",
+   "assembly": "build/camshaft_3.stl",
+   "print": "build/print_camshaft_3.stl",
    "color": "#5c6bc0",
    "explode": [
     0,
@@ -111,10 +112,10 @@
    ]
   },
   {
-   "id": "shaft_4",
-   "label": "カム軸 4",
-   "assembly": "build/shaft_4.stl",
-   "print": "build/print_shaft_4.stl",
+   "id": "camshaft_4",
+   "label": "カム軸 行4",
+   "assembly": "build/camshaft_4.stl",
+   "print": "build/print_camshaft_4.stl",
    "color": "#5c6bc0",
    "explode": [
     0,
@@ -124,7 +125,7 @@
   },
   {
    "id": "gear_0",
-   "label": "歯車 0",
+   "label": "歯車 行0",
    "assembly": "build/gear_0.stl",
    "print": "build/print_gear_0.stl",
    "color": "#26a69a",
@@ -136,7 +137,7 @@
   },
   {
    "id": "gear_1",
-   "label": "歯車 1",
+   "label": "歯車 行1",
    "assembly": "build/gear_1.stl",
    "print": "build/print_gear_1.stl",
    "color": "#26a69a",
@@ -148,7 +149,7 @@
   },
   {
    "id": "gear_2",
-   "label": "歯車 2",
+   "label": "歯車 行2",
    "assembly": "build/gear_2.stl",
    "print": "build/print_gear_2.stl",
    "color": "#26a69a",
@@ -160,7 +161,7 @@
   },
   {
    "id": "gear_3",
-   "label": "歯車 3",
+   "label": "歯車 行3",
    "assembly": "build/gear_3.stl",
    "print": "build/print_gear_3.stl",
    "color": "#26a69a",
@@ -172,310 +173,10 @@
   },
   {
    "id": "gear_4",
-   "label": "歯車 4",
+   "label": "歯車 行4",
    "assembly": "build/gear_4.stl",
    "print": "build/print_gear_4.stl",
    "color": "#26a69a",
-   "explode": [
-    0,
-    0,
-    20
-   ]
-  },
-  {
-   "id": "cam_0_0",
-   "label": "カム 列0 行0",
-   "assembly": "build/cam_0_0.stl",
-   "print": "build/print_cam_0_0.stl",
-   "color": "#ef5350",
-   "explode": [
-    0,
-    0,
-    20
-   ]
-  },
-  {
-   "id": "cam_1_0",
-   "label": "カム 列1 行0",
-   "assembly": "build/cam_1_0.stl",
-   "print": "build/print_cam_1_0.stl",
-   "color": "#ef5350",
-   "explode": [
-    0,
-    0,
-    20
-   ]
-  },
-  {
-   "id": "cam_2_0",
-   "label": "カム 列2 行0",
-   "assembly": "build/cam_2_0.stl",
-   "print": "build/print_cam_2_0.stl",
-   "color": "#ef5350",
-   "explode": [
-    0,
-    0,
-    20
-   ]
-  },
-  {
-   "id": "cam_3_0",
-   "label": "カム 列3 行0",
-   "assembly": "build/cam_3_0.stl",
-   "print": "build/print_cam_3_0.stl",
-   "color": "#ef5350",
-   "explode": [
-    0,
-    0,
-    20
-   ]
-  },
-  {
-   "id": "cam_4_0",
-   "label": "カム 列4 行0",
-   "assembly": "build/cam_4_0.stl",
-   "print": "build/print_cam_4_0.stl",
-   "color": "#ef5350",
-   "explode": [
-    0,
-    0,
-    20
-   ]
-  },
-  {
-   "id": "cam_0_1",
-   "label": "カム 列0 行1",
-   "assembly": "build/cam_0_1.stl",
-   "print": "build/print_cam_0_1.stl",
-   "color": "#ef5350",
-   "explode": [
-    0,
-    0,
-    20
-   ]
-  },
-  {
-   "id": "cam_1_1",
-   "label": "カム 列1 行1",
-   "assembly": "build/cam_1_1.stl",
-   "print": "build/print_cam_1_1.stl",
-   "color": "#ef5350",
-   "explode": [
-    0,
-    0,
-    20
-   ]
-  },
-  {
-   "id": "cam_2_1",
-   "label": "カム 列2 行1",
-   "assembly": "build/cam_2_1.stl",
-   "print": "build/print_cam_2_1.stl",
-   "color": "#ef5350",
-   "explode": [
-    0,
-    0,
-    20
-   ]
-  },
-  {
-   "id": "cam_3_1",
-   "label": "カム 列3 行1",
-   "assembly": "build/cam_3_1.stl",
-   "print": "build/print_cam_3_1.stl",
-   "color": "#ef5350",
-   "explode": [
-    0,
-    0,
-    20
-   ]
-  },
-  {
-   "id": "cam_4_1",
-   "label": "カム 列4 行1",
-   "assembly": "build/cam_4_1.stl",
-   "print": "build/print_cam_4_1.stl",
-   "color": "#ef5350",
-   "explode": [
-    0,
-    0,
-    20
-   ]
-  },
-  {
-   "id": "cam_0_2",
-   "label": "カム 列0 行2",
-   "assembly": "build/cam_0_2.stl",
-   "print": "build/print_cam_0_2.stl",
-   "color": "#ef5350",
-   "explode": [
-    0,
-    0,
-    20
-   ]
-  },
-  {
-   "id": "cam_1_2",
-   "label": "カム 列1 行2",
-   "assembly": "build/cam_1_2.stl",
-   "print": "build/print_cam_1_2.stl",
-   "color": "#ef5350",
-   "explode": [
-    0,
-    0,
-    20
-   ]
-  },
-  {
-   "id": "cam_2_2",
-   "label": "カム 列2 行2",
-   "assembly": "build/cam_2_2.stl",
-   "print": "build/print_cam_2_2.stl",
-   "color": "#ef5350",
-   "explode": [
-    0,
-    0,
-    20
-   ]
-  },
-  {
-   "id": "cam_3_2",
-   "label": "カム 列3 行2",
-   "assembly": "build/cam_3_2.stl",
-   "print": "build/print_cam_3_2.stl",
-   "color": "#ef5350",
-   "explode": [
-    0,
-    0,
-    20
-   ]
-  },
-  {
-   "id": "cam_4_2",
-   "label": "カム 列4 行2",
-   "assembly": "build/cam_4_2.stl",
-   "print": "build/print_cam_4_2.stl",
-   "color": "#ef5350",
-   "explode": [
-    0,
-    0,
-    20
-   ]
-  },
-  {
-   "id": "cam_0_3",
-   "label": "カム 列0 行3",
-   "assembly": "build/cam_0_3.stl",
-   "print": "build/print_cam_0_3.stl",
-   "color": "#ef5350",
-   "explode": [
-    0,
-    0,
-    20
-   ]
-  },
-  {
-   "id": "cam_1_3",
-   "label": "カム 列1 行3",
-   "assembly": "build/cam_1_3.stl",
-   "print": "build/print_cam_1_3.stl",
-   "color": "#ef5350",
-   "explode": [
-    0,
-    0,
-    20
-   ]
-  },
-  {
-   "id": "cam_2_3",
-   "label": "カム 列2 行3",
-   "assembly": "build/cam_2_3.stl",
-   "print": "build/print_cam_2_3.stl",
-   "color": "#ef5350",
-   "explode": [
-    0,
-    0,
-    20
-   ]
-  },
-  {
-   "id": "cam_3_3",
-   "label": "カム 列3 行3",
-   "assembly": "build/cam_3_3.stl",
-   "print": "build/print_cam_3_3.stl",
-   "color": "#ef5350",
-   "explode": [
-    0,
-    0,
-    20
-   ]
-  },
-  {
-   "id": "cam_4_3",
-   "label": "カム 列4 行3",
-   "assembly": "build/cam_4_3.stl",
-   "print": "build/print_cam_4_3.stl",
-   "color": "#ef5350",
-   "explode": [
-    0,
-    0,
-    20
-   ]
-  },
-  {
-   "id": "cam_0_4",
-   "label": "カム 列0 行4",
-   "assembly": "build/cam_0_4.stl",
-   "print": "build/print_cam_0_4.stl",
-   "color": "#ef5350",
-   "explode": [
-    0,
-    0,
-    20
-   ]
-  },
-  {
-   "id": "cam_1_4",
-   "label": "カム 列1 行4",
-   "assembly": "build/cam_1_4.stl",
-   "print": "build/print_cam_1_4.stl",
-   "color": "#ef5350",
-   "explode": [
-    0,
-    0,
-    20
-   ]
-  },
-  {
-   "id": "cam_2_4",
-   "label": "カム 列2 行4",
-   "assembly": "build/cam_2_4.stl",
-   "print": "build/print_cam_2_4.stl",
-   "color": "#ef5350",
-   "explode": [
-    0,
-    0,
-    20
-   ]
-  },
-  {
-   "id": "cam_3_4",
-   "label": "カム 列3 行4",
-   "assembly": "build/cam_3_4.stl",
-   "print": "build/print_cam_3_4.stl",
-   "color": "#ef5350",
-   "explode": [
-    0,
-    0,
-    20
-   ]
-  },
-  {
-   "id": "cam_4_4",
-   "label": "カム 列4 行4",
-   "assembly": "build/cam_4_4.stl",
-   "print": "build/print_cam_4_4.stl",
-   "color": "#ef5350",
    "explode": [
     0,
     0,
@@ -780,6 +481,30 @@
     0,
     0,
     70
+   ]
+  },
+  {
+   "id": "bearing_cap_px",
+   "label": "軸受けの押さえ棒（+X）",
+   "assembly": "build/bearing_cap_px.stl",
+   "print": "build/print_bearing_cap_px.stl",
+   "color": "#8d6e63",
+   "explode": [
+    0,
+    0,
+    32
+   ]
+  },
+  {
+   "id": "bearing_cap_mx",
+   "label": "軸受けの押さえ棒（-X）",
+   "assembly": "build/bearing_cap_mx.stl",
+   "print": "build/print_bearing_cap_mx.stl",
+   "color": "#8d6e63",
+   "explode": [
+    0,
+    0,
+    32
    ]
   },
   {
