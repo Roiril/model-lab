@@ -1,0 +1,249 @@
+{
+  "version": 1,
+  "model": "so101",
+  "source": "models/so101/build/manifest.json",
+  "sourceSha256": "b3c3105ce04323a65c619f503b5269662e262f4c1c141da3a7c4555bac11c7f5",
+  "groups": [
+    {
+      "id": "base",
+      "label": "土台",
+      "color": "#b8b2a4"
+    },
+    {
+      "id": "shoulder",
+      "label": "肩",
+      "color": "#c7c1b3"
+    },
+    {
+      "id": "upper",
+      "label": "上腕",
+      "color": "#d6d0c2"
+    },
+    {
+      "id": "lower",
+      "label": "前腕",
+      "color": "#ccc6b8"
+    },
+    {
+      "id": "wrist",
+      "label": "手首",
+      "color": "#ddd7c9"
+    },
+    {
+      "id": "gripper",
+      "label": "グリッパ",
+      "color": "#e4dfd2"
+    },
+    {
+      "id": "servo",
+      "label": "サーボ",
+      "color": "#2a2a2e"
+    }
+  ],
+  "parts": [
+    {
+      "id": "base-body",
+      "label": "土台",
+      "systemLabel": "土台",
+      "group": "base",
+      "kind": "printed",
+      "file": "so101-part-base-body.stl",
+      "sha256": "3dfd3f69b2599e2d2fbb20adfbd67f1cd071bea0209ad8a47e9dace6517bfa67",
+      "size": 471584,
+      "aliases": [],
+      "color": "#d6d0c2"
+    },
+    {
+      "id": "base-motor-holder",
+      "label": "土台のモータ受け",
+      "systemLabel": "土台のモータ受け",
+      "group": "base",
+      "kind": "printed",
+      "file": "so101-part-base-motor-holder.stl",
+      "sha256": "cf456222a3abccb9fa19480a7253cd1880d20e44d36f0442143ca73ba37f8e46",
+      "size": 1877084,
+      "aliases": [],
+      "color": "#d6d0c2"
+    },
+    {
+      "id": "base-board-plate",
+      "label": "基板の取付板",
+      "systemLabel": "基板の取付板",
+      "group": "base",
+      "kind": "printed",
+      "file": "so101-part-base-board-plate.stl",
+      "sha256": "74ac476ca20f10de28f30fd586e8670c54cc5b7ff14b6a07c54b8bf34611e409",
+      "size": 62784,
+      "aliases": [],
+      "color": "#d6d0c2"
+    },
+    {
+      "id": "servo-1",
+      "label": "サーボ #1 肩の旋回",
+      "systemLabel": "サーボ #1 肩の旋回",
+      "group": "servo",
+      "kind": "stock",
+      "file": "so101-part-servo-1.stl",
+      "sha256": "604360c2110b0998aa42d4b368c57f71a5327e2eafa18d5fed62f06e12a9bfde",
+      "size": 954084,
+      "aliases": [],
+      "color": "#2a2a2e"
+    },
+    {
+      "id": "shoulder-motor-holder",
+      "label": "肩のモータ受け",
+      "systemLabel": "肩のモータ受け",
+      "group": "shoulder",
+      "kind": "printed",
+      "file": "so101-part-shoulder-motor-holder.stl",
+      "sha256": "c88cd633c1142b8e321e63222ccc37e539a9f42483625cc76c8074cf97877c0a",
+      "size": 1129334,
+      "aliases": [],
+      "color": "#d6d0c2"
+    },
+    {
+      "id": "shoulder-rotation",
+      "label": "肩の回転台",
+      "systemLabel": "肩の回転台",
+      "group": "shoulder",
+      "kind": "printed",
+      "file": "so101-part-shoulder-rotation.stl",
+      "sha256": "c887aab99e3222a21f19b65a5daa65563e2fe7721b7002f8fa20f8fffdd29af8",
+      "size": 883684,
+      "aliases": [],
+      "color": "#d6d0c2"
+    },
+    {
+      "id": "servo-2",
+      "label": "サーボ #2 肩の上下",
+      "systemLabel": "サーボ #2 肩の上下",
+      "group": "servo",
+      "kind": "stock",
+      "file": "so101-part-servo-2.stl",
+      "sha256": "5d449788e9b6d63a99d1fe53135bfceb59aa5404603ecc083af682641a24eccd",
+      "size": 954084,
+      "aliases": [],
+      "color": "#2a2a2e"
+    },
+    {
+      "id": "upper-arm",
+      "label": "上腕",
+      "systemLabel": "上腕",
+      "group": "upper",
+      "kind": "printed",
+      "file": "so101-part-upper-arm.stl",
+      "sha256": "18bf73f7cd1c17ae834cabad713cfd41a9da8fa2c4d94bee63eb26f5a2e9af2b",
+      "size": 1303484,
+      "aliases": [],
+      "color": "#d6d0c2"
+    },
+    {
+      "id": "servo-3",
+      "label": "サーボ #3 肘",
+      "systemLabel": "サーボ #3 肘",
+      "group": "servo",
+      "kind": "stock",
+      "file": "so101-part-servo-3.stl",
+      "sha256": "bed38f48bb430c04dad76740ce1f10d299db606e3984ea5dc247de37724bf638",
+      "size": 954084,
+      "aliases": [],
+      "color": "#2a2a2e"
+    },
+    {
+      "id": "lower-arm",
+      "label": "前腕",
+      "systemLabel": "前腕",
+      "group": "lower",
+      "kind": "printed",
+      "file": "so101-part-lower-arm.stl",
+      "sha256": "3602e48c09583058e3865d1fb000b330a0c431109787ecf87a511da1cbe6a7eb",
+      "size": 1975884,
+      "aliases": [],
+      "color": "#d6d0c2"
+    },
+    {
+      "id": "lower-wrist-holder",
+      "label": "手首のモータ受け",
+      "systemLabel": "手首のモータ受け",
+      "group": "lower",
+      "kind": "printed",
+      "file": "so101-part-lower-wrist-holder.stl",
+      "sha256": "d4d1e64799c6ed85c78e4f54915c29ddaa945e20e00b6e378992d646a3ca6655",
+      "size": 1052184,
+      "aliases": [],
+      "color": "#d6d0c2"
+    },
+    {
+      "id": "servo-4",
+      "label": "サーボ #4 手首の曲げ",
+      "systemLabel": "サーボ #4 手首の曲げ",
+      "group": "servo",
+      "kind": "stock",
+      "file": "so101-part-servo-4.stl",
+      "sha256": "74732cddd004a9fae6accef9ff234d5909ee65e2d4ee76484bd8c4912db6122c",
+      "size": 954084,
+      "aliases": [],
+      "color": "#2a2a2e"
+    },
+    {
+      "id": "wrist-body",
+      "label": "手首",
+      "systemLabel": "手首",
+      "group": "wrist",
+      "kind": "printed",
+      "file": "so101-part-wrist-body.stl",
+      "sha256": "1aa1f34b350cb860dc5f15dd6eafa1bf284483ddc40bd49fb6c5e01ea4f6c914",
+      "size": 2699784,
+      "aliases": [],
+      "color": "#d6d0c2"
+    },
+    {
+      "id": "servo-5",
+      "label": "サーボ #5 手首の回転",
+      "systemLabel": "サーボ #5 手首の回転",
+      "group": "servo",
+      "kind": "stock",
+      "file": "so101-part-servo-5.stl",
+      "sha256": "b805067674efcbf56c46ddfdcbcc0d894d3b2fb9cffce15a232b0cac5989d630",
+      "size": 865884,
+      "aliases": [],
+      "color": "#2a2a2e"
+    },
+    {
+      "id": "gripper-fixed-jaw",
+      "label": "グリッパの固定あご",
+      "systemLabel": "グリッパの固定あご",
+      "group": "gripper",
+      "kind": "printed",
+      "file": "so101-part-gripper-fixed-jaw.stl",
+      "sha256": "ae0a38ec51824718dbb37f7f51ae015cf8b6cb9c06d6bf216bc998f329f4f19c",
+      "size": 1439884,
+      "aliases": [],
+      "color": "#d6d0c2"
+    },
+    {
+      "id": "servo-6",
+      "label": "サーボ #6 グリッパ",
+      "systemLabel": "サーボ #6 グリッパ",
+      "group": "servo",
+      "kind": "stock",
+      "file": "so101-part-servo-6.stl",
+      "sha256": "16c02de2bb0ff4e1b32eb449ca291404d4bfa03296f53b56b84e7a74a72587ea",
+      "size": 954084,
+      "aliases": [],
+      "color": "#2a2a2e"
+    },
+    {
+      "id": "gripper-moving-jaw",
+      "label": "グリッパの可動あご",
+      "systemLabel": "グリッパの可動あご",
+      "group": "gripper",
+      "kind": "printed",
+      "file": "so101-part-gripper-moving-jaw.stl",
+      "sha256": "7b416e74fae53f593d27b3b7a7aef560d4c720360d0141da1d55d181ed5b9f71",
+      "size": 1413584,
+      "aliases": [],
+      "color": "#d6d0c2"
+    }
+  ]
+}

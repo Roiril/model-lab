@@ -1,0 +1,136 @@
+{
+  "meta": {
+    "description": "SO-101（5 自由度アーム）。URDF どおりに組み立てた姿勢",
+    "joints_deg": {
+      "shoulder_pan": 0.0,
+      "shoulder_lift": -35.0,
+      "elbow_flex": 45.0,
+      "wrist_flex": -15.0,
+      "wrist_roll": 0.0,
+      "gripper": 0.0
+    },
+    "edits": [],
+    "source": "source/so101_new_calib.urdf (TheRobotStudio/SO-ARM100, Apache-2.0)"
+  },
+  "parts": [
+    {
+      "id": "base-body",
+      "label": "土台",
+      "assembly": "build/base-body.stl",
+      "color": "#d6d0c2",
+      "print": "build/print/base-body.stl"
+    },
+    {
+      "id": "base-motor-holder",
+      "label": "土台のモータ受け",
+      "assembly": "build/base-motor-holder.stl",
+      "color": "#d6d0c2",
+      "print": "build/print/base-motor-holder.stl"
+    },
+    {
+      "id": "base-board-plate",
+      "label": "基板の取付板",
+      "assembly": "build/base-board-plate.stl",
+      "color": "#d6d0c2",
+      "print": "build/print/base-board-plate.stl"
+    },
+    {
+      "id": "servo-1",
+      "label": "サーボ #1 肩の旋回",
+      "assembly": "build/servo-1.stl",
+      "color": "#2a2a2e",
+      "stock": true
+    },
+    {
+      "id": "shoulder-motor-holder",
+      "label": "肩のモータ受け",
+      "assembly": "build/shoulder-motor-holder.stl",
+      "color": "#d6d0c2",
+      "print": "build/print/shoulder-motor-holder.stl"
+    },
+    {
+      "id": "shoulder-rotation",
+      "label": "肩の回転台",
+      "assembly": "build/shoulder-rotation.stl",
+      "color": "#d6d0c2",
+      "print": "build/print/shoulder-rotation.stl"
+    },
+    {
+      "id": "servo-2",
+      "label": "サーボ #2 肩の上下",
+      "assembly": "build/servo-2.stl",
+      "color": "#2a2a2e",
+      "stock": true
+    },
+    {
+      "id": "upper-arm",
+      "label": "上腕",
+      "assembly": "build/upper-arm.stl",
+      "color": "#d6d0c2",
+      "print": "build/print/upper-arm.stl"
+    },
+    {
+      "id": "servo-3",
+      "label": "サーボ #3 肘",
+      "assembly": "build/servo-3.stl",
+      "color": "#2a2a2e",
+      "stock": true
+    },
+    {
+      "id": "lower-arm",
+      "label": "前腕",
+      "assembly": "build/lower-arm.stl",
+      "color": "#d6d0c2",
+      "print": "build/print/lower-arm.stl"
+    },
+    {
+      "id": "lower-wrist-holder",
+      "label": "手首のモータ受け",
+      "assembly": "build/lower-wrist-holder.stl",
+      "color": "#d6d0c2",
+      "print": "build/print/lower-wrist-holder.stl"
+    },
+    {
+      "id": "servo-4",
+      "label": "サーボ #4 手首の曲げ",
+      "assembly": "build/servo-4.stl",
+      "color": "#2a2a2e",
+      "stock": true
+    },
+    {
+      "id": "wrist-body",
+      "label": "手首",
+      "assembly": "build/wrist-body.stl",
+      "color": "#d6d0c2",
+      "print": "build/print/wrist-body.stl"
+    },
+    {
+      "id": "servo-5",
+      "label": "サーボ #5 手首の回転",
+      "assembly": "build/servo-5.stl",
+      "color": "#2a2a2e",
+      "stock": true
+    },
+    {
+      "id": "gripper-fixed-jaw",
+      "label": "グリッパの固定あご",
+      "assembly": "build/gripper-fixed-jaw.stl",
+      "color": "#d6d0c2",
+      "print": "build/print/gripper-fixed-jaw.stl"
+    },
+    {
+      "id": "servo-6",
+      "label": "サーボ #6 グリッパ",
+      "assembly": "build/servo-6.stl",
+      "color": "#2a2a2e",
+      "stock": true
+    },
+    {
+      "id": "gripper-moving-jaw",
+      "label": "グリッパの可動あご",
+      "assembly": "build/gripper-moving-jaw.stl",
+      "color": "#d6d0c2",
+      "print": "build/print/gripper-moving-jaw.stl"
+    }
+  ]
+}
