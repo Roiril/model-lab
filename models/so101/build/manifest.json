@@ -7,12 +7,13 @@
       "elbow_flex": 45.0,
       "wrist_flex": -15.0,
       "wrist_roll": 0.0,
-      "gripper": 0.0
+      "gripper": 10.0
     },
     "edits": [
-      "くちばしを切り、配線の箱（65×52×40 mm）を本体に一体化",
-      "可動あごを外した",
-      "Robot Hand（Right）を 1 単位 58 mm で取付板と一体化。島 1 個・開いた辺 0 本"
+      "固定あごのくちばしを切った",
+      "可動あごの先に配線の箱（65×52×40 mm）を一体化。サーボ 6 の軸から 30 mm、角度 10° で真っすぐ",
+      "Robot Hand（Right）を 1 単位 58 mm で取付板と一体化。島 1 個・開いた辺 0 本",
+      "可動域 -10〜100°で当たりなし"
     ],
     "source": "source/so101_new_calib.urdf (TheRobotStudio/SO-ARM100, Apache-2.0)"
   },
@@ -117,7 +118,7 @@
     },
     {
       "id": "gripper-fixed-jaw",
-      "label": "グリッパ本体（配線の箱つき）",
+      "label": "グリッパ本体（くちばしを切ったもの）",
       "assembly": "build/gripper-fixed-jaw.stl",
       "color": "#d6d0c2",
       "print": "build/print/gripper-fixed-jaw.stl"
@@ -128,6 +129,13 @@
       "assembly": "build/servo-6.stl",
       "color": "#2a2a2e",
       "stock": true
+    },
+    {
+      "id": "gripper-moving-jaw",
+      "label": "手首の振り台（可動あご + 配線の箱）",
+      "assembly": "build/gripper-moving-jaw.stl",
+      "color": "#d6d0c2",
+      "print": "build/print/gripper-moving-jaw.stl"
     },
     {
       "id": "hand",

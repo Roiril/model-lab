@@ -2,7 +2,7 @@
   "version": 1,
   "model": "so101",
   "source": "models/so101/build/manifest.json",
-  "sourceSha256": "e9c916ca272c41c407d055a9ea13aef34ee912ddf89959cfa0fbd50e45fc2044",
+  "sourceSha256": "d29bfbfca1557b7108ee56d9a43da21e0cb37a5d7365c92166c819824d2b7ebc",
   "groups": [
     {
       "id": "base",
@@ -216,13 +216,13 @@
     },
     {
       "id": "gripper-fixed-jaw",
-      "label": "グリッパ本体（配線の箱つき）",
-      "systemLabel": "グリッパ本体（配線の箱つき）",
+      "label": "グリッパ本体（くちばしを切ったもの）",
+      "systemLabel": "グリッパ本体（くちばしを切ったもの）",
       "group": "gripper",
       "kind": "printed",
       "file": "so101-part-gripper-fixed-jaw.stl",
-      "sha256": "efdb4ba7bbff21d0c98c670ad0275dea2a2e74b6ec55209f5680082a034b104e",
-      "size": 791084,
+      "sha256": "5f2ae4052814910b3541005251fd4ecd07ff7dc449ee3d4c5c8993641c3f6ae9",
+      "size": 787084,
       "aliases": [],
       "color": "#d6d0c2"
     },
@@ -239,14 +239,26 @@
       "color": "#2a2a2e"
     },
     {
+      "id": "gripper-moving-jaw",
+      "label": "手首の振り台（可動あご + 配線の箱）",
+      "systemLabel": "手首の振り台（可動あご + 配線の箱）",
+      "group": "gripper",
+      "kind": "printed",
+      "file": "so101-part-gripper-moving-jaw.stl",
+      "sha256": "7cf28c22ca9f1d86896111d0328ba9989731103df0826e0133bb11583a2e86e2",
+      "size": 1073484,
+      "aliases": [],
+      "color": "#d6d0c2"
+    },
+    {
       "id": "hand",
       "label": "ロボットハンド（取付板つき・右手）",
       "systemLabel": "ロボットハンド（取付板つき・右手）",
       "group": "hand",
       "kind": "printed",
       "file": "so101-part-hand.stl",
-      "sha256": "2cdecad0b729b64452a0de374b267b510b496ab253cb14b8498f2a024179d217",
-      "size": 31554884,
+      "sha256": "b2f68587e4d2b70c26edfc1679d3927f80da6c5cf9fe8d21bf7d2be7fbc9adc1",
+      "size": 31598984,
       "aliases": [],
       "color": "#d6d0c2"
     }

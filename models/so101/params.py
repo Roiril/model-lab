@@ -8,11 +8,12 @@ SHOULDER_LIFT = -35.0  # 肩の上下 [deg]
 ELBOW_FLEX = 45.0  # 肘 [deg]
 WRIST_FLEX = -15.0  # 手首の曲げ [deg]
 WRIST_ROLL = 0.0  # 手首の回転 [deg]
-GRIPPER = 0.0  # グリッパの開き [deg]
+GRIPPER = 10.0  # サーボ 6 の角度 [deg]。ハンドを付けたときは手首の前後（10 で真っすぐ、+ で掌の側へ）
 
 # 先端のロボットハンド（hand_mount.py）。FBX が hand_src/ に無いときは元のグリッパのまま
 HAND = 1  # ロボットハンドを付ける（1）/ 元のグリッパ（0）
 HAND_SIDE = "Right"
+STRAIGHT_DEG = 10.0  # ハンドが真っすぐ（−z）を向くサーボ 6 の角度 [deg]。可動域 −10〜100 で甲側 20°・掌側 90°（12 だと −10° で箱が本体に当たった）
 HAND_SCALE = 0.058  # FBX の 1 単位の長さ [m]。手首の円盤が 52 mm になり、箱の幅とそろう
 BOX_HEIGHT = 0.040  # 配線の箱の高さ [m]。中の高さ 37.6 mm = 8Servos Unit 10.5 + 差したコネクタ 14 + 線の曲がり 13
 
