@@ -10,7 +10,7 @@ z が負の向きが先端、+x が掌を向ける側、サーボ 6 の軸は y 
   固定あご: くちばしを z < CUT_Z で切り落とす（サーボ 6 の受けだけ残す）
   可動あご: 軸受けの根元だけ残し、その先に中空の箱を一体で付ける（8Servos Unit と指の線を入れる）
             → 箱の底を取付板でふさぎ、板にハンドの手首の円盤を載せる（板とハンドは一体で刷る）
-            板の四隅は M2 のタッピングねじで箱のボスへ留める。中央の穴は指の線をハンドから箱へ通す
+            板の四隅は M3 のタッピングねじで箱のボスへ留める。中央の穴は指の線をハンドから箱へ通す
             → 甲側（−x）の壁の上の切り欠きから Grove と 5V を出し、軸をまたいで腕へ沿わせる
   箱ごと回すので、回る継ぎ目をまたぐ線は Grove 4 本 + 5V 2 本だけ（指の 15 本は箱の中で終わる）
 
@@ -39,9 +39,9 @@ STUB_OVERLAP = 4.5       # 可動あごの根元を箱の上面へ食い込ま�
 WALL = 2.0
 TOP_WALL = 2.4
 PLATE_T = 3.0
-BOSS_D, BOSS_H = 6.0, 10.0
-PILOT_D, PILOT_DEPTH = 1.8, 8.0     # M2 タッピング
-CLEAR_D = 2.4                       # 取付板の M2 通し穴
+BOSS_D, BOSS_H = 7.0, 10.0
+PILOT_D, PILOT_DEPTH = 2.5, 8.0     # M3 タッピング（実物のハンドは約 190 g あるので M2 から上げた）
+CLEAR_D = 3.4                       # 取付板の M3 通し穴
 CABLE_HOLE = (18.0, 10.0)           # 指の線を通す穴（x 方向, y 方向）
 CABLE_RISE = 20.0                   # 手首の円盤の中へ通す深さ
 SLOT = (16.0, 8.0)                  # 甲側の壁の切り欠き（y 方向の幅, z 方向の高さ）
@@ -239,8 +239,9 @@ def apply(parts, frames, P):
     cx, cy = px, sum(BOX_Y) / 2
     plate_top, plate_bot = bottom, bottom - PLATE_T
     hand = _load_hand(P.HAND_SIDE, P.HAND_SCALE)
-    # FBX: 指 +Z、掌 +Y、親指 ±X  →  gripper_link: 指 −z、掌 +x、FBX の X は +y
-    R = Matrix(((0, 1, 0, 0), (1, 0, 0, 0), (0, 0, -1, 0), (0, 0, 0, 1)))
+    # FBX: 指 +Z、掌 −Y（右手の親指が +X にあるので掌は −Y。指先は +Y へ反っている）
+    #  →  gripper_link: 指 −z、掌 +x（掌の側へ 90° 振れる）、甲 −x（線の出口の側）
+    R = Matrix(((0, -1, 0, 0), (-1, 0, 0, 0), (0, 0, -1, 0), (0, 0, 0, 1)))
     _bake(hand, Matrix.Translation(Vector((cx * MM, cy * MM, plate_bot * MM))) @ R)
     plate = _box("plate", bx, BOX_Y, (plate_bot, plate_top))
     bm = bmesh.new()
