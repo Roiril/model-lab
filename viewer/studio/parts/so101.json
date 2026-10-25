@@ -2,7 +2,7 @@
   "version": 1,
   "model": "so101",
   "source": "models/so101/build/manifest.json",
-  "sourceSha256": "b3c3105ce04323a65c619f503b5269662e262f4c1c141da3a7c4555bac11c7f5",
+  "sourceSha256": "e9c916ca272c41c407d055a9ea13aef34ee912ddf89959cfa0fbd50e45fc2044",
   "groups": [
     {
       "id": "base",
@@ -33,6 +33,11 @@
       "id": "gripper",
       "label": "グリッパ",
       "color": "#e4dfd2"
+    },
+    {
+      "id": "hand",
+      "label": "ロボットハンド",
+      "color": "#9aa0a6"
     },
     {
       "id": "servo",
@@ -211,13 +216,13 @@
     },
     {
       "id": "gripper-fixed-jaw",
-      "label": "グリッパの固定あご",
-      "systemLabel": "グリッパの固定あご",
+      "label": "グリッパ本体（配線の箱つき）",
+      "systemLabel": "グリッパ本体（配線の箱つき）",
       "group": "gripper",
       "kind": "printed",
       "file": "so101-part-gripper-fixed-jaw.stl",
-      "sha256": "ae0a38ec51824718dbb37f7f51ae015cf8b6cb9c06d6bf216bc998f329f4f19c",
-      "size": 1439884,
+      "sha256": "efdb4ba7bbff21d0c98c670ad0275dea2a2e74b6ec55209f5680082a034b104e",
+      "size": 791084,
       "aliases": [],
       "color": "#d6d0c2"
     },
@@ -234,14 +239,14 @@
       "color": "#2a2a2e"
     },
     {
-      "id": "gripper-moving-jaw",
-      "label": "グリッパの可動あご",
-      "systemLabel": "グリッパの可動あご",
-      "group": "gripper",
+      "id": "hand",
+      "label": "ロボットハンド（取付板つき・右手）",
+      "systemLabel": "ロボットハンド（取付板つき・右手）",
+      "group": "hand",
       "kind": "printed",
-      "file": "so101-part-gripper-moving-jaw.stl",
-      "sha256": "7b416e74fae53f593d27b3b7a7aef560d4c720360d0141da1d55d181ed5b9f71",
-      "size": 1413584,
+      "file": "so101-part-hand.stl",
+      "sha256": "2cdecad0b729b64452a0de374b267b510b496ab253cb14b8498f2a024179d217",
+      "size": 31554884,
       "aliases": [],
       "color": "#d6d0c2"
     }

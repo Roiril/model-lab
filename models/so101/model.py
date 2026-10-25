@@ -25,6 +25,7 @@ from mathutils import Euler, Matrix, Vector
 
 import params as P
 import edits
+import hand_mount
 from blender_utils import clear_scene, export_stl
 
 SOURCE = HERE / "source"
@@ -67,6 +68,7 @@ GROUPS = [
     {"label": "前腕", "prefix": "lower", "color": "#ccc6b8"},
     {"label": "手首", "prefix": "wrist", "color": "#ddd7c9"},
     {"label": "グリッパ", "prefix": "gripper", "color": "#e4dfd2"},
+    {"label": "ロボットハンド", "prefix": "hand", "color": "#9aa0a6"},
     {"label": "サーボ", "prefix": "servo", "color": SERVO},
 ]
 
@@ -151,22 +153,27 @@ def main():
         raise KeyError(f"URDF に見つからない部品: {sorted(missing)}")
 
     changes = edits.apply(objects) or []
+    registry = [{"id": pid, "label": label, "printed": printed, "ob": objects[pid], "placed": placed[pid]}
+                for (pid, label, printed) in PARTS.values()]
+    changes += hand_mount.apply(registry, frames, P)
 
+    for stale in list(BUILD.glob("*.stl")) + list(PRINT_DIR.glob("*.stl")):
+        stale.unlink()                     # 外した部品の STL を残さない
     parts = []
-    for key, (pid, label, printed) in PARTS.items():
-        ob = objects[pid]
-        export_one(ob, BUILD / f"{pid}.stl", placed[pid])
-        entry = {"id": pid, "label": label, "assembly": f"build/{pid}.stl",
-                 "color": PRINTED if printed else SERVO}
-        if printed:
+    for p in registry:
+        pid, ob = p["id"], p["ob"]
+        export_one(ob, BUILD / f"{pid}.stl", p["placed"])
+        entry = {"id": pid, "label": p["label"], "assembly": f"build/{pid}.stl",
+                 "color": PRINTED if p["printed"] else SERVO}
+        if p["printed"]:
             export_one(ob, PRINT_DIR / f"{pid}.stl", Matrix.Identity(4))
             entry["print"] = f"build/print/{pid}.stl"
         else:
             entry["stock"] = True
         parts.append(entry)
 
-    for pid, ob in objects.items():
-        ob.matrix_world = placed[pid]
+    for p in registry:
+        p["ob"].matrix_world = p["placed"]
     bpy.ops.object.select_all(action="SELECT")
     export_stl("so101")
 
