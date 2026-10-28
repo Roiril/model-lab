@@ -21,6 +21,13 @@ Studio はユーザーとシュビーの共同編集 UI。ユーザーは 3D で
 3. 30 分で切れる。切れた通知が来たら同じ呼び出しで張り直す（ユーザーが Studio を使っている間）
 4. Studio をユーザーに見せる時は `mcp__Claude_Browser__preview_start` で `http://localhost:<http>/?model=<name>` を開いて渡す
 
+**Codex の場合**（差し込みの hook も Monitor もブラウザペインも無い）:
+
+- 作業を始めたら最初に `py -3.11 tools/requests.py list`。未対応があれば §2 へ
+- ユーザーが「Studio で指示するから待ってて」と言ったら `py -3.11 tools/requests.py wait --agent codex --timeout 600` で待つ。1 件届くと 1 行出て終わる。§2 で対応し、続くなら再び wait。timeout なら一言報告して再び wait してよい
+- サーバーは別プロセスで `node server.js` を起動する。Studio の URL は最終メッセージに書く
+- §2 の `--claim claude-code` は `--claim codex` に読み替える
+
 ## 2. 依頼が届いたら
 
 1. `py -3.11 tools/requests.py show <id>` で要約を読む

@@ -16,3 +16,6 @@ requests/
 models/*/build/gate_job.json
 models/*/build/gate_blender.json
 models/*/build/gate_blender.log
+
+# Codex 用の junction（.agents/skills -> .claude/skills）。Codex の SessionStart hook が作る
+.agents/

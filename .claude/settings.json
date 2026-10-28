@@ -38,7 +38,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .agents/hooks/stop.js",
+            "command": "node .claude/hooks/stop.js",
             "timeout": 30
           }
         ]

@@ -1,3 +1,10 @@
+---
+name: print-check
+description: モデルの 3D プリント適性（STL・肉厚・オーバーハング等）をチェックする。「印刷できるか」「/print-check」で使う
+---
+
+`$ARGUMENTS` はモデル名（Codex では依頼文に書かれたモデル名を当てる）。
+
 モデル「$ARGUMENTS」の3Dプリント適性をチェックしてください。
 
 ## チェック手順

@@ -35,7 +35,11 @@ server.js            # HTTP + WebSocket サーバー
 
 ## モデル作成ワークフロー
 
-**動く部品・組み立て・既製部品の嵌め合いがある依頼（箱・機構・サーボで動く物）は、最初に [.agents/skills/mechanism-gate/SKILL.md](.agents/skills/mechanism-gate/SKILL.md)（スキル `mechanism-gate`） を読む。** 完了は `py -3.11 tools/mechgate.py check <name>` の exit 0 で決まる（自前の検証スクリプトや報告の文章では決まらない）。計器と閾値（`tools/mechgate*`・`lib/printmech/solid_meter.py`）はモデルの作業の中で変えない。
+**動く部品・組み立て・既製部品の嵌め合いがある依頼（箱・機構・サーボで動く物）は、最初に [.claude/skills/mechanism-gate/SKILL.md](.claude/skills/mechanism-gate/SKILL.md)（スキル `mechanism-gate`） を読む。** 完了は `py -3.11 tools/mechgate.py check <name>` の exit 0 で決まる（自前の検証スクリプトや報告の文章では決まらない）。計器と閾値（`tools/mechgate*`・`lib/printmech/solid_meter.py`）はモデルの作業の中で変えない。
+
+モデルを作成・派生・追加するときは先に [.claude/skills/model-catalog/SKILL.md](.claude/skills/model-catalog/SKILL.md) を読む。表示名と用途を `models/<name>/catalog.json` に記録する。分類の正本は `models/catalog-groups.json`。完了前に `node tools/catalog.js check` を実行する。既存のモデルIDを改名せず整理する。
+
+SG92Rサーボと付属ホーンの正本は `models/sg92r-photo/`。2026-10-07にユーザーが形状を確定した。寸法は同フォルダの `params.py`、出典と仮値は `README.md` を参照する。旧 `models/sg92r/` と `models/horn/` は削除済み。単独の実寸モデルや計測UIを作り直さず、正本を更新する。古いスキルの計測UI手順よりこの指定を優先する。既存ロボットが使う `lib/servo_core.py` の値を正本として扱わない。既存ロボットの形状変更はその依頼の範囲で行う。
 
 新しいモデルを作るとき、必ずこの順番で進める。
 
@@ -234,7 +238,7 @@ dt.location = (0, 0, COVER_H + 0.0005)
 http://localhost:3000 が Studio。ユーザーは面を選んで「ここを厚く」、断面に線を描いて「この線に沿って」と指示し、
 「シュビーに送る」を押す。依頼は `requests/<model>/<id>/` に届く。
 
-- 未対応の依頼はセッション開始時と発話時に hook（`.claude/hooks/studio-inbox.js`）が差し込む。差し込まれたらスキル `studio-inbox` に従う。Studio を開いている間は `tools/requests.py watch` を Monitor で張って待ち受ける
+- 未対応の依頼はセッション開始時と発話時に hook（`.claude/hooks/studio-inbox.js`）が差し込む。差し込まれたらスキル `studio-inbox` に従う。Studio を開いている間は `tools/requests.py watch` を Monitor で張って待ち受ける。Codex には差し込みの hook も Monitor も無いので、作業を始めたら最初に `py -3.11 tools/requests.py list` を実行し、待つときは `tools/requests.py wait --agent codex`
 - 受け方・読み方・返し方は **`.claude/skills/studio-inbox/SKILL.md`**（座標系・意図の意味・返信の書き方・やってよい操作の範囲）
 - 直したら `py -3.11 tools/requests.py reply <id> "<何をどう変えたか>" --status done`。Studio 側で変更前と重ねて比べられる
 - 設計の正本は `.agent/plans/2026-10-07_studio.md`、モジュールの約束は `viewer/studio/CONTRACT.md`
@@ -248,7 +252,7 @@ http://localhost:3000 が Studio。ユーザーは面を選んで「ここを厚
 1. **⭐ ビューワーは「そのモデルを開いた状態」にして渡す**（2026-08-25 ユーザー指摘。
    モデルが 65 個あるので、URL だけ渡されると探すのに一苦労）。手順:
    - サーバーが起動していなければ `node server.js`（バックグラウンド実行）
-   - `mcp__Claude_Browser__preview_start` で **`http://localhost:3000/?model=<name>`** を開く
+   - `mcp__Claude_Browser__preview_start` で **`http://localhost:3000/?model=<name>`** を開く（Codex はブラウザペインが無いので、この URL を最終メッセージに書く）
    - `?model=` はカテゴリごと選択済みで開く。存在しない名前なら既定モデルへ落ちる
    - ブラウザペインが非表示だと canvas が 0x0 のままだが、表示すれば描画される（異常ではない）
    - URL は現在のモデルに追従するので、そのままリンクとして渡してよい
@@ -262,7 +266,7 @@ http://localhost:3000 が Studio。ユーザーは面を選んで「ここを厚
 
 ## スキル一覧
 
-| コマンド | 用途 |
+| スキル（Claude は `/名前`、Codex は `$名前`） | 用途 |
 |----------|------|
 | `/new-model <name>` | 新モデルのスキャフォールドを生成 |
 | `/build <name>` | モデルをビルドしてビューワーに反映 |
@@ -270,17 +274,20 @@ http://localhost:3000 が Studio。ユーザーは面を選んで「ここを厚
 
 ---
 
-## Claude Code ハーネス (.claude/)
+## ハーネス (.claude/) — Claude Code と Codex の共通の正本
 
-- **[memory/](.claude/memory/)** — 自動メモリ（`MEMORY.md` がインデックス、topic ごとに分割）
+Codex もこの CLAUDE.md と `.claude/` を読む（ルートの AGENTS.md は手で書かない。Codex の SessionStart hook が CLAUDE.md・常時 rules・MEMORY.md から組み立てる生成物で、git 管理外。`.agents/skills` は `.claude/skills` への junction で、Codex の SessionStart hook が作る。`.agents/` は gitignore）。知見はどちらのエージェントからも `.claude/` へ書く。
+
+- **[memory/](.claude/memory/)** — 自動メモリ（`MEMORY.md` がインデックス、topic ごとに分割）。検証の落とし穴は `lattice-verified-assembly.md`、SG92R ホーンの左右は `sg92r-horn-orientation.md`
 - **[skills/](.claude/skills/)** — `servo-robot-design`：1サーボ・ロボット（round/square-bot 等）とサーボ/ホーン嵌合部品・アクセサリの設計原則・落とし穴・ワークフロー集（サーボ機構/ホーン結合/配線/目耳/単位/boolean/検証/印刷分割を扱う。サーボ系を触る前に必読）
-- **共通スキル `printable-mechanism-design`**（`~/.claude/skills/`。Codex も `~/.agents/skills/` から同じ物を読む）— 刷れる機構を設計・検証して、そのまま刷れる 3mf まで作る手順。ユーザーの依頼文の好み・形の規則・印刷部品だけの継ぎ手・検証の型・Bambu Studio CLI の罠。動く部品・組み立てがある依頼で読む。Codex 用の `.agents/skills/servo-robot-design` は入口だけで、本文は `.claude/skills/servo-robot-design`
-- **[hooks/](.claude/hooks/)** — プロジェクト固有 PreToolUse ガード、`studio-inbox.js`（Studio の未対応依頼を SessionStart / UserPromptSubmit で差し込む）
+- **共通スキル `printable-mechanism-design`**（`~/.claude/skills/`。Codex も `~/.agents/skills/` から同じ物を読む）— 刷れる機構を設計・検証して、そのまま刷れる 3mf まで作る手順。ユーザーの依頼文の好み・形の規則・印刷部品だけの継ぎ手・検証の型・Bambu Studio CLI の罠。動く部品・組み立てがある依頼で読む
+- **[hooks/](.claude/hooks/)** — プロジェクト固有 PreToolUse ガード、`studio-inbox.js`（Studio の未対応依頼を SessionStart / UserPromptSubmit で差し込む。Claude のみ）、`stop.js`（機構モデルのゲートが古い・赤のまま終わろうとしたら知らせる。Codex の Stop hook からも呼ぶ）
 - **[skills/studio-inbox](.claude/skills/studio-inbox/SKILL.md)** — Studio の依頼の受け方・読み方・返し方
-- **[skills/mechanism-gate](.claude/skills/mechanism-gate/SKILL.md)** — 機構の依頼の手順と完了条件。本文は `.agents/skills/mechanism-gate/SKILL.md`（Codex と共有）
+- **[skills/mechanism-gate](.claude/skills/mechanism-gate/SKILL.md)** — 機構の依頼の手順と完了条件（spec.json → build/ の契約 → `tools/mechgate.py check`）。ゲートの閾値は `tools/mechgate_lib/limits.py`、既製部品の仮値の台帳は `lib/printmech/parts_ledger.json`
+- **[skills/model-catalog](.claude/skills/model-catalog/SKILL.md)** — モデルの表示名・用途・分類の記録
 - **[settings.json](.claude/settings.json)** — `bypassPermissions`（書き込み前承認なし）
 - **[settings.local.json](.claude/settings.local.json)** — ローカル個別 allow リスト
-- **[commands/](.claude/commands/)** — `/new-model` `/build` `/print-check` の本体
+- **[skills/](.claude/skills/)** の `new-model` `build` `print-check` — 旧スラッシュコマンドの本体
 
 汎用 hook（SessionStart 状態注入 / 不可逆操作ガード / Windows エンコーディング修正）とスラッシュコマンド（`/commit`, `/plan`）は `~/.claude/` にグローバル配置済み。
 
@@ -296,7 +303,7 @@ http://localhost:3000 が Studio。ユーザーは面を選んで「ここを厚
 
 ### その他
 
-- **ワークフロー**: `.agent/workflows/` — 他エージェント用（Claude Code は `.claude/commands/` を使う）
+- **ワークフロー**: `.agent/workflows/` — 他エージェント用（Claude Code と Codex は `.claude/skills/` を使う）
 - **計画**: `.agent/plans/` — 実装計画（`YYYY-MM-DD_<slug>.md`）。`/plan <slug>` で作成
 - **タスク**: `.agent/tasks/` — チェックリスト
 

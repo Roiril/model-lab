@@ -13,7 +13,7 @@ metadata:
 - 方針は「モデルはデータを出し、計器はハーネスが持ち、完了はゲートの exit code で決める」。design-critic 2 体が独立に同じ結論へ収束した
   - 根拠: 散文の規則は Opus でも守られなかった（model-request §6 の「圧入は最後だけ許可」が入った翌々日に C4-3 が全行程を許可）
   - C1 は Codex 製、C4-3 は Claude 製で、失敗の型は同じ（駆動を仮定する検証、許可の広げすぎ、既製部品の仮値）。モデル差よりハーネス差
-- 手順書の正本は `.agents/skills/mechanism-gate/SKILL.md`（Claude 側は入口だけ）。閾値は `tools/mechgate_lib/limits.py`、既製部品の台帳は `lib/printmech/parts_ledger.json`
+- 手順書の正本は `.claude/skills/mechanism-gate/SKILL.md`（2026-10-28 に .claude/ へ一本化。Codex は .agents/skills の junction から同じ物を読む）。閾値は `tools/mechgate_lib/limits.py`、既製部品の台帳は `lib/printmech/parts_ledger.json`
 - **Why:** 作った側の自己検査が「合格」と言っていた箇所で、実物の失敗が起きていた
 - **How to apply:** 機構の依頼では spec.json を最初に書き、ゲートを exit 0 にする。サブエージェントや Codex の「合格」も、親がゲートを流し直して確かめる
 

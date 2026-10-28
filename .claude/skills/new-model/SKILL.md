@@ -1,3 +1,10 @@
+---
+name: new-model
+description: 新しい 3D モデルのスキャフォールド（params.py・model.py）を作る。「新しいモデル」「/new-model」で使う
+---
+
+`$ARGUMENTS` はモデル名（Codex では依頼文に書かれたモデル名を当てる）。
+
 新しい3Dモデル「$ARGUMENTS」のスキャフォールドを作成してください。
 
 ## 手順

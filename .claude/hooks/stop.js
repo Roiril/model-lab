@@ -5,9 +5,9 @@
 // 判定は `py -3.11 tools/mechgate.py fresh <名前>`（入力の SHA を比べるだけ。Blender は使わない）。
 // 知らせるのはセッションにつき 1 回（ループと過剰な割り込みを防ぐ）。エラー時は素通し。
 //
-//   Claude Code: .claude/settings.json の Stop から `node .agents/hooks/stop.js`
+//   Claude Code: .claude/settings.json の Stop から `node .claude/hooks/stop.js`
 //                → {"decision":"block","reason":...}（1 回だけ止めて、ゲートを流すか赤と報告させる）
-//   Codex:       ~/.codex/hooks/project-stop.js がリポジトリのこのファイルを `--codex` で呼ぶ
+//   Codex:       ~/.codex/hooks/stop-guard.js がリポジトリのこのファイルを `--codex` で呼ぶ
 //                → {"systemMessage": ...}
 const { execFileSync } = require('child_process');
 const fs = require('fs');
@@ -73,7 +73,7 @@ process.stdin.on('end', () => {
       '[mechgate] 機構モデルのゲートが合格・最新ではない:',
       ...problems.map((p) => '  ' + p),
       '`py -3.11 tools/mechgate.py check <名前>` を流して exit 0 にする。',
-      '赤のまま終えるなら、報告の先頭に「ゲート不合格」と止めている検査 id を書く（.agents/skills/mechanism-gate/SKILL.md §5）。',
+      '赤のまま終えるなら、報告の先頭に「ゲート不合格」と止めている検査 id を書く（.claude/skills/mechanism-gate/SKILL.md §5）。',
     ].join('\n');
     if (codex) {
       process.stdout.write(JSON.stringify({ systemMessage: message }));
