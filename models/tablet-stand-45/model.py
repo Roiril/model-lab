@@ -10,6 +10,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 import bpy
 import bmesh
 from mathutils import Vector
+from mathutils.geometry import tessellate_polygon
 
 from blender_utils import clear_scene, export_stl
 from params import *
@@ -82,8 +83,13 @@ def extrude_profile(name, profile, width):
     bm = bmesh.new()
     left = [bm.verts.new((-half, y, z)) for y, z in profile]
     right = [bm.verts.new((half, y, z)) for y, z in profile]
-    bm.faces.new(list(reversed(left)))
-    bm.faces.new(right)
+    # Explicit cap triangles preserve the concave seat; n-gons can span its void.
+    cap = [Vector((y, z, 0)) for y, z in profile]
+    indices = {tuple(point): i for i, point in enumerate(cap)}
+    for triangle in tessellate_polygon([cap]):
+        ids = [point if isinstance(point, int) else indices[tuple(point)] for point in triangle]
+        bm.faces.new([left[i] for i in reversed(ids)])
+        bm.faces.new([right[i] for i in ids])
     for index in range(len(profile)):
         following = (index + 1) % len(profile)
         bm.faces.new((left[index], right[index], right[following], left[following]))
@@ -125,8 +131,8 @@ def outer_profile():
         tuple(origin),
         tuple(support_top),
         tuple(deck_back_top),
-        (DEPTH, BASE_THICKNESS),
-        (DEPTH, 0.0),
+        (FRAME_DEPTH, BASE_THICKNESS),
+        (FRAME_DEPTH, 0.0),
     ]
     radii = [
         0.0,
@@ -145,30 +151,10 @@ def outer_profile():
 
 
 def hole_profile():
-    """床上面、デッキ裏、後柱裏が作る角丸三角穴。"""
-    origin, upward, normal = support_frame()
-    deck_line_point = origin - normal * DECK_THICKNESS
-    front_distance = (BASE_THICKNESS - deck_line_point.y) / upward.y
-    front = deck_line_point + upward * front_distance
-
-    outer_top = origin + upward * SUPPORT_LENGTH - normal * DECK_THICKNESS
-    outer_bottom = Vector((DEPTH, BASE_THICKNESS))
-    rear_direction = (outer_bottom - outer_top).normalized()
-    inward = Vector((rear_direction.y, -rear_direction.x))
-    if inward.x > 0:
-        inward.negate()
-    rear_line_point = outer_top + inward * REAR_THICKNESS
-    rear_floor_y = rear_line_point.x + (
-        (BASE_THICKNESS - rear_line_point.y) * rear_direction.x / rear_direction.y
-    )
-    rear = Vector((rear_floor_y, BASE_THICKNESS))
-    denominator = _cross_2d(upward, rear_direction)
-    if abs(denominator) < 1e-8:
-        raise RuntimeError("deck and rear inner lines do not intersect")
-    deck_distance = _cross_2d(rear_line_point - deck_line_point, rear_direction) / denominator
-    top = deck_line_point + upward * deck_distance
+    """低い45度の窓。上部を肉でつなぎ、印刷中の独立した柱を短くする。"""
     return rounded_polygon(
-        [tuple(front), tuple(top), tuple(rear)],
+        [(OPENING_FRONT, BASE_THICKNESS), (OPENING_TOP_Y, OPENING_TOP_Z),
+         (OPENING_REAR, BASE_THICKNESS)],
         [HOLE_FLOOR_CORNER_R, HOLE_TOP_R, HOLE_FLOOR_CORNER_R],
     )
 
@@ -195,30 +181,6 @@ def _apply_boolean_union(base, addition, label):
     bpy.data.objects.remove(addition, do_unlink=True)
     _clean_mesh(base)
     mesh_metrics(base, label)
-
-
-def _chamfer_side_edges(obj, local_width):
-    half = local_width / 2.0
-    attribute = obj.data.attributes.get("bevel_weight_edge")
-    if attribute is None:
-        attribute = obj.data.attributes.new("bevel_weight_edge", "FLOAT", "EDGE")
-    marked = 0
-    for edge, weight in zip(obj.data.edges, attribute.data):
-        a = obj.data.vertices[edge.vertices[0]].co
-        b = obj.data.vertices[edge.vertices[1]].co
-        on_end = ((abs(abs(a.x) - half) < 1e-6) and
-                  (abs(abs(b.x) - half) < 1e-6) and a.x * b.x > 0)
-        weight.value = 1.0 if on_end else 0.0
-        marked += int(on_end)
-    if marked == 0:
-        raise RuntimeError("no side edges were found for chamfering")
-    bevel = obj.modifiers.new("side_edge_chamfer", "BEVEL")
-    bevel.limit_method = "WEIGHT"
-    bevel.width = SIDE_CHAMFER
-    bevel.segments = 1
-    bevel.affect = "EDGES"
-    bpy.context.view_layer.objects.active = obj
-    bpy.ops.object.modifier_apply(modifier=bevel.name)
 
 
 def _clean_mesh(obj):
@@ -290,42 +252,37 @@ def build_rib(name, center_x):
     rib = extrude_profile(name, outer_profile(), RIB_WIDTH)
     cutter = extrude_profile(f"{name}_opening", hole_profile(), RIB_WIDTH + 0.004)
     _apply_boolean_difference(rib, cutter)
-    _chamfer_side_edges(rib, RIB_WIDTH)
+    # Keep the profile's tangent rounds. A second bevel after triangulated
+    # Boolean caps introduces sliver faces at the small seat radii.
     _clean_mesh(rib)
     mesh_metrics(rib, name)
     _apply_location(rib, center_x)
     return rib
 
 
-def rounded_crossbar(name, start_y, depth):
-    bpy.ops.mesh.primitive_cube_add(
-        size=1.0,
-        location=(0.0, start_y + depth / 2.0, BAR_HEIGHT / 2.0),
+def rounded_base():
+    """全面接地の台座。角丸はXY内だけで、下面の縁は丸めない。"""
+    profile = rounded_polygon(
+        [(-WIDTH / 2, BASE_FRONT), (WIDTH / 2, BASE_FRONT),
+         (WIDTH / 2, BASE_FRONT + DEPTH), (-WIDTH / 2, BASE_FRONT + DEPTH)],
+        [BASE_CORNER_R] * 4,
     )
-    bar = bpy.context.object
-    bar.name = name
-    bar.dimensions = (BAR_WIDTH, depth, BAR_HEIGHT)
-    bpy.ops.object.transform_apply(location=True, rotation=True, scale=True)
-    bevel = bar.modifiers.new("rounded_edges", "BEVEL")
-    bevel.limit_method = "ANGLE"
-    bevel.width = BAR_CORNER_R
-    bevel.segments = 4
-    bpy.context.view_layer.objects.active = bar
-    bpy.ops.object.modifier_apply(modifier=bevel.name)
-    _clean_mesh(bar)
-    mesh_metrics(bar, name)
-    return bar
+    # extrude_profile maps (a,b) to (x,a,b); cycle axes to extrude in Z.
+    base = extrude_profile("rounded_plinth", profile, BASE_THICKNESS)
+    for vertex in base.data.vertices:
+        x, y, z = vertex.co
+        vertex.co = (y, z, x + BASE_THICKNESS / 2)
+    _clean_mesh(base)
+    mesh_metrics(base, "rounded_plinth")
+    return base
 
 
 def build_stand():
-    stand = build_rib("left_rib", -RIB_CENTER)
+    stand = rounded_base()
+    left = build_rib("left_rib", -RIB_CENTER)
     right = build_rib("right_rib", RIB_CENTER)
-    front = rounded_crossbar("front_crossbar", BAR_Y_FRONT, BAR_DEPTH_FRONT)
-    rear = rounded_crossbar("rear_crossbar", BAR_Y_REAR, BAR_DEPTH_REAR)
-
-    _apply_boolean_union(stand, front, "front_crossbar")
+    _apply_boolean_union(stand, left, "left_rib")
     _apply_boolean_union(stand, right, "right_rib")
-    _apply_boolean_union(stand, rear, "rear_crossbar")
     stand.name = "tablet_stand_45"
     metrics = mesh_metrics(stand)
     expected = (WIDTH * 1000, DEPTH * 1000)

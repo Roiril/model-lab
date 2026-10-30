@@ -17,7 +17,8 @@ import numpy as np
 sys.stdout.reconfigure(encoding="utf-8")
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
-OUT = ROOT / "exports" / "tablet-stand-45"
+EXPORT = ROOT / "exports" / "tablet-stand-45"
+OUT = Path("G:/マイドライブ/shubie/renders/2026-10-30_redmi-stand")
 WELD_MM = 0.0001
 
 
@@ -186,7 +187,7 @@ def geometric_checks(triangles, printing, params):
         lip.append(float(hits[1] - hits[0]))
     rear = []
     top = origin + u * (params.SUPPORT_LENGTH * 1000) - n * (params.DECK_THICKNESS * 1000)
-    rear_direction = np.array([0.0, params.DEPTH * 1000, params.BASE_THICKNESS * 1000]) - top
+    rear_direction = np.array([0.0, params.FRAME_DEPTH * 1000, params.BASE_THICKNESS * 1000]) - top
     rear_direction /= np.linalg.norm(rear_direction)
     inward = np.array([0.0, rear_direction[2], -rear_direction[1]])
     for x in (-rib, rib):
@@ -238,11 +239,10 @@ def geometric_checks(triangles, printing, params):
 
 def static_estimate(info, params, stand_mass):
     origin, u, n = frame(params)
-    # Four 14x14mm patches at rib centres, y=2..16 and 194..208.
-    # The conservative contact polygon insets their outer edges by 1mm.
-    half_width = params.RIB_CENTER * 1000 + 6
-    front = 3.0
-    rear = 206.0
+    # Inscribed rectangle stays inside the actual rounded plinth, including corners.
+    half_width = params.WIDTH * 500 - params.BASE_CORNER_R * 1000
+    front = params.BASE_FRONT * 1000 + 1.0
+    rear = (params.BASE_FRONT + params.DEPTH) * 1000 - 1.0
     stand_y = info["uniform_density_centroid_mm"][1]
     stand_y_conservative = stand_y + 10.0
     g = 9.80665
@@ -299,7 +299,7 @@ def main():
     import params
     calibration = calibrate()
     stand = load_stl(ROOT / "exports" / "tablet-stand-45.stl")
-    printing = load_stl(OUT / "print.stl")
+    printing = load_stl(EXPORT / "print.stl")
     stand_info = inspect_mesh(stand)
     print_info = inspect_mesh(printing)
     if abs(stand_info["volume_cm3"] - print_info["volume_cm3"]) > 0.01:
@@ -307,15 +307,17 @@ def main():
     if not np.allclose(sorted(stand_info["dimensions_mm"]), sorted(print_info["dimensions_mm"]), atol=0.01):
         raise ValueError("Print orientation changed dimensions")
     solid_mass = stand_info["volume_cm3"] * 1.27 / 1000
-    mass = args.stand_mass if args.stand_mass is not None else solid_mass
-    baseline_volume = 1752.7735322620545
+    if args.stand_mass is None:
+        parser.error("pass --stand-mass using the slicer estimate or measured mass; sparse infill is not solid")
+    mass = args.stand_mass
+    baseline_volume = 111.163433041
     report = {"calibration": calibration, "stand": stand_info, "print": print_info,
               "geometry": geometric_checks(stand, printing, params),
               "material": {"old_geometry_volume_cm3": baseline_volume,
-                           "geometry_volume_reduction_percent": 100 * (1 - stand_info["volume_cm3"] / baseline_volume),
+                           "geometry_volume_ratio_to_failed_frame": stand_info["volume_cm3"] / baseline_volume,
                            "petg_assumed_density_g_cm3": 1.27,
                            "solid_petg_mass_g": solid_mass * 1000,
-                           "mass_source": "User argument" if args.stand_mass is not None else "Solid-volume estimate; verify by slicer or weighing"},
+                           "mass_source": "Slicer estimate or measured mass supplied by --stand-mass"},
               "static_estimate": static_estimate(stand_info, params, mass)}
     OUT.mkdir(parents=True, exist_ok=True)
     report_path = OUT / "verification.json"

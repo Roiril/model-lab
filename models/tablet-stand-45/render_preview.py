@@ -10,7 +10,7 @@ from mathutils import Matrix, Vector
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
-OUT = ROOT / "exports" / "tablet-stand-45"
+OUT = Path("G:/マイドライブ/shubie/renders/2026-10-30_redmi-stand")
 sys.path.insert(0, str(HERE))
 import params
 
@@ -151,7 +151,7 @@ def main():
     render(OUT / "underside.png")
     ground.hide_render = False
     stand.hide_render = True
-    bpy.ops.wm.stl_import(filepath=str(OUT / "print.stl"))
+    bpy.ops.wm.stl_import(filepath=str(ROOT / "exports" / "tablet-stand-45" / "print.stl"))
     printing = bpy.context.object
     printing.name = "Flat-bottom print orientation"
     printing.scale = (0.001, 0.001, 0.001)
