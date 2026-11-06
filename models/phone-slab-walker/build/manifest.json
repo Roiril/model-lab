@@ -1,0 +1,99 @@
+{
+ "meta": {
+  "title": "スマホ板ロボット",
+  "units": "mm",
+  "hipZ": 234.90000000000003,
+  "halfWidth": 45.099999999999994,
+  "dimensions_mm": [
+   143.4,
+   60.0,
+   248.4
+  ]
+ },
+ "parts": [
+  {
+   "id": "tray",
+   "assembly": "build/tray.stl",
+   "print": "build/print_tray.stl",
+   "label": "背中側のトレイ（サーボ・マイコン・電池）",
+   "color": "#5f6b73"
+  },
+  {
+   "id": "frame",
+   "assembly": "build/frame.stl",
+   "print": "build/print_frame.stl",
+   "label": "前枠（スマホを押さえる）",
+   "color": "#3f474d"
+  },
+  {
+   "id": "divider",
+   "assembly": "build/divider.stl",
+   "print": "build/print_divider.stl",
+   "label": "仕切り板（スマホとマイコンの間）",
+   "color": "#8a959c"
+  },
+  {
+   "id": "cap",
+   "assembly": "build/cap.stl",
+   "print": "build/print_cap.stl",
+   "label": "足のふた（中央板の足）",
+   "color": "#2f353a"
+  },
+  {
+   "id": "leg_right",
+   "assembly": "build/leg_right.stl",
+   "print": "build/print_leg_right.stl",
+   "label": "右脚",
+   "color": "#70797f"
+  },
+  {
+   "id": "leg_left",
+   "assembly": "build/leg_left.stl",
+   "print": "build/print_leg_left.stl",
+   "label": "左脚",
+   "color": "#70797f"
+  },
+  {
+   "id": "servo_right",
+   "assembly": "build/servo_right.stl",
+   "label": "右サーボ STS3215",
+   "color": "#1c1c1c"
+  },
+  {
+   "id": "servo_left",
+   "assembly": "build/servo_left.stl",
+   "label": "左サーボ STS3215",
+   "color": "#1c1c1c"
+  },
+  {
+   "id": "horn_pair",
+   "assembly": "build/horn_pair.stl",
+   "label": "左右のホーン（別のサーボだが同じ角度で掃く）",
+   "color": "#c9ced2"
+  },
+  {
+   "id": "bolts_right",
+   "assembly": "build/bolts_right.stl",
+   "label": "右脚のホーンねじ 4 本（サーボ付属）",
+   "color": "#b0b5b8"
+  },
+  {
+   "id": "bolts_left",
+   "assembly": "build/bolts_left.stl",
+   "label": "左脚のホーンねじ 4 本（サーボ付属）",
+   "color": "#b0b5b8"
+  },
+  {
+   "id": "phone",
+   "assembly": "build/phone.stl",
+   "label": "Pixel 7a",
+   "color": "#0b0b0d"
+  },
+  {
+   "id": "board",
+   "assembly": "build/board.stl",
+   "label": "Arduino Leonardo R3",
+   "color": "#1b6f8a"
+  }
+ ]
+}
