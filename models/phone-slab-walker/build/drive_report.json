@@ -1,0 +1,158 @@
+{
+ "model": "phone-slab-walker",
+ "overall": {
+  "geometryPass": true
+ },
+ "interfaces": [
+  {
+   "id": "horn-bolt-right",
+   "label": "horn_pair → bolts_right",
+   "status": "pass",
+   "detail": "tools/mechgate.py interface.drive が測った",
+   "measurement": {
+    "id": "horn-bolt-right",
+    "driver": "horn_pair",
+    "driven": "bolts_right",
+    "sides": "both",
+    "samples": 12,
+    "pass": true,
+    "worst": [
+     {
+      "servoDeg": -45.0,
+      "unit": "deg",
+      "limit": 3,
+      "back": 0.407611,
+      "ahead": 0.407574,
+      "pass": true
+     },
+     {
+      "servoDeg": -37.5,
+      "unit": "deg",
+      "limit": 3,
+      "back": 0.407611,
+      "ahead": 0.407593,
+      "pass": true
+     }
+    ]
+   }
+  },
+  {
+   "id": "horn-bolt-left",
+   "label": "horn_pair → bolts_left",
+   "status": "pass",
+   "detail": "tools/mechgate.py interface.drive が測った",
+   "measurement": {
+    "id": "horn-bolt-left",
+    "driver": "horn_pair",
+    "driven": "bolts_left",
+    "sides": "both",
+    "samples": 12,
+    "pass": true,
+    "worst": [
+     {
+      "servoDeg": -45.0,
+      "unit": "deg",
+      "limit": 3,
+      "back": 0.407593,
+      "ahead": 0.407574,
+      "pass": true
+     },
+     {
+      "servoDeg": -37.5,
+      "unit": "deg",
+      "limit": 3,
+      "back": 0.407593,
+      "ahead": 0.407593,
+      "pass": true
+     }
+    ]
+   }
+  },
+  {
+   "id": "bolt-leg-right",
+   "label": "bolts_right → leg_right",
+   "status": "pass",
+   "detail": "tools/mechgate.py interface.drive が測った",
+   "measurement": {
+    "id": "bolt-leg-right",
+    "driver": "bolts_right",
+    "driven": "leg_right",
+    "sides": "both",
+    "samples": 12,
+    "pass": true,
+    "worst": [
+     {
+      "servoDeg": -45.0,
+      "unit": "deg",
+      "limit": 5,
+      "back": 0.989502,
+      "ahead": 0.989532,
+      "pass": true
+     },
+     {
+      "servoDeg": -37.5,
+      "unit": "deg",
+      "limit": 5,
+      "back": 0.989532,
+      "ahead": 0.989532,
+      "pass": true
+     }
+    ]
+   }
+  },
+  {
+   "id": "bolt-leg-left",
+   "label": "bolts_left → leg_left",
+   "status": "pass",
+   "detail": "tools/mechgate.py interface.drive が測った",
+   "measurement": {
+    "id": "bolt-leg-left",
+    "driver": "bolts_left",
+    "driven": "leg_left",
+    "sides": "both",
+    "samples": 12,
+    "pass": true,
+    "worst": [
+     {
+      "servoDeg": -45.0,
+      "unit": "deg",
+      "limit": 5,
+      "back": 0.989502,
+      "ahead": 0.989532,
+      "pass": true
+     },
+     {
+      "servoDeg": -37.5,
+      "unit": "deg",
+      "limit": 5,
+      "back": 0.989532,
+      "ahead": 0.989532,
+      "pass": true
+     }
+    ]
+   }
+  }
+ ],
+ "calibration": [
+  {
+   "id": "instrument.calibration",
+   "label": "ゲートの計器の校正",
+   "pass": true,
+   "detail": "tools/mechgate.py"
+  }
+ ],
+ "hardwareUnknown": [
+  "ねじが座面の穴を通り、ホーンに届くか",
+  "刺したコネクタが尻の間に収まるか",
+  "サーボが穴に入り、がたつかないか"
+ ],
+ "sourceHashes": {
+  "models/phone-slab-walker/build/manifest.json": "acf56c4966d5f42c047ee6dd778e0fe034827966c48d77a4de2f00266d96f34c",
+  "models/phone-slab-walker/build/motion.json": "e3471ff1d9ecbea774748a8da5060d20eec4b656d816e9d3db30a457fe303c27",
+  "models/phone-slab-walker/build/leg_right.stl": "6864b2e44c2848b41f305fa04033bd7e233355b76f66d51d8c5d93020255d929",
+  "models/phone-slab-walker/build/leg_left.stl": "93af0c8164d9869ce2ce0ddf0f59f356056a888793cda6d56657d752cb878ca3",
+  "models/phone-slab-walker/build/horn_pair.stl": "50b541ae9662747a91a8f1eb071ec6c5505be55ee871bbf0e1a30c87caf88d8d",
+  "models/phone-slab-walker/build/bolts_right.stl": "57f3ac14b316134781b76fce940ffadbac782179d8b9820f38b97a550d852e6e",
+  "models/phone-slab-walker/build/bolts_left.stl": "c7fca1f45a5dd2ae0924eddc8076ca6857bb7e5cbf62b3804838432f44614d24"
+ }
+}

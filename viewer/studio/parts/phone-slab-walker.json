@@ -1,0 +1,191 @@
+{
+  "version": 1,
+  "model": "phone-slab-walker",
+  "source": "models/phone-slab-walker/build/manifest.json",
+  "sourceSha256": "acf56c4966d5f42c047ee6dd778e0fe034827966c48d77a4de2f00266d96f34c",
+  "groups": [
+    {
+      "id": "leg",
+      "label": "脚",
+      "color": "#70797f"
+    },
+    {
+      "id": "bolts",
+      "label": "ホーンのねじ",
+      "color": "#b0b5b8"
+    },
+    {
+      "id": "servo",
+      "label": "サーボ",
+      "color": "#1c1c1c"
+    },
+    {
+      "id": "stock",
+      "label": "既製部品",
+      "color": "#c9ced2"
+    },
+    {
+      "id": "other",
+      "label": "その他",
+      "color": "#5f6b73"
+    }
+  ],
+  "parts": [
+    {
+      "id": "tray",
+      "label": "背中側のトレイ（サーボ・マイコン・電池）",
+      "systemLabel": "背中側のトレイ（サーボ・マイコン・電池）",
+      "group": "other",
+      "kind": "printed",
+      "file": "phone-slab-walker-part-tray.stl",
+      "sha256": "f96dee94b29c15583592764c97e299ef41b1bde3e91bea6f400dd7eb88d8d434",
+      "size": 96884,
+      "aliases": [],
+      "color": "#5f6b73"
+    },
+    {
+      "id": "frame",
+      "label": "前枠（スマホを押さえる）",
+      "systemLabel": "前枠（スマホを押さえる）",
+      "group": "other",
+      "kind": "printed",
+      "file": "phone-slab-walker-part-frame.stl",
+      "sha256": "33c962ac6afe693d55eb973b4b3e5b4c16f910b9941ba17b67ae4fb73eace0a2",
+      "size": 10784,
+      "aliases": [],
+      "color": "#3f474d"
+    },
+    {
+      "id": "divider",
+      "label": "仕切り板（スマホとマイコンの間）",
+      "systemLabel": "仕切り板（スマホとマイコンの間）",
+      "group": "other",
+      "kind": "printed",
+      "file": "phone-slab-walker-part-divider.stl",
+      "sha256": "abf668b7aae54a04a04d009a84c569f0c0df8a11fac7a69d1b8d1a2d43675bbc",
+      "size": 684,
+      "aliases": [],
+      "color": "#8a959c"
+    },
+    {
+      "id": "cap",
+      "label": "足のふた（中央板の足）",
+      "systemLabel": "足のふた（中央板の足）",
+      "group": "other",
+      "kind": "printed",
+      "file": "phone-slab-walker-part-cap.stl",
+      "sha256": "789220b5d4402cfc1f2b6743a7a5fdf2994b9d0e745f96687b3424e82344d1df",
+      "size": 9584,
+      "aliases": [],
+      "color": "#2f353a"
+    },
+    {
+      "id": "leg_right",
+      "label": "右脚",
+      "systemLabel": "右脚",
+      "group": "leg",
+      "kind": "printed",
+      "file": "phone-slab-walker-part-leg_right.stl",
+      "sha256": "6864b2e44c2848b41f305fa04033bd7e233355b76f66d51d8c5d93020255d929",
+      "size": 86184,
+      "aliases": [],
+      "color": "#70797f"
+    },
+    {
+      "id": "leg_left",
+      "label": "左脚",
+      "systemLabel": "左脚",
+      "group": "leg",
+      "kind": "printed",
+      "file": "phone-slab-walker-part-leg_left.stl",
+      "sha256": "93af0c8164d9869ce2ce0ddf0f59f356056a888793cda6d56657d752cb878ca3",
+      "size": 86184,
+      "aliases": [],
+      "color": "#70797f"
+    },
+    {
+      "id": "servo_right",
+      "label": "右サーボ STS3215",
+      "systemLabel": "右サーボ STS3215",
+      "group": "servo",
+      "kind": "stock",
+      "file": "phone-slab-walker-part-servo_right.stl",
+      "sha256": "685dcf060858ed6f17ec08540eea8bcf2fa607632a43fd2749b85e081565f347",
+      "size": 3084,
+      "aliases": [],
+      "color": "#1c1c1c"
+    },
+    {
+      "id": "servo_left",
+      "label": "左サーボ STS3215",
+      "systemLabel": "左サーボ STS3215",
+      "group": "servo",
+      "kind": "stock",
+      "file": "phone-slab-walker-part-servo_left.stl",
+      "sha256": "5292e1b26daacbdd7704d7e54aaa0f14a3759b0d52697e22cdd20adb5a5fa28a",
+      "size": 3084,
+      "aliases": [],
+      "color": "#1c1c1c"
+    },
+    {
+      "id": "horn_pair",
+      "label": "左右のホーン（別のサーボだが同じ角度で掃く）",
+      "systemLabel": "左右のホーン（別のサーボだが同じ角度で掃く）",
+      "group": "stock",
+      "kind": "stock",
+      "file": "phone-slab-walker-part-horn_pair.stl",
+      "sha256": "50b541ae9662747a91a8f1eb071ec6c5505be55ee871bbf0e1a30c87caf88d8d",
+      "size": 100084,
+      "aliases": [],
+      "color": "#c9ced2"
+    },
+    {
+      "id": "bolts_right",
+      "label": "右脚のホーンねじ 4 本（サーボ付属）",
+      "systemLabel": "右脚のホーンねじ 4 本（サーボ付属）",
+      "group": "bolts",
+      "kind": "stock",
+      "file": "phone-slab-walker-part-bolts_right.stl",
+      "sha256": "57f3ac14b316134781b76fce940ffadbac782179d8b9820f38b97a550d852e6e",
+      "size": 42484,
+      "aliases": [],
+      "color": "#b0b5b8"
+    },
+    {
+      "id": "bolts_left",
+      "label": "左脚のホーンねじ 4 本（サーボ付属）",
+      "systemLabel": "左脚のホーンねじ 4 本（サーボ付属）",
+      "group": "bolts",
+      "kind": "stock",
+      "file": "phone-slab-walker-part-bolts_left.stl",
+      "sha256": "c7fca1f45a5dd2ae0924eddc8076ca6857bb7e5cbf62b3804838432f44614d24",
+      "size": 42484,
+      "aliases": [],
+      "color": "#b0b5b8"
+    },
+    {
+      "id": "phone",
+      "label": "Pixel 7a",
+      "systemLabel": "Pixel 7a",
+      "group": "stock",
+      "kind": "stock",
+      "file": "phone-slab-walker-part-phone.stl",
+      "sha256": "6b64ec353277abc70e5594659c16e8160ccd3c0a3a5175538f91e94993b2928d",
+      "size": 684,
+      "aliases": [],
+      "color": "#0b0b0d"
+    },
+    {
+      "id": "board",
+      "label": "Arduino Leonardo R3",
+      "systemLabel": "Arduino Leonardo R3",
+      "group": "stock",
+      "kind": "stock",
+      "file": "phone-slab-walker-part-board.stl",
+      "sha256": "b6f5a7676e769840b243b7fc8a10e09013f6410da8d1dd5ad2e75ba668c01d22",
+      "size": 21084,
+      "aliases": [],
+      "color": "#1b6f8a"
+    }
+  ]
+}

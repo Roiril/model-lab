@@ -1,0 +1,43 @@
+{
+ "label": "スマホ板ロボット",
+ "displayName": "スマホ板ロボット",
+ "navLabel": "スマホ板ロボット",
+ "physics": {
+  "title": "脚の振り",
+  "playback": "motion-frames",
+  "term": "脚",
+  "chartSeries": [
+   "leg_right",
+   "leg_left"
+  ],
+  "openLabel": "前へ振る",
+  "closeLabel": "後ろへ振る",
+  "chartLabel": "足先の高さ",
+  "chartAxis": "高さ [mm]",
+  "simLimits": "脚を床から浮かせて ±45° 振る計算です。歩くときの床からの力は入っていません。歩きは sim_gait.py で別に見ています。",
+  "massNote": "中実の PLA として数えた上限側の値です。左右の合計をサーボ 2 個の停動の合計と比べています。"
+ },
+ "assembly": {
+  "servoSetup": "脚をまっすぐ持ち、Z 命令でまっすぐの位置を覚えさせてからねじを締めます。"
+ },
+ "print": {
+  "downloadBase": "prints"
+ },
+ "legendGroups": [
+  {
+   "label": "脚",
+   "prefix": "leg_",
+   "color": "#70797f"
+  },
+  {
+   "label": "ホーンのねじ",
+   "prefix": "bolts_",
+   "color": "#b0b5b8"
+  },
+  {
+   "label": "サーボ",
+   "prefix": "servo_",
+   "color": "#1c1c1c"
+  }
+ ]
+}

@@ -27,6 +27,19 @@
     {"id": "sg92r.wire", "what": "配線の太さ 1.6・出口の高さ 5mm・長さ", "source": "assumed"},
     {"id": "sg92r.connector", "what": "3 ピンコネクタの外形（正本に無い。C4-3 は 8.2 x 4.4 x 14 と仮定して窓を作り直した）", "source": "missing", "basis": "C4-3 の初版の窓は実物のコネクタが通らなかった（e8b4c65）。model-request の「8 x 4mm で通った」は窓の形が記録されていない"}
    ]
+  },
+  "sts3215": {
+   "canonical": "models/phone-slab-walker/params.py",
+   "stall_torque_nm": 2.94,
+   "no_load_speed_deg_per_s": 270,
+   "items": [
+    {"id": "sts3215.stall_torque", "what": "12V 版の停動 2.94 N·m・無負荷 45 rpm", "source": "datasheet", "basis": "mycobot-lab/src/robots/so101/sts3215.py（FEETECH C047 データシート）"},
+    {"id": "sts3215.body", "what": "本体 45.4 x 24.8、ホーン座まで 35.6mm、軸は端から 10.2mm", "source": "datasheet", "basis": "TheRobotStudio の sts3215_03a_v1.stl を解析（2026-11-06）。実物をノギスで測っていない"},
+    {"id": "sts3215.horn", "what": "ホーン φ20 x 2.5、穴 φ2.5 が軸から ±4.95", "source": "datasheet", "basis": "同じ STL の穴の輪を円で当てはめた"},
+    {"id": "sts3215.horn_screw", "what": "ホーンのねじの太さと長さ（M3x6 を仮定）", "source": "assumed"},
+    {"id": "sts3215.connector", "what": "刺さった 3 ピンコネクタと線の曲げの長さ 11mm", "source": "assumed"},
+    {"id": "sts3215.pocket_fit", "what": "穴の片側 0.3mm で入るか", "source": "assumed"}
+   ]
   }
  }
 }

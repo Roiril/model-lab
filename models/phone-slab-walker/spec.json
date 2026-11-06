@@ -1,0 +1,43 @@
+{
+ "model": "phone-slab-walker",
+ "request": "スマホをターズのようにするロボットを作って、できる事なら儲けたい。ちょっと自我強めなコミュニケーションロボット。右/左足モーター1個ずつと3Dプリンターでデモを作って、そのあとどう進めようか。／モデルラボで作ってほしい。モーターは、SO101で使ってるやつを使っていいよ。基盤で言うと、Leonardo R3 Development Boardがいっぱいあるから使える。信号を送るのはスマホかな。有線かな。バッテリーはどうしようか。予算はなるべく抑えたい。",
+ "requirements": [
+  {"id": "R1", "text": "スマホを体にして、左右の脚をモーター 1 個ずつで動かす", "checks": ["motion.interference", "motion.torque", "interface.coverage", "interface.drive", "manual:実機で歩かせ、30cm を 10 回中 9 回転ばずに進むか"]},
+  {"id": "R2", "text": "SO-101 の STS3215 を使い、Arduino Leonardo R3 を載せる", "checks": ["assembly.path", "manual:サーボを穴へ入れ、Leonardo から角度と電圧を読めるか"]},
+  {"id": "R3", "text": "スマホと有線で繋ぎ、電源線か電池で動かす", "checks": ["manual:USB-C と micro-B のケーブルを足の部屋に収めて閉じられるか", "manual:12V の線を背中の口から通せるか"]},
+  {"id": "C3", "text": "共通条件 §3 見える面をサポート無しできれいに刷る", "checks": ["print.slice", "print.grounding", "print.slender"]},
+  {"id": "C4", "text": "共通条件 §4 工具なしで組み、壊さず分解できる（ホーンのねじ 4 本 x 2 だけ例外）", "checks": ["assembly.path", "interface.retention"]}
+ ],
+ "envelope_mm": [145, 62, 250],
+ "uses": ["sts3215"],
+ "parts": {
+  "components": {},
+  "jigs": [],
+  "slender_ok": {}
+ },
+ "motion": {"actuator": "horn_pair", "servo": "sts3215"},
+ "allowances": [
+  {"type": "snap", "pairs": [["cap", "tray"]], "engage_mm": 11.6, "strain_percent": 0.6, "deflection_mm": 1.0, "basis": "足のふたの腕 t=2.5、L≈31、たわみ 1.0mm。ε=1.5·t·δ/L²≈0.4%。爪の上の斜面がトレイの下端からトレイ内壁を押して進み、窓で戻る"}
+ ],
+ "interfaces": [
+  {"id": "horn-bolt-right", "type": "drive", "driver": "horn_pair", "driven": "bolts_right", "sides": "both", "max_play_deg": 3},
+  {"id": "horn-bolt-left", "type": "drive", "driver": "horn_pair", "driven": "bolts_left", "sides": "both", "max_play_deg": 3},
+  {"id": "bolt-leg-right", "type": "drive", "driver": "bolts_right", "driven": "leg_right", "sides": "both", "max_play_deg": 5},
+  {"id": "bolt-leg-left", "type": "drive", "driver": "bolts_left", "driven": "leg_left", "sides": "both", "max_play_deg": 5},
+  {"id": "leg-right-out", "type": "retention", "parts": ["leg_right"], "against": ["bolts_right"], "direction": [1, 0, 0], "max_free_mm": 1.0, "engage_depth_mm": 2.4},
+  {"id": "leg-left-out", "type": "retention", "parts": ["leg_left"], "against": ["bolts_left"], "direction": [-1, 0, 0], "max_free_mm": 1.0, "engage_depth_mm": 2.4},
+  {"id": "frame-down", "type": "retention", "parts": ["frame"], "direction": [0, 0, -1], "max_free_mm": 1.0, "engage_depth_mm": 2.5},
+  {"id": "frame-front", "type": "retention", "parts": ["frame"], "direction": [0, 1, 0], "max_free_mm": 1.0, "engage_depth_mm": 1.2},
+  {"id": "phone-front", "type": "retention", "parts": ["phone"], "direction": [0, 1, 0], "max_free_mm": 1.0, "engage_depth_mm": 3.0},
+  {"id": "phone-down", "type": "retention", "parts": ["phone"], "direction": [0, 0, -1], "max_free_mm": 3.0, "engage_depth_mm": 4.0},
+  {"id": "cap-down", "type": "retention", "parts": ["cap"], "direction": [0, 0, -1], "max_free_mm": 1.0, "engage_depth_mm": 1.0},
+  {"id": "servo-right-front", "type": "retention", "parts": ["servo_right"], "direction": [0, 1, 0], "max_free_mm": 1.0, "engage_depth_mm": 3.0},
+  {"id": "servo-left-front", "type": "retention", "parts": ["servo_left"], "direction": [0, 1, 0], "max_free_mm": 1.0, "engage_depth_mm": 3.0}
+ ],
+ "unknowns": [
+  {"id": "sts3215.horn_screw", "trial_part": "prints/phone-slab-walker/trial/horn_seat.stl", "what": "ねじが座面の穴を通り、ホーンに届くか"},
+  {"id": "sts3215.connector", "trial_part": "prints/phone-slab-walker/trial/servo_pocket.stl", "what": "刺したコネクタが尻の間に収まるか"},
+  {"id": "sts3215.pocket_fit", "trial_part": "prints/phone-slab-walker/trial/servo_pocket.stl", "what": "サーボが穴に入り、がたつかないか"}
+ ],
+ "waivers": []
+}

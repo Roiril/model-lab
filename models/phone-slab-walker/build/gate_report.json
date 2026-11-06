@@ -1,0 +1,863 @@
+{
+ "model": "phone-slab-walker",
+ "generatedAt": "2026-11-06T23:05:56",
+ "pass": true,
+ "blocking": [],
+ "harness": {
+  "sha": "e81958ee6cd94fa6d5ba5c2bc4c8447cd632c08acb97f9bb697922edb475deee",
+  "stamp": "e81958ee6cd94fa6d5ba5c2bc4c8447cd632c08acb97f9bb697922edb475deee",
+  "stampedAt": "2026-10-15T10:58:57"
+ },
+ "blenderSeconds": 22.4,
+ "declared": {
+  "waivers": {},
+  "allowances": [
+   {
+    "type": "snap",
+    "pairs": [
+     [
+      "cap",
+      "tray"
+     ]
+    ],
+    "engage_mm": 11.6,
+    "strain_percent": 0.6,
+    "deflection_mm": 1.0,
+    "basis": "足のふたの腕 t=2.5、L≈31、たわみ 1.0mm。ε=1.5·t·δ/L²≈0.4%。爪の上の斜面がトレイの下端からトレイ内壁を押して進み、窓で戻る"
+   }
+  ],
+  "unknowns": [
+   {
+    "id": "sts3215.horn_screw",
+    "trial_part": "prints/phone-slab-walker/trial/horn_seat.stl",
+    "what": "ねじが座面の穴を通り、ホーンに届くか"
+   },
+   {
+    "id": "sts3215.connector",
+    "trial_part": "prints/phone-slab-walker/trial/servo_pocket.stl",
+    "what": "刺したコネクタが尻の間に収まるか"
+   },
+   {
+    "id": "sts3215.pocket_fit",
+    "trial_part": "prints/phone-slab-walker/trial/servo_pocket.stl",
+    "what": "サーボが穴に入り、がたつかないか"
+   }
+  ],
+  "slenderExceptions": {},
+  "motionExcluded": []
+ },
+ "requirements": [
+  {
+   "id": "R1",
+   "text": "スマホを体にして、左右の脚をモーター 1 個ずつで動かす",
+   "checks": [
+    "motion.interference",
+    "motion.torque",
+    "interface.coverage",
+    "interface.drive"
+   ],
+   "manual": [
+    "実機で歩かせ、30cm を 10 回中 9 回転ばずに進むか"
+   ],
+   "pass": true
+  },
+  {
+   "id": "R2",
+   "text": "SO-101 の STS3215 を使い、Arduino Leonardo R3 を載せる",
+   "checks": [
+    "assembly.path"
+   ],
+   "manual": [
+    "サーボを穴へ入れ、Leonardo から角度と電圧を読めるか"
+   ],
+   "pass": true
+  },
+  {
+   "id": "R3",
+   "text": "スマホと有線で繋ぎ、電源線か電池で動かす",
+   "checks": [],
+   "manual": [
+    "USB-C と micro-B のケーブルを足の部屋に収めて閉じられるか",
+    "12V の線を背中の口から通せるか"
+   ],
+   "pass": null
+  },
+  {
+   "id": "C3",
+   "text": "共通条件 §3 見える面をサポート無しできれいに刷る",
+   "checks": [
+    "print.slice",
+    "print.grounding",
+    "print.slender"
+   ],
+   "manual": [],
+   "pass": true
+  },
+  {
+   "id": "C4",
+   "text": "共通条件 §4 工具なしで組み、壊さず分解できる（ホーンのねじ 4 本 x 2 だけ例外）",
+   "checks": [
+    "assembly.path",
+    "interface.retention"
+   ],
+   "manual": [],
+   "pass": true
+  }
+ ],
+ "checks": [
+  {
+   "id": "harness.calibrated",
+   "title": "ハーネスの計器が selftest を通った版のままか",
+   "pass": true,
+   "summary": "selftest を通った版",
+   "detail": {
+    "sha": "e81958ee6cd94fa6d5ba5c2bc4c8447cd632c08acb97f9bb697922edb475deee",
+    "stamp": "e81958ee6cd94fa6d5ba5c2bc4c8447cd632c08acb97f9bb697922edb475deee",
+    "stampedAt": "2026-10-15T10:58:57"
+   },
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "spec.valid",
+   "title": "spec.json が揃っていて、許可・界面の宣言がハーネスの上限の中か",
+   "pass": true,
+   "summary": "宣言はハーネスの上限の中",
+   "detail": [],
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "contract.files",
+   "title": "manifest / motion / assembly と全 STL がそろっているか",
+   "pass": true,
+   "summary": "そろっている",
+   "detail": [],
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "instrument.calibration",
+   "title": "共通体積と初接触の計器が正負の形で期待どおりに出たか",
+   "pass": true,
+   "summary": "正負の形がすべて期待どおり",
+   "detail": {
+    "overlapHalf": {
+     "measured": 0.5,
+     "expected": 0.5,
+     "pass": true
+    },
+    "thinOverlap0.002": {
+     "measured": 0.0020000040531158447,
+     "expected": 0.002,
+     "pass": true
+    },
+    "separated": {
+     "measured": 0.0,
+     "expected": 0.0,
+     "pass": true
+    },
+    "faceContact": {
+     "measured": 0.0,
+     "expected": 0.0,
+     "pass": true
+    },
+    "edgeContact": {
+     "measured": 0.0,
+     "expected": 0.0,
+     "pass": true
+    },
+    "nestedInside": {
+     "measured": 1.0,
+     "expected": 1.0,
+     "pass": true
+    },
+    "nestedInsideReversed": {
+     "measured": 1.0,
+     "expected": 1.0,
+     "pass": true
+    },
+    "tiltedFaceContactAtScale": {
+     "measured": 0.0,
+     "expected": 0.0,
+     "pass": true
+    },
+    "tiltedThinOverlapAtScale": {
+     "measured": 4.000433860168268,
+     "expected": 4.0,
+     "pass": true
+    },
+    "skipAgreesWithBoolean": {
+     "cases": [
+      {
+       "case": "separated",
+       "fast": 0.0,
+       "full": 0.0,
+       "pass": true
+      },
+      {
+       "case": "overlap",
+       "fast": 0.7000000029802322,
+       "full": 0.7000000029802322,
+       "pass": true
+      },
+      {
+       "case": "nested",
+       "fast": 1.0,
+       "full": 1.0,
+       "pass": true
+      }
+     ],
+     "pass": true
+    },
+    "firstContactLinear": {
+     "measured": 0.501001,
+     "expected": 0.501,
+     "pass": true
+    },
+    "firstContactNone": {
+     "measured": null,
+     "expected": null,
+     "pass": true
+    },
+    "firstContactAngular": {
+     "measured": 14.255127,
+     "expected": 14.255098890306314,
+     "pass": true
+    },
+    "pass": true
+   },
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "parts.topology",
+   "title": "全 STL が閉じて向きのそろった多様体か（面積 0 の三角形も無し）",
+   "pass": true,
+   "summary": "19 個の STL を検査",
+   "detail": {
+    "failing": {},
+    "referenceNotes": {}
+   },
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "parts.components",
+   "title": "刷る STL の連結成分の数が宣言どおりか（既定 1）",
+   "pass": true,
+   "summary": "刷る部品 6 点",
+   "detail": {},
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "parts.self_intersection",
+   "title": "刷る STL に自己交差が無いか",
+   "pass": true,
+   "summary": "刷る STL 6 点",
+   "detail": {},
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "print.grounding",
+   "title": "刷る向きでベッドに十分な面積で接し、浮いた成分が無いか",
+   "pass": true,
+   "summary": "接地 10.0mm² 以上・浮いた成分なし",
+   "detail": {},
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "print.slender",
+   "title": "立てて刷る部品の高さが接地の短辺の 5 倍以内か",
+   "pass": true,
+   "summary": "高さ / 接地の短辺 ≤ 5.0",
+   "detail": {
+    "failing": {},
+    "declaredExceptions": {}
+   },
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "assembly.envelope",
+   "title": "組んだ外形が spec の上限に収まるか",
+   "pass": true,
+   "summary": "組んだ外形 143.4 x 60.0 x 248.4mm（上限 [145, 62, 250]）",
+   "detail": {
+    "size": [
+     143.4,
+     60.0,
+     248.4
+    ],
+    "limit": [
+     145,
+     62,
+     250
+    ]
+   },
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "motion.resolution",
+   "title": "motion.json の刻みが 2.5° 以下か",
+   "pass": true,
+   "summary": "motion.json の最大の刻み 2.500°（37 姿勢）",
+   "detail": {
+    "maxGapDeg": 2.5
+   },
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "motion.interference",
+   "title": "動く全範囲で、許可の無い部品の組の共通体積が 0 か",
+   "pass": true,
+   "summary": "13 部品・78 組 x 397 姿勢（-45.0〜45.0°、どの点も姿勢の間で 1.0mm 以内。補間 360）",
+   "detail": {
+    "violations": [],
+    "allowedContacts": []
+   },
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "motion.torque",
+   "title": "重力だけで見積もった必要トルクが停動トルクの 1/3 以下か",
+   "pass": true,
+   "summary": "重力の必要トルク最大 408.7 mN·m（45.0°）/ 停動 2.94 N·m = 13.9%（摩擦・圧入・ばねは含まない下限の見積もり）",
+   "detail": {
+    "peakNm": 0.4086885162061452,
+    "atServoDeg": 45.0,
+    "stallNm": 2.94,
+    "limitFraction": 0.3333333333333333,
+    "massesG": {
+     "tray": 140.73,
+     "frame": 63.76,
+     "divider": 30.88,
+     "cap": 62.6,
+     "leg_right": 258.39,
+     "leg_left": 258.39
+    }
+   },
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "interface.coverage",
+   "title": "動く部品の塊がすべて、駆動の界面でアクチュエータにつながっているか",
+   "pass": true,
+   "summary": "動く塊 1 個のうち 1 個がアクチュエータから駆動の界面でつながる",
+   "detail": {
+    "unreachableGroups": [],
+    "hint": "動く塊ごとに spec.interfaces に type: drive（driver → driven）を書く。界面はゲートが形で確かめる"
+   },
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "interface.drive",
+   "title": "駆動の界面ごとに、従動側を押すと遊びの中で駆動側に当たるか",
+   "pass": true,
+   "summary": "界面 4 個",
+   "detail": {
+    "failing": [],
+    "all": [
+     {
+      "id": "horn-bolt-right",
+      "driver": "horn_pair",
+      "driven": "bolts_right",
+      "sides": "both",
+      "samples": 12,
+      "pass": true,
+      "worst": [
+       {
+        "servoDeg": -45.0,
+        "unit": "deg",
+        "limit": 3,
+        "back": 0.407611,
+        "ahead": 0.407574,
+        "pass": true
+       },
+       {
+        "servoDeg": -37.5,
+        "unit": "deg",
+        "limit": 3,
+        "back": 0.407611,
+        "ahead": 0.407593,
+        "pass": true
+       }
+      ]
+     },
+     {
+      "id": "horn-bolt-left",
+      "driver": "horn_pair",
+      "driven": "bolts_left",
+      "sides": "both",
+      "samples": 12,
+      "pass": true,
+      "worst": [
+       {
+        "servoDeg": -45.0,
+        "unit": "deg",
+        "limit": 3,
+        "back": 0.407593,
+        "ahead": 0.407574,
+        "pass": true
+       },
+       {
+        "servoDeg": -37.5,
+        "unit": "deg",
+        "limit": 3,
+        "back": 0.407593,
+        "ahead": 0.407593,
+        "pass": true
+       }
+      ]
+     },
+     {
+      "id": "bolt-leg-right",
+      "driver": "bolts_right",
+      "driven": "leg_right",
+      "sides": "both",
+      "samples": 12,
+      "pass": true,
+      "worst": [
+       {
+        "servoDeg": -45.0,
+        "unit": "deg",
+        "limit": 5,
+        "back": 0.989502,
+        "ahead": 0.989532,
+        "pass": true
+       },
+       {
+        "servoDeg": -37.5,
+        "unit": "deg",
+        "limit": 5,
+        "back": 0.989532,
+        "ahead": 0.989532,
+        "pass": true
+       }
+      ]
+     },
+     {
+      "id": "bolt-leg-left",
+      "driver": "bolts_left",
+      "driven": "leg_left",
+      "sides": "both",
+      "samples": 12,
+      "pass": true,
+      "worst": [
+       {
+        "servoDeg": -45.0,
+        "unit": "deg",
+        "limit": 5,
+        "back": 0.989502,
+        "ahead": 0.989532,
+        "pass": true
+       },
+       {
+        "servoDeg": -37.5,
+        "unit": "deg",
+        "limit": 5,
+        "back": 0.989532,
+        "ahead": 0.989532,
+        "pass": true
+       }
+      ]
+     }
+    ]
+   },
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "interface.retention",
+   "title": "抜け止めごとに、外れる向きへ動かすと上限までに止まるか",
+   "pass": true,
+   "summary": "抜け止め 9 個",
+   "detail": {
+    "failing": [],
+    "all": [
+     {
+      "id": "leg-right-out",
+      "parts": [
+       "leg_right"
+      ],
+      "direction": [
+       1.0,
+       0.0,
+       0.0
+      ],
+      "limitMm": 1.0,
+      "travelMm": 0.105637,
+      "stoppedBy": [
+       "bolts_right"
+      ],
+      "stoppedPart": "leg_right",
+      "pass": true
+     },
+     {
+      "id": "leg-left-out",
+      "parts": [
+       "leg_left"
+      ],
+      "direction": [
+       -1.0,
+       0.0,
+       0.0
+      ],
+      "limitMm": 1.0,
+      "travelMm": 0.105637,
+      "stoppedBy": [
+       "bolts_left"
+      ],
+      "stoppedPart": "leg_left",
+      "pass": true
+     },
+     {
+      "id": "frame-down",
+      "parts": [
+       "frame"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       -1.0
+      ],
+      "limitMm": 1.0,
+      "travelMm": 1.5e-05,
+      "stoppedBy": [
+       "cap"
+      ],
+      "stoppedPart": "frame",
+      "pass": true
+     },
+     {
+      "id": "frame-front",
+      "parts": [
+       "frame"
+      ],
+      "direction": [
+       0.0,
+       1.0,
+       0.0
+      ],
+      "limitMm": 1.0,
+      "travelMm": 0.353607,
+      "stoppedBy": [
+       "tray"
+      ],
+      "stoppedPart": "frame",
+      "pass": true
+     },
+     {
+      "id": "phone-front",
+      "parts": [
+       "phone"
+      ],
+      "direction": [
+       0.0,
+       1.0,
+       0.0
+      ],
+      "limitMm": 1.0,
+      "travelMm": 0.400009,
+      "stoppedBy": [
+       "frame"
+      ],
+      "stoppedPart": "phone",
+      "pass": true
+     },
+     {
+      "id": "phone-down",
+      "parts": [
+       "phone"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       -1.0
+      ],
+      "limitMm": 3.0,
+      "travelMm": 0.400009,
+      "stoppedBy": [
+       "cap"
+      ],
+      "stoppedPart": "phone",
+      "pass": true
+     },
+     {
+      "id": "cap-down",
+      "parts": [
+       "cap"
+      ],
+      "direction": [
+       0.0,
+       0.0,
+       -1.0
+      ],
+      "limitMm": 1.0,
+      "travelMm": 0.060013,
+      "stoppedBy": [
+       "tray"
+      ],
+      "stoppedPart": "cap",
+      "pass": true
+     },
+     {
+      "id": "servo-right-front",
+      "parts": [
+       "servo_right"
+      ],
+      "direction": [
+       0.0,
+       1.0,
+       0.0
+      ],
+      "limitMm": 1.0,
+      "travelMm": 0.300003,
+      "stoppedBy": [
+       "frame"
+      ],
+      "stoppedPart": "servo_right",
+      "pass": true
+     },
+     {
+      "id": "servo-left-front",
+      "parts": [
+       "servo_left"
+      ],
+      "direction": [
+       0.0,
+       1.0,
+       0.0
+      ],
+      "limitMm": 1.0,
+      "travelMm": 0.300003,
+      "stoppedBy": [
+       "frame"
+      ],
+      "stoppedPart": "servo_left",
+      "pass": true
+     }
+    ]
+   },
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "assembly.path",
+   "title": "組立の各工程で、許可の範囲の外の当たりが無く、最後に全部品が組まれるか",
+   "pass": true,
+   "summary": "11 工程（補間で足した姿勢 0）",
+   "detail": {
+    "violations": [],
+    "boundaryErrors": [],
+    "interpolatedPoses": 0,
+    "finalNotAssembled": [],
+    "allowedContacts": [
+     {
+      "parts": [
+       "cap",
+       "tray"
+      ],
+      "type": "snap",
+      "maxCommonMm3": 21.40951,
+      "maxRemainingTravelMm": 10.0,
+      "samples": 10,
+      "steps": [
+       "cap"
+      ]
+     }
+    ],
+    "steps": [
+     {
+      "id": "tray",
+      "frames": 2,
+      "checkedPoses": 2,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "servos",
+      "frames": 36,
+      "checkedPoses": 36,
+      "moving": 3,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "board",
+      "frames": 31,
+      "checkedPoses": 31,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "divider",
+      "frames": 21,
+      "checkedPoses": 21,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "frame",
+      "frames": 183,
+      "checkedPoses": 183,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "phone",
+      "frames": 166,
+      "checkedPoses": 166,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "cap",
+      "frames": 26,
+      "checkedPoses": 26,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "leg_right",
+      "frames": 13,
+      "checkedPoses": 13,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "leg_left",
+      "frames": 13,
+      "checkedPoses": 13,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "bolts_right",
+      "frames": 31,
+      "checkedPoses": 31,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     },
+     {
+      "id": "bolts_left",
+      "frames": 31,
+      "checkedPoses": 31,
+      "moving": 1,
+      "violations": 0,
+      "pass": true
+     }
+    ]
+   },
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "unknowns.resolved",
+   "title": "既製部品の仮値・未確認の寸法がすべて扱いを決められているか（試し刷りの部品など）",
+   "pass": true,
+   "summary": "未確認 3 件の扱いが決まっている",
+   "detail": {
+    "problems": [],
+    "resolutions": [
+     {
+      "id": "sts3215.horn_screw",
+      "kind": "trial_part",
+      "value": "prints/phone-slab-walker/trial/horn_seat.stl",
+      "what": "ねじが座面の穴を通り、ホーンに届くか"
+     },
+     {
+      "id": "sts3215.connector",
+      "kind": "trial_part",
+      "value": "prints/phone-slab-walker/trial/servo_pocket.stl",
+      "what": "刺したコネクタが尻の間に収まるか"
+     },
+     {
+      "id": "sts3215.pocket_fit",
+      "kind": "trial_part",
+      "value": "prints/phone-slab-walker/trial/servo_pocket.stl",
+      "what": "サーボが穴に入り、がたつかないか"
+     }
+    ]
+   },
+   "required": true,
+   "waived": null
+  },
+  {
+   "id": "print.slice",
+   "title": "スライス済みのプレートで、サポート無し・外に見える支えの無い押し出しが上限以下か",
+   "pass": true,
+   "summary": "4 枚・9 物体。外の支えなし押し出し ≤ 2.0mm",
+   "detail": {
+    "failing": {},
+    "declaredSupports": {}
+   },
+   "required": true,
+   "waived": null
+  }
+ ],
+ "inputs": {
+  "models/phone-slab-walker/spec.json": "abed3ee23720879ce8cbb6a53d282ddab5a2d1bc28c8f08bed06f14e5fa0cde7",
+  "models/phone-slab-walker/build/manifest.json": "acf56c4966d5f42c047ee6dd778e0fe034827966c48d77a4de2f00266d96f34c",
+  "models/phone-slab-walker/build/motion.json": "e3471ff1d9ecbea774748a8da5060d20eec4b656d816e9d3db30a457fe303c27",
+  "models/phone-slab-walker/build/assembly.json": "ff89c3c768468aa7e69f24c16aea8f7d8027a13e3c9b34406cd737f6aa0ebe44",
+  "models/phone-slab-walker/export_gait.py": "77f762de7870021f58f316d95eed554d23bfe76f094a2905bc0ac9ec944c0d0c",
+  "models/phone-slab-walker/lattice_export.py": "9d7da4c28d867e00db91ef92e6ba1756c807683d60bda425aa6909013e1df500",
+  "models/phone-slab-walker/model.py": "6a0f2fb8ecb9495a2dece27d28504725e2018b4df4ee290b6d45ca9ff3673a3d",
+  "models/phone-slab-walker/params.py": "22935f748d456378df7b0fe2cf8660a35068a8c00f0db6bc68e6214fdfbbf5a5",
+  "models/phone-slab-walker/plate.py": "c5a7549e5af2ad1dbff71cc27617896c11ef7f19d4077fb35507eb9b0dd51330",
+  "models/phone-slab-walker/sim_gait.py": "bf5980177da7aef30407d36682019cb362574a489c818ac1dbc23e533e306480",
+  "models/phone-slab-walker/build/tray.stl": "f96dee94b29c15583592764c97e299ef41b1bde3e91bea6f400dd7eb88d8d434",
+  "models/phone-slab-walker/build/frame.stl": "33c962ac6afe693d55eb973b4b3e5b4c16f910b9941ba17b67ae4fb73eace0a2",
+  "models/phone-slab-walker/build/divider.stl": "abf668b7aae54a04a04d009a84c569f0c0df8a11fac7a69d1b8d1a2d43675bbc",
+  "models/phone-slab-walker/build/cap.stl": "789220b5d4402cfc1f2b6743a7a5fdf2994b9d0e745f96687b3424e82344d1df",
+  "models/phone-slab-walker/build/leg_right.stl": "6864b2e44c2848b41f305fa04033bd7e233355b76f66d51d8c5d93020255d929",
+  "models/phone-slab-walker/build/leg_left.stl": "93af0c8164d9869ce2ce0ddf0f59f356056a888793cda6d56657d752cb878ca3",
+  "models/phone-slab-walker/build/servo_right.stl": "685dcf060858ed6f17ec08540eea8bcf2fa607632a43fd2749b85e081565f347",
+  "models/phone-slab-walker/build/servo_left.stl": "5292e1b26daacbdd7704d7e54aaa0f14a3759b0d52697e22cdd20adb5a5fa28a",
+  "models/phone-slab-walker/build/horn_pair.stl": "50b541ae9662747a91a8f1eb071ec6c5505be55ee871bbf0e1a30c87caf88d8d",
+  "models/phone-slab-walker/build/bolts_right.stl": "57f3ac14b316134781b76fce940ffadbac782179d8b9820f38b97a550d852e6e",
+  "models/phone-slab-walker/build/bolts_left.stl": "c7fca1f45a5dd2ae0924eddc8076ca6857bb7e5cbf62b3804838432f44614d24",
+  "models/phone-slab-walker/build/phone.stl": "6b64ec353277abc70e5594659c16e8160ccd3c0a3a5175538f91e94993b2928d",
+  "models/phone-slab-walker/build/board.stl": "b6f5a7676e769840b243b7fc8a10e09013f6410da8d1dd5ad2e75ba668c01d22",
+  "models/phone-slab-walker/build/print_tray.stl": "bb484f398c1cd05c781f012e319e4b6a72bd8558e6d97cc08388a6da489a36b0",
+  "models/phone-slab-walker/build/print_frame.stl": "faaf210f0b44a2fc73576dbf09fdd4659dfffec27ecb473ab8a05cf265e03dad",
+  "models/phone-slab-walker/build/print_divider.stl": "649b052c4d2966667970c1d0936ff39ae4e364539e009e4b9fd2439d7c4f7446",
+  "models/phone-slab-walker/build/print_cap.stl": "7d92f0dfa1e583aebb82cb1591906d5004fb854be78947bd82876d465afeb67c",
+  "models/phone-slab-walker/build/print_leg_right.stl": "a378f264512dfbe4c64a18e696541e65d247dfeba795bda025f76bbbc4ddcf03",
+  "models/phone-slab-walker/build/print_leg_left.stl": "42394ccb3517e48edfbb2c670af8ebb738c2f352f80d0b17ef01276a924d2a03",
+  "prints/phone-slab-walker/trial/horn_seat.stl": "4b21e92f1920e452e225664c20d7f021c1265386823b6c3be249ebc9e49433a0",
+  "prints/phone-slab-walker/trial/servo_pocket.stl": "9e755bc99f1bdecfc1c350ab88a4415c15b23f4e7c60c3b3fd25b4e996e26a9d",
+  "prints/phone-slab-walker/1-trial.gcode.3mf": "c6453c0636b8d10c7b57b2f1c1bf4058d030e996b98876b77989ac786d7ba9eb",
+  "prints/phone-slab-walker/2-body.gcode.3mf": "6a4abc4b4ff7bcd7920a7c823d1799013c7d6db44e6f1456217535276c28c9c3",
+  "prints/phone-slab-walker/3-legs.gcode.3mf": "ea6b7c18f6da8b220f659a9eabda03aa2a88d2c9df73d4129e0118ccdbd402aa",
+  "prints/phone-slab-walker/4-divider.gcode.3mf": "a064bdd08d7a1bedbad91e4540a3854d9f719a9fa7c60fb6df35bb6d00b4303c",
+  "tools/mechgate.py": "a04a4984d76cf8fa034fecbf79635d71513659919101b1cd6e61ff7bffba6f7b",
+  "tools/mechgate_lib/__init__.py": "7f409f2f5490445952a8c8ccbcacc41dbe79c6e4d90eaf83d1eaf05c1a20ca93",
+  "tools/mechgate_lib/limits.py": "0e544a9ae5e0495fdf009983bf0cca7696cea68c05349a92af08eb7ac3634f88",
+  "tools/mechgate_lib/meshcheck.py": "3efc9d3d1de32a392d8f1979a59665c6a382a497794c4f82d8f3af927d094110",
+  "tools/mechgate_lib/gate.py": "678d74e161580b390d630c39ac6df5717e9c391f9c6bd68e5cd08d1da40e3f99",
+  "tools/mechgate_lib/bl_job.py": "91aa0d0e7150e4812b8d20f1a80c8e7ddbde5851e1e5c16656d243082158b135",
+  "tools/mechgate_lib/selftest.py": "8f0a0411afe96f993744f0ff20fb51207e857e6c8672b81d5f0b68912cae967e",
+  "lib/printmech/solid_meter.py": "29fd57451bc054b928b3f54edec94de6a8dc529372db52bf48e6e62f90a2c53d",
+  "lib/printmech/contract.py": "c07fbf75fc73042f69db935b61ce3d078d00da4d8c0f40ebc9948ddf7abf4aef",
+  "lib/solid_volume.py": "e2ef2fed94077267883da61c7b28ca09f321d1263833bcaf6580daa7748b1415"
+ }
+}

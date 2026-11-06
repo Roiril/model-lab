@@ -1,0 +1,137 @@
+{
+ "seed": 253,
+ "params": {
+  "period": 2.725858814960231,
+  "knots": [
+   -14.24006426178915,
+   -25.643910415043234,
+   -17.42921998876018,
+   -1.18544618687082
+  ],
+  "durs": [
+   1.0009734455961645,
+   1.0303059914389796,
+   0.5174465007402557,
+   1.2851694849403792
+  ],
+  "phase": 0.5
+ },
+ "periodS": 2.736,
+ "keys": 24,
+ "rows": {
+  "基準": {
+   "forward_mm": 96,
+   "lateral_mm": 3,
+   "yaw_deg": -4,
+   "fell_at": null,
+   "peak_nm": 0.53,
+   "tilt_max": 8.4
+  },
+  "隙間 1.5mm": {
+   "forward_mm": 78,
+   "lateral_mm": 3,
+   "yaw_deg": -5,
+   "fell_at": null,
+   "peak_nm": 0.53,
+   "tilt_max": 9.8
+  },
+  "隙間 4.5mm": {
+   "forward_mm": 107,
+   "lateral_mm": 5,
+   "yaw_deg": -4,
+   "fell_at": null,
+   "peak_nm": 0.44,
+   "tilt_max": 14.4
+  },
+  "軽くて滑る": {
+   "forward_mm": 103,
+   "lateral_mm": 1,
+   "yaw_deg": -4,
+   "fell_at": null,
+   "peak_nm": 0.42,
+   "tilt_max": 8.9
+  },
+  "重くて滑らない": {
+   "forward_mm": 87,
+   "lateral_mm": 3,
+   "yaw_deg": -5,
+   "fell_at": null,
+   "peak_nm": 0.67,
+   "tilt_max": 8.1
+  },
+  "脚のゼロ 左+3 右-3": {
+   "forward_mm": 88,
+   "lateral_mm": -26,
+   "yaw_deg": -1,
+   "fell_at": null,
+   "peak_nm": 0.53,
+   "tilt_max": 14.6
+  },
+  "脚のゼロ 左-3 右+3": {
+   "forward_mm": 99,
+   "lateral_mm": 14,
+   "yaw_deg": -11,
+   "fell_at": null,
+   "peak_nm": 0.5,
+   "tilt_max": 5.5
+  },
+  "右が 40ms 遅れる": {
+   "forward_mm": 97,
+   "lateral_mm": 3,
+   "yaw_deg": -5,
+   "fell_at": null,
+   "peak_nm": 0.52,
+   "tilt_max": 8.2
+  },
+  "ジャイロなし": {
+   "forward_mm": 77,
+   "lateral_mm": 11,
+   "yaw_deg": -15,
+   "fell_at": null,
+   "peak_nm": 0.43,
+   "tilt_max": 10.2
+  },
+  "左へ曲げる（+6°）": {
+   "forward_mm": 68,
+   "lateral_mm": 22,
+   "yaw_deg": 18,
+   "fell_at": null,
+   "peak_nm": 0.46,
+   "tilt_max": 9.4
+  },
+  "右へ曲げる（-6°）": {
+   "forward_mm": 66,
+   "lateral_mm": -11,
+   "yaw_deg": -69,
+   "fell_at": null,
+   "peak_nm": 0.46,
+   "tilt_max": 7.6
+  },
+  "ジャイロつきで 40 秒": {
+   "forward_mm": 172,
+   "lateral_mm": 7,
+   "yaw_deg": 3,
+   "fell_at": null,
+   "peak_nm": 0.53,
+   "tilt_max": 8.4
+  },
+  "後ろへ（符号反転）": {
+   "forward_mm": -96,
+   "lateral_mm": 3,
+   "yaw_deg": 4,
+   "fell_at": null,
+   "peak_nm": 0.53,
+   "tilt_max": 8.4
+  },
+  "校正: 指令なしなら進まず転ばない": {
+   "forward_mm": 0,
+   "lateral_mm": 0,
+   "yaw_deg": 0,
+   "fell_at": null,
+   "peak_nm": 0.0,
+   "tilt_max": 0.0
+  }
+ },
+ "worstForwardMmPerS": 6.4,
+ "note": "MuJoCo の比較。実機で歩かせて確かめるまで距離は保証しない"
+}
