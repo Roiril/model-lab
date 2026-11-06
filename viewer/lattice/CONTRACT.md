@@ -124,6 +124,9 @@ py -3.11 tools/lattice_web.py <名前>
   "navLabel": "TPC 画素の立方体",       // モデル切り替えのリンク。無ければ label
   "navOrder": 40,                       // 切り替えの並び（小さい順）。既定 100
   "dimensionsFallback": "…",            // meta.dimensions_mm が無いときの寸法表示
+  "actuatorLabel": "STS3215 2台",       // ヘッダのアクチュエータ。既定「SG92R 1台」
+  "cutLabel": "右半分を隠す",           // 断面表示の札。既定「箱の右半分を隠す」
+  "limitsText": "…",                    // 「確認範囲」の 1 段目を置き換える。箱以外のモデルは書くこと
   "physics": {
     "title": "画素の上下",              // 物理検証の見出し。無ければ displayName
     "playback": "motion-frames",        // "group-lift"（既定）か "motion-frames"
@@ -134,10 +137,14 @@ py -3.11 tools/lattice_web.py <名前>
     "liftLabel": "…", "chartLabel": "…", "chartAxis": "…",   // 数値欄・折れ線の題・縦軸。無ければ term から作る
     "patternNote": "…",                 // 「凹む場所」の注記を置き換える
     "simLimits": "…",                   // 「確認範囲」の文章を置き換える。新モデルは自分の仮定を書くこと
-    "massNote": "…"                     // 「トルクの上限・重さ」の注記の後半（質量の出どころと摩擦の前提）。無いと旧 3 モデル向けの固定文（摩擦係数 0.30・円盤外周）が出る
+    "massNote": "…",                    // 「トルクの上限・重さ」の注記の後半（質量の出どころと摩擦の前提）。無いと旧 3 モデル向けの固定文（摩擦係数 0.30・円盤外周）が出る
+    "contactNote": "…",                 // 計算結果の文の接触の説明。カムで押さないモデルは書くこと
+    "stallCondition": "12V",            // 停動トルクの条件。既定 4.8V
+    "reachToleranceDeg": 3              // 「目標に到達」と書く角度の差。既定 1
   },
   "assembly": {
     "servoSetup": "…",                  // 「サーボの角度を決める」の説明
+    "eyebrow": "…",                     // 組み立てタブの見出しの上。既定「工具、ねじ、接着剤なし」。ねじを使うモデルは必ず書く
     "maxTranslationMm": 1, "maxRotationDeg": 1   // 干渉検査の許容。無ければ文を出さない
   },
   "print": { "downloadBase": "prints" },   // 印刷データの置き場。"prints"（/prints/<モデル>/）か "exports"（/exports/）。既定 prints

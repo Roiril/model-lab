@@ -329,7 +329,7 @@ function deliverySummary(report, pathReview) {
   for (const [name, plate] of Object.entries(report.plates || {})) {
     for (const [material, result] of Object.entries(plate.materials || {})) {
       const multipleFull = Object.keys(report.plates || {}).filter(key => key.startsWith('full')).length > 1;
-      const label = name === 'fit_test' ? '試片' : name === 'full' ? (multipleFull ? '本体 1' : '全体') : `本体 ${name.replace(/^full_/, '')}`;
+      const label = plate.label ?? (name === 'fit_test' ? '試片' : name === 'full' ? (multipleFull ? '本体 1' : '全体') : `本体 ${name.replace(/^full_/, '')}`);
       rows.push([`${label} · ${material}`, `${Math.round(result.prediction_s / 60)}分 / ${Number(result.weight_g).toFixed(1)} g`]);
     }
   }
@@ -366,14 +366,16 @@ async function start() {
     const state = { servoDeg: minimum, cut: true, hidden: new Set(), transforms: null, present: null };
     const canvas = $('gl'), renderer = createRenderer(canvas, data, state, ui.colors), meta = data.meta;
     document.title = `${ui.displayName}の${mode === 'assembly' ? '組み立て' : '物理検証'} · model-lab`;
-    $('eyebrow').textContent = mode === 'assembly' ? '工具、ねじ、接着剤なし' : '接続形状を前提にした1自由度計算';
+    $('eyebrow').textContent = mode === 'assembly' ? ui.assembly.eyebrow : '接続形状を前提にした1自由度計算';
     $('pageTitle').textContent = mode === 'assembly' ? '組み立ての手順と検証' : ui.physics.title;
     $('summary').textContent = mode === 'assembly'
       ? '表示する経路で実際のSTLを動かし、据えた部品との共通体積を測ります。実物では未検証です。'
       : '接続形状の検査を通った場合だけ、質量と慣性にサーボのトルク上限と速度の限界を入れて計算します。スプライン嵌合と材料は実機未確認です。';
     document.querySelector('.workspace-model strong').textContent = ui.displayName;
-    document.querySelector('.workspace-model small').textContent = `${dimensionText(meta, ui.dimensionsFallback)} · SG92R 1台 · 印刷 ${data.parts.filter(p => p.printable).length}点`;
+    document.querySelector('.workspace-model small').textContent = `${dimensionText(meta, ui.dimensionsFallback)} · ${ui.actuatorLabel} · 印刷 ${data.parts.filter(p => p.printable).length}点`;
     document.querySelector('.workspace-brand').href = `/?model=${model}`;
+    $('cutLabel').textContent = ui.cutLabel;
+    if (ui.limitsText) $('limitsText').textContent = ui.limitsText;
     $('cut').addEventListener('change', event => { state.cut = event.currentTarget.checked; renderer.draw(); });
     $('home').addEventListener('click', () => renderer.setCamera('iso'));
     const meshById = new Map(renderer.meshes.map(mesh => [mesh.id, mesh]));
@@ -399,14 +401,15 @@ async function start() {
       }
       for (const [material, result] of Object.entries(plate.materials || {})) {
         const filename = String(result.file?.file || '').split('/').at(-1);
-        if (!filename?.startsWith(`${model}-`) || !filename.endsWith('.gcode.3mf')) continue;
+        const underModel = String(result.file?.file || '').startsWith(`prints/${model}/`);
+        if (!(filename?.startsWith(`${model}-`) || underModel) || !filename.endsWith('.gcode.3mf')) continue;
         const li = document.createElement('li'), link = document.createElement('a');
         link.href = ui.print.downloadBase === 'prints'
           ? `/prints/${encodeURIComponent(model)}/${encodeURIComponent(filename)}`
           : `/exports/${encodeURIComponent(filename)}`;
         link.download = filename;
         const multipleFull = Object.keys(data.delivery.plates).filter(name => name.startsWith('full')).length > 1;
-        const plateLabel = kind === 'fit_test' ? '試片' : kind === 'full' ? (multipleFull ? '本体 1' : '全体') : `本体 ${kind.replace(/^full_/, '')}`;
+        const plateLabel = plate.label ?? (kind === 'fit_test' ? '試片' : kind === 'full' ? (multipleFull ? '本体 1' : '全体') : `本体 ${kind.replace(/^full_/, '')}`);
         link.textContent = `${plateLabel} · ${material}をダウンロード`;
         li.append(link); printLinks.push(li);
       }

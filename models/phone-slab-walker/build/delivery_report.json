@@ -1,0 +1,59 @@
+{
+ "status": "ok",
+ "plates": {
+  "1-trial": {
+   "label": "確かめ用の部品",
+   "materials": {
+    "PLA": {
+     "prediction_s": 4020.0,
+     "weight_g": 36.4,
+     "file": {
+      "file": "prints/phone-slab-walker/1-trial.gcode.3mf"
+     }
+    }
+   }
+  },
+  "2-body": {
+   "label": "トレイと前枠",
+   "materials": {
+    "PLA": {
+     "prediction_s": 11124.0,
+     "weight_g": 143.3,
+     "file": {
+      "file": "prints/phone-slab-walker/2-body.gcode.3mf"
+     }
+    }
+   }
+  },
+  "3-legs": {
+   "label": "脚とふた",
+   "materials": {
+    "PLA": {
+     "prediction_s": 13590.0,
+     "weight_g": 186.3,
+     "file": {
+      "file": "prints/phone-slab-walker/3-legs.gcode.3mf"
+     }
+    }
+   }
+  },
+  "4-divider": {
+   "label": "仕切り板",
+   "materials": {
+    "PLA": {
+     "prediction_s": 2370.0,
+     "weight_g": 27.6,
+     "file": {
+      "file": "prints/phone-slab-walker/4-divider.gcode.3mf"
+     }
+    }
+   }
+  }
+ },
+ "settings": {
+  "machine": "Bambu Lab X1 Carbon 0.4 nozzle",
+  "overrides": {
+   "layer_height": 0.2
+  }
+ }
+}

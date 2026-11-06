@@ -35,6 +35,10 @@ for (const [model, former] of Object.entries(FORMER)) {
     assert.equal(ui.physics.term, '格子');
     assert.equal(ui.print.downloadBase, former.base);
     assert.equal(ui.dimensionsFallback, former.dims);
+    assert.equal(ui.actuatorLabel, 'SG92R 1台');
+    assert.equal(ui.assembly.eyebrow, '工具、ねじ、接着剤なし');
+    assert.equal(ui.physics.stallCondition, '4.8V');
+    assert.equal(ui.physics.reachToleranceDeg, 1);
     assert.match(ui.assembly.servoSetup, former.setup);
     assert.match(calibrationLimitText(ui.assembly), new RegExp(`^1mm以下の並進と${former.rotation}°以下の回転で検査しています。$`));
     const hasPatterns = Array.isArray(data.motion.patterns) && data.motion.patterns.length > 0;
