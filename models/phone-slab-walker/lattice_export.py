@@ -11,6 +11,7 @@
 import hashlib
 import json
 import math
+import re
 import sys
 from pathlib import Path
 
@@ -155,6 +156,33 @@ def calculate(tables):
                 limitsDeg=[low, high], runs=runs)
 
 
+def verify_report(checks):
+    """画面の検証表へ、ゲートが測った結果だけを写す"""
+    gate = read(BUILD / "gate_report.json")
+    interference = checks.get("motion.interference", {})
+    found = re.search(r"(\d+) 組 x (\d+) 姿勢", interference.get("summary", ""))
+    if not found:
+        raise ValueError("motion.interference の要約から組数と姿勢数を読めない")
+    torque = checks["motion.torque"]["detail"]
+    return dict(ok=gate.get("pass") is True,
+                exact_scene=dict(ok=interference.get("pass") is True, uniquePairs=int(found[1]), poseSamples=int(found[2])),
+                torque=dict(required_torque_Nm=round(torque["peakNm"], 3),
+                            stall_ratio=torque["peakNm"] / torque["stallNm"]),
+                source=f"models/{MODEL}/build/gate_report.json")
+
+
+def delivery_report():
+    """plate.py の記録を、画面の印刷データの形へ直す"""
+    report = read(BUILD / "plate_report.json")
+    labels = {"1-trial": "確かめ用の部品", "2-body": "トレイと前枠", "3-legs": "脚とふた", "4-divider": "仕切り板"}
+    plates = {}
+    for plate in report["plates"]:
+        plates[plate["plate"]] = dict(label=labels[plate["plate"]], materials={report["material"]: dict(
+            prediction_s=plate["minutes"] * 60, weight_g=plate["grams"], file=dict(file=plate["file"]))})
+    return dict(status="ok", plates=plates,
+                settings=dict(machine="Bambu Lab X1 Carbon 0.4 nozzle", overrides=dict(layer_height=0.2)))
+
+
 def main():
     status, changed = freshness(MODEL)
     checks = gate_checks()
@@ -167,8 +195,11 @@ def main():
     assembly["calibration"] = {"pass": checks.get("instrument.calibration", {}).get("pass") is True,
                                "by": "tools/mechgate.py instrument.calibration"}
     measured_steps = {row["id"]: row for row in (checks.get("assembly.path", {}).get("detail") or {}).get("steps", [])}
+    snap_steps = {name for row in (checks.get("assembly.path", {}).get("detail") or {}).get("allowedContacts", [])
+                  for name in row.get("steps", [])}
     for step in assembly["steps"]:
         row = measured_steps.get(step["id"], {})
+        step["checkText"] = ("爪のたわみを除いて当たりなし" if step["id"] in snap_steps else "当たりなし") if row.get("pass") is True else "要確認"
         step["report"] = {"samples": row.get("checkedPoses", 0), "pass": row.get("pass") is True,
                           "source": f"models/{MODEL}/build/gate_report.json#assembly.path"}
     if write(BUILD / "assembly.json", assembly):
@@ -206,14 +237,21 @@ def main():
                      "摩擦は共通の見積もり。床からの力は入っていない"],
         sourceHashes=hashes, **outcome))
     write(BUILD / "boolean_evidence.json", {})
+    write(BUILD / "verify_report.json", verify_report(checks))
+    write(BUILD / "delivery_report.json", delivery_report())
     write(BUILD / "ui.json", dict(
         label="スマホ板ロボット", displayName="スマホ板ロボット", navLabel="スマホ板ロボット",
+        actuatorLabel="STS3215 2台", cutLabel="右半分を隠す",
+        limitsText="形はゲート、歩きは MuJoCo、ファームはコンパイル、画面は模擬の機器で確かめました。実物では動かしていません。",
         physics=dict(title="脚の振り", playback="motion-frames", term="脚", chartSeries=["leg_right", "leg_left"],
                      openLabel="前へ振る", closeLabel="後ろへ振る",
                      chartLabel="足先の高さ", chartAxis="高さ [mm]",
                      simLimits="脚を床から浮かせて ±45° 振る計算です。歩くときの床からの力は入っていません。歩きは sim_gait.py で別に見ています。",
-                     massNote="中実の PLA として数えた上限側の値です。左右の合計をサーボ 2 個の停動の合計と比べています。"),
-        assembly=dict(servoSetup="脚をまっすぐ持ち、Z 命令でまっすぐの位置を覚えさせてからねじを締めます。"),
+                     massNote="中実の PLA として数えた上限側の値です。左右の合計をサーボ 2 個の停動の合計と比べています。",
+                     contactNote="床に触れない計算です。",
+                     stallCondition="12V、2 個の合計", reachToleranceDeg=REACH_TOLERANCE_DEG),
+        assembly=dict(eyebrow="工具を使うのは脚のねじ 8 本だけ",
+                      servoSetup="脚をまっすぐ持ち、Z 命令でまっすぐの位置を覚えさせてからねじを締めます。"),
         print=dict(downloadBase="prints"),
         legendGroups=[dict(label="脚", prefix="leg_", color="#70797f"),
                       dict(label="ホーンのねじ", prefix="bolts_", color="#b0b5b8"),

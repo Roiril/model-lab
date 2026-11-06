@@ -2,6 +2,9 @@
  "label": "スマホ板ロボット",
  "displayName": "スマホ板ロボット",
  "navLabel": "スマホ板ロボット",
+ "actuatorLabel": "STS3215 2台",
+ "cutLabel": "右半分を隠す",
+ "limitsText": "形はゲート、歩きは MuJoCo、ファームはコンパイル、画面は模擬の機器で確かめました。実物では動かしていません。",
  "physics": {
   "title": "脚の振り",
   "playback": "motion-frames",
@@ -15,9 +18,13 @@
   "chartLabel": "足先の高さ",
   "chartAxis": "高さ [mm]",
   "simLimits": "脚を床から浮かせて ±45° 振る計算です。歩くときの床からの力は入っていません。歩きは sim_gait.py で別に見ています。",
-  "massNote": "中実の PLA として数えた上限側の値です。左右の合計をサーボ 2 個の停動の合計と比べています。"
+  "massNote": "中実の PLA として数えた上限側の値です。左右の合計をサーボ 2 個の停動の合計と比べています。",
+  "contactNote": "床に触れない計算です。",
+  "stallCondition": "12V、2 個の合計",
+  "reachToleranceDeg": 3.0
  },
  "assembly": {
+  "eyebrow": "工具を使うのは脚のねじ 8 本だけ",
   "servoSetup": "脚をまっすぐ持ち、Z 命令でまっすぐの位置を覚えさせてからねじを締めます。"
  },
  "print": {
