@@ -125,7 +125,7 @@ class Part:
 
 def excluded(a, b):
     pair = {a, b}
-    if pair in ({"palm", "palm_shade"}, {"thumb_root", "thumb_shade"}):
+    if pair in ({"palm", "palm_shade"}, {"thumb_root", "thumb_shade"}, {"base", "base_rim"}):
         return True   # 同じ剛体の暗い板。親の中へ入り込んでいる
     if "palm" in pair:
         other = (pair - {"palm"}).pop() if len(pair) == 2 else ""
@@ -223,7 +223,7 @@ def main():
     log.append(f"全 {len(frames)} コマの最大貫通 {maxd:.2f}mm（格子 {PITCH*1000:.1f}mm、手のひらと台座は {PITCH_BIG*1000:.1f}mm）")
     for k, (d, fr) in ordered[:12]:
         log.append(f"  {k}: {d*1000:.2f}mm（コマ {fr}）")
-    log.append("除外: 指 4 本の根元の節と手のひら（固定。根元が %.1fmm 入り込む）/ 手のひらと開口の奥の暗い輪 / 親指の根元と裏の暗い円板（どちらも同じ剛体）" % P.ROOT_BELOW_PALM)
+    log.append("除外: 指 4 本の根元の節と手のひら（固定。根元が %.1fmm 入り込む）/ 手のひらと開口の奥の暗い輪 / 親指の根元と裏の暗い円板 / 台座と側面の帯（どれも同じ剛体）" % P.ROOT_BELOW_PALM)
     text = "\n".join(log)
     print(text, flush=True)
     if out:

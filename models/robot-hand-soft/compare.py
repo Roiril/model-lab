@@ -111,6 +111,23 @@ def detail_sheet(view, ref_rgb, mod_rgb, out_path):
     os.replace(tmp, out_path)
 
 
+def base_bands(rgb):
+    """台座の側面の帯と上面の明るさ（横 ±120 の中央値）。行は台座の下端から決める。"""
+    g = rgb.mean(2)
+    h, w = g.shape
+    mask = (g < 110) & (rgb[:, :, 2].astype(int) > rgb[:, :, 0].astype(int) - 25)
+    cols = np.where(mask[900:].sum(0) > 40)[0]
+    cx = (cols.min() + cols.max()) // 2
+    run = np.where(mask[:, cx - 3:cx + 3].all(1))[0]
+    bottom = run[run > 900].max()
+    side = float(np.median(g[bottom - 26:bottom - 6, cx - 120:cx + 120]))
+    top = float(np.median(g[bottom - 85:bottom - 55, cx - 120:cx + 120]))
+    return {"bottom_row": int(bottom), "side": round(side, 1), "top": round(top, 1)}
+
+
+BASE_TOL = 8
+
+
 def main():
     render_dir = sys.argv[1] if len(sys.argv) > 1 else MT.RENDER_DIR
     paths = {}
@@ -150,6 +167,11 @@ def main():
         for nm, rgn in (("壁の上", (20, 200, 20, 200)), ("壁の下", (780, 880, 20, 200)), ("机", (1040, 1200, 20, 200))):
             a, b, c, e = rgn
             log.append(f"  色 {nm}: 参考 {rgb_r[a:b, c:e].mean((0, 1)).round().astype(int)} モデル {rgb_m[a:b, c:e].mean((0, 1)).round().astype(int)}")
+        br, bm = base_bands(rgb_r), base_bands(rgb_m)
+        res[v]["base_ref"], res[v]["base_model"] = br, bm
+        base_ok = abs(bm["side"] - br["side"]) <= BASE_TOL
+        allok &= base_ok
+        log.append(f"  台座 側面: 参考 {br['side']} モデル {bm['side']} 差 {bm['side'] - br['side']:+.1f} / 上面: 参考 {br['top']} モデル {bm['top']} 差 {bm['top'] - br['top']:+.1f}（下端の行 {br['bottom_row']} / {bm['bottom_row']}）" + ("" if base_ok else " ← 側面が ±8 を超える"))
         detail_sheet(v, rgb_r, rgb_m, os.path.join(render_dir, f"detail-{v}.png"))
         side_by_side(v, rgb_r, rgb_m, mr, mm, s, sh, os.path.join(render_dir, f"compare-{v}.png"),
                      os.path.basename(paths[v][0]), os.path.basename(paths[v][1]))

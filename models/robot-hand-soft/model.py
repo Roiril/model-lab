@@ -139,7 +139,7 @@ def cradle_lip(zh):
     h = P.NARROW_HALF + 0.1          # 板の中まで通して、棒の両脇のすき間も塞ぐ
     ax = P.AXIS_Y
     rc = P.CRADLE_R
-    yb = P.SEG_DEPTH / 2 - ax + 0.03     # 節の背面よりわずかに外。節の角の丸みの線を隠す
+    yb = P.LIP_BACK_Y - ax
     zb = P.LIP_BOTTOM
     zt = P.LIP_TOP
     a1 = math.pi - math.acos(min(zt / rc, 1.0))   # 0 が近位の方向（-Z）、増えると背面（+Y）を通って遠位へ
@@ -179,7 +179,7 @@ def cradle_lip(zh):
     return _finish(bm)
 
 
-def stadium_plate(x0, x1, ax, z0, z1, R, e=0.5, n=20):
+def stadium_plate(x0, x1, ax, z0, z1, R, e=0.5, n=20, dome=0):
     """X 方向に厚みのある長円の板。y=ax を中心に、z0〜z1 の範囲。1 つの閉じた殻にする（重なった面を作らない）。"""
     def poly(r):
         zc0, zc1 = z0 + R, z1 - R
@@ -191,7 +191,17 @@ def stadium_plate(x0, x1, ax, z0, z1, R, e=0.5, n=20):
             t = math.pi + math.pi * i / n
             pts.append((ax + r * math.cos(t), zc0 + r * math.sin(t)))
         return pts
-    prof = [(x0, R - e), (x0 + e * 0.29, R - e * 0.29), (x0 + e, R), (x1 - e, R), (x1 - e * 0.29, R - e * 0.29), (x1, R - e)]
+    inner_lo = [(x0, R - e), (x0 + e * 0.29, R - e * 0.29), (x0 + e, R)]
+    inner_hi = [(x1 - e, R), (x1 - e * 0.29, R - e * 0.29), (x1, R - e)]
+    h = min(P.CAP_DOME_H, x1 - x0 - 2 * e)
+    rt = P.CAP_DOME_R
+    dome_rows = [(h * math.sin(math.pi / 2 * k / 10), R - (R - rt) * (1 - math.cos(math.pi / 2 * k / 10))) for k in range(11)]
+    if dome > 0:
+        prof = inner_lo + [(x1 - h + a, r) for a, r in dome_rows]
+    elif dome < 0:
+        prof = [(x0 + h - a, r) for a, r in reversed(dome_rows)] + inner_hi
+    else:
+        prof = inner_lo + inner_hi
     bm = bmesh.new()
     rows = [[bm.verts.new((x, y, z)) for y, z in poly(r)] for x, r in prof]
     m = len(rows[0])
@@ -211,72 +221,109 @@ def side_plates(zh, tail=None, outer=None, lip=True):
     out = []
     for sx in (-1, 1):
         x0, x1 = sorted((sx * P.NARROW_HALF, sx * outer))
-        out.append(stadium_plate(x0, x1, P.AXIS_Y, zh - tail - R, zh + R, R))
+        out.append(stadium_plate(x0, x1, P.AXIS_Y, zh - tail - R, zh + R, R, dome=sx))
     if lip:
         out.append(cradle_lip(zh))
+        out.append(xcyl(-P.DRUM_HALF, P.DRUM_HALF, P.DRUM_Y, zh, P.DRUM_R, edge=0.25, seg=48))
     return out
 
 
-def stepped_plate(steps, e=None, rc=None):
-    """平らな板。steps=[(半幅, z0, z1), ...] を z の順に並べた段つきの輪郭を Y 方向へ伸ばす。
-
-    前後の面は 1 枚で、段の所に線が出ない。縁は e で丸める。
-    """
-    e = P.SEG_EDGE_R if e is None else e
-    rc = e + 0.1 if rc is None else rc
-    hd = P.SEG_DEPTH / 2
-    corners = []
-    for hw, z0, z1 in steps:
-        corners += [(hw, z0), (hw, z1)]
-    for hw, z0, z1 in reversed(steps):
-        corners += [(-hw, z1), (-hw, z0)]
-    # 角を丸めた輪郭（反時計回りとは限らない）と、内向きの法線
-    c = np.array(corners, float)
-    n = len(c)
-    pts, nrm = [], []
-    area = 0.5 * sum(c[i, 0] * c[(i + 1) % n, 1] - c[(i + 1) % n, 0] * c[i, 1] for i in range(n))
-    sg = 1.0 if area > 0 else -1.0
-    for i in range(n):
-        p0, p1, p2 = c[i - 1], c[i], c[(i + 1) % n]
-        d1 = (p1 - p0) / np.linalg.norm(p1 - p0)
-        d2 = (p2 - p1) / np.linalg.norm(p2 - p1)
-        cross = d1[0] * d2[1] - d1[1] * d2[0]
-        n1 = np.array([-d1[1], d1[0]]) * sg   # 内向き
-        n2 = np.array([-d2[1], d2[0]]) * sg
-        convex = cross * sg > 0
-        center = p1 + (n1 + n2) * rc * (1 if convex else -1)
-        for k in range(7):
-            t = k / 6
-            if convex:
-                dirn = -(n1 * (1 - t) + n2 * t)
-            else:
-                dirn = n1 * (1 - t) + n2 * t
-            dirn = dirn / np.linalg.norm(dirn)
-            pts.append(center + dirn * rc)
-            nrm.append(-dirn if convex else dirn)
-    pts, nrm = np.array(pts), np.array(nrm)
-    prof = []
-    for k in range(4):
-        t = math.pi / 2 * (1 - k / 3)
-        prof.append((-hd + e * (1 - math.sin(t)), e * (1 - math.cos(t))))
-    for k in range(4):
-        t = math.pi / 2 * k / 3
-        prof.append((hd - e * (1 - math.sin(t)), e * (1 - math.cos(t))))
-    bm = bmesh.new()
-    rows = []
-    for y, i in prof:
-        q = pts + nrm * i
-        rows.append([bm.verts.new((a, y, b)) for a, b in q])
+def round_polygon(pts, r=1.2, n=6):
+    """閉じた折れ線の角を半径 r 相当で丸める。長い辺はそのまま残る。"""
+    pts = [np.array(p, float) for p in pts]
+    out = []
     m = len(pts)
+    for i in range(m):
+        p0, p1, p2 = pts[i - 1], pts[i], pts[(i + 1) % m]
+        l1, l2 = np.linalg.norm(p1 - p0), np.linalg.norm(p2 - p1)
+        t = min(r, 0.45 * l1, 0.45 * l2)
+        a, b = p1 + (p0 - p1) / l1 * t, p1 + (p2 - p1) / l2 * t
+        for k in range(n + 1):
+            u = k / n
+            out.append((1 - u) ** 2 * a + 2 * u * (1 - u) * p1 + u * u * b)
+    return np.array(out)
+
+
+def profile_plate(right, y0, y1, e0, e1, flat=0.94):
+    """Y 方向に厚みのある板。right=[(半幅, z), ...] を z の順に。左右対称。縁は y0 側 e0、y1 側 e1 で丸める。
+
+    平らな面の内側にもう 1 周（輪郭を中心へ flat 倍に縮めた輪）を置いて、なめらかな陰影が面の中へ広がらないようにする。
+    """
+    c = round_polygon([(x, z) for x, z in right] + [(-x, z) for x, z in reversed(right)])
+    t = np.roll(c, -1, 0) - np.roll(c, 1, 0)
+    t /= np.maximum(np.linalg.norm(t, axis=1, keepdims=True), 1e-9)
+    nrm = np.stack([-t[:, 1], t[:, 0]], 1)     # 反時計回りの輪郭の内向き
+    prof = []
+    if e0 > 0:
+        for k in range(4):
+            a = math.pi / 2 * (1 - k / 3)
+            prof.append((y0 + e0 * (1 - math.sin(a)), e0 * (1 - math.cos(a))))
+    else:
+        prof.append((y0, 0.0))
+    for k in range(5):
+        a = math.pi / 2 * k / 4
+        prof.append((y1 - e1 * (1 - math.sin(a)), e1 * (1 - math.cos(a))))
+    zc = (c[:, 1].min() + c[:, 1].max()) / 2
+    bm = bmesh.new()
+    rows = [[bm.verts.new((p[0], y, p[1])) for p in c + nrm * i] for y, i in prof]
+    m = len(c)
+
+    def shrink(row, y):
+        return [bm.verts.new((v.co.x * flat, y, zc + (v.co.z - zc) * flat)) for v in row]
+
+    if e0 > 0:
+        rows.insert(0, shrink(rows[0], y0))
+    rows.append(shrink(rows[-1], y1))
     for a, b in zip(rows, rows[1:]):
         for i in range(m):
             bm.faces.new((a[i], a[(i + 1) % m], b[(i + 1) % m], b[i]))
-    # 蓋は中心からの扇（輪郭は中心から見渡せる形）
-    zc = (steps[0][1] + steps[-1][2]) / 2
-    for row, y in ((rows[0], prof[0][0]), (rows[-1], prof[-1][0])):
-        ctr = bm.verts.new((0.0, y, zc))
+    # 平らな蓋。平面の中の三角分割なので、凹んだ輪郭でも膜は張らない
+    for row in (rows[0], rows[-1]):
+        cap = bm.faces.new(row)
+        bmesh.ops.triangulate(bm, faces=[cap], quad_method="BEAUTY", ngon_method="BEAUTY")
+    return _finish(bm)
+
+
+def rear_cover(right):
+    """節の甲側の板。胴より背面へわずかに出て、輪郭は胴と同じ。手のひら側からは見えない。"""
+    return profile_plate(right, P.COVER_Y0, P.SEG_DEPTH / 2 + 0.06, 0.0, P.SEG_EDGE_R)
+
+
+def seg_outline(w, L):
+    """節の輪郭の胴の部分。幅広の部分から左右の軸のふたの間へ斜めに細くなる。"""
+    hw = w / 2
+    n = P.NARROW_HALF
+    return [(P.BAR_HALF, 5.0), (hw, 5.8), (hw, L - 9.4), (n, L - 6.6)]
+
+
+def seg_cover(w, L):
+    z0 = P.COVER_Z0
+    d = 0.02
+    return rear_cover([(7.2, z0), (P.BAR_HALF + d, z0 + 0.4)]
+                      + [(x + d, z) for x, z in seg_outline(w, L)]
+                      + [(P.NARROW_HALF + d, L - 3.9), (7.2, L - P.COVER_END)])
+
+
+def tip_cover(w, d):
+    """指先の甲側を胴の手前まで伸ばす。断面は指先の根元と同じ丸い角。"""
+    body_r = min(w, d) * 0.42
+    base_r = max(2.2, body_r * 0.72)
+    z0 = P.COVER_Z0
+    stations = [(z0, 0.76), (z0 + 0.25, 0.88), (z0 + 0.7, 0.95), (P.WIDE_START + 0.8, 0.995)]
+    y0 = P.COVER_Y0
+    bm = bmesh.new()
+    rows = []
+    for z, s in stations:
+        sec = _section(w * s, d * s, min(base_r, d * 0.45) * s)
+        half = sec[:len(sec) // 2]        # 背面側の 2 つの角
+        ring = half + [(half[-1][0], y0), (half[0][0], y0)]
+        rows.append([bm.verts.new((x, y, z)) for x, y in ring])
+    m = len(rows[0])
+    for a, b in zip(rows, rows[1:]):
         for i in range(m):
-            bm.faces.new((row[i], row[(i + 1) % m], ctr))
+            bm.faces.new((a[i], a[(i + 1) % m], b[(i + 1) % m], b[i]))
+    bm.faces.new(rows[0])
+    bm.faces.new(rows[-1])
     return _finish(bm)
 
 
@@ -288,23 +335,27 @@ def hinge_bar(neck=False):
     out = [rbox(-h, h, ax - P.BAR_FRONT, ax + P.TONGUE_HALF, P.BAR_Z0, P.BAR_Z1, P.BAR_ROUND, seg=4),
            rbox(-h, h, ax - P.TONGUE_HALF, ax + P.TONGUE_HALF, P.BAR_Z0 + 0.5, P.DIST_START + 0.8, 0.3, seg=2)]
     if neck:
-        out.append(rbox(-h, h, -hd, hd, P.DIST_START, P.WIDE_START + 1.0, P.SEG_EDGE_R, seg=3))
+        out.append(rbox(-h, h, -hd, P.NECK_BACK_Y, P.DIST_START, P.WIDE_START + 1.0, P.SEG_EDGE_R, seg=3))
     return out
 
 
 def seg_body(w, L):
     """節の胴。1 枚の平らな板で、近位は細い首、中央が幅広、遠位は左右の板の間へ細くなる。"""
-    z_step = L - P.PLATE_TAIL - P.DISC_R - 0.2
-    return [stepped_plate([(P.BAR_HALF, P.DIST_START, P.WIDE_START), (w / 2, P.WIDE_START, z_step), (P.NARROW_HALF, z_step, L - P.PROX_END)])]
+    hd = P.SEG_DEPTH / 2
+    e = P.SEG_EDGE_R
+    body = profile_plate([(P.BAR_HALF, P.DIST_START)] + seg_outline(w, L) + [(P.NARROW_HALF, L - P.PROX_END)], -hd, hd, e, e)
+    return [body, seg_cover(w, L)]
 
 
 def finger_parts(name, tip, hinges, width, tip_width, root_extra):
     """1 本の指の節。戻り値は [(部品名, 親, 親の中の z, 小部品のリスト)]。局所原点は近位の関節。"""
     h1, h2, h3 = hinges
-    z_step = -P.PLATE_TAIL - P.DISC_R - 0.2
     out = []
     out.append((f"{name}_root", None, 0.0,
-                [stepped_plate([(width / 2, -root_extra, z_step), (P.NARROW_HALF, z_step, -P.PROX_END)])] + side_plates(0.0)))
+                [profile_plate([(width / 2, -root_extra), (width / 2, -9.4), (P.NARROW_HALF, -6.6), (P.NARROW_HALF, -P.PROX_END)],
+                               -P.SEG_DEPTH / 2, P.SEG_DEPTH / 2, P.SEG_EDGE_R, P.SEG_EDGE_R),
+                 rear_cover([(width / 2 + 0.02, -root_extra), (width / 2 + 0.02, -9.4), (P.NARROW_HALF + 0.02, -6.6),
+                             (P.NARROW_HALF + 0.02, -3.9), (7.2, -P.COVER_END)])] + side_plates(0.0)))
     L1 = h3 - h2
     out.append((f"{name}_seg1", f"{name}_root", 0.0,
                 seg_body(width, L1) + hinge_bar() + side_plates(L1)))
@@ -312,7 +363,7 @@ def finger_parts(name, tip, hinges, width, tip_width, root_extra):
     out.append((f"{name}_seg2", f"{name}_seg1", L1,
                 seg_body(width, L2) + hinge_bar() + side_plates(L2)))
     out.append((f"{name}_tip", f"{name}_seg2", L2,
-                [fingertip(tip_width, P.SEG_DEPTH + 0.5, P.WIDE_START, h1)] + hinge_bar(neck=True)))
+                [fingertip(tip_width, P.SEG_DEPTH + 0.5, P.WIDE_START, h1), tip_cover(tip_width, P.SEG_DEPTH + 0.5)] + hinge_bar(neck=True)))
     return out
 
 
@@ -508,7 +559,7 @@ def shade_ring():
             off = abs(math.sin(a - out))
             # 親指の線から perp より離れる。そこまでは半径を広げる
             # 開口の出口側は親指の線からの距離だけで切る。奥側は根元の丸い端を避けて半径で切る
-            r0 = L["r0"] if math.cos(a - out) < 0 else L["perp"] / max(off, 1e-6)
+            r0 = L["r0"] if math.cos(a - out) < -0.45 else L["perp"] / max(off, 1e-6)
             r1 = ray_to_palm(c, a, poly, L["r1"], L["overlap"])
             r0 = min(r0, r1 - 0.01)
             inner.append(bm.verts.new((c[0] + r0 * math.cos(a), y, c[1] + r0 * math.sin(a))))
@@ -630,9 +681,22 @@ def shade_material():
     mat = bpy.data.materials.get("hand_shade") or bpy.data.materials.new("hand_shade")
     mat.use_nodes = True
     b = next(n for n in mat.node_tree.nodes if n.type == "BSDF_PRINCIPLED")
-    b.inputs["Base Color"].default_value = (*P.SHADE_COLOR, 1)
+    b.inputs["Base Color"].default_value = (0, 0, 0, 1)
     b.inputs["Roughness"].default_value = 1.0
     b.inputs["Specular IOR Level"].default_value = 0.0
+    b.inputs["Emission Color"].default_value = (*P.SHADE_EMIT, 1)
+    b.inputs["Emission Strength"].default_value = 1.0
+    return mat
+
+
+def base_side_material():
+    """台座の側面の帯。上面より暗い。"""
+    mat = bpy.data.materials.get("base_side") or bpy.data.materials.new("base_side")
+    mat.use_nodes = True
+    b = next(n for n in mat.node_tree.nodes if n.type == "BSDF_PRINCIPLED")
+    b.inputs["Base Color"].default_value = (*P.BASE_SIDE_COLOR, 1)
+    b.inputs["Roughness"].default_value = P.HAND_ROUGHNESS
+    b.inputs["Specular IOR Level"].default_value = P.BASE_SIDE_SPECULAR
     return mat
 
 
@@ -662,6 +726,9 @@ def build_hand(collection=None):
 
     # 台座（固定）
     add("base", base_parts(), None, (0, 0, 0))
+    e = P.BASE_EDGE
+    add("base_rim", [revolve([(0.0, P.BASE_R - 0.48), (0.5, P.BASE_R + 0.02), (P.BASE_H - e, P.BASE_R + 0.02), (P.BASE_H - e + 0.02, P.BASE_R - 0.3)])],
+        "base", (0, 0, 0), material=base_side_material())
     # 手のひら（原点は手首の軸）
     zw = P.WRIST_Z
     pv, pf = palm_mesh()
@@ -714,7 +781,8 @@ def build_hand(collection=None):
         return [([(a + dx, b, c) for a, b, c in v], f) for v, f in subs]
 
     # 根元: 平らな板が開口の奥まで入り、両脇の細長い板が関節まで伸びる
-    root = shifted([rounded_plate(P.NARROW_HALF, -hd, hd, t["root_end"], Lp - P.PROX_END, t["root_end_r"], P.SEG_EDGE_R, P.SEG_EDGE_R)]
+    root = shifted([rounded_plate(P.NARROW_HALF, -hd, hd, t["root_end"], Lp - P.PROX_END, t["root_end_r"], P.SEG_EDGE_R, P.SEG_EDGE_R),
+                    rounded_plate(P.NARROW_HALF + 0.02, P.COVER_Y0, hd + 0.06, t["root_end"] - 0.02, Lp - P.COVER_END, t["root_end_r"], P.SEG_EDGE_R, P.SEG_EDGE_R)]
                    + side_plates(Lp, tail=Lp + t["rail_tail"], outer=t["rail_outer"]))
     add("thumb_root", root, "palm", (piv[0], 0.0, piv[1] - zw), (math.radians(t["rest_tilt"]), phi, 0.0))
     add("thumb_shade", [shade_disc(P.THUMB_SHADE_ZMAX)], "thumb_root", (0, 0, 0), material=dark)
@@ -722,7 +790,7 @@ def build_hand(collection=None):
     L2 = h2 - h1
     add("thumb_seg1", on_axis(seg_body(w, L1) + hinge_bar() + side_plates(L1)), "thumb_root", (dx, P.AXIS_Y, Lp))
     add("thumb_seg2", on_axis(seg_body(w, L2) + hinge_bar() + side_plates(L2)), "thumb_seg1", (0, 0, L1))
-    add("thumb_tip", on_axis([fingertip(t["tip_width"], P.SEG_DEPTH + 0.5, P.WIDE_START, h1)] + hinge_bar(neck=True)), "thumb_seg2", (0, 0, L2))
+    add("thumb_tip", on_axis([fingertip(t["tip_width"], P.SEG_DEPTH + 0.5, P.WIDE_START, h1), tip_cover(t["tip_width"], P.SEG_DEPTH + 0.5)] + hinge_bar(neck=True)), "thumb_seg2", (0, 0, L2))
     joints["thumb_cmc"] = (objs["thumb_root"], 1, (math.radians(t["rest_tilt"]), phi, 0.0))
     joints["thumb_j3"] = (objs["thumb_seg1"], 0, (0.0, 0.0, 0.0))
     joints["thumb_j2"] = (objs["thumb_seg2"], 0, (0.0, 0.0, 0.0))

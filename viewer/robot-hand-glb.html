@@ -39,11 +39,42 @@ scene.add(sun);
 const camera = new THREE.PerspectiveCamera(30, 1, 0.01, 20);
 // Blender の -Y（手のひら側）は glTF の +Z。親指の側から 30 度回して見る
 const az = -30 * Math.PI / 180;
-camera.position.set(0.72 * Math.sin(az), 0.2, 0.72 * Math.cos(az));
-camera.lookAt(0, 0.125, 0);
+
+// ?size=<px> で画面の大きさに関わらず正方形で描く（撮影用）
+const fixedSize = Number(new URLSearchParams(location.search).get("size")) || 0;
+
+// 手（台座を除く）が画面の高さの 8 割になるように置く
+function frameHand(root) {
+  const box = new THREE.Box3();
+  root.updateMatrixWorld(true);
+  root.traverse((o) => { if (o.isMesh && !o.name.startsWith("base")) box.expandByObject(o); });
+  const c = box.getCenter(new THREE.Vector3());
+  const h = box.max.y - box.min.y;
+  const d = (h / 0.8) / 2 / Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
+  camera.position.set(c.x + d * Math.sin(az), c.y + 0.06 * d, c.z + d * Math.cos(az));
+  camera.lookAt(c);
+  camera.updateMatrixWorld(true);
+  return box;
+}
+
+// 手の範囲が画面の高さのどれだけを占めるか（頂点を投影して測る）
+function handRatio(root) {
+  let lo = Infinity, hi = -Infinity;
+  const v = new THREE.Vector3();
+  root.updateMatrixWorld(true);
+  root.traverse((o) => {
+    if (!o.isMesh || o.name.startsWith("base")) return;
+    const p = o.geometry.attributes.position;
+    for (let i = 0; i < p.count; i += 7) {
+      v.fromBufferAttribute(p, i).applyMatrix4(o.matrixWorld).project(camera);
+      lo = Math.min(lo, v.y); hi = Math.max(hi, v.y);
+    }
+  });
+  return (hi - lo) / 2;
+}
 
 function resize() {
-  const w = window.innerWidth, h = window.innerHeight;
+  const w = fixedSize || window.innerWidth, h = fixedSize || window.innerHeight;
   renderer.setSize(w, h, false);
   camera.aspect = w / h;
   camera.updateProjectionMatrix();
@@ -56,6 +87,11 @@ const url = params.get("src") || "/exports/robot-hand-soft.glb";
 new GLTFLoader().load(url, (gltf) => {
   scene.add(gltf.scene);
   const clip = gltf.animations[0];
+  const mixer0 = new THREE.AnimationMixer(gltf.scene);
+  mixer0.clipAction(clip).play();
+  mixer0.setTime(0.3);
+  frameHand(gltf.scene);
+  mixer0.stopAllAction();
   const mixer = new THREE.AnimationMixer(gltf.scene);
   mixer.clipAction(clip).play();
   const seek = (t) => {
@@ -79,7 +115,7 @@ new GLTFLoader().load(url, (gltf) => {
       mats[o.material.name] = { color: o.material.color.getHexString(), roughness: o.material.roughness, metalness: o.material.metalness, normalMap: !!o.material.normalMap };
     }
   });
-  window.handCheck = { seek, duration: clip.duration, clips: gltf.animations.length, tracks: clip.tracks.length, meshes, materials: mats };
+  window.handCheck = { seek, handRatio: () => handRatio(gltf.scene), duration: clip.duration, clips: gltf.animations.length, tracks: clip.tracks.length, meshes, materials: mats };
   resize();
   const t = params.get("t");
   if (t !== null) {
