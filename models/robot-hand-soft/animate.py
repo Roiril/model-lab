@@ -192,6 +192,43 @@ def render_mp4(path, res, samples, view="front"):
     os.rename(made, path)
 
 
+def fit_video_camera(objs, fs, fe, az):
+    """全コマの手が画面に収まる範囲で、いちばん大きく映る焦点距離と注視点を求める。"""
+    from mathutils import Vector
+    sc = bpy.context.scene
+    pts = []
+    for fr in range(fs, fe + 1, 3):
+        sc.frame_set(fr)
+        bpy.context.view_layer.update()
+        for ob in objs.values():
+            mw = ob.matrix_world
+            pts += [mw @ Vector(c) for c in ob.bound_box]
+    c = {"az": az, "pitch": P.VIDEO_PITCH, "roll": 0.0, "tx": 0.0, "tz": 120.0, "dist": P.VIDEO_DIST, "f": 1500.0}
+    for _ in range(6):
+        F, Rt, Up, Rt0 = ST.camera_axes(c)
+        C = ST.camera_pos(c)
+        xs = [(p - C).dot(Rt) / (p - C).dot(F) for p in pts]
+        ys = [(p - C).dot(Up) / (p - C).dot(F) for p in pts]
+        cx, cy = (min(xs) + max(xs)) / 2, (min(ys) + max(ys)) / 2
+        c["tx"] += cx * c["dist"]
+        c["tz"] += cy * c["dist"]
+    span = max(max(xs) - min(xs), max(ys) - min(ys))
+    c["f"] = ST.P.MM * 0 + 1254.0 * (1 - 2 * P.VIDEO_MARGIN) / span
+    return c
+
+
+def place_video(st, c):
+    """机の奥の縁を台座の後ろへ置く。"""
+    from mathutils import Vector
+    F, Rt, Up, _ = ST.camera_axes(c)
+    C = ST.camera_pos(c)
+    a = math.radians(c["az"])
+    fwd = Vector((-math.sin(a), math.cos(a), 0))
+    q = fwd * 0.16 - C
+    row = 627 - c["f"] * q.dot(Up) / q.dot(F)
+    ST.place_view(st, {"front": c}, "front", row=row, light_key="video")
+
+
 if __name__ == "__main__":
     bpy.ops.wm.read_factory_settings(use_empty=True)
     res = int(ST._arg("--res", 960))
@@ -203,13 +240,10 @@ if __name__ == "__main__":
     objs, _, joints = HM.build_hand()
     fs, fe = apply_keys(joints)
     print("コマ", fs, fe, "秒", (fe - fs + 1) / P.FPS)
-    cams = ST.load_cameras()
-    # 手首を倒すと指先が画面の外へ出るので、動画は少し引いた画角で描く
-    zoom = P.VIDEO_ZOOM if mp4 or ST._arg("--stills", None) else 1.0
-    cam_view = dict(cams[view])
-    cam_view["f"] *= zoom
-    row = 627 + (ST.TABLE_EDGE_ROW[view] - 627) * zoom
-    ST.place_view(st, {view: cam_view}, view, row=row)
+    az = float(ST._arg("--az", P.VIDEO_AZ))
+    cam_view = fit_video_camera(objs, fs, fe, az)
+    print("動画のカメラ", {k: round(v, 1) for k, v in cam_view.items()})
+    place_video(st, cam_view)
     stills = ST._arg("--stills", None)
     if stills:
         for fr in stills.split(","):

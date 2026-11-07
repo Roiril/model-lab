@@ -23,11 +23,20 @@ CAM_JSON = os.path.join(HERE, "cameras.json")
 RENDER_DIR = r"G:\マイドライブ\shubie\renders\robot-hand-soft"
 # 机の奥の縁が写る行（参考画像から測った値）。視点ごとに机と壁をカメラへ向けて置く。
 TABLE_EDGE_ROW = {"front": 965, "oblique": 935, "rear": 967}
-WALL_COLOR = (0.73, 0.725, 0.715)
+# 壁の色は視点ごとに参考画像から読んだ sRGB。自発光にして、下へ向かって暗くならないようにする
+WALL_SRGB = {"front": (225, 220, 216), "oblique": (222, 216, 213), "rear": (224, 218, 214), "video": (225, 220, 216)}
+# 手を照らす面光源の強さ。視点ごとに手のひらの色が参考画像と合うように決めた
+LIGHT_ENERGY = {"front": 5.5, "oblique": 6.0, "rear": 3.2, "video": 5.0}
+# 周囲の明るさ。手のひらの色はほぼこれで決まる
+WORLD_BY_VIEW = {"front": 0.60, "oblique": 0.75, "rear": 0.88, "video": 0.7}
 WOOD_LIGHT = (0.37, 0.165, 0.075)
 WOOD_DARK = (0.235, 0.092, 0.036)
 WORLD_STRENGTH = 0.9
-WALL_GLOW = 0.16
+
+
+def srgb_to_linear(c):
+    c = c / 255.0
+    return c / 12.92 if c <= 0.04045 else ((c + 0.055) / 1.055) ** 2.4
 
 
 def camera_axes(c):
@@ -118,12 +127,19 @@ def wood_material():
 def wall_material():
     mat = bpy.data.materials.new("wall")
     mat.use_nodes = True
-    b = next(n for n in mat.node_tree.nodes if n.type == "BSDF_PRINCIPLED")
-    b.inputs["Base Color"].default_value = (*WALL_COLOR, 1)
-    b.inputs["Roughness"].default_value = 0.9
-    b.inputs["Emission Color"].default_value = (*WALL_COLOR, 1)
-    b.inputs["Emission Strength"].default_value = WALL_GLOW
+    nt = mat.node_tree
+    nt.nodes.clear()
+    out = nt.nodes.new("ShaderNodeOutputMaterial")
+    e = nt.nodes.new("ShaderNodeEmission")
+    e.inputs["Strength"].default_value = 1.0
+    nt.links.new(e.outputs[0], out.inputs[0])
     return mat
+
+
+def set_wall_color(st, view):
+    nt = st["wall"].data.materials[0].node_tree
+    e = next(n for n in nt.nodes if n.type == "EMISSION")
+    e.inputs["Color"].default_value = (*[srgb_to_linear(c) for c in WALL_SRGB[view]], 1)
 
 
 def setup_scene(res=1254, samples=128):
@@ -163,6 +179,9 @@ def setup_scene(res=1254, samples=128):
     # 机・壁（視点ごとに置き直す）
     table = _plane("table", 6.0, 6.0, col)
     table.data.materials.append(wood_material())
+    # 机の色が手へ映って赤くならないように、拡散光には机を見せない
+    table.visible_diffuse = False
+    table.visible_glossy = False
     wall = _plane("wall", 12.0, 12.0, col)
     wall.data.materials.append(wall_material())
     # 上の大きな面光源で輪郭に薄い明るさを乗せる
@@ -181,9 +200,13 @@ def setup_scene(res=1254, samples=128):
     return dict(table=table, wall=wall, light=lo, cam=cam)
 
 
-def place_view(st, cams, view, row=None):
+def place_view(st, cams, view, row=None, light_key=None):
     c = cams[view]
     apply_camera(st["cam"], c)
+    set_wall_color(st, light_key or view)
+    st["light"].data.energy = LIGHT_ENERGY[light_key or view]
+    bg = next(n for n in bpy.context.scene.world.node_tree.nodes if n.type == "BACKGROUND")
+    bg.inputs[1].default_value = WORLD_BY_VIEW[light_key or view]
     a = math.radians(c["az"])
     C = camera_pos(c)
     fwd = Vector((-math.sin(a), math.cos(a), 0))

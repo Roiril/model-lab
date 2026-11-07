@@ -92,11 +92,8 @@ def fingertip(w, d, z0, z1, base_r=2.2, nose=None):
         a = math.pi / 2 * i / 15
         stations.append((zb + nose * math.sin(a), math.cos(a), body_r))
     for z, s, r in stations:
-        k = min((z - z0) / P.BODY_CHAMFER, 1.0)   # 手のひら側を節と同じように斜めに落とす
-        dd = d * (0.6 + 0.4 * k)
-        off = d * 0.2 * (1 - k)
-        sec = _section(max(w * s, 0.3), max(dd * s, 0.3), min(r, dd * 0.45) * s)
-        rows.append([bm.verts.new((x, y + off, z)) for x, y in sec])
+        sec = _section(max(w * s, 0.3), max(d * s, 0.3), min(r, d * 0.45) * s)
+        rows.append([bm.verts.new((x, y, z)) for x, y in sec])
     n = len(rows[0])
     for a, b in zip(rows, rows[1:]):
         for i in range(n):
@@ -108,156 +105,214 @@ def fingertip(w, d, z0, z1, base_r=2.2, nose=None):
     return _finish(bm)
 
 
-def rear_web(zh):
-    """棒の背面を塞ぐ薄い壁。近位の節が持つ。手のひら側へ曲げても棒と舌に当たらない。"""
-    h = P.BAR_HALF
-    r0 = P.BAR_R + 0.35
-    yb = P.WEB_REAR_Y
-    zb = P.HINGE_CLEAR + 0.6
+def rounded_plate(hx, y0, y1, z0, z1, r0, r1, e, n=10):
+    """Y 方向に厚みのある板。z0 側の角を r0、z1 側の角を r1 で丸める。面の縁は e で丸める。"""
+    def poly(i):
+        hw, a, b = hx - i, z0 + i, z1 - i
+        ra, rb = max(r0 - i, 0.05), max(r1 - i, 0.05)
+        pts = []
+        for cx, cz, r, a0 in ((hw - rb, b - rb, rb, 0), (-hw + rb, b - rb, rb, 90), (-hw + ra, a + ra, ra, 180), (hw - ra, a + ra, ra, 270)):
+            for k in range(n + 1):
+                t = math.radians(a0 + 90 * k / n)
+                pts.append((cx + r * math.cos(t), cz + r * math.sin(t)))
+        return pts
+    prof = []
+    for k in range(5):
+        t = math.pi / 2 * (1 - k / 4)
+        prof.append((y0 + e * (1 - math.sin(t)), e * (1 - math.cos(t))))
+    for k in range(5):
+        t = math.pi / 2 * k / 4
+        prof.append((y1 - e * (1 - math.sin(t)), e * (1 - math.cos(t))))
     bm = bmesh.new()
-    angs = np.radians(np.linspace(0, 78, 9))  # 0 が近位の方向（-Z）、増えると背面（+Y）
-    A = [(r0 * math.sin(t), zh - r0 * math.cos(t)) for t in angs]
+    rows = [[bm.verts.new((x, y, z)) for x, z in poly(i)] for y, i in prof]
+    m = len(rows[0])
+    for a, b in zip(rows, rows[1:]):
+        for i in range(m):
+            bm.faces.new((a[i], a[(i + 1) % m], b[(i + 1) % m], b[i]))
+    bm.faces.new(rows[0])
+    bm.faces.new(rows[-1])
+    return _finish(bm)
+
+
+def cradle_lip(zh):
+    """棒を受ける部分と背面の壁。近位の節が持つ。棒の裏を塞ぎ、手のひら側へ曲げても当たらない。"""
+    h = P.NARROW_HALF + 0.1          # 板の中まで通して、棒の両脇のすき間も塞ぐ
+    ax = P.AXIS_Y
+    rc = P.CRADLE_R
+    yb = P.SEG_DEPTH / 2 - ax + 0.03     # 節の背面よりわずかに外。節の角の丸みの線を隠す
+    zb = P.LIP_BOTTOM
+    zt = P.LIP_TOP
+    a1 = math.pi - math.acos(min(zt / rc, 1.0))   # 0 が近位の方向（-Z）、増えると背面（+Y）を通って遠位へ
+    angs = np.linspace(0, a1, 15)
+    A = [(rc * math.sin(t), -rc * math.cos(t)) for t in angs]
     B = []
     for t in angs:
-        # 同じ光線が外枠（y=yb または z=zh-zb）に当たる点
-        sy, sz = math.sin(t), math.cos(t)
-        rr = min(yb / max(sy, 1e-6), zb / max(sz, 1e-6))
-        B.append((rr * sy, zh - rr * sz))
+        sy, sz = math.sin(t), -math.cos(t)     # 光線の向き（y, z）
+        rr = yb / max(sy, 1e-6)
+        if sz < 0:
+            rr = min(rr, zb / -sz)
+        elif sz > 0:
+            rr = min(rr, zt / sz)
+        B.append((rr * sy, rr * sz))
+    # 外枠の角を通るように、背面の 2 つの角の方向を足す
+    corners = [(math.atan2(yb, zb), (yb, -zb)), (math.pi - math.atan2(yb, zt), (yb, zt))]
+    pairs = list(zip(angs, A, B))
+    for ca, cp in corners:
+        if 0 < ca < a1:
+            pairs.append((ca, (rc * math.sin(ca), -rc * math.cos(ca)), cp))
+    pairs.sort(key=lambda q: q[0])
+    A = [q[1] for q in pairs]
+    B = [q[2] for q in pairs]
+    bm = bmesh.new()
     rows = []
     for x in (-h, h):
-        rows.append(([bm.verts.new((x, y, z)) for y, z in A], [bm.verts.new((x, y, z)) for y, z in B]))
-    (a0, b0), (a1, b1) = rows
+        rows.append(([bm.verts.new((x, ax + y, zh + z)) for y, z in A], [bm.verts.new((x, ax + y, zh + z)) for y, z in B]))
+    (a0, b0), (a1v, b1v) = rows
     n = len(A)
     for i in range(n - 1):
         bm.faces.new((a0[i], a0[i + 1], b0[i + 1], b0[i]))
-        bm.faces.new((a1[i], b1[i], b1[i + 1], a1[i + 1]))
-        bm.faces.new((a0[i], a1[i], a1[i + 1], a0[i + 1]))
-        bm.faces.new((b0[i], b0[i + 1], b1[i + 1], b1[i]))
-    bm.faces.new((a0[0], b0[0], b1[0], a1[0]))
-    bm.faces.new((a0[-1], a1[-1], b1[-1], b0[-1]))
+        bm.faces.new((a1v[i], b1v[i], b1v[i + 1], a1v[i + 1]))
+        bm.faces.new((a0[i], a1v[i], a1v[i + 1], a0[i + 1]))
+        bm.faces.new((b0[i], b0[i + 1], b1v[i + 1], b1v[i]))
+    bm.faces.new((a0[0], b0[0], b1v[0], a1v[0]))
+    bm.faces.new((a0[-1], a1v[-1], b1v[-1], b0[-1]))
     return _finish(bm)
 
 
-def thumb_cheek(r, y_half, x_edge, z_low, sign):
-    """つばの左右の張り出し。関節の円板より外側で、開口の中だけを塞ぐ。"""
-    n = 14
-    a0 = math.asin(min(max(z_low / r, -1), 1))
-    xe = abs(x_edge)
-    if xe >= r:
-        return None
-    a1 = math.acos(xe / r)
-    pts = [(xe, z_low)] + [(r * math.cos(a0 + (a1 - a0) * i / n), r * math.sin(a0 + (a1 - a0) * i / n)) for i in range(n + 1)]
+def stadium_plate(x0, x1, ax, z0, z1, R, e=0.5, n=20):
+    """X 方向に厚みのある長円の板。y=ax を中心に、z0〜z1 の範囲。1 つの閉じた殻にする（重なった面を作らない）。"""
+    def poly(r):
+        zc0, zc1 = z0 + R, z1 - R
+        pts = []
+        for i in range(n + 1):
+            t = math.pi * i / n
+            pts.append((ax + r * math.cos(t), zc1 + r * math.sin(t)))
+        for i in range(n + 1):
+            t = math.pi + math.pi * i / n
+            pts.append((ax + r * math.cos(t), zc0 + r * math.sin(t)))
+        return pts
+    prof = [(x0, R - e), (x0 + e * 0.29, R - e * 0.29), (x0 + e, R), (x1 - e, R), (x1 - e * 0.29, R - e * 0.29), (x1, R - e)]
     bm = bmesh.new()
-    rows = []
-    for y in (-y_half, y_half):
-        rows.append([bm.verts.new((sign * x, y, z)) for x, z in pts])
-    m = len(pts)
-    for i in range(m):
-        bm.faces.new((rows[0][i], rows[0][(i + 1) % m], rows[1][(i + 1) % m], rows[1][i]))
-    bm.faces.new(rows[0])
-    bm.faces.new(rows[1])
-    return _finish(bm)
-
-
-def thumb_boss(r, y_half, z_max, seg=64):
-    """親指の根元の丸い部分。Y 軸の円盤で、遠位側を z_max で切る。"""
-    pts = []
-    for i in range(seg):
-        a = 2 * math.pi * i / seg
-        x, z = r * math.sin(a), r * math.cos(a)
-        pts.append((x, min(z, z_max)))
-    bm = bmesh.new()
-    rows = []
-    e = 0.6
-    for y, k in ((-y_half, (r - e) / r), (-y_half + e, 1.0), (y_half - e, 1.0), (y_half, (r - e) / r)):
-        rows.append([bm.verts.new((x * k, y, z * k)) for x, z in pts])
+    rows = [[bm.verts.new((x, y, z)) for y, z in poly(r)] for x, r in prof]
+    m = len(rows[0])
     for a, b in zip(rows, rows[1:]):
-        for i in range(seg):
-            bm.faces.new((a[i], a[(i + 1) % seg], b[(i + 1) % seg], b[i]))
+        for i in range(m):
+            bm.faces.new((a[i], a[(i + 1) % m], b[(i + 1) % m], b[i]))
     bm.faces.new(rows[0])
     bm.faces.new(rows[-1])
     return _finish(bm)
 
 
-def side_plates(zh):
-    """z=zh の軸を挟む左右の長円の板。近位の節が持つ。軸の背面を塞ぐ壁も付ける。"""
+def side_plates(zh, tail=None, outer=None, lip=True):
+    """z=zh の軸を挟む左右の長円の板。近位の節が持つ。"""
+    tail = P.PLATE_TAIL if tail is None else tail
+    outer = P.DISC_OUTER_X if outer is None else outer
+    R = P.DISC_R
     out = []
     for sx in (-1, 1):
-        x0, x1 = sorted((sx * P.DISC_INNER_X, sx * P.DISC_OUTER_X))
-        out.append(xcyl(x0, x1, 0, zh, P.DISC_R, edge=0.5))
-        out.append(xcyl(x0, x1, 0, zh - P.PLATE_TAIL, P.DISC_R, edge=0.5))
-        out.append(rbox(x0, x1, -P.DISC_R, P.DISC_R, zh - P.PLATE_TAIL, zh, 0.5, seg=2))
-    out.append(rear_web(zh))
+        x0, x1 = sorted((sx * P.NARROW_HALF, sx * outer))
+        out.append(stadium_plate(x0, x1, P.AXIS_Y, zh - tail - R, zh + R, R))
+    if lip:
+        out.append(cradle_lip(zh))
     return out
 
 
-def hinge_bar():
-    """z=0 の軸にある棒と、節へつなぐ舌と細い首。遠位側の節が持つ。"""
-    h = P.BAR_HALF
-    c = P.HINGE_CLEAR
-    return [xcyl(-h, h, 0, 0, P.BAR_R, edge=0.3),
-            rbox(-h, h, -P.TONGUE_DEPTH / 2, P.TONGUE_DEPTH / 2, 0, c + 1.0, 0.4, seg=2),
-            profile_body(2 * h, c, P.BODY_START + 2.0, chamfer_far=False)]
+def stepped_plate(steps, e=None, rc=None):
+    """平らな板。steps=[(半幅, z0, z1), ...] を z の順に並べた段つきの輪郭を Y 方向へ伸ばす。
 
-
-def profile_body(w, z0, z1, chamfer_far=True, chamfer_near=True):
-    """節の胴。手のひら側（-Y）の両端を斜めに落とした断面を X へ伸ばす。縁は丸い。"""
+    前後の面は 1 枚で、段の所に線が出ない。縁は e で丸める。
+    """
+    e = P.SEG_EDGE_R if e is None else e
+    rc = e + 0.1 if rc is None else rc
     hd = P.SEG_DEPTH / 2
-    r = P.SEG_EDGE_R
-    c = min(P.BODY_CHAMFER, (z1 - z0) * 0.45)
-    # (y, z) の輪郭（凸）。-Y 側の両端は斜め、+Y 側は丸い角
-    pts = []
-    if chamfer_near:
-        pts += [(-hd, z0 + c), (-hd * 0.2, z0)]
-    else:
-        pts += [(-hd, z0)]
-    for i in range(7):
-        a = math.pi / 2 * (1 - i / 6)
-        pts.append((hd - r + r * math.cos(a), z0 + r - r * math.sin(a)))
-    for i in range(7):
-        a = math.pi / 2 * i / 6
-        pts.append((hd - r + r * math.cos(a), z1 - r + r * math.sin(a)))
-    if chamfer_far:
-        pts += [(-hd * 0.2, z1), (-hd, z1 - c)]
-    else:
-        pts += [(-hd, z1)]
-    pts = np.array(pts)
-    ctr = pts.mean(0)
-    e = r
-    rows = []
+    corners = []
+    for hw, z0, z1 in steps:
+        corners += [(hw, z0), (hw, z1)]
+    for hw, z0, z1 in reversed(steps):
+        corners += [(-hw, z1), (-hw, z0)]
+    # 角を丸めた輪郭（反時計回りとは限らない）と、内向きの法線
+    c = np.array(corners, float)
+    n = len(c)
+    pts, nrm = [], []
+    area = 0.5 * sum(c[i, 0] * c[(i + 1) % n, 1] - c[(i + 1) % n, 0] * c[i, 1] for i in range(n))
+    sg = 1.0 if area > 0 else -1.0
+    for i in range(n):
+        p0, p1, p2 = c[i - 1], c[i], c[(i + 1) % n]
+        d1 = (p1 - p0) / np.linalg.norm(p1 - p0)
+        d2 = (p2 - p1) / np.linalg.norm(p2 - p1)
+        cross = d1[0] * d2[1] - d1[1] * d2[0]
+        n1 = np.array([-d1[1], d1[0]]) * sg   # 内向き
+        n2 = np.array([-d2[1], d2[0]]) * sg
+        convex = cross * sg > 0
+        center = p1 + (n1 + n2) * rc * (1 if convex else -1)
+        for k in range(7):
+            t = k / 6
+            if convex:
+                dirn = -(n1 * (1 - t) + n2 * t)
+            else:
+                dirn = n1 * (1 - t) + n2 * t
+            dirn = dirn / np.linalg.norm(dirn)
+            pts.append(center + dirn * rc)
+            nrm.append(-dirn if convex else dirn)
+    pts, nrm = np.array(pts), np.array(nrm)
+    prof = []
+    for k in range(4):
+        t = math.pi / 2 * (1 - k / 3)
+        prof.append((-hd + e * (1 - math.sin(t)), e * (1 - math.cos(t))))
+    for k in range(4):
+        t = math.pi / 2 * k / 3
+        prof.append((hd - e * (1 - math.sin(t)), e * (1 - math.cos(t))))
     bm = bmesh.new()
-    for x, k in ((-w / 2, 1.0), (-w / 2 + e * 0.29, 0.29), (-w / 2 + e, 0.0), (w / 2 - e, 0.0), (w / 2 - e * 0.29, 0.29), (w / 2, 1.0)):
-        q = ctr + (pts - ctr) * np.array([1 - 2 * k * e / P.SEG_DEPTH, 1 - 2 * k * e / max(z1 - z0, 1e-3)])
-        rows.append([bm.verts.new((x, a, b)) for a, b in q])
-    n = len(pts)
+    rows = []
+    for y, i in prof:
+        q = pts + nrm * i
+        rows.append([bm.verts.new((a, y, b)) for a, b in q])
+    m = len(pts)
     for a, b in zip(rows, rows[1:]):
-        for i in range(n):
-            bm.faces.new((a[i], a[(i + 1) % n], b[(i + 1) % n], b[i]))
-    bm.faces.new(rows[0])
-    bm.faces.new(rows[-1])
+        for i in range(m):
+            bm.faces.new((a[i], a[(i + 1) % m], b[(i + 1) % m], b[i]))
+    # 蓋は中心からの扇（輪郭は中心から見渡せる形）
+    zc = (steps[0][1] + steps[-1][2]) / 2
+    for row, y in ((rows[0], prof[0][0]), (rows[-1], prof[-1][0])):
+        ctr = bm.verts.new((0.0, y, zc))
+        for i in range(m):
+            bm.faces.new((row[i], row[(i + 1) % m], ctr))
     return _finish(bm)
 
 
-def seg_body(w, z0, z1):
-    return profile_body(w, z0, z1)
+def hinge_bar(neck=False):
+    """軸の近くの横棒と、節へつなぐ舌。遠位側の節が持つ。棒の下は暗い溝として見える。neck=True で板の間を通る首も付ける。"""
+    h = P.BAR_HALF
+    ax = P.AXIS_Y
+    hd = P.SEG_DEPTH / 2 - 0.02
+    out = [rbox(-h, h, ax - P.BAR_FRONT, ax + P.TONGUE_HALF, P.BAR_Z0, P.BAR_Z1, P.BAR_ROUND, seg=4),
+           rbox(-h, h, ax - P.TONGUE_HALF, ax + P.TONGUE_HALF, P.BAR_Z0 + 0.5, P.DIST_START + 0.8, 0.3, seg=2)]
+    if neck:
+        out.append(rbox(-h, h, -hd, hd, P.DIST_START, P.WIDE_START + 1.0, P.SEG_EDGE_R, seg=3))
+    return out
+
+
+def seg_body(w, L):
+    """節の胴。1 枚の平らな板で、近位は細い首、中央が幅広、遠位は左右の板の間へ細くなる。"""
+    z_step = L - P.PLATE_TAIL - P.DISC_R - 0.2
+    return [stepped_plate([(P.BAR_HALF, P.DIST_START, P.WIDE_START), (w / 2, P.WIDE_START, z_step), (P.NARROW_HALF, z_step, L - P.PROX_END)])]
 
 
 def finger_parts(name, tip, hinges, width, tip_width, root_extra):
     """1 本の指の節。戻り値は [(部品名, 親, 親の中の z, 小部品のリスト)]。局所原点は近位の関節。"""
     h1, h2, h3 = hinges
-    c = P.HINGE_CLEAR
-    b0 = P.BODY_START
+    z_step = -P.PLATE_TAIL - P.DISC_R - 0.2
     out = []
     out.append((f"{name}_root", None, 0.0,
-                [profile_body(width - 2.5, -root_extra, -c, chamfer_near=False)] + side_plates(0.0)))
+                [stepped_plate([(width / 2, -root_extra, z_step), (P.NARROW_HALF, z_step, -P.PROX_END)])] + side_plates(0.0)))
     L1 = h3 - h2
     out.append((f"{name}_seg1", f"{name}_root", 0.0,
-                [seg_body(width, b0, L1 - c)] + hinge_bar() + side_plates(L1)))
+                seg_body(width, L1) + hinge_bar() + side_plates(L1)))
     L2 = h2 - h1
     out.append((f"{name}_seg2", f"{name}_seg1", L1,
-                [seg_body(width, b0, L2 - c)] + hinge_bar() + side_plates(L2)))
+                seg_body(width, L2) + hinge_bar() + side_plates(L2)))
     out.append((f"{name}_tip", f"{name}_seg2", L2,
-                [fingertip(tip_width, P.SEG_DEPTH + 0.5, b0, h1)] + hinge_bar()))
+                [fingertip(tip_width, P.SEG_DEPTH + 0.5, P.WIDE_START, h1)] + hinge_bar(neck=True)))
     return out
 
 
@@ -267,14 +322,7 @@ def _palm_polygon():
     """外形の点列 (X, Z)[mm]。px の指定を Catmull-Rom で滑らかにして等間隔に取り直す。"""
     pts = []
     for p in P.PALM_OUTLINE_PX:
-        if p == "NOTCH":
-            cu, cv = P.NOTCH_CENTER_PX
-            a0, a1 = P.NOTCH_ARC_START_DEG, P.NOTCH_ARC_END_DEG
-            for t in np.linspace(a0, a1, 14):
-                a = math.radians(t)
-                pts.append((cu + P.NOTCH_R_PX * math.cos(a), cv + P.NOTCH_R_PX * math.sin(a)))
-        else:
-            pts.append(p)
+        pts.append(p)
     pts = np.array([P.px(*p) for p in pts], float)
     n = len(pts)
     dense = []
@@ -358,14 +406,11 @@ def palm_mesh():
     Dp = np.maximum(D, 0)
     t = np.clip(Dp / R, 0, 1)
     edge = (P.PALM_DEPTH / 2) * (1 - (1 - t) ** p) ** (1 / p)
-    dome_shape = 1 - np.exp(-np.maximum(Dp - R, 0) / 14.0)
-    mound = np.zeros(mx.shape)
-    for name in P.FINGER_ORDER:
-        f = P.FINGERS[name]
-        phi = math.radians(f["splay"])
-        c = np.array(f["tip"]) - np.array([math.sin(phi), math.cos(phi)]) * (f["length"] + P.MOUND_INSET)
-        mound += P.MOUND_H * np.exp(-((mx - c[0]) ** 2 + (mz - c[1]) ** 2) / (2 * P.MOUND_SIGMA ** 2))
-    mound *= t
+    # ふくらみは外形の距離に依らない楕円の放物面にする。距離で作ると中心線に沿って折れ目が出る。
+    px0, pz0 = poly.min(0)
+    px1, pz1 = poly.max(0)
+    cx, cz, ax_, az_ = (px0 + px1) / 2, (pz0 + pz1) / 2, (px1 - px0) / 2, (pz1 - pz0) / 2
+    dome_shape = np.maximum(1 - ((mx - cx) / ax_) ** 2 - ((mz - cz) / az_) ** 2, 0)
 
     def blur(field):
         rad = int(3 * P.PALM_BLUR / hf)
@@ -375,9 +420,13 @@ def palm_mesh():
         return np.apply_along_axis(lambda m: np.convolve(m, g, mode="same"), 1, out)
 
     keep = np.clip((Dp - R * 0.12) / (R * 0.35), 0, 1)  # 縁のごく近くは元の丸みのまま
+    # ふくらみを縁へ向けて 0 に落とす。折れ目を出さないよう広くぼかす
+    rim = np.clip(Dp / P.PALM_DOME_RIM, 0, 1)
+    for _ in range(3):
+        rim = blur(rim)
 
-    def make(dome, extra):
-        h = edge + dome * dome_shape + extra
+    def make(dome):
+        h = edge + dome * dome_shape * rim
         return h * (1 - keep) + blur(h) * keep
 
     def read(field, pts):
@@ -392,8 +441,8 @@ def palm_mesh():
 
     poly_keys = {tuple(np.round(a, 3)) for a in poly}
     onb = np.array([tuple(np.round(a, 3)) in poly_keys for a in q])
-    yf = read(make(P.PALM_DOME_FRONT, 0.0), q)
-    yb = read(make(P.PALM_DOME_REAR, mound), q)
+    yf = read(make(P.PALM_DOME_FRONT), q)
+    yb = read(make(P.PALM_DOME_REAR), q)
     yf[onb] = 0
     yb[onb] = 0
     # 前後の面。外周の点は共有して閉じる。
@@ -421,16 +470,49 @@ def palm_mesh():
     return verts, faces
 
 
-def notch_ledge():
-    """開口の奥の段（手のひらに固定）。親指のつばの背面に重なって、すき間から向こうが見えないようにする。"""
-    L = P.NOTCH_LEDGE
-    cx, cz = P.px(*P.NOTCH_CENTER_PX)
-    angs = np.radians(np.linspace(L["deg0"], L["deg1"], 40))
+def pivot_mm():
+    return np.array(P.px(*P.THUMB_PIVOT_PX))
+
+
+def ray_to_palm(c, a, poly, r_max, overlap):
+    """開口の中心から角度 a の線が手のひらの外形に最初に当たる距離 + overlap。当たらなければ 0。"""
+    d = np.array([math.cos(a), math.sin(a)])
+    p0 = poly
+    e = np.roll(poly, -1, 0) - p0
+    den = d[0] * e[:, 1] - d[1] * e[:, 0]
+    ok = np.abs(den) > 1e-9
+    w = p0 - c
+    t = np.where(ok, (w[:, 0] * e[:, 1] - w[:, 1] * e[:, 0]) / np.where(ok, den, 1), -1)
+    u = np.where(ok, (w[:, 0] * d[1] - w[:, 1] * d[0]) / np.where(ok, den, 1), -1)
+    hit = t[(t > 0) & (u >= 0) & (u <= 1) & (t < r_max)]
+    return float(hit.min()) + overlap if len(hit) else 0.0
+
+
+def shade_ring():
+    """開口の奥を暗くする輪（手のひらに固定）。外周は外形の内側へ少し入るだけにして、壁の前へ出さない。"""
+    L = P.NOTCH_SHADE
+    c = pivot_mm()
+    phi = math.radians(P.THUMB["splay"])
+    # 親指が出ていく方向の角度（X→Z の角度）から gap だけ離して、反対側を回る
+    out = math.atan2(math.cos(phi), math.sin(phi))
+    amin = math.asin(L["perp"] / L["r1"])
+    poly = _palm_polygon()
+    # 外形に届く角度だけを使う。届かない向きは開口の口で、そこには何も置かない
+    angs = [a for a in np.linspace(out + amin, out + 2 * math.pi - amin, 200)
+            if ray_to_palm(c, a, poly, L["r1"], L["overlap"]) > 0]
     bm = bmesh.new()
     corners = []
     for y in (L["y0"], L["y1"]):
-        inner = [bm.verts.new((cx + L["r0"] * math.cos(a), y, cz - L["r0"] * math.sin(a))) for a in angs]
-        outer = [bm.verts.new((cx + L["r1"] * math.cos(a), y, cz - L["r1"] * math.sin(a))) for a in angs]
+        inner, outer = [], []
+        for a in angs:
+            off = abs(math.sin(a - out))
+            # 親指の線から perp より離れる。そこまでは半径を広げる
+            # 開口の出口側は親指の線からの距離だけで切る。奥側は根元の丸い端を避けて半径で切る
+            r0 = L["r0"] if math.cos(a - out) < 0 else L["perp"] / max(off, 1e-6)
+            r1 = ray_to_palm(c, a, poly, L["r1"], L["overlap"])
+            r0 = min(r0, r1 - 0.01)
+            inner.append(bm.verts.new((c[0] + r0 * math.cos(a), y, c[1] + r0 * math.sin(a))))
+            outer.append(bm.verts.new((c[0] + r1 * math.cos(a), y, c[1] + r1 * math.sin(a))))
         corners.append((inner, outer))
     (i0, o0), (i1, o1) = corners
     n = len(angs)
@@ -441,6 +523,25 @@ def notch_ledge():
         bm.faces.new((o0[k], o0[k + 1], o1[k + 1], o1[k]))
     bm.faces.new((i0[0], o0[0], o1[0], i1[0]))
     bm.faces.new((i0[-1], i1[-1], o1[-1], o0[-1]))
+    return _finish(bm)
+
+
+def shade_disc(z_max):
+    """親指の根元の裏の円板。親指と一緒に回る。開口の奥の暗がりとして見える。指先側は z_max で切る。"""
+    r = P.THUMB_SHADE_R
+    y0, y1 = P.THUMB_SHADE_Y
+    seg = 72
+    pts = []
+    for i in range(seg):
+        a = 2 * math.pi * i / seg
+        pts.append((r * math.cos(a), min(r * math.sin(a), z_max)))
+    bm = bmesh.new()
+    rows = [[bm.verts.new((x, y, z)) for x, z in pts] for y in (y0, y1)]
+    for i in range(seg):
+        bm.faces.new((rows[0][i], rows[0][(i + 1) % seg], rows[1][(i + 1) % seg], rows[1][i]))
+    bm.faces.new(rows[0])
+    bm.faces.new(rows[1])
+    bmesh.ops.remove_doubles(bm, verts=bm.verts, dist=1e-5)
     return _finish(bm)
 
 
@@ -524,14 +625,32 @@ def hand_material():
     return mat
 
 
+def shade_material():
+    """開口の奥の暗がり。ほとんど光を返さない。"""
+    mat = bpy.data.materials.get("hand_shade") or bpy.data.materials.new("hand_shade")
+    mat.use_nodes = True
+    b = next(n for n in mat.node_tree.nodes if n.type == "BSDF_PRINCIPLED")
+    b.inputs["Base Color"].default_value = (*P.SHADE_COLOR, 1)
+    b.inputs["Roughness"].default_value = 1.0
+    b.inputs["Specular IOR Level"].default_value = 0.0
+    return mat
+
+
+def on_axis(subs):
+    """回る節の小部品を、関節の軸（y=AXIS_Y）が局所原点になる座標へ移す。"""
+    return [([(a, b - P.AXIS_Y, c) for a, b, c in v], f) for v, f in subs]
+
+
 def build_hand(collection=None):
     """手を組む。戻り値は {部品名: オブジェクト}, {部品名: [小部品(m)]}, {関節名: (オブジェクト, 軸, 基準の Euler)}。"""
     col = collection or bpy.context.scene.collection
     mat = hand_material()
     objs, subs_all, joints = {}, {}, {}
 
-    def add(name, subs, parent, loc, rot=(0.0, 0.0, 0.0)):
-        ob = _mesh_object(name, subs, col, mat)
+    dark = shade_material()
+
+    def add(name, subs, parent, loc, rot=(0.0, 0.0, 0.0), material=None):
+        ob = _mesh_object(name, subs, col, material or mat)
         if parent is not None:
             ob.parent = objs[parent]
         ob.location = Vector(loc) * M
@@ -547,13 +666,13 @@ def build_hand(collection=None):
     zw = P.WRIST_Z
     pv, pf = palm_mesh()
     palm = [([(x, y, z - zw) for x, y, z in pv], pf)]
-    lv, lf = notch_ledge()
-    palm.append(([(x, y, z - zw) for x, y, z in lv], lf))
     h = P.WRIST_BLOCK_HALF
     palm.append(xcyl(-h, h, 0, 0, P.WRIST_BLOCK_R, edge=0.5))
     palm.append(rbox(-h, h, -P.WRIST_BLOCK_R, P.WRIST_BLOCK_R, 0, 10.0, 0.5, seg=2))
     add("palm", palm, "base" if False else None, (0, 0, zw))
     objs["palm"].parent = objs["base"]
+    rv, rf = shade_ring()
+    add("palm_shade", [(rv, rf)], "palm", (0, 0, -zw), material=dark)
     joints["wrist"] = (objs["palm"], 0, (0.0, 0.0, 0.0))
 
     # 指 4 本
@@ -570,9 +689,9 @@ def build_hand(collection=None):
                 add(part, subs, "palm", (j3[0], 0.0, j3[1] - zw), (0.0, phi, 0.0))
             else:
                 if part.endswith("seg1"):
-                    add(part, subs, parent, (0, 0, 0))
+                    add(part, on_axis(subs), parent, (0, P.AXIS_Y, 0))
                 else:
-                    add(part, subs, parent, (0, 0, z))
+                    add(part, on_axis(subs), parent, (0, 0, z))
         joints[f"{name}_j3"] = (objs[f"{name}_seg1"], 0, (0.0, 0.0, 0.0))
         joints[f"{name}_j2"] = (objs[f"{name}_seg2"], 0, (0.0, 0.0, 0.0))
         joints[f"{name}_j1"] = (objs[f"{name}_tip"], 0, (0.0, 0.0, 0.0))
@@ -583,32 +702,27 @@ def build_hand(collection=None):
     d = np.array([math.sin(phi), math.cos(phi)])
     tip = np.array(t["tip"])
     h1, h2, h3 = t["hinges"]
-    # 回転の中心は開口の中心。関節 j3 は指の線の上にあるので、根元の節は少し偏心する。
-    piv = np.array(P.px(*P.NOTCH_CENTER_PX))
+    # 回転の中心は開口の中。関節 j3 は指の線の上にあるので、根元の節はわずかに偏心する。
+    piv = pivot_mm()
     rel = (tip - d * h3) - piv
     Lp = float(rel @ d)
     dx = float(rel @ np.array([math.cos(phi), -math.sin(phi)]))
     w = t["width"]
-    r_end = t["root_end_r"]
-    zcut = Lp - P.BAR_R - 0.3
+    hd = P.SEG_DEPTH / 2
 
     def shifted(subs):
         return [([(a + dx, b, c) for a, b, c in v], f) for v, f in subs]
 
-    root = shifted([profile_body(w - 1.0, -2.0, Lp - P.HINGE_CLEAR, chamfer_near=False)] + side_plates(Lp))
-    root += [thumb_boss(r_end, t["boss_half"], zcut), thumb_boss(t["flange_r"], t["flange_half"], zcut)]
-    for sg in (-1, 1):
-        ch = thumb_cheek(t["flange_r"], t["flange_half"], P.DISC_OUTER_X + 0.3 + sg * dx * 1.0, zcut - 0.5, sg)
-        if ch is not None:
-            root.append(ch)
+    # 根元: 平らな板が開口の奥まで入り、両脇の細長い板が関節まで伸びる
+    root = shifted([rounded_plate(P.NARROW_HALF, -hd, hd, t["root_end"], Lp - P.PROX_END, t["root_end_r"], P.SEG_EDGE_R, P.SEG_EDGE_R)]
+                   + side_plates(Lp, tail=Lp + t["rail_tail"], outer=t["rail_outer"]))
     add("thumb_root", root, "palm", (piv[0], 0.0, piv[1] - zw), (math.radians(t["rest_tilt"]), phi, 0.0))
+    add("thumb_shade", [shade_disc(P.THUMB_SHADE_ZMAX)], "thumb_root", (0, 0, 0), material=dark)
     L1 = h3 - h2
     L2 = h2 - h1
-    b0 = P.BODY_START
-    c = P.HINGE_CLEAR
-    add("thumb_seg1", [seg_body(w, b0, L1 - c)] + hinge_bar() + side_plates(L1), "thumb_root", (dx, 0, Lp))
-    add("thumb_seg2", [seg_body(w, b0, L2 - c)] + hinge_bar() + side_plates(L2), "thumb_seg1", (0, 0, L1))
-    add("thumb_tip", [fingertip(t["tip_width"], P.SEG_DEPTH + 0.5, b0, h1)] + hinge_bar(), "thumb_seg2", (0, 0, L2))
+    add("thumb_seg1", on_axis(seg_body(w, L1) + hinge_bar() + side_plates(L1)), "thumb_root", (dx, P.AXIS_Y, Lp))
+    add("thumb_seg2", on_axis(seg_body(w, L2) + hinge_bar() + side_plates(L2)), "thumb_seg1", (0, 0, L1))
+    add("thumb_tip", on_axis([fingertip(t["tip_width"], P.SEG_DEPTH + 0.5, P.WIDE_START, h1)] + hinge_bar(neck=True)), "thumb_seg2", (0, 0, L2))
     joints["thumb_cmc"] = (objs["thumb_root"], 1, (math.radians(t["rest_tilt"]), phi, 0.0))
     joints["thumb_j3"] = (objs["thumb_seg1"], 0, (0.0, 0.0, 0.0))
     joints["thumb_j2"] = (objs["thumb_seg2"], 0, (0.0, 0.0, 0.0))

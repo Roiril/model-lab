@@ -18,7 +18,17 @@ import metrics as MT
 
 VIEWS = ["front", "oblique", "rear"]
 LABEL = {"front": "正面", "oblique": "斜め後ろ", "rear": "真後ろ"}
-TARGET = {"front": 0.90, "oblique": 0.85, "rear": 0.90}
+TARGET = {"front": 0.90, "oblique": 0.85, "rear": 0.90}   # 手だけ（台座を除く）の IoU で判定する
+HAND_CUT = {"front": 940, "oblique": 925, "rear": 940}    # 手首より上の行
+TOP_MARGIN_MIN = 0.02    # 上端の余白（画像の高さに対する割合）
+PALM_RECT = {"front": (600, 760, 700, 860), "oblique": (500, 660, 650, 800), "rear": (450, 650, 640, 800)}   # 手のひらの色を読む範囲 (u0,u1,v0,v1)
+COLOR_TOL = 6
+# 2 倍の拡大比較の範囲 (u0,v0,u1,v1)。親指の開口と人差し指
+DETAIL = {
+    "front": {"開口": (420, 620, 640, 860), "人差し指": (410, 60, 630, 540)},
+    "oblique": {"開口": (680, 590, 920, 860), "人差し指": (340, 120, 560, 600)},
+    "rear": {"開口": (660, 640, 900, 900), "人差し指": (330, 130, 550, 610)},
+}
 # 指を塗りつぶす帯（u0,v0,u1,v1,太さ）。参考画像の px。計器の校正だけに使う。
 ERASE = {
     "front": (1085, 245, 880, 600, 110),      # 小指
@@ -72,6 +82,35 @@ def side_by_side(view, ref_rgb, mod_rgb, ref_m, mod_m, score, score_hand, out_pa
     os.replace(tmp, out_path)
 
 
+def hand_range(mask, cut):
+    """手の範囲（左・右・上・下）を 1000 分率で返す。"""
+    ys, xs = np.where(mask[:cut])
+    h, w = mask.shape
+    return [round(1000 * xs.min() / w, 1), round(1000 * xs.max() / w, 1), round(1000 * ys.min() / h, 1), round(1000 * ys.max() / h, 1)]
+
+
+def detail_sheet(view, ref_rgb, mod_rgb, out_path):
+    """参考とモデルの開口と人差し指を 2 倍にして並べる。暗部を持ち上げず、そのままの色で見せる。"""
+    boxes = DETAIL[view]
+    rows = []
+    f = ImageFont.truetype(FONT, 24)
+    width = 2 * 2 * max(b[2] - b[0] for b in boxes.values()) + 60
+    height = sum(2 * (b[3] - b[1]) + 50 for b in boxes.values())
+    im = Image.new("RGB", (width, height), "white")
+    dr = ImageDraw.Draw(im)
+    y = 0
+    for name, (u0, v0, u1, v1) in boxes.items():
+        dr.text((10, y + 8), f"参考: {LABEL[view]} {name} 2 倍", fill=(20, 20, 20), font=f)
+        dr.text((10 + width // 2, y + 8), f"モデル: {LABEL[view]} {name} 2 倍", fill=(20, 20, 20), font=f)
+        for i, a in enumerate((ref_rgb, mod_rgb)):
+            c = Image.fromarray(a[v0:v1, u0:u1]).resize((2 * (u1 - u0), 2 * (v1 - v0)), Image.LANCZOS)
+            im.paste(c, (10 + i * width // 2, y + 44))
+        y += 2 * (v1 - v0) + 50
+    tmp = out_path + ".tmp.png"
+    im.save(tmp)
+    os.replace(tmp, out_path)
+
+
 def main():
     render_dir = sys.argv[1] if len(sys.argv) > 1 else MT.RENDER_DIR
     paths = {}
@@ -92,17 +131,26 @@ def main():
         if rgb_m.shape != rgb_r.shape:
             rgb_m = cv2.resize(rgb_m, rgb_r.shape[1::-1], interpolation=cv2.INTER_AREA)
         mr, mm = MT.hand_mask(rgb_r), MT.hand_mask(rgb_m)
-        # 手首のヒンジより上だけ（参考画像の手のひら下端の行）
-        rows = np.where(mr.sum(1) > 0)[0]
-        cut = int({"front": 940, "oblique": 925, "rear": 940}[v])
+        cut = HAND_CUT[v]
         s = MT.iou(mr, mm)
         sh = MT.iou(mr[:cut], mm[:cut])
-        res[v] = {"iou": round(s, 4), "iou_hand_only": round(sh, 4)}
-        allok &= s >= TARGET[v]
-        log.append(f"{LABEL[v]}: IoU 全体 {s:.4f}（目標 {TARGET[v]:.2f}）/ 台座を除く {sh:.4f}")
-        for nm, rgn in (("壁", (20, 200, 20, 200)), ("机", (1040, 1200, 20, 200)), ("手のひら", (640, 720, 640, 760))):
+        rr, rm = hand_range(mr, cut), hand_range(mm, cut)
+        u0, u1, v0, v1 = PALM_RECT[v]
+        pr, pm = rgb_r[v0:v1, u0:u1].mean((0, 1)), rgb_m[v0:v1, u0:u1].mean((0, 1))
+        dc = pm - pr
+        top_ok = rm[2] / 1000 >= TOP_MARGIN_MIN
+        col_ok = bool((np.abs(dc) <= COLOR_TOL).all())
+        res[v] = {"iou": round(s, 4), "iou_hand_only": round(sh, 4),
+                  "hand_range_ref_permille": rr, "hand_range_model_permille": rm,
+                  "palm_ref": [round(x, 1) for x in pr.tolist()], "palm_model": [round(x, 1) for x in pm.tolist()]}
+        allok &= sh >= TARGET[v] and top_ok and col_ok
+        log.append(f"{LABEL[v]}: 手だけの IoU {sh:.4f}（目標 {TARGET[v]:.2f}）/ 台座を含む {s:.4f}")
+        log.append(f"  手の範囲（左 右 上 下、1000 分率）参考 {rr} モデル {rm} 差 {[round(a - b, 1) for a, b in zip(rm, rr)]}")
+        log.append(f"  手のひらの色 参考 {pr.round(1).tolist()} モデル {pm.round(1).tolist()} 差 {dc.round(1).tolist()}" + ("" if col_ok else " ← ±6 を超える"))
+        for nm, rgn in (("壁の上", (20, 200, 20, 200)), ("壁の下", (780, 880, 20, 200)), ("机", (1040, 1200, 20, 200))):
             a, b, c, e = rgn
             log.append(f"  色 {nm}: 参考 {rgb_r[a:b, c:e].mean((0, 1)).round().astype(int)} モデル {rgb_m[a:b, c:e].mean((0, 1)).round().astype(int)}")
+        detail_sheet(v, rgb_r, rgb_m, os.path.join(render_dir, f"detail-{v}.png"))
         side_by_side(v, rgb_r, rgb_m, mr, mm, s, sh, os.path.join(render_dir, f"compare-{v}.png"),
                      os.path.basename(paths[v][0]), os.path.basename(paths[v][1]))
     print("\n".join(log))

@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ロボットハンド GLB 確認</title>
+<style>
+  :root { color-scheme: light; }
+  html, body { margin: 0; height: 100%; background: #e6e2dd; font: 14px/1.5 sans-serif; color: #222; }
+  #view { width: 100%; height: 100%; display: block; }
+  #info { position: fixed; left: 12px; top: 10px; white-space: pre; background: rgba(255,255,255,.8); padding: 6px 10px; }
+</style>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+<canvas id="view"></canvas>
+<div id="info">読み込み中</div>
+<script type="module">
+// GLB を three.js の GLTFLoader で読み、クリップを再生する。
+// ?t=<秒> で止めて見る。window.handCheck.seek(t) は指先の位置と材質を返す。
+import * as THREE from "three";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+
+const canvas = document.getElementById("view");
+const info = document.getElementById("info");
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(window.devicePixelRatio);
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0xe6e2dd);
+scene.add(new THREE.HemisphereLight(0xffffff, 0x8a7a6a, 2.2));
+const sun = new THREE.DirectionalLight(0xffffff, 1.6);
+sun.position.set(-0.3, 0.8, 0.6);
+scene.add(sun);
+const camera = new THREE.PerspectiveCamera(30, 1, 0.01, 20);
+// Blender の -Y（手のひら側）は glTF の +Z。親指の側から 30 度回して見る
+const az = -30 * Math.PI / 180;
+camera.position.set(0.72 * Math.sin(az), 0.2, 0.72 * Math.cos(az));
+camera.lookAt(0, 0.125, 0);
+
+function resize() {
+  const w = window.innerWidth, h = window.innerHeight;
+  renderer.setSize(w, h, false);
+  camera.aspect = w / h;
+  camera.updateProjectionMatrix();
+  renderer.render(scene, camera);
+}
+window.addEventListener("resize", resize);
+
+const params = new URLSearchParams(location.search);
+const url = params.get("src") || "/exports/robot-hand-soft.glb";
+new GLTFLoader().load(url, (gltf) => {
+  scene.add(gltf.scene);
+  const clip = gltf.animations[0];
+  const mixer = new THREE.AnimationMixer(gltf.scene);
+  mixer.clipAction(clip).play();
+  const seek = (t) => {
+    mixer.setTime(t);
+    gltf.scene.updateMatrixWorld(true);
+    renderer.render(scene, camera);
+    const pos = {};
+    for (const n of ["index_tip", "middle_tip", "ring_tip", "pinky_tip", "thumb_tip", "palm"]) {
+      const o = gltf.scene.getObjectByName(n);
+      const v = o.getWorldPosition(new THREE.Vector3());
+      pos[n] = [v.x, v.y, v.z].map((a) => Math.round(a * 1e4) / 10);
+    }
+    info.textContent = `t = ${t.toFixed(2)} 秒 / クリップ ${clip.duration.toFixed(2)} 秒`;
+    return pos;
+  };
+  const mats = {};
+  let meshes = 0;
+  gltf.scene.traverse((o) => {
+    if (o.isMesh) {
+      meshes += 1;
+      mats[o.material.name] = { color: o.material.color.getHexString(), roughness: o.material.roughness, metalness: o.material.metalness, normalMap: !!o.material.normalMap };
+    }
+  });
+  window.handCheck = { seek, duration: clip.duration, clips: gltf.animations.length, tracks: clip.tracks.length, meshes, materials: mats };
+  resize();
+  const t = params.get("t");
+  if (t !== null) {
+    seek(Number(t));
+  } else {
+    const start = performance.now();
+    const loop = () => {
+      seek(((performance.now() - start) / 1000) % clip.duration);
+      requestAnimationFrame(loop);
+    };
+    loop();
+  }
+}, undefined, (e) => { info.textContent = "読み込み失敗: " + e; });
+</script>
+</body>
+</html>

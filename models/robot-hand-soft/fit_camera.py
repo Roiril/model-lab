@@ -62,10 +62,34 @@ def raster(tris, c, size):
     return img.astype(bool)
 
 
-def fit(tris, ref, c, rounds=5):
+HAND_CUT = {"front": 940, "oblique": 925, "rear": 940}
+MAX_ROLL = 0.3        # 机の縁が傾かない範囲 [deg]
+TOP_MARGIN = 0.022    # 上端の余白の下限
+HAND_FLOOR = {"front": 0.90, "oblique": 0.853, "rear": 0.90}
+
+
+def score(tris, ref, c, view, size):
+    """手だけの IoU を下限つきで守りながら、台座を含む全体の IoU を上げる。"""
+    m = raster(tris, c, size)
+    cut = HAND_CUT[view] * size // MT.SIZE
+    hand = MT.iou(ref[:cut], m[:cut])
+    whole = MT.iou(ref, m)
+    ys = np.where(m.any(1))[0]
+    s = 0.5 * hand + 0.5 * whole
+    s -= 5 * max(HAND_FLOOR[view] - hand, 0)
+    s -= 5 * max(TOP_MARGIN - ys.min() / size, 0)
+    s -= 0.2 * max(abs(c["roll"]) - MAX_ROLL, 0)
+    # 手の範囲の中心がずれないようにする（指の長さの差は両端へ分ける）
+    xs = np.where(m[:cut].any(0))[0]
+    xr = np.where(ref[:cut].any(0))[0]
+    s -= 2 * max(abs((xs.min() + xs.max()) - (xr.min() + xr.max())) / (2 * size) - 0.008, 0)
+    return s
+
+
+def fit(tris, ref, c, view, rounds=4):
     size = int(MT.SIZE * FIT_SCALE)
     best = dict(c)
-    bs = MT.iou(raster(tris, best, size), ref)
+    bs = score(tris, ref, best, view, size)
     steps = dict(STEPS)
     for rd in range(rounds):
         moved = True
@@ -76,13 +100,13 @@ def fit(tris, ref, c, rounds=5):
                     while True:
                         t = dict(best)
                         t[k] += sg * steps[k]
-                        s = MT.iou(raster(tris, t, size), ref)
-                        if s > bs + 1e-5:
-                            bs, best = s, t
+                        x = score(tris, ref, t, view, size)
+                        if x > bs + 1e-5:
+                            bs, best = x, t
                             moved = True
                         else:
                             break
-        print(f"  round {rd}: iou={bs:.4f}", {k: round(best[k], 2) for k in KEYS}, flush=True)
+        print(f"  round {rd}: score={bs:.4f}", {k: round(best[k], 2) for k in KEYS}, flush=True)
         steps = {k: v * 0.5 for k, v in steps.items()}
     return best, bs
 
@@ -98,7 +122,11 @@ def main():
         ref = MT.hand_mask(MT.load_rgb(os.path.join(MT.REF_DIR, MT.REFS[v])))
         ref_s = cv2.resize(ref.astype(np.uint8), (size, size), interpolation=cv2.INTER_AREA) > 0
         print(v)
-        best, s = fit(tris, ref_s, cams.get(v, INIT[v]))
+        c0 = dict(cams.get(v, INIT[v]))
+        c0["roll"] = max(min(c0["roll"], MAX_ROLL), -MAX_ROLL)
+        seeds = [dict(c0, az=a) for a in (c0["az"], 142.0, 147.0)] if v == "oblique" else [c0]
+        results = [fit(tris, ref_s, q, v) for q in seeds]
+        best, s = max(results, key=lambda r: r[1])
         cams[v] = {k: float(best[k]) for k in KEYS}
     with open(CAM_JSON + ".tmp", "w", encoding="utf-8", newline="\n") as f:
         json.dump(cams, f, indent=1)
