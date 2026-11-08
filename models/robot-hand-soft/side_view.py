@@ -1,4 +1,4 @@
-"""真横から撮る（厚みの比較用）。指さしの姿勢: 人差し指を伸ばし、ほかの 3 本と親指を曲げる。
+"""真横から撮る（厚みの比較用）。正面の直交投影も撮る（手首の太さの検査用）。指さしの姿勢: 人差し指を伸ばし、ほかの 3 本と親指を曲げる。
 
 blender --background --python models/robot-hand-soft/side_view.py -- --out <png> [--res 1600] [--samples 64]
 
@@ -26,6 +26,7 @@ import studio as ST
 W, H = 1600, 1000
 ORTHO = 0.400        # 画面の幅 [m]
 CENTER = (0.0, 0.135)   # 画面の中心 (Y, Z) [m]
+FRONT_CENTER_Z = 0.060  # 正面の画面の中心の高さ [m]
 
 
 # 参考の写真に合わせた指さしの姿勢。人差し指以外は軽く曲げて下へ垂らす
@@ -88,6 +89,26 @@ def main():
     with open(out + ".json", "w", encoding="utf-8") as fp:
         json.dump(meta, fp, ensure_ascii=False, indent=1)
     print("横から:", out, meta)
+    # 正面（手のひら側から）の直交投影。手首の太さを測るのに使う。中心は手首の高さ
+    fz = FRONT_CENTER_Z
+    fwd, up = Vector((0, 1, 0)), Vector((0, 0, 1))
+    m = Matrix((fwd.cross(up), up, -fwd)).transposed().to_4x4()
+    m.translation = Vector((0.0, -1.0, fz))
+    cam.matrix_world = m
+    st["light"].location = Vector((-0.3, -0.6, 0.4))
+    st["light"].rotation_euler = (Vector((0, 0, 0.06)) - st["light"].location).to_track_quat("-Z", "Y").to_euler()
+    front = out.replace(".png", "-front.png")
+    ST.render_still(front)
+    fmeta = {"px_per_mm": meta["px_per_mm"], "center_x_mm": 0.0, "center_z_mm": fz * 1000,
+             "size": [sc.render.resolution_x, sc.render.resolution_y], "view": "手のひら側から"}
+    smeta = {"px_per_mm": meta["px_per_mm"], "center_y_mm": CENTER[0] * 1000, "center_z_mm": CENTER[1] * 1000,
+             "size": [sc.render.resolution_x, sc.render.resolution_y]}
+    with open(front + ".json", "w", encoding="utf-8") as fp:
+        json.dump(fmeta, fp, ensure_ascii=False, indent=1)
+    meta.update(smeta)
+    with open(out + ".json", "w", encoding="utf-8") as fp:
+        json.dump(meta, fp, ensure_ascii=False, indent=1)
+    print("正面から:", front)
 
 
 if __name__ == "__main__":

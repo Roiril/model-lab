@@ -184,8 +184,9 @@ def cradle_lip(zh):
     return _finish(bm)
 
 
-def stadium_plate(x0, x1, ax, z0, z1, R, e=0.5, n=20, dome=0):
-    """X 方向に厚みのある長円の板。y=ax を中心に、z0〜z1 の範囲。1 つの閉じた殻にする（重なった面を作らない）。"""
+def stadium_plate(x0, x1, ax, z0, z1, R, e=0.5, n=20, dome=0, flat_bottom=False):
+    """X 方向に厚みのある長円の板。y=ax を中心に、z0〜z1 の範囲。1 つの閉じた殻にする（重なった面を作らない）。
+    flat_bottom=True で下端を角の丸い四角にする（下の部品へ太さのまま入る）。"""
     def poly(r):
         zc0, zc1 = z0 + R, z1 - R
         pts = []
@@ -194,7 +195,10 @@ def stadium_plate(x0, x1, ax, z0, z1, R, e=0.5, n=20, dome=0):
             pts.append((ax + r * math.cos(t), zc1 + r * math.sin(t)))
         for i in range(n + 1):
             t = math.pi + math.pi * i / n
-            pts.append((ax + r * math.cos(t), zc0 + r * math.sin(t)))
+            c, s_ = math.cos(t), math.sin(t)
+            if flat_bottom:   # 超楕円で四角に寄せる
+                c, s_ = math.copysign(abs(c) ** 0.25, c), math.copysign(abs(s_) ** 0.25, s_)
+            pts.append((ax + r * c, zc0 + R * s_ if flat_bottom else zc0 + r * s_))
         return pts
     inner_lo = [(x0, R - e), (x0 + e * 0.29, R - e * 0.29), (x0 + e, R)]
     inner_hi = [(x1 - e, R), (x1 - e * 0.29, R - e * 0.29), (x1, R - e)]
@@ -672,24 +676,19 @@ def _arm_half(t):
     return float(np.interp(t, ts, [b for _, b, _ in pr])), float(np.interp(t, ts, [c for _, _, c in pr]))
 
 
-def arm_shell(z_top):
-    """前腕の殻。断面は角の丸い超楕円で、継ぎ目に浅い溝が入る。上端は丸め、下端は画面の外。"""
-    n = P.ARM_EXP
-    seg = 72
-    stations = [(0.0, -1.6), (0.35, -0.7), (1.2, -0.15), (2.4, 0.0)]
-    for g in P.ARM_GROOVES:
-        stations += [(g - 1.4, 0.0), (g - 0.7, -1.1), (g + 0.7, -1.1), (g + 1.4, 0.0)]
-    stations.append((P.ARM_PROFILE[-1][0], 0.0))
+def sell_loft(rows_spec, seg=72):
+    """超楕円の断面を z 方向につなぐ。rows_spec=[(z, X の半幅, Y の半幅[, 指数]), ...]。両端は平らな蓋。
+    指数を省くと ARM_EXP。大きいほど四角に近い。"""
     bm = bmesh.new()
     rows = []
-    for t, inset in stations:
-        a, b = _arm_half(t)
-        a, b = a + inset, b + inset
+    for row in rows_spec:
+        z, a, b = row[:3]
+        n = row[3] if len(row) > 3 else P.ARM_EXP
         ring = []
         for i in range(seg):
             th = 2 * math.pi * i / seg
             c, s_ = math.cos(th), math.sin(th)
-            ring.append(bm.verts.new((a * math.copysign(abs(c) ** (2 / n), c), b * math.copysign(abs(s_) ** (2 / n), s_), z_top - t)))
+            ring.append(bm.verts.new((a * math.copysign(abs(c) ** (2 / n), c), b * math.copysign(abs(s_) ** (2 / n), s_), z)))
         rows.append(ring)
     for r0, r1 in zip(rows, rows[1:]):
         for i in range(seg):
@@ -699,49 +698,104 @@ def arm_shell(z_top):
     return _finish(bm)
 
 
+def arm_shell(z_top):
+    """前腕の殻。断面は角の丸い超楕円で、継ぎ目に浅い溝が入る。上端は丸め、下端は画面の外。"""
+    stations = [(0.0, -1.6), (0.35, -0.7), (1.2, -0.15), (2.4, 0.0)]
+    for g in P.ARM_GROOVES:
+        stations += [(g - 1.4, 0.0), (g - 0.7, -1.1), (g + 0.7, -1.1), (g + 1.4, 0.0)]
+    stations.append((P.ARM_PROFILE[-1][0], 0.0))
+    spec = []
+    for t, inset in stations:
+        a, b = _arm_half(t)
+        spec.append((z_top - t, a + inset, b + inset))
+    return sell_loft(spec)
+
+
+def cup():
+    """前腕の端の口。殻より一回り太い縁があり、中は底までくぼむ（参考画像の前腕の端）。"""
+    la, lb = P.CUP_LIP
+    ia, ib = P.CUP_INNER
+    t = P.CUP_TOP
+    # 殻から立ち上がり、浅い溝をはさんで、太い縁へ広がる。縁と内側は四角に寄せ、枠の角が振れても入る
+    no, ni = P.CUP_EXP
+    ba, bb = P.CUP_BODY
+    g = P.CUP_GROOVE
+    rows = [(P.ARM_TOP - 1.0, ba - 0.8, bb - 0.8, no), (P.ARM_TOP - 0.2, ba, bb, no), (t - 8.0, ba, bb, no),
+            (t - 7.3, ba - g, bb - g, no), (t - 6.5, ba - g, bb - g, no), (t - 5.5, la - 0.7, lb - 0.7, no),
+            (t - 1.8, la, lb, no), (t - 0.5, la - 0.4, lb - 0.4, no), (t, la - 1.4, lb - 1.4, no),
+            (t, ia + 0.9, ib + 0.9, ni), (t - 0.3, ia + 0.25, ib + 0.25, ni), (t - 1.0, ia, ib, ni), (P.CUP_FLOOR, ia, ib, ni)]
+    return sell_loft(rows)
+
+
 def forearm_parts():
-    """手首の二股と前腕。手首の軸は z=WRIST_Z。机に置く台座ではなく、前腕が下へ伸びて画面の外へ出る。"""
-    zw = P.WRIST_Z
-    f_top = zw - P.FORK_DROP
-    f_bot = f_top          # 二股の板は手首の輪の上面から立つ
-    c_bot = f_top - P.COLLAR_H
+    """前腕。端の口の中に台座と回転部（Y 軸の円柱、溝付き）がある。回転部のピン頭は口の内壁に付く。
+    前腕は下へ伸びて画面の外へ出る。"""
+    zd = P.WRIST_DEV_Z
+    parts = [cup(), arm_shell(P.ARM_TOP)]
+    parts.append(rbox(-5.0, 5.0, -9.0, 9.0, P.CUP_FLOOR - 0.5, zd, 1.0, seg=2))   # 台座
+    y_in = P.FRAME_PLATE_Y[0] - 0.4
+    n = 7
+    ys = np.linspace(-y_in, y_in, n + 1)
+    for k in range(n):
+        big = k % 2 == 0
+        parts.append(cyl_between((0, ys[k] - 0.05, zd), (0, ys[k + 1] + 0.05, zd),
+                                 P.HUB_R if big else P.HUB_GROOVE_R, seg=36, edge=0.4 if big else 0.15))
+    for sy in (-1, 1):
+        a, b = sy * P.HUB_PIN_Y[0], sy * P.HUB_PIN_Y[1]
+        parts.append(cyl_between((0, a, zd), (0, b, zd), P.HUB_PIN_R, seg=36, edge=0.4))
+    return parts
+
+
+def frame_parts():
+    """手首の枠。左右の柱（手の曲げの軸を受ける）と、甲側・手のひら側の板（回転部のピン頭を受ける）。
+    局所原点は振りの軸（z=WRIST_DEV_Z）。"""
+    zd, zw = P.WRIST_DEV_Z, P.WRIST_Z
+    x0, x1 = P.FRAME_POST_X
+    y0, y1 = P.FRAME_PLATE_Y
+    R = P.FRAME_POST_R
+    z0 = P.FRAME_POST_Z0
+    rb = P.FRAME_RIB
     parts = []
-    # 手首の輪（二股の根元。下に前腕の殻がつながる）
-    e = 1.6
-    R = P.COLLAR_R
-    parts.append(revolve([(c_bot - 0.6, R - e), (c_bot - 0.6 + e * 0.3, R - e * 0.3), (c_bot - 0.6 + e, R),
-                          (f_bot + 0.6 - e, R), (f_bot + 0.6 - e * 0.3, R - e * 0.3), (f_bot + 0.6, R - e)]))
-    parts.append(arm_shell(c_bot + 0.2))
-    # 二股の板とピン
     for sx in (-1, 1):
-        a, b = sorted((sx * P.WRIST_LUG_X[0], sx * P.WRIST_LUG_X[1]))
-        parts.append(stadium_plate(a, b, 0.0, f_bot - 3.0, zw + P.WRIST_LUG_R, P.WRIST_LUG_R, e=0.5))
-        c, d = sorted((sx * P.WRIST_LUG_X[1], sx * P.WRIST_PIN_X))
-        parts.append(xcyl(c - 0.1 if sx > 0 else c, d if sx > 0 else d + 0.1, 0, zw, P.WRIST_PIN_R, edge=0.4))
-        c2, d2 = sorted((sx * (P.WRIST_PIN_X - 0.2), sx * (P.WRIST_PIN_X + 1.4)))
-        parts.append(xcyl(c2, d2, 0, zw, P.WRIST_HUB_R, edge=0.3))
-    # 手のひら側の 2 本の棒。輪の下から前腕の中ほどまで、殻から少し浮かせる
-    a0, b0 = _arm_half(0.0)
-    t1 = P.ARM_GROOVES[1] - 6.0
-    a1, b1 = _arm_half(t1)
-    z_shell = c_bot + 0.2
+        a, b = sorted((sx * x0, sx * x1))
+        # 柱: 上はピンを受ける半円の板、下は窓の開いた四角い枠
+        wy, wz0, wz1 = P.FRAME_WINDOW
+        parts.append(stadium_plate(a, b, 0.0, wz1 - 0.4, zw + R, R, e=0.8, flat_bottom=True))
+        for ya, yb in ((-R, -wy), (wy, R)):
+            parts.append(rbox(a, b, ya, yb, z0, wz1 + 0.4, 0.8, seg=2))                   # 窓の左右
+        parts.append(rbox(a, b, -R, R, z0, wz0, 0.8, seg=2))                              # 窓の下
+        c, d = sorted((sx * (x1 - 0.3), sx * (x1 + rb)))
+        for ya, yb in ((-R, -R + 2.2), (R - 2.2, R)):
+            parts.append(rbox(c, d, ya, yb, z0, zw, 0.4, seg=2))                          # 柱の外面の縁（縦）
+        parts.append(rbox(c, d, -R, R, z0, z0 + 2.2, 0.4, seg=2))                          # 柱の外面の縁（下）
+        for sy in (-1, 1):
+            ya, yb = sorted((sy * (R - 0.6), sy * y1))
+            parts.append(rbox(a, b, ya, yb, P.FRAME_PLATE_Z[0], P.FRAME_PLATE_Z[1], 0.8, seg=2))   # 柱と板をつなぐ角
+    for sy in (-1, 1):
+        a, b = sorted((sy * y0, sy * y1))
+        parts.append(rbox(-x1, x1, a, b, P.FRAME_PLATE_Z[0], P.FRAME_PLATE_Z[1], 0.8, seg=2))      # 甲側・手のひら側の板
+    return [([(x, y, z - zd) for x, y, z in v], f) for v, f in parts]
+
+
+def palm_wrist_parts():
+    """手のひらの下の、手首の部品。節（X 軸の円柱）と、節から手のひらへ上がるブロック、ピン頭、付け根の輪。
+    局所原点は手の曲げの軸（z=WRIST_Z）。"""
+    zw = P.WRIST_Z
+    kx, ky = P.KNUCKLE_HALF
+    parts = [xcyl(-kx, kx, 0, 0, P.KNUCKLE_R, edge=0.6),
+             rbox(-kx, kx, -ky, ky, 0, P.PALM_RING_Z[1] - zw - 1.0, 1.0, seg=2),
+             rbox(-kx, kx, -P.KNUCKLE_UPPER[1], P.KNUCKLE_UPPER[1], P.KNUCKLE_UPPER[0], P.PALM_RING_Z[1] - zw - 1.0, 1.5, seg=2)]
     for sx in (-1, 1):
-        y0 = -(b0 + P.ROD_R + 0.8)
-        y1 = -(b1 + P.ROD_R + 0.8)
-        top = (sx * P.ROD_X, y0, c_bot + 1.0)
-        bot = (sx * P.ROD_X, y1, z_shell - t1)
-        parts.append(cyl_between(top, bot, P.ROD_R))
-        # 下の留め具
-        parts.append(rbox(sx * P.ROD_X - 4.0, sx * P.ROD_X + 4.0, y1 - 3.4, -(b1 - 1.5), z_shell - t1 - 2.0, z_shell - t1 + 5.0, 1.0, seg=2))
-    # 甲側のピストン（筒と棒）
-    pr, rr = P.PISTON_R
-    tp0, tp1 = 16.0, P.ARM_GROOVES[1] - 4.0
-    yb0 = _arm_half(tp0)[1] + pr + 0.6
-    yb1 = _arm_half(tp1)[1] + pr + 0.6
-    parts.append(cyl_between((0, yb0, z_shell - tp0), (0, yb1, z_shell - tp1), pr, seg=32, edge=0.8))
-    parts.append(cyl_between((0, yb0, c_bot + 2.0), (0, yb0, z_shell - tp0 + 1.0), rr, seg=24))
-    parts.append(rbox(-6.0, 6.0, P.COLLAR_R - 3.0, yb0 + rr + 1.5, c_bot + 0.5, f_top - 0.5, 1.2, seg=2))
-    parts.append(rbox(-pr - 1.5, pr + 1.5, _arm_half(tp1)[1] - 1.5, yb1 + 1.0, z_shell - tp1 - 3.0, z_shell - tp1 + 2.0, 1.0, seg=2))
+        a, b = sorted((sx * P.KNUCKLE_PIN_X[0], sx * P.KNUCKLE_PIN_X[1]))
+        parts.append(xcyl(a, b, 0, 0, P.KNUCKLE_PIN_R, edge=0.5))
+        c, d = sorted((sx * (P.KNUCKLE_PIN_X[1] - 0.2), sx * (P.KNUCKLE_PIN_X[1] + 0.6)))
+        parts.append(xcyl(c, d, 0, 0, 2.6, edge=0.2))
+    za, zb = P.PALM_RING_Z
+    a, b = P.PALM_RING_HALF
+    e = 1.4
+    rows = [(za, a - e, b - e), (za + e * 0.3, a - e * 0.3, b - e * 0.3), (za + e, a, b),
+            (zb - e, a, b), (zb - e * 0.3, a - e * 0.3, b - e * 0.3), (zb, a - e, b - e)]
+    parts.append(sell_loft([(z - zw, aa, bb) for z, aa, bb in rows]))
     return parts
 
 
@@ -829,17 +883,17 @@ def build_hand(collection=None):
 
     # 前腕（固定。階層の根）
     add("forearm", forearm_parts(), None, (0, 0, 0))
-    # 手のひら（原点は手首の軸）
-    zw = P.WRIST_Z
+    # 手首の枠（原点は振りの軸）
+    zw, zd = P.WRIST_Z, P.WRIST_DEV_Z
+    add("wrist_frame", frame_parts(), "forearm", (0, 0, zd))
+    # 手のひら（原点は手の曲げの軸）
     pv, pf = palm_mesh()
-    palm = [([(x, y, z - zw) for x, y, z in pv], pf)]
-    h = P.WRIST_BLOCK_HALF
-    palm.append(xcyl(-h, h, 0, 0, P.WRIST_BLOCK_R, edge=0.5))
-    palm.append(rbox(-h, h, -P.WRIST_BLOCK_R, P.WRIST_BLOCK_R, 0, 49.3 - zw + 6.0, 1.0, seg=2))   # 手のひらの下端の中まで
-    add("palm", palm, "forearm", (0, 0, zw))
+    palm = [([(x, y, z - zw) for x, y, z in pv], pf)] + palm_wrist_parts()
+    add("palm", palm, "wrist_frame", (0, 0, zw - zd))
     rv, rf = shade_ring()
     add("palm_shade", [(rv, rf)], "palm", (0, 0, -zw), material=dark)
     joints["wrist"] = (objs["palm"], 0, (0.0, 0.0, 0.0))
+    joints["wrist_dev"] = (objs["wrist_frame"], 1, (0.0, 0.0, 0.0))
 
     # 指 4 本
     for name in P.FINGER_ORDER:

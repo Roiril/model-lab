@@ -21,7 +21,7 @@ ALL_FINGERS = P.FINGER_ORDER
 
 
 def zero_pose():
-    pose = {"wrist": 0.0, "thumb_cmc": 0.0}
+    pose = {"wrist": 0.0, "wrist_dev": 0.0, "thumb_cmc": 0.0}
     for n in ALL_FINGERS + ("thumb",):
         for j in ("j3", "j2", "j1"):
             pose[f"{n}_{j}"] = 0.0
@@ -76,15 +76,12 @@ def timeline():
     t += 0.65
     k.append((t + 0.55, open_))
     t += 0.55
-    # 手首を動かす
-    f = dict(open_, wrist=P.WRIST_FORWARD)
-    b = dict(open_, wrist=P.WRIST_BACK)
-    k.append((t + 0.6, f))
-    t += 0.6
-    k.append((t + 0.9, b))
-    t += 0.9
-    k.append((t + 0.55, open_))
-    t += 0.55
+    # 手首を動かす: 枠の左右の柱の軸で曲げる → 前腕の口の中の回転部の軸で振る
+    for dt, q in ((0.5, dict(open_, wrist=P.WRIST_FORWARD)), (0.7, dict(open_, wrist=P.WRIST_BACK)),
+                  (0.5, dict(open_, wrist_dev=P.WRIST_DEV)), (0.55, dict(open_, wrist_dev=-P.WRIST_DEV)),
+                  (0.4, open_)):
+        k.append((t + dt, q))
+        t += dt
     k.append((P.LOOP_SECONDS, open_))
     assert t <= P.LOOP_SECONDS + 1e-6, t
     check_limits(k)
@@ -94,6 +91,8 @@ def timeline():
 def _limit(name):
     if name == "wrist":
         return P.WRIST_LIMITS
+    if name == "wrist_dev":
+        return P.WRIST_DEV_LIMITS
     f, j = name.split("_")
     return P.THUMB_JOINT_LIMITS[j] if f == "thumb" else P.FINGER_JOINT_LIMITS[j]
 
