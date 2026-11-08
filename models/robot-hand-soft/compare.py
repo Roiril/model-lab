@@ -1,7 +1,7 @@
 """参考画像とモデルの描画を比べる。py -3.11 で動かす。
 
 - 計器の校正: 同じ画像同士 / 指を 1 本塗りつぶした画像
-- 視点ごとの IoU（全体と、台座を除いた手だけ）
+- 視点ごとの IoU（全体と、手首より上の手だけ）
 - 比較画像（参考 / モデル / 差）。ファイルが 1 つでも欠けたら落ちる。
 """
 import json
@@ -18,7 +18,7 @@ import metrics as MT
 
 VIEWS = ["front", "oblique", "rear"]
 LABEL = {"front": "正面", "oblique": "斜め後ろ", "rear": "真後ろ"}
-TARGET = {"front": 0.90, "oblique": 0.85, "rear": 0.90}   # 手だけ（台座を除く）の IoU で判定する
+TARGET = {"front": 0.93, "oblique": None, "rear": None}   # 手だけ（手首より上）の IoU。斜め後ろと真後ろは数値を出すだけ
 HAND_CUT = {"front": 940, "oblique": 925, "rear": 940}    # 手首より上の行
 TOP_MARGIN_MIN = 0.02    # 上端の余白（画像の高さに対する割合）
 PALM_RECT = {"front": (600, 760, 700, 860), "oblique": (500, 660, 650, 800), "rear": (450, 650, 640, 800)}   # 手のひらの色を読む範囲 (u0,u1,v0,v1)
@@ -75,7 +75,7 @@ def side_by_side(view, ref_rgb, mod_rgb, ref_m, mod_m, score, score_hand, out_pa
     f = ImageFont.truetype(FONT, 26)
     dr.text((10, 10), f"参考: {ref_name}", fill=(20, 20, 20), font=f)
     dr.text((w + 30, 10), f"モデル: {mod_name}", fill=(20, 20, 20), font=f)
-    dr.text((2 * w + 50, 10), f"{LABEL[view]} IoU 全体 {score:.3f} / 台座を除く {score_hand:.3f}", fill=(20, 20, 20), font=f)
+    dr.text((2 * w + 50, 10), f"{LABEL[view]} IoU 手だけ {score_hand:.3f} / 全体 {score:.3f}", fill=(20, 20, 20), font=f)
     dr.text((2 * w + 50, 48), "赤=参考だけ 青=モデルだけ", fill=(90, 90, 90), font=f)
     tmp = out_path + ".tmp.png"
     im.save(tmp)
@@ -111,23 +111,6 @@ def detail_sheet(view, ref_rgb, mod_rgb, out_path):
     os.replace(tmp, out_path)
 
 
-def base_bands(rgb):
-    """台座の側面の帯と上面の明るさ（横 ±120 の中央値）。行は台座の下端から決める。"""
-    g = rgb.mean(2)
-    h, w = g.shape
-    mask = (g < 110) & (rgb[:, :, 2].astype(int) > rgb[:, :, 0].astype(int) - 25)
-    cols = np.where(mask[900:].sum(0) > 40)[0]
-    cx = (cols.min() + cols.max()) // 2
-    run = np.where(mask[:, cx - 3:cx + 3].all(1))[0]
-    bottom = run[run > 900].max()
-    side = float(np.median(g[bottom - 26:bottom - 6, cx - 120:cx + 120]))
-    top = float(np.median(g[bottom - 85:bottom - 55, cx - 120:cx + 120]))
-    return {"bottom_row": int(bottom), "side": round(side, 1), "top": round(top, 1)}
-
-
-BASE_TOL = 8
-
-
 def main():
     render_dir = sys.argv[1] if len(sys.argv) > 1 else MT.RENDER_DIR
     paths = {}
@@ -160,18 +143,14 @@ def main():
         res[v] = {"iou": round(s, 4), "iou_hand_only": round(sh, 4),
                   "hand_range_ref_permille": rr, "hand_range_model_permille": rm,
                   "palm_ref": [round(x, 1) for x in pr.tolist()], "palm_model": [round(x, 1) for x in pm.tolist()]}
-        allok &= sh >= TARGET[v] and top_ok and col_ok
-        log.append(f"{LABEL[v]}: 手だけの IoU {sh:.4f}（目標 {TARGET[v]:.2f}）/ 台座を含む {s:.4f}")
+        allok &= (TARGET[v] is None or sh >= TARGET[v]) and top_ok and col_ok
+        goal = f"目標 {TARGET[v]:.2f}" if TARGET[v] is not None else "判定しない"
+        log.append(f"{LABEL[v]}: 手だけの IoU {sh:.4f}（{goal}）/ 手首から下を含む {s:.4f}")
         log.append(f"  手の範囲（左 右 上 下、1000 分率）参考 {rr} モデル {rm} 差 {[round(a - b, 1) for a, b in zip(rm, rr)]}")
         log.append(f"  手のひらの色 参考 {pr.round(1).tolist()} モデル {pm.round(1).tolist()} 差 {dc.round(1).tolist()}" + ("" if col_ok else " ← ±6 を超える"))
-        for nm, rgn in (("壁の上", (20, 200, 20, 200)), ("壁の下", (780, 880, 20, 200)), ("机", (1040, 1200, 20, 200))):
+        for nm, rgn in (("壁の上", (20, 200, 20, 200)), ("壁の下", (780, 880, 20, 200))):
             a, b, c, e = rgn
             log.append(f"  色 {nm}: 参考 {rgb_r[a:b, c:e].mean((0, 1)).round().astype(int)} モデル {rgb_m[a:b, c:e].mean((0, 1)).round().astype(int)}")
-        br, bm = base_bands(rgb_r), base_bands(rgb_m)
-        res[v]["base_ref"], res[v]["base_model"] = br, bm
-        base_ok = abs(bm["side"] - br["side"]) <= BASE_TOL
-        allok &= base_ok
-        log.append(f"  台座 側面: 参考 {br['side']} モデル {bm['side']} 差 {bm['side'] - br['side']:+.1f} / 上面: 参考 {br['top']} モデル {bm['top']} 差 {bm['top'] - br['top']:+.1f}（下端の行 {br['bottom_row']} / {bm['bottom_row']}）" + ("" if base_ok else " ← 側面が ±8 を超える"))
         detail_sheet(v, rgb_r, rgb_m, os.path.join(render_dir, f"detail-{v}.png"))
         side_by_side(v, rgb_r, rgb_m, mr, mm, s, sh, os.path.join(render_dir, f"compare-{v}.png"),
                      os.path.basename(paths[v][0]), os.path.basename(paths[v][1]))

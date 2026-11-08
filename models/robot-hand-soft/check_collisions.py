@@ -26,7 +26,7 @@ import params as P
 import studio as ST
 
 PITCH = 0.0006      # 格子 [m]（0.6mm）
-PITCH_BIG = 0.0008  # 手のひらと台座
+PITCH_BIG = 0.0008  # 手のひらと前腕
 SAMPLE_AREA = 0.25e-6   # 表面点 1 個あたりの面積 [m2]
 
 
@@ -125,7 +125,7 @@ class Part:
 
 def excluded(a, b):
     pair = {a, b}
-    if pair in ({"palm", "palm_shade"}, {"thumb_root", "thumb_shade"}, {"base", "base_rim"}):
+    if pair in ({"palm", "palm_shade"}, {"thumb_root", "thumb_shade"}):
         return True   # 同じ剛体の暗い板。親の中へ入り込んでいる
     if "palm" in pair:
         other = (pair - {"palm"}).pop() if len(pair) == 2 else ""
@@ -201,7 +201,7 @@ def main():
     print("\n".join(log), flush=True)
     parts = {}
     for k, s in subs.items():
-        parts[k] = Part(k, s, PITCH_BIG if k in ("palm", "base") else PITCH)
+        parts[k] = Part(k, s, PITCH_BIG if k in ("palm", "forearm") else PITCH)
     print("格子を作った", {k: int((p.depth > 0).sum()) for k, p in parts.items()}, flush=True)
     # 姿勢で確かめる: 指を手の甲側へ 60 度（通常の範囲外）。手のひらに当たらないはず / 親指を手のひらへ押し込む
     sc.frame_set(1)
@@ -220,10 +220,10 @@ def main():
     worst, per_frame = scan(parts, objs, frames, sc)
     ordered = sorted(worst.items(), key=lambda kv: -kv[1][0])
     maxd = ordered[0][1][0] * 1000 if ordered else 0.0
-    log.append(f"全 {len(frames)} コマの最大貫通 {maxd:.2f}mm（格子 {PITCH*1000:.1f}mm、手のひらと台座は {PITCH_BIG*1000:.1f}mm）")
+    log.append(f"全 {len(frames)} コマの最大貫通 {maxd:.2f}mm（格子 {PITCH*1000:.1f}mm、手のひらと前腕は {PITCH_BIG*1000:.1f}mm）")
     for k, (d, fr) in ordered[:12]:
         log.append(f"  {k}: {d*1000:.2f}mm（コマ {fr}）")
-    log.append("除外: 指 4 本の根元の節と手のひら（固定。根元が %.1fmm 入り込む）/ 手のひらと開口の奥の暗い輪 / 親指の根元と裏の暗い円板 / 台座と側面の帯（どれも同じ剛体）" % P.ROOT_BELOW_PALM)
+    log.append("除外: 指 4 本の根元の節と手のひら（固定。根元が %.1fmm 入り込む）/ 手のひらと開口の奥の暗い輪 / 親指の根元と裏の暗い円板（どれも同じ剛体）" % P.ROOT_BELOW_PALM)
     text = "\n".join(log)
     print(text, flush=True)
     if out:

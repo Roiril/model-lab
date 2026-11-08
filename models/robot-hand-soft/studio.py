@@ -1,4 +1,4 @@
-"""参考画像と同じ構図（白い壁・木の机・つや消しの黒）を組む。
+"""参考画像と同じ構図（白い壁・つや消しの黒）を組む。手は前腕で支えるので、机は置かない。
 
 単独で実行すると 3 視点の静止画を描く:
   blender --background --python models/robot-hand-soft/studio.py -- [--res 1254] [--samples 128] [--views front,rear,oblique] [--out DIR]
@@ -182,6 +182,8 @@ def setup_scene(res=1254, samples=128):
     # 机の色が手へ映って赤くならないように、拡散光には机を見せない
     table.visible_diffuse = False
     table.visible_glossy = False
+    # 手は前腕で支えるので机に置かない。机は描かず、壁だけを背景にする
+    table.hide_render = True
     wall = _plane("wall", 12.0, 12.0, col)
     wall.data.materials.append(wall_material())
     # 上の大きな面光源で輪郭に薄い明るさを乗せる

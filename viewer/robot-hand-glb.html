@@ -43,11 +43,11 @@ const az = -30 * Math.PI / 180;
 // ?size=<px> で画面の大きさに関わらず正方形で描く（撮影用）
 const fixedSize = Number(new URLSearchParams(location.search).get("size")) || 0;
 
-// 手（台座を除く）が画面の高さの 8 割になるように置く
+// 手（前腕を除く）が画面の高さの 8 割になるように置く。前腕は画面の下から外へ出る
 function frameHand(root) {
   const box = new THREE.Box3();
   root.updateMatrixWorld(true);
-  root.traverse((o) => { if (o.isMesh && !o.name.startsWith("base")) box.expandByObject(o); });
+  root.traverse((o) => { if (o.isMesh && !o.name.startsWith("forearm")) box.expandByObject(o); });
   const c = box.getCenter(new THREE.Vector3());
   const h = box.max.y - box.min.y;
   const d = (h / 0.8) / 2 / Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
@@ -63,7 +63,7 @@ function handRatio(root) {
   const v = new THREE.Vector3();
   root.updateMatrixWorld(true);
   root.traverse((o) => {
-    if (!o.isMesh || o.name.startsWith("base")) return;
+    if (!o.isMesh || o.name.startsWith("forearm")) return;
     const p = o.geometry.attributes.position;
     for (let i = 0; i < p.count; i += 7) {
       v.fromBufferAttribute(p, i).applyMatrix4(o.matrixWorld).project(camera);

@@ -161,7 +161,7 @@ def export_glb(path, objs):
     bpy.ops.object.select_all(action="DESELECT")
     for o in objs.values():
         o.select_set(True)
-    bpy.context.view_layer.objects.active = objs["base"]
+    bpy.context.view_layer.objects.active = objs["forearm"]
     os.makedirs(os.path.dirname(path), exist_ok=True)
     bpy.ops.export_scene.gltf(filepath=path, export_format="GLB", use_selection=True,
                               export_animations=True, export_animation_mode="SCENE", export_frame_range=True,
@@ -200,7 +200,9 @@ def fit_video_camera(objs, fs, fe, az):
     for fr in range(fs, fe + 1, 3):
         sc.frame_set(fr)
         bpy.context.view_layer.update()
-        for ob in objs.values():
+        for name, ob in objs.items():
+            if name == "forearm":
+                continue          # 前腕は画面の下から外へ出す
             mw = ob.matrix_world
             pts += [mw @ Vector(c) for c in ob.bound_box]
     c = {"az": az, "pitch": P.VIDEO_PITCH, "roll": 0.0, "tx": 0.0, "tz": 120.0, "dist": P.VIDEO_DIST, "f": 1500.0}
@@ -218,7 +220,7 @@ def fit_video_camera(objs, fs, fe, az):
 
 
 def place_video(st, c):
-    """机の奥の縁を台座の後ろへ置く。"""
+    """壁を手の後ろへ置く。"""
     from mathutils import Vector
     F, Rt, Up, _ = ST.camera_axes(c)
     C = ST.camera_pos(c)
