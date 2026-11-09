@@ -400,6 +400,20 @@ def servos(M):
         screw(f"ball_screw{k}", p - Vector((0, 2.5, 0)), (0, -1, 0), M, r=1.8)
 
 
+def edge_wall(name, a, b, y0, y1, M):
+    """甲の板の縁 a→b（xz）から手のひら側へ折れた板。板の内側は a→b の左手（輪郭は反時計回り）。"""
+    t = ALU_T()
+    a3, b3 = Vector((a[0], 0, a[1])), Vector((b[0], 0, b[1]))
+    w = (b3 - a3).normalized()
+    n_in = Vector((-w.z, 0, w.x))       # 輪郭を反時計回りにたどったときの内側
+    L = (b3 - a3).length
+    o = a3 + n_in * (t / 2)
+    Ms = basis((0, 1, 0), tuple(w), tuple(o))
+    plate(name, rrect(y0, 0, y1, L, 1.5, 3), t, Ms, M["alu"])
+    c0, c1 = a3 + n_in * t, b3 + n_in * t
+    cyl(name + "_fold", (c0.x, y1 - t, c0.z), (c1.x, y1 - t, c1.z), t, M["alu"], n=16)
+
+
 def back_and_sides(M):
     xz_plate("back_plate", fillet(P.BACK_OUTLINE, 4.0), P.PALM_BACK_Y, P.ALU_T, M["alu"])
     yb = P.PALM_BACK_Y + P.ALU_T
@@ -407,33 +421,16 @@ def back_and_sides(M):
         screw(f"bp_screw{i}", (x, yb, z), (0, 1, 0), M, r=2.6, head="button")
     for i, (x, z) in enumerate(P.BACK_SCREWS_BIG):
         screw(f"bp_big{i}", (x, yb, z), (0, 1, 0), M, r=3.8, head="button")
-    # 側板。甲の板の縁から手のひら側へ折れた 1 枚の板金として、甲の板の外面まで伸ばして角を丸く閉じる。
-    # 小指側は z = SIDE_STEP_Z より上だけ。甲の板の斜めの縁に沿って傾いて立つ。親指側は面取りの下端まで
+    # 側板と上の縁。甲の板の縁から手のひら側へ折れた板金で、甲の板の外面まで伸ばして折り目を丸く閉じる
+    # （2026-11-10 スケッチ 083139）。親指側は斜めの縁に沿って下の角から面取りの下端まで傾いて立つ。
+    # 小指側は z = SIDE_STEP_Z より上だけ。上辺と面取りの縁も浅く折れる
     s = P.SIDE_WALL
-    t = ALU_T()
-    (xa, za), (xb, zb) = P.BACK_SIDE_LITTLE, P.BACK_TOP_LITTLE
-    w = Vector((xb - xa, 0, zb - za)).normalized()      # 小指側の縁に沿って上向き
-    n_in = Vector((w.z, 0, -w.x))                       # 縁から板の内側へ（+X 寄り）
-    edge = lambda z: Vector((xa + (z - za) / w.z * w.x, 0, z))
-    o = edge(0) + n_in * (t / 2)
-    sz = lambda z: z / w.z                                # 高さ z を縁に沿った長さへ
-    z_lo, z_hi = P.SIDE_STEP_Z, s["z1"]
-    walls = (
-        (basis((0, 1, 0), w, o),
-         [(s["y0"], sz(z_lo)), (yb, sz(z_lo)), (yb, sz(z_hi)), (s["y0"] + 4, sz(z_hi)), (s["y0"], sz(z_hi) - 4)],
-         edge(z_lo), edge(z_hi - 2)),
-        (basis((0, 1, 0), (0, 0, 1), (P.PALM_X[1] - t / 2, 0, 0)),
-         rrect(s["y0"], s["z0"], yb, P.SIDE_THUMB_TOP, 2, 4),
-         Vector((P.PALM_X[1], 0, s["z0"])), Vector((P.PALM_X[1], 0, P.SIDE_THUMB_TOP - 2))),
-    )
-    for k, (Ms, outline, a, b) in enumerate(walls):
-        plate(f"side_wall{k}", outline, t, Ms, M["alu"])
-        # 折り目の丸み（板厚を半径にした円筒で角を埋める）
-        inward = n_in if k == 0 else Vector((-1, 0, 0))
-        a = a + inward * (t / 2); b = b + inward * (t / 2)
-        cyl(f"side_fold{k}", (a.x, yb - t, a.z), (b.x, yb - t, b.z), t, M["alu"], n=16)
+    edge_wall("side_wall0", P.BACK_TOP_LITTLE, (P.BACK_TOP_LITTLE[0], P.SIDE_STEP_Z), s["y0"], yb, M)
+    edge_wall("side_wall1", P.BACK_BOTTOM_THUMB, P.BACK_TOP_THUMB, s["y0"], yb, M)
+    edge_wall("top_lip0", P.BACK_PEAK, P.BACK_TOP_LITTLE, yb - P.TOP_LIP, yb, M)
+    edge_wall("top_lip1", P.BACK_TOP_THUMB, P.BACK_PEAK, yb - P.TOP_LIP, yb, M)
     # 内側の詰め物（すき間から白い背景が見えないように）
-    lx = [x for x, _ in P.LOWER_PLATE]   # 手前のサーボ板より外へ出さない
+    lx = [x for x, z in P.LOWER_PLATE if z > 100]   # 手前のサーボ板の本体より外へ出さない（親指側の翼は除く）
     yc0, yc1 = -18.0, P.PALM_BACK_Y - 0.5
     box("palm_core", ((min(lx) + max(lx)) / 2, (yc0 + yc1) / 2, 72), (max(lx) - min(lx) - 4, yc1 - yc0, 100), M["dark"], bevel=0)
 
