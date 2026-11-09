@@ -5,6 +5,7 @@ py -3.11 models/hiwonder-uhand/camfit.py <view>
 - 目印は points/<view>.json: {"size": [w, h], "mirror": bool, "points": [[name, [x,y,z] mm, [u,v] px], ...]}
   画素は左右反転した後の写真の座標（mirror=true のとき）
 - 焦点距離を総当たりし、各焦点で solvePnP を解いて再投影誤差が最小のものを採る
+- "ippe": 0 / 1 で、平面の目印から出る 2 つの姿勢のどちらかを選ぶ（板だけでは決まらない）
 - 結果は points/<view>_cam.json（render_views.py がこれを読んで同じ画角で描く）
 - 点ごとの残差を出す。残差が大きい点は、モデルのその部品の位置が写真と違う
 """
@@ -18,8 +19,16 @@ import numpy as np
 HERE = os.path.dirname(os.path.abspath(__file__))
 
 
-def solve(obj, img, w, h, f):
+def solve(obj, img, w, h, f, alt=None):
     K = np.array([[f, 0, w / 2], [0, f, h / 2], [0, 0, 1]], float)
+    if alt is not None:
+        # 目印が 1 平面に乗るとき、板の傾きを鏡に映した 2 つ目の姿勢がほぼ同じ誤差で解ける（IPPE の 2 解）。
+        # alt で解の番号を選ぶ。どちらが正しいかは、平面の外にある部品（指・親指）を重ねて決める
+        n, rvs, tvs, _ = cv2.solvePnPGeneric(obj, img, K, None, flags=cv2.SOLVEPNP_IPPE)
+        rv, tv = rvs[alt], tvs[alt]
+        proj, _ = cv2.projectPoints(obj, rv, tv, K, None)
+        res = np.linalg.norm(proj.reshape(-1, 2) - img, axis=1)
+        return float(np.sqrt((res ** 2).mean())), rv, tv, K, res
     ok, rv, tv = cv2.solvePnP(obj, img, K, None, flags=cv2.SOLVEPNP_ITERATIVE)
     if not ok:
         return None
@@ -39,7 +48,7 @@ def main():
     best = None
     fs = [d["f"]] if "f" in d else np.geomspace(300, 20000, 200)   # 目印が 1 平面に乗るときは焦点を固定する
     for f in fs:
-        r = solve(obj, img, w, h, f)
+        r = solve(obj, img, w, h, f, d.get("ippe"))
         if r and (best is None or r[0] < best[0][0]):
             best = (r, f)
     (rms, rv, tv, K, res), f = best

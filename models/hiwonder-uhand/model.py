@@ -408,24 +408,30 @@ def back_and_sides(M):
     for i, (x, z) in enumerate(P.BACK_SCREWS_BIG):
         screw(f"bp_big{i}", (x, yb, z), (0, 1, 0), M, r=3.8, head="button")
     # 側板。甲の板の縁から手のひら側へ折れた 1 枚の板金として、甲の板の外面まで伸ばして角を丸く閉じる。
-    # 小指側は甲の板の段（z = SIDE_STEP_Z）より上だけ折れている。下は甲の板の縁が内側へ入るだけで側板は無い
-    # （074343 と 074156 の写真）。親指側は面取りの下端（z = 123）まで。
+    # 小指側は z = SIDE_STEP_Z より上だけ。甲の板の斜めの縁に沿って傾いて立つ。親指側は面取りの下端まで
     s = P.SIDE_WALL
-    xl, xr = P.PALM_X
     t = ALU_T()
+    (xa, za), (xb, zb) = P.BACK_SIDE_LITTLE, P.BACK_TOP_LITTLE
+    w = Vector((xb - xa, 0, zb - za)).normalized()      # 小指側の縁に沿って上向き
+    n_in = Vector((w.z, 0, -w.x))                       # 縁から板の内側へ（+X 寄り）
+    edge = lambda z: Vector((xa + (z - za) / w.z * w.x, 0, z))
+    o = edge(0) + n_in * (t / 2)
+    sz = lambda z: z / w.z                                # 高さ z を縁に沿った長さへ
+    z_lo, z_hi = P.SIDE_STEP_Z, s["z1"]
     walls = (
-        (xl + t / 2, [(s["y0"], P.SIDE_STEP_Z), (yb, P.SIDE_STEP_Z), (yb, s["z1"]), (s["y0"] + 4, s["z1"]), (s["y0"], s["z1"] - 4)]),
-        (xr - t / 2, rrect(s["y0"], s["z0"], yb, P.SIDE_THUMB_TOP, 2, 4)),
+        (basis((0, 1, 0), w, o),
+         [(s["y0"], sz(z_lo)), (yb, sz(z_lo)), (yb, sz(z_hi)), (s["y0"] + 4, sz(z_hi)), (s["y0"], sz(z_hi) - 4)],
+         edge(z_lo), edge(z_hi - 2)),
+        (basis((0, 1, 0), (0, 0, 1), (P.PALM_X[1] - t / 2, 0, 0)),
+         rrect(s["y0"], s["z0"], yb, P.SIDE_THUMB_TOP, 2, 4),
+         Vector((P.PALM_X[1], 0, s["z0"])), Vector((P.PALM_X[1], 0, P.SIDE_THUMB_TOP - 2))),
     )
-    for k, (x, outline) in enumerate(walls):
-        Ms = basis((0, 1, 0), (0, 0, 1), (x, 0, 0))
+    for k, (Ms, outline, a, b) in enumerate(walls):
         plate(f"side_wall{k}", outline, t, Ms, M["alu"])
-        z0, z1 = outline[0][1], max(z for _, z in outline)
-        if k == 1:
-            z0 = s["z0"]
         # 折り目の丸み（板厚を半径にした円筒で角を埋める）
-        xc = x - t / 2 + t if k == 0 else x + t / 2 - t
-        cyl(f"side_fold{k}", (xc, yb - t, z0), (xc, yb - t, z1 - 2), t, M["alu"], n=16)
+        inward = n_in if k == 0 else Vector((-1, 0, 0))
+        a = a + inward * (t / 2); b = b + inward * (t / 2)
+        cyl(f"side_fold{k}", (a.x, yb - t, a.z), (b.x, yb - t, b.z), t, M["alu"], n=16)
     # 内側の詰め物（すき間から白い背景が見えないように）
     lx = [x for x, _ in P.LOWER_PLATE]   # 手前のサーボ板より外へ出さない
     yc0, yc1 = -18.0, P.PALM_BACK_Y - 0.5
