@@ -33,6 +33,7 @@ VIEWS = {
 
 
 CURLED = {"side"}   # 指を曲げた姿勢で描く図
+FIT = "--fit" in sys.argv   # points/<view>_cam.json があれば写真から逆算したカメラで描く
 
 
 def args():
@@ -114,6 +115,20 @@ def place(cam, az, pitch, look, dist, lens, roll=0.0):
     cam.data.lens = lens
 
 
+def place_fit(cam, view):
+    """camfit.py が写真から逆算したカメラを置く。写真と同じ画角になる。"""
+    import json
+    from mathutils import Matrix
+    d = json.load(open(os.path.join(HERE, "points", f"{view}_cam.json"), encoding="utf-8"))
+    r, dn, fw = (Vector(d[k]) for k in ("right", "down", "fwd"))
+    m = Matrix((r, -dn, -fw)).transposed()          # 列 = カメラの x, y, z（Blender は -Z を見る）
+    cam.matrix_world = Matrix.Translation(Vector(d["pos"]) * MM) @ m.to_4x4()
+    cam.data.sensor_fit = "HORIZONTAL"
+    cam.data.sensor_width = 36.0
+    cam.data.lens = d["f_px"] * 36.0 / d["size"][0]
+    return tuple(d["size"])
+
+
 def main():
     out = args()
     os.makedirs(out, exist_ok=True)
@@ -130,6 +145,8 @@ def main():
             HM.build()
         sc.render.resolution_x, sc.render.resolution_y = res
         place(cam, az, pitch, look, dist, lens, rest[0] if rest else 0.0)
+        if FIT and os.path.exists(os.path.join(HERE, "points", f"{name}_cam.json")):
+            sc.render.resolution_x, sc.render.resolution_y = place_fit(cam, name)
         sc.render.filepath = os.path.join(out, f"{name}.png")
         bpy.ops.render.render(write_still=True)
         print("[render]", sc.render.filepath)

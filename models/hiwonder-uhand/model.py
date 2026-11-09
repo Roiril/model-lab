@@ -64,7 +64,7 @@ def materials():
     return dict(
         acrylic=_mat("uh_acrylic", (0.006, 0.006, 0.007), 0.13, coat=0.0, spec=0.5),
         servo=_mat("uh_servo", (0.008, 0.008, 0.009), 0.5),
-        alu=_grain(_mat("uh_alu", (0.022, 0.022, 0.024), 0.72, metal=0.3), scale=1500.0, strength=0.25),
+        alu=_grain(_mat("uh_alu", (0.028, 0.033, 0.046), 0.72, metal=0.3), scale=1500.0, strength=0.25),
         steel=_mat("uh_steel", (0.45, 0.45, 0.47), 0.3, metal=0.55),
         link=_mat("uh_link", (0.42, 0.42, 0.44), 0.32, metal=0.5),
         dark=_mat("uh_dark", (0.002, 0.002, 0.002), 0.5),
@@ -300,48 +300,38 @@ def joint(name, pos, x_out, x_in, M, washer=True):
 # 部品
 # ======================================================================
 def front_plates(M):
-    # 指の付け根を受ける紺色の板。指の後ろに立ち、上端は指ごとの段付き。縦長の小窓が 2 列並ぶ
-    holes, scr = [], []
-    tops = P.PLATE_TOP
-    xs = [f[1] for f in P.FINGERS]
-    edges = [-64.0] + [(xs[k] + xs[k + 1]) / 2 + 2 for k in range(3)] + [62.0]
-    up = [(-64.0, 60.0)]
+    # 指の付け根を受ける紺色の板。指の後ろに立ち、上端は指ごとの段付き。ねじの上下に縦長の小窓
+    xl, xr = P.BLUE_X
+    tops, steps = P.PLATE_TOP, P.PLATE_STEPS
+    edges = [xl] + steps + [xr]
+    up = [(xl + 17, P.BLUE_BOTTOM), (xl, P.BLUE_LITTLE_BOTTOM)]   # 小指側の下は斜めに落とす（サーボの写真で板の外に何も無い）
     for k in range(4):
         x0, x1, zt = edges[k], edges[k + 1], tops[k]
         up += [(x0, zt - 3), (x0 + 3, zt)] if k == 0 else [(x0, tops[k - 1]), (x0, zt)]
-        up += [(x1 - 3, zt), (x1, zt - 3)] if k == 3 else [(x1, zt)]
-        fx = xs[k]
-        for col, cx in enumerate((fx + 3.0, fx + 15.0)):
-            for r in range(3):
-                z1 = zt - 6 - r * 11
-                holes.append(rrect(cx - 1.4, z1 - 8, cx + 1.4, z1, 0.5, 2))
-        for cx in (fx - 3.0, fx + 9.0):
-            for r in range(2):
-                scr.append((cx, zt - 10 - r * 12))
-    up += [(62.0, 60.0)]
+        up += [(x1 - 5, zt), (x1, zt - 5)] if k == 3 else [(x1, zt)]
+    up += [(xr, P.BLUE_BOTTOM)]
+    holes = []
+    for x, z in P.UPPER_SCREWS:
+        for z0, z1 in ((z + 4.5, z + 11.5), (z - 12.0, z - 5.0)):
+            holes.append(rrect(x - 1.3, z0, x + 1.3, z1, 0.4, 2))
+    holes = [h for h in holes if all(_inside(q, up) for q in h)]
     xz_plate("upper_plate", up, P.UPPER_PLATE_Y, P.ACRYLIC_T, M["blue"], holes)
-    for i, (x, z) in enumerate(scr):
-        screw(f"up_screw{i}", (x, P.UPPER_PLATE_Y, z), (0, -1, 0), M, r=2.0)
+    for i, (x, z) in enumerate(P.UPPER_SCREWS):
+        screw(f"up_screw{i}", (x, P.UPPER_PLATE_Y, z), (0, -1, 0), M, r=2.2)
 
-    # 手前のサーボ板。サーボの窓と親指サーボの切り欠き
+    # 手前のサーボ板。サーボの窓、親指サーボの切り欠き、左右の耳の穴
     W, H = P.SERVO_FACE
     holes = [rrect(x - W / 2 - 0.6, z - H / 2 - 0.6, x + W / 2 + 0.6, z + H / 2 + 0.6, 1.0, 2)
              for x, z in P.FINGER_SERVOS]
-    t = P.THUMB_SERVO_BODY
-    holes.append(rrect(t["x0"] - 1, t["z0"] - 0.6, t["x1"] + 1, t["z1"] + 1, 1.5, 3))
-    holes.append(circle((-38, 98), 3.4, 20))
-    holes.append(circle((50, 104), 3.4, 20))
-    lp = P.LOWER_PLATE
-    xz_plate("lower_plate", fillet(lp, 3), P.LOWER_PLATE_Y, P.ACRYLIC_T + 1, M["acrylic"], holes)
-
-    # 斜めの肩（小指側の上の段差）
-
-
+    holes += [circle(c, 3.3, 24) for c in P.LOWER_EAR_HOLES]
+    sx, sz = P.THUMB_SERVO_SHAFT
+    holes.append(circle((sx, sz), 7.5, 28))   # 親指サーボの出力軸とホーンの逃げ
+    xz_plate("lower_plate", fillet(P.LOWER_PLATE, 2.5), P.LOWER_PLATE_Y, P.ACRYLIC_T + 1, M["acrylic"], holes)
     ys = P.LOWER_PLATE_Y
-    for i, (x, z) in enumerate([(-48, 40), (-50, 100), (-25, 125), (30, 124), (50, 104), (56, 72),
-                                (50, 30), (-35, 23), (22, 23)]):
-        screw(f"lp_screw{i}", (x, ys, z), (0, -1, 0), M, r=2.2)
-
+    for i, (x, z) in enumerate(P.LOWER_EAR_SCREWS):
+        screw(f"lp_ear_screw{i}", (x, ys, z), (0, -1, 0), M, r=2.8)
+    for i, (x, z) in enumerate(P.LOWER_SCREWS):
+        screw(f"lp_screw{i}", (x, ys, z), (0, -1, 0), M, r=2.5)
 
 
 def servo(name, cx, cz, M, horiz=False):
@@ -409,21 +399,24 @@ def servos(M):
 
 def back_and_sides(M):
     b = P.BACK_PLATE
-    c = 9.0  # 角の面取り
-    oct_ = [(b["x0"] + c, b["z0"]), (b["x1"] - c, b["z0"]), (b["x1"], b["z0"] + c), (b["x1"], b["z1"] - c),
-            (b["x1"] - c, b["z1"]), (b["x0"] + c, b["z1"]), (b["x0"], b["z1"] - c), (b["x0"], b["z0"] + c)]
-    xz_plate("back_plate", fillet(oct_, 8, 6), P.PALM_BACK_Y, P.ALU_T, M["alu"])
-    for i, (x, z) in enumerate([(-52, 30), (52, 30), (-52, 136), (52, 136), (10, 80), (26, 92), (22, 70)]):
-        screw(f"bp_screw{i}", (x, P.PALM_BACK_Y + P.ALU_T, z), (0, 1, 0), M, r=3.8)
+    xz_plate("back_plate", rrect(b["x0"], b["z0"], b["x1"], b["z1"], b["r"], 6), P.PALM_BACK_Y, P.ALU_T, M["alu"])
+    yb = P.PALM_BACK_Y + P.ALU_T
+    for i, (x, z) in enumerate(P.BACK_SCREWS_SMALL):
+        screw(f"bp_screw{i}", (x, yb, z), (0, 1, 0), M, r=2.6)
+    for i, (x, z) in enumerate(P.BACK_SCREWS_BIG):
+        screw(f"bp_big{i}", (x, yb, z), (0, 1, 0), M, r=3.6)
     s = P.SIDE_WALL
-    Ms = basis((0, 1, 0), (0, 0, 1), (s["x"] - P.ACRYLIC_T / 2, 0, 0))
-    plate("side_wall", rrect(s["y0"], s["z0"], s["y1"], s["z1"], 2), P.ACRYLIC_T, Ms, M["acrylic"])
-    # 側板の上に乗る四角い枠（写真の左の箱）
-    box("side_box", (s["x"] - 1, (s["y0"] + s["y1"]) / 2, 104), (4, s["y1"] - s["y0"], 48), M["acrylic"], bevel=0.5)
-    Ms2 = basis((0, 1, 0), (0, 0, 1), (63.5, 0, 0))
-    plate("side_wall_r", rrect(-20, 24, 18, 130, 2), P.ACRYLIC_T, Ms2, M["acrylic"])
+    xl, xr = P.PALM_X
+    n = P.SIDE_WALL_LITTLE_NOTCH
+    little = [(n["y"], s["z0"]), (s["y1"], s["z0"]), (s["y1"], s["z1"]), (s["y0"], s["z1"]), (s["y0"], n["z"]),
+              (n["y"], n["z"] - 6)]
+    for k, x in enumerate((xl + ALU_T() / 2, xr - ALU_T() / 2)):
+        Ms = basis((0, 1, 0), (0, 0, 1), (x, 0, 0))
+        outline = little if k == 0 else rrect(s["y0"], s["z0"], s["y1"], s["z1"], 2, 4)
+        plate(f"side_wall{k}", outline, ALU_T(), Ms, M["alu"])   # 側板は甲と同じ艶消しのアルミ
     # 内側の詰め物（すき間から白い背景が見えないように）
-    box("palm_core", (0, -6, 74), (120, 24, 98), M["dark"], bevel=0)
+    lx = [x for x, _ in P.LOWER_PLATE]   # 手前のサーボ板より外へ出さない
+    box("palm_core", ((min(lx) + max(lx)) / 2, -6, 72), (max(lx) - min(lx) - 4, 24, 100), M["dark"], bevel=0)
 
 
 def wrist(M):
@@ -445,12 +438,13 @@ def wrist(M):
                                                            for dy, dz in ((8, 8), (-8, 8), (8, -8), (-8, -8))]
         plate(f"wrist_u_side{k}", fillet([(u["y0"], u["z0"]), (u["y1"], u["z0"]), (u["y1"], u["z1"]), (u["y0"], u["z1"])], 10),
               P.ALU_T, Mu, M["alu"], holes)
-    web_holes = [circle((0, u["hz"]), 7.0, 32)] + [circle((dx, u["hz"] + dz), 1.5, 12)
+    cx = (u["x0"] + u["x1"]) / 2
+    web_holes = [circle((cx, u["hz"]), 7.0, 32)] + [circle((cx + dx, u["hz"] + dz), 1.5, 12)
                                                    for dx, dz in ((9, 9), (-9, 9), (9, -9), (-9, -9))]
     xz_plate("wrist_u_web", rrect(u["x0"], u["z0"], u["x1"], u["z1"], 11), u["y1"] - P.ALU_T, P.ALU_T, M["alu"], web_holes)
-    cyl("wrist_u_shaft", (0, u["y1"] - 3, u["hz"]), (0, u["y1"] - 0.6, u["hz"]), 5.0, M["servo"], n=32, bevel=0.4)
+    cyl("wrist_u_shaft", (cx, u["y1"] - 3, u["hz"]), (cx, u["y1"] - 0.6, u["hz"]), 5.0, M["servo"], n=32, bevel=0.4)
     cyl("wrist_u_hub", (u["x0"] - 3, u["hy"], u["hz"]), (u["x1"] + 3, u["hy"], u["hz"]), 5.2, M["servo"])
-    box("wrist_servo", (0, (u["y0"] + u["y1"]) / 2 - 1, u["hz"]), (u["x1"] - u["x0"] - 2 * P.ALU_T - 1, 20, 38),
+    box("wrist_servo", (cx, (u["y0"] + u["y1"]) / 2 - 1, u["hz"]), (u["x1"] - u["x0"] - 2 * P.ALU_T - 1, 20, 38),
         M["servo"], bevel=7.0)
     screw("wrist_screw0", (-15, w["y_front"], 0), (0, -1, 0), M, r=2.0)
     screw("wrist_screw1", (15, w["y_front"], 0), (0, -1, 0), M, r=2.0)
@@ -515,7 +509,7 @@ def finger(name, fx, fz, lens, angs, M, fan=0.0):
                 plate(f"{nm}_{k}", outline2, t, frame(dx), M["acrylic"], bevel=0.25)
 
     W = P.FINGER_W / 2
-    base = ribbon([(0, fz - 26), (0, fz)], [W + 1.0, W + 0.5])
+    base = ribbon([(0, fz - 20), (0, fz)], [W + 1.0, W + 0.5])
     seg_plates(f"{name}_base", base)
     for s in range(2):
         L = lens[s]
@@ -589,7 +583,7 @@ def thumb(M):
     # 付け根の金具（手のひらの横に立つ）
     # 付け根の縦軸の円筒ブッシュ（上下の支持板の間）
     cyl("thumb_root_bush", (px, py, P.THUMB_PLATES_Z[0] - 6), (px, py, P.THUMB_PLATES_Z[1] + 9), 6.5, M["bushing"], n=28, bevel=0.5)
-    box("thumb_bracket", (px - 4, py + 2, 68), (10, 16, 32), M["acrylic"], bevel=0.6)
+    box("thumb_bracket", (px - 2, py + 2, 68), (8, 16, 32), M["acrylic"], bevel=0.6)
     for zi, z in enumerate(P.THUMB_PLATES_Z):
         Mz = basis((1, 0, 0), (0, 1, 0), (0, 0, z + 1.5))
         # 基節と中節を分ける（関節で 2 mm 空ける）
@@ -686,3 +680,8 @@ if __name__ == "__main__" and not os.environ.get("UHAND_NO_EXPORT"):
     build()
     to_meshes()
     export_stl("hiwonder-uhand")
+    # 色つきの GLB（viewer/uhand-camera.html で写真と重ねてカメラを合わせる）
+    for ob in bpy.data.objects:
+        ob.select_set(ob.name in COLL.objects)
+    bpy.ops.export_scene.gltf(filepath=os.path.join(os.path.dirname(__file__), "../../exports/hiwonder-uhand.glb"),
+                              export_format="GLB", use_selection=True, export_apply=True)
