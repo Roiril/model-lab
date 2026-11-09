@@ -422,39 +422,32 @@ def back_and_sides(M):
 
 
 def wrist(M):
-    f = P.FOOT
-    Mf = basis((1, 0, 0), (0, 1, 0), (0, 0, f["z"] + f["t"] / 2))
-    foot = circle((0, f["y"]), 30.0, 64)   # 写真の台座は円盤
-    plate("foot", foot, f["t"], Mf, M["acrylic"], [circle((0, f["y"]), f["hole_r"], 20),
-                                                  circle((-21, f["y"]), 2.0, 12), circle((21, f["y"]), 2.0, 12)])
-    w = P.WRIST_BRACKET
-    for k, y in enumerate((w["y_front"], w["y_back"])):
-        xz_plate(f"wrist_plate{k}", rrect(w["x0"], w["z0"], w["x1"], w["z1"] + 4, 3), y, ALU_T(), M["alu"])
-    box("wrist_block", (0, (w["y_front"] + w["y_back"]) / 2, (w["z0"] + w["z1"]) / 2 + 2),
-        (w["x1"] - w["x0"] - 4, w["y_back"] - w["y_front"], w["z1"] - w["z0"] + 4), M["servo"], bevel=1)
-    # 手首の U 字金具。手のひらの下端から後ろへ水平に伸び、背面に大穴と 4 つの小穴
-    if P.WRIST_U_SHOW:
-        u = P.WRIST_U
-        wm = P.WRIST_MOUNT
-        xz_plate("wrist_mount", rrect(u["x0"], u["z0"], u["x1"], wm["z1"], 6), wm["y"], u["y0"] - wm["y"], M["alu"])
-        for i, (dx, z) in enumerate(((8, wm["z1"] - 7), (-8, wm["z1"] - 7))):
-            screw(f"wrist_mount_screw{i}", ((u["x0"] + u["x1"]) / 2 + dx, u["y0"], z), (0, 1, 0), M, r=2.4, head="button")
-        for k, x in enumerate((u["x0"], u["x1"] - P.ALU_T)):
-            Mu = basis((0, 1, 0), (0, 0, 1), (x + P.ALU_T / 2, 0, 0))
-            holes = [circle((u["hy"], u["hz"]), 6.0, 28)] + [circle((u["hy"] + dy, u["hz"] + dz), 1.4, 12)
-                                                               for dy, dz in ((8, 8), (-8, 8), (8, -8), (-8, -8))]
-            plate(f"wrist_u_side{k}", fillet([(u["y0"], u["z0"]), (u["y1"], u["z0"]), (u["y1"], u["z1"]), (u["y0"], u["z1"])], 10),
-                  P.ALU_T, Mu, M["alu"], holes)
-        cx = (u["x0"] + u["x1"]) / 2
-        web_holes = [circle((cx, u["hz"]), 7.0, 32)] + [circle((cx + dx, u["hz"] + dz), 1.5, 12)
-                                                       for dx, dz in ((9, 9), (-9, 9), (9, -9), (-9, -9))]
-        xz_plate("wrist_u_web", rrect(u["x0"], u["z0"], u["x1"], u["z1"], 11), u["y1"] - P.ALU_T, P.ALU_T, M["alu"], web_holes)
-        cyl("wrist_u_shaft", (cx, u["y1"] - 3, u["hz"]), (cx, u["y1"] - 0.6, u["hz"]), 5.0, M["servo"], n=32, bevel=0.4)
-        cyl("wrist_u_hub", (u["x0"] - 3, u["hy"], u["hz"]), (u["x1"] + 3, u["hy"], u["hz"]), 5.2, M["servo"])
-        box("wrist_servo", (cx, (u["y0"] + u["y1"]) / 2 - 1, u["hz"]), (u["x1"] - u["x0"] - 2 * P.ALU_T - 1, 20, 38),
-            M["servo"], bevel=7.0)
-    screw("wrist_screw0", (-15, w["y_front"], 0), (0, -1, 0), M, r=2.0)
-    screw("wrist_screw1", (15, w["y_front"], 0), (0, -1, 0), M, r=2.0)
+    """手首。甲の板のすぐ後ろから下りて前へ折れる L 字の金具と、その下の丸いフランジとハブ（寸法図の側面）。"""
+    w = P.WRIST_L
+    t = P.ALU_T
+    yb = P.PALM_BACK_Y + t            # 甲の板の外面。L 字の縦の板はここに重なる
+    xc = (w["x0"] + w["x1"]) / 2
+    # 縦の板（甲の板の下端の舌と重ねて 2 本のねじで留める）
+    xz_plate("wrist_l_v", rrect(w["x0"], w["z"] - t / 2, w["x1"], w["z_top"], 3), yb, t, M["alu"])
+    for i, dx in enumerate((-12, 12)):
+        screw(f"wrist_l_screw{i}", (xc + dx, yb + t, w["z_top"] - 7), (0, 1, 0), M, r=2.4, head="button")
+    # 水平の板（前へ伸びてフランジに載る）
+    Mh = basis((1, 0, 0), (0, 1, 0), (0, 0, w["z"]))
+    plate("wrist_l_h", rrect(w["x0"], w["y_front"], w["x1"], yb + t, 3), t, Mh, M["alu"])
+    # フランジ（ねじ 3 本）とハブ
+    f = P.WRIST_FLANGE
+    zf = w["z"] - t / 2
+    cyl("wrist_flange", (f["x"], f["y"], zf), (f["x"], f["y"], zf - f["t"]), f["r"], M["servo"], n=48, bevel=0.4)
+    for i, a in enumerate((90, 210, 330)):
+        a = math.radians(a)
+        sx, sy = f["x"] + (f["r"] - 4) * math.cos(a), f["y"] + (f["r"] - 4) * math.sin(a)
+        if w["x0"] - 3 < sx < w["x1"] + 3 and w["y_front"] - 3 < sy:
+            continue   # 水平の板の下に隠れるねじは置かない
+        screw(f"wrist_flange_screw{i}", (sx, sy, zf), (0, 0, 1), M, r=2.2)
+    for i, a in enumerate((30, 150, 270)):
+        a = math.radians(a)
+        screw(f"wrist_l_hscrew{i}", (f["x"] + 9 * math.cos(a), f["y"] + 9 * math.sin(a), w["z"] + t / 2), (0, 0, 1), M, r=2.0)
+    cyl("wrist_hub", (f["x"], f["y"], zf - f["t"]), (f["x"], f["y"], zf - f["t"] - f["hub_h"]), f["hub_r"], M["steel"], n=40, bevel=0.3)
 
 
 def ALU_T():

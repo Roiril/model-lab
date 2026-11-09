@@ -1,8 +1,8 @@
 """写真と、同じカメラで描いたレンダーを 1 枚に並べる。
 
-py -3.11 models/hiwonder-uhand/overlay.py <render_dir> <out_dir>
+py -3.11 models/hiwonder-uhand/overlay.py <render_dir> <out_dir> [--views back3]
 
-- render_views.py --fit で描いた servo / front / back を、写真（servo と back は左右反転）と並べる
+- render_views.py --fit で描いた servo / front / back（back3 は 2026-11-10 074343 の甲の写真）を、写真（servo と back は左右反転）と並べる
 - 左から 写真 / レンダー / 写真の上にレンダーの輪郭（赤）
 - 目印点（points/<view>.json）の写真上の位置を緑、レンダーで同じ点が来るはずの位置を写真側にも重ねる
 - 写真やレンダーが 1 枚でも欠けたら組まずに止める
@@ -15,7 +15,9 @@ import cv2
 import numpy as np
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-VIEWS = ("servo", "front", "back")
+VIEWS = ["servo", "front", "back"]
+if "--views" in sys.argv:
+    VIEWS = sys.argv[sys.argv.index("--views") + 1].split(",")
 
 
 def load(path):
