@@ -24,6 +24,21 @@ py -3.11 models/hiwonder-uhand/ortho_cmp.py "<寸法図.png>" <dir> <out.png>
 
 甲の板の輪郭とねじは、074343 の甲の写真を射影変換で板に写して読んだ。輪郭は親指側の上の面取り、小指側の段、下の舌を持つ。
 
+### 甲の写真 2 枚で確かめる（2026-11-10）
+
+074343（points/back3.json）と 074156（points/persp3.json）の 2 枚から、甲の板のねじでカメラを逆算した。
+板のねじの位置は 074343 だけから読んでいる。074156 は独立した確認で、残差は 3〜4px。
+
+```bash
+"C:/Program Files/Blender Foundation/Blender 5.1/blender.exe" --background --python models/hiwonder-uhand/render_views.py -- --out <dir> --views back3,persp3 --fit
+py -3.11 models/hiwonder-uhand/overlay.py <dir> <dir> --views back3,persp3
+```
+
+- 側板は甲の板から折れた板金として、甲の板の外面まで伸ばして角を丸く閉じている。小指側は段（z = 88）より上だけ
+- 親指は板の束を軸まわりに -70° 転がしている。0° では甲の写真で板の縁しか見えない。寸法図はどちらでもほぼ同じ重なりで、決め手にならない
+- 親指は動く部品なので、写真ごとに姿勢が違う。074343 では付け根がモデルより高く写る
+- `box()` で作った物に回転を入れると原点まわりに飛ぶ。斜めの帯は `plate()` に基底を渡して作る
+
 以下は縮尺を直す前の手順の記録。
 
 - サーボの底面（約 21 x 45mm）を物差しにして写真の画素を mm に換算した。実物の採寸ではない
