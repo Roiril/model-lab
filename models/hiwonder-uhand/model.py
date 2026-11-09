@@ -400,8 +400,7 @@ def servos(M):
 
 
 def back_and_sides(M):
-    b = P.BACK_PLATE
-    xz_plate("back_plate", rrect(b["x0"], b["z0"], b["x1"], b["z1"], b["r"], 6), P.PALM_BACK_Y, P.ALU_T, M["alu"])
+    xz_plate("back_plate", fillet(P.BACK_OUTLINE, 4.0), P.PALM_BACK_Y, P.ALU_T, M["alu"])
     yb = P.PALM_BACK_Y + P.ALU_T
     for i, (x, z) in enumerate(P.BACK_SCREWS_SMALL):
         screw(f"bp_screw{i}", (x, yb, z), (0, 1, 0), M, r=2.6, head="button")
@@ -418,7 +417,8 @@ def back_and_sides(M):
         plate(f"side_wall{k}", outline, ALU_T(), Ms, M["alu"])   # 側板は甲と同じ艶消しのアルミ
     # 内側の詰め物（すき間から白い背景が見えないように）
     lx = [x for x, _ in P.LOWER_PLATE]   # 手前のサーボ板より外へ出さない
-    box("palm_core", ((min(lx) + max(lx)) / 2, -6, 72), (max(lx) - min(lx) - 4, 24, 100), M["dark"], bevel=0)
+    yc0, yc1 = -18.0, P.PALM_BACK_Y - 0.5
+    box("palm_core", ((min(lx) + max(lx)) / 2, (yc0 + yc1) / 2, 72), (max(lx) - min(lx) - 4, yc1 - yc0, 100), M["dark"], bevel=0)
 
 
 def wrist(M):
@@ -510,10 +510,10 @@ def finger(name, fx, fz, lens, angs, M, fan=0.0):
     def seg_plates(nm, outline2, inner=False):
         """outer: 2 枚の板で挟む節。inner: 1 枚の板（外の節の間に入る）。関節で段差が見える。"""
         if inner:
-            plate(f"{nm}_0", outline2, 2 * t + g - 3.0, frame(0.0), M["acrylic"], bevel=0.3)
+            plate(f"{nm}_0", outline2, 2 * t + g - 3.0, frame(0.0), M["acrylic"], bevel=0.12)
         else:
             for k, dx in enumerate((-(g / 2 + t / 2), g / 2 + t / 2)):
-                plate(f"{nm}_{k}", outline2, t, frame(dx), M["acrylic"], bevel=0.25)
+                plate(f"{nm}_{k}", outline2, t, frame(dx), M["acrylic"], bevel=0.12)
 
     W = P.FINGER_W / 2
     base = ribbon([(0, fz - 20), (0, fz)], [W + 1.0, W + 0.5])
