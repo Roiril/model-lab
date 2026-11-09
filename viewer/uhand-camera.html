@@ -10,6 +10,7 @@
   body { display: grid; grid-template-columns: 1fr 300px; height: 100vh; }
   #stageWrap { position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
   #stage { position: relative; }
+  #stage { background: #fff; }
   #stage > * { position: absolute; inset: 0; width: 100%; height: 100%; }
   #photo { object-fit: fill; }
   #view { cursor: grab; }
@@ -53,6 +54,10 @@
     <button data-view="servo">サーボ</button>
     <button data-view="front">正面</button>
     <button data-view="back">甲</button>
+  </div>
+  <div class="row">
+    <label>写真の濃さ <span id="popv"></span></label>
+    <input id="pop" type="range" min="0" max="1" step="0.01" value="1">
   </div>
   <div class="row">
     <label>モデルの濃さ <span id="opv"></span></label>
@@ -177,6 +182,7 @@ function draw() {
   $("fv").textContent = st.f.toFixed(0);
   $("rv").textContent = `${(+$("roll").value).toFixed(1)}°`;
   $("opv").textContent = (+$("op").value).toFixed(2);
+  $("popv").textContent = (+$("pop").value).toFixed(2);
 }
 
 async function load(view) {
@@ -253,6 +259,8 @@ $("roll").addEventListener("input", () => {
   rotateAround(fw, THREE.MathUtils.degToRad(v - lastRoll)); lastRoll = v; draw();
 });
 $("op").addEventListener("input", () => { canvas.style.opacity = $("op").value; draw(); });
+// 写真を薄くすると下地の白が透けて、モデルの輪郭が見やすくなる
+$("pop").addEventListener("input", () => { photo.style.opacity = $("pop").value; draw(); });
 $("showMarks").addEventListener("change", draw);
 window.addEventListener("keydown", (e) => {
   const m = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] }[e.key];
