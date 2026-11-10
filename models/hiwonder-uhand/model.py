@@ -285,377 +285,360 @@ def nut(name, pos, normal, M, r=2.8, h=2.0):
     cyl(name, pos, pos + normal * h, r, M["steel"], n=6, bevel=0.2)
 
 
-def joint(name, pos, x_out, x_in, M, washer=True):
-    """指の関節の軸。x_out 側（-X、カメラ側）にねじ頭と黒いブッシュ、x_in 側にナット。"""
-    p = Vector(pos)
-    out = Vector((x_out, p.y, p.z))
-    inn = Vector((x_in, p.y, p.z))
-    sgn = -1 if x_out < x_in else 1
-    if washer:
-        cyl(name + "_bush", out, out + Vector((sgn * 1.6, 0, 0)), 3.6, M["bushing"], bevel=0.3)
-        screw(name + "_head", out + Vector((sgn * 1.6, 0, 0)), (sgn, 0, 0), M, r=2.3)
-    else:
-        screw(name + "_head", out, (sgn, 0, 0), M, r=2.3)
-    nut(name + "_nut", inn, (-sgn, 0, 0), M, r=2.4, h=1.6)
-
-
 # ======================================================================
 # 部品
 # ======================================================================
-def front_plates(M):
-    # 指の付け根を受ける紺色の板。指の後ろに立ち、上端は指ごとの段付き。ねじの上下に縦長の小窓
-    xl, xr = P.BLUE_X
-    tops, steps = P.PLATE_TOP, P.PLATE_STEPS
-    edges = [xl] + steps + [xr]
-    up = [(xl + 17, P.BLUE_BOTTOM), (xl, P.BLUE_LITTLE_BOTTOM)]   # 小指側の下は斜めに落とす（サーボの写真で板の外に何も無い）
-    for k in range(4):
-        x0, x1, zt = edges[k], edges[k + 1], tops[k]
-        up += [(x0, zt - 3), (x0 + 3, zt)] if k == 0 else [(x0, tops[k - 1]), (x0, zt)]
-        up += [(x1 - 5, zt), (x1, zt - 5)] if k == 3 else [(x1, zt)]
-    up += [(xr, P.BLUE_BOTTOM)]
-    holes = []
-    for x, z in P.UPPER_SCREWS:
-        for z0, z1 in ((z + 4.5, z + 11.5), (z - 12.0, z - 5.0)):
-            holes.append(rrect(x - 1.3, z0, x + 1.3, z1, 0.4, 2))
-    holes = [h for h in holes if all(_inside(q, up) for q in h)]
-    xz_plate("upper_plate", up, P.UPPER_PLATE_Y, P.ACRYLIC_T, M["blue" if P.UPPER_PLATE_NAVY else "acrylic"], holes)
-    for i, (x, z) in enumerate(P.UPPER_SCREWS):
-        screw(f"up_screw{i}", (x, P.UPPER_PLATE_Y, z), (0, -1, 0), M, r=2.2)
+def yz(x):
+    """YZ 面の板の基底。面内座標は (y, z)、厚みは x を中心に振り分ける。"""
+    return basis((0, 1, 0), (0, 0, 1), (x, 0, 0))
 
-    # 手前のサーボ板。サーボの窓、親指サーボの切り欠き、左右の耳の穴
+
+def xcyl(name, x0, x1, p, r, mat, n=24, bevel=0.0):
+    """X 軸に平行な円柱。p は面内の (y, z)。"""
+    return cyl(name, (x0, p[0], p[1]), (x1, p[0], p[1]), r, mat, n=n, bevel=bevel)
+
+
+def palm_plate(M):
+    """手のひらの板。上端は指ごとの段、親指側に翼。指ごとに 2 列の窓とねじ、1 列目の上に S 字の板の受け。"""
+    outline = fillet(P.PALM_OUTLINE, 1.5)
+    holes, insets = [], []
+    for xa, s in zip(P.FINGER_X, P.STEP_Z):
+        xb = xa + P.COL_B
+        for x0, z0, x1, z1, tab in ((xa + 0.6, s - 17.2, xa + 3.6, s - 12.2, False),
+                                    (xb - 1.6, s - 7.8, xb + 1.6, s - 2.3, True),
+                                    (xb - 1.5, s - 18.8, xb + 1.5, s - 13.3, False)):
+            h = rrect(x0, z0, x1, z1, 0.4, 2)
+            if all(_inside(q, outline) for q in h):
+                holes.append(h)
+                if tab:
+                    insets.append(((x0 + x1) / 2, (z0 + z1) / 2, x1 - x0 - 0.5, z1 - z0 - 0.8))
+    y0 = P.PALM_Y[0]
+    xz_plate("palm_plate", outline, y0, P.ACRYLIC_T, M["acrylic"], holes)
+    for k, (x, z, w, h) in enumerate(insets):     # 窓に差さった指の台の爪
+        box(f"palm_tab{k}", (x, 0.2, z), (w, P.ACRYLIC_T + 1.0, h), M["servo"], bevel=0.2)
+    for i, (xa, s) in enumerate(zip(P.FINGER_X, P.STEP_Z)):
+        screw(f"palm_sa{i}", (xa + 1.0, y0, s - 10.0), (0, -1, 0), M, r=1.5)
+        screw(f"palm_sb{i}", (xa + P.COL_B, y0, s - 10.0), (0, -1, 0), M, r=1.5)
+        # S 字の板の受け（板の手前の黒い台と、横向きの軸）
+        hy, hz = P.HOOK_PIVOT[0], s + P.HOOK_PIVOT[1]
+        box(f"hook_block{i}", (xa, (y0 - 9.0) / 2, s - 5.3), (4.5, 9.0 + y0, 5.6), M["servo"], bevel=0.5)
+        xcyl(f"hook_bush{i}", xa - 2.0, xa + 3.6, (hy, hz), 2.3, M["bushing"], bevel=0.3)
+        screw(f"hook_screw{i}", (xa + P.LAYER_S - P.LINK_T / 2, hy, hz), (-1, 0, 0), M, r=1.7)
+    for i, (x, z) in enumerate(P.PALM_SCREWS):
+        screw(f"palm_screw{i}", (x, y0, z), (0, -1, 0), M, r=1.6)
+
+
+def servo_plate(M):
+    """手前のサーボ板。指のサーボ 4 個の窓があり、下は親指のサーボをよけて斜めに切れている。"""
     W, H = P.SERVO_FACE
-    holes = [rrect(x - W / 2 - 0.6, z - H / 2 - 0.6, x + W / 2 + 0.6, z + H / 2 + 0.6, 1.0, 2)
+    holes = [rrect(x - W / 2 - 0.3, z - H / 2 - 0.3, x + W / 2 + 0.3, z + H / 2 + 0.3, 0.6, 2)
              for x, z in P.FINGER_SERVOS]
-    holes += [circle(c, 3.3, 24) for c in P.LOWER_EAR_HOLES]
-    sx, sz = P.THUMB_SERVO_SHAFT
-    holes.append(circle((sx, sz), 7.5, 28))   # 親指サーボの出力軸とホーンの逃げ
-    xz_plate("lower_plate", fillet(P.LOWER_PLATE, 2.5), P.LOWER_PLATE_Y, P.ACRYLIC_T + 1, M["acrylic"], holes)
-    ys = P.LOWER_PLATE_Y
-    for i, (x, z) in enumerate(P.LOWER_EAR_SCREWS):
-        screw(f"lp_ear_screw{i}", (x, ys, z), (0, -1, 0), M, r=2.8)
-    for i, (x, z) in enumerate(P.LOWER_SCREWS):
-        screw(f"lp_screw{i}", (x, ys, z), (0, -1, 0), M, r=2.5)
+    ys = P.SERVO_PLATE_Y
+    xz_plate("servo_plate", fillet(P.SERVO_PLATE, 1.5), ys, P.ACRYLIC_T, M["acrylic"], holes)
+    for i, (x, z, r) in enumerate(P.SERVO_PLATE_SCREWS):
+        screw(f"sp_screw{i}", (x, ys, z), (0, -1, 0), M, r=r)
+        cyl(f"sp_post{i}", (x, ys + P.ACRYLIC_T, z), (x, P.PALM_Y[0], z), 2.0, M["bushing"], n=6)
 
 
-def servo(name, cx, cz, M, horiz=False):
+def servo(name, cx, cz, M):
     W, H = P.SERVO_FACE
-    if horiz:
-        W, H = H, W
-    yf = P.LOWER_PLATE_Y - P.SERVO_PROUD
+    yf = P.SERVO_PLATE_Y - P.SERVO_PROUD
     D = P.SERVO_DEPTH
-    box(name, (cx, yf + D / 2, cz), (W, D, H), M["servo"], bevel=1.0)
-    # 底面のねじ 4 本
+    box(name, (cx, yf + D / 2, cz), (W, D, H), M["servo"], bevel=0.5)
     for sx in (-1, 1):
         for sz in (-1, 1):
-            screw(f"{name}_s{sx}{sz}", (cx + sx * (W / 2 - 2.6), yf, cz + sz * (H / 2 - 2.6)), (0, -1, 0), M, r=1.5)
-    # 底面の浮き彫り（丸と弧）。ごく浅い
-    u, v = (1, 0, 0), (0, 0, 1)
-    if horiz:
-        u, v = (0, 0, -1), (1, 0, 0)
-    org = (cx, yf - 0.25, cz)
-    Mb = basis(u, v, org)
-    # 写真の刻印: 上に四角で囲んだ X 字、中央に凹んだ穴、下に弧
-    plate(name + "_frame", [(-6, 9), (6, 9), (6, 18), (-6, 18)], 0.4, Mb, M["servo"],
-          [[(-5.1, 9.9), (5.1, 9.9), (5.1, 17.1), (-5.1, 17.1)]], bevel=0.05)
-    for k, (a, b) in enumerate((((-4.2, 10.6), (4.2, 16.4)), ((-4.2, 16.4), (4.2, 10.6)))):
-        plate(f"{name}_x{k}", ribbon([a, b], 0.55), 0.4, Mb, M["servo"], bevel=0.05)
-    cyl(name + "_hole", (cx, yf + 0.6, cz), (cx, yf - 0.05, cz), 1.6, M["dark"], n=16)
-    arc = [(4.5 * math.cos(math.radians(a)), -8 + 2.5 * math.sin(math.radians(a))) for a in range(200, 341, 10)]
-    plate(name + "_arc", ribbon(arc, 0.45), 0.4, Mb, M["servo"], bevel=0.05)
+            screw(f"{name}_s{sx}{sz}", (cx + sx * (W / 2 - 1.5), yf, cz + sz * (H / 2 - 1.5)), (0, -1, 0), M, r=0.85)
+    # 底面の浮き彫り: 上に四角で囲んだ X 字、中央に穴、下に弧
+    Mb = basis((1, 0, 0), (0, 0, 1), (cx, yf - 0.12, cz))
+    plate(name + "_frame", [(-3, 4.3), (3, 4.3), (3, 8.8), (-3, 8.8)], 0.25, Mb, M["servo"],
+          [[(-2.5, 4.8), (2.5, 4.8), (2.5, 8.3), (-2.5, 8.3)]], bevel=0.03)
+    for k, (a, b) in enumerate((((-2.1, 5.2), (2.1, 7.9)), ((-2.1, 7.9), (2.1, 5.2)))):
+        plate(f"{name}_x{k}", ribbon([a, b], 0.28), 0.25, Mb, M["servo"], bevel=0.03)
+    cyl(name + "_hole", (cx, yf + 0.4, cz), (cx, yf - 0.03, cz), 0.8, M["dark"], n=16)
+    arc = [(2.3 * math.cos(math.radians(a)), -4 + 1.3 * math.sin(math.radians(a))) for a in range(200, 341, 10)]
+    plate(name + "_arc", ribbon(arc, 0.24), 0.25, Mb, M["servo"], bevel=0.03)
+
+
+def thumb_frame():
+    """親指の板の面の基底。e1 は面内で右下がり、e2 は手のひら側、n は板の上面から下向き。"""
+    t = math.radians(P.THUMB_TILT)
+    e1 = Vector((math.cos(t), 0, -math.sin(t)))
+    e2 = Vector((0, -1, 0))
+    return e1, e2, e1.cross(e2), Vector(P.THUMB_ORIGIN)
+
+
+def thumb_pt(a, b, h=0.0):
+    e1, e2, n, o = thumb_frame()
+    return o + e1 * a + e2 * b + n * h
+
+
+def thumb_ab(p):
+    """実座標の点を親指の面内座標 (a, b, h) に直す。"""
+    e1, e2, n, o = thumb_frame()
+    d = Vector(p) - o
+    return d.dot(e1), d.dot(e2), d.dot(n)
+
+
+def thumb_strut_bottom():
+    d = math.radians(P.THUMB_DIR)
+    a = P.THUMB_PIVOT_A + P.THUMB_STRUT * math.cos(d)
+    b = P.THUMB_STRUT * math.sin(d)
+    return a, b
 
 
 def servos(M):
     for i, (x, z) in enumerate(P.FINGER_SERVOS):
         servo(f"servo{i}", x, z, M)
-    t = P.THUMB_SERVO_BODY
-    cx, cz = (t["x0"] + t["x1"]) / 2, (t["z0"] + t["z1"]) / 2
-    before = set(COLL.objects)
-    box("thumb_servo", (cx, (t["y0"] + t["y1"]) / 2, cz), (t["x1"] - t["x0"], t["y1"] - t["y0"], t["z1"] - t["z0"]),
-        M["servo"], bevel=1.0)
-    # 取り付け耳
-    box("thumb_servo_ear", (cx, t["y0"] + 4, cz), (t["x1"] - t["x0"] + 12, 2.5, 9), M["servo"], bevel=0.5)
-    # ホーン（白いナイロン）
+    # 親指のサーボ。寝かせて斜めに付く。上面（出力軸のある面）が手のひら側を向く
     sx, sz = P.THUMB_SERVO_SHAFT
+    t = math.radians(P.THUMB_SERVO_TILT)
+    u, w = Vector((math.cos(t), math.sin(t))), Vector((-math.sin(t), math.cos(t)))
+    s0 = Vector((sx, sz))
+
+    def rect(a0, a1, hw):
+        return [tuple(s0 + u * a + w * b) for a, b in ((a0, -hw), (a1, -hw), (a1, hw), (a0, hw))]
+
+    yt = P.THUMB_SERVO_TOP_Y
+    D = P.SERVO_DEPTH
+    Mxz = lambda y: basis((1, 0, 0), (0, 0, 1), (0, y, 0))
+    plate("thumb_servo", fillet(rect(*P.THUMB_SERVO_ALONG, 6.0), 0.8), D, Mxz(yt + D / 2), M["servo"], bevel=0.5)
+    plate("thumb_servo_ear", fillet(rect(*P.THUMB_SERVO_EARS, 6.0), 1.5), 2.5, Mxz(yt + 5.5), M["servo"], bevel=0.4)
+    for k, a in enumerate((P.THUMB_SERVO_EARS[0] + 2.3, P.THUMB_SERVO_EARS[1] - 2.6)):
+        q = s0 + u * a
+        screw(f"thumb_servo_s{k}", (q.x, yt + 4.25, q.y), (0, -1, 0), M, r=1.5)
+    # ホーン（白いナイロン）。軸から右上へ腕が伸び、先に押し棒の受けが付く
     hx, hz = P.HORN_TIP
-    yh = t["y0"] - 2.5
-    cyl("horn_spline", (sx, t["y0"], sz), (sx, yh, sz), 3.2, M["nylon"])
-    Mh = basis((1, 0, 0), (0, 0, 1), (0, yh - 1.2, 0))
-    arm = ribbon([(sx, sz), (hx, hz)], [4.8, 3.2])
-    holes = [circle((sx + (hx - sx) * f, sz + (hz - sz) * f), 1.0, 12) for f in (0.40, 0.52, 0.64, 0.76, 0.88)]
-    cyl("horn_disc", (sx, yh - 0.5, sz), (sx, yh - 2.6, sz), 6.8, M["nylon"], n=32, bevel=0.4)
-    plate("horn_arm", arm, 2.4, Mh, M["nylon"], holes, bevel=0.5)
-    screw("horn_screw", (sx, yh - 2.7, sz), (0, -1, 0), M, r=2.4)
-    # 写真ではサーボごと斜めに付いている。出力軸（Y 軸に平行）まわりに傾ける
-    c = Vector((sx, 0, sz)) * MM
-    Rt = Matrix.Translation(c) @ Matrix.Rotation(math.radians(-P.THUMB_SERVO_TILT), 4, "Y") @ Matrix.Translation(-c)
-    bpy.context.view_layer.update()
-    for ob in set(COLL.objects) - before:
-        ob.matrix_world = Rt @ ob.matrix_world
-    # 押し棒（黒）とボールリンク
-    a = (Rt @ (Vector((hx, yh - 4.5, hz)) * MM)) / MM
-    b = Vector((74.0, -36.0, 58.0))
-    cyl("push_rod", a, b, 1.6, M["brass"], n=12)   # 写真では真鍮色
-    for k, p in enumerate((a, b)):
-        cyl(f"ball_link{k}", p + Vector((0, 2.5, 0)), p - Vector((0, 2.5, 0)), 4.0, M["servo"], bevel=0.5)
-        screw(f"ball_screw{k}", p - Vector((0, 2.5, 0)), (0, -1, 0), M, r=1.8)
+    yh = P.HORN_Y
+    cyl("horn_boss", (sx, yt, sz), (sx, yh + 1.0, sz), 3.0, M["nylon"], n=24)
+    holes = [circle((sx + (hx - sx) * f, sz + (hz - sz) * f), 0.55, 10) for f in (0.36, 0.5, 0.64)]
+    plate("horn_arm", ribbon([(sx, sz), (hx, hz)], [3.6, 2.7]), 2.0, Mxz(yh), M["nylon"], holes, bevel=0.4)
+    plate("horn_stub", ribbon([(sx, sz), (sx + 5.6, sz - 2.3)], [3.6, 3.0]), 2.0, Mxz(yh), M["nylon"],
+          [circle((sx + 5.6, sz - 2.3), 1.2, 14)], bevel=0.4)
+    cyl("horn_washer", (sx, yh - 1.0, sz), (sx, yh - 1.5, sz), 2.6, M["steel"], n=24)
+    screw("horn_screw", (sx, yh - 1.5, sz), (0, -1, 0), M, r=1.7)
+    cyl("rod_end0", (hx, yh - 1.0, hz), (hx, yh - 4.6, hz), 3.3, M["servo"], n=24, bevel=0.5)
+    screw("rod_end0_s", (hx, yh - 4.6, hz), (0, -1, 0), M, r=1.6)
+    # 押し棒: ホーンの先から親指の下の真鍮の柱の下端へ
+    a, b = thumb_strut_bottom()
+    end = thumb_pt(a, b, P.THUMB_LAYERS["lower"][1] + 9.5)
+    cyl("push_rod", (hx, yh - 2.8, hz), end, 1.1, M["servo"], n=12)
 
 
 def edge_wall(name, a, b, y0, y1, M):
     """甲の板の縁 a→b（xz）から手のひら側へ折れた板。板の内側は a→b の左手（輪郭は反時計回り）。"""
-    t = ALU_T()
+    t = P.METAL_T
     a3, b3 = Vector((a[0], 0, a[1])), Vector((b[0], 0, b[1]))
     w = (b3 - a3).normalized()
-    n_in = Vector((-w.z, 0, w.x))       # 輪郭を反時計回りにたどったときの内側
+    n_in = Vector((-w.z, 0, w.x))
     L = (b3 - a3).length
     o = a3 + n_in * (t / 2)
-    Ms = basis((0, 1, 0), tuple(w), tuple(o))
-    plate(name, rrect(y0, 0, y1, L, 1.5, 3), t, Ms, M["alu"])
+    plate(name, rrect(y0, 0, y1, L, 1.2, 3), t, basis((0, 1, 0), tuple(w), tuple(o)), M["alu"])
     c0, c1 = a3 + n_in * t, b3 + n_in * t
     cyl(name + "_fold", (c0.x, y1 - t, c0.z), (c1.x, y1 - t, c1.z), t, M["alu"], n=16)
 
 
-def back_and_sides(M):
-    xz_plate("back_plate", fillet(P.BACK_OUTLINE, 4.0), P.PALM_BACK_Y, P.ALU_T, M["alu"])
-    yb = P.PALM_BACK_Y + P.ALU_T
+def along(a, b, d):
+    """a から b へ向かって d だけ進んだ点。"""
+    a, b = Vector(a), Vector(b)
+    return tuple(a + (b - a).normalized() * d)
+
+
+def metal_cover(M):
+    """甲の板金。甲の板と、縁から手のひら側へ折れた左右の側板、上辺と面取りの縁。
+    親指側の縁は鉛直、小指側の縁は上へ向けて外に開く（写真 04 を、下辺を水平にして読んだ）。"""
+    y0, y1 = P.BACK_Y
+    xz_plate("back_plate", fillet(P.BACK_OUTLINE, 3.5), y0, P.METAL_T, M["alu"])
     for i, (x, z) in enumerate(P.BACK_SCREWS_SMALL):
-        screw(f"bp_screw{i}", (x, yb, z), (0, 1, 0), M, r=2.6, head="button")
+        screw(f"bp_screw{i}", (x, y1, z), (0, 1, 0), M, r=1.4, head="button")
     for i, (x, z) in enumerate(P.BACK_SCREWS_BIG):
-        screw(f"bp_big{i}", (x, yb, z), (0, 1, 0), M, r=3.8, head="button")
-    # 側板と上の縁。甲の板の縁から手のひら側へ折れた板金で、甲の板の外面まで伸ばして折り目を丸く閉じる
-    # （2026-11-10 スケッチ 083139）。親指側は斜めの縁に沿って下の角から面取りの下端まで傾いて立つ。
-    # 小指側は z = SIDE_STEP_Z より上だけ。上辺と面取りの縁も浅く折れる
-    s = P.SIDE_WALL
-    edge_wall("side_wall0", P.BACK_TOP_LITTLE, (P.BACK_TOP_LITTLE[0], P.SIDE_STEP_Z), s["y0"], yb, M)
-    edge_wall("side_wall1", P.BACK_BOTTOM_THUMB, P.BACK_TOP_THUMB, s["y0"], yb, M)
-    edge_wall("top_lip0", P.BACK_PEAK, P.BACK_TOP_LITTLE, yb - P.TOP_LIP, yb, M)
-    edge_wall("top_lip1", P.BACK_TOP_THUMB, P.BACK_PEAK, yb - P.TOP_LIP, yb, M)
-    # 内側の詰め物（すき間から白い背景が見えないように）
-    lx = [x for x, z in P.LOWER_PLATE if z > 100]   # 手前のサーボ板の本体より外へ出さない（親指側の翼は除く）
-    yc0, yc1 = -18.0, P.PALM_BACK_Y - 0.5
-    box("palm_core", ((min(lx) + max(lx)) / 2, (yc0 + yc1) / 2, 72), (max(lx) - min(lx) - 4, yc1 - yc0, 100), M["dark"], bevel=0)
+        screw(f"bp_big{i}", (x, y1, z), (0, 1, 0), M, r=2.0, head="button")
+    edge_wall("wall_thumb", along(P.BACK_BT, P.BACK_TT, 4.0), P.BACK_TT, P.SIDE_WALL_Y0, y1, M)
+    edge_wall("wall_little", P.BACK_TL, along(P.BACK_BL, P.BACK_TL, 4.0), P.SIDE_WALL_Y0, y1, M)
+    edge_wall("lip_chamfer", P.BACK_TT, P.BACK_PEAK, y1 - P.TOP_LIP, y1, M)
+    edge_wall("lip_top", P.BACK_PEAK, P.BACK_TL, y1 - P.TOP_LIP, y1, M)
+    # 板の間の柱（甲のねじ 4 本が手のひらの板まで通る）
+    for i, (x, z) in enumerate(P.BACK_SCREWS_SMALL):
+        cyl(f"post{i}", (x, P.PALM_Y[1], z), (x, y0, z), 2.2, M["bushing"], n=6)
+    # 内側の詰め物（すき間から背景が抜けないように）
+    box("palm_core", (-1.5, 13.5, 47.0), (40.0, 21.0, 44.0), M["dark"], bevel=0)
 
 
 def wrist(M):
-    """手首。甲の板のすぐ後ろから下りて前へ折れる L 字の金具と、その下の丸いフランジとハブ（寸法図の側面）。"""
-    w = P.WRIST_L
-    t = P.ALU_T
-    yb = P.PALM_BACK_Y + t            # 甲の板の外面。L 字の縦の板はここに重なる
-    xc = (w["x0"] + w["x1"]) / 2
-    # 縦の板（甲の板の下端の舌と重ねて 2 本のねじで留める）
-    xz_plate("wrist_l_v", rrect(w["x0"], w["z"] - t / 2, w["x1"], w["z_top"], 3), yb, t, M["alu"])
-    for i, dx in enumerate((-12, 12)):
-        screw(f"wrist_l_screw{i}", (xc + dx, yb + t, w["z_top"] - 7), (0, 1, 0), M, r=2.4, head="button")
-    # 水平の板（前へ伸びてフランジに載る）
-    Mh = basis((1, 0, 0), (0, 1, 0), (0, 0, w["z"]))
-    plate("wrist_l_h", rrect(w["x0"], w["y_front"], w["x1"], yb + t, 3), t, Mh, M["alu"])
-    # フランジ（ねじ 3 本）とハブ
+    """手首。甲の板の内側に重なる L 字の金具。縦の板が甲の板の下から舌のように出て、前へ折れて丸いフランジに載る。"""
+    x0, x1 = P.WRIST_X
+    t = P.METAL_T
+    zb, zt = P.WRIST_H_Z
+    yv = P.BACK_Y[0] - t
+    xz_plate("wrist_v", rrect(x0, zb, x1, P.WRIST_TOP_Z, 1.2), yv, t, M["alu"])
+    Mh = basis((1, 0, 0), (0, 1, 0), (0, 0, (zb + zt) / 2))
+    plate("wrist_h", rrect(x0, P.WRIST_FRONT_Y, x1, yv + t, 2.0), zt - zb, Mh, M["alu"])
+    cyl("wrist_bend", (x0 + 0.3, yv + t - (zt - zb), zt), (x1 - 0.3, yv + t - (zt - zb), zt), zt - zb, M["alu"], n=20)
     f = P.WRIST_FLANGE
-    zf = w["z"] - t / 2
-    cyl("wrist_flange", (f["x"], f["y"], zf), (f["x"], f["y"], zf - f["t"]), f["r"], M["servo"], n=48, bevel=0.4)
-    for i, a in enumerate((90, 210, 330)):
+    cyl("wrist_flange", (f["x"], f["y"], zb), (f["x"], f["y"], f["z0"]), f["r"], M["servo"], n=48, bevel=0.3)
+    cyl("wrist_hub", (f["x"], f["y"], f["z0"]), (f["x"], f["y"], 0.0), f["hub_r"], M["steel"], n=32, bevel=0.2)
+    for i, a in enumerate((0, 90, 180, 270)):
         a = math.radians(a)
-        sx, sy = f["x"] + (f["r"] - 4) * math.cos(a), f["y"] + (f["r"] - 4) * math.sin(a)
-        if w["x0"] - 3 < sx < w["x1"] + 3 and w["y_front"] - 3 < sy:
-            continue   # 水平の板の下に隠れるねじは置かない
-        screw(f"wrist_flange_screw{i}", (sx, sy, zf), (0, 0, 1), M, r=2.2)
-    for i, a in enumerate((30, 150, 270)):
-        a = math.radians(a)
-        screw(f"wrist_l_hscrew{i}", (f["x"] + 9 * math.cos(a), f["y"] + 9 * math.sin(a), w["z"] + t / 2), (0, 0, 1), M, r=2.0)
-    cyl("wrist_hub", (f["x"], f["y"], zf - f["t"]), (f["x"], f["y"], zf - f["t"] - f["hub_h"]), f["hub_r"], M["steel"], n=40, bevel=0.3)
-
-
-def ALU_T():
-    return P.ALU_T
+        screw(f"wrist_screw{i}", (f["x"] + 7.0 * math.cos(a), f["y"] + 7.0 * math.sin(a), zt), (0, 0, 1), M, r=1.5)
 
 
 # ---- 指 ---------------------------------------------------------------
-def axis_joint(name, c, ax, h_out, M, washer=True, r_bush=5.3, r_head=2.6):
-    """軸 ax（単位ベクトル、カメラ側へ向く）の関節。c は軸の中心、h_out は中心から外面まで。"""
-    c, ax = Vector(c), Vector(ax).normalized()
-    out = c + ax * h_out
-    inn = c - ax * h_out
-    if washer:
-        cyl(name + "_bush", out, out + ax * 1.6, r_bush, M["bushing"], n=24, bevel=0.5)
-        out = out + ax * 1.6
-        cyl(name + "_washer", out, out + ax * 0.9, r_head * 1.45, M["steel"], n=24, bevel=0.2)
-        out = out + ax * 0.9
-    screw(name + "_head", out, ax, M, r=r_head)
-    nut(name + "_nut", inn, -ax, M, r=2.6, h=1.8)
+def paddle_outline(sh):
+    """末節の板。付け根が広く、先へ細くなる木の葉形（側面図の人差し指）。"""
+    cy, cz = P.F_TIP_C
+    r = P.F_TIP_R
+    cap = [(cy + r * math.cos(math.radians(a)), cz + r * math.sin(math.radians(a))) for a in range(45, 186, 15)]
+    pts = [(11.4, 138.8), (10.2, 143.0), *cap, (-15.2, 155.0), (-13.7, 150.5), (-11.2, 146.2),
+           (-8.3, 142.5), (-6.5, 139.9), (5.0, 136.9), (8.3, 136.6), (10.7, 137.6)]
+    return [sh(p) for p in pts]
 
 
-def finger(name, fx, fz, lens, angs, M, fan=0.0):
-    """指。面内座標 (p, q): p = 手のひら側へ、q = 上。指の板の面は鉛直軸まわりに FINGER_YAW だけ回す。"""
-    y0 = P.FINGER_ROOT_Y
-    t, g = P.FINGER_PLATE_T, P.FINGER_GAP
-    yaw = math.radians(P.FINGER_YAW)
-    R = Matrix.Rotation(math.radians(fan), 3, "Y") @ Matrix.Rotation(yaw, 3, "Z")
-    ex = R @ Vector((1, 0, 0))          # 板の厚み方向（軸の向き）
-    ep = R @ Vector((0, -1, 0))         # 曲がる向き
-    ez = R @ Vector((0, 0, 1))
-    O = Vector((fx, y0, fz)) - ez * fz   # 付け根の関節 (fx, y0, fz) を中心に扇に開く
-    h = g / 2 + t                        # 軸の中心から板の外面まで
-    pivots, dirs = [], []
-    p0 = Vector((0.0, fz))
-    phi = 0.0
-    for L, a in zip(lens, angs):
-        phi += math.radians(a)
-        d = Vector((math.sin(phi), math.cos(phi)))
-        pivots.append(p0.copy()); dirs.append(d)
-        p0 = p0 + d * L
+def finger(i, M):
+    """指 1 本。面内座標 (y, z) は側面図の人差し指の読み。指ごとに z をずらし、付け根の軸まわりに扇に開く。
+    手のひらの板の後ろに付け根の軸があり、基節が板の上端をまたいで前へ傾く。
+    板の層（小指側から）: S 字の銀の板、中節の板、基節と末節の板、銀の連結板。"""
+    nm = ("little", "ring", "middle", "index")[i]
+    xa, dz, s = P.FINGER_X[i], P.FINGER_DZ[i], P.STEP_Z[i]
+    t = P.FINGER_T
+    blk, slv = M["acrylic"], M["link"]
 
-    def w2(seg, pp, qq):
-        d = dirs[seg]
-        n = Vector((d.y, -d.x))
-        return pivots[seg] + n * pp + d * qq
+    def sh(p):
+        return (p[0], p[1] + dz)
 
-    def to3(v2, dx=0.0):
-        return O + ex * dx + ep * v2.x + ez * v2.y
+    mcp, pip, dip, mid = sh(P.F_MCP), sh(P.F_PIP), sh(P.F_DIP), sh(P.F_MID)
+    pa, pd, pg = sh(P.F_A), sh(P.F_D), sh(P.F_G)
+    xm, xc, xl = xa + P.LAYER_MID, xa + P.LAYER_CORE, xa + P.LAYER_LINK
+    before = set(COLL.objects)
 
-    def frame(dx):
-        return basis(tuple(ep), tuple(ez), tuple(O + ex * dx))  # n = ep × ez = -ex
+    # 基節（付け根の軸から最初の関節まで）と、連結板の下端を受ける張り出し
+    plate(f"{nm}_prox", ribbon([mcp, sh((12.0, 100.0)), pip], [4.5, 5.5, 6.3]), t, yz(xc), blk, bevel=0.3)
+    plate(f"{nm}_prox_lug", ribbon([pip, pa], [4.0, 3.2]), t, yz(xc), blk, bevel=0.3)
+    # 中節（2 つの関節をつなぐ骨の形の板）と、下の尾
+    plate(f"{nm}_mid", ribbon([dip, mid, pip], [4.3, 3.5, 4.3]), t, yz(xm), blk, bevel=0.3)
+    plate(f"{nm}_mid_tail", ribbon([pip, pg], [4.3, 3.0]), t, yz(xm), blk, bevel=0.3)
+    # 末節
+    plate(f"{nm}_tip", paddle_outline(sh), t, yz(xc), blk, bevel=0.4)
+    # 銀の連結板（親指側の面。基節の張り出しから末節の付け根へ、甲の側へ少し反る）
+    ap = arc_pts(pa, pd, -1.2)
+    plate(f"{nm}_link", ribbon(ap, 2.0), P.LINK_T, yz(xl), slv, bevel=0.25)
+    for e, q in enumerate((pa, pd)):
+        plate(f"{nm}_link_e{e}", circle(q, 3.0, 20), P.LINK_T, yz(xl), slv, bevel=0.25)
+        screw(f"{nm}_link_s{e}", (xl + P.LINK_T / 2, q[0], q[1]), (1, 0, 0), M, r=1.9)
 
-    def seg_plates(nm, outline2, inner=False):
-        """outer: 2 枚の板で挟む節。inner: 1 枚の板（外の節の間に入る）。関節で段差が見える。"""
-        if inner:
-            plate(f"{nm}_0", outline2, 2 * t + g - 3.0, frame(0.0), M["acrylic"], bevel=0.12)
-        else:
-            for k, dx in enumerate((-(g / 2 + t / 2), g / 2 + t / 2)):
-                plate(f"{nm}_{k}", outline2, t, frame(dx), M["acrylic"], bevel=0.12)
+    # 小指側の面の金具: 2 つの関節に大きい座金とねじ、中ほどに小ねじ
+    xf = xm - t / 2
+    for k, q in enumerate((dip, pip)):
+        xcyl(f"{nm}_washer{k}", xf, xf - 0.7, q, 3.3, M["steel"], bevel=0.15)
+        screw(f"{nm}_jscrew{k}", (xf - 0.7, q[0], q[1]), (-1, 0, 0), M, r=1.9, head="button")
+    screw(f"{nm}_midscrew", (xf, mid[0], mid[1]), (-1, 0, 0), M, r=1.5, head="button")
+    nut(f"{nm}_midnut", (xm + t / 2, mid[0], mid[1]), (1, 0, 0), M, r=1.9, h=1.8)
+    # 親指側の面: 最初の関節から黒い筒が出て、先が銀色
+    xr = xc + t / 2
+    xcyl(f"{nm}_pip_spacer", xr, xr + 3.5, pip, 2.6, M["bushing"], bevel=0.3)
+    xcyl(f"{nm}_pip_cap", xr + 3.5, xr + 4.3, pip, 1.7, M["steel"], bevel=0.2)
+    xcyl(f"{nm}_dip_pin", xr, xr + 0.5, dip, 1.0, M["steel"])
+    # 付け根の軸とナット
+    xcyl(f"{nm}_mcp_bolt", xm - t / 2 - 0.5, xr + 2.0, mcp, 1.2, M["steel"])
+    nut(f"{nm}_mcp_nut", (xr, mcp[0], mcp[1]), (1, 0, 0), M, r=2.6, h=1.9)
+    # 引き棒（サーボから基節の上端へ）と下端のナット
+    rb, rt = sh(P.F_ROD_BOTTOM), sh(P.F_ROD_TOP)
+    cyl(f"{nm}_rod", (xc, rb[0], rb[1]), (xc, rt[0], rt[1]), 0.7, M["steel"], n=10)
+    xcyl(f"{nm}_rod_end", xc - 1.8, xc + 1.8, rb, 3.0, M["bushing"], bevel=0.3)
+    nut(f"{nm}_rod_nut", (xc + 1.8, rb[0], rb[1]), (1, 0, 0), M, r=2.2, h=1.6)
 
-    W = P.FINGER_W / 2
-    base = ribbon([(0, fz - 20), (0, fz)], [W + 1.0, W + 0.5])
-    seg_plates(f"{name}_base", base)
-    for s in range(2):
-        L = lens[s]
-        c2 = [tuple(w2(s, -1.5 * math.sin(math.pi * i / 2), q)) for i, q in enumerate((0, L * 0.5, L))]
-        seg_plates(f"{name}_seg{s}", ribbon(c2, [W + 0.5, W, W]) if s == 1 else ribbon(c2, [W, W, W - 0.5]),
-                   inner=(s == 0))
-    curl = math.radians(P.TIP_CURL)
-    L = lens[2]
-    pts, halfs = [], []
-    n = 12
-    cur = Vector((0.0, 0.0))
-    for i in range(n + 1):
-        pts.append(tuple(w2(2, cur.x, cur.y)))
-        halfs.append(W * (0.86 - 0.3 * (i / n) ** 4))
-        ang = curl * (i / n) ** 1.3
-        cur = cur + Vector((math.sin(ang), math.cos(ang))) * (L / n)
-    seg_plates(f"{name}_tip", ribbon(pts, halfs), inner=True)
+    # 付け根の軸まわりに扇に開く
+    c = Vector((xa, mcp[0], mcp[1])) * MM
+    R = Matrix.Translation(c) @ Matrix.Rotation(math.radians(P.FINGER_FAN[i]), 4, "Y") @ Matrix.Translation(-c)
+    bpy.context.view_layer.update()
+    for ob in set(COLL.objects) - before:
+        ob.matrix_world = R @ ob.matrix_world
 
-    for s in range(3):
-        a3 = to3(pivots[s])
-        b3 = to3(pivots[s] + dirs[s] * lens[s] * (0.75 if s == 2 else 1.0))
-        cyl(f"{name}_core{s}", a3, b3, 4.5, M["dark"], n=12)
-
-    # 関節（カメラ側 = -ex 側にねじ頭）
-    for s in range(3):
-        axis_joint(f"{name}_j{s}", to3(pivots[s]), -ex, h, M)
-    for s in range(2):
-        axis_joint(f"{name}_m{s}", to3(w2(s, 0, lens[s] * 0.5)), -ex, h, M, washer=False, r_head=2.3)
-    # 指先の止めねじ
-    axis_joint(f"{name}_tipscrew", to3(w2(2, 1.5, L * 0.45)), -ex, h, M, washer=False, r_head=2.0)
-
-    # 銀色のリンク（手の甲側 = -p 側、カメラ側の外面の外）
-    dl = -(h + 1.6 + P.LINK_T / 2 + 0.3)   # カメラ側の外面（ブッシュの外）
-    Ml = frame(dl)
-    links = [
-        (w2(0, -5.0, lens[0] * 0.55), w2(1, -5.0, 10.0), 1.5),
-        (w2(1, -5.0, lens[1] * 0.55), w2(2, -5.0, 10.0), 1.5),
-    ]
-    for k, (a, b, sag) in enumerate(links):
-        ap = arc_pts(a, b, sag)
-        hw = [P.LINK_W / 2 * (1.0 - 0.35 * math.sin(math.pi * i / (len(ap) - 1))) for i in range(len(ap))]
-        plate(f"{name}_link{k}", ribbon(ap, hw), P.LINK_T, Ml, M["link"], bevel=0.3)
-        for e, pnt in enumerate((a, b)):   # 端は丸く広げる
-            plate(f"{name}_link{k}_e{e}", circle(tuple(pnt), P.LINK_W / 2 + 1.0, 20), P.LINK_T, Ml, M["link"], bevel=0.3)
-        for e, pnt in enumerate((a, b)):
-            screw(f"{name}_link{k}_s{e}", to3(pnt, dl - P.LINK_T / 2), -ex, M, r=2.8)
-    s_pts = [(-5.0, fz + 4), (-8.0, fz - 8), (-3.0, fz - 18), (-1.0, fz - 30)]
-    plate(f"{name}_slink", ribbon(s_pts, P.LINK_W / 2), P.LINK_T, Ml, M["link"], bevel=0.3)
-    plate(f"{name}_slink_e", circle(s_pts[-1], P.LINK_W / 2 + 1.0, 20), P.LINK_T, Ml, M["link"], bevel=0.3)
-    screw(f"{name}_slink_s", to3(Vector(s_pts[-1]), dl - P.LINK_T / 2), -ex, M, r=2.6)
-    # 板の手前の黒いナット受け
-    box(f"{name}_slink_blk", tuple((to3(Vector(s_pts[-1]), dl * 0.5)) ), (7, 6, 7), M["servo"], bevel=0.8)
-
-
-POSE = None   # None なら params の曲げ角、リストなら指ごとに差し替える
+    # 付け根の台（手のひらの板の後ろで軸を支える）。板に固定なので回さない
+    plate(f"{nm}_base", ribbon([(4.5, s - 1.5), mcp], [4.0, 4.6]), t, yz(xm), M["servo"], bevel=0.3)
+    # S 字の銀の板: 手のひらの板の手前の軸から板の上端をまたぎ、中節の尾へ上がる
+    g = (R @ (Vector((xm, pg[0], pg[1])) * MM)) / MM
+    hy, hz = P.HOOK_PIVOT[0], s + P.HOOK_PIVOT[1]
+    top = s + 6.3
+    path = [(hy, hz), (hy + 0.3, s + 0.8), (-4.6, s + 4.7), (-0.8, top), (2.6, top + 1.4),
+            (4.4, (top + 1.4 + g.z) / 2), (g.y, g.z)]
+    xs = xa + P.LAYER_S
+    plate(f"{nm}_slink", ribbon(path, 1.9), P.LINK_T, yz(xs), slv, bevel=0.25)
+    for e, q in enumerate((path[0], path[-1])):
+        plate(f"{nm}_slink_e{e}", circle(q, 2.8, 20), P.LINK_T, yz(xs), slv, bevel=0.25)
+    screw(f"{nm}_slink_s", (xs - P.LINK_T / 2, g.y, g.z), (-1, 0, 0), M, r=1.7)
 
 
 def fingers(M):
-    for i, (nm, fx, fz, lens, angs) in enumerate(P.FINGERS):
-        finger(nm, fx, fz, lens, POSE[i] if POSE else angs, M, P.FINGER_FAN[i])
+    for i in range(4):
+        finger(i, M)
 
 
 def thumb(M):
-    """親指。基節は上下 2 枚の板、末節は 1 枚の板で、基節の 2 枚の間に挟まる（2026-11-10 074343 の写真と寸法図）。
-    板は平たいへら形で、上下の板は板厚ぶんしか離れていない。末節の先は丸く、穴が 1 つある。
-    上には銀色の曲げ金具が付け根の側板から基節へ渡り、下には真鍮の押し棒が通る。"""
-    px, py = P.THUMB_PIVOT
-    a = math.radians(P.THUMB_DIR)
-    d = Vector((math.cos(a), math.sin(a)))
-    nrm = Vector((-d.y, d.x))           # 指の幅方向。+nrm が甲の側
-    L1, L2 = P.THUMB_LEN
-    t = P.THUMB_PLATE_T
-    zb, zt = P.THUMB_PLATES_Z          # 下の板と上の板の下面
-    zm = (zb + zt) / 2                  # 末節の板の下面
-    o = Vector((px, py))
-    j1 = o + d * L1                     # 基節と末節の関節
+    """親指。基節は上下 2 枚の板、末節は 1 枚でその間に挟まる。板は右下がりに傾き、正面からは縁だけが見える。
+    上に銀のクランク（翼の裏から親指へ渡る）、下に真鍮の柱と押し棒。"""
+    e1, e2, n, o = thumb_frame()
+    L = P.THUMB_LAYERS
 
-    def Mz(z):
-        return basis((1, 0, 0), (0, 1, 0), (0, 0, z + t / 2))
+    def Mt(layer):
+        h0, h1 = layer
+        return basis(tuple(e1), tuple(e2), tuple(o + n * ((h0 + h1) / 2))), h1 - h0
 
-    # 付け根の縦軸のブッシュと、側板に留める黒い金具
-    cyl("thumb_root_bush", (px, py, zb - 5), (px, py, zt + t + 5), 5.5, M["bushing"], n=28, bevel=0.5)
-    box("thumb_bracket", (px + 4, py + 6, zm + t / 2), (6, 18, 34), M["acrylic"], bevel=0.6)
+    d = math.radians(P.THUMB_DIR)
+    du = Vector((math.cos(d), math.sin(d)))
+    pv = Vector((P.THUMB_PIVOT_A, 0.0))
+    jt = pv + du * P.THUMB_PROX_LEN
+    up = -n
 
-    # 基節（上下 2 枚）。付け根は軸を囲む円、関節側も円で終わる、幅の広いへら形
-    prox = ribbon([tuple(o), tuple(o + d * (L1 * 0.5)), tuple(j1)], [P.THUMB_W[0], P.THUMB_W[0] - 0.5, P.THUMB_W[1]])
-    for zi, z in enumerate((zb, zt)):
-        plate(f"thumb_prox{zi}", prox, t, Mz(z), M["acrylic"], [circle(tuple(o + d * (L1 * 0.5)), 1.4, 12)], bevel=0.15)
-
-    # 末節（1 枚）。関節の少し手前から始まり、手のひら側へ少し反って先は丸く、先に穴
-    pts, halfs = [], []
-    cur = j1 - d * 6.0
-    n = 10
-    for k in range(n + 1):
-        pts.append(tuple(cur))
-        f_ = k / n
-        halfs.append(P.THUMB_W[1] + (P.THUMB_W[2] - P.THUMB_W[1]) * f_)
-        ang = a - math.radians(P.THUMB_TIP_BEND) * f_ ** 1.5
-        cur = cur + Vector((math.cos(ang), math.sin(ang))) * ((L2 + 6.0) / n)
-    tip_hole = Vector(pts[-1]) - (Vector(pts[-1]) - Vector(pts[-2])).normalized() * 3.0
-    plate("thumb_distal", ribbon(pts, halfs), t, Mz(zm), M["acrylic"], [circle(tuple(tip_hole), 1.8, 16)], bevel=0.15)
-
-    # 関節: 黒いブッシュ、座金、ねじ（上の板の上と下の板の下）
-    for k, pnt in enumerate((o, j1)):
-        cyl(f"thumb_jb{k}", (pnt.x, pnt.y, zt + t), (pnt.x, pnt.y, zt + t + 1.6), 5.0, M["bushing"], n=24, bevel=0.4)
-        cyl(f"thumb_jw{k}", (pnt.x, pnt.y, zt + t + 1.6), (pnt.x, pnt.y, zt + t + 2.4), 4.2, M["steel"], n=24, bevel=0.2)
-        screw(f"thumb_jh{k}", (pnt.x, pnt.y, zt + t + 2.4), (0, 0, 1), M, r=3.0)
-        screw(f"thumb_jn{k}", (pnt.x, pnt.y, zb), (0, 0, -1), M, r=2.6)
-    # 基節の中ほどの小ねじ（上の板）
-    mid = o + d * (L1 * 0.5)
-    screw("thumb_mid_s", (mid.x, mid.y, zt + t), (0, 0, 1), M, r=1.8)
-
-    # 銀色の曲げ金具: 側板の金具から上へ持ち上がり、基節の付け根寄りへ下りる（クランク形）
-    zl = zt + t + 3.2
-    a0 = Vector((px + 6, py + 20))       # 側板側の端
-    a1 = o + d * 16 + nrm * 4            # 基節側の端
-    plate("thumb_crank_a", circle(tuple(a0), 4.0, 20), P.LINK_T, Mz(zl - t / 2 + P.LINK_T / 2 - 4.0), M["link"], bevel=0.3)
-    plate("thumb_crank_b", circle(tuple(a1), 4.0, 20), P.LINK_T, Mz(zt + t - t / 2 + P.LINK_T / 2), M["link"], bevel=0.3)
-    # 帯: 端の高さから持ち上がって水平に渡る（3 区間の箱で近似）
-    pa = Vector((a0.x, a0.y, zl - 4.0 + P.LINK_T / 2))
-    pb = Vector((a1.x, a1.y, zt + t + P.LINK_T / 2))
-    q0 = pa + (pb - pa) * 0.3
-    q1 = pa + (pb - pa) * 0.7
-    q0.z = q1.z = zl + 2.0
-    wdir = Vector((-(pb - pa).y, (pb - pa).x, 0)).normalized()   # 帯の幅の向き（水平）
-    for k, (u, v) in enumerate(((pa, q0), (q0, q1), (q1, pb))):
-        dv = v - u
-        # box を回すと原点まわりに飛ぶので、帯の面の基底で板を作る
-        plate(f"thumb_crank{k}", ribbon([(0.0, 0.0), (dv.length, 0.0)], P.LINK_W / 2), P.LINK_T,
-              basis(tuple(dv.normalized()), tuple(wdir), tuple(u)), M["link"], bevel=0.3)
-    for k, (pnt, z) in enumerate(((a0, zl - 4.0 + P.LINK_T), (a1, zt + t + P.LINK_T))):
-        screw(f"thumb_crank_s{k}", (pnt.x, pnt.y, z), (0, 0, 1), M, r=2.4)
+    # 基節の上下の板
+    Mu, tu = Mt(L["upper"])
+    plate("thumb_upper", ribbon([tuple(pv - du * 2), tuple(pv + du * 24), tuple(jt)], [6.0, 6.0, 5.2]), tu, Mu,
+          M["acrylic"], bevel=0.3)
+    Ml, tl = Mt(L["lower"])
+    plate("thumb_lower", ribbon([tuple(pv - du * 5), tuple(pv + du * 20), tuple(pv + du * 40)], [6.0, 6.0, 5.0]), tl, Ml,
+          M["acrylic"], bevel=0.3)
+    # 付け根の黒い詰め物と縦軸
+    Mm, tm = Mt(L["mid"])
+    plate("thumb_root", ribbon([tuple(pv - du * 2), tuple(pv + du * 14)], 5.0), tm, Mm, M["servo"], bevel=0.3)
+    cyl("thumb_pivot", thumb_pt(pv.x, pv.y, -1.2), thumb_pt(pv.x, pv.y, L["lower"][1] + 1.2), 3.2, M["bushing"], n=24, bevel=0.3)
+    # 末節（1 枚。関節の手前から始まり、先は丸く、穴が 1 つ）
+    dm_a = math.radians(P.THUMB_TIP_DIR)
+    dm = Vector((math.cos(dm_a), math.sin(dm_a)))
+    tip_c = jt + dm * P.THUMB_TIP_LEN
+    hole = circle(tuple(tip_c), 1.3, 14)
+    plate("thumb_distal", ribbon([tuple(jt - du * 16), tuple(jt - du * 4), tuple(jt + dm * 6), tuple(tip_c)],
+                                 [5.2, 5.2, 4.6, 3.9]), tm, Mm, M["acrylic"], [hole], bevel=0.3)
+    # 上の板のねじ: 付け根寄りと中ほどに小ねじ、中央と関節に座金つき
+    for k, (dist, big) in enumerate(((7.9, False), (28.3, True), (39.9, False), (P.THUMB_PROX_LEN, True))):
+        q = pv + du * dist
+        top = thumb_pt(q.x, q.y, 0.0)
+        if big:
+            cyl(f"thumb_w{k}", top, top + up * 0.7, 3.3, M["steel"], n=24, bevel=0.15)
+            screw(f"thumb_s{k}", top + up * 0.7, up, M, r=1.9)
+        else:
+            screw(f"thumb_s{k}", top, up, M, r=1.5)
+        if dist <= 40:
+            nut(f"thumb_n{k}", thumb_pt(q.x, q.y, L["lower"][1]), n, M, r=1.9, h=1.6)
+    # 真鍮の柱と、下端の押し棒の受け
+    a, b = thumb_strut_bottom()
+    h0 = L["lower"][1]
+    cyl("thumb_strut", thumb_pt(a, b, h0), thumb_pt(a, b, h0 + 8.0), 1.5, M["brass"], n=16)
+    cyl("rod_end1", thumb_pt(a, b, h0 + 7.5), thumb_pt(a, b, h0 + 11.0), 2.8, M["servo"], n=24, bevel=0.4)
+    screw("rod_end1_s", thumb_pt(a, b, h0 + 11.0), n, M, r=1.5)
+    # 銀のクランク: 翼の裏の柱から親指の手のひら側の張り出しへ渡る
+    fa, fb, fh = thumb_ab(P.THUMB_CRANK_F)
+    ta, tb, th = thumb_ab(P.THUMB_CRANK_T)
+    hc = min(fh, th, -P.LINK_T / 2 - 0.2)
+    Mc = basis(tuple(e1), tuple(e2), tuple(o + n * hc))
+    path = [(fa, fb), (fa + (ta - fa) * 0.15, fb + (tb - fb) * 0.35), (fa + (ta - fa) * 0.85, fb + (tb - fb) * 0.65), (ta, tb)]
+    plate("thumb_crank", ribbon(path, 2.6), P.LINK_T, Mc, M["link"], bevel=0.25)
+    for k, q in enumerate(((fa, fb), (ta, tb))):
+        plate(f"thumb_crank_e{k}", circle(q, 3.3, 20), P.LINK_T, Mc, M["link"], bevel=0.25)
+        screw(f"thumb_crank_s{k}", thumb_pt(q[0], q[1], hc - P.LINK_T / 2), up, M, r=1.7)
+    # 親指側の受け（上の板から手のひら側へ出る黒い張り出し）
+    on_axis = pv + du * ((ta - pv.x) / du.x)
+    plate("thumb_crank_tab", ribbon([tuple(on_axis), (ta, tb)], [4.0, 3.3]), tu, Mu, M["acrylic"], bevel=0.3)
+    # 固定側の柱（翼の裏から）
+    f = Vector(P.THUMB_CRANK_F)
+    cyl("thumb_crank_post", (f.x, P.PALM_Y[1], f.z), tuple(f), 2.2, M["bushing"], n=6)
 
 
 # ======================================================================
@@ -664,24 +647,13 @@ def build():
     COLL = bpy.data.collections.new("uhand")
     bpy.context.scene.collection.children.link(COLL)
     M = materials()
-    front_plates(M)
+    palm_plate(M)
+    servo_plate(M)
     servos(M)
-    back_and_sides(M)
+    metal_cover(M)
     wrist(M)
     fingers(M)
-    before = set(COLL.objects)
     thumb(M)
-    # 親指全体を付け根まわりに下へ傾ける
-    a = math.radians(P.THUMB_DIR)
-    axis = Vector((-math.sin(a), math.cos(a), 0))
-    c = Vector((*P.THUMB_PIVOT, sum(P.THUMB_PLATES_Z) / 2)) * MM
-    d = Vector((math.cos(a), math.sin(a), 0))
-    # 先に指の向きの軸まわりに転がし（負で板の上面が甲の側を向く）、次に先を下げる
-    R = (Matrix.Translation(c) @ Matrix.Rotation(math.radians(P.THUMB_PITCH), 4, axis)
-         @ Matrix.Rotation(math.radians(P.THUMB_ROLL), 4, d) @ Matrix.Translation(-c))
-    bpy.context.view_layer.update()   # 直前に scale を入れた物の matrix_world を確定させる
-    for ob in set(COLL.objects) - before:
-        ob.matrix_world = R @ ob.matrix_world
     return COLL
 
 
@@ -703,7 +675,7 @@ if __name__ == "__main__" and not os.environ.get("UHAND_NO_EXPORT"):
     build()
     to_meshes()
     export_stl("hiwonder-uhand")
-    # 色つきの GLB（viewer/uhand-camera.html で写真と重ねてカメラを合わせる）
+    # 色つきの GLB
     for ob in bpy.data.objects:
         ob.select_set(ob.name in COLL.objects)
     bpy.ops.export_scene.gltf(filepath=os.path.join(os.path.dirname(__file__), "../../exports/hiwonder-uhand.glb"),

@@ -19,13 +19,13 @@ from mathutils import Vector
 import model as HM
 
 # 描く範囲 [mm]（モデル座標。縮尺を変えても枠は同じ）
-FRAME = dict(h0=-110.0, h1=170.0, z0=-40.0, z1=200.0)
+FRAME = dict(h0=-60.0, h1=100.0, z0=-5.0, z1=180.0)
 
 
 def main():
     a = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
     out = a[a.index("--out") + 1] if "--out" in a else os.path.join(HERE, "_renders")
-    mmpx = float(a[a.index("--mmpx") + 1]) if "--mmpx" in a else 0.16
+    mmpx = float(a[a.index("--mmpx") + 1]) if "--mmpx" in a else 0.1
     os.makedirs(out, exist_ok=True)
     for ob in list(bpy.data.objects):
         bpy.data.objects.remove(ob, do_unlink=True)

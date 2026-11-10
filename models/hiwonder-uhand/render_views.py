@@ -16,33 +16,25 @@ from mathutils import Vector
 
 import model as HM
 
-MM = HM.P.MM   # 写真の目盛りの 1 単位 [m]。カメラの座標も写真の目盛りで書いてある
-# 名前: (方位[deg]: -Y から -X 側へ、仰角[deg]、注視点 (x, y, z)[mm]、距離[mm]、焦点距離、解像度)
+MM = HM.P.MM
+# 名前: (方位[deg]: -Y から -X 側へ、仰角[deg]、注視点 (x, y, z)[mm]、距離[mm]、焦点距離、解像度、ロール[deg])
 VIEWS = {
-    # 商品写真（正面寄り、小指側から）
-    "main": (24.0, 10.0, (8, -10, 150), 700, 70, (760, 1000)),
-    # 指の横顔（親指側から、指先側）
-    "side": (55.0, 18.0, (20, -30, 212), 400, 70, (1035, 765), 0.0),
-    # 手のひら側のサーボを寄りで（写真の左上）
-    "servo": (22.0, 18.0, (5, -20, 100), 330, 70, (1035, 765)),
-    # 正面寄りの写真（2 枚目に届いた写真。手のひら側を正面から）
-    "front": (4.0, 6.0, (8, -10, 150), 700, 70, (746, 866)),
-    # 手の甲のアルミ板（写真の左下）
-    "back": (200.0, 45.0, (0, 10, 72), 330, 70, (1035, 765), 70.0),
-    # 甲の板（2026-11-10 074343）。--fit で points/back3_cam.json の逆算カメラを使う
-    "back3": (150.0, 4.0, (5, 10, 75), 520, 70, (720, 432)),
-    # 甲の側から斜め上、指が左上へ伸びる（2026-11-10 074156）
-    "persp3": (215.0, 28.0, (-5, 0, 120), 800, 70, (800, 800), -28.0),
-    # 確認用: 真後ろと、斜め後ろ上から
-    "rear": (180.0, 8.0, (5, 10, 90), 700, 70, (800, 900)),
-    "rear_oblique": (140.0, 30.0, (5, 10, 90), 700, 70, (800, 900)),
-    # 確認用: 手首まわりを横の低い位置から
-    "under": (120.0, -5.0, (0, 10, 10), 450, 50, (900, 700)),
+    # 商品写真 10（手のひら側、小指側の斜め前から）
+    "p10": (27.0, 8.0, (20, 0, 88), 400, 70, (757, 705), 0.0),
+    # 商品写真 11（同じ向きで少し上から）
+    "p11": (30.0, 14.0, (18, 0, 90), 400, 70, (676, 676), 0.0),
+    # 実物写真 14（手のひら側をほぼ正面から）
+    "p14": (4.0, 4.0, (22, 0, 88), 430, 70, (746, 866), 0.0),
+    # 甲の写真 04（後ろから、親指側へ少し回る）
+    "p04": (196.0, -2.0, (14, 20, 50), 400, 85, (1010, 681), -6.0),
+    # 甲の写真 06（斜め後ろ上、小指側から。指が左上へ伸びる）
+    "p06": (150.0, 32.0, (-5, 10, 90), 400, 70, (666, 666), -32.0),
+    # 商品写真 13 の左下（甲を上から）
+    "p13": (215.0, 50.0, (0, 20, 45), 220, 70, (690, 512), -60.0),
+    # 確認用
+    "side": (-90.0, 5.0, (0, 0, 88), 380, 70, (700, 900), 0.0),
+    "under": (160.0, -12.0, (5, 10, 25), 330, 60, (900, 700), 0.0),
 }
-
-
-CURLED = {"side"}   # 指を曲げた姿勢で描く図
-FIT = "--fit" in sys.argv   # points/<view>_cam.json があれば写真から逆算したカメラで描く
 
 
 def args():
@@ -103,7 +95,7 @@ def setup_scene():
         ld.size = size
         lo = bpy.data.objects.new(name, ld)
         lo.location = loc
-        d = Vector((0, 0, 0.13)) - Vector(loc)
+        d = Vector((0, 0, 0.09)) - Vector(loc)
         lo.rotation_euler = d.to_track_quat("-Z", "Y").to_euler()
         sc.collection.objects.link(lo)
     cd = bpy.data.cameras.new("cam")
@@ -124,38 +116,15 @@ def place(cam, az, pitch, look, dist, lens, roll=0.0):
     cam.data.lens = lens
 
 
-def place_fit(cam, view):
-    """camfit.py が写真から逆算したカメラを置く。写真と同じ画角になる。"""
-    import json
-    from mathutils import Matrix
-    d = json.load(open(os.path.join(HERE, "points", f"{view}_cam.json"), encoding="utf-8"))
-    r, dn, fw = (Vector(d[k]) for k in ("right", "down", "fwd"))
-    m = Matrix((r, -dn, -fw)).transposed()          # 列 = カメラの x, y, z（Blender は -Z を見る）
-    cam.matrix_world = Matrix.Translation(Vector(d["pos"]) * MM) @ m.to_4x4()
-    cam.data.sensor_fit = "HORIZONTAL"
-    cam.data.sensor_width = 36.0
-    cam.data.lens = d["f_px"] * 36.0 / d["size"][0]
-    return tuple(d["size"])
-
-
 def main():
     out = args()
     os.makedirs(out, exist_ok=True)
     cam = setup_scene()
     sc = bpy.context.scene
-    for name, (az, pitch, look, dist, lens, res, *rest) in VIEWS.items():
-        pose = HM.P.CURL_POSE if name in CURLED else None
-        if HM.COLL is None or HM.POSE != pose:
-            if HM.COLL is not None:
-                for ob in list(HM.COLL.objects):
-                    bpy.data.objects.remove(ob, do_unlink=True)
-                bpy.data.collections.remove(HM.COLL)
-            HM.POSE = pose
-            HM.build()
+    HM.build()
+    for name, (az, pitch, look, dist, lens, res, roll) in VIEWS.items():
         sc.render.resolution_x, sc.render.resolution_y = res
-        place(cam, az, pitch, look, dist, lens, rest[0] if rest else 0.0)
-        if FIT and os.path.exists(os.path.join(HERE, "points", f"{name}_cam.json")):
-            sc.render.resolution_x, sc.render.resolution_y = place_fit(cam, name)
+        place(cam, az, pitch, look, dist, lens, roll)
         sc.render.filepath = os.path.join(out, f"{name}.png")
         bpy.ops.render.render(write_still=True)
         print("[render]", sc.render.filepath)

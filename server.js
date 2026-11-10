@@ -520,7 +520,6 @@ function resolveStatic(pathname) {
     ["/prints/", PRINTS_DIR],
     ["/reports/", REPORTS_DIR],
     ["/models/mystery-box-sg92r-c4-2/", path.join(MODELS_DIR, "mystery-box-sg92r-c4-2")],
-    ["/models/hiwonder-uhand/", path.join(MODELS_DIR, "hiwonder-uhand")],   // 写真とカメラを合わせるページ用（ref/ と points/）
     ["/requests/", REQUESTS_DIR],
     ["/preview/", PREVIEW_DIR],
     ["/viewer/", VIEWER_DIR],   // /viewer/studio/* もここ
@@ -611,24 +610,6 @@ async function main() {
         const out = path.join(outDir, "_browser_shot.png");
         fs.writeFileSync(out, Buffer.from(b64, "base64"));
         return sendJSON(res, { ok: true, bytes: fs.statSync(out).size });
-      }
-      if (p === "/api/uhand-cam" && req.method === "POST") {
-        // viewer/uhand-camera.html で合わせたカメラを models/hiwonder-uhand/points/<view>_cam.json に書く
-        const body = await readJSON(req);
-        if (!["servo", "front", "back", "main", "side"].includes(body.view)) throw new HttpError(400, "view が不正です");
-        const vec = (v) => Array.isArray(v) && v.length === 3 && v.every(Number.isFinite);
-        const c = body.cam || {};
-        if (!vec(c.pos) || !vec(c.right) || !vec(c.down) || !vec(c.fwd) || !Number.isFinite(c.f_px) || c.f_px <= 0
-            || !Array.isArray(c.size) || c.size.length !== 2 || !c.size.every((n) => Number.isInteger(n) && n > 0)) {
-          throw new HttpError(400, "cam が不正です");
-        }
-        const out = { view: body.view, size: c.size, f_px: c.f_px, rms_px: null, pos: c.pos, right: c.right, down: c.down,
-                      fwd: c.fwd, mirror: !!c.mirror, source: "manual (viewer/uhand-camera.html)", saved: isoLocal(new Date()) };
-        const file = path.join(MODELS_DIR, "hiwonder-uhand", "points", `${body.view}_cam.json`);
-        const tmp = file + ".tmp";
-        fs.writeFileSync(tmp, JSON.stringify(out, null, 1));
-        fs.renameSync(tmp, file);
-        return sendJSON(res, { ok: true, file: path.relative(ROOT, file) });
       }
       if (p === "/api/listener") return sendJSON(res, readListener());
       if (p === "/api/requests") {
