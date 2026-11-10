@@ -10,7 +10,7 @@ description: model-lab の Hiwonder uHand（5 本指ロボットハンド）の�
 ```bash
 py -3.11 models/hiwonder-uhand/anim.py check            # 定義と機構の検査。exit 0 で合格
 py -3.11 models/hiwonder-uhand/anim.py build            # 検査 → exports/hiwonder-uhand-rigged.{fbx,glb,json}
-py -3.11 models/hiwonder-uhand/anim.py preview <clip> [front|palm|back|side]   # 8 コマの絵と動画
+py -3.11 models/hiwonder-uhand/anim.py preview <clip> [front|palm|back|side|little]   # 8 コマの絵と動画
 py -3.11 models/hiwonder-uhand/anim.py pose <姿勢> [view]                       # 姿勢 1 枚
 py -3.11 models/hiwonder-uhand/anim.py dofs index=1,thumb=0.5 [view]           # 量を直に決めて 1 枚
 py -3.11 models/hiwonder-uhand/anim.py unity-test       # Unity の空プロジェクトで読み込み・組み立て・照合
@@ -29,7 +29,7 @@ py -3.11 models/hiwonder-uhand/anim.py unity <project>  # 使うプロジェク�
 | `thumb` | 0〜1 | 0 が寸法図の姿勢、1 が手のひらへ倒しきり |
 | `wrist` | -1〜1 | 手首の回転。0 が正面、±1 が ±90 度 |
 
-指は量 1 個から、付け根・次の関節・指先の 3 つの角度と、銀の板 2 枚と引き棒の姿勢が決まる（`kin.py` が実物と同じ 4 節リンクを解く）。握りきりで関節は 60 / 約 75 / 約 62 度。**関節の角度を個別に書く口は無い。** 実物に無い動きを作らないため。
+指は量 1 個から、付け根・次の関節・指先の 3 つの角度と、銀の板 2 枚、サーボのホーン、引き棒の姿勢が決まる（`kin.py` が実物と同じ 4 節リンクを解く）。握りきりで関節は 45 / 約 81 / 約 65 度。**関節の角度を個別に書く口は無い。** 実物に無い動きを作らないため。
 
 ## 2. クリップを足す
 
@@ -63,13 +63,13 @@ py -3.11 models/hiwonder-uhand/anim.py unity <project>  # 使うプロジェク�
 |---|---|
 | クリップの間・順番・速さ | `anim/clips/<名前>.json` |
 | 「握った形」「ピースの形」そのもの | `anim/poses.json` |
-| 指の曲がりの深さ（全クリップに効く） | `kin.py` の `FINGER_MCP_MAX` `THUMB_PROX_MAX` `THUMB_TIP_MAX` |
+| 指の曲がりの深さ（全クリップに効く） | `kin.py` の `FINGER_MCP_MAX`（45 まで）`THUMB_PROX_MAX` `THUMB_TIP_MAX` |
 | 関節どうしの連動の比 | `params.py` の `F_G`（S 字の板の上端）と `F_A` `F_D`（銀の連結板の両端）。形も一緒に変わる |
 | 部品の形・位置 | `model.py` `params.py`。変えたら `anim.py build` まで通す |
 | どの部品がどの骨に付くか | `anim_build.py` の `RULES`。当たらない部品があると止まる |
 | 骨の親子・回転の中心 | `kin.py` の `bones()` |
 
-`params.py` の指の点（`F_MCP` `F_PIP` `F_DIP` `F_G` `F_A` `F_D`）を動かすと連結が解けなくなることがある。`anim.py check` が「届かない」「曲げが戻る」で止める。
+`params.py` の指の点（`F_MCP` `F_PIP` `F_DIP` `F_G` `F_A` `F_D` `F_LEVER`）を動かすと連結が解けなくなることがある。`anim.py check` が「届かない」「曲げが戻る」で止める。
 
 ## 4. 仕組み
 
@@ -91,8 +91,8 @@ py -3.11 models/hiwonder-uhand/anim.py unity <project>  # 使うプロジェク�
 ## 6. 知っておくこと
 
 - **親指の銀のクランクは伸び縮みで合わせている**（最大 1.33 倍）。資料から仕組みが読めず、固定側から親指を追わせているため。検査の幅は `anim_check.py` の `CRANK_STRETCH`。仕組みが分かったら `kin.thumb_pose` を直して幅を狭める
-- 指の引き棒も伸び縮み（最大 1.12 倍）。手のひらの中にほぼ隠れる
-- S 字の板の上端 `F_G` は、連動が成り立つ位置を計算で探して決めた（関節の 15mm 下）。寸法図の側面で板が上端をまたいで後ろへ下りる形とは合うが、留め位置そのものは図から読めていない
+- 指の引き棒は長さが変わらない。基節の後ろの腕（`F_LEVER`）と、手のひらの板の後ろで回るサーボのホーンをつなぐ。ホーンの軸の位置と腕の長さは推定（`FINGER_SHAFT_DZ` `FINGER_HORN_R` `FINGER_HORN_REST`）
+- S 字の板の上端 `F_G` は中節の板の尾の先。実物の写真（2026-11-10。握った姿勢で付け根 43 度・次の関節 74 度）に合う位置を計算で選んだ。付け根が 52 度を超えると板が届かないので、`FINGER_MCP_MAX` は 45 より上げない
 - 書き出し（FBX・GLB・目録）と確認用の絵は git に入れない。別の PC では `anim.py build` で作る
 - Bash の heredoc で `\n` を含む置換を書くと 1 段消える。JS や JSON を直すときは Edit ツールを使う
 - Blender 5.1 で通している。骨の姿勢は `matrix_basis = 休み⁻¹ · 親の動き⁻¹ · 自分の動き · 休み` で入れる（`anim_build.apply_pose`）

@@ -25,7 +25,7 @@ DOFS = {
     "little": (0.0, 1.0, 0.0), "ring": (0.0, 1.0, 0.0), "middle": (0.0, 1.0, 0.0), "index": (0.0, 1.0, 0.0),
     "thumb": (0.0, 1.0, 0.0), "wrist": (-1.0, 1.0, 0.0),
 }
-FINGER_MCP_MAX = 60.0     # 付け根の最大の曲げ [deg]。このとき次の関節は約 76 度、指先は約 60 度
+FINGER_MCP_MAX = 45.0     # 付け根の最大の曲げ [deg]。このとき次の関節は約 81 度、指先は約 65 度。52 度を超えると S 字の板が届かなくなる
 THUMB_PROX_MAX = 46.0     # 親指の基節が手のひら側へ倒れる角度 [deg]
 THUMB_TIP_MAX = 38.0      # 親指の末節の曲げ [deg]
 WRIST_MAX = 90.0
@@ -132,7 +132,7 @@ def finger_points(i):
     dz = P.FINGER_DZ[i]
     sh = lambda p: (p[0], p[1] + dz)
     return dict(mcp=sh(P.F_MCP), pip=sh(P.F_PIP), dip=sh(P.F_DIP), g=sh(P.F_G), a=sh(P.F_A), d=sh(P.F_D),
-                rb=sh(P.F_ROD_BOTTOM), rt=sh(P.F_ROD_TOP),
+                lv=sh(P.F_LEVER),
                 h=(P.HOOK_PIVOT[0], P.STEP_Z[i] + P.HOOK_PIVOT[1]))
 
 
@@ -163,14 +163,10 @@ def finger_solve(i, u, steps=24):
     g = vadd2(pip, _r2(vsub2(q["g"], q["pip"]), alpha))
     ap = vadd2(q["mcp"], _r2(vsub2(q["a"], q["mcp"]), t1))
     dp = vadd2(dip, _r2(vsub2(q["d"], q["dip"]), beta))
-    rt = vadd2(q["mcp"], _r2(vsub2(q["rt"], q["mcp"]), t1))
     ang = lambda a, b: math.atan2(b[1] - a[1], b[0] - a[0])
-    return dict(prox=t1, mid=alpha, tip=beta, pip=pip, dip=dip, g=g, a=ap, d=dp, rt=rt,
+    return dict(prox=t1, mid=alpha, tip=beta, pip=pip, dip=dip, g=g, a=ap, d=dp,
                 slink=ang(q["h"], g) - ang(q["h"], q["g"]),
-                link=ang(ap, dp) - ang(q["a"], q["d"]),
-                rod=ang(q["rb"], rt) - ang(q["rb"], q["rt"]),
-                rod_stretch=math.hypot(rt[0] - q["rb"][0], rt[1] - q["rb"][1])
-                / math.hypot(q["rt"][0] - q["rb"][0], q["rt"][1] - q["rb"][1]))
+                link=ang(ap, dp) - ang(q["a"], q["d"]))
 
 
 def vadd2(a, b):
@@ -193,6 +189,53 @@ def finger_fan(i):
     return rot_axis((0, 1, 0), math.radians(P.FINGER_FAN[i]), c)
 
 
+def horn_angle(shaft, tip, target, L, what):
+    """Y 軸まわりに回るホーン（軸 shaft、先 tip）の先から target までが長さ L になる角度 [rad]。
+    0 から外へ向けて符号の変わる所を探し、二分法で詰める。"""
+    def err(g):
+        return vlen(vsub(target, apply(rot_axis((0, 1, 0), g, shaft), tip))) - L
+
+    if abs(err(0.0)) < 1e-9:
+        return 0.0
+    step = math.radians(1.0)
+    for k in range(1, 121):
+        for sgn in (1, -1):
+            g0, g1 = sgn * (k - 1) * step, sgn * k * step
+            if err(g0) * err(g1) <= 0:
+                for _ in range(40):
+                    gm = (g0 + g1) / 2
+                    if err(g0) * err(gm) <= 0:
+                        g1 = gm
+                    else:
+                        g0 = gm
+                return (g0 + g1) / 2
+    raise ValueError(f"{what}が届かない")
+
+
+def finger_drive(i):
+    """指 i のサーボまわりの点（世界座標）。shaft: ホーンの軸、arm: ホーンの腕の先、tip: 引き棒の下端、lever: 基節の腕の先（引き棒の上端）。"""
+    q = finger_points(i)
+    sx, sz = P.FINGER_SERVOS[i]
+    lever = apply(finger_fan(i), (P.FINGER_X[i] + P.LAYER_CORE, q["lv"][0], q["lv"][1]))
+    zs = sz + P.FINGER_SHAFT_DZ
+    a = math.radians(P.FINGER_HORN_REST)
+    # 腕は引き棒の上端に近い側へ出る。端の 2 本（小指・人差し指）は側板に当たるので手の中心側へ出す
+    side = (1.0 if sx < 0 else -1.0) if i in (0, 3) else (1.0 if lever[0] >= sx else -1.0)
+    tx, tz = sx + side * P.FINGER_HORN_R * math.cos(a), zs + P.FINGER_HORN_R * math.sin(a)
+    return dict(shaft=(sx, P.FINGER_HORN_Y, zs), arm=(tx, P.FINGER_HORN_Y, tz), tip=(tx, P.FINGER_ROD_Y, tz), lever=lever)
+
+
+def finger_horn(i, Wprox):
+    """基節の動き Wprox のときの、ホーンと引き棒の行列と、ホーンの角度 [rad]。引き棒は長さが変わらない。"""
+    dr = finger_drive(i)
+    lever = apply(Wprox, dr["lever"])
+    L = vlen(vsub(dr["lever"], dr["tip"]))
+    g = horn_angle(dr["shaft"], dr["tip"], lever, L, f"finger {FINGERS[i]}: 引き棒")
+    Wh = rot_axis((0, 1, 0), g, dr["shaft"])
+    tip = apply(Wh, dr["tip"])
+    return Wh, aim(dr["tip"], tip, vsub(dr["lever"], dr["tip"]), vsub(lever, tip)), g
+
+
 def finger_pose(i, u):
     nm = FINGERS[i]
     q = finger_points(i)
@@ -206,11 +249,8 @@ def finger_pose(i, u):
         f"{nm}_link": mul(F, _plane(s["link"], q["a"], s["a"]), Fi),
         f"{nm}_slink": _plane(s["slink"], q["h"], q["h"]),      # 手のひらの板に付くので扇に開かない
     }
-    # 引き棒: 下端は動かず、上端が基節に付いて行く。棒の向きに伸び縮みさせる
-    d0 = (0.0, q["rt"][0] - q["rb"][0], q["rt"][1] - q["rb"][1])
-    d1 = (0.0, s["rt"][0] - q["rb"][0], s["rt"][1] - q["rb"][1])
-    rb = (0.0, q["rb"][0], q["rb"][1])
-    out[f"{nm}_rod"] = mul(F, aim(rb, rb, d0, d1, s["rod_stretch"]), Fi)
+    # サーボのホーンが回り、引き棒が基節の後ろの腕を押し上げる
+    out[f"{nm}_horn"], out[f"{nm}_rod"], _ = finger_horn(i, out[f"{nm}_prox"])
     return out
 
 
@@ -251,30 +291,7 @@ def thumb_pose(u):
     strut = apply(Wp, q["strut"])
     L = vlen(vsub(q["strut"], q["horn_tip"]))
 
-    def err(g):
-        tip = apply(rot_axis((0, 1, 0), g, q["shaft"]), q["horn_tip"])
-        return vlen(vsub(strut, tip)) - L
-
-    # 0 から外へ向けて符号の変わる所を探し、二分法で詰める
-    gamma, found = 0.0, abs(err(0.0)) < 1e-9
-    if not found:
-        step = math.radians(1.0)
-        for k in range(1, 121):
-            for sgn in (1, -1):
-                g0, g1 = sgn * (k - 1) * step, sgn * k * step
-                if err(g0) * err(g1) <= 0:
-                    for _ in range(40):
-                        gm = (g0 + g1) / 2
-                        if err(g0) * err(gm) <= 0:
-                            g1 = gm
-                        else:
-                            g0 = gm
-                    gamma, found = (g0 + g1) / 2, True
-                    break
-            if found:
-                break
-    if not found:
-        raise ValueError(f"thumb: 押し棒が届かない (u={u:.3f})")
+    gamma = horn_angle(q["shaft"], q["horn_tip"], strut, L, f"thumb: 押し棒 (u={u:.3f}) ")
     Wh = rot_axis((0, 1, 0), gamma, q["shaft"])
     tip = apply(Wh, q["horn_tip"])
     Wrod = aim(q["horn_tip"], tip, vsub(q["strut"], q["horn_tip"]), vsub(strut, tip))
@@ -302,7 +319,9 @@ def bones():
         out[f"{nm}_link"] = (f"{nm}_prox", w(q["a"], P.LAYER_LINK), w(q["d"], P.LAYER_LINK))
         xs = P.FINGER_X[i] + P.LAYER_S
         out[f"{nm}_slink"] = ("hand", (xs, q["h"][0], q["h"][1]), (xs, q["g"][0], q["g"][1]))
-        out[f"{nm}_rod"] = ("hand", w(q["rb"]), w(q["rt"]))
+        dr = finger_drive(i)
+        out[f"{nm}_horn"] = ("hand", dr["shaft"], dr["arm"])
+        out[f"{nm}_rod"] = (f"{nm}_horn", dr["tip"], dr["lever"])
     q = thumb_points()
     out["thumb_prox"] = ("hand", q["pivot"], q["joint"])
     e1, e2, n, o = thumb_frame()

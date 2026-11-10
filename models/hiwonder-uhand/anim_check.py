@@ -4,7 +4,7 @@ py -3.11 models/hiwonder-uhand/anim_check.py [--json]
 exit 0 なら合格。クリップを足したり kin.py・params.py を変えたりしたら、書き出す前に必ず通す。
   1. クリップの定義（anim/poses.json・anim/clips/*.json）の書式と値の範囲
   2. 量を端から端まで動かしたとき、指の連結が解けて、曲げが途中で戻らないこと
-  3. 伸び縮みで合わせている棒（引き棒・親指のクランク）の伸びが決めた幅に収まること
+  3. 指の引き棒が端から端まで届くこと。伸び縮みで合わせている親指のクランクの伸びが決めた幅に収まること
   4. すべてのクリップのすべてのフレームで姿勢が計算できること
 """
 import json
@@ -14,7 +14,6 @@ import sys
 import anim_lib
 import kin
 
-ROD_STRETCH = (0.55, 1.45)     # 指の引き棒。細い針金で、手のひらの中にほぼ隠れる
 CRANK_STRETCH = (0.75, 1.35)   # 親指の銀のクランク。資料から仕組みが読めず、固定側から親指を追わせて伸びで合わせている（今の最大は 1.33）
 SWEEP = 40
 
@@ -36,14 +35,15 @@ def main():
                     errors.append(f"{nm}: u = {k / SWEEP:.3f} で曲げが戻る")
                 prev = cur
                 rows.append(cur)
-                rs.append(s["rod_stretch"])
+                _, _, g = kin.finger_horn(i, kin.finger_pose(i, k / SWEEP)[f"{nm}_prox"])
+                rs.append(math.degrees(g))
         except ValueError as e:
             errors.append(str(e))
             continue
         report[nm] = dict(full_deg=[round(math.degrees(a), 1) for a in rows[-1]],
-                          rod_stretch=[round(min(rs), 3), round(max(rs), 3)])
-        if not ROD_STRETCH[0] <= min(rs) and max(rs) <= ROD_STRETCH[1]:
-            errors.append(f"{nm}: 引き棒の伸びが {min(rs):.2f}〜{max(rs):.2f}（許す幅 {ROD_STRETCH}）")
+                          horn_deg=[round(min(rs), 1), round(max(rs), 1)])
+        if any(abs(b - a) > 6.0 for a, b in zip(rs, rs[1:])):
+            errors.append(f"{nm}: ホーンの角度が途中で飛ぶ")
     # 親指
     try:
         cs, hs = [], []
@@ -77,7 +77,7 @@ def main():
         for nm in kin.FINGERS:
             if nm in report:
                 r = report[nm]
-                print(f"{nm:7s} 握りきったときの関節 {r['full_deg']} 度 / 引き棒の伸び {r['rod_stretch']}")
+                print(f"{nm:7s} 握りきったときの関節 {r['full_deg']} 度 / ホーンの角度 {r['horn_deg']} 度")
         if "thumb" in report:
             print(f"thumb   ホーンの角度 {report['thumb']['horn_deg']} 度 / クランクの伸び {report['thumb']['crank_stretch']}")
         for name, c in report["clips"].items():

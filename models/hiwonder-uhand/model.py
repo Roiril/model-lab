@@ -15,6 +15,7 @@ import bpy
 from mathutils import Matrix, Vector
 
 import params as P
+import kin
 
 MM = P.MM
 
@@ -337,7 +338,7 @@ def servo_plate(M):
     xz_plate("servo_plate", fillet(P.SERVO_PLATE, 1.5), ys, P.ACRYLIC_T, M["acrylic"], holes)
     for i, (x, z, r) in enumerate(P.SERVO_PLATE_SCREWS):
         screw(f"sp_screw{i}", (x, ys, z), (0, -1, 0), M, r=r)
-        cyl(f"sp_post{i}", (x, ys + P.ACRYLIC_T, z), (x, P.PALM_Y[0], z), 2.0, M["bushing"], n=6)
+        cyl(f"sp_post{i}", (x, ys + P.ACRYLIC_T, z), (x, P.PALM_Y[0], z), 2.0, M["brass"], n=6)
 
 
 def servo(name, cx, cz, M):
@@ -444,23 +445,24 @@ def along(a, b, d):
 
 
 def metal_cover(M):
-    """甲の板金。甲の板と、縁から手のひら側へ折れた左右の側板、上辺と面取りの縁。
-    親指側の縁は鉛直、小指側の縁は上へ向けて外に開く（写真 04 を、下辺を水平にして読んだ）。"""
+    """甲の板金。甲の板と、縁の上半分から手のひら側へ折れた左右の側板。上辺に折れた縁は無い。
+    親指側の縁は鉛直。小指側の縁は側板のある上半分が鉛直で、その下は内へ寄る（2026-11-10 の実物の写真）。"""
     y0, y1 = P.BACK_Y
     xz_plate("back_plate", fillet(P.BACK_OUTLINE, 3.5), y0, P.METAL_T, M["alu"])
     for i, (x, z) in enumerate(P.BACK_SCREWS_SMALL):
-        screw(f"bp_screw{i}", (x, y1, z), (0, 1, 0), M, r=1.4, head="button")
+        if i == 3:      # ねじの無い穴。奥に柱の真鍮が見える
+            cyl(f"bp_hole{i}", (x, y1 - 0.2, z), (x, y1 + 0.05, z), 1.3, M["dark"], n=16)
+            cyl(f"bp_hole{i}_brass", (x, y1 - 0.2, z), (x, y1 + 0.08, z), 0.7, M["brass"], n=12)
+        else:
+            screw(f"bp_screw{i}", (x, y1, z), (0, 1, 0), M, r=1.4, head="button")
     for i, (x, z) in enumerate(P.BACK_SCREWS_BIG):
         screw(f"bp_big{i}", (x, y1, z), (0, 1, 0), M, r=2.0, head="button")
-    edge_wall("wall_thumb", along(P.BACK_BT, P.BACK_TT, 4.0), P.BACK_TT, P.SIDE_WALL_Y0, y1, M)
-    edge_wall("wall_little", P.BACK_TL, along(P.BACK_BL, P.BACK_TL, 4.0), P.SIDE_WALL_Y0, y1, M)
-    edge_wall("lip_chamfer", P.BACK_TT, P.BACK_PEAK, y1 - P.TOP_LIP, y1, M)
-    edge_wall("lip_top", P.BACK_PEAK, P.BACK_TL, y1 - P.TOP_LIP, y1, M)
-    # 板の間の柱（甲のねじ 4 本が手のひらの板まで通る）
+    xt, xl = P.BACK_TT[0], P.BACK_TL[0]
+    edge_wall("wall_thumb", (xt, P.WALL_THUMB_Z[0]), (xt, P.WALL_THUMB_Z[1]), P.SIDE_WALL_Y0, y1, M)
+    edge_wall("wall_little", (xl, P.WALL_LITTLE_Z[1]), (xl, P.WALL_LITTLE_Z[0]), P.SIDE_WALL_Y0, y1, M)
+    # 板の間の柱（甲のねじが手のひらの板まで通る。真鍮の六角）
     for i, (x, z) in enumerate(P.BACK_SCREWS_SMALL):
-        cyl(f"post{i}", (x, P.PALM_Y[1], z), (x, y0, z), 2.2, M["bushing"], n=6)
-    # 内側の詰め物（すき間から背景が抜けないように）
-    box("palm_core", (-1.5, 13.5, 47.0), (40.0, 21.0, 44.0), M["dark"], bevel=0)
+        cyl(f"post{i}", (x, P.PALM_Y[1], z), (x, y0, z), 2.2, M["brass"], n=6)
 
 
 def wrist(M):
@@ -512,13 +514,19 @@ def finger(i, M):
     # 基節（付け根の軸から最初の関節まで）と、連結板の下端を受ける張り出し
     plate(f"{nm}_prox", ribbon([mcp, sh((12.0, 100.0)), pip], [4.5, 5.5, 6.3]), t, yz(xc), blk, bevel=0.3)
     plate(f"{nm}_prox_lug", ribbon([pip, pa], [4.0, 3.2]), t, yz(xc), blk, bevel=0.3)
+    # 付け根の後ろへ出た腕（引き棒の上端が留まる）
+    lv = sh(P.F_LEVER)
+    plate(f"{nm}_prox_lever", ribbon([mcp, lv], [4.6, 3.4]), t, yz(xc), blk, bevel=0.3)
+    xcyl(f"{nm}_prox_eye", xc + t / 2, xc + t / 2 + 3.2, lv, 1.6, M["brass"], n=16)
+    xcyl(f"{nm}_prox_eye_cap", xc + t / 2 + 3.2, xc + t / 2 + 4.6, lv, 2.6, M["bushing"], bevel=0.3)
+    screw(f"{nm}_prox_eye_s", (xc + t / 2 + 4.6, lv[0], lv[1]), (1, 0, 0), M, r=1.5)
     # 中節（2 つの関節をつなぐ骨の形の板）と、下の尾
     plate(f"{nm}_mid", ribbon([dip, mid, pip], [4.3, 3.5, 4.3]), t, yz(xm), blk, bevel=0.3)
     plate(f"{nm}_mid_tail", ribbon([pip, pg], [4.3, 3.0]), t, yz(xm), blk, bevel=0.3)
     # 末節
     plate(f"{nm}_tip", paddle_outline(sh), t, yz(xc), blk, bevel=0.4)
     # 銀の連結板（親指側の面。基節の張り出しから末節の付け根へ、甲の側へ少し反る）
-    ap = arc_pts(pa, pd, -1.2)
+    ap = arc_pts(pa, pd, -3.4)
     plate(f"{nm}_link", ribbon(ap, 2.0), P.LINK_T, yz(xl), slv, bevel=0.25)
     for e, q in enumerate((pa, pd)):
         plate(f"{nm}_link_e{e}", circle(q, 3.0, 20), P.LINK_T, yz(xl), slv, bevel=0.25)
@@ -539,11 +547,6 @@ def finger(i, M):
     # 付け根の軸とナット
     xcyl(f"{nm}_mcp_bolt", xm - t / 2 - 0.5, xr + 2.0, mcp, 1.2, M["steel"])
     nut(f"{nm}_mcp_nut", (xr, mcp[0], mcp[1]), (1, 0, 0), M, r=2.6, h=1.9)
-    # 引き棒（サーボから基節の上端へ）と下端のナット
-    rb, rt = sh(P.F_ROD_BOTTOM), sh(P.F_ROD_TOP)
-    cyl(f"{nm}_rod", (xc, rb[0], rb[1]), (xc, rt[0], rt[1]), 0.7, M["steel"], n=10)
-    xcyl(f"{nm}_rod_end", xc - 1.8, xc + 1.8, rb, 3.0, M["bushing"], bevel=0.3)
-    nut(f"{nm}_rod_nut", (xc + 1.8, rb[0], rb[1]), (1, 0, 0), M, r=2.2, h=1.6)
 
     # 付け根の軸まわりに扇に開く
     c = Vector((xa, mcp[0], mcp[1])) * MM
@@ -554,16 +557,38 @@ def finger(i, M):
 
     # 付け根の台（手のひらの板の後ろで軸を支える）。板に固定なので回さない
     plate(f"{nm}_base", ribbon([(4.5, s - 1.5), mcp], [4.0, 4.6]), t, yz(xm), M["servo"], bevel=0.3)
-    # S 字の銀の板: 手のひらの板の手前の軸から板の上端をまたぎ、板の後ろで中節の尾に留まる
+    # S 字の銀の板: 手のひらの板の手前の軸から板の上端をまたぎ、板の後ろで中節の尾に留まる。
+    # 下半分は手のひら側の上へ、上半分は甲の側の下へふくらむ（実物の写真の S 字）
     g = (R @ (Vector((xm, pg[0], pg[1])) * MM)) / MM
     hy, hz = P.HOOK_PIVOT[0], s + P.HOOK_PIVOT[1]
-    top = s + 6.3
-    path = [(hy, hz), (hy + 0.3, s + 0.8), (-4.6, s + 4.7), (-0.8, top), (4.0, (top + g.z) / 2 + 0.6), (g.y, g.z)]
+    dy, dzz = g.y - hy, g.z - hz
+    ln = math.hypot(dy, dzz)
+    ny, nz = -dzz / ln, dy / ln
+    path = [(hy + dy * f + ny * b, hz + dzz * f + nz * b)
+            for f, b in ((0.0, 0.0), (0.12, 2.2), (0.27, 3.6), (0.42, 1.6), (0.58, -1.6), (0.73, -3.6), (0.88, -2.2), (1.0, 0.0))]
     xs = xa + P.LAYER_S
     plate(f"{nm}_slink", ribbon(path, 1.9), P.LINK_T, yz(xs), slv, bevel=0.25)
     for e, q in enumerate((path[0], path[-1])):
         plate(f"{nm}_slink_e{e}", circle(q, 2.8, 20), P.LINK_T, yz(xs), slv, bevel=0.25)
     screw(f"{nm}_slink_s", (xs - P.LINK_T / 2, g.y, g.z), (-1, 0, 0), M, r=1.7)
+
+    # サーボのホーン（白）と引き棒。ホーンは手のひらの板の後ろで回り、棒が基節の腕を押し上げる
+    dr = kin.finger_drive(i)
+    sx, yh, zs = dr["shaft"]
+    Mxz = basis((1, 0, 0), (0, 0, 1), (0, yh, 0))
+    yb = P.SERVO_PLATE_Y - P.SERVO_PROUD + P.SERVO_DEPTH
+    cyl(f"{nm}_horn_boss", (sx, yb, zs), (sx, yh + 1.0, zs), 3.0, M["nylon"], n=24)
+    ax, _, az = dr["arm"]
+    plate(f"{nm}_horn_arm", ribbon([(sx, zs), (ax, az)], [3.6, 2.6]), 2.0, Mxz, M["nylon"], bevel=0.4)
+    plate(f"{nm}_horn_back", ribbon([(sx, zs), (2 * sx - ax, 2 * zs - az)], [3.6, 2.6]), 2.0, Mxz, M["nylon"], bevel=0.4)
+    screw(f"{nm}_horn_screw", (sx, yh + 1.0, zs), (0, 1, 0), M, r=1.7)
+    tp = dr["tip"]
+    cyl(f"{nm}_horn_pin", (ax, yh + 1.0, az), (tp[0], tp[1] + 1.8, tp[2]), 1.0, M["brass"], n=12)
+    lvw = dr["lever"]
+    top = (lvw[0] + t / 2 + 2.4, lvw[1], lvw[2])
+    cyl(f"{nm}_rod", tp, top, 1.3, M["servo"], n=12)
+    cyl(f"{nm}_rod_ball0", (tp[0], tp[1] - 1.6, tp[2]), (tp[0], tp[1] + 1.6, tp[2]), 2.7, M["servo"], n=20, bevel=0.5)
+    cyl(f"{nm}_rod_ball1", (top[0] - 1.5, top[1], top[2]), (top[0] + 1.5, top[1], top[2]), 2.7, M["servo"], n=20, bevel=0.5)
 
 
 def fingers(M):

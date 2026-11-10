@@ -37,8 +37,9 @@ ARM = "uhand"
 RULES = [
     (r"wrist_(flange|hub)$", "base"),
     (r"(palm_|hook_|sp_|servo\d|servo_plate$|thumb_servo|back_plate$|bp_|wall_|lip_|post\d|wrist_|thumb_crank_post$)", "hand"),
-    (r"{f}_(rod_end|rod_nut|base)", "hand"),
-    (r"{f}_rod$", "{f}_rod"),
+    (r"{f}_base", "hand"),
+    (r"{f}_horn", "{f}_horn"),
+    (r"{f}_rod", "{f}_rod"),
     (r"{f}_slink", "{f}_slink"),
     (r"{f}_link", "{f}_link"),
     (r"{f}_(prox|pip_|mcp_)", "{f}_prox"),
@@ -52,7 +53,7 @@ RULES = [
     (r"(thumb_(upper|lower|root|pivot|strut|w\d|s\d|n\d)|rod_end1)", "thumb_prox"),
 ]
 # 量 → その量で動く骨（Unity で層ごとのマスクに使う）
-DOF_BONES = {nm: [f"{nm}_{p}" for p in ("prox", "mid", "tip", "link", "slink", "rod")] for nm in kin.FINGERS}
+DOF_BONES = {nm: [f"{nm}_{p}" for p in ("prox", "mid", "tip", "link", "slink", "horn", "rod")] for nm in kin.FINGERS}
 DOF_BONES["thumb"] = ["thumb_prox", "thumb_tip", "thumb_horn", "thumb_pushrod", "thumb_crank"]
 DOF_BONES["wrist"] = ["hand"]
 

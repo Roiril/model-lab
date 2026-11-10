@@ -2,7 +2,7 @@
 
 py -3.11 models/hiwonder-uhand/anim.py check                      定義と機構の検査（exit 0 で合格）
 py -3.11 models/hiwonder-uhand/anim.py build                      検査 → 骨入りの FBX / GLB / 目録を exports/ に書く
-py -3.11 models/hiwonder-uhand/anim.py preview <clip> [view]      8 コマの 1 枚絵と動画（view: front / palm / back / side）
+py -3.11 models/hiwonder-uhand/anim.py preview <clip> [view]      8 コマの 1 枚絵と動画（view: front / palm / back / side / little）
 py -3.11 models/hiwonder-uhand/anim.py sheets [view]              全クリップの 1 枚絵
 py -3.11 models/hiwonder-uhand/anim.py pose <姿勢の名前> [view]    poses.json の姿勢を 1 枚
 py -3.11 models/hiwonder-uhand/anim.py dofs index=1,thumb=0.5 [view]   量を直に決めて 1 枚
