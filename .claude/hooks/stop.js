@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 // Stop hook（Claude Code と Codex の両方から呼ぶ）: 機構モデルのゲートが古い・赤のまま作業を終えようとしたら知らせる。
 //
+// 動きの定義を持つモデル（models/<名前>/anim.py）は、検査が赤・書き出しが定義より古いときも知らせる。
+//
 // 対象は spec.json を持つモデルのうち、未コミットの変更か未 push のコミットがあるもの。
 // 判定は `py -3.11 tools/mechgate.py fresh <名前>`（入力の SHA を比べるだけ。Blender は使わない）。
 // 知らせるのはセッションにつき 1 回（ループと過剰な割り込みを防ぐ）。エラー時は素通し。
@@ -50,7 +52,22 @@ process.stdin.on('end', () => {
     collect(git(root, ['diff', '--name-only', '@{u}..HEAD', '--', 'models']), false);
 
     const problems = [];
+    const animProblems = [];
     for (const model of touched) {
+      // 動きの定義を持つモデル（anim.py）: 検査が赤、または書き出しが定義より古いまま終えようとしている
+      const anim = path.join('models', model, 'anim.py');
+      if (fs.existsSync(path.join(root, anim))) {
+        for (const sub of ['check', 'status']) {
+          try {
+            execFileSync('py', ['-3.11', anim, sub],
+              { cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], timeout: 20000 });
+          } catch (e) {
+            const tail = (e.stdout || '').toString().trim().split('\n').slice(-3).join(' / ');
+            animProblems.push(`${model}: anim.py ${sub} が通らない。${tail}`);
+            break;
+          }
+        }
+      }
       if (!fs.existsSync(path.join(root, 'models', model, 'spec.json'))) continue;
       let out = '';
       let ok = true;
@@ -63,18 +80,29 @@ process.stdin.on('end', () => {
       }
       if (!ok) problems.push(out.trim() || `${model}: 判定できない`);
     }
-    if (!problems.length) return;
+    if (!problems.length && !animProblems.length) return;
 
     if (stateFile) {
       fs.mkdirSync(stateDir, { recursive: true });
-      fs.writeFileSync(stateFile, JSON.stringify({ at: new Date().toISOString(), problems }));
+      fs.writeFileSync(stateFile, JSON.stringify({ at: new Date().toISOString(), problems, animProblems }));
     }
-    const message = [
-      '[mechgate] 機構モデルのゲートが合格・最新ではない:',
-      ...problems.map((p) => '  ' + p),
-      '`py -3.11 tools/mechgate.py check <名前>` を流して exit 0 にする。',
-      '赤のまま終えるなら、報告の先頭に「ゲート不合格」と止めている検査 id を書く（.claude/skills/mechanism-gate/SKILL.md §5）。',
-    ].join('\n');
+    const lines = [];
+    if (problems.length) {
+      lines.push(
+        '[mechgate] 機構モデルのゲートが合格・最新ではない:',
+        ...problems.map((p) => '  ' + p),
+        '`py -3.11 tools/mechgate.py check <名前>` を流して exit 0 にする。',
+        '赤のまま終えるなら、報告の先頭に「ゲート不合格」と止めている検査 id を書く（.claude/skills/mechanism-gate/SKILL.md §5）。',
+      );
+    }
+    if (animProblems.length) {
+      lines.push(
+        '[anim] 動きの定義が検査を通っていない、または書き出しが古い:',
+        ...animProblems.map((p) => '  ' + p),
+        '`py -3.11 models/<名前>/anim.py build` を流す（.claude/skills/uhand-animation/SKILL.md）。',
+      );
+    }
+    const message = lines.join('\n');
     if (codex) {
       process.stdout.write(JSON.stringify({ systemMessage: message }));
     } else {

@@ -1,0 +1,28 @@
+{
+ "description": "開いた手のまま手首を左右に回す。繰り返す",
+ "loop": true,
+ "keys": [
+  {
+   "t": 0,
+   "pose": "open"
+  },
+  {
+   "t": 0.8,
+   "pose": "open",
+   "set": {
+    "wrist": 0.7
+   }
+  },
+  {
+   "t": 2.4,
+   "pose": "open",
+   "set": {
+    "wrist": -0.7
+   }
+  },
+  {
+   "t": 3.2,
+   "pose": "open"
+  }
+ ]
+}

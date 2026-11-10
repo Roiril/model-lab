@@ -554,12 +554,11 @@ def finger(i, M):
 
     # 付け根の台（手のひらの板の後ろで軸を支える）。板に固定なので回さない
     plate(f"{nm}_base", ribbon([(4.5, s - 1.5), mcp], [4.0, 4.6]), t, yz(xm), M["servo"], bevel=0.3)
-    # S 字の銀の板: 手のひらの板の手前の軸から板の上端をまたぎ、中節の尾へ上がる
+    # S 字の銀の板: 手のひらの板の手前の軸から板の上端をまたぎ、板の後ろで中節の尾に留まる
     g = (R @ (Vector((xm, pg[0], pg[1])) * MM)) / MM
     hy, hz = P.HOOK_PIVOT[0], s + P.HOOK_PIVOT[1]
     top = s + 6.3
-    path = [(hy, hz), (hy + 0.3, s + 0.8), (-4.6, s + 4.7), (-0.8, top), (2.6, top + 1.4),
-            (4.4, (top + 1.4 + g.z) / 2), (g.y, g.z)]
+    path = [(hy, hz), (hy + 0.3, s + 0.8), (-4.6, s + 4.7), (-0.8, top), (4.0, (top + g.z) / 2 + 0.6), (g.y, g.z)]
     xs = xa + P.LAYER_S
     plate(f"{nm}_slink", ribbon(path, 1.9), P.LINK_T, yz(xs), slv, bevel=0.25)
     for e, q in enumerate((path[0], path[-1])):

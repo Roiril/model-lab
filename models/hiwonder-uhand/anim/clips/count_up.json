@@ -1,0 +1,54 @@
+{
+ "description": "握った手から 1・2・3・4・5 と指を立てて数える",
+ "loop": false,
+ "keys": [
+  {
+   "t": 0,
+   "pose": "fist"
+  },
+  {
+   "t": 0.5,
+   "pose": "fist"
+  },
+  {
+   "t": 0.9,
+   "pose": "point"
+  },
+  {
+   "t": 1.4,
+   "pose": "point"
+  },
+  {
+   "t": 1.8,
+   "pose": "peace"
+  },
+  {
+   "t": 2.3,
+   "pose": "peace"
+  },
+  {
+   "t": 2.7,
+   "pose": "three"
+  },
+  {
+   "t": 3.2,
+   "pose": "three"
+  },
+  {
+   "t": 3.6,
+   "pose": "four"
+  },
+  {
+   "t": 4.1,
+   "pose": "four"
+  },
+  {
+   "t": 4.5,
+   "pose": "open"
+  },
+  {
+   "t": 5.2,
+   "pose": "open"
+  }
+ ]
+}

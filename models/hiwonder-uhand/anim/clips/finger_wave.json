@@ -1,0 +1,62 @@
+{
+ "description": "小指から人差し指へ順に曲げて戻す波。繰り返す",
+ "loop": true,
+ "keys": [
+  {
+   "t": 0,
+   "pose": "open"
+  },
+  {
+   "t": 0.3,
+   "set": {
+    "little": 0.9,
+    "ring": 0.35
+   }
+  },
+  {
+   "t": 0.6,
+   "set": {
+    "little": 0.5,
+    "ring": 0.9,
+    "middle": 0.35
+   }
+  },
+  {
+   "t": 0.9,
+   "set": {
+    "little": 0.1,
+    "ring": 0.5,
+    "middle": 0.9,
+    "index": 0.35
+   }
+  },
+  {
+   "t": 1.2,
+   "set": {
+    "ring": 0.1,
+    "middle": 0.5,
+    "index": 0.9,
+    "thumb": 0.3
+   }
+  },
+  {
+   "t": 1.5,
+   "set": {
+    "middle": 0.1,
+    "index": 0.5,
+    "thumb": 0.6
+   }
+  },
+  {
+   "t": 1.8,
+   "set": {
+    "index": 0.1,
+    "thumb": 0.3
+   }
+  },
+  {
+   "t": 2.1,
+   "pose": "open"
+  }
+ ]
+}

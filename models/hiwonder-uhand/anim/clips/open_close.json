@@ -1,0 +1,26 @@
+{
+ "description": "開いた手を握って、また開く。握る前に少しためる",
+ "loop": true,
+ "keys": [
+  {
+   "t": 0,
+   "pose": "open"
+  },
+  {
+   "t": 0.9,
+   "pose": "fist"
+  },
+  {
+   "t": 1.3,
+   "pose": "fist"
+  },
+  {
+   "t": 2.2,
+   "pose": "open"
+  },
+  {
+   "t": 2.6,
+   "pose": "open"
+  }
+ ]
+}

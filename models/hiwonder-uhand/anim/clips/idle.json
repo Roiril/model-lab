@@ -1,0 +1,38 @@
+{
+ "description": "力を抜いた手が小さく動き続ける待機。繰り返す",
+ "loop": true,
+ "keys": [
+  {
+   "t": 0,
+   "pose": "relax"
+  },
+  {
+   "t": 1.2,
+   "pose": "relax",
+   "set": {
+    "little": 0.36,
+    "ring": 0.3,
+    "middle": 0.25,
+    "index": 0.2,
+    "thumb": 0.26,
+    "wrist": 0.03
+   }
+  },
+  {
+   "t": 2.4,
+   "pose": "relax",
+   "set": {
+    "little": 0.24,
+    "ring": 0.22,
+    "middle": 0.2,
+    "index": 0.19,
+    "thumb": 0.18,
+    "wrist": -0.03
+   }
+  },
+  {
+   "t": 3.6,
+   "pose": "relax"
+  }
+ ]
+}

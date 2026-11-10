@@ -1,0 +1,50 @@
+{
+ "description": "人差し指と小指を立てて、手首を小刻みに振る",
+ "loop": false,
+ "keys": [
+  {
+   "t": 0,
+   "pose": "open"
+  },
+  {
+   "t": 0.5,
+   "pose": "rock_sign"
+  },
+  {
+   "t": 0.75,
+   "pose": "rock_sign",
+   "set": {
+    "wrist": 0.25
+   }
+  },
+  {
+   "t": 1.0,
+   "pose": "rock_sign",
+   "set": {
+    "wrist": -0.25
+   }
+  },
+  {
+   "t": 1.25,
+   "pose": "rock_sign",
+   "set": {
+    "wrist": 0.25
+   }
+  },
+  {
+   "t": 1.5,
+   "pose": "rock_sign",
+   "set": {
+    "wrist": -0.25
+   }
+  },
+  {
+   "t": 1.75,
+   "pose": "rock_sign"
+  },
+  {
+   "t": 2.4,
+   "pose": "open"
+  }
+ ]
+}

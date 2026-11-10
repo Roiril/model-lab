@@ -1,0 +1,47 @@
+{
+ "description": "開いた手からピースを作り、手首を左右に小さく振って戻す",
+ "loop": false,
+ "keys": [
+  {
+   "t": 0,
+   "pose": "open"
+  },
+  {
+   "t": 0.6,
+   "pose": "peace"
+  },
+  {
+   "t": 0.95,
+   "pose": "peace",
+   "set": {
+    "wrist": 0.18
+   }
+  },
+  {
+   "t": 1.3,
+   "pose": "peace",
+   "set": {
+    "wrist": -0.18
+   }
+  },
+  {
+   "t": 1.65,
+   "pose": "peace",
+   "set": {
+    "wrist": 0.18
+   }
+  },
+  {
+   "t": 2.0,
+   "pose": "peace"
+  },
+  {
+   "t": 2.4,
+   "pose": "peace"
+  },
+  {
+   "t": 3.0,
+   "pose": "open"
+  }
+ ]
+}

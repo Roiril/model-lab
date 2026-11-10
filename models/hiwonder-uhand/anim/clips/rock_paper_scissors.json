@@ -1,0 +1,60 @@
+{
+ "description": "じゃんけん。握った手を 3 回振ってからチョキを出す",
+ "loop": false,
+ "keys": [
+  {
+   "t": 0,
+   "pose": "fist"
+  },
+  {
+   "t": 0.25,
+   "pose": "fist",
+   "set": {
+    "wrist": -0.22
+   }
+  },
+  {
+   "t": 0.5,
+   "pose": "fist",
+   "set": {
+    "wrist": 0.12
+   },
+   "ease": "in"
+  },
+  {
+   "t": 0.75,
+   "pose": "fist",
+   "set": {
+    "wrist": -0.22
+   }
+  },
+  {
+   "t": 1.0,
+   "pose": "fist",
+   "set": {
+    "wrist": 0.12
+   },
+   "ease": "in"
+  },
+  {
+   "t": 1.25,
+   "pose": "fist",
+   "set": {
+    "wrist": -0.22
+   }
+  },
+  {
+   "t": 1.5,
+   "pose": "peace",
+   "ease": "in"
+  },
+  {
+   "t": 2.6,
+   "pose": "peace"
+  },
+  {
+   "t": 3.1,
+   "pose": "open"
+  }
+ ]
+}

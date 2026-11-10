@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>uHand の動き</title>
+<style>
+  :root { color-scheme: light; }
+  html, body { margin: 0; height: 100%; background: #e9eaec; font: 14px/1.6 "Segoe UI", "Yu Gothic UI", sans-serif; color: #1c1d20; }
+  #wrap { display: grid; grid-template-columns: 1fr 300px; height: 100%; }
+  #view { width: 100%; height: 100%; display: block; min-width: 0; }
+  #panel { background: #fff; border-left: 1px solid #d5d7db; padding: 14px 16px; overflow-y: auto; }
+  h1 { font-size: 15px; margin: 0 0 2px; }
+  h2 { font-size: 12px; margin: 18px 0 6px; color: #5b5f66; font-weight: 600; }
+  #status { font-size: 12px; color: #5b5f66; min-height: 1.6em; }
+  .clips { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  button { font: inherit; padding: 6px 8px; border: 1px solid #c9ccd1; background: #f6f7f8; border-radius: 6px; cursor: pointer; text-align: left; }
+  button:hover { background: #eceef0; }
+  button.on { background: #1c1d20; color: #fff; border-color: #1c1d20; }
+  #desc { font-size: 12px; color: #3c4046; margin-top: 8px; min-height: 3.2em; }
+  .row { display: grid; grid-template-columns: 64px 1fr 40px; align-items: center; gap: 8px; margin: 4px 0; }
+  .row output { text-align: right; font-variant-numeric: tabular-nums; color: #5b5f66; }
+  input[type=range] { width: 100%; }
+  .bar { display: flex; gap: 6px; align-items: center; margin-top: 8px; }
+  .bar label { font-size: 12px; color: #5b5f66; }
+  @media (max-width: 760px) { #wrap { grid-template-columns: 1fr; grid-template-rows: 55% 45%; } #panel { border-left: 0; border-top: 1px solid #d5d7db; } }
+</style>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+<div id="wrap">
+  <canvas id="view"></canvas>
+  <div id="panel">
+    <h1>uHand の動き</h1>
+    <div id="status">読み込み中</div>
+    <h2>動きを再生する</h2>
+    <div class="clips" id="clips"></div>
+    <div id="desc"></div>
+    <div class="bar">
+      <button id="pause">止める</button>
+      <label>速さ <input id="speed" type="range" min="0.1" max="2" step="0.1" value="1" style="width:110px"></label>
+      <output id="speedOut">1.0</output>
+    </div>
+    <h2>サーボを 1 個ずつ動かす</h2>
+    <div id="dofs"></div>
+    <div class="bar"><button id="reset">元の姿勢へ戻す</button></div>
+  </div>
+</div>
+<script type="module">
+// exports/hiwonder-uhand-rigged.glb と目録（.json）を読み、クリップの再生と、量ごとのつまみを出す。
+// つまみは dof_<量> のクリップを時刻で引く（Unity で層を重ねるのと同じやり方）。
+// 確認用: window.uhand.play(name) / window.uhand.set({index: 1}) / window.uhand.state()
+import * as THREE from "three";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+
+const BASE = "/exports/hiwonder-uhand-rigged";
+const LABEL = { little: "小指", ring: "薬指", middle: "中指", index: "人差し指", thumb: "親指", wrist: "手首" };
+const $ = (id) => document.getElementById(id);
+const canvas = $("view");
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0xe9eaec);
+scene.add(new THREE.HemisphereLight(0xffffff, 0x9aa0a8, 2.4));
+const sun = new THREE.DirectionalLight(0xffffff, 2.0);
+sun.position.set(-0.4, 0.7, 0.8);
+scene.add(sun);
+const back = new THREE.DirectionalLight(0xffffff, 1.2);
+back.position.set(0.3, 0.5, -0.8);
+scene.add(back);
+const camera = new THREE.PerspectiveCamera(28, 1, 0.01, 10);
+const controls = new OrbitControls(camera, canvas);
+controls.enableDamping = true;
+
+let mixer = null, manifest = null, current = null, paused = false;
+const actions = {}, dofActions = {}, dofValue = {};
+
+function resize() {
+  const w = canvas.clientWidth, h = canvas.clientHeight;
+  if (canvas.width !== Math.round(w * renderer.getPixelRatio()) || canvas.height !== Math.round(h * renderer.getPixelRatio())) {
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+  }
+}
+
+function showDofs() {
+  for (const [name, a] of Object.entries(dofActions)) {
+    const d = manifest.dofs[name];
+    a.time = (dofValue[name] - d.min) / (d.max - d.min) * a.getClip().duration;
+  }
+}
+
+function useDofs() {
+  if (current) { actions[current].stop(); current = null; }
+  for (const a of Object.values(dofActions)) { a.play(); a.paused = true; a.setEffectiveWeight(1); }
+  for (const b of document.querySelectorAll("#clips button")) b.classList.remove("on");
+  $("desc").textContent = "";
+  showDofs();
+}
+
+function play(name) {
+  if (!actions[name]) return false;
+  for (const a of Object.values(dofActions)) a.stop();
+  if (current) actions[current].stop();
+  current = name;
+  const info = manifest.clips.find((c) => c.name === name);
+  const a = actions[name];
+  a.reset();
+  a.setLoop(info.loop ? THREE.LoopRepeat : THREE.LoopOnce, Infinity);
+  a.clampWhenFinished = true;
+  a.play();
+  paused = false;
+  $("pause").textContent = "止める";
+  for (const b of document.querySelectorAll("#clips button")) b.classList.toggle("on", b.dataset.name === name);
+  $("desc").textContent = `${info.description}（${info.seconds.toFixed(1)} 秒${info.loop ? "・繰り返し" : ""}）`;
+  return true;
+}
+
+function setDofs(values) {
+  for (const [k, v] of Object.entries(values)) {
+    if (!(k in manifest.dofs)) continue;
+    const d = manifest.dofs[k];
+    dofValue[k] = Math.min(d.max, Math.max(d.min, Number(v)));
+    const el = document.querySelector(`input[data-dof="${k}"]`);
+    if (el) { el.value = dofValue[k]; el.nextElementSibling.value = dofValue[k].toFixed(2); }
+  }
+  useDofs();
+}
+
+async function main() {
+  manifest = await (await fetch(BASE + ".json", { cache: "no-store" })).json();
+  const gltf = await new GLTFLoader().loadAsync(BASE + ".glb?t=" + Date.now());
+  scene.add(gltf.scene);
+  const box = new THREE.Box3().setFromObject(gltf.scene);
+  const c = box.getCenter(new THREE.Vector3());
+  const h = box.max.y - box.min.y;
+  const d = (h / 0.72) / 2 / Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
+  // Blender の -Y（手のひら側）は glTF の +Z
+  camera.position.set(c.x - d * 0.42, c.y + d * 0.16, c.z + d * 0.9);
+  controls.target.copy(c);
+  mixer = new THREE.AnimationMixer(gltf.scene);
+  const byName = Object.fromEntries(gltf.animations.map((a) => [a.name, a]));
+  for (const info of manifest.clips) {
+    const clip = byName[info.name];
+    if (!clip) continue;
+    if (info.name.startsWith("dof_")) {
+      const dof = info.name.slice(4);
+      const bones = new Set(manifest.dofs[dof].bones);
+      // その量で動く骨の分だけ残す（他の量のつまみと混ざらないように）
+      const own = new THREE.AnimationClip(clip.name, clip.duration, clip.tracks.filter((t) => bones.has(t.name.split(".")[0])));
+      dofActions[dof] = mixer.clipAction(own);
+      dofValue[dof] = manifest.dofs[dof].rest;
+    } else {
+      actions[info.name] = mixer.clipAction(clip);
+      const b = document.createElement("button");
+      b.textContent = info.name;
+      b.dataset.name = info.name;
+      b.title = info.description;
+      b.onclick = () => play(info.name);
+      $("clips").appendChild(b);
+    }
+  }
+  for (const [name, d] of Object.entries(manifest.dofs)) {
+    const row = document.createElement("div");
+    row.className = "row";
+    row.innerHTML = `<span>${LABEL[name] || name}</span><input type="range" data-dof="${name}" min="${d.min}" max="${d.max}" step="0.01" value="${d.rest}"><output>${d.rest.toFixed(2)}</output>`;
+    row.querySelector("input").oninput = (e) => setDofs({ [name]: e.target.value });
+    $("dofs").appendChild(row);
+  }
+  $("status").textContent = `クリップ ${Object.keys(actions).length} 本・骨 ${Object.keys(manifest.bones).length} 本`;
+  const want = new URLSearchParams(location.search).get("clip");
+  if (!play(want || "open_close")) useDofs();
+}
+
+$("pause").onclick = () => { paused = !paused; $("pause").textContent = paused ? "動かす" : "止める"; };
+$("speed").oninput = (e) => { $("speedOut").value = Number(e.target.value).toFixed(1); };
+$("reset").onclick = () => setDofs(Object.fromEntries(Object.entries(manifest.dofs).map(([k, d]) => [k, d.rest])));
+
+const clock = new THREE.Clock();
+function tick() {
+  resize();
+  const dt = clock.getDelta();
+  if (mixer) mixer.update(current && !paused ? dt * Number($("speed").value) : 0);
+  controls.update();
+  renderer.render(scene, camera);
+  requestAnimationFrame(tick);
+}
+
+window.uhand = {
+  play, set: setDofs,
+  state: () => ({ current, paused, dofs: { ...dofValue }, clips: Object.keys(actions), time: current ? actions[current].time : null }),
+};
+main().then(tick).catch((e) => { $("status").textContent = "読み込めなかった: " + e.message; console.error(e); });
+</script>
+</body>
+</html>

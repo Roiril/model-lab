@@ -1,0 +1,40 @@
+{
+ "description": "握って親指だけ立て、手首を回して見せて戻す",
+ "loop": false,
+ "keys": [
+  {
+   "t": 0,
+   "pose": "open"
+  },
+  {
+   "t": 0.6,
+   "pose": "fist"
+  },
+  {
+   "t": 0.9,
+   "pose": "thumbs_up"
+  },
+  {
+   "t": 1.4,
+   "pose": "thumbs_up",
+   "set": {
+    "wrist": 0.5
+   }
+  },
+  {
+   "t": 2.2,
+   "pose": "thumbs_up",
+   "set": {
+    "wrist": 0.5
+   }
+  },
+  {
+   "t": 2.7,
+   "pose": "thumbs_up"
+  },
+  {
+   "t": 3.3,
+   "pose": "open"
+  }
+ ]
+}

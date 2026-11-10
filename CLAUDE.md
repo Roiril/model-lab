@@ -285,6 +285,7 @@ Codex もこの CLAUDE.md と `.claude/` を読む（ルートの AGENTS.md は�
 - **[skills/studio-inbox](.claude/skills/studio-inbox/SKILL.md)** — Studio の依頼の受け方・読み方・返し方
 - **[skills/mechanism-gate](.claude/skills/mechanism-gate/SKILL.md)** — 機構の依頼の手順と完了条件（spec.json → build/ の契約 → `tools/mechgate.py check`）。ゲートの閾値は `tools/mechgate_lib/limits.py`、既製部品の仮値の台帳は `lib/printmech/parts_ledger.json`
 - **[skills/model-catalog](.claude/skills/model-catalog/SKILL.md)** — モデルの表示名・用途・分類の記録
+- **[skills/uhand-animation](.claude/skills/uhand-animation/SKILL.md)** — Hiwonder uHand の動き（クリップの追加と調整・確認・Unity への受け渡し）。入口は `py -3.11 models/hiwonder-uhand/anim.py`。検査が赤・書き出しが古いまま終えようとすると `stop.js` が知らせる
 - **[settings.json](.claude/settings.json)** — `bypassPermissions`（書き込み前承認なし）
 - **[settings.local.json](.claude/settings.local.json)** — ローカル個別 allow リスト
 - **[skills/](.claude/skills/)** の `new-model` `build` `print-check` — 旧スラッシュコマンドの本体

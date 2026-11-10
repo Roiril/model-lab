@@ -20,5 +20,9 @@ models/*/build/gate_blender.log
 # Codex 用の junction（.agents/skills -> .claude/skills）。Codex の SessionStart hook が作る
 .agents/
 
+# uHand の骨入りの書き出しと確認用の絵（anim.py build / preview で作り直せる）
+exports/hiwonder-uhand-rigged.*
+exports/uhand-anim-preview/
+
 # 商品写真のスクリーンショット（公開リポジトリに入れない）
 models/hiwonder-uhand/ref/
