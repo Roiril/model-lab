@@ -142,7 +142,10 @@ def serpentine(cx, z_start, z_end, usable_half_x, count, step):
 
 # ---------------------------------------------------------------- uHand
 arm_h, rest_h = AB.rig()
-AB.apply_pose(arm_h, rest_h, anim_lib.load_poses()["point"])
+_pose = dict(anim_lib.load_poses()["point"])
+if arg("--pose"):  # 例: --pose index=0,middle=0.45
+    _pose.update({k: float(v) for k, v in (kv.split("=") for kv in arg("--pose").split(","))})
+AB.apply_pose(arm_h, rest_h, _pose)
 bpy.context.view_layer.update()
 uh_objs = [o for o in bpy.data.objects if o.name.startswith("uh_")]
 
@@ -216,8 +219,8 @@ cx, cy = (tmn.x + tmx.x) / 2, (tmn.y + tmx.y) / 2
 hx, hy = (tmx.x - tmn.x) / 2, (tmx.y - tmn.y) / 2
 EDGE = 0.07
 print(f"[scene] table top={top:.3f} half=({hx:.3f},{hy:.3f})")
-chair0 = fit_height(os.path.join(KENNEY, "chair.fbx"), (0, -0.61), 180, 0.85, 0.55)
-chair1 = fit_height(os.path.join(KENNEY, "chair.fbx"), (0, 0.61), 0, 0.85, 0.55)
+chair0 = fit_height(os.path.join(KENNEY, "chair.fbx"), (0, -0.61), 0, 0.85, 0.55)
+chair1 = fit_height(os.path.join(KENNEY, "chair.fbx"), (0, 0.61), 180, 0.85, 0.55)
 
 # ---------------------------------------------------------------- 海底探検（PlaceDeepSeaAdventure）
 CHIP = 1.6
@@ -398,78 +401,84 @@ def box(name, loc, size, mat):
     return o
 
 
-ROOM = 6.0
-box("floor", (0, 0, -0.01), (ROOM, ROOM, 0.02), flat_mat("floor", (0.25, 0.27, 0.30)))
-wall = flat_mat("wall", (0.63, 0.61, 0.58))
-box("wall_n", (0, ROOM / 2, 1.5), (ROOM, 0.02, 3), wall)
-box("wall_e", (ROOM / 2, 0, 1.5), (0.02, ROOM, 3), wall)
-box("wall_w", (-ROOM / 2, 0, 1.5), (0.02, ROOM, 3), wall)
-box("wall_s", (0, -ROOM / 2, 1.5), (ROOM, 0.02, 3), wall)
+def render_default():
+    """元の構図（人の肩越し）で部屋・光・カメラを置いて描く。"""
+    ROOM = 6.0
+    box("floor", (0, 0, -0.01), (ROOM, ROOM, 0.02), flat_mat("floor", (0.25, 0.27, 0.30)))
+    wall = flat_mat("wall", (0.63, 0.61, 0.58))
+    box("wall_n", (0, ROOM / 2, 1.5), (ROOM, 0.02, 3), wall)
+    box("wall_e", (ROOM / 2, 0, 1.5), (0.02, ROOM, 3), wall)
+    box("wall_w", (-ROOM / 2, 0, 1.5), (0.02, ROOM, 3), wall)
+    box("wall_s", (0, -ROOM / 2, 1.5), (ROOM, 0.02, 3), wall)
 
-sc = bpy.context.scene
-world = bpy.data.worlds.new("w")
-sc.world = world
-world.use_nodes = True
-bg = next(n for n in world.node_tree.nodes if n.type == "BACKGROUND")
-bg.inputs[0].default_value = (0.62, 0.62, 0.64, 1)
-bg.inputs[1].default_value = 0.25
-
-
-def light(name, kind, loc, energy, size=1.0, target=(0, 0, 0.75)):
-    ld = bpy.data.lights.new(name, kind)
-    ld.energy = energy
-    if kind == "AREA":
-        ld.size = size
-    lo = bpy.data.objects.new(name, ld)
-    sc.collection.objects.link(lo)
-    lo.location = loc
-    lo.rotation_euler = (Vector(target) - Vector(loc)).to_track_quat("-Z", "Y").to_euler()
-    return lo
+    sc = bpy.context.scene
+    world = bpy.data.worlds.new("w")
+    sc.world = world
+    world.use_nodes = True
+    bg = next(n for n in world.node_tree.nodes if n.type == "BACKGROUND")
+    bg.inputs[0].default_value = (0.62, 0.62, 0.64, 1)
+    bg.inputs[1].default_value = 0.25
 
 
-light("key", "AREA", (0.6, -0.4, 2.4), 150, 1.4)
-light("fill", "AREA", (-1.6, -1.2, 1.8), 50, 2.0)
-light("rim", "AREA", (0.2, 1.6, 1.9), 45, 1.5)
+    def light(name, kind, loc, energy, size=1.0, target=(0, 0, 0.75)):
+        ld = bpy.data.lights.new(name, kind)
+        ld.energy = energy
+        if kind == "AREA":
+            ld.size = size
+        lo = bpy.data.objects.new(name, ld)
+        sc.collection.objects.link(lo)
+        lo.location = loc
+        lo.rotation_euler = (Vector(target) - Vector(loc)).to_track_quat("-Z", "Y").to_euler()
+        return lo
 
-cam_d = bpy.data.cameras.new("cam")
-cam = bpy.data.objects.new("cam", cam_d)
-sc.collection.objects.link(cam)
-sc.camera = cam
-if flag("--top"):
-    cam_d.type = "ORTHO"
-    cam_d.ortho_scale = 1.5
-    cam.location = (cx, cy, 3)
-    cam.rotation_euler = (0, 0, 0)
-else:
-    cam_d.lens = float(arg("--lens", "32"))
-    loc = Vector(tuple(float(v) for v in arg("--cam", "0.62,-1.05,1.32").split(",")))
-    look = Vector(tuple(float(v) for v in arg("--look", "-0.05,0.08,0.80").split(",")))
-    cam.location = loc
-    cam.rotation_euler = (look - loc).to_track_quat("-Z", "Y").to_euler()
 
-for eng in ("BLENDER_EEVEE_NEXT", "BLENDER_EEVEE"):
+    light("key", "AREA", (0.6, -0.4, 2.4), 150, 1.4)
+    light("fill", "AREA", (-1.6, -1.2, 1.8), 50, 2.0)
+    light("rim", "AREA", (0.2, 1.6, 1.9), 45, 1.5)
+
+    cam_d = bpy.data.cameras.new("cam")
+    cam = bpy.data.objects.new("cam", cam_d)
+    sc.collection.objects.link(cam)
+    sc.camera = cam
+    if flag("--top"):
+        cam_d.type = "ORTHO"
+        cam_d.ortho_scale = 1.5
+        cam.location = (cx, cy, 3)
+        cam.rotation_euler = (0, 0, 0)
+    else:
+        cam_d.lens = float(arg("--lens", "32"))
+        loc = Vector(tuple(float(v) for v in arg("--cam", "0.62,-1.05,1.32").split(",")))
+        look = Vector(tuple(float(v) for v in arg("--look", "-0.05,0.08,0.80").split(",")))
+        cam.location = loc
+        cam.rotation_euler = (look - loc).to_track_quat("-Z", "Y").to_euler()
+
+    for eng in ("BLENDER_EEVEE_NEXT", "BLENDER_EEVEE"):
+        try:
+            sc.render.engine = eng
+            break
+        except TypeError:
+            pass
     try:
-        sc.render.engine = eng
-        break
-    except TypeError:
-        pass
-try:
-    sc.eevee.taa_render_samples = int(arg("--samples", "64"))
-except Exception:
-    pass
-for attr in ("use_shadows", "use_gtao", "use_raytracing"):
-    try:
-        setattr(sc.eevee, attr, True)
+        sc.eevee.taa_render_samples = int(arg("--samples", "64"))
     except Exception:
         pass
-try:
-    sc.view_settings.view_transform = "AgX"
-except TypeError:
-    pass
-w, h = (int(v) for v in arg("--size", "1600x900").split("x"))
-sc.render.resolution_x, sc.render.resolution_y = w, h
-sc.render.film_transparent = False
-out = arg("--out", os.path.join(ML, "exports", "deep-sea", "vr-scene.png"))
-sc.render.filepath = out
-bpy.ops.render.render(write_still=True)
-print("[scene] wrote", out)
+    for attr in ("use_shadows", "use_gtao", "use_raytracing"):
+        try:
+            setattr(sc.eevee, attr, True)
+        except Exception:
+            pass
+    try:
+        sc.view_settings.view_transform = "AgX"
+    except TypeError:
+        pass
+    w, h = (int(v) for v in arg("--size", "1600x900").split("x"))
+    sc.render.resolution_x, sc.render.resolution_y = w, h
+    sc.render.film_transparent = False
+    out = arg("--out", os.path.join(ML, "exports", "deep-sea", "vr-scene.png"))
+    sc.render.filepath = out
+    bpy.ops.render.render(write_still=True)
+    print("[scene] wrote", out)
+
+
+if __name__ == "__main__":
+    render_default()
