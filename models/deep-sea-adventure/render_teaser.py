@@ -213,175 +213,181 @@ for name in ("uh_steel", "uh_link"):
         b.inputs["Roughness"].default_value = 0.28
 
 # ---------------------------------------------------------------- 部屋
-def bsdf_of(m):
-    return next(n for n in m.node_tree.nodes if n.type == "BSDF_PRINCIPLED")
+def render_scene():
+    """部屋・光・カメラを置いて描く。別の図（tools/tableduo_figs/fig_env.py）は、ここより上の場面だけを使う。"""
+    def bsdf_of(m):
+        return next(n for n in m.node_tree.nodes if n.type == "BSDF_PRINCIPLED")
 
 
-def set_in(b, names, value):
-    for nm in names:
-        if nm in b.inputs:
-            b.inputs[nm].default_value = value
-            return
+    def set_in(b, names, value):
+        for nm in names:
+            if nm in b.inputs:
+                b.inputs[nm].default_value = value
+                return
 
 
-# 卓と椅子: 白に近い色だと光を全部返して面が飛ぶ。明るい木の色まで落とし、薄い艶で手と駒を映す
-TABLE_RGB = tuple(float(v) for v in arg("--table", "0.58,0.47,0.37").split(","))
-for m in bpy.data.materials:
-    if m.name.startswith(("table_mat", "chair_mat")):
-        b = bsdf_of(m)
-        b.inputs["Base Color"].default_value = (*TABLE_RGB, 1)
-        b.inputs["Roughness"].default_value = float(arg("--table-rough", "0.42"))
-        set_in(b, ("Coat Weight", "Coat"), 0.15)
-        set_in(b, ("Coat Roughness",), 0.12)
+    # 卓と椅子: 白に近い色だと光を全部返して面が飛ぶ。明るい木の色まで落とし、薄い艶で手と駒を映す
+    TABLE_RGB = tuple(float(v) for v in arg("--table", "0.58,0.47,0.37").split(","))
+    for m in bpy.data.materials:
+        if m.name.startswith(("table_mat", "chair_mat")):
+            b = bsdf_of(m)
+            b.inputs["Base Color"].default_value = (*TABLE_RGB, 1)
+            b.inputs["Roughness"].default_value = float(arg("--table-rough", "0.42"))
+            set_in(b, ("Coat Weight", "Coat"), 0.15)
+            set_in(b, ("Coat Roughness",), 0.12)
 
-# 手の側の椅子は画面の左端に角だけ入って邪魔なので描かない
-for o in [S.chair1, *S.chair1.children_recursive]:
-    o.hide_render = True
+    # 手の側の椅子は画面の左端に角だけ入って邪魔なので描かない
+    for o in [S.chair1, *S.chair1.children_recursive]:
+        o.hide_render = True
 
-ROOM = 6.0
-floor_m = S.flat_mat("floor", (0.030, 0.036, 0.045), 0.35)
-wall_m = S.flat_mat("wall", (0.070, 0.095, 0.120), 0.95)
-S.box("floor", (0, 0, -0.01), (ROOM, ROOM, 0.02), floor_m)
-S.box("wall_n", (0, ROOM / 2, 1.5), (ROOM, 0.02, 3), wall_m)
-S.box("wall_e", (ROOM / 2, 0, 1.5), (0.02, ROOM, 3), wall_m)
-S.box("wall_w", (-ROOM / 2, 0, 1.5), (0.02, ROOM, 3), wall_m)
-S.box("wall_s", (0, -ROOM / 2, 1.5), (ROOM, 0.02, 3), wall_m)
+    ROOM = 6.0
+    floor_m = S.flat_mat("floor", (0.030, 0.036, 0.045), 0.35)
+    wall_m = S.flat_mat("wall", (0.070, 0.095, 0.120), 0.95)
+    S.box("floor", (0, 0, -0.01), (ROOM, ROOM, 0.02), floor_m)
+    S.box("wall_n", (0, ROOM / 2, 1.5), (ROOM, 0.02, 3), wall_m)
+    S.box("wall_e", (ROOM / 2, 0, 1.5), (0.02, ROOM, 3), wall_m)
+    S.box("wall_w", (-ROOM / 2, 0, 1.5), (0.02, ROOM, 3), wall_m)
+    S.box("wall_s", (0, -ROOM / 2, 1.5), (ROOM, 0.02, 3), wall_m)
 
-world = bpy.data.worlds.new("w")
-sc.world = world
-world.use_nodes = True
-bg = next(n for n in world.node_tree.nodes if n.type == "BACKGROUND")
-bg.inputs[0].default_value = (0.30, 0.42, 0.60, 1)
-bg.inputs[1].default_value = float(arg("--ambient", "0.06"))
-
-
-def light(name, kind, loc, energy, size=1.0, target=(0, 0, 0.75), color=(1, 1, 1), size_y=None, spot=None,
-          spread=None):
-    ld = bpy.data.lights.new(name, kind)
-    ld.energy = energy
-    ld.color = color
-    if kind == "AREA":
-        ld.size = size
-        if size_y:
-            ld.shape = "RECTANGLE"
-            ld.size_y = size_y
-        if spread is not None:
-            ld.spread = math.radians(spread)
-    if kind == "SPOT":
-        ld.spot_size = math.radians(spot or 40)
-        ld.spot_blend = 1.0
-        ld.shadow_soft_size = size
-    lo = bpy.data.objects.new(name, ld)
-    sc.collection.objects.link(lo)
-    lo.location = loc
-    lo.rotation_euler = (Vector(target) - Vector(loc)).to_track_quat("-Z", "Y").to_euler()
-    return lo
+    world = bpy.data.worlds.new("w")
+    sc.world = world
+    world.use_nodes = True
+    bg = next(n for n in world.node_tree.nodes if n.type == "BACKGROUND")
+    bg.inputs[0].default_value = (0.30, 0.42, 0.60, 1)
+    bg.inputs[1].default_value = float(arg("--ambient", "0.06"))
 
 
-cam_loc = vec("--cam", "-0.88,0.0,1.10")
-look = vec("--look", "0.0,0.04,0.995")
-K = float(arg("--light", "1.0"))
-hand_c = Vector(S.arm_h.matrix_world @ S.arm_h.pose.bones["index_prox"].head)  # 手の胴のあたり
-head_c = Vector(S.arm_r.matrix_world @ S.arm_r.pose.bones["mixamorig:Head"].head) + Vector((0, 0.03, 0.08))
-hc, fc = tuple(hand_c), tuple(head_c)
-WARM, COOL = (1.0, 0.90, 0.78), (0.62, 0.82, 1.0)
-RIM = float(arg("--rim", "1.0"))
+    def light(name, kind, loc, energy, size=1.0, target=(0, 0, 0.75), color=(1, 1, 1), size_y=None, spot=None,
+              spread=None):
+        ld = bpy.data.lights.new(name, kind)
+        ld.energy = energy
+        ld.color = color
+        if kind == "AREA":
+            ld.size = size
+            if size_y:
+                ld.shape = "RECTANGLE"
+                ld.size_y = size_y
+            if spread is not None:
+                ld.spread = math.radians(spread)
+        if kind == "SPOT":
+            ld.spot_size = math.radians(spot or 40)
+            ld.spot_blend = 1.0
+            ld.shadow_soft_size = size
+        lo = bpy.data.objects.new(name, ld)
+        sc.collection.objects.link(lo)
+        lo.location = loc
+        lo.rotation_euler = (Vector(target) - Vector(loc)).to_track_quat("-Z", "Y").to_euler()
+        return lo
 
 
-def only(lo, objs, name):
-    """この光を objs だけに当てる（卓へ漏れると、艶のある天板がカメラへ鏡のように返して面が飛ぶ）。"""
-    col = bpy.data.collections.new(name)
-    for o in objs:
-        col.objects.link(o)
-    lo.light_linking.receiver_collection = col
+    cam_loc = vec("--cam", "-0.88,0.0,1.10")
+    look = vec("--look", "0.0,0.04,0.995")
+    K = float(arg("--light", "1.0"))
+    hand_c = Vector(S.arm_h.matrix_world @ S.arm_h.pose.bones["index_prox"].head)  # 手の胴のあたり
+    head_c = Vector(S.arm_r.matrix_world @ S.arm_r.pose.bones["mixamorig:Head"].head) + Vector((0, 0.03, 0.08))
+    hc, fc = tuple(hand_c), tuple(head_c)
+    WARM, COOL = (1.0, 0.90, 0.78), (0.62, 0.82, 1.0)
+    RIM = float(arg("--rim", "1.0"))
 
 
-HAND_OBJS = [o for o in bpy.data.objects if o.name.startswith("uh_") and o.type == "MESH"]
-REMY_OBJS = [o for o in S.remy_new if o.type == "MESH"]
-# 主光: カメラの左上、卓の向こう側から斜めに。人の顔と手の正面に当たり、卓には奥へ向かって落ちる濃淡が付く
-light("key", "AREA", (-0.55, 1.05, 1.85), 28 * K * float(arg("--key", "1.15")), 0.7, target=hc, color=WARM, spread=110)
-# 人の顔だけを少し起こす
-only(light("face", "AREA", (-0.75, 0.25, 1.55), 4 * K, 0.6, target=fc, color=WARM, spread=70), REMY_OBJS, "ll_face")
-# 手の輪郭: カメラの反対側の上から、細長い青い光。板の縁と銀の金具に線が入る
-only(light("rim_hand", "AREA", (0.95, 0.45, 1.45), 48 * K * RIM, 1.3, target=hc, color=COOL, size_y=0.14, spread=60),
-     HAND_OBJS, "ll_rim_hand")
-# 人の髪と肩の輪郭
-only(light("rim_head", "AREA", (0.95, -1.05, 1.95), 19 * K * RIM, 0.7, target=fc, color=COOL, spread=60),
-     REMY_OBJS, "ll_rim_head")
-# 手の甲の板に映り込ませる大きな面。弱く、広く
-only(light("card", "AREA", (-1.25, 0.55, 1.75), 8.5 * K * float(arg("--card", "1.0")), 1.6, target=hc,
-           color=(0.92, 0.96, 1.0), spread=90), HAND_OBJS, "ll_card")
-# 手の下側の指と金具を、低い位置から少し起こす
-only(light("under", "AREA", (-0.80, -0.35, 0.95), 2.2 * K, 0.35, target=hc, color=WARM, spread=60), HAND_OBJS, "ll_under")
-# 奥の壁の青い明かり。黒い手の後ろを明るくして形を抜く
-WASH = float(arg("--wash", "0.30"))
-if WASH > 0:
-    wx = float(arg("--wash-y", "0.55"))
-    light("wash", "SPOT", (1.2, wx, 0.15), 1500 * WASH, 0.3, target=(3.0, wx, 1.00), color=(0.30, 0.58, 0.85), spot=115)
+    def only(lo, objs, name):
+        """この光を objs だけに当てる（卓へ漏れると、艶のある天板がカメラへ鏡のように返して面が飛ぶ）。"""
+        col = bpy.data.collections.new(name)
+        for o in objs:
+            col.objects.link(o)
+        lo.light_linking.receiver_collection = col
 
-# ---------------------------------------------------------------- カメラ
-cam_d = bpy.data.cameras.new("cam")
-cam = bpy.data.objects.new("cam", cam_d)
-sc.collection.objects.link(cam)
-sc.camera = cam
-cam_d.lens = float(arg("--lens", "28.5"))
-cam.location = cam_loc
-cam.rotation_euler = (look - cam_loc).to_track_quat("-Z", "Y").to_euler()
-fstop = float(arg("--fstop", "4.0"))
-if fstop > 0:
-    cam_d.dof.use_dof = True
-    cam_d.dof.focus_distance = (hand_c - cam_loc).length
-    cam_d.dof.aperture_fstop = fstop
-print(f"[teaser] cam->hand {(hand_c - cam_loc).length:.3f} m / cam->head "
-      f"{((S.arm_r.matrix_world @ S.arm_r.pose.bones['mixamorig:Head'].head) - cam_loc).length:.3f} m")
 
-# ---------------------------------------------------------------- 描画
-engine = arg("--engine", "cycles")
-samples = int(arg("--samples", "128"))
-if engine == "cycles":
-    sc.render.engine = "CYCLES"
-    prefs = bpy.context.preferences.addons["cycles"].preferences
-    dev = "CPU"
-    for kind in ("OPTIX", "CUDA", "HIP", "ONEAPI"):
-        try:
-            prefs.compute_device_type = kind
-            prefs.get_devices()
-            gpus = [d for d in prefs.devices if d.type == kind]
-            if gpus:
-                for d in prefs.devices:
-                    d.use = d.type == kind
-                dev = "GPU"
-                print("[teaser] cycles device", kind, [d.name for d in gpus])
+    HAND_OBJS = [o for o in bpy.data.objects if o.name.startswith("uh_") and o.type == "MESH"]
+    REMY_OBJS = [o for o in S.remy_new if o.type == "MESH"]
+    # 主光: カメラの左上、卓の向こう側から斜めに。人の顔と手の正面に当たり、卓には奥へ向かって落ちる濃淡が付く
+    light("key", "AREA", (-0.55, 1.05, 1.85), 28 * K * float(arg("--key", "1.15")), 0.7, target=hc, color=WARM, spread=110)
+    # 人の顔だけを少し起こす
+    only(light("face", "AREA", (-0.75, 0.25, 1.55), 4 * K, 0.6, target=fc, color=WARM, spread=70), REMY_OBJS, "ll_face")
+    # 手の輪郭: カメラの反対側の上から、細長い青い光。板の縁と銀の金具に線が入る
+    only(light("rim_hand", "AREA", (0.95, 0.45, 1.45), 48 * K * RIM, 1.3, target=hc, color=COOL, size_y=0.14, spread=60),
+         HAND_OBJS, "ll_rim_hand")
+    # 人の髪と肩の輪郭
+    only(light("rim_head", "AREA", (0.95, -1.05, 1.95), 19 * K * RIM, 0.7, target=fc, color=COOL, spread=60),
+         REMY_OBJS, "ll_rim_head")
+    # 手の甲の板に映り込ませる大きな面。弱く、広く
+    only(light("card", "AREA", (-1.25, 0.55, 1.75), 8.5 * K * float(arg("--card", "1.0")), 1.6, target=hc,
+               color=(0.92, 0.96, 1.0), spread=90), HAND_OBJS, "ll_card")
+    # 手の下側の指と金具を、低い位置から少し起こす
+    only(light("under", "AREA", (-0.80, -0.35, 0.95), 2.2 * K, 0.35, target=hc, color=WARM, spread=60), HAND_OBJS, "ll_under")
+    # 奥の壁の青い明かり。黒い手の後ろを明るくして形を抜く
+    WASH = float(arg("--wash", "0.30"))
+    if WASH > 0:
+        wx = float(arg("--wash-y", "0.55"))
+        light("wash", "SPOT", (1.2, wx, 0.15), 1500 * WASH, 0.3, target=(3.0, wx, 1.00), color=(0.30, 0.58, 0.85), spot=115)
+
+    # ---------------------------------------------------------------- カメラ
+    cam_d = bpy.data.cameras.new("cam")
+    cam = bpy.data.objects.new("cam", cam_d)
+    sc.collection.objects.link(cam)
+    sc.camera = cam
+    cam_d.lens = float(arg("--lens", "28.5"))
+    cam.location = cam_loc
+    cam.rotation_euler = (look - cam_loc).to_track_quat("-Z", "Y").to_euler()
+    fstop = float(arg("--fstop", "4.0"))
+    if fstop > 0:
+        cam_d.dof.use_dof = True
+        cam_d.dof.focus_distance = (hand_c - cam_loc).length
+        cam_d.dof.aperture_fstop = fstop
+    print(f"[teaser] cam->hand {(hand_c - cam_loc).length:.3f} m / cam->head "
+          f"{((S.arm_r.matrix_world @ S.arm_r.pose.bones['mixamorig:Head'].head) - cam_loc).length:.3f} m")
+
+    # ---------------------------------------------------------------- 描画
+    engine = arg("--engine", "cycles")
+    samples = int(arg("--samples", "128"))
+    if engine == "cycles":
+        sc.render.engine = "CYCLES"
+        prefs = bpy.context.preferences.addons["cycles"].preferences
+        dev = "CPU"
+        for kind in ("OPTIX", "CUDA", "HIP", "ONEAPI"):
+            try:
+                prefs.compute_device_type = kind
+                prefs.get_devices()
+                gpus = [d for d in prefs.devices if d.type == kind]
+                if gpus:
+                    for d in prefs.devices:
+                        d.use = d.type == kind
+                    dev = "GPU"
+                    print("[teaser] cycles device", kind, [d.name for d in gpus])
+                    break
+            except Exception:
+                pass
+        sc.cycles.device = dev
+        sc.cycles.samples = samples
+        sc.cycles.use_denoising = True
+        sc.cycles.max_bounces = 6
+    else:
+        for eng in ("BLENDER_EEVEE_NEXT", "BLENDER_EEVEE"):
+            try:
+                sc.render.engine = eng
                 break
-        except Exception:
-            pass
-    sc.cycles.device = dev
-    sc.cycles.samples = samples
-    sc.cycles.use_denoising = True
-    sc.cycles.max_bounces = 6
-else:
-    for eng in ("BLENDER_EEVEE_NEXT", "BLENDER_EEVEE"):
-        try:
-            sc.render.engine = eng
-            break
-        except TypeError:
-            pass
-    sc.eevee.taa_render_samples = samples
-    for attr in ("use_shadows", "use_gtao", "use_raytracing"):
-        try:
-            setattr(sc.eevee, attr, True)
-        except Exception:
-            pass
-try:
-    sc.view_settings.view_transform = "AgX"
-    sc.view_settings.look = arg("--agx-look", "AgX - Base Contrast")
-except TypeError as e:
-    print("[teaser] view", e)
-sc.view_settings.exposure = float(arg("--exposure", "0"))
-w, h = (int(v) for v in arg("--size", "2400x1350").split("x"))
-sc.render.resolution_x, sc.render.resolution_y = w, h
-sc.render.film_transparent = False
-out = arg("--out", os.path.join(S.ML, "exports", "deep-sea", "vr-scene.png"))
-sc.render.filepath = out
-bpy.ops.render.render(write_still=True)
-print("[teaser] wrote", out)
+            except TypeError:
+                pass
+        sc.eevee.taa_render_samples = samples
+        for attr in ("use_shadows", "use_gtao", "use_raytracing"):
+            try:
+                setattr(sc.eevee, attr, True)
+            except Exception:
+                pass
+    try:
+        sc.view_settings.view_transform = "AgX"
+        sc.view_settings.look = arg("--agx-look", "AgX - Base Contrast")
+    except TypeError as e:
+        print("[teaser] view", e)
+    sc.view_settings.exposure = float(arg("--exposure", "0"))
+    w, h = (int(v) for v in arg("--size", "2400x1350").split("x"))
+    sc.render.resolution_x, sc.render.resolution_y = w, h
+    sc.render.film_transparent = False
+    out = arg("--out", os.path.join(S.ML, "exports", "deep-sea", "vr-scene.png"))
+    sc.render.filepath = out
+    bpy.ops.render.render(write_still=True)
+    print("[teaser] wrote", out)
+
+
+if __name__ == "__main__":
+    render_scene()
