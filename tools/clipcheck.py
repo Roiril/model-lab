@@ -11,4 +11,7 @@ for p in sys.argv[1:]:
     hi_all = sum(1 for r, g, b in px if min(r, g, b) >= 245) / n
     lo = sum(1 for r, g, b in px if max(r, g, b) <= 8) / n
     L = sorted(0.2126 * r + 0.7152 * g + 0.0722 * b for r, g, b in px)
+    b230 = sum(1 for v in L if v >= 230) / n
+    b210 = sum(1 for v in L if v >= 210) / n
+    print(f"  輝度>=230 {b230:.2%} / >=210 {b210:.2%}（明るい面の広さ。卓や肌が飛んで見えるのはここ）")
     print(f"{p}: 1ch>=250 {hi:.2%} / 白(全ch>=245) {hi_all:.2%} / 黒(<=8) {lo:.2%} / 輝度 p50 {L[n // 2]:.0f} p99 {L[int(n * .99)]:.0f}")

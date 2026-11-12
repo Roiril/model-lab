@@ -39,6 +39,9 @@ def vec(name, default):
 
 
 goal = S.goal.copy()  # 人差し指の先（駒の上）
+HOVER = float(arg("--hover", "0.035"))  # 指先を駒から浮かせる高さ
+S.arm_h.matrix_world = Matrix.Translation(Vector((0, 0, HOVER))) @ S.arm_h.matrix_world
+bpy.context.view_layer.update()
 print("[teaser] fingertip", tuple(round(v, 3) for v in goal))
 
 # ---------------------------------------------------------------- 人の視線を手へ
@@ -210,8 +213,33 @@ for name in ("uh_steel", "uh_link"):
         b.inputs["Roughness"].default_value = 0.28
 
 # ---------------------------------------------------------------- 部屋
+def bsdf_of(m):
+    return next(n for n in m.node_tree.nodes if n.type == "BSDF_PRINCIPLED")
+
+
+def set_in(b, names, value):
+    for nm in names:
+        if nm in b.inputs:
+            b.inputs[nm].default_value = value
+            return
+
+
+# 卓と椅子: 白に近い色だと光を全部返して面が飛ぶ。明るい木の色まで落とし、薄い艶で手と駒を映す
+TABLE_RGB = tuple(float(v) for v in arg("--table", "0.58,0.47,0.37").split(","))
+for m in bpy.data.materials:
+    if m.name.startswith(("table_mat", "chair_mat")):
+        b = bsdf_of(m)
+        b.inputs["Base Color"].default_value = (*TABLE_RGB, 1)
+        b.inputs["Roughness"].default_value = float(arg("--table-rough", "0.42"))
+        set_in(b, ("Coat Weight", "Coat"), 0.15)
+        set_in(b, ("Coat Roughness",), 0.12)
+
+# 手の側の椅子は画面の左端に角だけ入って邪魔なので描かない
+for o in [S.chair1, *S.chair1.children_recursive]:
+    o.hide_render = True
+
 ROOM = 6.0
-floor_m = S.flat_mat("floor", (0.050, 0.060, 0.072), 0.55)
+floor_m = S.flat_mat("floor", (0.030, 0.036, 0.045), 0.35)
 wall_m = S.flat_mat("wall", (0.070, 0.095, 0.120), 0.95)
 S.box("floor", (0, 0, -0.01), (ROOM, ROOM, 0.02), floor_m)
 S.box("wall_n", (0, ROOM / 2, 1.5), (ROOM, 0.02, 3), wall_m)
@@ -223,11 +251,12 @@ world = bpy.data.worlds.new("w")
 sc.world = world
 world.use_nodes = True
 bg = next(n for n in world.node_tree.nodes if n.type == "BACKGROUND")
-bg.inputs[0].default_value = (0.35, 0.45, 0.60, 1)
-bg.inputs[1].default_value = float(arg("--ambient", "0.10"))
+bg.inputs[0].default_value = (0.30, 0.42, 0.60, 1)
+bg.inputs[1].default_value = float(arg("--ambient", "0.06"))
 
 
-def light(name, kind, loc, energy, size=1.0, target=(0, 0, 0.75), color=(1, 1, 1), size_y=None, spot=None):
+def light(name, kind, loc, energy, size=1.0, target=(0, 0, 0.75), color=(1, 1, 1), size_y=None, spot=None,
+          spread=None):
     ld = bpy.data.lights.new(name, kind)
     ld.energy = energy
     ld.color = color
@@ -236,6 +265,8 @@ def light(name, kind, loc, energy, size=1.0, target=(0, 0, 0.75), color=(1, 1, 1
         if size_y:
             ld.shape = "RECTANGLE"
             ld.size_y = size_y
+        if spread is not None:
+            ld.spread = math.radians(spread)
     if kind == "SPOT":
         ld.spot_size = math.radians(spot or 40)
         ld.spot_blend = 1.0
@@ -248,28 +279,45 @@ def light(name, kind, loc, energy, size=1.0, target=(0, 0, 0.75), color=(1, 1, 1
 
 
 cam_loc = vec("--cam", "-0.88,0.0,1.10")
-look = vec("--look", "0.0,0.0,0.995")
+look = vec("--look", "0.0,0.04,0.995")
 K = float(arg("--light", "1.0"))
-g = tuple(goal)
 hand_c = Vector(S.arm_h.matrix_world @ S.arm_h.pose.bones["index_prox"].head)  # 手の胴のあたり
-
 head_c = Vector(S.arm_r.matrix_world @ S.arm_r.pose.bones["mixamorig:Head"].head) + Vector((0, 0.03, 0.08))
+hc, fc = tuple(hand_c), tuple(head_c)
+WARM, COOL = (1.0, 0.90, 0.78), (0.62, 0.82, 1.0)
 RIM = float(arg("--rim", "1.0"))
-# 卓の真上から落とす主光。卓と駒を明るい面にする
-light("key", "AREA", (-0.15, -0.05, 2.15), 60 * K, 1.1, target=(0, -0.05, 0.75), color=(1.0, 0.96, 0.90))
-# 人の顔に当てる光（卓の向こう、カメラ寄りの上から）
-light("face", "AREA", (-0.65, 0.60, 1.65), 42 * K, 0.8, target=tuple(head_c), color=(1.0, 0.93, 0.85))
-# 手の輪郭を拾う細長い光。カメラの反対側の上から
-light("rim_hand", "AREA", (0.85, 0.50, 1.50), 110 * K * RIM, 1.4, target=tuple(hand_c), color=(0.72, 0.87, 1.0), size_y=0.22)
+
+
+def only(lo, objs, name):
+    """この光を objs だけに当てる（卓へ漏れると、艶のある天板がカメラへ鏡のように返して面が飛ぶ）。"""
+    col = bpy.data.collections.new(name)
+    for o in objs:
+        col.objects.link(o)
+    lo.light_linking.receiver_collection = col
+
+
+HAND_OBJS = [o for o in bpy.data.objects if o.name.startswith("uh_") and o.type == "MESH"]
+REMY_OBJS = [o for o in S.remy_new if o.type == "MESH"]
+# 主光: カメラの左上、卓の向こう側から斜めに。人の顔と手の正面に当たり、卓には奥へ向かって落ちる濃淡が付く
+light("key", "AREA", (-0.55, 1.05, 1.85), 28 * K * float(arg("--key", "1.15")), 0.7, target=hc, color=WARM, spread=110)
+# 人の顔だけを少し起こす
+only(light("face", "AREA", (-0.75, 0.25, 1.55), 4 * K, 0.6, target=fc, color=WARM, spread=70), REMY_OBJS, "ll_face")
+# 手の輪郭: カメラの反対側の上から、細長い青い光。板の縁と銀の金具に線が入る
+only(light("rim_hand", "AREA", (0.95, 0.45, 1.45), 48 * K * RIM, 1.3, target=hc, color=COOL, size_y=0.14, spread=60),
+     HAND_OBJS, "ll_rim_hand")
 # 人の髪と肩の輪郭
-light("rim_head", "AREA", (0.90, -1.15, 1.95), 75 * K * RIM, 0.9, target=tuple(head_c), color=(0.72, 0.87, 1.0))
-# 手のカメラ側の板とねじを起こす光
-light("hand_fill", "AREA", (-0.95, 0.30, 1.18), 20 * K, 0.45, target=tuple(hand_c), color=(1.0, 0.96, 0.92))
-# 奥の壁に落とす青い明かり。黒い手の後ろを明るくして形を抜く
-WASH = float(arg("--wash", "0.45"))
+only(light("rim_head", "AREA", (0.95, -1.05, 1.95), 19 * K * RIM, 0.7, target=fc, color=COOL, spread=60),
+     REMY_OBJS, "ll_rim_head")
+# 手の甲の板に映り込ませる大きな面。弱く、広く
+only(light("card", "AREA", (-1.25, 0.55, 1.75), 8.5 * K * float(arg("--card", "1.0")), 1.6, target=hc,
+           color=(0.92, 0.96, 1.0), spread=90), HAND_OBJS, "ll_card")
+# 手の下側の指と金具を、低い位置から少し起こす
+only(light("under", "AREA", (-0.80, -0.35, 0.95), 2.2 * K, 0.35, target=hc, color=WARM, spread=60), HAND_OBJS, "ll_under")
+# 奥の壁の青い明かり。黒い手の後ろを明るくして形を抜く
+WASH = float(arg("--wash", "0.30"))
 if WASH > 0:
-    wx = float(arg("--wash-y", "0.75"))
-    light("wash", "SPOT", (1.2, wx, 0.15), 1500 * WASH, 0.3, target=(3.0, wx, 1.05), color=(0.35, 0.62, 0.85), spot=120)
+    wx = float(arg("--wash-y", "0.55"))
+    light("wash", "SPOT", (1.2, wx, 0.15), 1500 * WASH, 0.3, target=(3.0, wx, 1.00), color=(0.30, 0.58, 0.85), spot=115)
 
 # ---------------------------------------------------------------- カメラ
 cam_d = bpy.data.cameras.new("cam")
