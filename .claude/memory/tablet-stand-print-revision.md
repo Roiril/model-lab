@@ -1,7 +1,11 @@
 ---
-name: Redmiスタンドの印刷失敗と補強
-description: tablet-stand-45は細枠版が実印刷でスパゲッティ失敗。2026-10-30に全面台座と厚肉支えへ更新。
-type: project
+name: redmi-stand-history
+description: Redmi Pad SEスタンドの経緯。45度版の印刷失敗と補強、2026-11-14にredmi-pad-standへ作り直し。横置き専用で穴は不要。
+metadata:
+  node_type: memory
+  type: project
+  originSessionId: 64a93352-622f-48ff-8fba-f7b1974ef232
+  modified: 2026-11-14T06:24:22.437Z
 ---
 
 - ユーザー報告: 使用フィラメントを抑えたRedmiスタンドが印刷中にスパゲッティで失敗。失敗層・剥がれの位置は不明。
@@ -13,3 +17,5 @@ type: project
 - `plate.py` は共有のG-code計器を利用。旧Bambu CLIでは物体ラベルがなく `None` に全部品の経路が入るため、このキーも必ず検査する。
 - 生成ログと検証出力: `G:\マイドライブ\shubie\renders\2026-10-30_redmi-stand\`。詳細・コマンドはモデルREADME。
 - 実印刷による改修版の確認は未実施。計算の合格を「スパゲッティ再発なし」とは扱わない。
+- 2026-11-14 ユーザー依頼で `models/redmi-pad-stand/` へ根本から作り直し（60°・側面輪郭の押し出し一体・後ろへ流れる尾）。tablet-stand-45 は catalog で archived。
+- ユーザーは**横置き専用**で使う。縦置き用のケーブル溝などの穴は「不要な穴」として外すよう指示された（2026-11-14）。
