@@ -39,7 +39,7 @@ def vec(name, default):
 
 
 goal = S.goal.copy()  # 人差し指の先（駒の上）
-HOVER = float(arg("--hover", "0.035"))  # 指先を駒から浮かせる高さ
+HOVER = float(arg("--hover", "0.070"))  # 指先を駒から浮かせる高さ
 S.arm_h.matrix_world = Matrix.Translation(Vector((0, 0, HOVER))) @ S.arm_h.matrix_world
 bpy.context.view_layer.update()
 print("[teaser] fingertip", tuple(round(v, 3) for v in goal))
