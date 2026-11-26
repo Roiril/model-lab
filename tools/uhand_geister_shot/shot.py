@@ -128,20 +128,31 @@ def light(name, off, energy, size):
 
 
 K = float(arg("--light", "0.15"))
+LS = float(arg("--light-size", "1.0"))     # 面光源の大きさの倍率。大きいほど影の縁と照り返しが柔らかい（明るさは energy のまま）
 # 参照は画面の左上から光が来る。右手で描いて反転するので、ここでは画面の右上から当てる
-light("key", right * 0.3 + back * 0.15 + Vector((0, 0, 0.75)), 140 * K, 0.9)
-light("fill", -right * 0.5 - back * 0.55 + Vector((0, 0, 0.35)), 45 * K, 0.8)
-light("rim", right * 0.5 + back * 0.45 + Vector((0, 0, 0.3)), 35 * K, 0.6)
+light("key", right * 0.3 + back * 0.15 + Vector((0, 0, 0.75)), 140 * K, 0.9 * LS)
+light("fill", -right * 0.5 - back * 0.55 + Vector((0, 0, 0.35)), 45 * K, 0.8 * LS)
+light("rim", right * 0.5 + back * 0.45 + Vector((0, 0, 0.3)), 35 * K, 0.6 * LS)
 
 # ---------------------------------------------------------------- カメラ（camsearch.py と同じ置き方）
 cd = bpy.data.cameras.new("cam")
-cd.lens, cd.sensor_width, cd.sensor_fit = 60.0, 36.0, "HORIZONTAL"
-cd.shift_x, cd.shift_y = cam_cfg["shift_x"], cam_cfg["shift_y"]
+# --zoom: 画面の中心を保ったまま拡大縮小する（1 より小さいと引いて余白ができる）。焦点距離とシフトを同じ比で掛ける
+Z = float(arg("--zoom", "1.0"))
+cd.lens, cd.sensor_width, cd.sensor_fit = 60.0 * Z, 36.0, "HORIZONTAL"
+cd.shift_x, cd.shift_y = cam_cfg["shift_x"] * Z, cam_cfg["shift_y"] * Z
 cam = bpy.data.objects.new("cam", cd)
 sc.collection.objects.link(cam)
 sc.camera = cam
 cam.location = cam_pos
 cam.rotation_euler = (center - cam_pos).to_track_quat("-Z", "Y").to_euler()
+# --fstop: 被写界深度。ピントは駒の、親指と人差し指のあいだの高さ（つまんでいる所）に合わせる
+FSTOP = arg("--fstop")
+if FSTOP:
+    focus = Vector((S.cx, S.cy, (cl["uh_thumb_tip"][1] + cl["uh_index_tip"][1]) / 2))
+    cd.dof.use_dof = True
+    cd.dof.aperture_fstop = float(FSTOP)
+    cd.dof.focus_distance = (focus - cam_pos).length
+    print(f"[render] 被写界深度 F{FSTOP} ピント {cd.dof.focus_distance * 1000:.0f}mm 先（駒の高さ {focus.z * 1000:.0f}mm）")
 
 wd, ht = (int(v) for v in arg("--size", "1920x1120").split("x"))
 sc.render.resolution_x, sc.render.resolution_y = wd, ht
@@ -149,6 +160,7 @@ sc.render.image_settings.file_format = "PNG"
 sc.render.engine = "CYCLES"
 sc.cycles.samples = int(arg("--samples", "256"))
 sc.cycles.use_denoising = True
+sc.cycles.sample_clamp_indirect = 5.0      # 金属のねじの照り返しで出る白い点を抑える
 prefs = bpy.context.preferences.addons["cycles"].preferences
 used = "CPU"
 for kind in ("OPTIX", "CUDA"):
