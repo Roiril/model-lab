@@ -198,6 +198,7 @@ for k, r in enumerate(ok[:8]):
 out = arg("--out")
 tmp = out + ".tmp"
 with open(tmp, "w", encoding="utf-8", newline="\n") as f:
-    json.dump({"scene": cfg, "ok": ok, "rejected": ng}, f, ensure_ascii=False, indent=1)
+    # all は駒の見えで落とした角度も含む（周りの角度から撮り比べるとき用）
+    json.dump({"scene": cfg, "ok": ok, "rejected": ng, "all": res}, f, ensure_ascii=False, indent=1)
 os.replace(tmp, out)
 print("[cam]", out)
