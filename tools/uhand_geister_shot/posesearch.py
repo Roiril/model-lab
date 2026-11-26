@@ -89,8 +89,13 @@ def main():
             print(f"[pose] {g}: {time.time() - t0:.2f} 秒 score={r['score']:.1f} 見え={r['visible']:.2f} 向き={r['view_el_az']} "
                   f"親指 {r['thumb_gap_mm']:.1f}mm@{r['thumb_z_mm']:.0f} 人差し指 {r['index_gap_mm']:.1f}mm@{r['index_z_mm']:.0f}")
         return
-    grid = list(itertools.product((0.5, 0.6, 0.7, 0.8, 0.9, 1.0), (0.05,), (0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0),
-                                  (-10, 0, 10, 20, 30, 40), (-30, -20, -10, 0, 10, 20, 30)))
+    axes = {"index": (0.5, 0.6, 0.7, 0.8, 0.9, 1.0), "step": (0.05,), "thumb": (0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0),
+            "pitch": (-10, 0, 10, 20, 30, 40), "roll": (-30, -20, -10, 0, 10, 20, 30)}
+    if arg("--fix"):      # 例: --fix index=0.7,step=0.15,thumb=1,pitch=-10,roll=20
+        for kv in arg("--fix").split(","):
+            k, v = kv.split("=")
+            axes[k] = (float(v),)
+    grid = list(itertools.product(*axes.values()))
     res = []
     t0 = time.time()
     for n, g in enumerate(grid):
