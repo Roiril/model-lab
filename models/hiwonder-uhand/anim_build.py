@@ -47,7 +47,7 @@ RULES = [
     (r"{f}_(tip|dip_pin)", "{f}_tip"),
     (r"(horn_|rod_end0)", "thumb_horn"),
     (r"push_rod$", "thumb_pushrod"),
-    (r"thumb_distal$", "thumb_tip"),
+    (r"thumb_distal(_s.*)?$", "thumb_tip"),
     (r"thumb_crank_tab$", "thumb_prox"),
     (r"thumb_crank", "thumb_crank"),
     (r"(thumb_(upper|lower|root|pivot|strut|w\d|s\d|n\d)|rod_end1)", "thumb_prox"),

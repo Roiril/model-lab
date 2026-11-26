@@ -614,24 +614,32 @@ def thumb(M):
 
     # 基節の上下の板
     Mu, tu = Mt(L["upper"])
-    plate("thumb_upper", ribbon([tuple(pv - du * 2), tuple(pv + du * 24), tuple(jt)], [6.0, 6.0, 5.2]), tu, Mu,
-          M["acrylic"], bevel=0.3)
+    plate("thumb_upper", ribbon([tuple(pv - du * 2), tuple(pv + du * (P.THUMB_PROX_LEN / 2)), tuple(jt)], [6.0, 6.0, 5.2]),
+          tu, Mu, M["acrylic"], bevel=0.3)
     Ml, tl = Mt(L["lower"])
-    plate("thumb_lower", ribbon([tuple(pv - du * 5), tuple(pv + du * 20), tuple(pv + du * 40)], [6.0, 6.0, 5.0]), tl, Ml,
-          M["acrylic"], bevel=0.3)
+    lower_end = P.THUMB_PROX_LEN - 8.1      # 下の板は関節の手前で終わる
+    plate("thumb_lower", ribbon([tuple(pv - du * 5), tuple(pv + du * (lower_end / 2)), tuple(pv + du * lower_end)],
+                                [6.0, 6.0, 5.0]), tl, Ml, M["acrylic"], bevel=0.3)
     # 付け根の黒い詰め物と縦軸
     Mm, tm = Mt(L["mid"])
     plate("thumb_root", ribbon([tuple(pv - du * 2), tuple(pv + du * 14)], 5.0), tm, Mm, M["servo"], bevel=0.3)
     cyl("thumb_pivot", thumb_pt(pv.x, pv.y, -1.2), thumb_pt(pv.x, pv.y, L["lower"][1] + 1.2), 3.2, M["bushing"], n=24, bevel=0.3)
-    # 末節（1 枚。関節の手前から始まり、先は丸く、穴が 1 つ）
+    # 末節（1 枚。後ろは関節を中心とする半円で終わり、先は丸く、穴が 1 つ）。
+    # 以前は関節の 16mm 手前まで尾があり、末節を曲げると尾が基節の板の外へ振り出して突き出した（2026-11-26）。
+    # 後ろの端を関節の丸み（上の板の端と同じ半径 5.2）に収め、どの角度でも基節の輪郭から出ないようにする
     dm_a = math.radians(P.THUMB_TIP_DIR)
     dm = Vector((math.cos(dm_a), math.sin(dm_a)))
     tip_c = jt + dm * P.THUMB_TIP_LEN
     hole = circle(tuple(tip_c), 1.3, 14)
-    plate("thumb_distal", ribbon([tuple(jt - du * 16), tuple(jt - du * 4), tuple(jt + dm * 6), tuple(tip_c)],
-                                 [5.2, 5.2, 4.6, 3.9]), tm, Mm, M["acrylic"], [hole], bevel=0.3)
-    # 上の板のねじ: 付け根寄りと中ほどに小ねじ、中央と関節に座金つき
-    for k, (dist, big) in enumerate(((7.9, False), (28.3, True), (39.9, False), (P.THUMB_PROX_LEN, True))):
+    plate("thumb_distal", ribbon([tuple(jt), tuple(jt + dm * 6), tuple(jt + dm * (P.THUMB_TIP_LEN * 0.6)), tuple(tip_c)],
+                                 [5.2, 4.8, 4.5, 3.9]), tm, Mm, M["acrylic"], [hole], bevel=0.3)
+    # 尾があった所（上下の板のあいだ、付け根の詰め物の先から関節の手前まで）は基節側の詰め物で埋める。末節の半円とは 0.6mm 離す
+    plate("thumb_root_fill", ribbon([tuple(pv + du * 14), tuple(jt - du * 11)], 5.2), tm, Mm, M["acrylic"], bevel=0.3)
+    # 末節の中ほどに小ねじ（上から見えるもの）
+    mid = jt + dm * (P.THUMB_TIP_LEN * 0.5)
+    screw("thumb_distal_s", thumb_pt(mid.x, mid.y, L["mid"][0]), up, M, r=1.5)
+    # 上の板のねじ: 付け根寄りに小ねじ、銀のクランクの留め（28.3）と関節に座金つき
+    for k, (dist, big) in enumerate(((7.9, False), (28.3, True), (P.THUMB_PROX_LEN, True))):
         q = pv + du * dist
         top = thumb_pt(q.x, q.y, 0.0)
         if big:
@@ -639,7 +647,7 @@ def thumb(M):
             screw(f"thumb_s{k}", top + up * 0.7, up, M, r=1.9)
         else:
             screw(f"thumb_s{k}", top, up, M, r=1.5)
-        if dist <= 40:
+        if dist <= lower_end:
             nut(f"thumb_n{k}", thumb_pt(q.x, q.y, L["lower"][1]), n, M, r=1.9, h=1.6)
     # 真鍮の柱と、下端の押し棒の受け
     a, b = thumb_strut_bottom()
