@@ -47,8 +47,8 @@ def band(x, lo, hi):
     return 0.0 if lo <= x <= hi else min(abs(x - lo), abs(x - hi))
 
 
-def evaluate(S, index, step, thumb, pitch, roll):
-    d = SC.fingers(index, step)
+def evaluate(S, index, step, thumb, pitch, roll, little=None):
+    d = SC.fingers(index, step, little)
     d["thumb"] = thumb
     S.set_hand(d, pitch, roll)
     c, cl, v = S.place_ghost()
@@ -90,8 +90,9 @@ def main():
                   f"親指 {r['thumb_gap_mm']:.1f}mm@{r['thumb_z_mm']:.0f} 人差し指 {r['index_gap_mm']:.1f}mm@{r['index_z_mm']:.0f}")
         return
     axes = {"index": (0.5, 0.6, 0.7, 0.8, 0.9, 1.0), "step": (0.05,), "thumb": (0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0),
-            "pitch": (-10, 0, 10, 20, 30, 40), "roll": (-30, -20, -10, 0, 10, 20, 30)}
-    if arg("--fix"):      # 例: --fix index=0.7,step=0.15,thumb=1,pitch=-10,roll=20
+            "pitch": (-10, 0, 10, 20, 30, 40), "roll": (-30, -20, -10, 0, 10, 20, 30), "little": (None,)}
+    # little を固定すると step は使われず、人差し指から小指までを直線でつなぐ（負は甲の側へ反る）
+    if arg("--fix"):      # 例: --fix index=0.7,step=0.15,thumb=1,pitch=-10,roll=20 / --fix index=0.7,little=-0.08,...
         for kv in arg("--fix").split(","):
             k, v = kv.split("=")
             axes[k] = (float(v),)

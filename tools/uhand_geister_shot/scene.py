@@ -19,6 +19,14 @@ import numpy as np
 from mathutils import Matrix
 
 import anim_build as AB
+import kin
+
+# 絵のためだけに、4 本の指を開いた姿勢（量 0）より先、甲の側へ反らせられるようにする（-0.4 まで連結が解ける）。
+# 実物のサーボがここまで反らせるかは確かめていない。模型の定義（kin.py）は変えず、この道具の中だけで広げる
+FINGER_LO = -0.3
+for _f in kin.FINGERS:
+    _lo, _hi, _rest = kin.DOFS[_f]
+    kin.DOFS[_f] = (FINGER_LO, _hi, _rest)
 
 GHOST = os.path.join(ML, "exports", "geister-ghost", "ghost_blue.glb")
 CLEAR = 0.001
@@ -35,8 +43,12 @@ def hand_rot(pitch, roll):
     return rot("y", pitch) @ rot("x", -roll) @ R0
 
 
-def fingers(index, curl_step):
-    """人差し指の量から、中指・薬指・小指を少しずつ浅くする（参照の扇）。"""
+def fingers(index, curl_step, little=None):
+    """人差し指の量から、中指・薬指・小指を少しずつ浅くする（参照の扇）。
+
+    little を渡すと、人差し指から小指までを直線で補間する（小指は負にして甲の側へ反らせてよい）。"""
+    if little is not None:
+        return {nm: index + (little - index) * k / 3 for k, nm in enumerate(("index", "middle", "ring", "little"))}
     return {"index": index, "middle": max(0.0, index - curl_step), "ring": max(0.0, index - 2 * curl_step),
             "little": max(0.0, index - 3 * curl_step)}
 
