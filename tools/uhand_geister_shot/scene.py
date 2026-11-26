@@ -28,6 +28,35 @@ for _f in kin.FINGERS:
     _lo, _hi, _rest = kin.DOFS[_f]
     kin.DOFS[_f] = (FINGER_LO, _hi, _rest)
 
+# 親指の基節と末節を別々の角度で曲げられるようにする（実物は 1 つのサーボで両方が連動する）。
+# dofs に thumb_prox_deg / thumb_tip_deg を入れると、量 thumb の代わりにその角度 [deg] を使う。
+# 基節を小さくすると親指が手のひらから離れて後ろへ反り、末節を大きくすると先が内へ曲がる
+_THUMB = {"prox": None, "tip": None}
+_thumb_pose_orig = kin.thumb_pose
+
+
+def _thumb_pose(u):
+    if _THUMB["prox"] is None:
+        return _thumb_pose_orig(u)
+    e1, e2, n, o = kin.thumb_frame()
+    q = kin.thumb_points()
+    Wp = kin.rot_axis(n, math.radians(_THUMB["prox"]), q["pivot"])
+    Wt = kin.mul(Wp, kin.rot_axis(n, math.radians(_THUMB["tip"]), q["joint"]))
+    strut = kin.apply(Wp, q["strut"])
+    L = kin.vlen(kin.vsub(q["strut"], q["horn_tip"]))
+    gamma = kin.horn_angle(q["shaft"], q["horn_tip"], strut, L, "thumb: 押し棒（角度指定） ")
+    Wh = kin.rot_axis((0, 1, 0), gamma, q["shaft"])
+    tip = kin.apply(Wh, q["horn_tip"])
+    Wrod = kin.aim(q["horn_tip"], tip, kin.vsub(q["strut"], q["horn_tip"]), kin.vsub(strut, tip))
+    ct = kin.apply(Wp, q["crank_t"])
+    d0, d1 = kin.vsub(q["crank_t"], q["crank_f"]), kin.vsub(ct, q["crank_f"])
+    Wc = kin.aim(q["crank_f"], q["crank_f"], d0, d1, kin.vlen(d1) / kin.vlen(d0))
+    return {"thumb_prox": Wp, "thumb_tip": Wt, "thumb_horn": Wh, "thumb_pushrod": Wrod, "thumb_crank": Wc}, \
+        dict(horn=gamma, crank_stretch=kin.vlen(d1) / kin.vlen(d0))
+
+
+kin.thumb_pose = _thumb_pose
+
 GHOST = os.path.join(ML, "exports", "geister-ghost", "ghost_blue.glb")
 CLEAR = 0.001
 R0 = np.array([[0, 0, 1], [1, 0, 0], [0, 1, 0]], dtype=float)
@@ -98,6 +127,9 @@ class Scene:
     def set_hand(self, dofs, pitch, roll):
         self.dofs, self.pitch, self.roll = dict(dofs), pitch, roll
         self.arm.matrix_world = Matrix.Identity(4)
+        _THUMB["prox"], _THUMB["tip"] = dofs.get("thumb_prox_deg"), dofs.get("thumb_tip_deg")
+        if (_THUMB["prox"] is None) != (_THUMB["tip"] is None):
+            raise ValueError("thumb_prox_deg と thumb_tip_deg は両方そろえて渡す")
         AB.apply_pose(self.arm, self.rest, dofs)
         bpy.context.view_layer.update()
         R = Matrix(hand_rot(pitch, roll).tolist()).to_4x4()
