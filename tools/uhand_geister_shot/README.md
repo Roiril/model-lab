@@ -1,0 +1,48 @@
+# uHand とガイスターの駒の 1 枚（生成画像の構図を実モデルで描き直す）
+
+参照は AI の生成画像（黒いロボットハンドが斜め上から見え、親指と人差し指で白いおばけの駒に触れている）。
+同じ構図を、`models/hiwonder-uhand`（実寸・サーボ 6 量）と `exports/geister-ghost/ghost_blue.glb`（実寸）で描く。
+
+## 手順
+
+```bash
+B="C:/Program Files/Blender Foundation/Blender 5.1/blender.exe"
+D=<作業用のフォルダ>
+py -3.11 tools/uhand_geister_shot/ref_masks.py --ref <参照 1920x1200> --crop 0,0,960,560 --out $D    # 参照を 960x560 に切るとき
+"$B" --background --python tools/uhand_geister_shot/posesearch.py -- --out $D/scene.json             # 手の姿勢と駒の位置（約 5 分）
+"$B" --background --python tools/uhand_geister_shot/camsearch.py -- --scene $D/scene.json \
+    --ref-hand $D/ref_hand.npy --ref-ghost $D/ref_ghost.npy --out $D/cams.json --work $D/cs --el 35,40,45,50,55
+"$B" --background --python tools/uhand_geister_shot/shot.py -- --cams $D/cams.json --out $D/final/shot.png \
+    --sil $D/final/sil.png --size 1920x1120 --samples 256 --lift 1.0 --bg 0.48 --world 0.3 --light 0.25 --spec 0.3 \
+    --view AgX --look "AgX - Punchy"
+py -3.11 tools/uhand_geister_shot/compare.py --ref $D/ref.png --ref-hand $D/ref_hand.npy --ref-ghost $D/ref_ghost.npy \
+    --shot $D/final/shot.png --sil $D/final/sil.png --out $D/final
+```
+
+- `scene.py` 場面の部品（手の向き・駒の高さごとの半径・隙間・駒の見え）。Blender の中で import する
+- `posesearch.py` 手の姿勢と傾きを格子で探す。駒は親指の先と人差し指の先の両方に接する位置へ解く
+- `camsearch.py` 場面を固定し、カメラの仰角と方位を格子で探す。距離とレンズのシフトは、手の頂点を投影した外接枠が参照の枠に合うよう詰める
+- `shot.py` Cycles で描く。面どうしの当たり判定で接触と食い込みを印字する
+- `compare.py` 左右反転して参照と並べ、シルエットの IoU を出す
+
+参照は左手、模型は右手。右手で描いて最後に反転する（反転した絵は左手の uHand に見える）。
+
+## 目標の決め方（2026-11-26）
+
+最初は参照の点（関節・指先・板の四隅・駒）やシルエットに、姿勢・手の向き・カメラを全部まとめて合わせた。
+数値は合っても絵が別物になり、2 回続けて行き詰まった。
+
+- **生成画像の手は比率が実物と違う。** 手首の板と指の付け根のあいだに長いサーボの区画があり、手のひらが約 2 倍長い。
+  指も駒に対して約 1.5 倍長い。合わせ切れないぶんを、最適化はカメラを寄せて手を立てることで吸収してしまう
+- そこで、比率に依らない記述を目標にした。甲が見える。親指の側がカメラに近い。駒が手の外、親指の先と人差し指の先のあいだに立ち、
+  斜め上から 9 割以上見える。そのうえで、場面（姿勢）を先に固定し、カメラだけを探す
+- 「駒が見える」は加点ではなく硬い条件にする。加点だと、駒が手のひらの下に隠れた解が選ばれる
+- 外接枠は描画から測らない。画面からはみ出した部分が測れず、枠合わせが狂う。頂点を投影して測る
+
+2026-11-26 の結果: 人差し指 0.70（中指以下 0.05 ずつ浅く）、親指 1.0、pitch -10、roll 20。
+カメラは仰角 40・方位 160。手の IoU 0.574、駒は 96% 見える。駒の画面上の高さは参照の約 1.45 倍（実寸のまま）。
+
+## 明るさ
+
+黒い材質の色を下げても手は明るいままだった。効いたのは表示変換（AgX の既定の look は暗部を持ち上げる）。
+参照の背景 200・手の中央値 42 に対し、`AgX - Punchy` で背景 207・手 82（甲の板の上面が上からの光を受けるぶん高い）。
