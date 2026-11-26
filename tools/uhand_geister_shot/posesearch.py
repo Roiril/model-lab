@@ -47,11 +47,21 @@ def band(x, lo, hi):
     return 0.0 if lo <= x <= hi else min(abs(x - lo), abs(x - hi))
 
 
-def evaluate(S, index, step, thumb, pitch, roll, little=None, tprox=None, ttip=None):
+THUMB_Z = tuple(float(v) for v in (arg("--thumb-z") or "2,15").split(","))    # 親指が駒に触れる高さの帯 [mm]
+INDEX_Z = tuple(float(v) for v in (arg("--index-z") or "25,45").split(","))   # 人差し指が触れる高さの帯 [mm]
+
+
+def evaluate(S, index, step, thumb, pitch, roll, little=None, tprox=None, ttip=None, ipip=None, lift=None, idip=None):
     d = SC.fingers(index, step, little)
     d["thumb"] = thumb
     if tprox is not None:       # 親指の基節と末節の角度 [deg] を別々に（scene.py の _thumb_pose）
         d["thumb_prox_deg"], d["thumb_tip_deg"] = tprox, ttip
+    if ipip is not None:        # 人差し指の第 2 関節を緩める角度 [deg]（scene.py の _finger_pose）
+        d["index_pip_deg"] = ipip
+    if idip is not None:        # 人差し指の第 1 関節（先）を緩める角度 [deg]
+        d["index_dip_deg"] = idip
+    if lift is not None:        # 手を床から持ち上げる高さ [mm]
+        d["lift_mm"] = lift
     S.set_hand(d, pitch, roll)
     c, cl, v = S.place_ghost()
     if not cl:
@@ -61,7 +71,7 @@ def evaluate(S, index, step, thumb, pitch, roll, little=None, tprox=None, ttip=N
     tips_low = min(S.verts[f"uh_{f}_tip"][:, 2].min() for f in ("middle", "ring", "little"))
     score = (abs(t[0]) + abs(i[0])) * 1000 * 4                    # 接していること [mm]
     score += max(0.0, -others) * 1000 * 50                         # 食い込み
-    score += band(t[1] * 1000, 2, 15) * 2 + band(i[1] * 1000, 25, 45) * 2
+    score += band(t[1] * 1000, *THUMB_Z) * 2 + band(i[1] * 1000, *INDEX_Z) * 2
     score += max(0.0, 6 - tips_low * 1000) * 2                     # ほかの指の先は 6mm 以上浮く
     score += abs(pitch) * 0.05 + abs(roll) * 0.08
     vis, vdir = 0.0, None
@@ -83,6 +93,7 @@ def evaluate(S, index, step, thumb, pitch, roll, little=None, tprox=None, ttip=N
 
 def main():
     S = SC.Scene()
+    print(f"[pose] 駒の高さ {S.ghost_h * 1000:.1f}mm / 触れる高さの帯 親指 {THUMB_Z} 人差し指 {INDEX_Z}", flush=True)
     if flag("--quick"):
         t0 = time.time()
         for g in ((0.85, 0.07, 1.0, 0, 20), (0.7, 0.05, 0.5, 20, 0)):
@@ -93,7 +104,7 @@ def main():
         return
     axes = {"index": (0.5, 0.6, 0.7, 0.8, 0.9, 1.0), "step": (0.05,), "thumb": (0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0),
             "pitch": (-10, 0, 10, 20, 30, 40), "roll": (-30, -20, -10, 0, 10, 20, 30), "little": (None,),
-            "tprox": (None,), "ttip": (None,)}
+            "tprox": (None,), "ttip": (None,), "ipip": (None,), "lift": (None,), "idip": (None,)}
     # little を固定すると step は使われず、人差し指から小指までを直線でつなぐ（負は甲の側へ反る）
     if arg("--fix"):      # 例: --fix index=0.7,step=0.15,thumb=1,pitch=-10,roll=20 / --fix index=0.7,little=-0.08,...
         for kv in arg("--fix").split(","):

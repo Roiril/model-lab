@@ -108,6 +108,13 @@ def set_cam(el, az, dist, sx, sy):
 
 
 HV = hv[::7]          # 外接枠の計算に使う手の点（間引き）
+# --frame-all: 手と駒を合わせた外接枠を、参照の手と駒を合わせた枠に合わせる。
+# 手を床から持ち上げると駒が手より下へ出て、手だけで合わせると駒の下が画面の外に切れる（2026-11-26）
+FRAME_ALL = "--" in sys.argv and "--frame-all" in sys.argv[sys.argv.index("--") + 1:]
+if FRAME_ALL:
+    gv = np.array([(o.matrix_world @ v.co)[:] for o in S.gm for v in o.data.vertices])   # 駒は軸まわりに回るだけなので枠は変わらない
+    HV = np.concatenate([HV, gv[::7]])
+    RB = np.array([min(RB[0], RG[0]), max(RB[1], RG[1]), min(RB[2], RG[2]), max(RB[3], RG[3])])
 
 
 def proj_box():

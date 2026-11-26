@@ -57,6 +57,43 @@ def _thumb_pose(u):
 
 kin.thumb_pose = _thumb_pose
 
+# 人差し指の第 2 関節（PIP）だけを、連結で決まる角度から緩める（実物は 1 つのサーボで 3 関節が連動する）。
+# dofs に index_pip_deg（緩める角度 [deg]、正で伸びる側）を入れると効く。中節と末節を PIP の軸まわりに回し、
+# 基節と中節を結ぶ連結板は、中節側の端を追って向け直す（長さの食い違いは伸び縮みで吸う）
+_INDEX_PIP = {"deg": 0.0, "dip": 0.0}     # dip は dofs の index_dip_deg（第 1 関節を緩める角度 [deg]）
+_finger_pose_orig = kin.finger_pose
+PIP_OPEN_SIGN = -1.0    # 回す向き。量 0.8 で 15° 回すと付け根から指先までが 43.7 → 51.1mm に伸びる向き（数値で確かめた）
+
+
+def _finger_pose(i, u):
+    out = _finger_pose_orig(i, u)
+    nm = kin.FINGERS[i]
+    if nm != "index" or not (_INDEX_PIP["deg"] or _INDEX_PIP["dip"]):
+        return out
+    q = kin.finger_points(i)
+    F = kin.finger_fan(i)
+    x = kin.P.FINGER_X[i]
+    rest = lambda p, dx=0.0: kin.apply(F, (x + dx, p[0], p[1]))
+    if _INDEX_PIP["dip"]:   # 第 1 関節（DIP。指の先）も緩める。末節だけを DIP の軸まわりに回す
+        dip_w = kin.apply(out[f"{nm}_tip"], rest(q["dip"]))
+        axis = kin.vsub(kin.apply(out[f"{nm}_tip"], rest(q["dip"], 1.0)), dip_w)
+        out[f"{nm}_tip"] = kin.mul(kin.rot_axis(axis, math.radians(_INDEX_PIP["dip"]) * PIP_OPEN_SIGN, dip_w), out[f"{nm}_tip"])
+    if not _INDEX_PIP["deg"]:
+        return out
+    pip_w = kin.apply(out[f"{nm}_mid"], rest(q["pip"]))
+    axis = kin.vsub(kin.apply(out[f"{nm}_mid"], rest(q["pip"], 1.0)), pip_w)
+    R = kin.rot_axis(axis, math.radians(_INDEX_PIP["deg"]) * PIP_OPEN_SIGN, pip_w)
+    out[f"{nm}_mid"] = kin.mul(R, out[f"{nm}_mid"])
+    out[f"{nm}_tip"] = kin.mul(R, out[f"{nm}_tip"])
+    a_r, d_r = rest(q["a"]), rest(q["d"])
+    a_w, d_w = kin.apply(out[f"{nm}_link"], a_r), kin.apply(out[f"{nm}_mid"], d_r)
+    d0, d1 = kin.vsub(d_r, a_r), kin.vsub(d_w, a_w)
+    out[f"{nm}_link"] = kin.aim(a_r, a_w, d0, d1, kin.vlen(d1) / kin.vlen(d0))
+    return out
+
+
+kin.finger_pose = _finger_pose
+
 GHOST = os.path.join(ML, "exports", "geister-ghost", "ghost_blue.glb")
 CLEAR = 0.001
 R0 = np.array([[0, 0, 1], [1, 0, 0], [0, 1, 0]], dtype=float)
@@ -127,6 +164,8 @@ class Scene:
     def set_hand(self, dofs, pitch, roll):
         self.dofs, self.pitch, self.roll = dict(dofs), pitch, roll
         self.arm.matrix_world = Matrix.Identity(4)
+        _INDEX_PIP["deg"] = float(dofs.get("index_pip_deg", 0.0))
+        _INDEX_PIP["dip"] = float(dofs.get("index_dip_deg", 0.0))
         _THUMB["prox"], _THUMB["tip"] = dofs.get("thumb_prox_deg"), dofs.get("thumb_tip_deg")
         if (_THUMB["prox"] is None) != (_THUMB["tip"] is None):
             raise ValueError("thumb_prox_deg と thumb_tip_deg は両方そろえて渡す")
@@ -140,7 +179,8 @@ class Scene:
             v = self.local[o.name] @ M[:3, :3].T + M[:3, 3]
             self.verts[o.name] = v
             zmin = min(zmin, float(v[:, 2].min()))
-        shift = -zmin + CLEAR
+        # lift_mm: 手の最下点を床から持ち上げる高さ。駒を上のほうでつまむとき、手ごと上げる
+        shift = -zmin + CLEAR + float(dofs.get("lift_mm", 0.0)) / 1000
         for v in self.verts.values():
             v[:, 2] += shift
         self.arm.matrix_world = Matrix.Translation((0, 0, shift)) @ R
